@@ -1,0 +1,4 @@
+.vercel
+.next
+.wrangler
+node_modules
