@@ -1,11 +1,16 @@
-// import "./globalStyles.css";
-// import "./theme.css";
+import "./globalStyles.css";
+import * as styles from "./style.css";
+import { fontPrimary } from "./theme.css";
+import { variable } from "./theme";
 
 import { auth } from "../auth";
-import { SignOutButton } from "../components/SignOutButton";
-// import Link from "next/link";
+import { GlobalHeader } from "../components/GlobalHeader";
+import { notFound } from "next/navigation";
+import { SessionProvider } from "next-auth/react";
+import { getCurrentStrata } from "../data/stratas/getStrata";
+import { sourceSansPro } from "./fonts";
 
-export const runtime = "edge";
+const fontPrimaryVariable = variable(fontPrimary);
 
 export default async function RootLayout({
   children,
@@ -13,21 +18,32 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
+  const strata = await getCurrentStrata();
+
+  if (!strata) {
+    notFound();
+  }
 
   return (
     <html lang="en">
+      <head>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+                :root {
+                    ${fontPrimaryVariable}: ${sourceSansPro.style.fontFamily}, sans-serif;
+                }
+            `,
+          }}
+        />
+      </head>
       <body>
-        {session && session.user && (
-          <header>
-            <div></div>
-            <div>
-              <>
-                {session.user.name} <SignOutButton />
-              </>
-            </div>
-          </header>
-        )}
-        {children}
+        <div className={styles.body}>
+          <SessionProvider session={session}>
+            <GlobalHeader session={session} strata={strata} />
+            <div>{children}</div>
+          </SessionProvider>
+        </div>
       </body>
     </html>
   );

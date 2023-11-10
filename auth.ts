@@ -1,45 +1,30 @@
-import NextAuth, { NextAuthConfig } from "next-auth";
+import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { loginMember } from "./data/members/loginMember";
-import { Member } from "./data/members";
+import { signInMember } from "./data/members/signInMember";
+import { type Member } from "./data/members";
 
 export const authOptions: NextAuthConfig = {
   callbacks: {
     jwt({ user, token }) {
       if (user) {
         token.id = user.id;
-        token.scope = user as Member;
+        token.scope = (user as unknown as Member).role;
       }
 
       return token;
     },
     async session({ session, token }) {
-      // const user = await
-
-      // const user = { ...session.user };
-
       if (!session.user) {
         return session;
       }
 
-      (session.user as any).scope = token.scope;
+      session.user.scope = token.scope as string;
 
       return session;
     },
   },
-  //   cookies: {
-  //     pkceCodeVerifier: {
-  //       name: "next-auth.pkce.code_verifier",
-  //       options: {
-  //         httpOnly: true,
-  //         sameSite: "none",
-  //         path: "/",
-  //         secure: true,
-  //       },
-  //     },
-  //   },
   trustHost: true,
-  debug: true,
+  debug: false,
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     Credentials({
@@ -57,7 +42,11 @@ export const authOptions: NextAuthConfig = {
 
         const domain = request.headers.get("host")!;
 
-        return loginMember(credentials.email, credentials.password, domain);
+        return signInMember(
+          credentials.email,
+          credentials.password,
+          domain
+        ) as unknown as User;
       },
     }),
   ],

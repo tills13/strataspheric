@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
   className?: string;
   onTouchEnd?: React.TouchEventHandler;
-  priority: 1 | 2 | 3 | 4;
+  priority: 1 | 2 | 3 | 4 | 5;
 }
 
 export function Header({ children, className, onTouchEnd, priority }: Props) {

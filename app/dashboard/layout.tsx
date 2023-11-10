@@ -1,29 +1,25 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { auth } from "../../auth";
-import { getStrata } from "../../data/stratas";
-import Link from "next/link";
+import { getCurrentStrata } from "../../data/stratas/getStrata";
 
-export const runtime = "edge";
+import { DashboardHeader } from "../../components/DashboardHeader";
 
 export default async function Layout({ children }) {
   const session = await auth();
-
-  if (!session) {
-    redirect("/");
-  }
-
-  const strata = await getStrata();
+  const strata = await getCurrentStrata();
 
   if (!strata) {
-    return <div>Strata does not exist</div>;
+    return notFound();
+  }
+
+  if (!session && strata.visibility === "private") {
+    redirect("/");
   }
 
   return (
     <div>
-      <div>
-        <h1>{strata.name}</h1>
-        <Link href="/dashboard/membership">View Membership</Link>
-      </div>
+      <DashboardHeader />
+
       {children}
     </div>
   );

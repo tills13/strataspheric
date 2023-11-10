@@ -7,7 +7,8 @@ export const base = style({
   padding: `0 ${vars.spacing.small}`,
   color: vars.fontColors.primary,
   background: "none",
-  border: `2px solid ${vars.colors.grey700}`,
+  backgroundColor: vars.colors.white,
+  border: `2px solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius,
   boxShadow: "none",
   outline: "none",
@@ -20,6 +21,7 @@ export const base = style({
       backgroundColor: vars.colors.white,
       color: vars.fontColors.primaryInverse,
       opacity: 0.9,
+      borderColor: vars.colors.borderDefaultHover,
     },
     // "&:hover::placeholder": {
     //     color: vars.fontColors.primaryInverse,

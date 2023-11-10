@@ -1,47 +1,33 @@
+import React from "react";
 import { classnames } from "../../utils/classnames";
 import * as styles from "./style.css";
 
-function defaultRenderOption<T>(option: T) {
-  return <option key={`${option}`}>{`${option}`}</option>;
+interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  children: React.ReactNode[];
+  placeholderEnabled?: boolean;
+  compact?: boolean;
 }
 
-export type Props<T> = {
-  className?: string;
-  id?: string;
-  disabled?: boolean;
-  onChange: React.ChangeEventHandler<HTMLSelectElement>;
-  options: T[];
-  placeholder?: string;
-  placeholderEnabled?: boolean;
-  renderOption?: (o: T, idx: number) => JSX.Element;
-  compact?: boolean;
-  value?: string;
-};
-
-export function Select<T>({
+export function Select({
+  children,
   className,
-  disabled,
-  onChange,
-  options,
   placeholder,
   placeholderEnabled,
-  renderOption = defaultRenderOption,
-  value,
-}: Props<T>) {
+  ...delegateProps
+}: Props) {
   return (
     <select
       className={classnames(styles.baseSelect, className)}
-      disabled={disabled}
-      onChange={onChange}
       placeholder={placeholder}
-      value={value}
+      {...delegateProps}
     >
       {placeholder && (
         <option value="" disabled={!placeholderEnabled}>
           {placeholder}
         </option>
       )}
-      {options.map(renderOption)}
+
+      {children}
     </select>
   );
 }

@@ -1,0 +1,17 @@
+import { style, createVar } from "@vanilla-extract/css";
+import { vars } from "../../app/theme.css";
+
+export const dividerTextGapVar = createVar();
+
+export const dividerText = style({
+  display: "flex",
+  alignItems: "center",
+  gap: dividerTextGapVar,
+});
+
+export const dividerTextDivider = style({
+  display: "block",
+  height: "2px",
+  width: "100%",
+  backgroundColor: vars.colors.borderDefault,
+});

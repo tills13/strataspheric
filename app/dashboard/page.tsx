@@ -1,36 +1,53 @@
+import * as styles from "./style.css";
+
 import React from "react";
-import { mustGetStrata } from "../../data/stratas";
 import { NewWidgetForm } from "../../components/NewWidgetForm";
 import { getWidgets } from "../../data/widgets/getWidgets";
 import { Widget } from "../../components/Widget";
+import {
+  createEventAction,
+  createFileAction,
+  createWidgetAction,
+  deleteWidgetAction,
+} from "./actions";
+import { auth } from "../../auth";
+import { can } from "../../data/members/permissions";
+import { Header } from "../../components/Header";
+import { ElementGroup } from "../../components/ElementGroup";
+import { mustGetCurrentStrata } from "../../data/stratas/getStrata";
 
 export const runtime = "edge";
-// export const revalidate = false;
-// export const dynamic = "force-dynamic";
-// export const fetchCache = "force-no-store";
 
 export default async function Page() {
-  const strata = await mustGetStrata();
+  const session = await auth();
+  const strata = await mustGetCurrentStrata();
   const widgets = await getWidgets(strata);
 
-  // const staticGenerationAsyncStorage = (
-  //   fetch as any
-  // ).__nextGetStaticStore?.() as any;
-
-  // const store = staticGenerationAsyncStorage?.getStore();
-
-  // console.log(fetch, staticGenerationAsyncStorage, store);
-
   return (
-    <div>
-      <div>
-        <h3>Add Widget</h3>
-        <NewWidgetForm strataId={strata.id} />
-      </div>
+    <div className={styles.pageContainer}>
+      <Header className={styles.pageTitle} priority={2}>
+        Widgets
+      </Header>
 
-      <div>
+      <div className={styles.dashboardWidgetGridContainer}>
+        {can(session?.user, "stratas.widgets.create") && (
+          <ElementGroup gap="small" orientation="column">
+            <Header priority={3}>Add Widget</Header>
+
+            <NewWidgetForm
+              createWidget={createWidgetAction}
+              strataId={strata.id}
+            />
+          </ElementGroup>
+        )}
         {widgets.map((widget) => (
-          <Widget key={widget.id} widget={widget} />
+          <Widget
+            key={widget.id}
+            createEvent={createEventAction}
+            createFile={createFileAction}
+            deleteWidget={deleteWidgetAction}
+            widget={widget}
+          />
         ))}
       </div>
     </div>

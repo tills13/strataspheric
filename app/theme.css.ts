@@ -1,17 +1,16 @@
-import { createGlobalTheme } from "@vanilla-extract/css";
+import { createGlobalTheme, createVar } from "@vanilla-extract/css";
 
 export const breakpoints = {
   tablet: "(min-width: 400px)",
+  desktop: "(min-width: 1200px)",
 };
 
-export const fontFamilies = {
-  primary: "var(--fonts-primary)",
-  secondaryHeaer: "var(--fonts-secondaryHeader)",
-  text: "var(--fonts-text)",
-};
+export const fontPrimary = createVar();
+// export const fontSecondary = createVar();
+// export const fontText = createVar();
 
 export const vars = createGlobalTheme(":root", {
-  borderRadius: "0px",
+  borderRadius: "4px",
 
   spacing: {
     xs: "4px",
@@ -22,6 +21,7 @@ export const vars = createGlobalTheme(":root", {
   },
 
   sizes: {
+    xs: "24px",
     small: "32px",
     normal: "40px",
   },
@@ -65,20 +65,22 @@ export const vars = createGlobalTheme(":root", {
 
     secondary: "#393e46",
     secondaryHover: "#494f58",
-    // tertiary: "#3e4550"
+
+    borderDefault: "#e3e7ee",
+    borderDefaultHover: "#d4d9e2",
   },
 
   fontColors: {
-    primary: "#111419",
+    primary: "#495261",
     secondary: "#acacac",
     tertiary: "#8b8b8b",
     primaryInverse: "#111419",
   },
 
   fontFamilies: {
-    primary: "var(--fonts-primary)",
-    secondaryHeader: "var(--fonts-secondaryHeader)",
-    text: "var(--fonts-text)",
+    primary: fontPrimary,
+    secondaryHeader: fontPrimary,
+    text: fontPrimary,
   },
 
   states: {

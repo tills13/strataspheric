@@ -1,6 +1,6 @@
-import "@auth/core";
+import "next-auth";
 
-declare module "@auth/core" {
+declare module "next-auth" {
   export interface User {
     scope: string;
   }

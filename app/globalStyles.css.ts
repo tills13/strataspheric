@@ -1,5 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css";
-import { fontFamilies, vars } from "./theme.css";
+import { vars } from "./theme.css";
 
 globalStyle("*, *::before, *::after", {
   padding: 0,
@@ -19,8 +19,9 @@ globalStyle("body", {
   WebkitFontSmoothing: "always",
   backgroundColor: vars.colors.globalBg,
   color: vars.fontColors.primary,
-  fontFamily: fontFamilies["text"],
+  fontFamily: vars.fontFamilies.text,
   fontSize: vars.fontSizes.normal,
+  fontWeight: 600,
 });
 
 globalStyle("img, picture, video, canvas, svg", {

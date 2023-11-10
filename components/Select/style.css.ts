@@ -8,7 +8,8 @@ export const baseSelect = style({
   backgroundColor: vars.colors.globalBg,
   borderWidth: 2,
   borderStyle: "solid",
-  borderColor: vars.colors.white,
+  borderColor: vars.colors.borderDefault,
+  borderRadius: vars.borderRadius,
   outline: "none",
   appearance: "none",
   cursor: "pointer",
@@ -19,8 +20,9 @@ export const baseSelect = style({
 
   selectors: {
     "&:hover": {
-      backgroundColor: vars.colors.white,
-      color: vars.colors.globalBg,
+      // backgroundColor: vars.colors.white,
+      // color: vars.colors.globalBg,
+      borderColor: vars.colors.borderDefaultHover,
     },
     "&:disabled": {
       opacity: 0.7,

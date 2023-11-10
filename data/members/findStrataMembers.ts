@@ -1,5 +1,5 @@
-import { Member } from ".";
 import { db } from "../../db";
+import { StrataMember } from "./getStrataMembers";
 
 interface FindMembersFilters {
   email?: string;
@@ -7,7 +7,9 @@ interface FindMembersFilters {
   strataId?: string;
 }
 
-export async function findMembers(opts: FindMembersFilters): Promise<Member[]> {
+export async function findMembers(
+  opts: FindMembersFilters
+): Promise<StrataMember[]> {
   if (Object.keys(opts).length === 0) {
     throw new Error("invalid filer");
     // return [];
@@ -21,11 +23,11 @@ export async function findMembers(opts: FindMembersFilters): Promise<Member[]> {
       members.name, 
       members.email, 
       members.phone_number as phoneNumber, 
-      strata_membership.unit,
-      strata_membership.role 
+      strata_memberships.unit,
+      strata_memberships.role 
   FROM members 
-      JOIN strata_membership ON members.id = strata_membership.member_id
-      JOIN stratas ON strata_membership.strata_id = stratas.id
+      JOIN strata_memberships ON members.id = strata_memberships.member_id
+      JOIN stratas ON strata_memberships.strata_id = stratas.id
   WHERE TRUE`;
 
   if (opts.domain) {
@@ -41,7 +43,7 @@ export async function findMembers(opts: FindMembersFilters): Promise<Member[]> {
   const result = await db()
     .prepare(query)
     .bind(...args)
-    .all<Member>();
+    .all<StrataMember>();
 
   return result.results || [];
 }

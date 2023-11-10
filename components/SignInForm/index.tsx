@@ -35,17 +35,16 @@ export function SignInForm({ className }: Props) {
 
     if (result?.ok && result.url) {
       window.location.href = result.url;
-      // router.push("/");
     }
   }
 
   return (
     <form
-      className={classnames(className, styles.loginForm)}
+      className={classnames(className, styles.signInForm)}
       onSubmit={onSubmit}
     >
       <Input
-        className={styles.loginFormInput}
+        className={styles.signInFormInput}
         id="email"
         name="email"
         type="email"
@@ -53,7 +52,7 @@ export function SignInForm({ className }: Props) {
       />
 
       <Input
-        className={styles.loginFormInput}
+        className={styles.signInFormInput}
         id="password"
         name="password"
         type="password"

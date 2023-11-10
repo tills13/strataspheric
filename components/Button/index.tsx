@@ -5,11 +5,15 @@ import { classnames } from "../../utils/classnames";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   className?: string;
+  compact?: boolean;
 }
 
-export function Button({ children, className, ...rest }: Props) {
+export function Button({ children, className, compact, ...rest }: Props) {
   return (
-    <button className={classnames(styles.button, className)} {...rest}>
+    <button
+      className={classnames(compact ? styles.compact : styles.base, className)}
+      {...rest}
+    >
       {children}
     </button>
   );

@@ -1,0 +1,46 @@
+import { style } from "@vanilla-extract/css";
+import { vars } from "../../app/theme.css";
+
+export const base = style({
+  display: "inline-block",
+  position: "relative",
+
+  height: vars.sizes.xs,
+  width: vars.sizes.xs,
+
+  padding: 0,
+  border: `2px solid ${vars.colors.borderDefault}`,
+  borderRadius: vars.borderRadius,
+  boxShadow: "none",
+  outline: "none",
+  overflow: "hidden",
+  cursor: "pointer",
+
+  selectors: {
+    "&:has(input[type=checkbox]:checked), &:hover": {
+      boxShadow: "inset 0px 0px 0px 2px " + vars.colors.white,
+      backgroundColor: vars.colors.borderDefault,
+    },
+
+    "&::placeholder": {
+      color: vars.fontColors.secondary,
+    },
+
+    "&:hover": {
+      color: vars.fontColors.primaryInverse,
+      borderColor: vars.colors.borderDefaultHover,
+    },
+
+    "&:disabled": {
+      opacity: 0.7,
+      cursor: "not-allowed",
+    },
+  },
+});
+
+export const checkboxElement = style({
+  position: "absolute",
+  top: -100,
+  width: 1,
+  height: 1,
+});

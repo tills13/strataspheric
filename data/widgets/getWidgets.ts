@@ -1,7 +1,6 @@
 import { FileWidget, EventWidget, Widget } from ".";
 import { db } from "../../db";
 import { Strata } from "../stratas";
-import { File } from "../files";
 
 interface GetFileWidgetRow extends FileWidget {
   type: "file";
@@ -42,6 +41,7 @@ FROM strata_widgets
     LEFT JOIN events ON strata_widgets.type = "event" 
         AND events.widget_id = strata_widgets.id
 WHERE strata_widgets.strata_id = ?
+ORDER BY strata_widgets.id DESC
 `;
 
 export async function getWidgets(strata: Strata): Promise<Widget[]> {
