@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
 
-export const internalLink = style({
+export const linkBase = style({
   color: vars.fontColors.primary,
   selectors: {
     "&:active": {
@@ -12,3 +12,10 @@ export const internalLink = style({
     },
   },
 });
+
+export const linkNoUnderline = style([
+  linkBase,
+  {
+    textDecoration: "none",
+  },
+]);

@@ -12,11 +12,12 @@ export const pageTitle = style({
 export const dashboardWidgetGridContainer = style({
   display: "grid",
   gridTemplateColumns: "repeat(1, 1fr)",
-  gridTemplateRows: "400px",
   gap: vars.spacing.normal,
+
   "@media": {
     [breakpoints.tablet]: {
       gridTemplateColumns: "repeat(2, 1fr)",
+      gridTemplateRows: "400px",
     },
     [breakpoints.desktop]: {
       gridTemplateColumns: "repeat(3, 1fr)",

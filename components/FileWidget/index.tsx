@@ -1,4 +1,6 @@
 import * as styles from "./style.css";
+import * as abstractWidgetStyles from "../AbstractWidget/style.css";
+
 import { type FileWidget as IFileWidget } from "../../data/widgets";
 import {
   AbstractWidget,
@@ -8,6 +10,7 @@ import { auth } from "../../auth";
 import { can } from "../../data/members/permissions";
 import { NewFileForm } from "../NewFileForm";
 import { Header } from "../Header";
+import { ExternalLink } from "../Link/ExternalLink";
 
 interface Props extends AbstractWidgetProps {
   createFile: (fd: FormData) => void;
@@ -23,18 +26,27 @@ export async function FileWidget({ createFile, deleteWidget, widget }: Props) {
       deleteWidget={deleteWidget}
       widget={widget}
     >
-      <div className={styles.fileWidgetList}>
+      <div className={abstractWidgetStyles.abstractWidgetList}>
         {widget.files.length === 0 && <div>no files</div>}
 
         {widget.files.map((file) => (
-          <div key={file.id}>
-            <Header priority={3}>{file.name}</Header>
-            <span suppressHydrationWarning>
-              {file.createdAt.toLocaleDateString()}
-            </span>
-            <a href={file.path} target="_blank">
+          <div
+            key={file.id}
+            className={abstractWidgetStyles.abstractWidgetListItem}
+          >
+            <div>
+              <Header priority={3}>{file.name}</Header>
+              {file.description && <p>{file.description}</p>}
+              <span
+                className={styles.fileWidgetListItemDate}
+                suppressHydrationWarning
+              >
+                {file.createdAt.toLocaleDateString()}
+              </span>
+            </div>
+            <ExternalLink href={file.path} target="_blank">
               Download
-            </a>
+            </ExternalLink>
           </div>
         ))}
       </div>

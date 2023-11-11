@@ -6,6 +6,7 @@ import { type Session } from "next-auth";
 import { SignOutButton } from "../SignOutButton";
 import { Button } from "../Button";
 import { Header } from "../Header";
+import { InternalLink } from "../Link/InternalLink";
 
 interface Props {
   session: Session | null;
@@ -16,7 +17,11 @@ export function GlobalHeader({ session, strata }: Props) {
   return (
     <div className={styles.globalHeader}>
       <div>
-        <Header priority={1}>{strata.name}</Header>
+        <Header priority={1}>
+          <InternalLink href="/" noUnderline>
+            {strata.name}
+          </InternalLink>
+        </Header>
         {/* <Breadcrumbs /> */}
       </div>
       <div className={styles.globalHeaderActions}>

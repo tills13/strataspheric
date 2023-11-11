@@ -1,4 +1,5 @@
 import * as styles from "./style.css";
+import * as abstractWidgetStyles from "../AbstractWidget/style.css";
 
 import { EventWidget as IEventWidget } from "../../data/widgets";
 import {
@@ -28,14 +29,21 @@ export async function EventWidget({
       deleteWidget={deleteWidget}
       widget={widget}
     >
-      <div className={styles.eventWidgetList}>
+      <div className={abstractWidgetStyles.abstractWidgetList}>
         {widget.events.length === 0 && <div>no events</div>}
 
         {widget.events.map((event) => (
-          <div key={event.id}>
-            <Header priority={3}>{event.name}</Header>
-            <p>{event.description}</p>
-            <span suppressHydrationWarning>{event.date.toLocaleString()}</span>
+          <div
+            key={event.id}
+            className={abstractWidgetStyles.abstractWidgetListItem}
+          >
+            <div>
+              <Header priority={3}>{event.name}</Header>
+              <p>{event.description}</p>
+              <span suppressHydrationWarning>
+                {event.date.toLocaleString()}
+              </span>
+            </div>
           </div>
         ))}
       </div>

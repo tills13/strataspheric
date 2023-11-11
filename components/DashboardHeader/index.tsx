@@ -3,7 +3,7 @@
 import * as styles from "./style.css";
 import { useSession } from "next-auth/react";
 import { can } from "../../data/members/permissions";
-import { InternalLink } from "../InternalLink";
+import { InternalLink } from "../Link/InternalLink";
 import { usePathname } from "next/navigation";
 
 type Link = [href: string, label: string];

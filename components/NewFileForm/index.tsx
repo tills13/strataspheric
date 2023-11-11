@@ -14,11 +14,9 @@ export function NewFileForm({ createFile, widgetId }: Props) {
     <form className={styles.newFileForm} action={createFile}>
       <input name="widget_id" type="hidden" defaultValue={widgetId} />
       <Input name="name" placeholder="Name" />
-
-      <ElementGroup gap="small">
-        <Input name="file" type="file" />
-        <Button type="submit">Create</Button>
-      </ElementGroup>
+      <Input name="description" placeholder="Description" />
+      <Input name="file" type="file" />
+      <Button type="submit">Create</Button>
     </form>
   );
 }

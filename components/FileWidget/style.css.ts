@@ -3,8 +3,8 @@ import { vars } from "../../app/theme.css";
 
 export const fileWidget = style({});
 
-export const fileWidgetList = style({
-  flex: 1,
+export const fileWidgetListItemDate = style({
+  fontSize: vars.fontSizes.small,
 });
 
 export const fileWidgetFooter = style({

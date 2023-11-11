@@ -14,10 +14,8 @@ export function NewEventForm({ createEvent, widgetId }: Props) {
     <form className={styles.newEventForm} action={createEvent}>
       <input name="widget_id" type="hidden" defaultValue={widgetId} />
 
-      <ElementGroup gap="small">
-        <Input name="name" placeholder="Name" />
-        <Input name="date" type="datetime-local" placeholder="Date" />
-      </ElementGroup>
+      <Input name="name" placeholder="Name" />
+      <Input name="date" type="datetime-local" placeholder="Date" />
 
       <Input name="description" placeholder="Description" />
       <Button type="submit">Create</Button>
