@@ -1,7 +1,7 @@
 import { createGlobalTheme, createVar } from "@vanilla-extract/css";
 
 export const breakpoints = {
-  tablet: "(min-width: 400px)",
+  tablet: "(min-width: 640px)",
   desktop: "(min-width: 1200px)",
 };
 

@@ -7,7 +7,6 @@ import { Input } from "../Input";
 import * as styles from "./style.css";
 
 import { signIn } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
 
 interface Props {
   className?: string;
@@ -15,7 +14,6 @@ interface Props {
 
 export function SignInForm({ className }: Props) {
   const [error, setHasError] = useState(false);
-  const router = useRouter();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

@@ -17,7 +17,7 @@ export const dashboardWidgetGridContainer = style({
   "@media": {
     [breakpoints.tablet]: {
       gridTemplateColumns: "repeat(2, 1fr)",
-      gridTemplateRows: "400px",
+      gridTemplateRows: "minmax(400px, min-content)",
     },
     [breakpoints.desktop]: {
       gridTemplateColumns: "repeat(3, 1fr)",
