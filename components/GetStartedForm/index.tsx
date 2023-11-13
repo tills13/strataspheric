@@ -10,13 +10,21 @@ import { useDeferredValue, useEffect, useState } from "react";
 
 export function GetStartedForm() {
   const [strataName, setStrataName] = useState("");
+  const [isDomainAvailable, setIsDomainAvailable] = useState(false);
   const deferredStrataName = useDeferredValue(strataName);
 
-  const suggestedDomain = strataName.replaceAll(/ '/g, "").toLowerCase();
+  const suggestedDomain = deferredStrataName
+    .replaceAll(/[ ']/g, "")
+    .toLowerCase();
 
   useEffect(() => {
-    // const;
-  }, [deferredStrataName]);
+    async function fetchIsDomainAvailable() {
+      const r = await fetch("/api/stratas/domainAvailable");
+      const rJson = await r.json();
+
+      setIsDomainAvailable(rJson.isAvailable);
+    }
+  }, [suggestedDomain]);
 
   return (
     <form className={styles.getStartedForm}>
