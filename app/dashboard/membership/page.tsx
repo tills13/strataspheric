@@ -57,14 +57,6 @@ export default async function Page() {
       </Header>
 
       <div className={styles.pageContainer}>
-        {canUpsert && (
-          <UpsertStrataMemberForm
-            className={styles.addMemberForm}
-            strataId={strata.id}
-            upsertStrataMemberAction={createStrataMemberAction}
-          />
-        )}
-
         <div className={styles.membershipTableContainer}>
           <table className={styles.membershipTable}>
             {Object.entries(byUnit).map(([unit, strataMembers]) => (
@@ -122,6 +114,19 @@ export default async function Page() {
             ))}
           </table>
         </div>
+
+        {canUpsert && (
+          <div>
+            <Header className={styles.pageSecondaryTitle} priority={3}>
+              Add New Member
+            </Header>
+            <UpsertStrataMemberForm
+              className={styles.addMemberForm}
+              strataId={strata.id}
+              upsertStrataMemberAction={createStrataMemberAction}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export const runtime = "edge";
 export default function Page() {
   return (
     <div className={styles.pageContainer}>
-      <GetStartedForm />
+      <GetStartedForm className={styles.getStartedForm} />
     </div>
   );
 }

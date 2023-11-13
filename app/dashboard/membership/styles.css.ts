@@ -12,18 +12,34 @@ export const pageTitle = style({
   },
 });
 
+export const pageSecondaryTitle = style([
+  pageTitle,
+  {
+    marginBottom: vars.spacing.normal,
+  },
+]);
+
 export const membershipTableContainer = style({
   width: "100vw",
-  // marginLeft: `calc(-1 * ${vars.spacing.normal})`,
   overflow: "auto",
+  "@media": {
+    [breakpoints.tablet]: {
+      width: "100%",
+    },
+  },
 });
 
 export const membershipTable = style({
-  // width: "100%",
+  minWidth: "100%",
   // border: `2px solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius,
   gap: 0,
   borderSpacing: 0,
+  "@media": {
+    [breakpoints.tablet]: {
+      width: "100%",
+    },
+  },
 });
 
 globalStyle(`${membershipTable} th, ${membershipTable} td`, {
@@ -63,9 +79,10 @@ export const pageContainer = style({
 });
 
 export const addMemberForm = style({
-  // width: "100%",
+  padding: padding("0px", vars.spacing.normal),
   "@media": {
     [breakpoints.tablet]: {
+      padding: 0,
       width: "400px",
     },
   },

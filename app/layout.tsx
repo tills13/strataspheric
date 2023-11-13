@@ -21,10 +21,6 @@ export default async function RootLayout({
   const session = await auth();
   const strata = await getCurrentStrata();
 
-  if (!strata) {
-    notFound();
-  }
-
   return (
     <html lang="en">
       <head>

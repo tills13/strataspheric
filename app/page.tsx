@@ -12,6 +12,8 @@ import { DividerText } from "../components/DividerText";
 import { Button } from "../components/Button";
 import { ElementGroup } from "../components/ElementGroup";
 import { getCurrentStrata } from "../data/stratas/getStrata";
+import { SignInToStrataPage } from "../components/SignInToStrataPage";
+import { MarketingLandingPage } from "../components/MarketingLandingPage";
 
 export const runtime = "edge";
 
@@ -25,57 +27,13 @@ export default async function Page({ searchParams }: any) {
 
   const strata = await getCurrentStrata();
 
-  if (!strata) {
-    notFound();
-  }
-
-  if (strata.visibility === "public" && action === undefined) {
+  if (strata?.visibility === "public" && action === undefined) {
     redirect("/dashboard");
   }
 
-  return (
-    <div className={styles.landingPageContainer}>
-      <ElementGroup
-        className={styles.landingPageFormContainer}
-        orientation="column"
-      >
-        <Header priority={2}>
-          {action === "join" ? "Request to Join" : "Sign In"}
-        </Header>
-
-        {action === "join" ? (
-          <JoinStrataForm
-            className={styles.signInForm}
-            requestToJoinStrata={requestToJoinStrataAction}
-            strataId={strata.id}
-          />
-        ) : (
-          <SignInForm className={styles.signInForm} />
-        )}
-
-        {strata.visibility === "public" && (
-          <>
-            <DividerText>or</DividerText>
-            <Link href="/dashboard">
-              <Button className={styles.actionButton}>
-                view public content
-              </Button>
-            </Link>
-          </>
-        )}
-
-        <DividerText>or</DividerText>
-
-        {action === "join" ? (
-          <Link href="/?action=sigin">
-            <Button className={styles.actionButton}>Sign In</Button>
-          </Link>
-        ) : (
-          <Link href="/?action=join">
-            <Button className={styles.actionButton}>Request to join</Button>
-          </Link>
-        )}
-      </ElementGroup>
-    </div>
+  return strata ? (
+    <SignInToStrataPage action={action} strata={strata} />
+  ) : (
+    <MarketingLandingPage />
   );
 }

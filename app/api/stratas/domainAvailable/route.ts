@@ -17,6 +17,8 @@ export async function GET(req: Request) {
 
   const strata = await getStrata(domain);
 
+  // await new Promise((r) => setTimeout(r, 4 * 1000));
+
   return new Response(
     JSON.stringify({ isAvailable: !strata } as IsDomainAvailableResponseData),
     {

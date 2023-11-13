@@ -12,7 +12,7 @@ import { GlobalHeaderMobileActions } from "./MobileActions";
 
 interface Props {
   session: Session | null;
-  strata: Strata;
+  strata: Strata | null;
 }
 
 export function GlobalHeader({ session, strata }: Props) {
@@ -25,16 +25,20 @@ export function GlobalHeader({ session, strata }: Props) {
             href="/"
             noUnderline
           >
-            {strata.name}
+            {strata?.name || "Stratum"}
           </InternalLink>
         </Header>
       </div>
-      <GlobalHeaderActions
-        className={styles.globalHeaderDesktopActions}
-        session={session}
-        strata={strata}
-      />
-      <GlobalHeaderMobileActions session={session} strata={strata} />
+      {strata && (
+        <>
+          <GlobalHeaderActions
+            className={styles.globalHeaderDesktopActions}
+            session={session}
+            strata={strata}
+          />
+          <GlobalHeaderMobileActions session={session} strata={strata} />
+        </>
+      )}
     </header>
   );
 }
