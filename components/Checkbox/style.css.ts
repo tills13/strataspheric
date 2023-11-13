@@ -8,6 +8,8 @@ export const base = style({
   height: vars.sizes.xs,
   width: vars.sizes.xs,
 
+  flexShrink: 0,
+
   padding: 0,
   border: `2px solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius,
