@@ -1,7 +1,7 @@
 import "./globalStyles.css";
 import * as styles from "./style.css";
 import { fontPrimary } from "./theme.css";
-import { variable } from "./theme";
+import { variable } from "../theme";
 
 import { auth } from "../auth";
 import { GlobalHeader } from "../components/GlobalHeader";
@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { SessionProvider } from "next-auth/react";
 import { getCurrentStrata } from "../data/stratas/getStrata";
 import { sourceSansPro } from "./fonts";
+import { GlobalFooter } from "../components/GlobalFooter";
 
 const fontPrimaryVariable = variable(fontPrimary);
 
@@ -42,8 +43,10 @@ export default async function RootLayout({
           <SessionProvider session={session}>
             <GlobalHeader session={session} strata={strata} />
             <div>{children}</div>
+            <GlobalFooter />
           </SessionProvider>
         </div>
+        <div id="modal-root" />
       </body>
     </html>
   );

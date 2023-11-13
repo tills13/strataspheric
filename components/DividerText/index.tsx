@@ -1,7 +1,7 @@
 import * as styles from "./style.css";
 import React from "react";
 import { vars } from "../../app/theme.css";
-import { variable } from "../../app/theme";
+import { variable } from "../../theme";
 import { classnames } from "../../utils/classnames";
 
 interface Props {

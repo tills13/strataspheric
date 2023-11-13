@@ -7,6 +7,8 @@ import { SignOutButton } from "../SignOutButton";
 import { Button } from "../Button";
 import { Header } from "../Header";
 import { InternalLink } from "../Link/InternalLink";
+import { GlobalHeaderActions } from "./Actions";
+import { GlobalHeaderMobileActions } from "./MobileActions";
 
 interface Props {
   session: Session | null;
@@ -15,32 +17,24 @@ interface Props {
 
 export function GlobalHeader({ session, strata }: Props) {
   return (
-    <div className={styles.globalHeader}>
+    <header className={styles.globalHeader}>
       <div>
         <Header priority={1}>
-          <InternalLink href="/" noUnderline>
+          <InternalLink
+            className={styles.globalHeaderTitle}
+            href="/"
+            noUnderline
+          >
             {strata.name}
           </InternalLink>
         </Header>
-        {/* <Breadcrumbs /> */}
       </div>
-      <div className={styles.globalHeaderActions}>
-        {session ? (
-          <>
-            <span>{session.user?.name}</span>
-            <SignOutButton />
-          </>
-        ) : (
-          <>
-            <Link href="/?action=join">
-              <Button>Join {strata.name}</Button>
-            </Link>
-            <Link href="/?action=signin">
-              <Button>Sign In</Button>
-            </Link>
-          </>
-        )}
-      </div>
-    </div>
+      <GlobalHeaderActions
+        className={styles.globalHeaderDesktopActions}
+        session={session}
+        strata={strata}
+      />
+      <GlobalHeaderMobileActions session={session} strata={strata} />
+    </header>
   );
 }

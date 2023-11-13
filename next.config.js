@@ -15,7 +15,9 @@ module.exports = withVanillaExtract({
 });
 
 if (process.env.NODE_ENV === "development") {
-  const { setupDevBindings } = require("@cloudflare/next-on-pages/next-dev");
+  const {
+    setupDevBindings,
+  } = require("@cloudflare/next-on-pages/__experimental__next-dev");
 
   setupDevBindings({
     d1Databases: {

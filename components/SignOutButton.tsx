@@ -2,7 +2,14 @@
 
 import { signOut } from "next-auth/react";
 import { Button } from "./Button";
+import React from "react";
 
-export function SignOutButton() {
-  return <Button onClick={() => signOut()}>Sign Out</Button>;
+type Props = Omit<React.ComponentProps<typeof Button>, "onClick">;
+
+export function SignOutButton(props: Props) {
+  return (
+    <Button onClick={() => signOut()} {...props}>
+      Sign Out
+    </Button>
+  );
 }

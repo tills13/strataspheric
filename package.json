@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@auth/core": "^0.18.0",
-    "@cloudflare/next-on-pages": "1.7.3",
+    "@cloudflare/next-on-pages": "^0.0.0-3dc3ac4",
     "@cloudflare/workers-types": "^4.20231025.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",

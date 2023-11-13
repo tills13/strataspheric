@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { vars } from "../../app/theme.css";
+import { breakpoints, vars } from "../../app/theme.css";
 
 export const globalHeader = style({
   display: "flex",
@@ -9,10 +9,45 @@ export const globalHeader = style({
   borderBottom: `1px solid ${vars.colors.grey100}`,
 });
 
-export const globalHeaderActions = style({
-  display: "flex",
+export const globalHeaderTitle = style({
+  whiteSpace: "nowrap",
+});
+
+export const globalHeaderActions = style({});
+
+export const globalHeaderDesktopActions = style({
+  display: "none",
   alignItems: "center",
   gap: vars.spacing.normal,
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "flex",
+    },
+  },
+});
+
+export const globalMobileHeaderActions = style({
+  display: "block",
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "none",
+    },
+  },
+});
+
+export const globalMobileHeaderModalActions = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "stretch",
+  gap: vars.spacing.normal,
+});
+
+export const globalHeaderActionsButton = style({
+  selectors: {
+    [`${globalMobileHeaderModalActions} &`]: {
+      width: "100%",
+    },
+  },
 });
 
 export const breadcrumbs = style({

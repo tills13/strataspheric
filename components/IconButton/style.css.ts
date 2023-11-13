@@ -1,11 +1,14 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
 import * as buttonProps from "../Button/style.css";
+import { padding } from "../../theme";
 
 export const base = style([
   buttonProps.base,
   {
-    padding: 0,
+    padding: padding("8px", "0"),
+    height: vars.sizes.normal,
+    width: vars.sizes.normal,
     textAlign: "center",
   },
 ]);
@@ -15,6 +18,6 @@ export const compact = style([
   {
     height: vars.sizes.small,
     width: vars.sizes.small,
-    padding: 0,
+    padding: padding("4px", "0"),
   },
 ]);

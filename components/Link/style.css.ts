@@ -2,13 +2,13 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
 
 export const linkBase = style({
-  color: vars.fontColors.primary,
+  color: "inherit",
   selectors: {
     "&:active": {
-      color: vars.fontColors.primary,
+      color: "inherit",
     },
     "&:visited": {
-      color: vars.fontColors.primary,
+      color: "inherit",
     },
   },
 });

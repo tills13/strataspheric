@@ -3,12 +3,16 @@ import React, { ButtonHTMLAttributes } from "react";
 import { classnames } from "../../utils/classnames";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
   className?: string;
   compact?: boolean;
 }
 
-export function Button({ children, className, compact, ...rest }: Props) {
+export function Button({
+  children,
+  className,
+  compact,
+  ...rest
+}: React.PropsWithChildren<Props>) {
   return (
     <button
       className={classnames(compact ? styles.compact : styles.base, className)}

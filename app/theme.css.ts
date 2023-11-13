@@ -47,6 +47,8 @@ export const vars = createGlobalTheme(":root", {
     black: "#000",
     // black_rgb
 
+    red: "#f00",
+
     grey100: "#f5f6fa",
     grey200: "#e3e7ee",
     grey300: "#d4d9e2",
