@@ -51,7 +51,7 @@ export default async function Page() {
   }
 
   return (
-    <div className={parentStyles.pageContainer}>
+    <div className={parentStyles.pageContainerFullWidthMobile}>
       <Header className={styles.pageTitle} priority={2}>
         Members
       </Header>
@@ -65,57 +65,63 @@ export default async function Page() {
           />
         )}
 
-        <table className={styles.membershipTable}>
-          {Object.entries(byUnit).map(([unit, strataMembers]) => (
-            <tbody key={unit} className={styles.membershipTableSection}>
-              <tr className={styles.membershipTableSectionHeaderRow}>
-                <th colSpan={canDelete ? 5 : 4}>{unit}</th>
-              </tr>
-
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone #</th>
-                <th>Role</th>
-                {canDelete && <th></th>}
-              </tr>
-
-              {strataMembers.map((member) => (
-                <tr key={member.id}>
-                  <td>{member.name}</td>
-                  <td>{canSeeMemberDetails ? member.email : "****@***.***"}</td>
-                  <td>
-                    {canSeeMemberDetails ? member.phoneNumber : "***-***-****"}
-                  </td>
-                  <td>
-                    {member.role === "pending" ? (
-                      <ApproveStrataMembershipButton
-                        approveStrataMembership={approveStrataMembershipAction.bind(
-                          undefined,
-                          strata.id,
-                          member.id
-                        )}
-                      />
-                    ) : (
-                      member.role
-                    )}
-                  </td>
-                  {canDelete && (
-                    <td className={styles.membershipTableActionColumnCell}>
-                      <RemoveButton
-                        onClick={deleteStrataMemberAction.bind(
-                          undefined,
-                          strata.id,
-                          member.id
-                        )}
-                      />
-                    </td>
-                  )}
+        <div className={styles.membershipTableContainer}>
+          <table className={styles.membershipTable}>
+            {Object.entries(byUnit).map(([unit, strataMembers]) => (
+              <tbody key={unit} className={styles.membershipTableSection}>
+                <tr className={styles.membershipTableSectionHeaderRow}>
+                  <th colSpan={canDelete ? 5 : 4}>{unit}</th>
                 </tr>
-              ))}
-            </tbody>
-          ))}
-        </table>
+
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone #</th>
+                  <th>Role</th>
+                  {canDelete && <th></th>}
+                </tr>
+
+                {strataMembers.map((member) => (
+                  <tr key={member.id}>
+                    <td>{member.name}</td>
+                    <td>
+                      {canSeeMemberDetails ? member.email : "****@***.***"}
+                    </td>
+                    <td>
+                      {canSeeMemberDetails
+                        ? member.phoneNumber
+                        : "***-***-****"}
+                    </td>
+                    <td>
+                      {member.role === "pending" ? (
+                        <ApproveStrataMembershipButton
+                          approveStrataMembership={approveStrataMembershipAction.bind(
+                            undefined,
+                            strata.id,
+                            member.id
+                          )}
+                        />
+                      ) : (
+                        member.role
+                      )}
+                    </td>
+                    {canDelete && (
+                      <td className={styles.membershipTableActionColumnCell}>
+                        <RemoveButton
+                          onClick={deleteStrataMemberAction.bind(
+                            undefined,
+                            strata.id,
+                            member.id
+                          )}
+                        />
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            ))}
+          </table>
+        </div>
       </div>
     </div>
   );

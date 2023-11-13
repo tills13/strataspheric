@@ -1,9 +1,22 @@
 import { style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../theme.css";
+import { padding } from "../../theme";
 
 export const pageContainer = style({
   padding: vars.spacing.normal,
 });
+
+export const pageContainerFullWidthMobile = style([
+  pageContainer,
+  {
+    padding: padding(vars.spacing.normal, "0"),
+    "@media": {
+      [breakpoints.tablet]: {
+        padding: vars.spacing.normal,
+      },
+    },
+  },
+]);
 
 export const pageTitle = style({
   marginBottom: vars.spacing.large,

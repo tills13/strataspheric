@@ -15,6 +15,8 @@ module.exports = withVanillaExtract({
 });
 
 if (process.env.NODE_ENV === "development") {
+  console.log("[development] setting up D1 bindings");
+
   const {
     setupDevBindings,
   } = require("@cloudflare/next-on-pages/__experimental__next-dev");

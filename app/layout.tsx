@@ -18,6 +18,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  console.log(process.env);
   const session = await auth();
   const strata = await getCurrentStrata();
 
