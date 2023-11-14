@@ -12,7 +12,7 @@ export default async function Layout({ children }) {
     return notFound();
   }
 
-  if (!session && strata.visibility === "private") {
+  if (!session && !strata.isPublic) {
     redirect("/");
   }
 

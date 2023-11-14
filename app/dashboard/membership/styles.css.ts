@@ -2,6 +2,18 @@ import { globalStyle, style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../theme.css";
 import { padding } from "../../../theme";
 
+export const pageContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: vars.spacing.normal,
+  "@media": {
+    [breakpoints.tablet]: {
+      alignItems: "flex-start",
+      flexDirection: "row",
+    },
+  },
+});
+
 export const pageTitle = style({
   marginBottom: vars.spacing.large,
   padding: padding("0", vars.spacing.normal),
@@ -19,9 +31,12 @@ export const pageSecondaryTitle = style([
   },
 ]);
 
+export const leftColumn = style({ flex: 1 });
+
 export const membershipTableContainer = style({
   width: "100vw",
   overflow: "auto",
+  marginBottom: vars.spacing.large,
   "@media": {
     [breakpoints.tablet]: {
       width: "100%",
@@ -66,17 +81,17 @@ export const membershipTableActionColumnCell = style({
   textAlign: "right",
 });
 
-export const pageContainer = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: vars.spacing.normal,
+export const seatCountContainer = style({
+  textAlign: "center",
+  fontSize: vars.fontSizes.xxl,
+  fontWeight: 400,
   "@media": {
-    [breakpoints.tablet]: {
-      alignItems: "flex-start",
-      flexDirection: "row",
+    [breakpoints.desktop]: {
+      textAlign: "left",
     },
   },
 });
+export const seatCountEmphasis = style({ fontWeight: 700 });
 
 export const addMemberForm = style({
   padding: padding("0px", vars.spacing.normal),

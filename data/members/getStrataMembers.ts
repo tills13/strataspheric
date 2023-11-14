@@ -8,6 +8,7 @@ export interface StrataMember {
   name: string;
   email: string;
   phoneNumber: string;
+  isPaid: boolean;
 }
 
 export async function getStrataMembers(

@@ -23,7 +23,12 @@ export function updateStrataMember(
     }
 
     sets.push(`${camelToSnakeCase(key)} = ?`);
-    args.push(value);
+
+    if (key === "isPaid") {
+      args.push(value ? "TRUE" : "FALSE");
+    } else {
+      args.push(value);
+    }
   }
 
   q += sets.join(", ");

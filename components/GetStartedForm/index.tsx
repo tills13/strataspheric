@@ -11,18 +11,18 @@ import { CycleIcon } from "../Icon/CycleIcon";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
 import { InternalLink } from "../Link/InternalLink";
-import { style } from "@vanilla-extract/css";
 import { pluralize } from "../../utils/pluralize";
 import { classnames } from "../../utils/classnames";
 import { Money } from "../Money";
 
-const rootDomain = "stratum.pages.dev";
+const rootDomain = "sbstn.ca";
 
 interface Props {
   className?: string;
+  submitGetStarted: (fd: FormData) => void;
 }
 
-export function GetStartedForm({ className }: Props) {
+export function GetStartedForm({ className, submitGetStarted }: Props) {
   const [strataName, setStrataName] = useState("");
   const [isDomainAvailable, setIsDomainAvailable] = useState(undefined);
   const deferredStrataName = useDeferredValue(strataName);
@@ -50,7 +50,10 @@ export function GetStartedForm({ className }: Props) {
   }, [suggestedSubdomain]);
 
   return (
-    <form className={classnames(styles.getStartedForm, className)}>
+    <form
+      action={submitGetStarted}
+      className={classnames(styles.getStartedForm, className)}
+    >
       <Header priority={2}>Let's get to know you...</Header>
 
       <Input name="name" placeholder="Name" required />
@@ -61,8 +64,8 @@ export function GetStartedForm({ className }: Props) {
 
       <Input name="password" placeholder="Password" type="password" required />
       <Input
-        name="password_2"
-        placeholder="Password (again)"
+        name="confirm_password"
+        placeholder="Confirm Password"
         type="password"
         required
       />
@@ -94,6 +97,12 @@ export function GetStartedForm({ className }: Props) {
               .{rootDomain}
             </span>
           </div>
+
+          <input
+            name="strata_domain"
+            type="hidden"
+            value={`${suggestedSubdomain}.${rootDomain}`}
+          />
         </div>
       )}
 
@@ -129,6 +138,7 @@ export function GetStartedForm({ className }: Props) {
         1
         <input
           className={styles.numSeatsInput}
+          name="num_seats"
           type="range"
           min={1}
           max={numUnits}
@@ -153,7 +163,7 @@ export function GetStartedForm({ className }: Props) {
         </div>
       </div>
 
-      <Button type="submit">I'm done</Button>
+      <Button type="submit">Let's Get Started</Button>
     </form>
   );
 }

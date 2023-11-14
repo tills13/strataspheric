@@ -36,7 +36,7 @@ export function SignInToStrataPage({ action, strata }: Props) {
           <SignInForm className={styles.signInForm} />
         )}
 
-        {strata.visibility === "public" && (
+        {strata.isPublic && (
           <>
             <DividerText>or</DividerText>
             <Link href="/dashboard">

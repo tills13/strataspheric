@@ -27,7 +27,7 @@ export default async function Page({ searchParams }: any) {
 
   const strata = await getCurrentStrata();
 
-  if (strata?.visibility === "public" && action === undefined) {
+  if (strata?.isPublic && action === undefined) {
     redirect("/dashboard");
   }
 

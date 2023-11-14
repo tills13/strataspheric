@@ -17,7 +17,12 @@ export async function createStrataMember(
     }
 
     fields.push(camelToSnakeCase(key));
-    args.push(value);
+
+    if (key === "isPaid") {
+      args.push(value ? "TRUE" : "FALSE");
+    } else {
+      args.push(value);
+    }
   }
 
   await db()

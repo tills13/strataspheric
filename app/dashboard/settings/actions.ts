@@ -7,7 +7,7 @@ import { updateStrata } from "../../../data/stratas/updateStrata";
 export async function updateStrataAction(formData: FormData) {
   const strataId = formData.get("strata_id");
   const strataName = formData.get("name");
-  const visibility = formData.get("is_public") === "on" ? "public" : "private";
+  const isPublic = formData.get("is_public") === "on";
 
   if (
     typeof strataId !== "string" ||
@@ -18,7 +18,7 @@ export async function updateStrataAction(formData: FormData) {
     throw new Error("invalid fields");
   }
 
-  await updateStrata(strataId, { name: strataName, visibility });
+  await updateStrata(strataId, { name: strataName, isPublic });
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/settings");

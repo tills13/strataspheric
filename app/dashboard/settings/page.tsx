@@ -11,6 +11,7 @@ import { Button } from "../../../components/Button";
 import { Checkbox } from "../../../components/Checkbox";
 import { ElementGroup } from "../../../components/ElementGroup";
 import { mustGetCurrentStrata } from "../../../data/stratas/getStrata";
+import { getPlan } from "../../../data/plans/getPlan";
 
 export const runtime = "edge";
 
@@ -30,17 +31,48 @@ export default async function Page() {
 
       <form className={styles.form} action={updateStrataAction}>
         <ElementGroup orientation="column">
-          <input name="strata_id" type="hidden" defaultValue={strata.id} />
+          <input name="id" type="hidden" defaultValue={strata.id} />
+
+          <Header priority={3}>Strata Name</Header>
           <Input name="name" defaultValue={strata.name} />
 
-          <label className={styles.visibilityLabel} htmlFor="is_public">
-            Visible to public
+          <label className={styles.isPublicField} htmlFor="is_public">
+            <Header priority={3}>
+              I want my strata's content to be public
+            </Header>
             <Checkbox
               id="is_public"
               name="is_public"
-              defaultChecked={strata.visibility === "public"}
+              defaultChecked={strata.isPublic}
             />
           </label>
+
+          <Header priority={3}>Strata ID</Header>
+          <Input
+            name="strata_id"
+            placeholder="Strata ID (e.g. VIS...)"
+            required
+          />
+
+          <Header priority={3}>Address</Header>
+
+          <Input
+            name="strata_address_street_address"
+            placeholder="Street Address"
+            required
+          />
+
+          <Input
+            name="strata_address_postal_code"
+            placeholder="Postal Code"
+            required
+          />
+
+          <Input
+            name="strata_address_province_state"
+            placeholder="Province / State"
+            required
+          />
           <Button type="submit">Update Strata</Button>
         </ElementGroup>
       </form>

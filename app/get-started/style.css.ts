@@ -6,9 +6,10 @@ export const pageContainer = style({
 });
 
 export const getStartedForm = style({
-  width: "500px",
-  margin: "0 auto 100px",
   "@media": {
-    [breakpoints.tablet]: {},
+    [breakpoints.tablet]: {
+      margin: "0 auto 100px",
+      width: "500px",
+    },
   },
 });

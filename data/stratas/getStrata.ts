@@ -6,7 +6,12 @@ export interface Strata {
   id: string;
   name: string;
   domain: string;
-  visibility: "public" | "private";
+  numUnits: number;
+  strataId: string;
+  streetAddress: string;
+  postalCode: string;
+  provinceState: string;
+  isPublic: boolean;
 }
 
 export function getCurrentStrata() {
@@ -21,7 +26,22 @@ export function mustGetCurrentStrata() {
 
 export function getStrata(domain: string): Promise<Strata | null> {
   return db()
-    .prepare("SELECT * FROM stratas WHERE domain = ?")
+    .prepare(
+      `
+      SELECT 
+        id,
+        name,
+        domain,
+        num_units AS numUnits,
+        strata_id AS strataId,
+        street_address AS streetAddress,
+        postal_code AS postalCode,
+        province_state AS provinceState,
+        is_public AS isPublic 
+      FROM stratas 
+      WHERE domain = ?
+      `
+    )
     .bind(domain)
     .first();
 }

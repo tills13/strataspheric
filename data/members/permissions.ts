@@ -2,6 +2,7 @@
 
 export function roleScopeToScopes(roleScope: string | undefined) {
   switch (roleScope) {
+    case "administrator":
     case "president":
     case "vice-president":
     case "treasurer": {
