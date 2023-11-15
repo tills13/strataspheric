@@ -1,9 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../theme.css";
-import { border, important, padding } from "../../../theme";
+import { border } from "../../../theme";
 
 export const pageContainer = style({
-  // padding: vars.
   display: "flex",
   flexDirection: "column",
   gap: vars.spacing.normal,

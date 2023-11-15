@@ -1,13 +1,26 @@
 import { prepare } from "../../db";
+import { Strata } from "../stratas/getStrata";
 
-export async function getMemberStratas(memberId: string) {
+export async function getMemberStratas(memberId: string): Promise<Strata[]> {
   const r = await prepare`
-        SELECT stratas.name, stratas.domain FROM stratas
-        JOIN strata_memberships ON stratas.id = strata_memberships.strata_id
-        WHERE strata_memberships.member_id = ?
+        SELECT 
+          id,
+          name,
+          domain,
+          num_units AS numUnits,
+          strata_id AS strataId,
+          street_address AS streetAddress,
+          postal_code AS postalCode,
+          province_state AS provinceState,
+          is_public AS isPublic
+        FROM stratas WHERE id IN (
+          SELECT strata_id 
+          FROM strata_memberships 
+          WHERE strata_memberships.member_id = ?
+        )
     `
     .bind(memberId)
-    .all<{ name: string; domain: string }>();
+    .all<Strata>();
 
   return r.results;
 }

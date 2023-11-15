@@ -41,6 +41,9 @@ export const variants = styleVariants({
     color: vars.fontColors.primary,
 
     selectors: {
+      "&:disabled": {
+        opacity: 0.9,
+      },
       "&:hover": {
         color: vars.fontColors.primary,
         borderColor: vars.colors.borderDefaultHover,
@@ -54,6 +57,12 @@ export const variants = styleVariants({
     borderColor: vars.colors.grey800,
 
     selectors: {
+      "&:disabled": {
+        opacity: 0.4,
+        // backgroundColor: vars.colors.grey500,
+        // borderColor: vars.colors.grey500,
+      },
+
       "&:hover": {
         color: vars.colors.grey200,
         borderColor: vars.colors.grey900,

@@ -24,6 +24,7 @@ export const footer = style({
 });
 
 export const footerWordMark = style({
+  display: "block",
   marginBottom: vars.spacing.normal,
   vars: {
     [colorVar]: vars.colors.white,
@@ -41,6 +42,7 @@ export const footerLinks = style({
   display: "flex",
   flexDirection: "row",
   gap: vars.spacing.small,
+  marginBottom: vars.spacing.small,
 
   "@media": {
     [breakpoints.tablet]: {},
@@ -53,8 +55,9 @@ export const madeWith = style({
 
 export const heartIcon = style({
   position: "relative",
-  height: "0.9em",
+  height: "1em",
   fill: important(vars.colors.red),
+  verticalAlign: "middle",
 });
 
 export const continuePanel = style({

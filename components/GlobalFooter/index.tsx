@@ -9,10 +9,8 @@ import { Panel } from "../Panel";
 import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
 import { Header } from "../Header";
-import {
-  useSelectedLayoutSegment,
-  useSelectedLayoutSegments,
-} from "next/navigation";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { GoToStrataButton } from "../GoToStrataButton";
 import { Strata } from "../../data/stratas/getStrata";
 
 interface Props {
@@ -26,8 +24,12 @@ export function GlobalFooter({ sessionStratas }: Props) {
   return (
     <footer className={styles.footer}>
       <div>
-        <ExternalLink href="https://strataspheric.app" target="_blank">
-          <Wordmark className={styles.footerWordMark} />
+        <ExternalLink
+          className={styles.footerWordMark}
+          href="https://strataspheric.app"
+          target="_blank"
+        >
+          <Wordmark />
         </ExternalLink>
         <div className={styles.footerLinks}>
           <InternalLink href="/about">About</InternalLink>
@@ -50,15 +52,11 @@ export function GlobalFooter({ sessionStratas }: Props) {
             orientation="column"
           >
             {sessionStratas.map((strata) => (
-              <ExternalLink
+              <GoToStrataButton
                 key={strata.domain}
-                href={"https://" + strata.domain}
-                target="_blank"
-              >
-                <Button className={styles.continuePanelListButton}>
-                  Go to {strata.name}
-                </Button>
-              </ExternalLink>
+                className={styles.continuePanelListButton}
+                strata={strata}
+              />
             ))}
           </ElementGroup>
         </Panel>

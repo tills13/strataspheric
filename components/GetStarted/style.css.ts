@@ -79,3 +79,27 @@ export const estimatePeriod = style({
   fontSize: vars.fontSizes.small,
   textAlign: "end",
 });
+
+export const statusPageTitle = style({
+  marginBottom: vars.spacing.large,
+});
+
+export const statusPageText = style({
+  marginBottom: vars.spacing.large,
+});
+
+export const statusPageStatusIcon = style({
+  verticalAlign: "top",
+});
+
+export const statusPageLoadingIcon = style([statusPageStatusIcon, {}]);
+export const statusPageCheckIcon = style([
+  statusPageStatusIcon,
+  {
+    fill: important(vars.colors.green),
+  },
+]);
+
+export const statusPageGoToStrataButton = style({
+  width: "100%",
+});

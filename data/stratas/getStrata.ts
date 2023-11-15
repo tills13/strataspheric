@@ -1,6 +1,4 @@
-import { headers } from "next/headers";
 import { db } from "../../db";
-import { redirect } from "next/navigation";
 import { getDomain } from "../../utils/getDomain";
 
 export interface Strata {
@@ -38,5 +36,5 @@ export function getStrata(domain: string): Promise<Strata | null> {
       `
     )
     .bind(domain)
-    .first();
+    .first<Strata>();
 }

@@ -80,8 +80,5 @@ export async function submitGetStarted(fd: FormData) {
 
   await createPlan(strataId, parseInt(numSeats, 10));
 
-  return {
-    strataId,
-    strataDomain: "https://" + strataDomain,
-  };
+  redirect("/get-started/" + strataDomain);
 }
