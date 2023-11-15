@@ -65,30 +65,3 @@ export const plansContainer = style({
     },
   },
 });
-
-export const continuePanel = style({
-  position: "fixed",
-  bottom: vars.spacing.small,
-  left: vars.spacing.small,
-  right: vars.spacing.small,
-  zIndex: 2,
-
-  "@media": {
-    [breakpoints.tablet]: {
-      bottom: vars.spacing.normal,
-      left: "unset",
-      right: vars.spacing.normal,
-      width: 400,
-      margin: "auto",
-    },
-  },
-});
-
-export const continuePanelHeader = style({
-  marginBottom: vars.spacing.normal,
-});
-
-export const continuePanelList = style({});
-export const continuePanelListButton = style({
-  width: "100%",
-});

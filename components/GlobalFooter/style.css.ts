@@ -9,14 +9,14 @@ export const footer = style({
   gap: vars.spacing.normal,
   padding: vars.spacing.normal,
   borderTop: border("1px", "solid", vars.colors.borderDefault),
-  paddingBottom: `calc(112px + ${vars.spacing.normal})`,
 
   backgroundColor: vars.colors.grey700,
   color: vars.colors.white,
 
   "@media": {
     [breakpoints.tablet]: {
-      paddingBottom: vars.spacing.normal,
+      justifyContent: "space-between",
+      flexDirection: "row",
       backgroundColor: "unset",
       color: "unset",
     },
@@ -55,4 +55,22 @@ export const heartIcon = style({
   position: "relative",
   height: "0.9em",
   fill: important(vars.colors.red),
+});
+
+export const continuePanel = style({
+  color: vars.fontColors.primary,
+  "@media": {
+    [breakpoints.tablet]: {
+      width: 400,
+    },
+  },
+});
+
+export const continuePanelHeader = style({
+  marginBottom: vars.spacing.normal,
+});
+
+export const continuePanelList = style({});
+export const continuePanelListButton = style({
+  width: "100%",
 });

@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { auth } from "../../../auth";
 import { GlobalDashboardHeader } from "../../../components/GlobalDashboardHeader";
 import { getCurrentStrata } from "../../../data/stratas/getStrata";
-import { SessionProvider } from "next-auth/react";
 
 export default async function RootMarketingLayout({
   children,
@@ -17,9 +16,9 @@ export default async function RootMarketingLayout({
   }
 
   return (
-    <SessionProvider session={session}>
+    <>
       <GlobalDashboardHeader session={session} strata={strata} />
       <div>{children}</div>
-    </SessionProvider>
+    </>
   );
 }

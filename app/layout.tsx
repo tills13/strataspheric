@@ -6,6 +6,9 @@ import { variable } from "../theme";
 import { laila, sourceSans } from "./fonts";
 import { GlobalFooter } from "../components/GlobalFooter";
 import { getCurrentStrata } from "../data/stratas/getStrata";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "../auth";
+import { getMemberStratas } from "../data/members/getMemberStratas";
 
 const fontPrimaryVariable = variable(fontPrimaryVar);
 const fontHeaderVariable = variable(fontHeaderVar);
@@ -17,7 +20,12 @@ export default async function RootLayout({
   app: React.ReactNode;
   marketing: React.ReactNode;
 }) {
+  const session = await auth();
   const strata = await getCurrentStrata();
+
+  const sessionStratas = session?.user?.id
+    ? await getMemberStratas(session.user.id)
+    : [];
 
   return (
     <html lang="en">
@@ -56,8 +64,10 @@ export default async function RootLayout({
       </head>
       <body>
         <div className={styles.body}>
-          {strata ? app : marketing}
-          <GlobalFooter />
+          <SessionProvider session={session}>
+            {strata ? app : marketing}
+            <GlobalFooter sessionStratas={sessionStratas} />
+          </SessionProvider>
         </div>
 
         <div id="modal-root" />
