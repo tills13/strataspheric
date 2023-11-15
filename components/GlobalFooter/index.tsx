@@ -8,7 +8,12 @@ export function GlobalFooter() {
   return (
     <footer className={styles.footer}>
       <div>
-        <Wordmark className={styles.footerWordMark} color={vars.colors.white} />
+        <ExternalLink href="https://strataspheric.app">
+          <Wordmark
+            className={styles.footerWordMark}
+            color={vars.colors.white}
+          />
+        </ExternalLink>
         <div className={styles.footerLinks}>
           <ExternalLink href="http://localhost:3000/about">About</ExternalLink>
           <ExternalLink href="http://localhost:3000/pricing">
