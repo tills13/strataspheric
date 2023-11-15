@@ -5,18 +5,22 @@ import { auth } from "../../../../auth";
 import { updateStrataAction } from "./actions";
 import { can } from "../../../../data/members/permissions";
 import { Header } from "../../../../components/Header";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Input } from "../../../../components/Input";
 import { Button } from "../../../../components/Button";
 import { Checkbox } from "../../../../components/Checkbox";
 import { ElementGroup } from "../../../../components/ElementGroup";
-import { mustGetCurrentStrata } from "../../../../data/stratas/getStrata";
+import { getCurrentStrata } from "../../../../data/stratas/getStrata";
 
 export const runtime = "edge";
 
 export default async function Page() {
   const session = await auth();
-  const strata = await mustGetCurrentStrata();
+  const strata = await getCurrentStrata();
+
+  if (!strata) {
+    notFound();
+  }
 
   if (!can(session?.user, "stratas.edit")) {
     redirect("/dashboard");

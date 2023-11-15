@@ -19,11 +19,6 @@ export function getCurrentStrata() {
   return getStrata(getDomain());
 }
 
-export function mustGetCurrentStrata() {
-  const domain = headers().get("host") || "";
-  return mustGetStrata(domain);
-}
-
 export function getStrata(domain: string): Promise<Strata | null> {
   return db()
     .prepare(
@@ -44,14 +39,4 @@ export function getStrata(domain: string): Promise<Strata | null> {
     )
     .bind(domain)
     .first();
-}
-
-export async function mustGetStrata(domain: string): Promise<Strata> {
-  const strata = await getStrata(domain);
-
-  if (!strata) {
-    redirect("/");
-  }
-
-  return strata;
 }

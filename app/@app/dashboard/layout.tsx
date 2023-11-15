@@ -9,7 +9,7 @@ export default async function Layout({ children }) {
   const strata = await getCurrentStrata();
 
   if (!strata) {
-    return notFound();
+    notFound();
   }
 
   if (!session && !strata.isPublic) {

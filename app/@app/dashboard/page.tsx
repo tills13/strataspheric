@@ -8,12 +8,18 @@ import {
   createFileAction,
   deleteWidgetAction,
 } from "./actions";
-import { mustGetCurrentStrata } from "../../../data/stratas/getStrata";
+import { getCurrentStrata } from "../../../data/stratas/getStrata";
+import { notFound } from "next/navigation";
 
 export const runtime = "edge";
 
 export default async function Page() {
-  const strata = await mustGetCurrentStrata();
+  const strata = await getCurrentStrata();
+
+  if (!strata) {
+    notFound();
+  }
+
   const widgetIds = await getWidgets(strata);
 
   return (

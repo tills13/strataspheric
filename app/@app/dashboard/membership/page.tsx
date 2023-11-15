@@ -17,17 +17,23 @@ import { Header } from "../../../../components/Header";
 import { UpsertStrataMemberForm } from "../../../../components/UpsertStrataMemberForm";
 import { ApproveStrataMembershipButton } from "../../../../components/ApproveStrataMembershipButton";
 
-import { mustGetCurrentStrata } from "../../../../data/stratas/getStrata";
+import { getCurrentStrata } from "../../../../data/stratas/getStrata";
 import React from "react";
 import { Checkbox } from "../../../../components/Checkbox";
 import { getPlan } from "../../../../data/plans/getPlan";
 import { pluralize } from "../../../../utils/pluralize";
+import { notFound } from "next/navigation";
 
 export const runtime = "edge";
 
 export default async function Page() {
   const session = await auth();
-  const strata = await mustGetCurrentStrata();
+  const strata = await getCurrentStrata();
+
+  if (!strata) {
+    notFound();
+  }
+
   const plan = await getPlan(strata.id);
 
   const canSeeMemberDetails = !!session;

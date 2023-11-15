@@ -1,7 +1,8 @@
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../auth";
-import { mustGetCurrentStrata } from "../../data/stratas/getStrata";
+import { getCurrentStrata } from "../../data/stratas/getStrata";
 import { GlobalDashboardHeader } from "../../components/GlobalDashboardHeader";
+import { notFound } from "next/navigation";
 
 export default async function RootDashboardLayout({
   children,
@@ -9,7 +10,11 @@ export default async function RootDashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  const strata = await mustGetCurrentStrata();
+  const strata = await getCurrentStrata();
+
+  if (!strata) {
+    notFound();
+  }
 
   return (
     <SessionProvider session={session}>

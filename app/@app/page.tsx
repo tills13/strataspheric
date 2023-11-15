@@ -11,21 +11,24 @@ import { requestToJoinStrataAction } from "../actions";
 import { DividerText } from "../../components/DividerText";
 import { Button } from "../../components/Button";
 import { ElementGroup } from "../../components/ElementGroup";
-import { mustGetCurrentStrata } from "../../data/stratas/getStrata";
+import { getCurrentStrata } from "../../data/stratas/getStrata";
 
 export const runtime = "edge";
 
 export default async function Page({ searchParams }: any) {
   const session = await auth();
   const action = searchParams["action"];
-
   if (session) {
     redirect("/dashboard");
   }
 
-  const strata = await mustGetCurrentStrata();
+  const strata = await getCurrentStrata();
 
-  if (strata.isPublic && action === undefined) {
+  if (!strata) {
+    notFound();
+  }
+
+  if (strata?.isPublic && action === undefined) {
     redirect("/dashboard");
   }
 
