@@ -3,6 +3,8 @@ import Credentials from "next-auth/providers/credentials";
 import { signInMember } from "./data/members/signInMember";
 import { StrataMember } from "./data/members/getStrataMembers";
 
+const isNotDev = process.env.NODE_ENV !== "development";
+
 export const authOptions: NextAuthConfig = {
   callbacks: {
     jwt({ user, token }) {
@@ -22,6 +24,18 @@ export const authOptions: NextAuthConfig = {
       session.user.scope = token.scope as string;
 
       return session;
+    },
+  },
+  cookies: {
+    sessionToken: {
+      name: (isNotDev ? "__Secure-" : "") + "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        domain: isNotDev ? ".strataspheric.app" : "",
+        secure: isNotDev,
+      },
     },
   },
   trustHost: true,

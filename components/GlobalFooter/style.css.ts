@@ -16,14 +16,12 @@ export const footer = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      paddingBottom: "unset",
+      paddingBottom: vars.spacing.normal,
       backgroundColor: "unset",
       color: "unset",
     },
   },
 });
-
-const wordmarkColorVariable = variable(colorVar);
 
 export const footerWordMark = style({
   marginBottom: vars.spacing.normal,

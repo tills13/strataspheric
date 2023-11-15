@@ -3,23 +3,20 @@ import { HeartIcon } from "../Icon/HeartIcon";
 import { ExternalLink } from "../Link/ExternalLink";
 import { Wordmark } from "../Wordmark";
 import { vars } from "../../app/theme.css";
+import { InternalLink } from "../Link/InternalLink";
 
 export function GlobalFooter() {
   return (
     <footer className={styles.footer}>
       <div>
-        <ExternalLink href="https://strataspheric.app">
+        <ExternalLink href="https://strataspheric.app" target="_blank">
           <Wordmark className={styles.footerWordMark} />
         </ExternalLink>
         <div className={styles.footerLinks}>
-          <ExternalLink href="http://localhost:3000/about">About</ExternalLink>
-          <ExternalLink href="http://localhost:3000/pricing">
-            Pricing
-          </ExternalLink>
-          <ExternalLink href="http://localhost:3000/terms">Terms</ExternalLink>
-          <ExternalLink href="http://localhost:3000/privacy">
-            Privacy
-          </ExternalLink>
+          <InternalLink href="/about">About</InternalLink>
+          <InternalLink href="/pricing">Pricing</InternalLink>
+          <InternalLink href="/terms">Terms</InternalLink>
+          <InternalLink href="/privacy">Privacy</InternalLink>
         </div>
       </div>
       <div>
