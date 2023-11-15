@@ -10,7 +10,7 @@ export const headerVariants = styleVariants({
   h1: [
     headerBase,
     {
-      fontFamily: vars.fontFamilies.primary,
+      fontFamily: vars.fontFamilies.primaryHeader,
       fontSize: 36,
     },
   ],

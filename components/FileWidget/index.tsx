@@ -11,6 +11,8 @@ import { can } from "../../data/members/permissions";
 import { NewFileForm } from "../NewFileForm";
 import { Header } from "../Header";
 import { ExternalLink } from "../Link/ExternalLink";
+import { getWidget } from "../../data/widgets/getWidget";
+import { getWidgetFiles } from "../../data/widgets/getWidgetFiles";
 
 interface Props extends AbstractWidgetProps {
   createFile: (fd: FormData) => void;
@@ -19,6 +21,7 @@ interface Props extends AbstractWidgetProps {
 
 export async function FileWidget({ createFile, deleteWidget, widget }: Props) {
   const session = await auth();
+  const files = await getWidgetFiles(widget.id, 10, 0);
 
   return (
     <AbstractWidget
@@ -27,9 +30,9 @@ export async function FileWidget({ createFile, deleteWidget, widget }: Props) {
       widget={widget}
     >
       <div className={abstractWidgetStyles.abstractWidgetList}>
-        {widget.files.length === 0 && <div>no files</div>}
+        {files.length === 0 && <div>no files</div>}
 
-        {widget.files.map((file) => (
+        {files.map((file) => (
           <div
             key={file.id}
             className={abstractWidgetStyles.abstractWidgetListItem}

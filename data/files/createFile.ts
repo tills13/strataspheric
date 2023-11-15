@@ -1,17 +1,18 @@
 import { uuidv7 } from "uuidv7";
-import { db } from "../../db";
+import { prepare } from "../../db";
 
-export function createFile(
-  widgetId: string,
+export async function createFile(
   name: string,
   description: string,
   fileName: string
 ) {
-  return db()
-    .prepare(
-      `INSERT INTO files (id, widget_id, name, description, path, created_at) 
-      VALUES (?, ?, ?, ?, ?, datetime())`
-    )
-    .bind(uuidv7(), widgetId, name, description, fileName)
-    .run();
+  const r = await prepare`
+    INSERT INTO files (id, name, description, path, created_at) 
+    VALUES (?, ?, ?, ?, datetime())
+    RETURNING id
+  `
+    .bind(uuidv7(), name, description, fileName)
+    .first<{ id: string }>();
+
+  return r?.id;
 }

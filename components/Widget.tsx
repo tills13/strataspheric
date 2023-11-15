@@ -1,38 +1,60 @@
-import { type Widget as IWidget } from "../data/widgets";
+import { Suspense } from "react";
+import { getWidget } from "../data/widgets/getWidget";
 import { EventWidget } from "./EventWidget";
 import { FileWidget } from "./FileWidget";
+import { Skeleton } from "./Skeleton";
+import { Header } from "./Header";
 
 interface Props {
   createEvent: (fd: FormData) => void;
   createFile: (fd: FormData) => void;
   deleteWidget: (widgetId: string) => void;
-  widget: IWidget;
+  widgetId: string;
+  // widget: IWidget;
 }
 
-export function Widget({
+export async function Widget({
   createEvent,
   createFile,
   deleteWidget,
-  widget,
+  widgetId,
 }: Props) {
+  const widget = await getWidget(widgetId);
+
+  if (!widget) {
+    return null;
+  }
+
   switch (widget.type) {
     case "event": {
       return (
-        <EventWidget
-          createEvent={createEvent}
-          deleteWidget={deleteWidget}
-          widget={widget}
-        />
+        <Suspense
+          fallback={
+            <Skeleton title={<Header priority={2}>{widget.title}</Header>} />
+          }
+        >
+          <EventWidget
+            createEvent={createEvent}
+            deleteWidget={deleteWidget}
+            widget={widget}
+          />
+        </Suspense>
       );
     }
 
     case "file": {
       return (
-        <FileWidget
-          createFile={createFile}
-          deleteWidget={deleteWidget}
-          widget={widget}
-        />
+        <Suspense
+          fallback={
+            <Skeleton title={<Header priority={2}>{widget.title}</Header>} />
+          }
+        >
+          <FileWidget
+            createFile={createFile}
+            deleteWidget={deleteWidget}
+            widget={widget}
+          />
+        </Suspense>
       );
     }
 

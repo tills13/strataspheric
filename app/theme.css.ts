@@ -5,6 +5,7 @@ export const breakpoints = {
   desktop: "(min-width: 1200px)",
 };
 
+export const fontHeader = createVar();
 export const fontPrimary = createVar();
 // export const fontSecondary = createVar();
 // export const fontText = createVar();
@@ -13,6 +14,7 @@ export const vars = createGlobalTheme(":root", {
   borderRadius: "4px",
 
   spacing: {
+    xxs: "4px",
     xs: "4px",
     small: "8px",
     normal: "16px",
@@ -82,7 +84,8 @@ export const vars = createGlobalTheme(":root", {
 
   fontFamilies: {
     primary: fontPrimary,
-    secondaryHeader: fontPrimary,
+    secondaryHeader: fontHeader,
+    primaryHeader: fontHeader,
     text: fontPrimary,
   },
 

@@ -20,7 +20,7 @@ export const footer = style({
   },
 });
 
-export const footerHeader = style({
+export const footerWordMark = style({
   marginBottom: vars.spacing.normal,
 });
 

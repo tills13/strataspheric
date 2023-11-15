@@ -1,24 +1,22 @@
 import "./globalStyles.css";
 import * as styles from "./style.css";
-import { fontPrimary } from "./theme.css";
+import { fontHeader, fontPrimary } from "./theme.css";
 import { variable } from "../theme";
 
-import { auth } from "../auth";
-import { GlobalHeader } from "../components/GlobalHeader";
-import { notFound } from "next/navigation";
-import { SessionProvider } from "next-auth/react";
-import { getCurrentStrata } from "../data/stratas/getStrata";
-import { sourceSansPro } from "./fonts";
+import { laila, sourceSans } from "./fonts";
 import { GlobalFooter } from "../components/GlobalFooter";
+import { getCurrentStrata } from "../data/stratas/getStrata";
 
 const fontPrimaryVariable = variable(fontPrimary);
+const fontHeaderVariable = variable(fontHeader);
 
 export default async function RootLayout({
-  children,
+  app,
+  marketing,
 }: {
-  children: React.ReactNode;
+  app: React.ReactNode;
+  marketing: React.ReactNode;
 }) {
-  const session = await auth();
   const strata = await getCurrentStrata();
 
   return (
@@ -28,7 +26,8 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
                 :root {
-                    ${fontPrimaryVariable}: ${sourceSansPro.style.fontFamily}, sans-serif;
+                    ${fontPrimaryVariable}: ${sourceSans.style.fontFamily}, sans-serif;
+                    ${fontHeaderVariable}: ${laila.style.fontFamily};
                 }
             `,
           }}
@@ -36,12 +35,10 @@ export default async function RootLayout({
       </head>
       <body>
         <div className={styles.body}>
-          <SessionProvider session={session}>
-            <GlobalHeader session={session} strata={strata} />
-            <div>{children}</div>
-            <GlobalFooter />
-          </SessionProvider>
+          {strata ? marketing : app}
+          <GlobalFooter />
         </div>
+
         <div id="modal-root" />
       </body>
     </html>

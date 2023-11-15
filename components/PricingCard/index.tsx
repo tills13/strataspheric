@@ -63,7 +63,9 @@ export function PricingCard({ className, planName }: Props) {
       </div>
 
       <InternalLink href={`/get-started?plan=basic&seats=${numSeats}`}>
-        <Button className={styles.selectPlanButton}>Select Plan</Button>
+        <Button className={styles.selectPlanButton} variant="primary">
+          Select Plan
+        </Button>
       </InternalLink>
     </div>
   );

@@ -37,11 +37,19 @@ DROP TABLE IF EXISTS files;
 CREATE TABLE
     IF NOT EXISTS files (
         id text primary key,
-        widget_id text,
         name text,
         description text,
         path text,
         created_at text
+    );
+
+DROP TABLE IF EXISTS widget_files;
+
+CREATE TABLE
+    IF NOT EXISTS widget_files (
+        file_id string,
+        widget_id string,
+        primary key (file_id, widget_id)
     );
 
 DROP TABLE IF EXISTS events;
@@ -49,10 +57,18 @@ DROP TABLE IF EXISTS events;
 CREATE TABLE
     IF NOT EXISTS events (
         id text primary key,
-        widget_id text,
         name text,
         description text,
         date text
+    );
+
+DROP TABLE IF EXISTS widget_events;
+
+CREATE TABLE
+    IF NOT EXISTS widget_events (
+        event_id string,
+        widget_id string,
+        primary key (event_id, widget_id)
     );
 
 DROP TABLE IF EXISTS members;

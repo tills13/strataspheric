@@ -8,6 +8,10 @@ export function parameterize(len: number) {
   return Array.from(new Array(len), () => "?").join(", ");
 }
 
+export function prepare(t: TemplateStringsArray) {
+  return db().prepare(t.join(""));
+}
+
 export function db() {
   return process.env.DB as unknown as D1Database;
 }

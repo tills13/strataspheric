@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { db } from "../../db";
 import { redirect } from "next/navigation";
+import { getDomain } from "../../utils/getDomain";
 
 export interface Strata {
   id: string;
@@ -15,8 +16,7 @@ export interface Strata {
 }
 
 export function getCurrentStrata() {
-  const domain = headers().get("host") || "";
-  return getStrata(domain);
+  return getStrata(getDomain());
 }
 
 export function mustGetCurrentStrata() {

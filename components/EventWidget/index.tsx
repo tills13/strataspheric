@@ -10,6 +10,7 @@ import { NewEventForm } from "../NewEventForm";
 import { Header } from "../Header";
 import { can } from "../../data/members/permissions";
 import { auth } from "../../auth";
+import { getWidgetEvents } from "../../data/widgets/getWidgetEvents";
 
 interface Props extends AbstractWidgetProps {
   createEvent: (fd: FormData) => void;
@@ -22,6 +23,7 @@ export async function EventWidget({
   widget,
 }: Props) {
   const session = await auth();
+  const events = await getWidgetEvents(widget.id, 10, 0);
 
   return (
     <AbstractWidget
@@ -30,9 +32,9 @@ export async function EventWidget({
       widget={widget}
     >
       <div className={abstractWidgetStyles.abstractWidgetList}>
-        {widget.events.length === 0 && <div>no events</div>}
+        {events.length === 0 && <div>no events</div>}
 
-        {widget.events.map((event) => (
+        {events.map((event) => (
           <div
             key={event.id}
             className={abstractWidgetStyles.abstractWidgetListItem}

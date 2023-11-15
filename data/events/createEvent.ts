@@ -1,17 +1,18 @@
 import { uuidv7 } from "uuidv7";
-import { db } from "../../db";
+import { db, prepare } from "../../db";
 
-export function createEvent(
-  widgetId: string,
+export async function createEvent(
   name: string,
   description: string,
   date: string
 ) {
-  return db()
-    .prepare(
-      `INSERT INTO events (id, widget_id, name, description, date) 
-      VALUES (?, ?, ?, ?, ?)`
-    )
-    .bind(uuidv7(), widgetId, name, description, date)
-    .run();
+  const r = await prepare`
+    INSERT INTO events (id, name, description, date) 
+    VALUES (?, ?, ?, ?)
+    RETURNING id
+  `
+    .bind(uuidv7(), name, description, date)
+    .first<{ id: string }>();
+
+  return r?.id;
 }

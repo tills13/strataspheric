@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
 
 export const base = style({
@@ -30,3 +30,22 @@ export const compact = style([
     padding: `0 ${vars.spacing.small}`,
   },
 ]);
+
+export const variants = styleVariants({
+  base: [base],
+  primary: [
+    base,
+    {
+      backgroundColor: vars.colors.primary,
+      color: vars.colors.white,
+      borderColor: vars.colors.grey800,
+
+      selectors: {
+        "&:hover": {
+          color: vars.colors.grey200,
+          borderColor: vars.colors.grey900,
+        },
+      },
+    },
+  ],
+});
