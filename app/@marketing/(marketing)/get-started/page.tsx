@@ -1,6 +1,6 @@
 import * as styles from "./style.css";
 
-import { GetStartedForm } from "../../../components/GetStartedForm";
+import { GetStartedForm } from "../../../../components/GetStartedForm";
 
 import { submitGetStarted } from "./actions";
 

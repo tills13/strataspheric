@@ -1,14 +1,14 @@
 import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { signInMember } from "./data/members/signInMember";
-import { type Member } from "./data/members";
+import { StrataMember } from "./data/members/getStrataMembers";
 
 export const authOptions: NextAuthConfig = {
   callbacks: {
     jwt({ user, token }) {
       if (user) {
         token.id = user.id;
-        token.scope = (user as unknown as Member).role;
+        token.scope = (user as unknown as StrataMember).role;
       }
 
       return token;
@@ -18,6 +18,7 @@ export const authOptions: NextAuthConfig = {
         return session;
       }
 
+      session.user.id = token.id as string;
       session.user.scope = token.scope as string;
 
       return session;

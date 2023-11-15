@@ -1,7 +1,7 @@
 import { createVar, style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
 
-export const color = createVar();
+export const colorVar = createVar();
 
 export const wordmark = style({
   display: "flex",
@@ -10,7 +10,7 @@ export const wordmark = style({
   position: "relative",
   textTransform: "uppercase",
   fontWeight: 900,
-  color: color,
+  color: colorVar,
 });
 
-export const wordmarkLogo = style({ height: 50, fill: color });
+export const wordmarkLogo = style({ height: 50, fill: colorVar });

@@ -25,8 +25,6 @@ export function updateStrata(strataId: string, strata: Partial<Strata>) {
   q += sets.join(", ");
   q += " WHERE id = ?";
 
-  console.log(q);
-
   return db()
     .prepare(q)
     .bind(...args, strataId)

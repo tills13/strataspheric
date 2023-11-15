@@ -2,11 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
 import { border } from "../../theme";
 
-export const skeleton = style({
-  padding: vars.spacing.normal,
-  border: border("2px", "solid", vars.colors.borderDefault),
-  borderRadius: vars.borderRadius,
-});
+export const skeleton = style({});
 
 export const skeletonBone = style({
   display: "block",

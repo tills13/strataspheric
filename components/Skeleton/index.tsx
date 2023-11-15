@@ -1,5 +1,6 @@
 import React from "react";
 import * as styles from "./style.css";
+import { Panel } from "../Panel";
 
 interface Props {
   title?: React.ReactNode;
@@ -7,7 +8,7 @@ interface Props {
 
 export function Skeleton({ title }: Props) {
   return (
-    <div className={styles.skeleton}>
+    <Panel className={styles.skeleton}>
       {title ? (
         <div className={styles.skeletonHeader}>{title}</div>
       ) : (
@@ -17,6 +18,6 @@ export function Skeleton({ title }: Props) {
       <div className={styles.skeletonBone} />
       <div className={styles.skeletonBone} />
       <div className={styles.skeletonBone} />
-    </div>
+    </Panel>
   );
 }

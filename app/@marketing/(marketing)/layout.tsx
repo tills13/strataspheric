@@ -1,6 +1,6 @@
-import { GlobalMarketingHeader } from "../../components/GlobalMarketingHeader";
+import { GlobalMarketingHeader } from "../../../components/GlobalMarketingHeader";
 
-export default async function RootDashboardLayout({
+export default async function RootMarketingLayout({
   children,
 }: {
   children: React.ReactNode;

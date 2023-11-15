@@ -7,6 +7,7 @@ import { pluralize } from "../../utils/pluralize";
 import { Button } from "../Button";
 import { InternalLink } from "../Link/InternalLink";
 import { Money } from "../Money";
+import { Panel } from "../Panel";
 
 interface Props {
   className?: string;
@@ -17,7 +18,7 @@ export function PricingCard({ className, planName }: Props) {
   const [numSeats, setNumSeats] = useState(10);
 
   return (
-    <div className={classnames(styles.pricingCard, className)}>
+    <Panel className={classnames(styles.pricingCard, className)}>
       <h3 className={styles.pricingCardPlanName}>{planName}</h3>
 
       <h4>Features</h4>
@@ -71,6 +72,6 @@ export function PricingCard({ className, planName }: Props) {
           Select Plan
         </Button>
       </InternalLink>
-    </div>
+    </Panel>
   );
 }

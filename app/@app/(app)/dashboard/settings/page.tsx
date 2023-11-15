@@ -1,16 +1,16 @@
 import * as styles from "./styles.css";
 import * as parentStyles from "../style.css";
 
-import { auth } from "../../../../auth";
+import { auth } from "../../../../../auth";
 import { updateStrataAction } from "./actions";
-import { can } from "../../../../data/members/permissions";
-import { Header } from "../../../../components/Header";
+import { can } from "../../../../../data/members/permissions";
+import { Header } from "../../../../../components/Header";
 import { notFound, redirect } from "next/navigation";
-import { Input } from "../../../../components/Input";
-import { Button } from "../../../../components/Button";
-import { Checkbox } from "../../../../components/Checkbox";
-import { ElementGroup } from "../../../../components/ElementGroup";
-import { getCurrentStrata } from "../../../../data/stratas/getStrata";
+import { Input } from "../../../../../components/Input";
+import { Button } from "../../../../../components/Button";
+import { Checkbox } from "../../../../../components/Checkbox";
+import { ElementGroup } from "../../../../../components/ElementGroup";
+import { getCurrentStrata } from "../../../../../data/stratas/getStrata";
 
 export const runtime = "edge";
 

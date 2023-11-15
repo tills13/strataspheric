@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
-import { breakpoints, vars } from "../../app/theme.css";
-import { border, important, padding } from "../../theme";
+import { breakpoints, vars } from "../../theme.css";
+import { border, important, padding } from "../../../theme";
 
 export const pageContainer = style({
   // padding: vars.
@@ -47,6 +47,11 @@ export const ctaText = style({
 });
 export const ctaButton = style({
   width: "100%",
+  "@media": {
+    [breakpoints.tablet]: {
+      width: "300px",
+    },
+  },
 });
 
 export const plansContainer = style({
@@ -56,7 +61,34 @@ export const plansContainer = style({
   gap: vars.spacing.normal,
   "@media": {
     [breakpoints.tablet]: {
-      gridTemplateColumns: "repeat(3, 300)",
+      gridTemplateColumns: "repeat(3, 300px)",
     },
   },
+});
+
+export const continuePanel = style({
+  position: "fixed",
+  bottom: vars.spacing.small,
+  left: vars.spacing.small,
+  right: vars.spacing.small,
+  zIndex: 2,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      bottom: vars.spacing.normal,
+      left: "unset",
+      right: vars.spacing.normal,
+      width: 400,
+      margin: "auto",
+    },
+  },
+});
+
+export const continuePanelHeader = style({
+  marginBottom: vars.spacing.normal,
+});
+
+export const continuePanelList = style({});
+export const continuePanelListButton = style({
+  width: "100%",
 });

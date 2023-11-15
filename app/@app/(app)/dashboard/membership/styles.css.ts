@@ -1,6 +1,6 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { breakpoints, vars } from "../../../theme.css";
-import { padding } from "../../../../theme";
+import { breakpoints, vars } from "../../../../theme.css";
+import { padding } from "../../../../../theme";
 
 export const pageContainer = style({
   display: "flex",

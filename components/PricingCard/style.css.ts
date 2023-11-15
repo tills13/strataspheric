@@ -1,14 +1,11 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
-import { border, padding } from "../../theme";
+import { padding } from "../../theme";
 
 export const pricingCard = style({
   display: "flex",
   flexDirection: "column",
   gap: vars.spacing.normal,
-  padding: vars.spacing.normal,
-  border: border("2px", "solid", vars.colors.borderDefault),
-  borderRadius: vars.borderRadius,
 });
 
 export const pricingCardPlanName = style({

@@ -1,12 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createWidget } from "../../../data/widgets/createWidget";
-import { createEvent } from "../../../data/events/createEvent";
-import { createFile } from "../../../data/files/createFile";
-import { deleteWidget } from "../../../data/widgets/deleteWidget";
-import { addEventToWidget } from "../../../data/widgets/addEventToWidget";
-import { addFileToWidget } from "../../../data/widgets/addFileToWidget";
+import { createWidget } from "../../../../data/widgets/createWidget";
+import { createEvent } from "../../../../data/events/createEvent";
+import { createFile } from "../../../../data/files/createFile";
+import { deleteWidget } from "../../../../data/widgets/deleteWidget";
+import { addEventToWidget } from "../../../../data/widgets/addEventToWidget";
+import { addFileToWidget } from "../../../../data/widgets/addFileToWidget";
 
 export async function createEventAction(formData: FormData) {
   const widgetId = formData.get("widget_id");
@@ -71,7 +71,8 @@ export async function createWidgetAction(formData: FormData) {
     typeof strataId !== "string" ||
     typeof title !== "string" ||
     title === "" ||
-    typeof type !== "string"
+    typeof type !== "string" ||
+    !(type === "file" || type === "event")
   ) {
     throw new Error("invalid fields");
   }

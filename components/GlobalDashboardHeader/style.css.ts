@@ -11,6 +11,9 @@ export const globalHeader = style({
 
 export const globalHeaderTitle = style({
   whiteSpace: "nowrap",
+  fontFamily: vars.fontFamilies.primary,
+  fontSize: vars.fontSizes.xl,
+  fontWeight: vars.fontWeights.xbold,
 });
 
 export const globalHeaderActions = style({});

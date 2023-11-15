@@ -9,10 +9,7 @@ export function GlobalFooter() {
     <footer className={styles.footer}>
       <div>
         <ExternalLink href="https://strataspheric.app">
-          <Wordmark
-            className={styles.footerWordMark}
-            color={vars.colors.white}
-          />
+          <Wordmark className={styles.footerWordMark} />
         </ExternalLink>
         <div className={styles.footerLinks}>
           <ExternalLink href="http://localhost:3000/about">About</ExternalLink>
@@ -27,7 +24,7 @@ export function GlobalFooter() {
       </div>
       <div>
         <p className={styles.madeWith}>
-          Made with <HeartIcon className={styles.heartIcon} /> in Canada
+          Made in Canada <HeartIcon className={styles.heartIcon} />
         </p>
       </div>
     </footer>

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { breakpoints, vars } from "../../app/theme.css";
+import { breakpoints, vars } from "../../theme.css";
 
 export const signInToStrataPageContainer = style({
   display: "flex",
@@ -18,10 +18,10 @@ export const signInToStrataPageFormContainer = style({
   gap: vars.spacing.normal,
   width: "100%",
   padding: vars.spacing.normal,
+
   "@media": {
     [breakpoints.tablet]: {
       position: "relative",
-      top: "-80px",
       width: 300,
     },
   },

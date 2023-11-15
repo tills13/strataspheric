@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { updateStrataMember } from "../../../../data/members/updateStrataMember";
-import { updateStrata } from "../../../../data/stratas/updateStrata";
+import { updateStrataMember } from "../../../../../data/members/updateStrataMember";
+import { updateStrata } from "../../../../../data/stratas/updateStrata";
 
 export async function updateStrataAction(formData: FormData) {
   const strataId = formData.get("strata_id");

@@ -1,12 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { createMember } from "../../../data/members/createMember";
-import { createStrataMember } from "../../../data/members/createStrataMember";
-import { createPlan } from "../../../data/plans/createPlan";
-import { createStrata } from "../../../data/stratas/createStrata";
-import { updateStrata } from "../../../data/stratas/updateStrata";
-import { createWidget } from "../../../data/widgets/createWidget";
+import { createMember } from "../../../../data/members/createMember";
+import { createStrataMember } from "../../../../data/members/createStrataMember";
+import { createPlan } from "../../../../data/plans/createPlan";
+import { createStrata } from "../../../../data/stratas/createStrata";
+import { updateStrata } from "../../../../data/stratas/updateStrata";
+import { createWidget } from "../../../../data/widgets/createWidget";
 
 export async function submitGetStarted(fd: FormData) {
   const name = fd.get("name");
@@ -80,5 +80,8 @@ export async function submitGetStarted(fd: FormData) {
 
   await createPlan(strataId, parseInt(numSeats, 10));
 
-  redirect("https://" + strataDomain);
+  return {
+    strataId,
+    strataDomain: "https://" + strataDomain,
+  };
 }

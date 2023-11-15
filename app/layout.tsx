@@ -1,14 +1,14 @@
 import "./globalStyles.css";
 import * as styles from "./style.css";
-import { fontHeader, fontPrimary } from "./theme.css";
+import { fontHeaderVar, fontPrimaryVar } from "./theme.css";
 import { variable } from "../theme";
 
 import { laila, sourceSans } from "./fonts";
 import { GlobalFooter } from "../components/GlobalFooter";
 import { getCurrentStrata } from "../data/stratas/getStrata";
 
-const fontPrimaryVariable = variable(fontPrimary);
-const fontHeaderVariable = variable(fontHeader);
+const fontPrimaryVariable = variable(fontPrimaryVar);
+const fontHeaderVariable = variable(fontHeaderVar);
 
 export default async function RootLayout({
   app,

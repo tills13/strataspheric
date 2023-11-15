@@ -1,14 +1,14 @@
 import * as styles from "./style.css";
 
 import React from "react";
-import { getWidgets } from "../../../data/widgets/getWidgets";
-import { Widget } from "../../../components/Widget";
+import { getWidgets } from "../../../../data/widgets/getWidgets";
+import { Widget } from "../../../../components/Widget";
 import {
   createEventAction,
   createFileAction,
   deleteWidgetAction,
 } from "./actions";
-import { getCurrentStrata } from "../../../data/stratas/getStrata";
+import { getCurrentStrata } from "../../../../data/stratas/getStrata";
 import { notFound } from "next/navigation";
 
 export const runtime = "edge";

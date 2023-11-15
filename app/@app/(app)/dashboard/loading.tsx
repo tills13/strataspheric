@@ -1,4 +1,4 @@
-import { Skeleton } from "../../../components/Skeleton";
+import { Skeleton } from "../../../../components/Skeleton";
 import * as styles from "./style.css";
 
 import React from "react";

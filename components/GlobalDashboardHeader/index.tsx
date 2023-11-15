@@ -17,7 +17,7 @@ export function GlobalDashboardHeader({ session, strata }: Props) {
   return (
     <GlobalHeader className={styles.globalHeader}>
       <div>
-        <Header priority={1}>
+        <h1>
           <InternalLink
             className={styles.globalHeaderTitle}
             href="/"
@@ -25,7 +25,7 @@ export function GlobalDashboardHeader({ session, strata }: Props) {
           >
             {strata.name}
           </InternalLink>
-        </Header>
+        </h1>
       </div>
       <GlobalHeaderActions
         className={styles.globalHeaderDesktopActions}

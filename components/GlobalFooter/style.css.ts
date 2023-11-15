@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../app/theme.css";
-import { border, important } from "../../theme";
+import { border, important, variable } from "../../theme";
+import { colorVar } from "../Wordmark/style.css";
 
 export const footer = style({
   display: "flex",
@@ -8,20 +9,34 @@ export const footer = style({
   gap: vars.spacing.normal,
   padding: vars.spacing.normal,
   borderTop: border("1px", "solid", vars.colors.borderDefault),
+  paddingBottom: `calc(112px + ${vars.spacing.normal})`,
 
   backgroundColor: vars.colors.grey700,
   color: vars.colors.white,
 
   "@media": {
     [breakpoints.tablet]: {
+      paddingBottom: "unset",
       backgroundColor: "unset",
       color: "unset",
     },
   },
 });
 
+const wordmarkColorVariable = variable(colorVar);
+
 export const footerWordMark = style({
   marginBottom: vars.spacing.normal,
+  vars: {
+    [colorVar]: vars.colors.white,
+  },
+  "@media": {
+    [breakpoints.tablet]: {
+      vars: {
+        [colorVar]: vars.colors.grey700,
+      },
+    },
+  },
 });
 
 export const footerLinks = style({

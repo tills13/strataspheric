@@ -1,10 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createStrataMember } from "../../../../data/members/createStrataMember";
-import { deleteStrataMember } from "../../../../data/members/deleteStrataMember";
-import { updateStrataMember } from "../../../../data/members/updateStrataMember";
-import { createMember } from "../../../../data/members/createMember";
+import { createStrataMember } from "../../../../../data/members/createStrataMember";
+import { deleteStrataMember } from "../../../../../data/members/deleteStrataMember";
+import { updateStrataMember } from "../../../../../data/members/updateStrataMember";
+import { createMember } from "../../../../../data/members/createMember";
 
 export async function deleteStrataMemberAction(
   strataId: string,

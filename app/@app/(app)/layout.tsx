@@ -1,10 +1,10 @@
-import { SessionProvider } from "next-auth/react";
-import { auth } from "../../auth";
-import { getCurrentStrata } from "../../data/stratas/getStrata";
-import { GlobalDashboardHeader } from "../../components/GlobalDashboardHeader";
 import { notFound } from "next/navigation";
+import { auth } from "../../../auth";
+import { GlobalDashboardHeader } from "../../../components/GlobalDashboardHeader";
+import { getCurrentStrata } from "../../../data/stratas/getStrata";
+import { SessionProvider } from "next-auth/react";
 
-export default async function RootDashboardLayout({
+export default async function RootMarketingLayout({
   children,
 }: {
   children: React.ReactNode;

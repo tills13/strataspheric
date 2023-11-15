@@ -1,27 +1,27 @@
 import * as styles from "./styles.css";
 import * as parentStyles from "../style.css";
 
-import { auth } from "../../../../auth";
+import { auth } from "../../../../../auth";
 import {
   StrataMember,
   getStrataMembers,
-} from "../../../../data/members/getStrataMembers";
+} from "../../../../../data/members/getStrataMembers";
 import {
   approveStrataMembershipAction,
   deleteStrataMemberAction,
   createStrataMemberAction,
 } from "./actions";
-import { can } from "../../../../data/members/permissions";
-import { RemoveButton } from "../../../../components/RemoveButton";
-import { Header } from "../../../../components/Header";
-import { UpsertStrataMemberForm } from "../../../../components/UpsertStrataMemberForm";
-import { ApproveStrataMembershipButton } from "../../../../components/ApproveStrataMembershipButton";
+import { can } from "../../../../../data/members/permissions";
+import { RemoveButton } from "../../../../../components/RemoveButton";
+import { Header } from "../../../../../components/Header";
+import { UpsertStrataMemberForm } from "../../../../../components/UpsertStrataMemberForm";
+import { ApproveStrataMembershipButton } from "../../../../../components/ApproveStrataMembershipButton";
 
-import { getCurrentStrata } from "../../../../data/stratas/getStrata";
+import { getCurrentStrata } from "../../../../../data/stratas/getStrata";
 import React from "react";
-import { Checkbox } from "../../../../components/Checkbox";
-import { getPlan } from "../../../../data/plans/getPlan";
-import { pluralize } from "../../../../utils/pluralize";
+import { Checkbox } from "../../../../../components/Checkbox";
+import { getPlan } from "../../../../../data/plans/getPlan";
+import { pluralize } from "../../../../../utils/pluralize";
 import { notFound } from "next/navigation";
 
 export const runtime = "edge";
