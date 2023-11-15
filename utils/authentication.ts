@@ -4,21 +4,21 @@ export async function pbkdf2(password: string, iterations = 1e5) {
     "deriveBits",
   ]);
 
-  const saltUint8 = crypto.getRandomValues(new Uint8Array(16));
+  const salt = crypto.getRandomValues(new Uint8Array(16));
 
   const keyBuffer = await crypto.subtle.deriveBits(
     {
       name: "PBKDF2",
       hash: "SHA-256",
-      salt: saltUint8,
-      iterations: iterations,
+      salt,
+      iterations,
     },
     pwKey,
     256
   );
 
   const keyArray = Array.from(new Uint8Array(keyBuffer));
-  const saltArray = Array.from(new Uint8Array(saltUint8));
+  const saltArray = Array.from(new Uint8Array(salt));
 
   const iterHex = ("000000" + iterations.toString(16)).slice(-6);
 
