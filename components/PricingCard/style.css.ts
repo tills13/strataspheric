@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
-import { border } from "../../theme";
+import { border, padding } from "../../theme";
 
 export const pricingCard = style({
   display: "flex",
@@ -15,10 +15,13 @@ export const pricingCardPlanName = style({
   display: "inline-block",
   borderRadius: vars.borderRadius,
   textAlign: "center",
-  fontFamily: vars.fontFamilies.secondaryHeader,
-  fontSize: vars.fontSizes.xxl,
+  fontFamily: vars.fontFamilies.primary,
+  fontSize: "40px",
   backgroundColor: vars.colors.grey700,
   color: vars.colors.white,
+  textTransform: "uppercase",
+  padding: padding(vars.spacing.small, vars.spacing.normal),
+  marginTop: "-36px",
 });
 
 export const planDetailsList = style({

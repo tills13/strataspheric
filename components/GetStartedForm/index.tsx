@@ -163,7 +163,9 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
         </div>
       </div>
 
-      <Button type="submit">Let's Get Started</Button>
+      <Button type="submit" variant="primary" size="large">
+        Let's Get Started
+      </Button>
     </form>
   );
 }

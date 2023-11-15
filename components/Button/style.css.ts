@@ -4,48 +4,60 @@ import { vars } from "../../app/theme.css";
 export const base = style({
   position: "relative",
   display: "inline-block",
-  height: vars.sizes.normal,
-  padding: `0 ${vars.spacing.normal}`,
-  color: vars.fontColors.primary,
   fontWeight: 700,
-  backgroundColor: vars.colors.globalBg,
   border: `2px solid ${vars.colors.borderDefault}`,
   outline: "none",
   cursor: "pointer",
   borderRadius: vars.borderRadius,
   textTransform: "uppercase",
+});
 
-  selectors: {
-    "&:hover": {
-      color: vars.fontColors.primary,
-      borderColor: vars.colors.borderDefaultHover,
-    },
+export const sizeVariants = styleVariants({
+  small: {
+    height: vars.sizes.small,
+    padding: `0 ${vars.spacing.normal}`,
+  },
+  normal: {
+    height: vars.sizes.normal,
+    padding: `0 ${vars.spacing.normal}`,
+  },
+  large: {
+    height: vars.sizes.large,
+    padding: `0 ${vars.spacing.normal}`,
+  },
+  xl: {
+    height: vars.sizes.xl,
+    padding: `0 ${vars.spacing.normal}`,
+  },
+  xxl: {
+    height: vars.sizes.xxl,
+    padding: `0 ${vars.spacing.normal}`,
   },
 });
 
-export const compact = style([
-  base,
-  {
-    height: vars.sizes.small,
-    padding: `0 ${vars.spacing.small}`,
-  },
-]);
-
 export const variants = styleVariants({
-  base: [base],
-  primary: [
-    base,
-    {
-      backgroundColor: vars.colors.primary,
-      color: vars.colors.white,
-      borderColor: vars.colors.grey800,
+  base: {
+    borderColor: vars.colors.borderDefault,
+    color: vars.fontColors.primary,
 
-      selectors: {
-        "&:hover": {
-          color: vars.colors.grey200,
-          borderColor: vars.colors.grey900,
-        },
+    selectors: {
+      "&:hover": {
+        color: vars.fontColors.primary,
+        borderColor: vars.colors.borderDefaultHover,
       },
     },
-  ],
+  },
+
+  primary: {
+    backgroundColor: vars.colors.primary,
+    color: vars.colors.white,
+    borderColor: vars.colors.grey800,
+
+    selectors: {
+      "&:hover": {
+        color: vars.colors.grey200,
+        borderColor: vars.colors.grey900,
+      },
+    },
+  },
 });

@@ -4,14 +4,14 @@ import { classnames } from "../../utils/classnames";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  compact?: boolean;
+  size?: keyof typeof styles.sizeVariants;
   variant?: keyof typeof styles.variants;
 }
 
 export function Button({
   children,
   className,
-  compact,
+  size,
   variant,
   ...rest
 }: React.PropsWithChildren<Props>) {
@@ -21,8 +21,22 @@ export function Button({
     variantClassName = styles.variants[variant];
   }
 
+  let sizeClassName = styles.sizeVariants.normal;
+
+  if (size && styles.sizeVariants[size]) {
+    sizeClassName = styles.sizeVariants[size];
+  }
+
   return (
-    <button className={classnames(variantClassName, className)} {...rest}>
+    <button
+      className={classnames(
+        styles.base,
+        variantClassName,
+        sizeClassName,
+        className
+      )}
+      {...rest}
+    >
       {children}
     </button>
   );

@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../app/theme.css";
-import { border } from "../../theme";
+import { border, important, padding } from "../../theme";
 
 export const pageContainer = style({
   // padding: vars.
@@ -21,6 +21,17 @@ export const sectionHeader = style({
   marginBottom: vars.spacing.normal,
 });
 
+export const plansSection = style({
+  marginTop: 100,
+});
+
+export const plansSectionHeader = style([
+  sectionHeader,
+  {
+    marginBottom: vars.spacing.xl,
+  },
+]);
+
 export const sectionPadded = style([section, { padding: vars.spacing.normal }]);
 
 export const ctaSection = style([
@@ -34,15 +45,18 @@ export const ctaHeader = style([sectionHeader, {}]);
 export const ctaText = style({
   marginBottom: vars.spacing.normal,
 });
-export const ctaButton = style({});
+export const ctaButton = style({
+  width: "100%",
+});
 
 export const plansContainer = style({
+  display: "grid",
+  gridTemplateColumns: "repeat(1, 300px)",
+  justifyContent: "center",
+  gap: vars.spacing.normal,
   "@media": {
     [breakpoints.tablet]: {
-      display: "grid",
-      gridTemplateColumns: "repeat(3, 300px)",
-      justifyContent: "center",
-      gap: vars.spacing.normal,
+      gridTemplateColumns: "repeat(3, 300)",
     },
   },
 });
