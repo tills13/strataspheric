@@ -1,4 +1,4 @@
-export async function pbkdf2(password: string, iterations = 1e6) {
+export async function pbkdf2(password: string, iterations = 1e5) {
   const pwUtf8 = new TextEncoder().encode(password);
   const pwKey = await crypto.subtle.importKey("raw", pwUtf8, "PBKDF2", false, [
     "deriveBits",
