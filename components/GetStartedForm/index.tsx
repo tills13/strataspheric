@@ -15,7 +15,7 @@ import { pluralize } from "../../utils/pluralize";
 import { classnames } from "../../utils/classnames";
 import { Money } from "../Money";
 
-const rootDomain = "sbstn.ca";
+const rootDomain = "strataspheric.app";
 
 interface Props {
   className?: string;
