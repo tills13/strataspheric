@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { breakpoints, vars } from "../../../theme.css";
+import { breakpoints, vars } from "../../../../theme.css";
 
 export const layoutContainer = style({
   marginTop: 100,

@@ -1,5 +1,5 @@
-export const ACCOUNT_ID = "8d89f3928f99f4b426c6299b292dedbe";
-export const ZONE_ID = "a87302420e3e13d13ae08afad0776ff7";
-
-export const CF_PAGES_PROJECT_ID =
-  process.env.CF_PAGES_PROJECT_ID || "strataspheric";
+export const ACCOUNT_ID = process.env.ACCOUNT_ID!;
+export const ZONE_ID = process.env.ZONE_ID!;
+export const CF_PAGES_PROJECT_ID = process.env.CF_PAGES_PROJECT_ID!;
+export const CF_AUTH_KEY = process.env.CF_AUTH_KEY!;
+export const CF_AUTH_EMAIL = process.env.CF_AUTH_EMAIL!;

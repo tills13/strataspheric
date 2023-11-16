@@ -1,5 +1,5 @@
-import { GetStartedStatus } from "../../../../../components/GetStarted/Status";
-import { getStrata } from "../../../../../data/stratas/getStrata";
+import { GetStartedStatus } from "../../../../../../components/GetStarted/Status";
+import { getStrata } from "../../../../../../data/stratas/getStrata";
 import { redirect } from "next/navigation";
 
 export const runtime = "edge";

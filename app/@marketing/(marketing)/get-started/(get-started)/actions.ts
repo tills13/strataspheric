@@ -1,13 +1,15 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { createMember } from "../../../../data/members/createMember";
-import { createStrataMember } from "../../../../data/members/createStrataMember";
-import { createPlan } from "../../../../data/plans/createPlan";
-import { createStrata } from "../../../../data/stratas/createStrata";
-import { updateStrata } from "../../../../data/stratas/updateStrata";
-import { createWidget } from "../../../../data/widgets/createWidget";
-import { addCustomDomain } from "../../../../cloudflare/pages/addCustomDomain";
+import { createMember } from "../../../../../data/members/createMember";
+import { createStrataMember } from "../../../../../data/members/createStrataMember";
+import { createPlan } from "../../../../../data/plans/createPlan";
+import { createStrata } from "../../../../../data/stratas/createStrata";
+import { updateStrata } from "../../../../../data/stratas/updateStrata";
+import { createWidget } from "../../../../../data/widgets/createWidget";
+import { addCustomDomain } from "../../../../../cloudflare/pages/addCustomDomain";
+import { createRecord } from "../../../../../cloudflare/dns/createRecord";
+import { CF_PAGES_PROJECT_ID } from "../../../../../cloudflare/constants";
 
 export async function submitGetStarted(fd: FormData) {
   const name = fd.get("name");
@@ -80,6 +82,18 @@ export async function submitGetStarted(fd: FormData) {
   await createWidget(strataId, "Events", "event");
 
   await createPlan(strataId, parseInt(numSeats, 10));
+
+  const [createDnsRecordResponse] = await createRecord(
+    "CNAME",
+    strataDomain,
+    CF_PAGES_PROJECT_ID + ".pages.dev"
+  );
+
+  console.log(createDnsRecordResponse);
+
+  if (!createDnsRecordResponse.success) {
+    throw new Error("unable to create DNS record");
+  }
 
   const [rJson] = await addCustomDomain(strataDomain);
 

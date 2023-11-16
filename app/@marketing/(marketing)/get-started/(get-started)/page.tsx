@@ -1,6 +1,6 @@
 import * as styles from "./style.css";
 
-import { GetStartedForm } from "../../../../components/GetStarted/Form";
+import { GetStartedForm } from "../../../../../components/GetStarted/Form";
 import { submitGetStarted } from "./actions";
 
 export const runtime = "edge";

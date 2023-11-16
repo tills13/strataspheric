@@ -1,7 +1,4 @@
-const AUTH_HEADERS = {
-  "x-auth-key": process.env.CF_AUTH_KEY!,
-  "x-auth-email": process.env.CF_AUTH_EMAIL!,
-};
+import { CF_AUTH_EMAIL, CF_AUTH_KEY } from "./constants";
 
 export type CloudflareApiResponse<T = unknown> =
   | {
@@ -17,13 +14,6 @@ export type CloudflareApiResponse<T = unknown> =
       success: false;
     };
 
-// export interface CloudflareApiResponse<T = unknown> {
-//   errors: [];
-//   messages: [];
-//   result: T | null;
-//   success: boolean;
-// }
-
 export async function makeRequest<T>(
   endpoint: string,
   init: RequestInit
@@ -31,7 +21,10 @@ export async function makeRequest<T>(
   const r = await fetch("https://api.cloudflare.com/client/v4" + endpoint, {
     ...init,
     headers: {
-      ...AUTH_HEADERS,
+      ...{
+        "x-auth-key": CF_AUTH_KEY,
+        "x-auth-email": CF_AUTH_EMAIL,
+      },
       ...(init.body && {
         "content-type": "application/json",
       }),
