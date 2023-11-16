@@ -14,8 +14,6 @@ import { InternalLink } from "../Link/InternalLink";
 import { pluralize } from "../../utils/pluralize";
 import { classnames } from "../../utils/classnames";
 import { Money } from "../Money";
-import { useFormStatus } from "react-dom";
-import { Panel } from "../Panel";
 
 const rootDomain = "strataspheric.app";
 
@@ -168,10 +166,6 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
       <Button type="submit" variant="primary" size="large">
         Let's Get Started
       </Button>
-
-      <Panel>
-        <Header priority={4}>Creating private instance...</Header>
-      </Panel>
     </form>
   );
 }

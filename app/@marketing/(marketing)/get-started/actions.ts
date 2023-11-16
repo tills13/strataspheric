@@ -7,6 +7,7 @@ import { createPlan } from "../../../../data/plans/createPlan";
 import { createStrata } from "../../../../data/stratas/createStrata";
 import { updateStrata } from "../../../../data/stratas/updateStrata";
 import { createWidget } from "../../../../data/widgets/createWidget";
+import { addCustomDomain } from "../../../../cloudflare/pages/addCustomDomain";
 
 export async function submitGetStarted(fd: FormData) {
   const name = fd.get("name");
@@ -79,6 +80,14 @@ export async function submitGetStarted(fd: FormData) {
   await createWidget(strataId, "Events", "event");
 
   await createPlan(strataId, parseInt(numSeats, 10));
+
+  const [rJson] = await addCustomDomain(strataDomain);
+
+  console.log(rJson);
+
+  if (!rJson.success) {
+    throw new Error("unable to create custom domain");
+  }
 
   redirect("/get-started/" + strataDomain);
 }
