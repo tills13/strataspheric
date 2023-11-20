@@ -1,5 +1,6 @@
-import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
+import { style } from "@vanilla-extract/css";
+
 import { border } from "../../theme";
 
 export const skeleton = style({});

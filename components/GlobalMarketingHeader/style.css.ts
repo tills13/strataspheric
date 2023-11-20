@@ -1,5 +1,6 @@
-import { keyframes, style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../app/theme.css";
+import { keyframes, style } from "@vanilla-extract/css";
+
 import { padding } from "../../theme";
 
 export const globalHeader = style({

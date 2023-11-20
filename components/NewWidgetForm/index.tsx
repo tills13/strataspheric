@@ -1,10 +1,11 @@
 "use client";
 
+import * as styles from "./style.css";
+
 import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
 import { Input } from "../Input";
 import { Select } from "../Select";
-import * as styles from "./style.css";
 
 interface Props {
   createWidget: (formData: FormData) => void;

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Icon } from "./Icon";
 
 export function HeartIcon(props: React.ComponentProps<typeof Icon>) {

@@ -2,7 +2,7 @@ import {
   GetCustomDomainData,
   getCustomDomain,
 } from "../../../../cloudflare/pages/getCustomDomain";
-import { getStrata } from "../../../../data/stratas/getStrata";
+import { getStrata } from "../../../../db/stratas/getStrata";
 
 export const runtime = "edge";
 
@@ -36,6 +36,6 @@ export async function GET(req: Request) {
     } as GetDomainStatusResponseData),
     {
       status: 200,
-    }
+    },
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Icon } from "./Icon";
 
 export function CircleErrorIcon(props: React.ComponentProps<typeof Icon>) {

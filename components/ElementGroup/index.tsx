@@ -1,7 +1,9 @@
-import * as styles from "./style.css";
-import React from "react";
-import { classnames } from "../../utils/classnames";
 import { vars } from "../../app/theme.css";
+import * as styles from "./style.css";
+
+import React from "react";
+
+import { classnames } from "../../utils/classnames";
 
 interface BaseProps {
   className?: string;

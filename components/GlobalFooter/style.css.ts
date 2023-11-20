@@ -1,7 +1,8 @@
-import { style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../app/theme.css";
-import { border, important, variable } from "../../theme";
 import { colorVar } from "../Wordmark/style.css";
+import { style } from "@vanilla-extract/css";
+
+import { border, important, variable } from "../../theme";
 
 export const footer = style({
   display: "flex",

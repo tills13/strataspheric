@@ -1,15 +1,16 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { createMember } from "../../../../../data/members/createMember";
-import { createStrataMember } from "../../../../../data/members/createStrataMember";
-import { createPlan } from "../../../../../data/plans/createPlan";
-import { createStrata } from "../../../../../data/stratas/createStrata";
-import { updateStrata } from "../../../../../data/stratas/updateStrata";
-import { createWidget } from "../../../../../data/widgets/createWidget";
-import { addCustomDomain } from "../../../../../cloudflare/pages/addCustomDomain";
-import { createRecord } from "../../../../../cloudflare/dns/createRecord";
+
 import { CF_PAGES_PROJECT_ID } from "../../../../../cloudflare/constants";
+import { createRecord } from "../../../../../cloudflare/dns/createRecord";
+import { addCustomDomain } from "../../../../../cloudflare/pages/addCustomDomain";
+import { createPlan } from "../../../../../db/plans/createPlan";
+import { createStrataMembership } from "../../../../../db/strataMemberships/createStrataMembership";
+import { createStrata } from "../../../../../db/stratas/createStrata";
+import { updateStrata } from "../../../../../db/stratas/updateStrata";
+import { createUser } from "../../../../../db/users/createUser";
+import { createWidget } from "../../../../../db/widgets/createWidget";
 
 export async function submitGetStarted(fd: FormData) {
   const name = fd.get("name");
@@ -33,7 +34,7 @@ export async function submitGetStarted(fd: FormData) {
   }
 
   const strataName = fd.get("strata_name");
-  const strataDomain = fd.get("strata_domain");
+  let strataDomain = fd.get("strata_domain");
   const isPublic = fd.get("is_public") === "on";
 
   const numUnits = fd.get("num_units");
@@ -57,50 +58,58 @@ export async function submitGetStarted(fd: FormData) {
 
   // ----
 
-  const memberId = await createMember(email, password);
+  const { id: userId } = await createUser({ email, password });
 
-  if (!memberId) {
-    throw new Error("failed to create member");
+  if (!userId) {
+    throw new Error("failed to create user");
   }
 
-  const strataId = await createStrata(strataName, strataDomain, isPublic);
+  if (process.env.NODE_ENV === "development") {
+    strataDomain = "localhost:3000";
+  }
+
+  const { id: strataId } = await createStrata({
+    domain: strataDomain,
+    name: strataName,
+    numUnits: parseInt(numUnits, 10),
+    isPublic: isPublic ? 1 : 0,
+  });
 
   if (!strataId) {
     throw new Error("failed to create strata");
   }
 
-  await updateStrata(strataId, { numUnits: parseInt(numUnits, 10) });
-  await createStrataMember(strataId, memberId, {
+  await createStrataMembership({
+    strataId,
+    userId,
     email,
     name,
     role: "administrator",
-    isPaid: true,
+    isPaid: 1,
   });
 
-  await createWidget(strataId, "Minutes", "file");
-  await createWidget(strataId, "Documents", "file");
-  await createWidget(strataId, "Events", "event");
+  await createWidget({ strataId, title: "Minutes", type: "file" });
+  await createWidget({ strataId, title: "Documents", type: "file" });
+  await createWidget({ strataId, title: "Events", type: "event" });
 
-  await createPlan(strataId, parseInt(numSeats, 10));
+  await createPlan({ strataId, numSeats: parseInt(numSeats, 10) });
 
-  const [createDnsRecordResponse] = await createRecord(
-    "CNAME",
-    strataDomain,
-    CF_PAGES_PROJECT_ID + ".pages.dev"
-  );
+  if (process.env.NODE_ENV !== "development") {
+    const [createDnsRecordResponse] = await createRecord(
+      "CNAME",
+      strataDomain,
+      CF_PAGES_PROJECT_ID + ".pages.dev",
+    );
 
-  console.log(createDnsRecordResponse);
+    if (!createDnsRecordResponse.success) {
+      throw new Error("unable to create DNS record");
+    }
 
-  if (!createDnsRecordResponse.success) {
-    throw new Error("unable to create DNS record");
-  }
+    const [rJson] = await addCustomDomain(strataDomain);
 
-  const [rJson] = await addCustomDomain(strataDomain);
-
-  console.log(rJson);
-
-  if (!rJson.success) {
-    throw new Error("unable to create custom domain");
+    if (!rJson.success) {
+      throw new Error("unable to create custom domain");
+    }
   }
 
   redirect("/get-started/" + strataDomain);

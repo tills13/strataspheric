@@ -12,6 +12,6 @@ interface Props {
 export function Modal({ children }: Props) {
   return ReactDOM.createPortal(
     <div className={styles.modal}>{children}</div>,
-    document.querySelector("#modal-root")!
+    document.querySelector("#modal-root")!,
   );
 }

@@ -1,6 +1,7 @@
+import * as styles from "./style.css";
+
 import { classnames } from "../../utils/classnames";
 import { Logo } from "../Logo";
-import * as styles from "./style.css";
 
 interface Props {
   className?: string;

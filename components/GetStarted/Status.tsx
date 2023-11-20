@@ -1,14 +1,15 @@
 "use client";
+
 import * as styles from "./style.css";
 
 import { useEffect, useState } from "react";
-import { Strata } from "../../data/stratas/getStrata";
+
 import { GetDomainStatusResponseData } from "../../app/api/stratas/domainStatus/route";
+import { Strata } from "../../db";
+import { GoToStrataButton } from "../GoToStrataButton";
 import { Header } from "../Header";
-import { Button } from "../Button";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { LoadingIcon } from "../LoadingIcon";
-import { GoToStrataButton } from "../GoToStrataButton";
 
 interface Props {
   strata: Strata;
@@ -23,7 +24,7 @@ export function GetStartedStatus({ strata }: Props) {
 
     async function loadDomainStatus() {
       const r = await fetch(
-        "/api/stratas/domainStatus?domain=" + encodeURIComponent(domain)
+        "/api/stratas/domainStatus?domain=" + encodeURIComponent(domain),
       );
       const rJson = (await r.json()) as GetDomainStatusResponseData;
 

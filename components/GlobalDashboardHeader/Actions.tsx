@@ -1,13 +1,13 @@
 import * as styles from "./style.css";
 
-import Link from "next/link";
-import { SignOutButton } from "../SignOutButton";
-
 import { Session } from "next-auth";
-import { Button } from "../Button";
-import { Strata } from "../../data/stratas/getStrata";
-import { GlobalHeaderMobileActions } from "./MobileActions";
+import Link from "next/link";
+
+import { Strata } from "../../db";
 import { classnames } from "../../utils/classnames";
+import { Button } from "../Button";
+import { SignOutButton } from "../SignOutButton";
+import { GlobalHeaderMobileActions } from "./MobileActions";
 
 interface Props {
   className?: string;

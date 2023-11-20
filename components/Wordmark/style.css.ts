@@ -1,5 +1,5 @@
-import { createVar, style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
+import { createVar, style } from "@vanilla-extract/css";
 
 export const colorVar = createVar();
 

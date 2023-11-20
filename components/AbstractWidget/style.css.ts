@@ -1,7 +1,7 @@
-import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
-import * as fileWidgetStyles from "../FileWidget/style.css";
 import * as eventWidgetStyles from "../EventWidget/style.css";
+import * as fileWidgetStyles from "../FileWidget/style.css";
+import { style } from "@vanilla-extract/css";
 
 export const abstractWidget = style({
   display: "flex",

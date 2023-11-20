@@ -1,8 +1,9 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { createMember } from "../data/members/createMember";
-import { createStrataMember } from "../data/members/createStrataMember";
+
+import { createStrataMembership } from "../db/strataMemberships/createStrataMembership";
+import { createUser } from "../db/users/createUser";
 
 export async function requestToJoinStrataAction(formData: FormData) {
   const strataId = formData.get("strata_id");
@@ -23,13 +24,15 @@ export async function requestToJoinStrataAction(formData: FormData) {
     throw new Error("invalid fields");
   }
 
-  const memberId = await createMember(email, password);
+  const { id: userId } = await createUser({ email, password });
 
-  if (!memberId) {
+  if (!userId) {
     throw new Error("failed");
   }
 
-  await createStrataMember(strataId, memberId, {
+  await createStrataMembership({
+    strataId,
+    userId,
     name,
     email,
     role: "pending",

@@ -1,5 +1,6 @@
 import { ACCOUNT_ID, CF_PAGES_PROJECT_ID } from "../constants";
 import { CloudflareApiResponse, makeRequest } from "../makeRequest";
+
 export type Status = "active" | "pending";
 
 export interface GetCustomDomainData {
@@ -19,6 +20,6 @@ export function getCustomDomain(domainName: string) {
     `/accounts/${ACCOUNT_ID}/pages/projects/${CF_PAGES_PROJECT_ID}/domains/${domainName}`,
     {
       method: "GET",
-    }
+    },
   );
 }

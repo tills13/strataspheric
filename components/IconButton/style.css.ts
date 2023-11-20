@@ -1,6 +1,7 @@
-import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
 import * as buttonProps from "../Button/style.css";
+import { style } from "@vanilla-extract/css";
+
 import { padding } from "../../theme";
 
 export const base = style([

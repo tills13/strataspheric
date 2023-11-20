@@ -1,22 +1,21 @@
-import * as styles from "./style.css";
 import * as abstractWidgetStyles from "../AbstractWidget/style.css";
+import * as styles from "./style.css";
 
-import { type FileWidget as IFileWidget } from "../../data/widgets";
+import { auth } from "../../auth";
+import { type File as IFileWidget, StrataWidget } from "../../db";
+import { can } from "../../db/users/permissions";
+import { getWidgetFiles } from "../../db/widgets/getWidgetFiles";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
 } from "../AbstractWidget";
-import { auth } from "../../auth";
-import { can } from "../../data/members/permissions";
-import { NewFileForm } from "../NewFileForm";
 import { Header } from "../Header";
 import { ExternalLink } from "../Link/ExternalLink";
-import { getWidget } from "../../data/widgets/getWidget";
-import { getWidgetFiles } from "../../data/widgets/getWidgetFiles";
+import { NewFileForm } from "../NewFileForm";
 
 interface Props extends AbstractWidgetProps {
   createFile: (fd: FormData) => void;
-  widget: IFileWidget;
+  widget: StrataWidget;
 }
 
 export async function FileWidget({ createFile, deleteWidget, widget }: Props) {
@@ -44,7 +43,7 @@ export async function FileWidget({ createFile, deleteWidget, widget }: Props) {
                 className={styles.fileWidgetListItemDate}
                 suppressHydrationWarning
               >
-                {file.createdAt.toLocaleDateString()}
+                {new Date(file.createdAt).toLocaleDateString()}
               </span>
             </div>
             <ExternalLink href={file.path} target="_blank">

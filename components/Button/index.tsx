@@ -1,5 +1,7 @@
 import * as styles from "./style.css";
+
 import React, { ButtonHTMLAttributes } from "react";
+
 import { classnames } from "../../utils/classnames";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -33,7 +35,7 @@ export function Button({
         styles.base,
         variantClassName,
         sizeClassName,
-        className
+        className,
       )}
       {...rest}
     >

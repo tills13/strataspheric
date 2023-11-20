@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
+import { style } from "@vanilla-extract/css";
 
 export const baseSelect = style({
   padding: `0 ${vars.spacing.large} 0 ${vars.spacing.normal}`,

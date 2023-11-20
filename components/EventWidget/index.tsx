@@ -1,20 +1,20 @@
 import * as styles from "./style.css";
-import * as abstractWidgetStyles from "../AbstractWidget/style.css";
 
-import { EventWidget as IEventWidget } from "../../data/widgets";
+import { StrataWidget } from "../../db";
+import { can } from "../../db/users/permissions";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
 } from "../AbstractWidget";
-import { NewEventForm } from "../NewEventForm";
 import { Header } from "../Header";
-import { can } from "../../data/members/permissions";
+import { NewEventForm } from "../NewEventForm";
+import { EventWidgetList } from "./EventWidgetList";
+import { getWidgetEvents } from "../../db/widgets/getWidgetEvents";
 import { auth } from "../../auth";
-import { getWidgetEvents } from "../../data/widgets/getWidgetEvents";
 
 interface Props extends AbstractWidgetProps {
   createEvent: (fd: FormData) => void;
-  widget: IEventWidget;
+  widget: StrataWidget;
 }
 
 export async function EventWidget({
@@ -31,24 +31,7 @@ export async function EventWidget({
       deleteWidget={deleteWidget}
       widget={widget}
     >
-      <div className={abstractWidgetStyles.abstractWidgetList}>
-        {events.length === 0 && <div>no events</div>}
-
-        {events.map((event) => (
-          <div
-            key={event.id}
-            className={abstractWidgetStyles.abstractWidgetListItem}
-          >
-            <div>
-              <Header priority={3}>{event.name}</Header>
-              <p>{event.description}</p>
-              <span suppressHydrationWarning>
-                {event.date.toLocaleString()}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
+      <EventWidgetList events={events} />
 
       {can(session?.user, "stratas.events.create") && (
         <div className={styles.eventWidgetFooter}>

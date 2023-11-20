@@ -1,10 +1,12 @@
 "use client";
 
 import * as styles from "./style.css";
+
 import { useSession } from "next-auth/react";
-import { can } from "../../data/members/permissions";
-import { InternalLink } from "../Link/InternalLink";
 import { usePathname } from "next/navigation";
+
+import { can } from "../../db/users/permissions";
+import { InternalLink } from "../Link/InternalLink";
 
 type Link = [href: string, label: string];
 type LinkWithPermissions = [href: string, label: string, permissions: string[]];

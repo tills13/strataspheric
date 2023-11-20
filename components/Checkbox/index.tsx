@@ -1,6 +1,8 @@
-import { classnames } from "../../utils/classnames";
 import * as styles from "./style.css";
+
 import React, { InputHTMLAttributes } from "react";
+
+import { classnames } from "../../utils/classnames";
 
 interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {}
 
@@ -14,5 +16,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, Props>(
         {...rest}
       />
     </div>
-  )
+  ),
 );
+
+Checkbox.displayName = "Checkbox";

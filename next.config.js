@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === "development") {
 
   setupDevBindings({
     d1Databases: {
-      DB: "d82795eb-def6-48d6-bfd1-e44f2505e943",
+      DB: "b41b59b9-6d30-4e5d-8142-9cc76908b090",
     },
   });
 }

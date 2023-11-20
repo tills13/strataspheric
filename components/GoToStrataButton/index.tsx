@@ -1,7 +1,8 @@
 import React from "react";
-import { Strata } from "../../data/stratas/getStrata";
-import { ExternalLink } from "../Link/ExternalLink";
+
+import { Strata } from "../../db";
 import { Button } from "../Button";
+import { ExternalLink } from "../Link/ExternalLink";
 
 type ExternalLinkProps = React.ComponentProps<typeof ExternalLink>;
 type ButtonProps = React.ComponentProps<typeof Button>;

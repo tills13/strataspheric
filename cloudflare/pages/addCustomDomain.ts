@@ -10,6 +10,6 @@ export function addCustomDomain(domainName: string) {
       headers: {
         "content-type": "application/json",
       },
-    }
+    },
   );
 }

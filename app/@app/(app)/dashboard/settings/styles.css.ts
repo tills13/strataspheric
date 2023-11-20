@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../theme.css";
+import { style } from "@vanilla-extract/css";
 
 export const form = style({
   maxWidth: 600,

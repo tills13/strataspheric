@@ -1,6 +1,8 @@
-import { classnames } from "../../utils/classnames";
 import * as styles from "./style.css";
+
 import React, { InputHTMLAttributes } from "react";
+
+import { classnames } from "../../utils/classnames";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   compact?: boolean;
@@ -13,5 +15,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
       ref={ref}
       {...rest}
     />
-  )
+  ),
 );
+
+Input.displayName = "Input";

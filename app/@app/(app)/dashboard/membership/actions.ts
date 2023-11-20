@@ -1,14 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createStrataMember } from "../../../../../data/members/createStrataMember";
-import { deleteStrataMember } from "../../../../../data/members/deleteStrataMember";
-import { updateStrataMember } from "../../../../../data/members/updateStrataMember";
-import { createMember } from "../../../../../data/members/createMember";
+
+import { createStrataMembership } from "../../../../../db/strataMemberships/createStrataMembership";
+import { deleteStrataMember } from "../../../../../db/strataMemberships/deleteStrataMember";
+import { updateStrataMembership } from "../../../../../db/strataMemberships/updateStrataMembership";
+import { createUser } from "../../../../../db/users/createUser";
 
 export async function deleteStrataMemberAction(
   strataId: string,
-  memberId: string
+  memberId: string,
 ) {
   await deleteStrataMember(strataId, memberId);
   revalidatePath("/dashboard/membership");
@@ -41,18 +42,20 @@ export async function createStrataMemberAction(formData: FormData) {
     throw new Error("invalid fields");
   }
 
-  const memberId = await createMember(email, password);
+  const { id: userId } = await createUser({ email, password });
 
-  if (!memberId) {
+  if (!userId) {
     throw new Error("nope");
   }
 
-  await createStrataMember(strataId, memberId, {
+  await createStrataMembership({
+    strataId,
+    userId,
     email,
     name,
     phoneNumber,
     unit,
-    role,
+    role: role as any,
   });
 
   revalidatePath("/dashboard/membership");
@@ -60,8 +63,8 @@ export async function createStrataMemberAction(formData: FormData) {
 
 export async function approveStrataMembershipAction(
   strataId: string,
-  memberId: string
+  userId: string,
 ) {
-  await updateStrataMember(strataId, memberId, { role: "owner" });
+  await updateStrataMembership(strataId, userId, { role: "owner" });
   revalidatePath("/dashboard/membership");
 }

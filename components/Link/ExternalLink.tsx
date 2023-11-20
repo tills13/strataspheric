@@ -1,6 +1,8 @@
 import * as styles from "./style.css";
-import { classnames } from "../../utils/classnames";
+
 import React, { PropsWithChildren } from "react";
+
+import { classnames } from "../../utils/classnames";
 
 interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   noUnderline?: boolean;
@@ -16,7 +18,7 @@ export function ExternalLink({
     <a
       className={classnames(
         noUnderline ? styles.linkNoUnderline : styles.linkBase,
-        className
+        className,
       )}
       {...props}
     >

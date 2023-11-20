@@ -1,6 +1,7 @@
 "use client";
 
 import { startTransition } from "react";
+
 import { Button } from "./Button";
 
 interface Props {
@@ -17,7 +18,7 @@ export function ApproveStrataMembershipButton({
           approveStrataMembership();
         })
       }
-      compact
+      size="small"
     >
       Approve
     </Button>

@@ -1,12 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createWidget } from "../../../../data/widgets/createWidget";
-import { createEvent } from "../../../../data/events/createEvent";
-import { createFile } from "../../../../data/files/createFile";
-import { deleteWidget } from "../../../../data/widgets/deleteWidget";
-import { addEventToWidget } from "../../../../data/widgets/addEventToWidget";
-import { addFileToWidget } from "../../../../data/widgets/addFileToWidget";
+
+import { createEvent } from "../../../../db/events/createEvent";
+import { createFile } from "../../../../db/files/createFile";
+import { addEventToWidget } from "../../../../db/widgets/addEventToWidget";
+import { addFileToWidget } from "../../../../db/widgets/addFileToWidget";
+import { createWidget } from "../../../../db/widgets/createWidget";
+import { deleteWidget } from "../../../../db/widgets/deleteWidget";
 
 export async function createEventAction(formData: FormData) {
   const widgetId = formData.get("widget_id");
@@ -24,13 +25,13 @@ export async function createEventAction(formData: FormData) {
     throw new Error("invalid fields");
   }
 
-  const eventId = await createEvent(name, description, date);
+  const { id: eventId } = await createEvent({ name, description, date });
 
   if (!eventId) {
     throw new Error("error while creating event");
   }
 
-  await addEventToWidget(widgetId, eventId);
+  await addEventToWidget({ widgetId, eventId });
 
   revalidatePath("/dashboard");
 }
@@ -51,13 +52,17 @@ export async function createFileAction(formData: FormData) {
     throw new Error("invalid fields");
   }
 
-  const fileId = await createFile(name, description, (file as File).name);
+  const { id: fileId } = await createFile({
+    name,
+    description,
+    path: (file as File).name,
+  });
 
   if (!fileId) {
     throw new Error("error while creating file");
   }
 
-  await addFileToWidget(widgetId, fileId);
+  await addFileToWidget({ widgetId, fileId });
 
   revalidatePath("/dashboard");
 }
@@ -77,7 +82,7 @@ export async function createWidgetAction(formData: FormData) {
     throw new Error("invalid fields");
   }
 
-  await createWidget(strataId, title, type);
+  await createWidget({ strataId, title, type });
 
   revalidatePath("/dashboard");
 }

@@ -2,18 +2,19 @@
 
 import * as styles from "./style.css";
 
-import React from "react";
-import { type Widget } from "../../data/widgets";
-import { classnames } from "../../utils/classnames";
 import { useSession } from "next-auth/react";
-import { can } from "../../data/members/permissions";
+import React from "react";
+
+import { StrataWidget } from "../../db";
+import { can } from "../../db/users/permissions";
+import { classnames } from "../../utils/classnames";
 import { Header } from "../Header";
 import { RemoveButton } from "../RemoveButton";
 
 export interface Props {
   className?: string;
   deleteWidget?: (widgetId: string) => void;
-  widget: Widget;
+  widget: StrataWidget;
 }
 
 export function AbstractWidget({

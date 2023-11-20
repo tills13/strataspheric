@@ -1,6 +1,7 @@
+import * as styles from "./style.css";
+
 import { classnames } from "../../utils/classnames";
 import { CycleIcon } from "../Icon/CycleIcon";
-import * as styles from "./style.css";
 
 interface Props {
   className?: string;

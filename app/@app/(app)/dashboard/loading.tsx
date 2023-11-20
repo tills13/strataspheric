@@ -1,7 +1,8 @@
-import { Skeleton } from "../../../../components/Skeleton";
 import * as styles from "./style.css";
 
 import React from "react";
+
+import { Skeleton } from "../../../../components/Skeleton";
 
 export const runtime = "edge";
 

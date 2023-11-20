@@ -1,8 +1,8 @@
 import { notFound, redirect } from "next/navigation";
-import { auth } from "../../../../auth";
-import { getCurrentStrata } from "../../../../data/stratas/getStrata";
 
+import { auth } from "../../../../auth";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
+import { getCurrentStrata } from "../../../../db/stratas/getStrata";
 
 export default async function Layout({ children }) {
   const session = await auth();

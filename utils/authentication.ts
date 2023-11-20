@@ -14,7 +14,7 @@ export async function pbkdf2(password: string, iterations = 1e5) {
       iterations,
     },
     pwKey,
-    256
+    256,
   );
 
   const keyArray = Array.from(new Uint8Array(keyBuffer));
@@ -38,7 +38,7 @@ export async function pbkdf2(password: string, iterations = 1e5) {
 
 export async function pbkdf2Verify(
   hashedPassword: string,
-  suppliedPassword: string
+  suppliedPassword: string,
 ) {
   let compositeStr: string;
 
@@ -58,7 +58,7 @@ export async function pbkdf2Verify(
   }
 
   const saltUint8 = new Uint8Array(
-    saltStr.split("").map((ch) => ch.charCodeAt(0))
+    saltStr.split("").map((ch) => ch.charCodeAt(0)),
   );
 
   const iterHex = iterStr
@@ -80,7 +80,7 @@ export async function pbkdf2Verify(
       iterations: iterations,
     },
     pwKey,
-    256
+    256,
   );
   const keyArray = Array.from(new Uint8Array(keyBuffer));
   const keyStrNew = keyArray.map((byte) => String.fromCharCode(byte)).join("");

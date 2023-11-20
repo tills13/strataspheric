@@ -1,5 +1,6 @@
-import { style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../theme.css";
+import { style } from "@vanilla-extract/css";
+
 import { border } from "../../../theme";
 
 export const pageContainer = style({
@@ -45,7 +46,7 @@ export const ctaText = style({
   marginBottom: vars.spacing.normal,
 });
 export const ctaButton = style({
-  width: "100%",
+  width: "80%",
   "@media": {
     [breakpoints.tablet]: {
       width: "300px",

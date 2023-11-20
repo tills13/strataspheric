@@ -1,24 +1,40 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { updateStrataMember } from "../../../../../data/members/updateStrataMember";
-import { updateStrata } from "../../../../../data/stratas/updateStrata";
+
+import { updateStrataMembership } from "../../../../../db/strataMemberships/updateStrataMembership";
+import { updateStrata } from "../../../../../db/stratas/updateStrata";
 
 export async function updateStrataAction(formData: FormData) {
-  const strataId = formData.get("strata_id");
+  const id = formData.get("id");
+  const strataId = formData.get("strata_id") || "";
+  const streetAddress = formData.get("strata_address_street_address") || "";
+  const postalCode = formData.get("strata_address_postal_code") || "";
+  const provinceState = formData.get("strata_address_province_state") || "";
   const strataName = formData.get("name");
   const isPublic = formData.get("is_public") === "on";
 
   if (
+    typeof id !== "string" ||
+    id === "" ||
     typeof strataId !== "string" ||
-    strataId === "" ||
+    typeof streetAddress !== "string" ||
+    typeof postalCode !== "string" ||
+    typeof provinceState !== "string" ||
     typeof strataName !== "string" ||
     strataName === ""
   ) {
     throw new Error("invalid fields");
   }
 
-  await updateStrata(strataId, { name: strataName, isPublic });
+  await updateStrata(id, {
+    name: strataName,
+    strataId,
+    streetAddress,
+    postalCode,
+    provinceState,
+    isPublic: isPublic ? 1 : 0,
+  });
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/settings");
@@ -26,8 +42,8 @@ export async function updateStrataAction(formData: FormData) {
 
 export async function approveStrataMembershipAction(
   strataId: string,
-  memberId: string
+  memberId: string,
 ) {
-  await updateStrataMember(strataId, memberId, { role: "owner" });
+  await updateStrataMembership(strataId, memberId, { role: "owner" });
   revalidatePath("/dashboard/membership");
 }

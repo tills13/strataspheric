@@ -1,14 +1,15 @@
 import "./globalStyles.css";
 import * as styles from "./style.css";
 import { fontHeaderVar, fontPrimaryVar } from "./theme.css";
-import { variable } from "../theme";
 
-import { laila, sourceSans } from "./fonts";
-import { GlobalFooter } from "../components/GlobalFooter";
-import { getCurrentStrata } from "../data/stratas/getStrata";
 import { SessionProvider } from "next-auth/react";
+
 import { auth } from "../auth";
-import { getMemberStratas } from "../data/members/getMemberStratas";
+import { GlobalFooter } from "../components/GlobalFooter";
+import { getCurrentStrata } from "../db/stratas/getStrata";
+import { getUserStratas } from "../db/users/getUserStratas";
+import { variable } from "../theme";
+import { laila, sourceSans } from "./fonts";
 
 const fontPrimaryVariable = variable(fontPrimaryVar);
 const fontHeaderVariable = variable(fontHeaderVar);
@@ -24,7 +25,7 @@ export default async function RootLayout({
   const strata = await getCurrentStrata();
 
   const sessionStratas = session?.user?.id
-    ? await getMemberStratas(session.user.id)
+    ? await getUserStratas(session.user.id)
     : [];
 
   return (

@@ -2,18 +2,20 @@
 
 import * as styles from "./style.css";
 
+import { useDeferredValue, useEffect, useState } from "react";
+
+import { classnames } from "../../utils/classnames";
+import { pluralize } from "../../utils/pluralize";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 import { Header } from "../Header";
-import { Input } from "../Input";
-import { useDeferredValue, useEffect, useState } from "react";
-import { CycleIcon } from "../Icon/CycleIcon";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
+import { CycleIcon } from "../Icon/CycleIcon";
+import { Input } from "../Input";
 import { InternalLink } from "../Link/InternalLink";
-import { pluralize } from "../../utils/pluralize";
-import { classnames } from "../../utils/classnames";
 import { Money } from "../Money";
+import { RangeInput } from "../RangeInput";
 
 const rootDomain = "strataspheric.app";
 
@@ -39,7 +41,7 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
 
       const r = await fetch(
         "/api/stratas/domainAvailable?domain=" +
-          encodeURIComponent(`${suggestedSubdomain}.${rootDomain}`)
+          encodeURIComponent(`${suggestedSubdomain}.${rootDomain}`),
       );
       const rJson = await r.json();
 
@@ -54,7 +56,7 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
       action={submitGetStarted}
       className={classnames(styles.getStartedForm, className)}
     >
-      <Header priority={2}>Let's get to know you...</Header>
+      <Header priority={2}>Let&apos;s get to know you...</Header>
 
       <Input name="name" placeholder="Name" required />
 
@@ -70,7 +72,7 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
         required
       />
 
-      <Header priority={2}>Let's get to know your strata...</Header>
+      <Header priority={2}>Let&apos;s get to know your strata...</Header>
 
       <Input
         name="strata_name"
@@ -107,7 +109,9 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
       )}
 
       <label className={styles.isPublicField} htmlFor="is_public">
-        <Header priority={3}>I want my strata's content to be public</Header>
+        <Header priority={3}>
+          I want my strata&apos;s content to be public
+        </Header>
         <Checkbox id="is_public" name="is_public" defaultChecked />
       </label>
 
@@ -129,17 +133,17 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
       <p>
         We recommend 1 seat per unit so that at least someone per unit can view
         and download important documents, but you can choose as many or as few
-        seats as you'd like. Non-paid seats will be able to sign in and view
-        content, but not download or interact with it. For more info on pricing,
-        refer to the <InternalLink href="/pricing">pricing</InternalLink> page.
+        seats as you&apos;d like. Non-paid seats will be able to sign in and
+        view content, but not download or interact with it. For more info on
+        pricing, refer to the{" "}
+        <InternalLink href="/pricing">pricing</InternalLink> page.
       </p>
 
       <div className={styles.numSeatsField}>
         1
-        <input
+        <RangeInput
           className={styles.numSeatsInput}
           name="num_seats"
-          type="range"
           min={1}
           max={numUnits}
           disabled={numUnits === 0}
@@ -164,7 +168,7 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
       </div>
 
       <Button type="submit" variant="primary" size="large">
-        Let's Get Started
+        Let&apos;s Get Started
       </Button>
     </form>
   );

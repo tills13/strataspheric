@@ -1,5 +1,7 @@
-import React from "react";
 import * as styles from "./style.css";
+
+import React from "react";
+
 import { Panel } from "../Panel";
 
 interface Props {

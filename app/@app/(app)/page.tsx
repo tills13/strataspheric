@@ -1,17 +1,18 @@
 import * as styles from "./style.css";
 
-import React from "react";
-import { auth } from "../../../auth";
-import { notFound, redirect } from "next/navigation";
-import { SignInForm } from "../../../components/SignInForm";
 import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import React from "react";
+
+import { auth } from "../../../auth";
+import { Button } from "../../../components/Button";
+import { DividerText } from "../../../components/DividerText";
+import { ElementGroup } from "../../../components/ElementGroup";
 import { Header } from "../../../components/Header";
 import { JoinStrataForm } from "../../../components/JoinStrataForm";
+import { SignInForm } from "../../../components/SignInForm";
+import { getCurrentStrata } from "../../../db/stratas/getStrata";
 import { requestToJoinStrataAction } from "../../actions";
-import { DividerText } from "../../../components/DividerText";
-import { Button } from "../../../components/Button";
-import { ElementGroup } from "../../../components/ElementGroup";
-import { getCurrentStrata } from "../../../data/stratas/getStrata";
 
 export const runtime = "edge";
 

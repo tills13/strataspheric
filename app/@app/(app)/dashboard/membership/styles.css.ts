@@ -1,5 +1,6 @@
-import { globalStyle, style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../../../theme.css";
+import { globalStyle, style } from "@vanilla-extract/css";
+
 import { padding } from "../../../../../theme";
 
 export const pageContainer = style({

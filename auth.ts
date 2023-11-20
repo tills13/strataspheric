@@ -1,7 +1,6 @@
 import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { signInMember } from "./data/members/signInMember";
-import { StrataMember } from "./data/members/getStrataMembers";
+import { signInUser } from "./db/users/signInUser";
 
 const isNotDev = process.env.NODE_ENV !== "development";
 
@@ -10,7 +9,7 @@ export const authOptions: NextAuthConfig = {
     jwt({ user, token }) {
       if (user) {
         token.id = user.id;
-        token.scope = (user as unknown as StrataMember).role;
+        token.scope = user.scope;
       }
 
       return token;
@@ -57,11 +56,17 @@ export const authOptions: NextAuthConfig = {
 
         const domain = request.headers.get("host")!;
 
-        return signInMember(
+        const user = await signInUser(
           credentials.email,
           credentials.password,
-          domain
-        ) as unknown as User;
+          domain,
+        );
+
+        return {
+          ...user,
+          scope: user.role,
+          id: user.userId,
+        };
       },
     }),
   ],

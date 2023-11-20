@@ -1,30 +1,24 @@
 import { Suspense } from "react";
-import { getWidget } from "../data/widgets/getWidget";
+
+import { StrataWidget } from "../db";
 import { EventWidget } from "./EventWidget";
 import { FileWidget } from "./FileWidget";
-import { Skeleton } from "./Skeleton";
 import { Header } from "./Header";
+import { Skeleton } from "./Skeleton";
 
 interface Props {
   createEvent: (fd: FormData) => void;
   createFile: (fd: FormData) => void;
   deleteWidget: (widgetId: string) => void;
-  widgetId: string;
-  // widget: IWidget;
+  widget: StrataWidget;
 }
 
-export async function Widget({
+export function Widget({
   createEvent,
   createFile,
   deleteWidget,
-  widgetId,
+  widget,
 }: Props) {
-  const widget = await getWidget(widgetId);
-
-  if (!widget) {
-    return null;
-  }
-
   switch (widget.type) {
     case "event": {
       return (

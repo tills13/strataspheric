@@ -1,5 +1,5 @@
-import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
+import { style, styleVariants } from "@vanilla-extract/css";
 
 export const headerBase = style({
   fontFamily: vars.fontFamilies.secondaryHeader,

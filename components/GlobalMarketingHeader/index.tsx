@@ -1,10 +1,11 @@
 import * as styles from "./style.css";
 
 import Image from "next/image";
-import { InternalLink } from "../Link/InternalLink";
+
 import { GlobalHeader } from "../GlobalHeader";
-import { Wordmark } from "../Wordmark";
+import { InternalLink } from "../Link/InternalLink";
 import { Logo } from "../Logo";
+import { Wordmark } from "../Wordmark";
 
 export function GlobalMarketingHeader() {
   return (

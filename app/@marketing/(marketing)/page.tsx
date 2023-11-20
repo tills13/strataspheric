@@ -1,10 +1,11 @@
+import * as styles from "./style.css";
+
 import { auth } from "../../../auth";
 import { Button } from "../../../components/Button";
 import { Header } from "../../../components/Header";
 import { InternalLink } from "../../../components/Link/InternalLink";
 import { PricingCard } from "../../../components/PricingCard";
 import { classnames } from "../../../utils/classnames";
-import * as styles from "./style.css";
 
 export const runtime = "edge";
 

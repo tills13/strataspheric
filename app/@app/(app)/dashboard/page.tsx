@@ -1,15 +1,16 @@
 import * as styles from "./style.css";
 
+import { notFound } from "next/navigation";
 import React from "react";
-import { getWidgets } from "../../../../data/widgets/getWidgets";
+
 import { Widget } from "../../../../components/Widget";
+import { getCurrentStrata } from "../../../../db/stratas/getStrata";
+import { getWidgets } from "../../../../db/widgets/getWidgets";
 import {
   createEventAction,
   createFileAction,
   deleteWidgetAction,
 } from "./actions";
-import { getCurrentStrata } from "../../../../data/stratas/getStrata";
-import { notFound } from "next/navigation";
 
 export const runtime = "edge";
 
@@ -20,18 +21,18 @@ export default async function Page() {
     notFound();
   }
 
-  const widgetIds = await getWidgets(strata);
+  const widgets = await getWidgets(strata.id);
 
   return (
     <div className={styles.pageContainer}>
       <div className={styles.dashboardWidgetGridContainer}>
-        {widgetIds.map((widgetId) => (
+        {widgets.map((widget) => (
           <Widget
-            key={widgetId}
+            key={widget.id}
             createEvent={createEventAction}
             createFile={createFileAction}
             deleteWidget={deleteWidgetAction}
-            widgetId={widgetId}
+            widget={widget}
           />
         ))}
       </div>

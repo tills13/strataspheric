@@ -1,28 +1,26 @@
-import * as styles from "./styles.css";
 import * as parentStyles from "../style.css";
+import * as styles from "./styles.css";
+
+import { notFound } from "next/navigation";
+import React from "react";
 
 import { auth } from "../../../../../auth";
-import {
-  StrataMember,
-  getStrataMembers,
-} from "../../../../../data/members/getStrataMembers";
+import { ApproveStrataMembershipButton } from "../../../../../components/ApproveStrataMembershipButton";
+import { Checkbox } from "../../../../../components/Checkbox";
+import { Header } from "../../../../../components/Header";
+import { RemoveButton } from "../../../../../components/RemoveButton";
+import { UpsertStrataMemberForm } from "../../../../../components/UpsertStrataMemberForm";
+import { StrataMembership } from "../../../../../db";
+import { getPlan } from "../../../../../db/plans/getPlan";
+import { getStrataMembership } from "../../../../../db/strataMemberships/getStrataMembership";
+import { getCurrentStrata } from "../../../../../db/stratas/getStrata";
+import { can } from "../../../../../db/users/permissions";
+import { pluralize } from "../../../../../utils/pluralize";
 import {
   approveStrataMembershipAction,
-  deleteStrataMemberAction,
   createStrataMemberAction,
+  deleteStrataMemberAction,
 } from "./actions";
-import { can } from "../../../../../data/members/permissions";
-import { RemoveButton } from "../../../../../components/RemoveButton";
-import { Header } from "../../../../../components/Header";
-import { UpsertStrataMemberForm } from "../../../../../components/UpsertStrataMemberForm";
-import { ApproveStrataMembershipButton } from "../../../../../components/ApproveStrataMembershipButton";
-
-import { getCurrentStrata } from "../../../../../data/stratas/getStrata";
-import React from "react";
-import { Checkbox } from "../../../../../components/Checkbox";
-import { getPlan } from "../../../../../data/plans/getPlan";
-import { pluralize } from "../../../../../utils/pluralize";
-import { notFound } from "next/navigation";
 
 export const runtime = "edge";
 
@@ -37,32 +35,32 @@ export default async function Page() {
   const plan = await getPlan(strata.id);
 
   const canSeeMemberDetails = !!session;
-  const canDelete = can(session?.user, "stratas.members.delete");
+  const canDelete = can(session?.user, "stratas.memberships.delete");
   const canUpsert = can(
     session?.user,
-    "stratas.members.create",
-    "stratas.members.edit"
+    "stratas.memberships.create",
+    "stratas.memberships.edit",
   );
 
-  const members = await getStrataMembers(strata.id, canUpsert);
+  const memberships = await getStrataMembership(strata.id, canUpsert);
 
-  const numActivePaidSeats = members.reduce(
+  const numActivePaidSeats = memberships.reduce(
     (acc, curr) => (curr.isPaid ? acc + 1 : acc),
-    0
+    0,
   );
 
-  const byUnit: Record<string, StrataMember[]> = {};
+  const byUnit: Record<string, StrataMembership[]> = {};
 
-  for (const strataMember of members) {
+  for (const strataMemberships of memberships) {
     const unit =
-      strataMember.role === "pending"
+      strataMemberships.role === "pending"
         ? "Pending"
-        : !strataMember.unit
-        ? "No Unit"
-        : `Unit ${strataMember.unit}`;
+        : !strataMemberships.unit
+          ? "No Unit"
+          : `Unit ${strataMemberships.unit}`;
 
     byUnit[unit] = byUnit[unit] || [];
-    byUnit[unit].push(strataMember);
+    byUnit[unit].push(strataMemberships);
   }
 
   return (
@@ -71,7 +69,7 @@ export default async function Page() {
         <div className={styles.leftColumn}>
           <div className={styles.membershipTableContainer}>
             <table className={styles.membershipTable}>
-              {Object.entries(byUnit).map(([unit, strataMembers]) => (
+              {Object.entries(byUnit).map(([unit, strataMemberships]) => (
                 <tbody key={unit} className={styles.membershipTableSection}>
                   <tr className={styles.membershipTableSectionHeaderRow}>
                     <th colSpan={canDelete ? 6 : 5}>{unit}</th>
@@ -87,32 +85,34 @@ export default async function Page() {
                     {canDelete && <th></th>}
                   </tr>
 
-                  {strataMembers.map((member) => (
-                    <tr key={member.id}>
-                      <td>{member.name}</td>
+                  {strataMemberships.map((membership) => (
+                    <tr key={membership.userId}>
+                      <td>{membership.name}</td>
                       <td>
-                        {canSeeMemberDetails ? member.email : "****@***.***"}
+                        {canSeeMemberDetails
+                          ? membership.email
+                          : "****@***.***"}
                       </td>
                       <td>
                         {canSeeMemberDetails
-                          ? member.phoneNumber
+                          ? membership.phoneNumber
                           : "***-***-****"}
                       </td>
                       <td>
-                        {member.role === "pending" ? (
+                        {membership.role === "pending" ? (
                           <ApproveStrataMembershipButton
                             approveStrataMembership={approveStrataMembershipAction.bind(
                               undefined,
                               strata.id,
-                              member.id
+                              membership.userId,
                             )}
                           />
                         ) : (
-                          member.role
+                          membership.role
                         )}
                       </td>
                       <td>
-                        <Checkbox defaultChecked={member.isPaid} />
+                        <Checkbox defaultChecked={membership.isPaid === 1} />
                       </td>
                       {canDelete && (
                         <td className={styles.membershipTableActionColumnCell}>
@@ -120,7 +120,7 @@ export default async function Page() {
                             onClick={deleteStrataMemberAction.bind(
                               undefined,
                               strata.id,
-                              member.id
+                              membership.userId,
                             )}
                           />
                         </td>

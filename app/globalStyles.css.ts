@@ -1,5 +1,5 @@
-import { globalStyle } from "@vanilla-extract/css";
 import { vars } from "./theme.css";
+import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle("*, *::before, *::after", {
   padding: 0,

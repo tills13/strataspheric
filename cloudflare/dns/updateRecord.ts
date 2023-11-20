@@ -9,7 +9,7 @@ export function updateRecord(
   dnsRecordId: string,
   type: "CNAME",
   name: string,
-  content: string
+  content: string,
 ) {
   return makeRequest<UpdateRecordResponse>(
     `/zones/${ZONE_ID}/dns_records/${dnsRecordId}`,
@@ -21,6 +21,6 @@ export function updateRecord(
         content,
         proxied: true,
       }),
-    }
+    },
   );
 }

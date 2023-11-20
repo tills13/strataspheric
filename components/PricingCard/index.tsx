@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { classnames } from "../../utils/classnames";
 import * as styles from "./style.css";
+
+import { useState } from "react";
+
+import { classnames } from "../../utils/classnames";
 import { pluralize } from "../../utils/pluralize";
 import { Button } from "../Button";
 import { InternalLink } from "../Link/InternalLink";

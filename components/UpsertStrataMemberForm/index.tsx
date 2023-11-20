@@ -1,16 +1,16 @@
 import * as styles from "./style.css";
 
+import { StrataMembership } from "../../db";
+import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
+import { ElementGroup } from "../ElementGroup";
 import { Input } from "../Input";
 import { Select } from "../Select";
-import { ElementGroup } from "../ElementGroup";
-import { classnames } from "../../utils/classnames";
-import { StrataMember } from "../../data/members/getStrataMembers";
 
 interface Props {
   className?: string;
   upsertStrataMemberAction: (fd: FormData) => void;
-  strataMember?: StrataMember;
+  strataMembership?: StrataMembership;
   strataId: string;
 }
 
@@ -18,7 +18,7 @@ export function UpsertStrataMemberForm({
   className,
   upsertStrataMemberAction,
   strataId,
-  strataMember,
+  strataMembership,
 }: Props) {
   return (
     <form
@@ -32,29 +32,29 @@ export function UpsertStrataMemberForm({
           name="name"
           type="text"
           placeholder="Name"
-          defaultValue={strataMember?.name}
+          defaultValue={strataMembership?.name}
         />
         <Input
           name="unit"
           type="text"
           placeholder="Unit"
-          defaultValue={strataMember?.unit}
+          defaultValue={strataMembership?.unit || undefined}
         />
 
         <Input
           name="email"
           type="email"
           placeholder="Email"
-          defaultValue={strataMember?.email}
+          defaultValue={strataMembership?.email}
         />
         <Input
           name="phone_number"
           type="text"
           placeholder="Phone #"
-          defaultValue={strataMember?.phoneNumber}
+          defaultValue={strataMembership?.phoneNumber || undefined}
         />
 
-        <Select name="role" defaultValue={strataMember?.role || "owner"}>
+        <Select name="role" defaultValue={strataMembership?.role || "owner"}>
           <option value="owner">Owner</option>
           <option value="treasurer">Treasurer</option>
           <option value="vice_president">Vice President</option>

@@ -1,7 +1,9 @@
 import * as styles from "./style.css";
+
 import Link, { LinkProps } from "next/link";
-import { classnames } from "../../utils/classnames";
 import { PropsWithChildren } from "react";
+
+import { classnames } from "../../utils/classnames";
 
 interface Props extends LinkProps {
   className?: string;
@@ -18,7 +20,7 @@ export function InternalLink({
     <Link
       className={classnames(
         noUnderline ? styles.linkNoUnderline : styles.linkBase,
-        className
+        className,
       )}
       {...props}
     >

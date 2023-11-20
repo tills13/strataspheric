@@ -1,16 +1,17 @@
-import * as styles from "./styles.css";
 import * as parentStyles from "../style.css";
+import * as styles from "./styles.css";
+
+import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
-import { updateStrataAction } from "./actions";
-import { can } from "../../../../../data/members/permissions";
-import { Header } from "../../../../../components/Header";
-import { notFound, redirect } from "next/navigation";
-import { Input } from "../../../../../components/Input";
 import { Button } from "../../../../../components/Button";
 import { Checkbox } from "../../../../../components/Checkbox";
 import { ElementGroup } from "../../../../../components/ElementGroup";
-import { getCurrentStrata } from "../../../../../data/stratas/getStrata";
+import { Header } from "../../../../../components/Header";
+import { Input } from "../../../../../components/Input";
+import { getCurrentStrata } from "../../../../../db/stratas/getStrata";
+import { can } from "../../../../../db/users/permissions";
+import { updateStrataAction } from "./actions";
 
 export const runtime = "edge";
 
@@ -37,12 +38,12 @@ export default async function Page() {
 
           <label className={styles.isPublicField} htmlFor="is_public">
             <Header priority={3}>
-              I want my strata's content to be public
+              I want my strata&apos;s content to be public
             </Header>
             <Checkbox
               id="is_public"
               name="is_public"
-              defaultChecked={strata.isPublic}
+              defaultChecked={strata.isPublic === 1}
             />
           </label>
 
@@ -50,7 +51,7 @@ export default async function Page() {
           <Input
             name="strata_id"
             placeholder="Strata ID (e.g. VIS...)"
-            required
+            defaultValue={strata.strataId || undefined}
           />
 
           <Header priority={3}>Address</Header>
@@ -58,19 +59,19 @@ export default async function Page() {
           <Input
             name="strata_address_street_address"
             placeholder="Street Address"
-            required
+            defaultValue={strata.streetAddress || undefined}
           />
 
           <Input
             name="strata_address_postal_code"
             placeholder="Postal Code"
-            required
+            defaultValue={strata.postalCode || undefined}
           />
 
           <Input
             name="strata_address_province_state"
             placeholder="Province / State"
-            required
+            defaultValue={strata.provinceState || undefined}
           />
           <Button type="submit">Update Strata</Button>
         </ElementGroup>

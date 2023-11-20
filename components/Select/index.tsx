@@ -1,6 +1,8 @@
-import React from "react";
-import { classnames } from "../../utils/classnames";
 import * as styles from "./style.css";
+
+import React from "react";
+
+import { classnames } from "../../utils/classnames";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   children: React.ReactNode[];

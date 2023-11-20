@@ -1,8 +1,9 @@
 "use client";
 
 import { signOut } from "next-auth/react";
-import { Button } from "./Button";
 import React from "react";
+
+import { Button } from "./Button";
 
 type Props = Omit<React.ComponentProps<typeof Button>, "onClick">;
 

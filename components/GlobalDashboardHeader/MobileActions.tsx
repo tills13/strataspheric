@@ -3,10 +3,11 @@
 import * as styles from "./style.css";
 
 import { Session } from "next-auth";
-import { Strata } from "../../data/stratas/getStrata";
+import { useState } from "react";
+
+import { Strata } from "../../db";
 import { MenuIcon } from "../Icon/MenuIcon";
 import { IconButton } from "../IconButton";
-import { useState } from "react";
 import { Modal } from "../Modal";
 import { GlobalHeaderActions } from "./Actions";
 

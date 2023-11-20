@@ -1,6 +1,8 @@
-import * as styles from "./style.css";
-import React from "react";
 import { vars } from "../../app/theme.css";
+import * as styles from "./style.css";
+
+import React from "react";
+
 import { variable } from "../../theme";
 import { classnames } from "../../utils/classnames";
 

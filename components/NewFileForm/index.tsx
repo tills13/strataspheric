@@ -1,8 +1,8 @@
 import * as styles from "./style.css";
 
 import { Button } from "../Button";
-import { Input } from "../Input";
 import { ElementGroup } from "../ElementGroup";
+import { Input } from "../Input";
 
 interface Props {
   createFile: (fd: FormData) => void;

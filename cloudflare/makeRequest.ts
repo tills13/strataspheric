@@ -16,7 +16,7 @@ export type CloudflareApiResponse<T = unknown> =
 
 export async function makeRequest<T>(
   endpoint: string,
-  init: RequestInit
+  init: RequestInit,
 ): Promise<[T, Response]> {
   const r = await fetch("https://api.cloudflare.com/client/v4" + endpoint, {
     ...init,

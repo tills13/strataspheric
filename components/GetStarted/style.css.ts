@@ -1,5 +1,6 @@
-import { keyframes, style } from "@vanilla-extract/css";
 import { vars } from "../../app/theme.css";
+import { keyframes, style } from "@vanilla-extract/css";
+
 import { important } from "../../theme";
 
 export const getStartedForm = style({

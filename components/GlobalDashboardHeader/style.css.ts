@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../app/theme.css";
+import { style } from "@vanilla-extract/css";
 
 export const globalHeader = style({
   display: "flex",

@@ -1,21 +1,24 @@
 "use client";
 
 import * as styles from "./style.css";
+
+import { useSelectedLayoutSegment } from "next/navigation";
+
+import { Strata } from "../../db";
+import { ElementGroup } from "../ElementGroup";
+import { GoToStrataButton } from "../GoToStrataButton";
+import { Header } from "../Header";
 import { HeartIcon } from "../Icon/HeartIcon";
 import { ExternalLink } from "../Link/ExternalLink";
-import { Wordmark } from "../Wordmark";
-import { InternalLink } from "../Link/InternalLink";
 import { Panel } from "../Panel";
-import { Button } from "../Button";
-import { ElementGroup } from "../ElementGroup";
-import { Header } from "../Header";
-import { useSelectedLayoutSegment } from "next/navigation";
-import { GoToStrataButton } from "../GoToStrataButton";
-import { Strata } from "../../data/stratas/getStrata";
+import { Wordmark } from "../Wordmark";
 
 interface Props {
   sessionStratas: Strata[];
 }
+
+const baseUrl =
+  process.env.NODE_ENV === "development" ? "" : "https://strataspheric.app";
 
 export function GlobalFooter({ sessionStratas }: Props) {
   const isMarketingSegment =
@@ -32,10 +35,18 @@ export function GlobalFooter({ sessionStratas }: Props) {
           <Wordmark />
         </ExternalLink>
         <div className={styles.footerLinks}>
-          <InternalLink href="/about">About</InternalLink>
-          <InternalLink href="/pricing">Pricing</InternalLink>
-          <InternalLink href="/terms">Terms</InternalLink>
-          <InternalLink href="/privacy">Privacy</InternalLink>
+          <ExternalLink href={baseUrl + "/about"} target="_blank">
+            About
+          </ExternalLink>
+          <ExternalLink href={baseUrl + "/pricing"} target="_blank">
+            Pricing
+          </ExternalLink>
+          <ExternalLink href={baseUrl + "/terms"} target="_blank">
+            Terms
+          </ExternalLink>
+          <ExternalLink href={baseUrl + "/privacy"} target="_blank">
+            Privacy
+          </ExternalLink>
         </div>
         <p className={styles.madeWith}>
           Made in Canada <HeartIcon className={styles.heartIcon} />
