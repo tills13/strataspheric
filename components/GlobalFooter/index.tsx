@@ -12,6 +12,8 @@ import { HeartIcon } from "../Icon/HeartIcon";
 import { ExternalLink } from "../Link/ExternalLink";
 import { Panel } from "../Panel";
 import { Wordmark } from "../Wordmark";
+import { InternalLink } from "../Link/InternalLink";
+import { Button } from "../Button";
 
 interface Props {
   sessionStratas: Strata[];
@@ -47,17 +49,20 @@ export function GlobalFooter({ sessionStratas }: Props) {
           <ExternalLink href={baseUrl + "/privacy"} target="_blank">
             Privacy
           </ExternalLink>
+          <ExternalLink href={baseUrl + "/contact"} target="_blank">
+            Contact
+          </ExternalLink>
         </div>
         <p className={styles.madeWith}>
           Made in Canada <HeartIcon className={styles.heartIcon} />
         </p>
       </div>
 
-      {isMarketingSegment && sessionStratas.length !== 0 && (
-        <Panel className={styles.continuePanel}>
-          <Header className={styles.continuePanelHeader} priority={3}>
-            Continue where you left off...
-          </Header>
+      <Panel className={styles.continuePanel}>
+        <Header className={styles.continuePanelHeader} priority={3}>
+          Continue where you left off...
+        </Header>
+        {isMarketingSegment && sessionStratas.length !== 0 ? (
           <ElementGroup
             className={styles.continuePanelList}
             orientation="column"
@@ -70,8 +75,14 @@ export function GlobalFooter({ sessionStratas }: Props) {
               />
             ))}
           </ElementGroup>
-        </Panel>
-      )}
+        ) : (
+          <InternalLink href="/find">
+            <Button className={styles.continuePanelListButton}>
+              Find Your Stratas
+            </Button>
+          </InternalLink>
+        )}
+      </Panel>
     </footer>
   );
 }

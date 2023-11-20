@@ -42,7 +42,7 @@ export const footerWordMark = style({
 export const footerLinks = style({
   display: "flex",
   flexDirection: "row",
-  gap: vars.spacing.small,
+  gap: vars.spacing.normal,
   marginBottom: vars.spacing.small,
 
   "@media": {

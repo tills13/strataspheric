@@ -11,7 +11,7 @@ import {
   QueryCompiler,
   QueryResult,
 } from "kysely";
-import type { D1Database } from "@cloudflare/workers-types";
+import type { D1Database, D1Result } from "@cloudflare/workers-types";
 
 /**
  * Config for the D1 dialect. Pass your D1 instance to this object that you bound in `wrangler.toml`.
@@ -99,15 +99,26 @@ class D1Connection implements DatabaseConnection {
     // Transactions are not supported yet.
     // if (this.#transactionClient) return this.#transactionClient.executeQuery(compiledQuery)
 
-    console.log(compiledQuery.sql);
+    let results: D1Result<Record<string, unknown>> | undefined;
+    let error: Error | undefined;
 
-    const results = await this.#config.database
-      .prepare(compiledQuery.sql)
-      .bind(...compiledQuery.parameters)
-      .all();
+    try {
+      results = await this.#config.database
+        .prepare(compiledQuery.sql)
+        .bind(...compiledQuery.parameters)
+        .all();
+    } catch (e) {
+      error = e;
+    }
 
-    if (results.error) {
-      throw new Error(results.error);
+    if (!results || results.error) {
+      if (error && error.message.includes("D1_")) {
+        console.log("[D1]", "query:", compiledQuery.sql);
+      }
+
+      console.log(results, error);
+
+      throw new Error(results?.error || "an unknown error occurred");
     }
 
     const numAffectedRows =

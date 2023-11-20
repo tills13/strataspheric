@@ -2,7 +2,7 @@
 
 import * as styles from "./style.css";
 
-import { useDeferredValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { classnames } from "../../utils/classnames";
 import { pluralize } from "../../utils/pluralize";
@@ -16,6 +16,8 @@ import { Input } from "../Input";
 import { InternalLink } from "../Link/InternalLink";
 import { Money } from "../Money";
 import { RangeInput } from "../RangeInput";
+import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
+import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 
 const rootDomain = "strataspheric.app";
 
@@ -27,13 +29,11 @@ interface Props {
 export function GetStartedForm({ className, submitGetStarted }: Props) {
   const [strataName, setStrataName] = useState("");
   const [isDomainAvailable, setIsDomainAvailable] = useState(undefined);
-  const deferredStrataName = useDeferredValue(strataName);
+  const deferredStrataName = useTimeDeferredValue(strataName);
   const [numUnits, setNumUnits] = useState(0);
   const [numSeats, setNumSeats] = useState(0);
 
-  const suggestedSubdomain = deferredStrataName
-    .replaceAll(/[ ']/g, "")
-    .toLowerCase();
+  const suggestedSubdomain = normalizeStrataNameToSubdomain(deferredStrataName);
 
   useEffect(() => {
     async function fetchIsDomainAvailable() {
@@ -81,7 +81,7 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
         required
       />
 
-      {strataName !== "" && (
+      {suggestedSubdomain !== "" && (
         <div className={styles.subdomainField}>
           {isDomainAvailable === undefined && suggestedSubdomain ? (
             <CycleIcon className={styles.subdomainStatusLoading} />

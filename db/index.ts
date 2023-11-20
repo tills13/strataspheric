@@ -77,13 +77,24 @@ export type StrataWidget = Selectable<StrataWidgetsTable>;
 export type NewStrataWidget = Insertable<StrataWidgetsTable>;
 
 export interface UsersTable {
-  id: string;
-  email: string;
+  id: ColumnType<string, string, never>;
+  email: ColumnType<string, string, never>;
   password: string;
 }
 
 export type User = Selectable<UsersTable>;
 export type NewUser = Insertable<UsersTable>;
+export type UserUpdate = Updateable<UsersTable>;
+
+export interface UserPasswordResetTokensTable {
+  userId: string;
+  token: string;
+  createdAt: ColumnType<string, never, never>;
+}
+
+export type UserPasswordResetToken = Selectable<UserPasswordResetTokensTable>;
+export type NewUserPasswordResetToken =
+  Insertable<UserPasswordResetTokensTable>;
 
 export interface WidgetEventsTable {
   eventId: string;
@@ -107,6 +118,7 @@ export interface Database {
   strata_widgets: StrataWidgetsTable;
   stratas: StratasTable;
   users: UsersTable;
+  user_password_reset_tokens: UserPasswordResetTokensTable;
   widget_events: WidgetEventsTable;
   widget_files: WidgetFilesTable;
 }

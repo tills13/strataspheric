@@ -76,6 +76,16 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE
     IF NOT EXISTS users (id text primary key, email text, password text);
 
+DROP TABLE IF EXISTS user_password_reset_tokens;
+
+CREATE TABLE
+    IF NOT EXISTS user_password_reset_tokens (
+        token text,
+        userId text,
+        createdAt text DEFAULT CURRENT_TIMESTAMP,
+        primary key (token)
+    );
+
 DROP TABLE IF EXISTS strata_memberships;
 
 CREATE TABLE
