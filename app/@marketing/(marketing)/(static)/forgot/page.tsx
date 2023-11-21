@@ -1,17 +1,66 @@
+"use client";
+
 import * as styles from "./style.css";
 
+import {
+  experimental_useFormState, // @ts-expect-error
+  experimental_useFormStatus,
+} from "react-dom";
+
 import { Button } from "../../../../../components/Button";
-import { Input } from "../../../../../components/Input";
-import { resetPasswordAction, requestPasswordResetAction } from "./actions";
 import { Header } from "../../../../../components/Header";
+import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
+import { Input } from "../../../../../components/Input";
+import { LoadingIcon } from "../../../../../components/LoadingIcon";
+import {
+  requestPasswordResetActionReducer,
+  resetPasswordAction,
+} from "./actions";
 
 export const runtime = "edge";
 
-export default async function Page({
+function RequestPasswordFormSubmitStatus({
+  submitSuccess,
+}: {
+  submitSuccess: boolean;
+}) {
+  const s = experimental_useFormStatus();
+
+  if (s.pending) {
+    return (
+      <div className={styles.submitPendingContainer}>
+        <LoadingIcon />
+      </div>
+    );
+  }
+
+  return submitSuccess ? (
+    <>
+      <CircleCheckIcon className={styles.submitButtonIcon} /> an email has been
+      sent to the entered address if it exists in our system.
+    </>
+  ) : (
+    <Button
+      className={styles.submitButton}
+      type="submit"
+      size="large"
+      variant="primary"
+    >
+      Continue{" "}
+    </Button>
+  );
+}
+
+export default function Page({
   searchParams,
 }: {
   searchParams: Record<string, string>;
 }) {
+  const [state, requestPasswordResetAction] = experimental_useFormState(
+    requestPasswordResetActionReducer,
+    { emailSent: false },
+  );
+
   if (searchParams["token"]) {
     return (
       <form action={resetPasswordAction}>
@@ -65,14 +114,8 @@ export default async function Page({
         placeholder="Email Address"
         name="email_address"
       />
-      <Button
-        className={styles.submitButton}
-        type="submit"
-        size="large"
-        variant="primary"
-      >
-        Continue
-      </Button>
+
+      <RequestPasswordFormSubmitStatus submitSuccess={!!state.emailSent} />
     </form>
   );
 }

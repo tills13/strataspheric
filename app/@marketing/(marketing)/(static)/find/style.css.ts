@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../theme.css";
+import { style } from "@vanilla-extract/css";
 
 export const header = style({
   marginBottom: vars.spacing.large,
@@ -26,4 +26,8 @@ export const submitButton = style({
 
 export const stratasList = style({
   marginLeft: vars.spacing.normal,
+});
+
+export const loadingContainer = style({
+  textAlign: "center",
 });

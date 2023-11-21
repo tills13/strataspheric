@@ -2,20 +2,37 @@
 
 import * as styles from "./style.css";
 
+import {
+  experimental_useFormState, // @ts-expect-error
+  experimental_useFormStatus,
+} from "react-dom";
+
 import { Button } from "../../../../../components/Button";
-import { Input } from "../../../../../components/Input";
-import { findYourStratasActionReducer } from "./actions";
-import { Header } from "../../../../../components/Header";
 import { DividerText } from "../../../../../components/DividerText";
-import { experimental_useFormState } from "react-dom";
+import { Header } from "../../../../../components/Header";
+import { Input } from "../../../../../components/Input";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
+import { LoadingIcon } from "../../../../../components/LoadingIcon";
+import { findYourStratasActionReducer } from "./actions";
 
 export const runtime = "edge";
+
+function FormLoadingIndicator() {
+  const s = experimental_useFormStatus();
+
+  return (
+    s.pending && (
+      <div className={styles.loadingContainer}>
+        <LoadingIcon />
+      </div>
+    )
+  );
+}
 
 export default function Page() {
   const [state, findYourStratasAction] = experimental_useFormState(
     findYourStratasActionReducer,
-    { stratas: [] },
+    { stratas: undefined },
   );
 
   return (
@@ -33,6 +50,7 @@ export default function Page() {
         className={styles.input}
         placeholder="Email Address"
         name="email_address"
+        type="email"
       />
 
       <DividerText className={styles.divider}>or</DividerText>
@@ -52,17 +70,25 @@ export default function Page() {
         Find
       </Button>
 
-      <Header priority={2}>Stratas</Header>
+      <FormLoadingIndicator />
 
-      <ul className={styles.stratasList}>
-        {state.stratas.map((strata) => (
-          <li key={strata.id}>
-            <ExternalLink href={"https://" + strata.domain}>
-              {strata.name}
-            </ExternalLink>
-          </li>
-        ))}
-      </ul>
+      {state.stratas !== undefined && (
+        <>
+          <Header priority={2}>Stratas</Header>
+
+          {state.stratas.length === 0 && <div>no stratas found</div>}
+
+          <ul className={styles.stratasList}>
+            {state.stratas.map((strata) => (
+              <li key={strata.id}>
+                <ExternalLink href={"https://" + strata.domain}>
+                  {strata.name}
+                </ExternalLink>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </form>
   );
 }

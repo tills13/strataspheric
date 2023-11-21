@@ -1,10 +1,7 @@
+import { breakpoints, vars } from "../../../../theme.css";
 import { style } from "@vanilla-extract/css";
-import { breakpoints, vars } from "../../../theme.css";
 
-export const layoutContainer = style({
-  marginTop: 100,
-  padding: vars.spacing.normal,
-});
+export const layoutContainer = style({});
 
 export const plansContainer = style({
   display: "grid",

@@ -1,13 +1,13 @@
 import * as styles from "./style.css";
 
-import { InternalLink } from "../../../../components/Link/InternalLink";
-import { PricingCard } from "../../../../components/PricingCard";
+import { InternalLink } from "../../../../../components/Link/InternalLink";
+import { PricingCard } from "../../../../../components/PricingCard";
 
 export const runtime = "edge";
 
 export default function Page() {
   return (
-    <div className={styles.layoutContainer}>
+    <div>
       <div className={styles.plansContainer}>
         <PricingCard
           features={[

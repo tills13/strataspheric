@@ -12,17 +12,24 @@ const domain =
     ? "http://localhost:3000"
     : "https://strataspheric.app";
 
-export async function requestPasswordResetAction(fd: FormData) {
+export interface RequestResetPasswordFormState {
+  emailSent?: boolean;
+}
+
+export async function requestPasswordResetActionReducer(
+  state: RequestResetPasswordFormState,
+  fd: FormData,
+) {
   const emailAddress = fd.get("email_address");
 
   if (typeof emailAddress !== "string" || emailAddress === "") {
-    throw new Error("invalid");
+    return state;
   }
 
   const u = await getUser(emailAddress);
 
   if (!u) {
-    return;
+    return state;
   }
 
   let token = await getUserPasswordResetToken({ userId: u.id });
@@ -31,7 +38,7 @@ export async function requestPasswordResetAction(fd: FormData) {
     token = await createUserPasswordResetToken({ userId: u.id });
   }
 
-  await sendEmail(
+  const r = await sendEmail(
     u.email,
     "Strataspheric: Password Reset",
     `
@@ -41,6 +48,10 @@ export async function requestPasswordResetAction(fd: FormData) {
     To reset your password, <a href="${domain}/forgot?token=${token.token}">click here</a>.
   `,
   );
+
+  const rJson = await r.json();
+
+  return { emailSent: !!rJson.id };
 }
 
 export async function resetPasswordAction(fd: FormData) {

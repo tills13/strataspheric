@@ -1,5 +1,7 @@
-import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../theme.css";
+import { style } from "@vanilla-extract/css";
+
+import { important } from "../../../../../theme";
 
 export const header = style({
   marginBottom: vars.spacing.large,
@@ -16,4 +18,13 @@ export const input = style({
 
 export const submitButton = style({
   width: "100%",
+});
+
+export const submitButtonIcon = style({
+  verticalAlign: "top",
+  fill: important(vars.colors.green),
+});
+
+export const submitPendingContainer = style({
+  textAlign: "center",
 });

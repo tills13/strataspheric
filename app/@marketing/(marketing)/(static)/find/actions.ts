@@ -1,13 +1,12 @@
 "use server";
 
 import { SelectQueryBuilder } from "kysely";
+
 import { Database, Strata, db } from "../../../../../db";
 
 interface State {
-  stratas: Strata[];
+  stratas: Strata[] | undefined;
 }
-
-interface SearchAction {}
 
 export async function findYourStratasActionReducer(
   currentState: State,

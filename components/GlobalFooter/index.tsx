@@ -5,6 +5,7 @@ import * as styles from "./style.css";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 import { Strata } from "../../db";
+import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
 import { GoToStrataButton } from "../GoToStrataButton";
 import { Header } from "../Header";
@@ -12,8 +13,6 @@ import { HeartIcon } from "../Icon/HeartIcon";
 import { ExternalLink } from "../Link/ExternalLink";
 import { Panel } from "../Panel";
 import { Wordmark } from "../Wordmark";
-import { InternalLink } from "../Link/InternalLink";
-import { Button } from "../Button";
 
 interface Props {
   sessionStratas: Strata[];
@@ -31,7 +30,7 @@ export function GlobalFooter({ sessionStratas }: Props) {
       <div>
         <ExternalLink
           className={styles.footerWordMark}
-          href="https://strataspheric.app"
+          href={baseUrl + "/"}
           target="_blank"
         >
           <Wordmark />
@@ -76,11 +75,11 @@ export function GlobalFooter({ sessionStratas }: Props) {
             ))}
           </ElementGroup>
         ) : (
-          <InternalLink href="/find">
+          <ExternalLink href={baseUrl + "/find"}>
             <Button className={styles.continuePanelListButton}>
               Find Your Stratas
             </Button>
-          </InternalLink>
+          </ExternalLink>
         )}
       </Panel>
     </footer>
