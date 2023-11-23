@@ -1,11 +1,10 @@
 import * as styles from "./style.css";
 
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 import { classnames } from "../../utils/classnames";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  children: React.ReactNode[];
   placeholderEnabled?: boolean;
   compact?: boolean;
 }
@@ -16,7 +15,7 @@ export function Select({
   placeholder,
   placeholderEnabled,
   ...delegateProps
-}: Props) {
+}: PropsWithChildren<Props>) {
   return (
     <select
       className={classnames(styles.baseSelect, className)}

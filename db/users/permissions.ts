@@ -1,4 +1,4 @@
-// actions: create, edit, delete
+// actions: create, edit, delete, view
 
 const roles = [
   "administrator",

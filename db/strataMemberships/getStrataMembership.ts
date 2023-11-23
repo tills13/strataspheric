@@ -2,7 +2,7 @@ import { StrataMembership, db } from "..";
 
 export async function getStrataMembership(
   strataId: string,
-  includePending = false,
+  showAll = false,
 ): Promise<StrataMembership[]> {
   let query = db
     .selectFrom("strata_memberships")
@@ -11,7 +11,7 @@ export async function getStrataMembership(
     .orderBy("unit")
     .orderBy("name asc");
 
-  if (includePending) {
+  if (!showAll) {
     query = query.where("strata_memberships.role", "!=", "pending");
   }
 

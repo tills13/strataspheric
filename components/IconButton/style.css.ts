@@ -1,24 +1,37 @@
 import { vars } from "../../app/theme.css";
 import * as buttonProps from "../Button/style.css";
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 
 import { padding } from "../../theme";
 
 export const base = style([
   buttonProps.base,
   {
-    padding: padding("8px", "0"),
-    height: vars.sizes.normal,
-    width: vars.sizes.normal,
-    textAlign: "center",
+    display: "inline-flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 ]);
 
-export const compact = style([
-  base,
-  {
+export const sizeVariants = styleVariants({
+  small: {
     height: vars.sizes.small,
     width: vars.sizes.small,
-    padding: padding("4px", "0"),
   },
-]);
+  normal: {
+    height: vars.sizes.normal,
+    width: vars.sizes.normal,
+  },
+  large: {
+    height: vars.sizes.large,
+    width: vars.sizes.large,
+  },
+  xl: {
+    height: vars.sizes.xl,
+    width: vars.sizes.xl,
+  },
+  xxl: {
+    height: vars.sizes.xxl,
+    width: vars.sizes.xxl,
+  },
+});

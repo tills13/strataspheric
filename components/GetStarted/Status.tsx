@@ -45,20 +45,20 @@ export function GetStartedStatus({ strata }: Props) {
   return (
     <div>
       <Header className={styles.statusPageTitle} priority={2}>
-        Creating custom instance...
+        Creating your strata...
       </Header>
 
       {domainStatus === "active" ? (
         <p className={styles.statusPageText}>
           <CircleCheckIcon className={styles.statusPageCheckIcon} /> your strata
-          is ready to go! Click the button below to go to your strata.
+          is ready to go! Click the button below to continue.
         </p>
       ) : (
         <p className={styles.statusPageText}>
           <LoadingIcon className={styles.statusPageLoadingIcon} /> We are
-          initializing and setting up {domain} for you. This may take a few
-          minutes. You can stay or come back to this page later to check on the
-          status of this process.
+          initializing and setting up <b>{strata.name}</b> for you. This may
+          take a few minutes. You can stay and wait or come back to this page
+          later to check on the status of this process.
         </p>
       )}
 

@@ -3,6 +3,17 @@ import { style } from "@vanilla-extract/css";
 
 import { padding } from "../../../../theme";
 
+export const dashboardLayoutContainer = style({
+  display: "grid",
+  gridTemplateRows: "min-content auto",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      overflow: "hidden",
+    },
+  },
+});
+
 export const pageContainer = style({
   padding: vars.spacing.normal,
 });

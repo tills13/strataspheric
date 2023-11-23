@@ -1,4 +1,4 @@
-import {} from "@vanilla-extract/css";
+import "@vanilla-extract/css";
 
 export function important(value: string): string {
   return `${value} !important`;
@@ -13,7 +13,7 @@ export function padding(
   top: string,
   right: string,
   bottom: string,
-  left: string
+  left: string,
 ): string;
 
 export function padding(
@@ -27,7 +27,7 @@ export function padding(
 
   const [top, right, bottom, left] = args;
 
-  return `${top} $${right} ${bottom} ${left}`;
+  return `${top} ${right} ${bottom} ${left}`;
 }
 
 export function variable(input: string): string {

@@ -1,9 +1,9 @@
 import { D1Database } from "@cloudflare/workers-types";
 import { ColumnType, Insertable, Kysely, Selectable, Updateable } from "kysely";
-// import { D1Dialect } from "kysely-d1";
 
-import { Role } from "./users/permissions";
 import { D1Dialect } from "./d1";
+// import { D1Dialect } from "kysely-d1";
+import { Role } from "./users/permissions";
 
 export interface EventsTable {
   id: string;
@@ -25,6 +25,39 @@ export interface FilesTable {
 
 export type File = Selectable<FilesTable>;
 export type NewFile = Insertable<FilesTable>;
+
+export interface InboxMessagesTable {
+  id: string;
+  strataId: string;
+  threadId: string;
+  fileId: string | null;
+  viewId: string | null;
+  subject: string;
+  message: string;
+  senderUserId: string | null;
+  senderName: string | null;
+  senderEmail: string | null;
+  senderPhoneNumber: string | null;
+  sentAt: ColumnType<string, never, never>;
+  isUnread: ColumnType<0 | 1, never, never>;
+}
+
+export type InboxMessage = Selectable<InboxMessagesTable>;
+export type NewInboxMessage = Insertable<InboxMessagesTable>;
+
+export interface InboxThreadChatsTable {
+  id: string;
+  threadId: string;
+  messageId: string | undefined;
+  chatId: string | undefined;
+  fileId: string | undefined;
+  message: string;
+  userId: string;
+  sentAt: ColumnType<string, never, never>;
+}
+
+export type InboxThreadChat = Selectable<InboxThreadChatsTable>;
+export type NewInboxThreadChat = Insertable<InboxThreadChatsTable>;
 
 export interface StratasTable {
   id: ColumnType<string, string, never>;
@@ -61,6 +94,7 @@ export interface StrataPlansTable {
   id: string;
   strataId: string;
   numSeats: number;
+  enableInbox: 0 | 1;
 }
 
 export type StrataPlan = Selectable<StrataPlansTable>;
@@ -113,6 +147,8 @@ export type NewWidgetFile = Insertable<WidgetFilesTable>;
 export interface Database {
   events: EventsTable;
   files: FilesTable;
+  inbox_thread_chats: InboxThreadChatsTable;
+  inbox_messages: InboxMessagesTable;
   strata_memberships: StrataMembershipsTable;
   strata_plans: StrataPlansTable;
   strata_widgets: StrataWidgetsTable;

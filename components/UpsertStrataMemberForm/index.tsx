@@ -5,7 +5,7 @@ import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
 import { Input } from "../Input";
-import { Select } from "../Select";
+import { StrataRoleSelect } from "../StrataRoleSelect";
 
 interface Props {
   className?: string;
@@ -54,12 +54,10 @@ export function UpsertStrataMemberForm({
           defaultValue={strataMembership?.phoneNumber || undefined}
         />
 
-        <Select name="role" defaultValue={strataMembership?.role || "owner"}>
-          <option value="owner">Owner</option>
-          <option value="treasurer">Treasurer</option>
-          <option value="vice_president">Vice President</option>
-          <option value="president">President</option>
-        </Select>
+        <StrataRoleSelect
+          name="role"
+          defaultValue={strataMembership?.role || "owner"}
+        />
 
         <Button type="submit">Add Member</Button>
       </ElementGroup>

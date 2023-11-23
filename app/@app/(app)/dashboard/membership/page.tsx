@@ -9,10 +9,11 @@ import { ApproveStrataMembershipButton } from "../../../../../components/Approve
 import { Checkbox } from "../../../../../components/Checkbox";
 import { Header } from "../../../../../components/Header";
 import { RemoveButton } from "../../../../../components/RemoveButton";
+import { StrataRoleSelect } from "../../../../../components/StrataRoleSelect";
 import { UpsertStrataMemberForm } from "../../../../../components/UpsertStrataMemberForm";
 import { StrataMembership } from "../../../../../db";
-import { getPlan } from "../../../../../db/plans/getPlan";
 import { getStrataMembership } from "../../../../../db/strataMemberships/getStrataMembership";
+import { getStrataPlan } from "../../../../../db/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../db/stratas/getStrata";
 import { can } from "../../../../../db/users/permissions";
 import { pluralize } from "../../../../../utils/pluralize";
@@ -20,6 +21,7 @@ import {
   approveStrataMembershipAction,
   createStrataMemberAction,
   deleteStrataMemberAction,
+  updateStrataMemberAction,
 } from "./actions";
 
 export const runtime = "edge";
@@ -32,7 +34,7 @@ export default async function Page() {
     notFound();
   }
 
-  const plan = await getPlan(strata.id);
+  const plan = await getStrataPlan(strata.id);
 
   const canSeeMemberDetails = !!session;
   const canDelete = can(session?.user, "stratas.memberships.delete");
@@ -107,6 +109,20 @@ export default async function Page() {
                               membership.userId,
                             )}
                           />
+                        ) : canUpsert ? (
+                          <form
+                            action={updateStrataMemberAction.bind(
+                              undefined,
+                              strata.id,
+                              membership.userId,
+                            )}
+                          >
+                            <StrataRoleSelect
+                              name="role"
+                              defaultValue={membership.role || "owner"}
+                              submitOnChange
+                            />
+                          </form>
                         ) : (
                           membership.role
                         )}

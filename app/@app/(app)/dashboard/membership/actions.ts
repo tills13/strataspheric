@@ -6,6 +6,7 @@ import { createStrataMembership } from "../../../../../db/strataMemberships/crea
 import { deleteStrataMember } from "../../../../../db/strataMemberships/deleteStrataMember";
 import { updateStrataMembership } from "../../../../../db/strataMemberships/updateStrataMembership";
 import { createUser } from "../../../../../db/users/createUser";
+import { getUser } from "../../../../../db/users/getUser";
 
 export async function deleteStrataMemberAction(
   strataId: string,
@@ -42,10 +43,14 @@ export async function createStrataMemberAction(formData: FormData) {
     throw new Error("invalid fields");
   }
 
-  const { id: userId } = await createUser({ email, password });
+  let userId: string;
+  const existingUser = await getUser(email);
 
-  if (!userId) {
-    throw new Error("nope");
+  if (existingUser) {
+    userId = existingUser.id;
+  } else {
+    const newUser = await createUser({ email, password });
+    userId = newUser.id;
   }
 
   await createStrataMembership({
@@ -56,6 +61,38 @@ export async function createStrataMemberAction(formData: FormData) {
     phoneNumber,
     unit,
     role: role as any,
+  });
+
+  revalidatePath("/dashboard/membership");
+}
+
+export async function updateStrataMemberAction(
+  strataId: string,
+  userId: string,
+  formData: FormData,
+) {
+  const email = formData.get("email");
+  const name = formData.get("name");
+  const phoneNumber = formData.get("phone_number");
+  const unit = formData.get("unit");
+  const role = formData.get("role");
+
+  if (
+    (email && typeof email !== "string") ||
+    (name && typeof name !== "string") ||
+    (phoneNumber && typeof phoneNumber !== "string") ||
+    (unit && typeof unit !== "string") ||
+    (role && typeof role !== "string")
+  ) {
+    throw new Error("invalid fields");
+  }
+
+  await updateStrataMembership(strataId, userId, {
+    ...(email && { email }),
+    ...(name && { name }),
+    ...(phoneNumber && { phoneNumber }),
+    ...(unit && { unit }),
+    ...(role && { role }),
   });
 
   revalidatePath("/dashboard/membership");

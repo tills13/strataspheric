@@ -7,13 +7,19 @@ import { classnames } from "../../utils/classnames";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   className?: string;
-  compact?: boolean;
+  size?: keyof typeof styles.sizeVariants;
 }
 
-export function IconButton({ children, className, compact, ...rest }: Props) {
+export function IconButton({ children, className, size, ...rest }: Props) {
+  let sizeClassName = styles.sizeVariants.normal;
+
+  if (size && styles.sizeVariants[size]) {
+    sizeClassName = styles.sizeVariants[size];
+  }
+
   return (
     <button
-      className={classnames(compact ? styles.compact : styles.base, className)}
+      className={classnames(styles.base, sizeClassName, className)}
       {...rest}
     >
       {children}

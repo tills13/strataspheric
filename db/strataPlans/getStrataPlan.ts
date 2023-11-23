@@ -1,6 +1,6 @@
 import { StrataPlan, db } from "..";
 
-export function getPlan(strataId: string): Promise<StrataPlan> {
+export function getStrataPlan(strataId: string): Promise<StrataPlan> {
   return db
     .selectFrom("strata_plans")
     .selectAll()

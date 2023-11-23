@@ -1,3 +1,5 @@
+import * as styles from "./style.css";
+
 import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
@@ -17,10 +19,10 @@ export default async function Layout({ children }) {
   }
 
   return (
-    <>
+    <div className={styles.dashboardLayoutContainer}>
       <DashboardHeader />
 
       {children}
-    </>
+    </div>
   );
 }

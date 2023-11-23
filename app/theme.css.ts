@@ -23,6 +23,7 @@ export const vars = createGlobalTheme(":root", {
   },
 
   sizes: {
+    xxs: "12px",
     xs: "24px",
     small: "32px",
     normal: "40px",

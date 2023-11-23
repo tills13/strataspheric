@@ -18,7 +18,7 @@ export function RemoveButton({ onClick }: Props) {
           onClick();
         });
       }}
-      compact
+      size="small"
     >
       <RemoveIcon />
     </IconButton>

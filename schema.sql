@@ -100,3 +100,37 @@ CREATE TABLE
         isPaid boolean DEFAULT FALSE,
         primary key (strataId, userId)
     );
+
+DROP TABLE IF EXISTS inbox_messages;
+
+CREATE TABLE
+    IF NOT EXISTS inbox_messages (
+        id text,
+        strataId text,
+        threadId text,
+        fileId text,
+        viewId text,
+        subject text,
+        message text,
+        senderUserId text,
+        senderName text,
+        senderEmail text,
+        senderPhoneNumber text,
+        sentAt text DEFAULT CURRENT_TIMESTAMP,
+        isUnread boolean DEFAULT TRUE
+    );
+
+DROP TABLE IF EXISTS inbox_thread_chats;
+
+CREATE TABLE
+    IF NOT EXISTS inbox_thread_chats (
+        id text,
+        threadId text,
+        messageId text,
+        chatId text,
+        fileId text,
+        message text,
+        userId text,
+        sentAt text DEFAULT CURRENT_TIMESTAMP,
+        primary key (id)
+    );

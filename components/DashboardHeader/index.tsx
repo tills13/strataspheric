@@ -14,6 +14,7 @@ type LinkWithPermissions = [href: string, label: string, permissions: string[]];
 const links: Array<Link | LinkWithPermissions> = [
   ["/dashboard", "Dashboard"],
   ["/dashboard/membership", "Membership"],
+  ["/dashboard/inbox", "Inbox", ["stratas.edit"]],
   ["/dashboard/settings", "Settings", ["stratas.edit"]],
 ];
 
@@ -24,7 +25,10 @@ export function DashboardHeader() {
   return (
     <div className={styles.subheader}>
       {links.map(([href, label, permissions = []]) => {
-        const isActive = pathname === href;
+        const isActive =
+          href === "/dashboard"
+            ? pathname === href
+            : pathname?.startsWith(href);
 
         if (permissions && !can(session?.user, ...permissions)) {
           return null;

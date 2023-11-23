@@ -19,7 +19,7 @@ export default async function RootMarketingLayout({
   return (
     <>
       <GlobalDashboardHeader session={session} strata={strata} />
-      <div>{children}</div>
+      {children}
     </>
   );
 }
