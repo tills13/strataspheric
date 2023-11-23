@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { getFiles } from "../../../../../db/files/getFiles";
 import { getCurrentStrata } from "../../../../../db/stratas/getStrata";
 
+export const runtime = "edge";
+
 export default async function Page() {
   const strata = await getCurrentStrata();
 
