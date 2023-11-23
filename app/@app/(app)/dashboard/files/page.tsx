@@ -17,7 +17,7 @@ export default async function Page() {
   const files = await getFiles(strata.id);
 
   return (
-    <div>
+    <div className={styles.filesTableContainer}>
       <table className={styles.filesTable}>
         <tbody>
           {files.map((file) => (

@@ -3,7 +3,20 @@ import { style } from "@vanilla-extract/css";
 
 import { border, padding } from "../../../../../theme";
 
-export const filesTable = style({});
+export const filesTableContainer = style({
+  width: "100vw",
+  overflow: "auto",
+  marginBottom: vars.spacing.large,
+  "@media": {
+    [breakpoints.tablet]: {
+      width: "100%",
+    },
+  },
+});
+
+export const filesTable = style({
+  minWidth: "100%",
+});
 
 export const filesTableRow = style({
   selectors: {
