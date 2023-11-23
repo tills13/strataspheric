@@ -6,6 +6,7 @@ export const subheader = style({
   gap: vars.spacing.small,
   padding: `${vars.spacing.small} ${vars.spacing.normal}`,
   borderBottom: `1px solid ${vars.colors.grey100}`,
+  overflow: "auto",
 });
 
 export const subheaderLink = style({
