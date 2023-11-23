@@ -23,7 +23,7 @@ export function GlobalHeaderMobileActions({ session, strata }: Props) {
     <>
       <div className={styles.globalMobileHeaderActions}>
         <IconButton onClick={() => setShowMenu(!showMenu)}>
-          <MenuIcon />
+          <MenuIcon className={styles.hamburgerIcon} />
         </IconButton>
       </div>
       {showMenu && (

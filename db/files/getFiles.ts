@@ -1,5 +1,9 @@
 import { db } from "..";
 
-export function getFiles() {
-  return db.selectFrom("files").selectAll().execute();
+export function getFiles(strataId: string) {
+  return db
+    .selectFrom("files")
+    .selectAll()
+    .where("files.strataId", "=", strataId)
+    .execute();
 }

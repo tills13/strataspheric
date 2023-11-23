@@ -20,6 +20,7 @@ export interface FilesTable {
   name: string;
   description: string;
   path: string;
+  strataId: string;
   createdAt: ColumnType<string, never, never>;
 }
 

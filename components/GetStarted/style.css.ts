@@ -91,6 +91,7 @@ export const statusPageText = style({
 
 export const statusPageStatusIcon = style({
   verticalAlign: "top",
+  height: "24px",
 });
 
 export const statusPageLoadingIcon = style([statusPageStatusIcon, {}]);

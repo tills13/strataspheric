@@ -13,6 +13,7 @@ type LinkWithPermissions = [href: string, label: string, permissions: string[]];
 
 const links: Array<Link | LinkWithPermissions> = [
   ["/dashboard", "Dashboard"],
+  ["/dashboard/files", "Files"],
   ["/dashboard/membership", "Membership"],
   ["/dashboard/inbox", "Inbox", ["stratas.edit"]],
   ["/dashboard/settings", "Settings", ["stratas.edit"]],

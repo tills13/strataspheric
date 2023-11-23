@@ -47,6 +47,7 @@ export default async function Page({
           strata.id,
           threadId,
         )}
+        strataId={strata.id}
         threadId={threadId}
       />
       <InboxThreadChats
@@ -54,6 +55,7 @@ export default async function Page({
           undefined,
           threadId,
         )}
+        strataId={strata.id}
         threadId={threadId}
       />
     </div>

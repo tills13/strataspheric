@@ -38,6 +38,10 @@ export const globalMobileHeaderActions = style({
   },
 });
 
+export const hamburgerIcon = style({
+  height: "24px",
+});
+
 export const globalMobileHeaderModalActions = style({
   display: "flex",
   flexDirection: "column",

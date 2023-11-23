@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { auth } from "../../../../../../auth";
 import { SendInboxMessageForm } from "../../../../../../components/SendInboxMessageForm";
+import { getFiles } from "../../../../../../db/files/getFiles";
 import { getCurrentStrata } from "../../../../../../db/stratas/getStrata";
 import { sendInboxMessageAction } from "../actions";
 
@@ -17,10 +18,13 @@ export default async function Page() {
     notFound();
   }
 
+  const files = await getFiles(strata.id);
+
   return (
     <div className={styles.pageContainer}>
       <div className={styles.formContainer}>
         <SendInboxMessageForm
+          availableFileAttachments={files}
           isFromNonMember={!u?.user}
           sendInboxMessageAction={sendInboxMessageAction.bind(
             undefined,

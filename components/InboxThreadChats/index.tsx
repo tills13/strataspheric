@@ -1,6 +1,7 @@
 import * as styles from "./style.css";
 
 import { auth } from "../../auth";
+import { getFiles } from "../../db/files/getFiles";
 import { getInboxThreadChats } from "../../db/inbox/getInboxThreadChats";
 import { getInboxThreadMessages } from "../../db/inbox/getInboxThreadMessages";
 import { classnames } from "../../utils/classnames";
@@ -14,12 +15,14 @@ import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
 interface Props {
   className?: string;
   sendInboxThreadChatAction: (fd: FormData) => void;
+  strataId: string;
   threadId: string;
 }
 
 export async function InboxThreadChats({
   className,
   sendInboxThreadChatAction,
+  strataId,
   threadId,
 }: Props) {
   const session = await auth();
@@ -32,6 +35,7 @@ export async function InboxThreadChats({
     );
   }
 
+  const files = await getFiles(strataId);
   const thread = await getInboxThreadMessages(threadId);
   const chats = await getInboxThreadChats(threadId);
 
@@ -103,6 +107,7 @@ export async function InboxThreadChats({
         </div>
 
         <SendInboxThreadChatForm
+          availableFileAttachments={files}
           sendInboxThreadChatAction={sendInboxThreadChatAction}
         />
       </div>

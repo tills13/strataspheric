@@ -40,6 +40,7 @@ CREATE TABLE
         name text,
         description text,
         path text,
+        strataId text,
         createdAt text DEFAULT CURRENT_TIMESTAMP
     );
 

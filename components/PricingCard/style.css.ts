@@ -69,6 +69,7 @@ export const planFeaturesFeatureIcon = style({
   verticalAlign: "top",
   marginLeft: `calc(-1 * ${vars.spacing.large})`,
   marginRight: "12px",
+  height: "24px",
 });
 export const planFeaturesFeatureIconIncluded = style([
   planFeaturesFeatureIcon,

@@ -1,6 +1,10 @@
 import * as styles from "./style.css";
 
+import { ComponentProps } from "react";
+
 import { auth } from "../../auth";
+import { InboxMessage } from "../../db";
+import { getFiles } from "../../db/files/getFiles";
 import { getInboxThreadMessages } from "../../db/inbox/getInboxThreadMessages";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { ShareIcon } from "../Icon/ShareIcon";
@@ -12,25 +16,21 @@ import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
 interface Props {
   sendInboxThreadChatAction: (fd: FormData) => void;
   sendNewMessageAction: (fd: FormData) => void;
+  strataId: string;
   threadId: string;
 }
 
 export async function InboxMessageThread({
   sendNewMessageAction,
   sendInboxThreadChatAction,
+  strataId,
   threadId,
 }: Props) {
-  const session = await auth();
+  const files = await getFiles(strataId);
   const messages = await getInboxThreadMessages(threadId);
+  const message0 = messages[0];
 
-  const {
-    senderName,
-    senderEmail,
-    senderPhoneNumber,
-    subject,
-    sentAt,
-    viewId,
-  } = messages[0];
+  const { senderName, senderEmail, subject, sentAt, viewId } = message0;
 
   return (
     <div className={styles.inboxMessageThreadContainer}>
@@ -86,15 +86,16 @@ export async function InboxMessageThread({
       ))}
 
       <SendInboxMessageForm
+        availableFileAttachments={files}
         className={styles.newMessageForm}
-        isFromNonMember={!session}
+        isFromNonMember={!message0.senderUserId}
         sendInboxMessageAction={sendNewMessageAction}
         showHeaders={false}
         showSubjectInput={false}
-        {...(!session && {
-          defaultEmail: senderEmail ?? undefined,
-          defaultName: senderName ?? undefined,
-          defaultPhoneNumber: senderPhoneNumber ?? undefined,
+        {...(!message0.senderUserId && {
+          defaultEmail: message0.senderEmail ?? undefined,
+          defaultName: message0.senderName ?? undefined,
+          defaultPhoneNumber: message0.senderPhoneNumber ?? undefined,
         })}
       />
     </div>

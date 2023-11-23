@@ -1,14 +1,19 @@
 import * as styles from "./style.css";
 
+import { ComponentProps } from "react";
+
 import { getFiles } from "../../db/files/getFiles";
+import { getCurrentStrata } from "../../db/stratas/getStrata";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
+import { FileSelect } from "../FileSelect";
 import { Header } from "../Header";
 import { Input } from "../Input";
 import { Select } from "../Select";
 import { TextArea } from "../TextArea";
 
 interface Props {
+  availableFileAttachments: ComponentProps<typeof FileSelect>["files"];
   className?: string;
   defaultName?: string;
   defaultEmail?: string;
@@ -19,7 +24,8 @@ interface Props {
   showSubjectInput?: boolean;
 }
 
-export async function SendInboxMessageForm({
+export function SendInboxMessageForm({
+  availableFileAttachments,
   className,
   defaultName,
   defaultEmail,
@@ -29,8 +35,6 @@ export async function SendInboxMessageForm({
   showHeaders: showHeaders = true,
   showSubjectInput = true,
 }: Props) {
-  const files = await getFiles();
-
   return (
     <form
       className={classnames(styles.form, className)}
@@ -87,14 +91,10 @@ export async function SendInboxMessageForm({
         required
       />
 
-      <Select className={styles.formInput} name="fileId">
-        <option>Attach a File</option>
-        {files.map((file) => (
-          <option key={file.id} value={file.id}>
-            {file.name}
-          </option>
-        ))}
-      </Select>
+      <FileSelect
+        className={styles.formInput}
+        files={availableFileAttachments}
+      />
 
       <Button className={styles.formButton} type="submit" variant="primary">
         Send Message

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { createEvent } from "../../../../db/events/createEvent";
 import { createFile } from "../../../../db/files/createFile";
+import { getCurrentStrata } from "../../../../db/stratas/getStrata";
 import { addEventToWidget } from "../../../../db/widgets/addEventToWidget";
 import { addFileToWidget } from "../../../../db/widgets/addFileToWidget";
 import { createWidget } from "../../../../db/widgets/createWidget";
@@ -42,12 +43,15 @@ export async function createFileAction(formData: FormData) {
   const description = formData.get("description") || "";
   const file = formData.get("file");
 
+  const { id: strataId } = (await getCurrentStrata()) || {};
+
   if (
     typeof widgetId !== "string" ||
     typeof name !== "string" ||
     name === "" ||
     typeof description !== "string" ||
-    file === null
+    file === null ||
+    !strataId
   ) {
     throw new Error("invalid fields");
   }
@@ -56,6 +60,7 @@ export async function createFileAction(formData: FormData) {
     name,
     description,
     path: (file as File).name,
+    strataId,
   });
 
   if (!fileId) {

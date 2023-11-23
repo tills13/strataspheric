@@ -92,7 +92,11 @@ export async function submitGetStarted(fd: FormData) {
   await createWidget({ strataId, title: "Documents", type: "file" });
   await createWidget({ strataId, title: "Events", type: "event" });
 
-  await createPlan({ strataId, numSeats: parseInt(numSeats, 10) });
+  await createPlan({
+    enableInbox: 1,
+    strataId,
+    numSeats: parseInt(numSeats, 10),
+  });
 
   if (process.env.NODE_ENV !== "development") {
     const [createDnsRecordResponse] = await createRecord(
