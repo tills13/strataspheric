@@ -9,14 +9,11 @@ import { Select } from "../Select";
 
 interface Props {
   createWidget: (formData: FormData) => void;
-  strataId: string;
 }
 
-export function NewWidgetForm({ createWidget, strataId }: Props) {
+export function NewWidgetForm({ createWidget }: Props) {
   return (
     <form action={createWidget} className={styles.newWidgetForm}>
-      <input name="strata_id" type="hidden" defaultValue={strataId} />
-
       <ElementGroup orientation="column" gap="small">
         <Input name="title" type="title" placeholder="Title" />
 

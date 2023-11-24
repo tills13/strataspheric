@@ -18,11 +18,5 @@ export default async function Layout({ children }) {
     redirect("/");
   }
 
-  return (
-    <div className={styles.dashboardLayoutContainer}>
-      <DashboardHeader />
-
-      {children}
-    </div>
-  );
+  return <div className={styles.dashboardLayoutContainer}>{children}</div>;
 }

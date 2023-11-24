@@ -3,34 +3,50 @@
 import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { startTransition } from "react";
 
-import { StrataWidget } from "../../db";
 import { can } from "../../db/users/permissions";
 import { classnames } from "../../utils/classnames";
+import { DropdownActions, filterIsAction } from "../DropdownActions";
 import { Header } from "../Header";
-import { RemoveButton } from "../RemoveButton";
+import { DeleteIcon } from "../Icon/DeleteIcon";
 
 export interface Props {
+  additionalActions?: React.ComponentProps<typeof DropdownActions>["actions"];
   className?: string;
-  deleteWidget?: (widgetId: string) => void;
-  widget: StrataWidget;
+  deleteWidget?: () => void;
+  widgetTitle?: React.ReactNode;
 }
 
 export function AbstractWidget({
+  additionalActions = [],
   className,
   deleteWidget,
   children,
-  widget,
+  widgetTitle,
 }: React.PropsWithChildren<Props>) {
   const { data: session } = useSession();
+
+  const widgetActions = [
+    ...additionalActions,
+    can(session?.user, "stratas.widgets.delete") &&
+      deleteWidget && {
+        label: "Delete Widget",
+        action: () =>
+          startTransition(() => {
+            deleteWidget();
+          }),
+        icon: <DeleteIcon />,
+      },
+  ].filter(filterIsAction);
 
   return (
     <div className={classnames(styles.abstractWidget, className)}>
       <div className={styles.abstractWidgetHeader}>
-        <Header priority={2}>{widget.title}</Header>
-        {deleteWidget && can(session?.user, "stratas.widgets.delete") && (
-          <RemoveButton onClick={deleteWidget.bind(undefined, widget.id)} />
+        {widgetTitle && <Header priority={2}>{widgetTitle}</Header>}
+
+        {widgetActions.length !== 0 && (
+          <DropdownActions actions={widgetActions} />
         )}
       </div>
       <div className={styles.abstractWidgetBody}>{children}</div>

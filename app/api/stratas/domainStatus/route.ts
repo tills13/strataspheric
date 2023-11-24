@@ -36,6 +36,9 @@ export async function GET(req: Request) {
     } as GetDomainStatusResponseData),
     {
       status: 200,
+      headers: {
+        "content-type": "application/json",
+      },
     },
   );
 }

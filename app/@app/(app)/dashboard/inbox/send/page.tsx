@@ -25,7 +25,7 @@ export default async function Page() {
       <div className={styles.formContainer}>
         <SendInboxMessageForm
           availableFileAttachments={files}
-          isFromNonMember={!u?.user}
+          showContactInformationFields={!u?.user}
           sendInboxMessageAction={sendInboxMessageAction.bind(
             undefined,
             strata.id,

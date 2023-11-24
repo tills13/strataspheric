@@ -3,11 +3,13 @@ import { style } from "@vanilla-extract/css";
 
 import { border, padding } from "../../theme";
 
-export const inboxMessagesContainer = style({
+export const inboxMessages = style({
   width: "100%",
   height: "100%",
   overflow: "hidden",
+});
 
+export const inboxMessagesContainer = style({
   "@media": {
     [breakpoints.tablet]: {
       display: "table",

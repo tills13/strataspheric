@@ -1,4 +1,9 @@
+"use client";
+
 import * as styles from "./style.css";
+
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 import { StrataWidget } from "../../db";
 import { can } from "../../db/users/permissions";
@@ -6,38 +11,54 @@ import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
 } from "../AbstractWidget";
-import { Header } from "../Header";
+import { AddIcon } from "../Icon/AddIcon";
+import { Modal } from "../Modal";
 import { NewEventForm } from "../NewEventForm";
 import { EventWidgetList } from "./EventWidgetList";
-import { getWidgetEvents } from "../../db/widgets/getWidgetEvents";
-import { auth } from "../../auth";
 
 interface Props extends AbstractWidgetProps {
+  initialEvents: React.ComponentProps<typeof EventWidgetList>["events"];
   createEvent: (fd: FormData) => void;
+  deleteEvent: (eventId: string) => void;
   widget: StrataWidget;
 }
 
-export async function EventWidget({
+export function EventWidget({
+  initialEvents,
   createEvent,
+  deleteEvent,
   deleteWidget,
   widget,
 }: Props) {
-  const session = await auth();
-  const events = await getWidgetEvents(widget.id, 10, 0);
+  const { data: session } = useSession();
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   return (
     <AbstractWidget
+      additionalActions={[
+        can(session?.user, "stratas.events.create") && {
+          label: "Add Event",
+          action: () => setShowCreateModal(true),
+          icon: <AddIcon />,
+        },
+      ]}
       className={styles.eventWidget}
       deleteWidget={deleteWidget}
-      widget={widget}
+      widgetTitle={widget.title}
     >
-      <EventWidgetList events={events} />
+      <EventWidgetList
+        deleteEvent={deleteEvent}
+        events={initialEvents}
+        widgetId={widget.id}
+      />
 
-      {can(session?.user, "stratas.events.create") && (
-        <div className={styles.eventWidgetFooter}>
-          <Header priority={4}>New Event</Header>
-          <NewEventForm createEvent={createEvent} widgetId={widget.id} />
-        </div>
+      {showCreateModal && (
+        <Modal
+          closeModal={() => setShowCreateModal(false)}
+          title={"Add Event to " + widget.title}
+        >
+          <NewEventForm createEvent={createEvent} />
+        </Modal>
       )}
     </AbstractWidget>
   );

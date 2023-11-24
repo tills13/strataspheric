@@ -56,6 +56,7 @@ export const message = style({
 });
 
 export const messageHeader = style({
+  position: "relative",
   padding: vars.spacing.normal,
   "@media": {
     [breakpoints.tablet]: {
@@ -65,8 +66,28 @@ export const messageHeader = style({
   },
 });
 
+export const messageHeaderActions = style({
+  display: "flex",
+  alignItems: "center",
+  gap: vars.spacing.small,
+});
+
 export const messageHeaderSentAt = style({
   color: vars.colors.grey500,
+});
+
+export const chatActionButton = style({
+  position: "absolute",
+  right: vars.spacing.normal,
+  top: vars.spacing.normal,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      position: "relative",
+      top: "unset",
+      right: "unset",
+    },
+  },
 });
 
 export const messageSender = style({
@@ -80,15 +101,15 @@ export const messageText = style({
   whiteSpace: "pre-wrap",
 });
 
-export const messageChatForm = style({
-  padding: vars.spacing.normal,
-});
+export const messageChatForm = style({});
 
 export const newMessageForm = style({
   padding: vars.spacing.normal,
 });
 
 export const messageFile = style({
+  display: "flex",
+  gap: vars.spacing.small,
   padding: vars.spacing.small,
   backgroundColor: "rgba(0, 0, 0, 0.05)",
 });
@@ -96,4 +117,10 @@ export const messageFile = style({
 export const messageFileAttachmentIcon = style({
   height: "24px",
   verticalAlign: "top",
+});
+
+export const modalBodyClassName = style({
+  overflow: "hidden",
+  display: "grid",
+  gridTemplateRows: "auto min-content",
 });

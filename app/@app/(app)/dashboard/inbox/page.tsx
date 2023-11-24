@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
+import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { InboxMessages } from "../../../../../components/InboxMessages";
 import { getInboxMessages } from "../../../../../db/inbox/getInboxMessages";
 // import { getStrataPlan } from "../../../../../db/strataPlans/getStrataPlan";
@@ -29,8 +30,9 @@ export default async function Page() {
   const messages = await getInboxMessages(strata.id);
 
   return (
-    <div>
+    <>
+      <DashboardHeader />
       <InboxMessages messages={messages} />
-    </div>
+    </>
   );
 }

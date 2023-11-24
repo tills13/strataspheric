@@ -1,4 +1,3 @@
-import { message } from "../../../../../../components/InboxMessageThread/style.css";
 import * as styles from "./style.css";
 
 import { notFound, redirect } from "next/navigation";
@@ -47,15 +46,14 @@ export default async function Page({
           strata.id,
           threadId,
         )}
-        strataId={strata.id}
         threadId={threadId}
       />
       <InboxThreadChats
-        sendInboxThreadChatAction={sendInboxThreadChatAction.bind(
+        sendInboxThreadChat={sendInboxThreadChatAction.bind(
           undefined,
           threadId,
+          undefined,
         )}
-        strataId={strata.id}
         threadId={threadId}
       />
     </div>

@@ -11,6 +11,7 @@ export const abstractWidget = style({
   // color: vars.colors.white,
   borderRadius: vars.borderRadius,
   border: `2px solid ${vars.colors.borderDefault}`,
+  overflow: "hidden",
 });
 
 export const abstractWidgetHeader = style({

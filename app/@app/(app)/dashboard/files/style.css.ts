@@ -1,7 +1,7 @@
 import { breakpoints, vars } from "../../../../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { border, padding } from "../../../../../theme";
+import { padding } from "../../../../../theme";
 
 export const filesTableContainer = style({
   width: "100vw",
@@ -16,6 +16,7 @@ export const filesTableContainer = style({
 
 export const filesTable = style({
   minWidth: "100%",
+  borderSpacing: 0,
 });
 
 export const filesTableRow = style({
@@ -28,5 +29,13 @@ export const filesTableRow = style({
 
 export const filesTableCell = style({
   padding: padding(vars.spacing.small, vars.spacing.normal),
+  textAlign: "left",
   whiteSpace: "nowrap",
 });
+
+export const descriptionCell = style([
+  filesTableCell,
+  {
+    width: "100%",
+  },
+]);

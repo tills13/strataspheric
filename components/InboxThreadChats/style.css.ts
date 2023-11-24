@@ -4,17 +4,16 @@ import { style } from "@vanilla-extract/css";
 import { border } from "../../theme";
 
 export const wrapper = style({
-  position: "relative",
+  display: "grid",
+  gridTemplateRows: "auto min-content",
+  gap: vars.spacing.normal,
+  padding: vars.spacing.normal,
+
   overflow: "hidden",
   borderLeft: border("1px", "solid", vars.colors.borderDefault),
 });
 
 export const chatsContainer = style({
-  display: "grid",
-  gridTemplateRows: "min-content auto min-content",
-  gap: vars.spacing.normal,
-  padding: vars.spacing.normal,
-
   "@media": {
     [breakpoints.tablet]: {
       height: "100%",
@@ -55,44 +54,11 @@ export const chatBubbleTimestamp = style({
   opacity: 0.5,
 });
 
-export const quotedMessageIcon = style({
-  position: "absolute",
-  verticalAlign: "middle",
-  height: "64px",
-  opacity: 0.1,
-  left: 0,
-  top: 0,
-});
-
-export const quotedMessageTimestamp = style([chatBubbleTimestamp]);
-
-export const quotedMessage = style({
-  position: "relative",
-  padding: vars.spacing.normal,
-  marginBottom: vars.spacing.normal,
-  backgroundColor: "rgba(255, 255, 255, 0.1)",
-  selectors: {
-    [`${chatBubble} &`]: {
-      backgroundColor: "rgba(0, 0, 0, 0.05)",
-    },
-    [`${selfChatBubble} &`]: {
-      backgroundColor: "rgba(255, 255, 255, 0.1)",
-    },
-  },
-});
-
 export const chatBubbleHeader = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   padding: vars.spacing.normal,
-  selectors: {
-    [`${quotedMessage} &`]: {
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingTop: 0,
-    },
-  },
 });
 
 export const chatMessage = style({
@@ -108,6 +74,7 @@ export const chatFile = style({
     [`${chatBubble} &`]: {
       backgroundColor: "rgba(0, 0, 0, 0.05)",
     },
+
     [`${selfChatBubble} &`]: {
       backgroundColor: "rgba(255, 255, 255, 0.1)",
     },
@@ -117,4 +84,8 @@ export const chatFile = style({
 export const chatFileAttachmentIcon = style({
   height: "24px",
   verticalAlign: "top",
+});
+
+export const quotedMessage = style({
+  marginBottom: vars.spacing.normal,
 });

@@ -16,6 +16,7 @@ export const dashboardLayoutContainer = style({
 
 export const pageContainer = style({
   padding: vars.spacing.normal,
+  overflow: "auto",
 });
 
 export const pageContainerFullWidthMobile = style([
@@ -34,11 +35,12 @@ export const dashboardWidgetGridContainer = style({
   display: "grid",
   gridTemplateColumns: "repeat(1, 1fr)",
   gap: vars.spacing.normal,
+  overflow: "auto",
 
   "@media": {
     [breakpoints.tablet]: {
       gridTemplateColumns: "repeat(2, 1fr)",
-      gridTemplateRows: "minmax(400px, min-content)",
+      gridAutoRows: "400px",
     },
     [breakpoints.desktop]: {
       gridTemplateColumns: "repeat(3, 1fr)",

@@ -19,7 +19,7 @@ export function IconButton({ children, className, size, ...rest }: Props) {
 
   return (
     <button
-      className={classnames(styles.base, sizeClassName, className)}
+      className={classnames(styles.iconButton, sizeClassName, className)}
       {...rest}
     >
       {children}

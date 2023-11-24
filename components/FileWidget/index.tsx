@@ -1,32 +1,52 @@
+"use client";
+
 import * as abstractWidgetStyles from "../AbstractWidget/style.css";
 import * as styles from "./style.css";
 
-import { auth } from "../../auth";
-import { type File as IFileWidget, StrataWidget } from "../../db";
+import { useSession } from "next-auth/react";
+import React, { useState } from "react";
+
+import { File, StrataWidget } from "../../db";
 import { can } from "../../db/users/permissions";
-import { getWidgetFiles } from "../../db/widgets/getWidgetFiles";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
 } from "../AbstractWidget";
+import { AddFileToWidgetForm } from "../AddFileToWidgetForm";
 import { Header } from "../Header";
+import { AddIcon } from "../Icon/AddIcon";
 import { ExternalLink } from "../Link/ExternalLink";
-import { NewFileForm } from "../NewFileForm";
+import { Modal } from "../Modal";
 
 interface Props extends AbstractWidgetProps {
   createFile: (fd: FormData) => void;
+  deleteFile: (fileId: string) => void;
+  files: File[];
   widget: StrataWidget;
 }
 
-export async function FileWidget({ createFile, deleteWidget, widget }: Props) {
-  const session = await auth();
-  const files = await getWidgetFiles(widget.id, 10, 0);
+export function FileWidget({
+  createFile,
+  deleteFile,
+  deleteWidget,
+  files,
+  widget,
+}: Props) {
+  const { data: session } = useSession();
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   return (
     <AbstractWidget
+      additionalActions={[
+        can(session?.user, "stratas.files.create") && {
+          label: "Add File",
+          action: () => setShowCreateModal(true),
+          icon: <AddIcon />,
+        },
+      ]}
       className={styles.fileWidget}
       deleteWidget={deleteWidget}
-      widget={widget}
+      widgetTitle={widget.title}
     >
       <div className={abstractWidgetStyles.abstractWidgetList}>
         {files.length === 0 && <div>no files</div>}
@@ -53,11 +73,13 @@ export async function FileWidget({ createFile, deleteWidget, widget }: Props) {
         ))}
       </div>
 
-      {can(session?.user, "stratas.files.create") && (
-        <div className={styles.fileWidgetFooter}>
-          <Header priority={4}>New File</Header>
-          <NewFileForm createFile={createFile} widgetId={widget.id} />
-        </div>
+      {showCreateModal && (
+        <Modal
+          closeModal={() => setShowCreateModal(false)}
+          title={"Add File to " + widget.title}
+        >
+          <AddFileToWidgetForm createFile={createFile} />
+        </Modal>
       )}
     </AbstractWidget>
   );

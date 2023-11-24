@@ -1,12 +1,13 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { auth } from "../../../../../../auth";
 import { createInboxThreadChat } from "../../../../../../db/inbox/createInboxThreadChat";
 
 export async function sendInboxThreadChatAction(
   threadId: string,
+  messageId: string,
   fd: FormData,
 ) {
   const session = await auth();
@@ -16,7 +17,6 @@ export async function sendInboxThreadChatAction(
   }
 
   const message = fd.get("message");
-  const messageId = fd.get("message_id") || "";
   const fileId = fd.get("fileId") || "";
 
   if (
@@ -36,5 +36,7 @@ export async function sendInboxThreadChatAction(
     userId: session.user.id,
   });
 
-  revalidatePath("/dashboard/inbox/" + threadId);
+  revalidateTag("chats");
+
+  // revalidatePath("/dashboard/inbox/" + threadId);
 }

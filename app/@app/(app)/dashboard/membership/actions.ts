@@ -16,8 +16,10 @@ export async function deleteStrataMemberAction(
   revalidatePath("/dashboard/membership");
 }
 
-export async function createStrataMemberAction(formData: FormData) {
-  const strataId = formData.get("strata_id");
+export async function addStrataMemberAction(
+  strataId: string,
+  formData: FormData,
+) {
   const email = formData.get("email");
   const name = formData.get("name");
   const phoneNumber = formData.get("phone_number");
@@ -26,8 +28,6 @@ export async function createStrataMemberAction(formData: FormData) {
   const password = formData.get("password") || "";
 
   if (
-    typeof strataId !== "string" ||
-    strataId === "" ||
     typeof email !== "string" ||
     email === "" ||
     typeof name !== "string" ||

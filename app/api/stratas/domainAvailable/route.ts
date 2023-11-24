@@ -21,6 +21,9 @@ export async function GET(req: Request) {
     JSON.stringify({ isAvailable: !strata } as IsDomainAvailableResponseData),
     {
       status: 200,
+      headers: {
+        "content-type": "application/json",
+      },
     },
   );
 }

@@ -1,19 +1,32 @@
-import { ComponentProps } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 
 import { File } from "../../db";
 import { Select } from "../Select";
 
-interface Props extends ComponentProps<typeof Select> {
+interface Props extends React.ComponentProps<typeof Select> {
   className?: string;
-  files: Pick<File, "id" | "name">[];
 }
 
 export function FileSelect({
   className,
-  files,
   placeholder,
   ...delegateProps
 }: Props) {
+  const [files, setFiles] = useState<File[]>([]);
+
+  useEffect(() => {
+    async function loadFiles() {
+      const r = await fetch("/api/files/listFiles");
+      const rJson = await r.json();
+
+      setFiles(rJson.files || []);
+    }
+
+    loadFiles();
+  }, []);
+
   return (
     <Select className={className} {...delegateProps}>
       <option value="">{placeholder || "Attach a File"}</option>

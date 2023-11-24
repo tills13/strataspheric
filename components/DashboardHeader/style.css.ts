@@ -3,9 +3,18 @@ import { style } from "@vanilla-extract/css";
 
 export const subheader = style({
   display: "flex",
-  gap: vars.spacing.small,
+  alignItems: "center",
+  justifyContent: "space-between",
+  width: "100vw",
+  gap: vars.spacing.normal,
   padding: `${vars.spacing.small} ${vars.spacing.normal}`,
   borderBottom: `1px solid ${vars.colors.grey100}`,
+});
+
+export const linksRail = style({
+  display: "flex",
+  gap: vars.spacing.small,
+  flex: 1,
   overflow: "auto",
 });
 

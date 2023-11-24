@@ -3,8 +3,8 @@ import { style } from "@vanilla-extract/css";
 
 export const eventWidget = style({});
 
-export const eventWidgetFooter = style({
+export const eventWidgetListActions = style({
   display: "flex",
-  flexDirection: "column",
+  alignItems: "center",
   gap: vars.spacing.small,
 });

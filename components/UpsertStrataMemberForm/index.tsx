@@ -8,25 +8,21 @@ import { Input } from "../Input";
 import { StrataRoleSelect } from "../StrataRoleSelect";
 
 interface Props {
+  addStrataMember: (fd: FormData) => void;
   className?: string;
-  upsertStrataMemberAction: (fd: FormData) => void;
   strataMembership?: StrataMembership;
-  strataId: string;
 }
 
 export function UpsertStrataMemberForm({
+  addStrataMember,
   className,
-  upsertStrataMemberAction,
-  strataId,
   strataMembership,
 }: Props) {
   return (
     <form
       className={classnames(styles.upsertStrataMemberForm, className)}
-      action={upsertStrataMemberAction}
+      action={addStrataMember}
     >
-      <input name="strata_id" type="hidden" defaultValue={strataId} />
-
       <ElementGroup gap="small" orientation="column">
         <Input
           name="name"

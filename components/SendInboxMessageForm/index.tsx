@@ -1,36 +1,29 @@
 import * as styles from "./style.css";
 
-import { ComponentProps } from "react";
-
-import { getFiles } from "../../db/files/getFiles";
-import { getCurrentStrata } from "../../db/stratas/getStrata";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { FileSelect } from "../FileSelect";
 import { Header } from "../Header";
 import { Input } from "../Input";
-import { Select } from "../Select";
 import { TextArea } from "../TextArea";
 
 interface Props {
-  availableFileAttachments: ComponentProps<typeof FileSelect>["files"];
   className?: string;
   defaultName?: string;
   defaultEmail?: string;
   defaultPhoneNumber?: string;
-  isFromNonMember: boolean;
+  showContactInformationFields: boolean;
   sendInboxMessageAction: (fd: FormData) => void;
   showHeaders?: boolean;
   showSubjectInput?: boolean;
 }
 
 export function SendInboxMessageForm({
-  availableFileAttachments,
   className,
   defaultName,
   defaultEmail,
   defaultPhoneNumber,
-  isFromNonMember,
+  showContactInformationFields = false,
   sendInboxMessageAction,
   showHeaders: showHeaders = true,
   showSubjectInput = true,
@@ -40,7 +33,7 @@ export function SendInboxMessageForm({
       className={classnames(styles.form, className)}
       action={sendInboxMessageAction}
     >
-      {isFromNonMember && (
+      {showContactInformationFields && (
         <>
           {showHeaders && (
             <Header className={styles.formHeader} priority={2}>
@@ -91,10 +84,7 @@ export function SendInboxMessageForm({
         required
       />
 
-      <FileSelect
-        className={styles.formInput}
-        files={availableFileAttachments}
-      />
+      <FileSelect className={styles.formInput} name="fileId" />
 
       <Button className={styles.formButton} type="submit" variant="primary">
         Send Message
