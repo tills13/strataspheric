@@ -36,7 +36,6 @@ export async function sendInboxThreadChatAction(
     userId: session.user.id,
   });
 
-  revalidateTag("chats");
-
-  // revalidatePath("/dashboard/inbox/" + threadId);
+  // revalidateTag("chats");
+  revalidatePath("/dashboard/inbox/" + threadId);
 }

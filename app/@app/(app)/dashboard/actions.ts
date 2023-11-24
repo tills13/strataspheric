@@ -102,7 +102,7 @@ export async function deleteWidgetEventAction(
   eventId: string,
 ) {
   await deleteEventFromWidget(widgetId, eventId);
-  revalidateTag("widget_events");
+  // revalidateTag("widget_events");
 }
 
 export async function deleteWidgetFileAction(widgetId: string, fileId: string) {

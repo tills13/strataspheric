@@ -27,7 +27,7 @@ export function GlobalHeaderMobileActions({ session, strata }: Props) {
         </IconButton>
       </div>
       {showMenu && (
-        <Modal>
+        <Modal closeModal={() => setShowMenu(false)}>
           <div>
             <GlobalHeaderActions
               className={styles.globalMobileHeaderModalActions}

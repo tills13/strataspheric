@@ -19,7 +19,7 @@ export const modal = style({
   padding: vars.spacing.normal,
   backgroundColor: vars.colors.white,
   width: "100vw",
-  height: "100vh",
+  height: "100dvh",
   overflow: "hidden",
 
   "@media": {

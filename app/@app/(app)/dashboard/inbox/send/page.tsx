@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 import { notFound } from "next/navigation";
 
 import { auth } from "../../../../../../auth";
+import { DashboardHeader } from "../../../../../../components/DashboardHeader";
 import { SendInboxMessageForm } from "../../../../../../components/SendInboxMessageForm";
 import { getFiles } from "../../../../../../db/files/getFiles";
 import { getCurrentStrata } from "../../../../../../db/stratas/getStrata";
@@ -21,18 +22,20 @@ export default async function Page() {
   const files = await getFiles(strata.id);
 
   return (
-    <div className={styles.pageContainer}>
-      <div className={styles.formContainer}>
-        <SendInboxMessageForm
-          availableFileAttachments={files}
-          showContactInformationFields={!u?.user}
-          sendInboxMessageAction={sendInboxMessageAction.bind(
-            undefined,
-            strata.id,
-            undefined,
-          )}
-        />
+    <>
+      <DashboardHeader />
+      <div className={styles.pageContainer}>
+        <div className={styles.formContainer}>
+          <SendInboxMessageForm
+            showContactInformationFields={!u?.user}
+            sendInboxMessageAction={sendInboxMessageAction.bind(
+              undefined,
+              strata.id,
+              undefined,
+            )}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
