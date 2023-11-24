@@ -7,7 +7,6 @@ import { Strata } from "../../db";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { SignOutButton } from "../SignOutButton";
-import { GlobalHeaderMobileActions } from "./MobileActions";
 
 interface Props {
   className?: string;

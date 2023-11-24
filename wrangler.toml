@@ -2,6 +2,10 @@ name="strataspheric"
 compatibility_date = "2023-02-05"
 
 [[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
+binding = "DB"
 database_name = "strataspheric"
 database_id = "b41b59b9-6d30-4e5d-8142-9cc76908b090"
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "strataspheric-dev"

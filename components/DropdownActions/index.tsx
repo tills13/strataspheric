@@ -19,11 +19,17 @@ interface Props {
 }
 
 export function DropdownActions({ actions }: Props) {
+  const filteredActions = actions.filter(filterIsAction);
+
+  if (filteredActions.length === 0) {
+    return null;
+  }
+
   return (
     <DropdownButton
       panel={
         <>
-          {actions.filter(filterIsAction).map((action, idx) => (
+          {filteredActions.map((action, idx) => (
             <div key={idx} className={styles.actionRow} onClick={action.action}>
               {action.icon}
               {action.label}

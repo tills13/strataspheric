@@ -1,21 +1,12 @@
 import * as styles from "./style.css";
 
 import { notFound } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 
 import { DashboardHeader } from "../../../../components/DashboardHeader";
-import { NewWidgetWidget } from "../../../../components/NewWidgetWidget";
-import { Widget } from "../../../../components/Widget";
+import { WidgetSkeleton } from "../../../../components/Skeleton/WidgetSkeleton";
 import { getCurrentStrata } from "../../../../db/stratas/getStrata";
-import { getWidgets } from "../../../../db/widgets/getWidgets";
-import {
-  createEventAction,
-  createFileAction,
-  createWidgetAction,
-  deleteWidgetAction,
-  deleteWidgetEventAction,
-  deleteWidgetFileAction,
-} from "./actions";
+import { StrataWidgets } from "./StrataWidget";
 
 export const runtime = "edge";
 
@@ -26,32 +17,21 @@ export default async function Page() {
     notFound();
   }
 
-  const widgets = await getWidgets(strata.id);
-
   return (
     <>
       <DashboardHeader />
       <div className={styles.pageContainer}>
-        <div className={styles.dashboardWidgetGridContainer}>
-          {widgets.map((widget) => (
-            <Widget
-              key={widget.id}
-              createEvent={createEventAction.bind(undefined, widget.id)}
-              createFile={createFileAction.bind(
-                undefined,
-                strata.id,
-                widget.id,
-              )}
-              deleteEvent={deleteWidgetEventAction.bind(undefined, widget.id)}
-              deleteFile={deleteWidgetFileAction.bind(undefined, widget.id)}
-              deleteWidget={deleteWidgetAction.bind(undefined, widget.id)}
-              widget={widget}
-            />
-          ))}
-          <NewWidgetWidget
-            createWidget={createWidgetAction.bind(undefined, strata.id)}
-          />
-        </div>
+        <Suspense
+          fallback={
+            <div className={styles.dashboardWidgetGridContainer}>
+              <WidgetSkeleton />
+              <WidgetSkeleton />
+              <WidgetSkeleton />
+            </div>
+          }
+        >
+          <StrataWidgets strataId={strata.id} />
+        </Suspense>
       </div>
     </>
   );

@@ -3,7 +3,7 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 
 import { auth } from "../../../../../../auth";
-import { createInboxThreadChat } from "../../../../../../db/inbox/createInboxThreadChat";
+import { createThreadChat } from "../../../../../../db/inbox/createThreadChat";
 
 export async function sendInboxThreadChatAction(
   threadId: string,
@@ -28,7 +28,7 @@ export async function sendInboxThreadChatAction(
     throw new Error("invalid data");
   }
 
-  await createInboxThreadChat({
+  await createThreadChat({
     threadId,
     message,
     messageId,

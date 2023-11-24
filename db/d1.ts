@@ -1,3 +1,4 @@
+import type { D1Database, D1Result } from "@cloudflare/workers-types";
 import {
   CompiledQuery,
   DatabaseConnection,
@@ -5,13 +6,12 @@ import {
   Dialect,
   Driver,
   Kysely,
+  QueryCompiler,
+  QueryResult,
   SqliteAdapter,
   SqliteIntrospector,
   SqliteQueryCompiler,
-  QueryCompiler,
-  QueryResult,
 } from "kysely";
-import type { D1Database, D1Result } from "@cloudflare/workers-types";
 
 /**
  * Config for the D1 dialect. Pass your D1 instance to this object that you bound in `wrangler.toml`.
@@ -96,6 +96,7 @@ class D1Connection implements DatabaseConnection {
   }
 
   async executeQuery<O>(compiledQuery: CompiledQuery): Promise<QueryResult<O>> {
+    // await new Promise((r) => setTimeout(r, 3000));
     // Transactions are not supported yet.
     // if (this.#transactionClient) return this.#transactionClient.executeQuery(compiledQuery)
 

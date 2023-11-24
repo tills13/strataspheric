@@ -1,6 +1,11 @@
 import { db } from "..";
 
-export function getInboxThreadMessages(
+interface Opts {
+  senderUserId?: string;
+  viewId?: string;
+}
+
+export function getThreadMessages(
   threadId: string,
   viewId?: string | undefined,
 ) {
@@ -43,8 +48,6 @@ export function getInboxThreadMessages(
   if (viewId) {
     query = query.where("inbox_messages.viewId", "=", viewId);
   }
-
-  const { parameters, sql } = query.compile();
 
   return query.orderBy("inbox_messages.sentAt asc").execute();
 }

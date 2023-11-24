@@ -1,5 +1,7 @@
 import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+
+import { roleScopeToScopes } from "./db/users/permissions";
 import { signInUser } from "./db/users/signInUser";
 
 const isNotDev = process.env.NODE_ENV !== "development";
@@ -9,7 +11,7 @@ export const authOptions: NextAuthConfig = {
     jwt({ user, token }) {
       if (user) {
         token.id = user.id;
-        token.scope = user.scope;
+        token.scopes = user.scopes;
       }
 
       return token;
@@ -20,7 +22,7 @@ export const authOptions: NextAuthConfig = {
       }
 
       session.user.id = token.id as string;
-      session.user.scope = token.scope as string;
+      session.user.scopes = token.scopes as string[];
 
       return session;
     },
@@ -64,7 +66,7 @@ export const authOptions: NextAuthConfig = {
 
         return {
           ...user,
-          scope: user.role,
+          scopes: roleScopeToScopes(user.role),
           id: user.userId,
         };
       },

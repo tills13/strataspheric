@@ -1,8 +1,9 @@
 import * as styles from "./style.css";
 
 import { auth } from "../../auth";
-import { getInboxThreadChats } from "../../db/inbox/getInboxThreadChats";
-import { getInboxThreadMessages } from "../../db/inbox/getInboxThreadMessages";
+import { getThreadChats } from "../../db/inbox/getThreadChats";
+import { getThreadMessages } from "../../db/inbox/getThreadMessages";
+import { can, p } from "../../db/users/permissions";
 import { classnames } from "../../utils/classnames";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
 import { ChatStream } from "./ChatStream";
@@ -22,14 +23,20 @@ export async function InboxThreadChats({
 
   if (!session) {
     return (
-      <div className={classnames(styles.chatsContainer, className)}>
+      <div className={classnames(styles.wrapper, className)}>
         Sign in to view message chats
+      </div>
+    );
+  } else if (!can(session.user, p("stratas", "inbox_thread_chats", "view"))) {
+    return (
+      <div className={classnames(styles.wrapper, className)}>
+        You don&apos;t have permission to see chats
       </div>
     );
   }
 
-  const thread = await getInboxThreadMessages(threadId);
-  const chats = await getInboxThreadChats(threadId);
+  const thread = await getThreadMessages(threadId);
+  const chats = await getThreadChats(threadId);
 
   return (
     <div className={styles.wrapper}>

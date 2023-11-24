@@ -6,9 +6,10 @@ import { auth } from "../../../../../../auth";
 import { DashboardHeader } from "../../../../../../components/DashboardHeader";
 import { InboxMessageThread } from "../../../../../../components/InboxMessageThread";
 import { InboxThreadChats } from "../../../../../../components/InboxThreadChats";
-import { getInboxThreadMessages } from "../../../../../../db/inbox/getInboxThreadMessages";
+import { getThread } from "../../../../../../db/inbox/getThread";
+import { Thread } from "../../../../../../db/inbox/getThreads";
 import { getCurrentStrata } from "../../../../../../db/stratas/getStrata";
-import { can } from "../../../../../../db/users/permissions";
+import { can, p } from "../../../../../../db/users/permissions";
 import { sendInboxMessageAction } from "../actions";
 import { sendInboxThreadChatAction } from "./actions";
 
@@ -25,13 +26,25 @@ export default async function Page({
     notFound();
   }
 
-  const messages = await getInboxThreadMessages(threadId, viewId);
+  let thread: Thread;
 
-  if (viewId) {
-    if (!messages) {
+  if (!session || !session.user) {
+    if (!viewId) {
       redirect("/dashboard");
     }
-  } else if (!can(session?.user, "stratas.inbox.view")) {
+
+    thread = await getThread(strata.id, threadId, {
+      viewId,
+    });
+  } else {
+    thread = await getThread(strata.id, threadId, {
+      senderUserId: can(session.user, p("stratas", "inbox_messages", "view"))
+        ? undefined
+        : session.user.id,
+    });
+  }
+
+  if (!thread) {
     redirect("/dashboard");
   }
 

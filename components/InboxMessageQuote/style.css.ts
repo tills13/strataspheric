@@ -25,6 +25,9 @@ export const quotedMessage = style({
   gridTemplateRows: "min-content auto",
   gap: vars.spacing.normal,
 
+  color: "inherit",
+  textDecoration: "none",
+
   selectors: {
     [`${chatBubbleStyles.chatBubble} &`]: {
       backgroundColor: "rgba(0, 0, 0, 0.05)",

@@ -1,7 +1,7 @@
 import * as styles from "./style.css";
 
 import { auth } from "../../auth";
-import { getInboxThreadMessages } from "../../db/inbox/getInboxThreadMessages";
+import { getThreadMessages } from "../../db/inbox/getThreadMessages";
 import { ShareIcon } from "../Icon/ShareIcon";
 import { IconButton } from "../IconButton";
 import { ExternalLink } from "../Link/ExternalLink";
@@ -20,7 +20,7 @@ export async function InboxMessageThread({
   threadId,
 }: Props) {
   const session = await auth();
-  const messages = await getInboxThreadMessages(threadId);
+  const messages = await getThreadMessages(threadId);
   const message0 = messages[0];
 
   const { senderName, senderEmail, subject, sentAt, viewId } = message0;

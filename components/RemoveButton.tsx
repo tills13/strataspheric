@@ -1,24 +1,19 @@
 "use client";
 
-import { startTransition } from "react";
+import React, { startTransition } from "react";
 
-import { Button } from "./Button";
 import { RemoveIcon } from "./Icon/RemoveIcon";
 import { IconButton } from "./IconButton";
 
-interface Props {
+interface Props extends React.ComponentProps<typeof IconButton> {
   onClick: () => void;
 }
 
-export function RemoveButton({ onClick }: Props) {
+export function RemoveButton({ onClick, ...delegateProps }: Props) {
   return (
     <IconButton
-      onClick={() => {
-        startTransition(() => {
-          onClick();
-        });
-      }}
-      size="small"
+      {...delegateProps}
+      onClick={() => startTransition(() => onClick())}
     >
       <RemoveIcon />
     </IconButton>

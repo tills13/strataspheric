@@ -1,5 +1,5 @@
 import { breakpoints, vars } from "../../app/theme.css";
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
 
 import { border } from "../../theme";
 
@@ -54,6 +54,22 @@ export const message = style({
     },
   },
 });
+
+export const highlightAnimation = keyframes({
+  "25%": {
+    backgroundColor: vars.colors.yellow500,
+  },
+  "100%": {
+    backgroundColor: vars.colors.yellow100,
+  },
+});
+
+export const messageHighighted = style([
+  message,
+  {
+    animation: `${highlightAnimation} 1s ease forwards`,
+  },
+]);
 
 export const messageHeader = style({
   position: "relative",

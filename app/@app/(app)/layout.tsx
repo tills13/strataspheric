@@ -9,16 +9,9 @@ export default async function RootMarketingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-  const strata = await getCurrentStrata();
-
-  if (!strata) {
-    notFound();
-  }
-
   return (
     <>
-      <GlobalDashboardHeader session={session} strata={strata} />
+      <GlobalDashboardHeader />
       {children}
     </>
   );

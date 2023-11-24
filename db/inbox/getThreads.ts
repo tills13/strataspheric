@@ -1,7 +1,14 @@
-import { db } from "..";
+import { InboxMessage, db } from "..";
 
-export function getInboxMessages(strataId: string) {
-  return db
+export type Thread = InboxMessage & {
+  numChats: number | null;
+};
+
+export function getThreads(
+  strataId: string,
+  senderUserId?: string,
+): Promise<Thread[]> {
+  let query = db
     .selectFrom("inbox_messages")
     .leftJoin(
       "strata_memberships",
@@ -18,6 +25,7 @@ export function getInboxMessages(strataId: string) {
       "inbox_messages.sentAt",
       "inbox_messages.senderUserId",
       "inbox_messages.strataId",
+      "inbox_messages.fileId",
       eb.fn
         .coalesce("strata_memberships.name", "inbox_messages.senderName")
         .as("senderName"),
@@ -32,7 +40,7 @@ export function getInboxMessages(strataId: string) {
         .as("senderPhoneNumber"),
       eb
         .selectFrom("inbox_thread_chats")
-        .select((mEb) => mEb.fn.countAll().as("count"))
+        .select((mEb) => mEb.fn.countAll<number>().as("count"))
         .where(
           "inbox_thread_chats.threadId",
           "=",
@@ -46,7 +54,11 @@ export function getInboxMessages(strataId: string) {
         .select((eb) => eb.fn.min("inbox_messages.id").as("id"))
         .groupBy("inbox_messages.threadId"),
     )
-    .where("inbox_messages.strataId", "=", strataId)
-    .orderBy("inbox_messages.sentAt desc")
-    .execute();
+    .where("inbox_messages.strataId", "=", strataId);
+
+  if (senderUserId) {
+    query = query.where("inbox_messages.senderUserId", "=", senderUserId);
+  }
+
+  return query.orderBy("inbox_messages.sentAt desc").execute();
 }

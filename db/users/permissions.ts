@@ -1,4 +1,18 @@
 // actions: create, edit, delete, view
+import { StrataMembership } from "..";
+
+type Namespaces = "stratas";
+type Scope =
+  | "*"
+  | "events"
+  | "files"
+  | "inbox_messages"
+  | "inbox_thread_chats"
+  | "memberships"
+  | "widgets";
+type Action = "*" | "create" | "edit" | "delete" | "view";
+
+type Permission = `${Namespaces}.${Scope}.${Action}`;
 
 const roles = [
   "administrator",
@@ -10,7 +24,26 @@ const roles = [
   "pending",
 ] as const;
 
-export type Role = (typeof roles)[number] & {};
+export type Role = (typeof roles)[number];
+
+export function p(): string;
+export function p(namespace: "stratas"): string;
+export function p(namespace: "stratas", scope: Scope): string;
+export function p(namespace: "stratas", scope: Scope, action: Action): string;
+export function p(
+  namespace: "stratas" = "stratas",
+  scope: Scope = "*",
+  action: Action = "*",
+): string {
+  return [namespace, scope, action].filter(Boolean).join(".");
+}
+
+export function memberToScopes(membership: StrataMembership): string[] {
+  return [
+    roleScopeToScopes(membership.role),
+    membership.isPaid === 1 && p("stratas", "files", "view"),
+  ].filter((i): i is string => !!i);
+}
 
 export function roleScopeToScopes(roleScope: Role | string | undefined) {
   switch (roleScope) {
@@ -18,10 +51,13 @@ export function roleScopeToScopes(roleScope: Role | string | undefined) {
     case "president":
     case "vice-president":
     case "treasurer": {
-      return ["stratas.*"];
+      return [p()];
     }
     case "secretary": {
-      return ["stratas.files.*", "stratas.events.*"];
+      return [p("stratas", "files"), p("stratas", "events")];
+    }
+    case "owner": {
+      return [];
     }
     default: {
       return [];
@@ -30,7 +66,7 @@ export function roleScopeToScopes(roleScope: Role | string | undefined) {
 }
 
 interface HasScope {
-  scope: string[] | string;
+  scopes: string[];
 }
 
 const PermissionsError = new Error("insufficient permissions");
@@ -50,12 +86,7 @@ export function can(
   }
 
   const mTargetScope = targetScope[0];
-
-  const userScopes = !scoped
-    ? roleScopeToScopes(undefined)
-    : typeof scoped.scope === "string"
-      ? roleScopeToScopes(scoped?.scope)
-      : scoped.scope;
+  const userScopes = !scoped ? roleScopeToScopes(undefined) : scoped.scopes;
 
   let scope: RegExp | string;
 

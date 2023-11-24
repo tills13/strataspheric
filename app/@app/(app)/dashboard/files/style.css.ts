@@ -33,6 +33,12 @@ export const filesTableCell = style({
   whiteSpace: "nowrap",
 });
 
+export const fileActionsContainer = style({
+  display: "flex",
+  gap: vars.spacing.small,
+  alignItems: "center",
+});
+
 export const descriptionCell = style([
   filesTableCell,
   {

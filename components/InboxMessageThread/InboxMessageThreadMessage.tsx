@@ -4,6 +4,11 @@ import * as styles from "./style.css";
 
 import { useState } from "react";
 
+import { p } from "../../db/users/permissions";
+import { useCan } from "../../hooks/useCan";
+import { useHash } from "../../hooks/useHash";
+import { classnames } from "../../utils/classnames";
+import { FileLink } from "../FileLink";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { ChatIcon } from "../Icon/ChatIcon";
 import { IconButton } from "../IconButton";
@@ -33,10 +38,18 @@ export function InboxMessageThreadMessage({
   sentAt,
   sendInboxThreadChat,
 }: Props) {
+  const can = useCan();
   const [showChatReplyModal, setShowChatReplyModal] = useState(false);
+  const hash = useHash();
 
   return (
-    <div key={id} className={styles.message}>
+    <div
+      key={id}
+      id={id}
+      className={classnames(
+        hash === id ? styles.messageHighighted : styles.message,
+      )}
+    >
       <div className={styles.messageHeader}>
         <div>
           <h3>{senderName}</h3>
@@ -46,24 +59,26 @@ export function InboxMessageThreadMessage({
           <span className={styles.messageHeaderSentAt}>
             Sent {new Date(sentAt).toLocaleString()}
           </span>
-          <IconButton
-            className={styles.chatActionButton}
-            onClick={() => setShowChatReplyModal(true)}
-            size="small"
-          >
-            <ChatIcon />
-          </IconButton>
+          {can(p("stratas", "inbox_thread_chats", "view")) && (
+            <IconButton
+              className={styles.chatActionButton}
+              onClick={() => setShowChatReplyModal(true)}
+              size="small"
+            >
+              <ChatIcon />
+            </IconButton>
+          )}
         </div>
       </div>
       <p className={styles.messageText}>{message}</p>
 
       {filePath && (
-        <ExternalLink href={filePath}>
+        <FileLink path={filePath}>
           <div className={styles.messageFile}>
             <AttachmentIcon className={styles.messageFileAttachmentIcon} />
             {fileName}
           </div>
-        </ExternalLink>
+        </FileLink>
       )}
 
       {showChatReplyModal && (
@@ -74,6 +89,7 @@ export function InboxMessageThreadMessage({
         >
           <InboxMessageQuote
             maxPreviewLength={-1}
+            messageId={id}
             message={message}
             senderName={senderName}
             timestamp={sentAt}

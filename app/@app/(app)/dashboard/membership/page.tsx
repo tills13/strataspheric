@@ -145,6 +145,7 @@ export default async function Page() {
                                 strata.id,
                                 membership.userId,
                               )}
+                              size="small"
                             />
                           </td>
                         )}
@@ -155,7 +156,7 @@ export default async function Page() {
               </table>
             </div>
 
-            <div className={styles.seatCountContainer}>
+            {/* <div className={styles.seatCountContainer}>
               <Header priority={3}>You are using</Header>
               <span className={styles.seatCountEmphasis}>
                 {numActivePaidSeats}
@@ -163,7 +164,7 @@ export default async function Page() {
               of{" "}
               <span className={styles.seatCountEmphasis}>{plan?.numSeats}</span>{" "}
               paid {pluralize("seat", plan?.numSeats || 0)}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -1,11 +1,11 @@
 import * as styles from "./style.css";
 
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../../../../auth";
 import { DashboardHeader } from "../../../../../../components/DashboardHeader";
 import { SendInboxMessageForm } from "../../../../../../components/SendInboxMessageForm";
-import { getFiles } from "../../../../../../db/files/getFiles";
+import { getStrataPlan } from "../../../../../../db/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../../db/stratas/getStrata";
 import { sendInboxMessageAction } from "../actions";
 
@@ -19,7 +19,11 @@ export default async function Page() {
     notFound();
   }
 
-  const files = await getFiles(strata.id);
+  const strataPlan = await getStrataPlan(strata.id);
+
+  if (strataPlan.enableInbox !== 1) {
+    redirect("/dashboard/inbox");
+  }
 
   return (
     <>

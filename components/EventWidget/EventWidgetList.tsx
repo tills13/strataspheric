@@ -1,9 +1,13 @@
+"use client";
+
 import * as abstractWidgetStyles from "../AbstractWidget/style.css";
 import * as styles from "./style.css";
 
+import { useSession } from "next-auth/react";
 import { startTransition } from "react";
 
 import { Event } from "../../db";
+import { can, p } from "../../db/users/permissions";
 import { DropdownActions } from "../DropdownActions";
 import { Header } from "../Header";
 import { DeleteIcon } from "../Icon/DeleteIcon";
@@ -11,10 +15,10 @@ import { DeleteIcon } from "../Icon/DeleteIcon";
 interface Props {
   deleteEvent: (eventId: string) => void;
   events: Event[];
-  widgetId: string;
 }
 
-export function EventWidgetList({ deleteEvent, events, widgetId }: Props) {
+export function EventWidgetList({ deleteEvent, events }: Props) {
+  const { data: session } = useSession();
   return (
     <div className={abstractWidgetStyles.abstractWidgetList}>
       {events.length === 0 && <div>no events</div>}
@@ -32,7 +36,7 @@ export function EventWidgetList({ deleteEvent, events, widgetId }: Props) {
             <span suppressHydrationWarning>{event.date.toLocaleString()}</span>
             <DropdownActions
               actions={[
-                {
+                can(session?.user, p("stratas", "widgets", "edit")) && {
                   label: "Delete Event",
                   action: () =>
                     startTransition(() => {

@@ -8,9 +8,9 @@ interface Props {
   title?: React.ReactNode;
 }
 
-export function Skeleton({ title }: Props) {
+export function WidgetSkeleton({ title }: Props) {
   return (
-    <Panel className={styles.skeleton}>
+    <Panel className={styles.widgetSkeleton}>
       {title ? (
         <div className={styles.skeletonHeader}>{title}</div>
       ) : (

@@ -8,6 +8,7 @@ import { QuoteIcon } from "../Icon/QuoteIcon";
 interface Props {
   className?: string;
   maxPreviewLength?: number;
+  messageId: string;
   message: string;
   senderName: string;
   timestamp: string;
@@ -16,12 +17,16 @@ interface Props {
 export function InboxMessageQuote({
   className,
   maxPreviewLength = 200,
+  messageId,
   message,
   senderName,
   timestamp,
 }: Props) {
   return (
-    <div className={classnames(styles.quotedMessage, className)}>
+    <a
+      className={classnames(styles.quotedMessage, className)}
+      href={"#" + messageId}
+    >
       <div className={styles.quotedMessageHeader}>
         <Header priority={3}>
           <QuoteIcon className={styles.quotedMessageIcon} /> {senderName}{" "}
@@ -37,6 +42,6 @@ export function InboxMessageQuote({
           ? message
           : truncate(message, maxPreviewLength)}
       </p>
-    </div>
+    </a>
   );
 }

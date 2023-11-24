@@ -7,16 +7,19 @@ import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 
 import { File, StrataWidget } from "../../db";
-import { can } from "../../db/users/permissions";
+import { can, p } from "../../db/users/permissions";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
 } from "../AbstractWidget";
 import { AddFileToWidgetForm } from "../AddFileToWidgetForm";
+import { FileLink } from "../FileLink";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
-import { ExternalLink } from "../Link/ExternalLink";
+import { DownloadIcon } from "../Icon/DownloadIcon";
+import { IconButton } from "../IconButton";
 import { Modal } from "../Modal";
+import { RemoveButton } from "../RemoveButton";
 
 interface Props extends AbstractWidgetProps {
   createFile: (fd: FormData) => void;
@@ -38,7 +41,11 @@ export function FileWidget({
   return (
     <AbstractWidget
       additionalActions={[
-        can(session?.user, "stratas.files.create") && {
+        can(
+          session?.user,
+          p("stratas", "files", "create"),
+          p("stratas", "widgets", "edit"),
+        ) && {
           label: "Add File",
           action: () => setShowCreateModal(true),
           icon: <AddIcon />,
@@ -66,9 +73,22 @@ export function FileWidget({
                 {new Date(file.createdAt).toLocaleDateString()}
               </span>
             </div>
-            <ExternalLink href={file.path} target="_blank">
-              Download
-            </ExternalLink>
+
+            <div className={styles.fileActions}>
+              {can(session?.user, p("stratas", "files", "view")) && (
+                <FileLink path={file.path}>
+                  <IconButton size="small">
+                    <DownloadIcon />
+                  </IconButton>
+                </FileLink>
+              )}
+              {can(session?.user, p("stratas", "widgets", "edit")) && (
+                <RemoveButton
+                  onClick={deleteFile.bind(undefined, file.id)}
+                  size="small"
+                />
+              )}
+            </div>
           </div>
         ))}
       </div>

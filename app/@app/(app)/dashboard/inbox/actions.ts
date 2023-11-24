@@ -1,10 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
-import { createInboxMessage } from "../../../../../db/inbox/createInboxMessage";
-import { getInboxThreadMessages } from "../../../../../db/inbox/getInboxThreadMessages";
+import { createThread } from "../../../../../db/inbox/createThread";
+import { deleteThread } from "../../../../../db/inbox/deleteThread";
+import { deleteThreadChats } from "../../../../../db/inbox/deleteThreadChats";
+import { getThreadMessages } from "../../../../../db/inbox/getThreadMessages";
 import { getCurrentStrata } from "../../../../../db/stratas/getStrata";
 import { sendEmail } from "../../../../../utils/sendEmail";
 
@@ -12,6 +15,13 @@ const domain =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
     : "https://strataspheric.app";
+
+export async function deleteThreadAction(threadId: string) {
+  await deleteThread(threadId);
+  await deleteThreadChats(threadId);
+
+  revalidatePath("/dashboard/inbox");
+}
 
 export async function sendInboxMessageAction(
   strataId: string,
@@ -41,7 +51,7 @@ export async function sendInboxMessageAction(
     throw new Error("invalid data");
   }
 
-  await createInboxMessage({
+  const newMessage = await createThread({
     senderName,
     senderEmail,
     senderPhoneNumber,
@@ -54,7 +64,7 @@ export async function sendInboxMessageAction(
   });
 
   if (threadId) {
-    const [message0] = await getInboxThreadMessages(threadId);
+    const [message0] = await getThreadMessages(threadId);
     const strata = await getCurrentStrata();
 
     if (message0.senderUserId === undefined && message0.senderEmail && strata) {
@@ -80,4 +90,12 @@ export async function sendInboxMessageAction(
   if (threadId) {
     revalidatePath("/dashboard/inbox/" + threadId);
   }
+
+  let redirectLoc = "/dashboard/inbox/" + newMessage.threadId;
+
+  if (newMessage.viewId) {
+    redirectLoc += "?viewId=" + newMessage.viewId;
+  }
+
+  redirect(redirectLoc);
 }

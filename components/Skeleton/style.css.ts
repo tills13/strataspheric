@@ -3,7 +3,11 @@ import { style } from "@vanilla-extract/css";
 
 import { border } from "../../theme";
 
-export const skeleton = style({});
+export const widgetSkeleton = style({});
+
+export const tableSkeleton = style({
+  width: "100%",
+});
 
 export const skeletonBone = style({
   display: "block",
@@ -13,7 +17,7 @@ export const skeletonBone = style({
   borderRadius: vars.borderRadius,
 
   selectors: {
-    [`${skeleton} &:not(:last-child)`]: {
+    [`${widgetSkeleton} &:not(:last-child)`]: {
       marginBottom: vars.spacing.small,
     },
   },
@@ -27,7 +31,7 @@ export const skeletonBoneHeader = style([
   skeletonBone,
   {
     selectors: {
-      [`${skeleton} &:not(:last-child)`]: {
+      [`${widgetSkeleton} &:not(:last-child)`]: {
         marginBottom: vars.spacing.normal,
       },
     },

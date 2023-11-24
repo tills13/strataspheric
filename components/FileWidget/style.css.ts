@@ -12,3 +12,9 @@ export const fileWidgetFooter = style({
   flexDirection: "column",
   gap: vars.spacing.small,
 });
+
+export const fileActions = style({
+  display: "flex",
+  alignItems: "center",
+  gap: vars.spacing.small,
+});

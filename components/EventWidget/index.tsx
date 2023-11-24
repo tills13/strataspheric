@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 import { StrataWidget } from "../../db";
-import { can } from "../../db/users/permissions";
+import { can, p } from "../../db/users/permissions";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
@@ -36,7 +36,11 @@ export function EventWidget({
   return (
     <AbstractWidget
       additionalActions={[
-        can(session?.user, "stratas.events.create") && {
+        can(
+          session?.user,
+          p("stratas", "events", "create"),
+          p("stratas", "widgets", "edit"),
+        ) && {
           label: "Add Event",
           action: () => setShowCreateModal(true),
           icon: <AddIcon />,
@@ -46,11 +50,7 @@ export function EventWidget({
       deleteWidget={deleteWidget}
       widgetTitle={widget.title}
     >
-      <EventWidgetList
-        deleteEvent={deleteEvent}
-        events={initialEvents}
-        widgetId={widget.id}
-      />
+      <EventWidgetList deleteEvent={deleteEvent} events={initialEvents} />
 
       {showCreateModal && (
         <Modal

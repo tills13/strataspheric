@@ -39,18 +39,19 @@ export const inboxMessagesTableRow = style({
   },
 });
 
-export const inboxMessagesTableCell = style({
+export const tableCell = style({
   "@media": {
     [breakpoints.tablet]: {
       padding: padding(vars.spacing.small, vars.spacing.normal),
       display: "table-cell",
       whiteSpace: "nowrap",
+      verticalAlign: "middle",
     },
   },
 });
 
 export const senderNameCell = style([
-  inboxMessagesTableCell,
+  tableCell,
   {
     marginBottom: vars.spacing.small,
 
@@ -63,7 +64,7 @@ export const senderNameCell = style([
 ]);
 
 export const subjectCell = style([
-  inboxMessagesTableCell,
+  tableCell,
   {
     width: "100%",
     marginBottom: vars.spacing.small,
@@ -88,7 +89,7 @@ export const unreadDot = style({
 });
 
 export const statusCell = style([
-  inboxMessagesTableCell,
+  tableCell,
   {
     paddingTop: "6px",
     paddingRight: vars.spacing.small,
@@ -96,7 +97,7 @@ export const statusCell = style([
 ]);
 
 export const messageCell = style([
-  inboxMessagesTableCell,
+  tableCell,
   {
     color: vars.colors.grey500,
     width: "100%",
@@ -111,7 +112,7 @@ export const messageCell = style([
 ]);
 
 export const chatsCell = style([
-  inboxMessagesTableCell,
+  tableCell,
   {
     display: "none",
 
@@ -124,7 +125,7 @@ export const chatsCell = style([
 ]);
 
 export const sentAtCell = style([
-  inboxMessagesTableCell,
+  tableCell,
   {
     justifySelf: "flex-end",
     "@media": {
@@ -132,5 +133,13 @@ export const sentAtCell = style([
         justifySelf: "unset",
       },
     },
+  },
+]);
+
+export const actionsCell = style([
+  tableCell,
+  {
+    display: "flex",
+    alignItems: "center",
   },
 ]);

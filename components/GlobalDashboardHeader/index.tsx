@@ -1,19 +1,20 @@
 import * as styles from "./style.css";
 
-import { type Session } from "next-auth";
-
-import { Strata } from "../../db";
+import { auth } from "../../auth";
+import { getCurrentStrata } from "../../db/stratas/getStrata";
 import { GlobalHeader } from "../GlobalHeader";
 import { InternalLink } from "../Link/InternalLink";
 import { GlobalHeaderActions } from "./Actions";
 import { GlobalHeaderMobileActions } from "./MobileActions";
 
-interface Props {
-  session: Session | null;
-  strata: Strata;
-}
+export async function GlobalDashboardHeader() {
+  const session = await auth();
+  const strata = await getCurrentStrata();
 
-export function GlobalDashboardHeader({ session, strata }: Props) {
+  if (!strata) {
+    return null;
+  }
+
   return (
     <GlobalHeader className={styles.globalHeader}>
       <div>

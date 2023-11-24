@@ -2,7 +2,7 @@ import { uuidv7 } from "uuidv7";
 
 import { NewInboxMessage, db } from "..";
 
-export function createInboxMessage({
+export function createThread({
   threadId,
   ...rest
 }: Omit<NewInboxMessage, "id" | "threadId" | "viewId"> & {
@@ -16,5 +16,6 @@ export function createInboxMessage({
       viewId: threadId ? undefined : uuidv7(),
       ...rest,
     })
-    .execute();
+    .returning(["inbox_messages.viewId", "inbox_messages.threadId"])
+    .executeTakeFirstOrThrow();
 }

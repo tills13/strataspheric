@@ -16,7 +16,11 @@ import { requestToJoinStrataAction } from "../../actions";
 
 export const runtime = "edge";
 
-export default async function Page({ searchParams }: any) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Record<string, any>;
+}) {
   const session = await auth();
   const action = searchParams["action"];
 

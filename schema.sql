@@ -19,7 +19,8 @@ CREATE TABLE
     IF NOT EXISTS strata_plans (
         id text primary key,
         strataId text,
-        numSeats integer
+        numSeats integer,
+        enableInbox boolean DEFAULT FALSE
     );
 
 DROP TABLE IF EXISTS strata_widgets;
@@ -81,10 +82,9 @@ DROP TABLE IF EXISTS user_password_reset_tokens;
 
 CREATE TABLE
     IF NOT EXISTS user_password_reset_tokens (
-        token text,
+        token text primary key,
         userId text,
-        createdAt text DEFAULT CURRENT_TIMESTAMP,
-        primary key (token)
+        createdAt text DEFAULT CURRENT_TIMESTAMP
     );
 
 DROP TABLE IF EXISTS strata_memberships;
@@ -125,13 +125,12 @@ DROP TABLE IF EXISTS inbox_thread_chats;
 
 CREATE TABLE
     IF NOT EXISTS inbox_thread_chats (
-        id text,
+        id text primary key,
         threadId text,
         messageId text,
         chatId text,
         fileId text,
         message text,
         userId text,
-        sentAt text DEFAULT CURRENT_TIMESTAMP,
-        primary key (id)
+        sentAt text DEFAULT CURRENT_TIMESTAMP
     );

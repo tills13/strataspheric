@@ -1,16 +1,20 @@
 import * as styles from "./style.css";
 
-import React, { ButtonHTMLAttributes } from "react";
+import React from "react";
 
 import { classnames } from "../../utils/classnames";
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   size?: keyof typeof styles.sizeVariants;
 }
 
-export function IconButton({ children, className, size, ...rest }: Props) {
+export function IconButton({
+  children,
+  className,
+  size,
+  ...rest
+}: React.PropsWithChildren<Props>) {
   let sizeClassName = styles.sizeVariants.normal;
 
   if (size && styles.sizeVariants[size]) {

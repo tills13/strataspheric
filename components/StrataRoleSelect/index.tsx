@@ -23,6 +23,7 @@ export function StrataRoleSelect({ submitOnChange, ...delegateProps }: Props) {
       <option value="treasurer">Treasurer</option>
       <option value="vice_president">Vice President</option>
       <option value="president">President</option>
+      <option value="administrator">Administrator</option>
     </Select>
   );
 }
