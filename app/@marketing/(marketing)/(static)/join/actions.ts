@@ -48,6 +48,7 @@ export async function resetPasswordAction(fd: FormData) {
   }
 
   redirect(
-    (process.env.NODE_ENV === "development" ? "" : "https://") + strata.domain,
+    (process.env.NODE_ENV === "development" ? "http://" : "https://") +
+      strata.domain,
   );
 }

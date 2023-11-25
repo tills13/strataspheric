@@ -12,9 +12,8 @@ export async function findStrataMemberships(
 ): Promise<StrataMembership[]> {
   let query = db
     .selectFrom("strata_memberships")
-    .selectAll("strata_memberships")
-    .innerJoin("stratas", "strata_memberships.strataId", "stratas.id")
-    .selectAll();
+    .selectAll(["strata_memberships"])
+    .innerJoin("stratas", "strata_memberships.strataId", "stratas.id");
 
   if (opts.userId) {
     query = query.where("strata_memberships.userId", "=", opts.userId);
