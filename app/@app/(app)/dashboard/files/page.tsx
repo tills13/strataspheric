@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import { TableSkeleton } from "../../../../../components/Skeleton/TableSkeleton";
-import { getCurrentStrata } from "../../../../../db/stratas/getStrata";
+import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { FilesHeader } from "./FilesHeader";
 import { FilesTable } from "./FilesTable";
 import { createFileAction } from "./actions";

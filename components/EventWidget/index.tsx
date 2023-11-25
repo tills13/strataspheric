@@ -5,8 +5,8 @@ import * as styles from "./style.css";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
-import { StrataWidget } from "../../db";
-import { can, p } from "../../db/users/permissions";
+import { StrataWidget } from "../../data";
+import { can, p } from "../../data/users/permissions";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,

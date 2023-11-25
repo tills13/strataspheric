@@ -11,11 +11,11 @@ import { Header } from "../../../../../components/Header";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { StrataRoleSelect } from "../../../../../components/StrataRoleSelect";
 import { UpsertStrataMemberForm } from "../../../../../components/UpsertStrataMemberForm";
-import { StrataMembership } from "../../../../../db";
-import { getStrataMembership } from "../../../../../db/strataMemberships/getStrataMembership";
-import { getStrataPlan } from "../../../../../db/strataPlans/getStrataPlan";
-import { getCurrentStrata } from "../../../../../db/stratas/getStrata";
-import { can } from "../../../../../db/users/permissions";
+import { StrataMembership } from "../../../../../data";
+import { getStrataMembership } from "../../../../../data/strataMemberships/getStrataMembership";
+import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
+import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { can } from "../../../../../data/users/permissions";
 import { pluralize } from "../../../../../utils/pluralize";
 import { MembershipHeader } from "./MembershipHeader";
 import {

@@ -2,7 +2,7 @@ import {
   GetCustomDomainData,
   getCustomDomain,
 } from "../../../../cloudflare/pages/getCustomDomain";
-import { getStrata } from "../../../../db/stratas/getStrata";
+import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
 
 export const runtime = "edge";
 
@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     return new Response("Bad Request", { status: 400 });
   }
 
-  const strata = await getStrata(domain);
+  const strata = await getStrataByDomain(domain);
 
   if (!strata) {
     return new Response("Bad Request", { status: 400 });

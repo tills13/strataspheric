@@ -3,7 +3,7 @@ import * as styles from "./style.css";
 import { Session } from "next-auth";
 import Link from "next/link";
 
-import { Strata } from "../../db";
+import { Strata } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { SignOutButton } from "../SignOutButton";

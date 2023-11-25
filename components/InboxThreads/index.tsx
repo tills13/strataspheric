@@ -2,8 +2,8 @@
 
 import * as styles from "./style.css";
 
-import { type Thread } from "../../db/inbox/getThreads";
-import { p } from "../../db/users/permissions";
+import { type Thread } from "../../data/inbox/getThreads";
+import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { DeleteButton } from "../DeleteButton";
 import { InternalLink } from "../Link/InternalLink";

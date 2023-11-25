@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { auth } from "../../../auth";
 import { GlobalDashboardHeader } from "../../../components/GlobalDashboardHeader";
-import { getCurrentStrata } from "../../../db/stratas/getStrata";
+import { getCurrentStrata } from "../../../data/stratas/getStrataByDomain";
 
 export default async function RootMarketingLayout({
   children,

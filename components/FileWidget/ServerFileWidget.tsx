@@ -1,6 +1,6 @@
 import { FileWidget } from ".";
-import { StrataWidget } from "../../db";
-import { getWidgetFiles } from "../../db/widgets/getWidgetFiles";
+import { StrataWidget } from "../../data";
+import { getWidgetFiles } from "../../data/widgets/getWidgetFiles";
 import { type Props as AbstractWidgetProps } from "../AbstractWidget";
 
 interface Props extends AbstractWidgetProps {

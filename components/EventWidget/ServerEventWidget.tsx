@@ -1,6 +1,6 @@
 import { EventWidget } from ".";
-import { StrataWidget } from "../../db";
-import { getWidgetEvents } from "../../db/widgets/getWidgetEvents";
+import { StrataWidget } from "../../data";
+import { getWidgetEvents } from "../../data/widgets/getWidgetEvents";
 import { type Props as AbstractWidgetProps } from "../AbstractWidget";
 
 interface Props extends AbstractWidgetProps {

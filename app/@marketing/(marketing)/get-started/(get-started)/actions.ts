@@ -5,12 +5,12 @@ import { redirect } from "next/navigation";
 import { CF_PAGES_PROJECT_ID } from "../../../../../cloudflare/constants";
 import { createRecord } from "../../../../../cloudflare/dns/createRecord";
 import { addCustomDomain } from "../../../../../cloudflare/pages/addCustomDomain";
-import { createStrataMembership } from "../../../../../db/strataMemberships/createStrataMembership";
-import { createPlan } from "../../../../../db/strataPlans/createStrataPlan";
-import { createStrata } from "../../../../../db/stratas/createStrata";
-import { updateStrata } from "../../../../../db/stratas/updateStrata";
-import { createUser } from "../../../../../db/users/createUser";
-import { createWidget } from "../../../../../db/widgets/createWidget";
+import { createStrataMembership } from "../../../../../data/strataMemberships/createStrataMembership";
+import { createPlan } from "../../../../../data/strataPlans/createStrataPlan";
+import { createStrata } from "../../../../../data/stratas/createStrata";
+import { updateStrata } from "../../../../../data/stratas/updateStrata";
+import { createUser } from "../../../../../data/users/createUser";
+import { createWidget } from "../../../../../data/widgets/createWidget";
 
 export async function submitGetStarted(fd: FormData) {
   const name = fd.get("name");

@@ -6,8 +6,8 @@ import * as styles from "./style.css";
 import { useSession } from "next-auth/react";
 import { startTransition } from "react";
 
-import { Event } from "../../db";
-import { can, p } from "../../db/users/permissions";
+import { Event } from "../../data";
+import { can, p } from "../../data/users/permissions";
 import { DropdownActions } from "../DropdownActions";
 import { Header } from "../Header";
 import { DeleteIcon } from "../Icon/DeleteIcon";

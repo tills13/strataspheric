@@ -11,7 +11,7 @@ import { ElementGroup } from "../../../components/ElementGroup";
 import { Header } from "../../../components/Header";
 import { JoinStrataForm } from "../../../components/JoinStrataForm";
 import { SignInForm } from "../../../components/SignInForm";
-import { getCurrentStrata } from "../../../db/stratas/getStrata";
+import { getCurrentStrata } from "../../../data/stratas/getStrataByDomain";
 import { requestToJoinStrataAction } from "../../actions";
 
 export const runtime = "edge";

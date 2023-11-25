@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-import { can } from "../../db/users/permissions";
+import { can } from "../../data/users/permissions";
 import { DropdownActions } from "../DropdownActions";
 import { InternalLink } from "../Link/InternalLink";
 

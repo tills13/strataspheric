@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 
-import { can } from "../db/users/permissions";
+import { can } from "../data/users/permissions";
 
 export function useCan() {
   const { data: session } = useSession();

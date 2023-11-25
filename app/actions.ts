@@ -2,8 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-import { createStrataMembership } from "../db/strataMemberships/createStrataMembership";
-import { createUser } from "../db/users/createUser";
+import { createStrataMembership } from "../data/strataMemberships/createStrataMembership";
+import { createUser } from "../data/users/createUser";
 
 export async function requestToJoinStrataAction(formData: FormData) {
   const strataId = formData.get("strata_id");

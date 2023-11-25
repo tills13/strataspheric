@@ -5,8 +5,8 @@ import { DeleteButton } from "../../../../../components/DeleteButton";
 import { FileLink } from "../../../../../components/FileLink";
 import { DownloadIcon } from "../../../../../components/Icon/DownloadIcon";
 import { IconButton } from "../../../../../components/IconButton";
-import { getFiles } from "../../../../../db/files/getFiles";
-import { can, p } from "../../../../../db/users/permissions";
+import { getFiles } from "../../../../../data/files/getFiles";
+import { can, p } from "../../../../../data/users/permissions";
 import { deleteFileAction } from "./actions";
 
 interface Props {

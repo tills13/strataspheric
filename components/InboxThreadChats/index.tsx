@@ -1,9 +1,9 @@
 import * as styles from "./style.css";
 
 import { auth } from "../../auth";
-import { getThreadChats } from "../../db/inbox/getThreadChats";
-import { getThreadMessages } from "../../db/inbox/getThreadMessages";
-import { can, p } from "../../db/users/permissions";
+import { getThreadChats } from "../../data/inbox/getThreadChats";
+import { getThreadMessages } from "../../data/inbox/getThreadMessages";
+import { can, p } from "../../data/users/permissions";
 import { classnames } from "../../utils/classnames";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
 import { ChatStream } from "./ChatStream";

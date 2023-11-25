@@ -1,4 +1,4 @@
-import { getStrata } from "../../../../db/stratas/getStrata";
+import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
 
 export const runtime = "edge";
 
@@ -15,7 +15,7 @@ export async function GET(req: Request) {
     return new Response("Bad Request", { status: 400 });
   }
 
-  const strata = await getStrata(domain);
+  const strata = await getStrataByDomain(domain);
 
   return new Response(
     JSON.stringify({ isAvailable: !strata } as IsDomainAvailableResponseData),

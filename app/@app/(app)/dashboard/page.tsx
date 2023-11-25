@@ -5,7 +5,7 @@ import React, { Suspense } from "react";
 
 import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { WidgetSkeleton } from "../../../../components/Skeleton/WidgetSkeleton";
-import { getCurrentStrata } from "../../../../db/stratas/getStrata";
+import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { StrataWidgets } from "./StrataWidget";
 
 export const runtime = "edge";

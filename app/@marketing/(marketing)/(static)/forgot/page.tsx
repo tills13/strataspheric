@@ -78,12 +78,14 @@ export default function Page({
           className={styles.input}
           placeholder="Password"
           name="password"
+          type="password"
         />
 
         <Input
           className={styles.input}
           placeholder="Confirm Password"
           name="confirm_password"
+          type="password"
         />
 
         <Button

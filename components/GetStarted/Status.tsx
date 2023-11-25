@@ -5,7 +5,7 @@ import * as styles from "./style.css";
 import { useEffect, useState } from "react";
 
 import { GetDomainStatusResponseData } from "../../app/api/stratas/domainStatus/route";
-import { Strata } from "../../db";
+import { Strata } from "../../data";
 import { GoToStrataButton } from "../GoToStrataButton";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";

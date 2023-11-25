@@ -1,16 +1,15 @@
 "use server";
 
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
-import { createEvent } from "../../../../db/events/createEvent";
-import { createFile } from "../../../../db/files/createFile";
-import { getCurrentStrata } from "../../../../db/stratas/getStrata";
-import { addEventToWidget } from "../../../../db/widgets/addEventToWidget";
-import { addFileToWidget } from "../../../../db/widgets/addFileToWidget";
-import { createWidget } from "../../../../db/widgets/createWidget";
-import { deleteEventFromWidget } from "../../../../db/widgets/deleteEventFromWidget";
-import { deleteFileFromWidget } from "../../../../db/widgets/deleteFileFromWidget";
-import { deleteWidget } from "../../../../db/widgets/deleteWidget";
+import { createEvent } from "../../../../data/events/createEvent";
+import { createAndUpdloadFile } from "../../../../data/files/createAndUploadFile";
+import { addEventToWidget } from "../../../../data/widgets/addEventToWidget";
+import { addFileToWidget } from "../../../../data/widgets/addFileToWidget";
+import { createWidget } from "../../../../data/widgets/createWidget";
+import { deleteEventFromWidget } from "../../../../data/widgets/deleteEventFromWidget";
+import { deleteFileFromWidget } from "../../../../data/widgets/deleteFileFromWidget";
+import { deleteWidget } from "../../../../data/widgets/deleteWidget";
 
 export async function createEventAction(widgetId: string, formData: FormData) {
   const name = formData.get("name");
@@ -60,12 +59,13 @@ export async function createFileAction(
       throw new Error("invalid fields");
     }
 
-    const newFile = await createFile({
+    const newFile = await createAndUpdloadFile(
+      strataId,
       name,
       description,
-      path: (file as File).name,
-      strataId,
-    });
+      (file as File).name,
+      file,
+    );
 
     fileId = newFile.id;
   }

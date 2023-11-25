@@ -2,11 +2,18 @@
 
 import { revalidatePath } from "next/cache";
 
-import { createStrataMembership } from "../../../../../db/strataMemberships/createStrataMembership";
-import { deleteStrataMember } from "../../../../../db/strataMemberships/deleteStrataMember";
-import { updateStrataMembership } from "../../../../../db/strataMemberships/updateStrataMembership";
-import { createUser } from "../../../../../db/users/createUser";
-import { getUser } from "../../../../../db/users/getUser";
+import { auth } from "../../../../../auth";
+import { StrataMembershipUpdate } from "../../../../../data";
+import { createStrataMembership } from "../../../../../data/strataMemberships/createStrataMembership";
+import { deleteStrataMember } from "../../../../../data/strataMemberships/deleteStrataMember";
+import { updateStrataMembership } from "../../../../../data/strataMemberships/updateStrataMembership";
+import { getStrataById } from "../../../../../data/stratas/getStrataById";
+import { createUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/createUserPasswordResetToken";
+import { createUser } from "../../../../../data/users/createUser";
+import { getUser } from "../../../../../data/users/getUser";
+import { Role } from "../../../../../data/users/permissions";
+import * as formdata from "../../../../../utils/formdata";
+import { sendEmail } from "../../../../../utils/sendEmail";
 
 export async function deleteStrataMemberAction(
   strataId: string,
@@ -16,30 +23,26 @@ export async function deleteStrataMemberAction(
   revalidatePath("/dashboard/membership");
 }
 
-export async function addStrataMemberAction(
-  strataId: string,
-  formData: FormData,
-) {
-  const email = formData.get("email");
-  const name = formData.get("name");
-  const phoneNumber = formData.get("phone_number");
-  const unit = formData.get("unit");
-  const role = formData.get("role");
-  const password = formData.get("password") || "";
+const domain =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://strataspheric.app";
 
-  if (
-    typeof email !== "string" ||
-    email === "" ||
-    typeof name !== "string" ||
-    name === "" ||
-    typeof phoneNumber !== "string" ||
-    phoneNumber === "" ||
-    typeof unit !== "string" ||
-    unit === "" ||
-    typeof role !== "string" ||
-    role === "" ||
-    typeof password !== "string"
-  ) {
+export async function addStrataMemberAction(strataId: string, fd: FormData) {
+  const session = await auth();
+
+  if (!session || !session.user) {
+    throw new Error("not allowed");
+  }
+
+  const email = formdata.getString(fd, "email");
+  const name = formdata.getString(fd, "name");
+  const phoneNumber = formdata.getString(fd, "phone_number");
+  const unit = formdata.getString(fd, "unit");
+  const role = formdata.getString(fd, "role");
+  const password = formdata.getString(fd, "password");
+
+  if (email === "" || name === "" || unit === "" || role === "") {
     throw new Error("invalid fields");
   }
 
@@ -51,6 +54,26 @@ export async function addStrataMemberAction(
   } else {
     const newUser = await createUser({ email, password });
     userId = newUser.id;
+
+    const strata = await getStrataById(strataId);
+
+    if (!strata) {
+      throw new Error("wow");
+    }
+
+    const token = await createUserPasswordResetToken({ userId });
+
+    await sendEmail(
+      email,
+      "Welcome to Strataspheric",
+      `
+      <h1>Welcome to Strataspheric</h1>
+      
+      <p>${session.user.name} has invited you to join <b>${strata.name}</b> on Strataspheric.</p>
+    
+      <p>To finish setting up your account, <a href="${domain}/join?token=${token.token}">click here</a>.</p>
+    `,
+    );
   }
 
   await createStrataMembership({
@@ -60,7 +83,7 @@ export async function addStrataMemberAction(
     name,
     phoneNumber,
     unit,
-    role: role as any,
+    role: role as Role,
   });
 
   revalidatePath("/dashboard/membership");
@@ -69,31 +92,41 @@ export async function addStrataMemberAction(
 export async function updateStrataMemberAction(
   strataId: string,
   userId: string,
-  formData: FormData,
+  fd: FormData,
 ) {
-  const email = formData.get("email");
-  const name = formData.get("name");
-  const phoneNumber = formData.get("phone_number");
-  const unit = formData.get("unit");
-  const role = formData.get("role");
+  const email = formdata.getString(fd, "email");
+  const name = formdata.getString(fd, "name");
+  const phoneNumber = formdata.getString(fd, "phone_number");
+  const unit = formdata.getString(fd, "unit");
+  const role = formdata.getString(fd, "role");
 
-  if (
-    (email && typeof email !== "string") ||
-    (name && typeof name !== "string") ||
-    (phoneNumber && typeof phoneNumber !== "string") ||
-    (unit && typeof unit !== "string") ||
-    (role && typeof role !== "string")
-  ) {
-    throw new Error("invalid fields");
+  let update: StrataMembershipUpdate = {};
+
+  if (email !== "") {
+    update.email = email;
   }
 
-  await updateStrataMembership(strataId, userId, {
-    ...(email && { email }),
-    ...(name && { name }),
-    ...(phoneNumber && { phoneNumber }),
-    ...(unit && { unit }),
-    ...(role && { role }),
-  });
+  if (name !== "") {
+    update.name = name;
+  }
+
+  if (phoneNumber !== "") {
+    update.phoneNumber = phoneNumber;
+  }
+
+  if (unit !== "") {
+    update.unit = unit;
+  }
+
+  if (role !== "") {
+    update.role = role as Role;
+  }
+
+  if (Object.keys(update).length === 0) {
+    return;
+  }
+
+  await updateStrataMembership(strataId, userId, update);
 
   revalidatePath("/dashboard/membership");
 }

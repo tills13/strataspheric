@@ -7,7 +7,7 @@ import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { AddIcon } from "../../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../../components/Modal";
 import { NewFileForm } from "../../../../../components/NewFileForm";
-import { can, p } from "../../../../../db/users/permissions";
+import { can, p } from "../../../../../data/users/permissions";
 
 interface Props {
   createFile: (fd: FormData) => void;

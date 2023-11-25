@@ -2,7 +2,7 @@ import * as styles from "./style.css";
 
 import { NewWidgetWidget } from "../../../../components/NewWidgetWidget";
 import { Widget } from "../../../../components/Widget";
-import { getWidgets } from "../../../../db/widgets/getWidgets";
+import { getWidgets } from "../../../../data/widgets/getWidgets";
 import {
   createEventAction,
   createFileAction,

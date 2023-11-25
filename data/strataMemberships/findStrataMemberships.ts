@@ -4,6 +4,7 @@ interface FindMembersFilters {
   email?: string;
   domain?: string;
   strataId?: string;
+  userId?: string;
 }
 
 export async function findStrataMemberships(
@@ -14,6 +15,10 @@ export async function findStrataMemberships(
     .selectAll("strata_memberships")
     .innerJoin("stratas", "strata_memberships.strataId", "stratas.id")
     .selectAll();
+
+  if (opts.userId) {
+    query = query.where("strata_memberships.userId", "=", opts.userId);
+  }
 
   if (opts.strataId) {
     query = query.where("stratas.id", "=", opts.strataId);

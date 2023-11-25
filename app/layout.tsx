@@ -6,8 +6,8 @@ import { SessionProvider } from "next-auth/react";
 
 import { auth } from "../auth";
 import { GlobalFooter } from "../components/GlobalFooter";
-import { getCurrentStrata } from "../db/stratas/getStrata";
-import { getUserStratas } from "../db/users/getUserStratas";
+import { getCurrentStrata } from "../data/stratas/getStrataByDomain";
+import { getUserStratas } from "../data/users/getUserStratas";
 import { variable } from "../theme";
 import { laila, sourceSans } from "./fonts";
 

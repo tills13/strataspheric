@@ -10,8 +10,8 @@ import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { ElementGroup } from "../../../../../components/ElementGroup";
 import { Header } from "../../../../../components/Header";
 import { Input } from "../../../../../components/Input";
-import { getCurrentStrata } from "../../../../../db/stratas/getStrata";
-import { can } from "../../../../../db/users/permissions";
+import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { can } from "../../../../../data/users/permissions";
 import { updateStrataAction } from "./actions";
 
 export const runtime = "edge";

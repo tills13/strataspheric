@@ -1,10 +1,10 @@
 "use server";
 
-import { createUserPasswordResetToken } from "../../../../../db/userPasswordResetTokens/createUserPasswordResetToken";
-import { deleteUserPasswordResetToken } from "../../../../../db/userPasswordResetTokens/deleteUserPasswordResetToken";
-import { getUserPasswordResetToken } from "../../../../../db/userPasswordResetTokens/getUserPasswordResetToken";
-import { getUser } from "../../../../../db/users/getUser";
-import { updateUser } from "../../../../../db/users/updateUser";
+import { createUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/createUserPasswordResetToken";
+import { deleteUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
+import { getUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/getUserPasswordResetToken";
+import { getUser } from "../../../../../data/users/getUser";
+import { updateUser } from "../../../../../data/users/updateUser";
 import { sendEmail } from "../../../../../utils/sendEmail";
 
 const domain =

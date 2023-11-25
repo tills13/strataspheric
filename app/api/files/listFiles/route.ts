@@ -1,6 +1,6 @@
 import { auth } from "../../../../auth";
-import { getFiles } from "../../../../db/files/getFiles";
-import { getCurrentStrata } from "../../../../db/stratas/getStrata";
+import { getFiles } from "../../../../data/files/getFiles";
+import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 
 export const runtime = "edge";
 

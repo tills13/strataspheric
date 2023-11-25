@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { StrataWidget } from "../db";
+import { StrataWidget } from "../data";
 import { ServerEventWidget } from "./EventWidget/ServerEventWidget";
 import { ServerFileWidget } from "./FileWidget/ServerFileWidget";
 import { Header } from "./Header";

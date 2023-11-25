@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 
-import { updateStrataMembership } from "../../../../../db/strataMemberships/updateStrataMembership";
-import { updateStrata } from "../../../../../db/stratas/updateStrata";
+import { updateStrataMembership } from "../../../../../data/strataMemberships/updateStrataMembership";
+import { updateStrata } from "../../../../../data/stratas/updateStrata";
 
 export async function updateStrataAction(formData: FormData) {
   const id = formData.get("id");

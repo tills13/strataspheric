@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { File } from "../../db";
+import { File } from "../../data";
 import { Select } from "../Select";
 
 interface Props extends React.ComponentProps<typeof Select> {

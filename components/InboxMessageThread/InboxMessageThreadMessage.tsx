@@ -4,7 +4,7 @@ import * as styles from "./style.css";
 
 import { useState } from "react";
 
-import { p } from "../../db/users/permissions";
+import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { useHash } from "../../hooks/useHash";
 import { classnames } from "../../utils/classnames";

@@ -1,6 +1,6 @@
 import * as styles from "./style.css";
 
-import { StrataMembership } from "../../db";
+import { StrataMembership } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";

@@ -4,11 +4,11 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
-import { createThread } from "../../../../../db/inbox/createThread";
-import { deleteThread } from "../../../../../db/inbox/deleteThread";
-import { deleteThreadChats } from "../../../../../db/inbox/deleteThreadChats";
-import { getThreadMessages } from "../../../../../db/inbox/getThreadMessages";
-import { getCurrentStrata } from "../../../../../db/stratas/getStrata";
+import { createThread } from "../../../../../data/inbox/createThread";
+import { deleteThread } from "../../../../../data/inbox/deleteThread";
+import { deleteThreadChats } from "../../../../../data/inbox/deleteThreadChats";
+import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
+import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { sendEmail } from "../../../../../utils/sendEmail";
 
 const domain =

@@ -1,8 +1,8 @@
 import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-import { roleScopeToScopes } from "./db/users/permissions";
-import { signInUser } from "./db/users/signInUser";
+import { roleScopeToScopes } from "./data/users/permissions";
+import { signInUser } from "./data/users/signInUser";
 
 const isNotDev = process.env.NODE_ENV !== "development";
 

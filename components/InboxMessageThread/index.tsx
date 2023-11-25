@@ -1,7 +1,7 @@
 import * as styles from "./style.css";
 
 import { auth } from "../../auth";
-import { getThreadMessages } from "../../db/inbox/getThreadMessages";
+import { getThreadMessages } from "../../data/inbox/getThreadMessages";
 import { ShareIcon } from "../Icon/ShareIcon";
 import { IconButton } from "../IconButton";
 import { ExternalLink } from "../Link/ExternalLink";

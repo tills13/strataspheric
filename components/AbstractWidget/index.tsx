@@ -5,7 +5,7 @@ import * as styles from "./style.css";
 import { useSession } from "next-auth/react";
 import React, { startTransition } from "react";
 
-import { can } from "../../db/users/permissions";
+import { can } from "../../data/users/permissions";
 import { classnames } from "../../utils/classnames";
 import { DropdownActions, filterIsAction } from "../DropdownActions";
 import { Header } from "../Header";

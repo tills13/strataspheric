@@ -5,5 +5,5 @@ export function getUser(email: string) {
     .selectFrom("users")
     .select(["users.id", "users.email"])
     .where("users.email", "=", email)
-    .executeTakeFirstOrThrow();
+    .executeTakeFirst();
 }

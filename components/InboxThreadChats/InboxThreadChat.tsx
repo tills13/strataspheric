@@ -9,7 +9,7 @@ import {
   type Chat,
   isThreadChatWithFile,
   isThreadChatWithQuote,
-} from "../../db/inbox/getThreadChats";
+} from "../../data/inbox/getThreadChats";
 import { useHash } from "../../hooks/useHash";
 import { classnames } from "../../utils/classnames";
 import { FileLink } from "../FileLink";

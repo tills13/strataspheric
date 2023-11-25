@@ -1,7 +1,7 @@
 import * as styles from "./style.css";
 
 import { auth } from "../../auth";
-import { getCurrentStrata } from "../../db/stratas/getStrata";
+import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { GlobalHeader } from "../GlobalHeader";
 import { InternalLink } from "../Link/InternalLink";
 import { GlobalHeaderActions } from "./Actions";

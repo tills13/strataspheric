@@ -6,10 +6,10 @@ import { auth } from "../../../../../../auth";
 import { DashboardHeader } from "../../../../../../components/DashboardHeader";
 import { InboxMessageThread } from "../../../../../../components/InboxMessageThread";
 import { InboxThreadChats } from "../../../../../../components/InboxThreadChats";
-import { getThread } from "../../../../../../db/inbox/getThread";
-import { Thread } from "../../../../../../db/inbox/getThreads";
-import { getCurrentStrata } from "../../../../../../db/stratas/getStrata";
-import { can, p } from "../../../../../../db/users/permissions";
+import { getThread } from "../../../../../../data/inbox/getThread";
+import { Thread } from "../../../../../../data/inbox/getThreads";
+import { getCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";
+import { can, p } from "../../../../../../data/users/permissions";
 import { sendInboxMessageAction } from "../actions";
 import { sendInboxThreadChatAction } from "./actions";
 

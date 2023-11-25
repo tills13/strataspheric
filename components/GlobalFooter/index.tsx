@@ -4,7 +4,7 @@ import * as styles from "./style.css";
 
 import { useSelectedLayoutSegment } from "next/navigation";
 
-import { Strata } from "../../db";
+import { Strata } from "../../data";
 import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
 import { GoToStrataButton } from "../GoToStrataButton";

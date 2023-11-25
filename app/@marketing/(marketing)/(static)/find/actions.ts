@@ -2,7 +2,7 @@
 
 import { SelectQueryBuilder } from "kysely";
 
-import { Database, Strata, db } from "../../../../../db";
+import { Database, Strata, db } from "../../../../../data";
 
 interface State {
   stratas: Strata[] | undefined;

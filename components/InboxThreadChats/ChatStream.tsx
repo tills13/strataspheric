@@ -4,7 +4,7 @@ import * as styles from "./style.css";
 
 import React, { useLayoutEffect, useRef } from "react";
 
-import { Chat } from "../../db/inbox/getThreadChats";
+import { Chat } from "../../data/inbox/getThreadChats";
 import { Header } from "../Header";
 import { InboxThreadChat } from "./InboxThreadChat";
 

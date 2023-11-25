@@ -7,7 +7,7 @@ import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { AddIcon } from "../../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../../components/Modal";
 import { UpsertStrataMemberForm } from "../../../../../components/UpsertStrataMemberForm";
-import { p } from "../../../../../db/users/permissions";
+import { p } from "../../../../../data/users/permissions";
 import { useCan } from "../../../../../hooks/useCan";
 
 interface Props {

@@ -5,8 +5,8 @@ import { notFound, redirect } from "next/navigation";
 import { auth } from "../../../../../../auth";
 import { DashboardHeader } from "../../../../../../components/DashboardHeader";
 import { SendInboxMessageForm } from "../../../../../../components/SendInboxMessageForm";
-import { getStrataPlan } from "../../../../../../db/strataPlans/getStrataPlan";
-import { getCurrentStrata } from "../../../../../../db/stratas/getStrata";
+import { getStrataPlan } from "../../../../../../data/strataPlans/getStrataPlan";
+import { getCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";
 import { sendInboxMessageAction } from "../actions";
 
 export const runtime = "edge";

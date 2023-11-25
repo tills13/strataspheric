@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Strata } from "../../db";
+import { Strata } from "../../data";
 import { Button } from "../Button";
 import { ExternalLink } from "../Link/ExternalLink";
 

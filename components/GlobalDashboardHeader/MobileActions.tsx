@@ -5,7 +5,7 @@ import * as styles from "./style.css";
 import { Session } from "next-auth";
 import { useState } from "react";
 
-import { Strata } from "../../db";
+import { Strata } from "../../data";
 import { MenuIcon } from "../Icon/MenuIcon";
 import { IconButton } from "../IconButton";
 import { Modal } from "../Modal";
