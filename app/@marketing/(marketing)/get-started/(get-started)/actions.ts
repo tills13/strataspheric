@@ -2,75 +2,81 @@
 
 import { redirect } from "next/navigation";
 
+import { auth } from "../../../../../auth";
 import { CF_PAGES_PROJECT_ID } from "../../../../../cloudflare/constants";
 import { createRecord } from "../../../../../cloudflare/dns/createRecord";
 import { addCustomDomain } from "../../../../../cloudflare/pages/addCustomDomain";
 import { createStrataMembership } from "../../../../../data/strataMemberships/createStrataMembership";
 import { createPlan } from "../../../../../data/strataPlans/createStrataPlan";
 import { createStrata } from "../../../../../data/stratas/createStrata";
-import { updateStrata } from "../../../../../data/stratas/updateStrata";
 import { createUser } from "../../../../../data/users/createUser";
 import { createWidget } from "../../../../../data/widgets/createWidget";
+import * as formdata from "../../../../../utils/formdata";
 
-export async function submitGetStarted(fd: FormData) {
-  const name = fd.get("name");
-  const email = fd.get("email");
-  const password = fd.get("password");
-  const confirmPassword = fd.get("confirm_password");
+export type SubmitGetStartedState =
+  | {
+      success: false;
+      error: string;
+    }
+  | never;
 
-  if (
-    typeof name !== "string" ||
-    name === "" ||
-    typeof email !== "string" ||
-    email === "" ||
-    typeof password !== "string" ||
-    password === ""
-  ) {
-    throw new Error("missing or invalid fields");
+export async function submitGetStarted(
+  _state: SubmitGetStartedState,
+  fd: FormData,
+): Promise<SubmitGetStartedState> {
+  const session = await auth();
+
+  const name = formdata.getString(fd, "name");
+  const email = formdata.getString(fd, "email");
+  const password = formdata.getString(fd, "password");
+  const confirmPassword = formdata.getString(fd, "confirmPassword");
+
+  if (!session) {
+    if (name === "" || email === "" || password === "") {
+      return { success: false, error: "missing or invalid fields" };
+    }
+
+    if (password !== confirmPassword) {
+      return { success: false, error: "passwords do not match" };
+    }
   }
 
-  if (password !== confirmPassword) {
-    throw new Error("password don't match");
+  const strataName = formdata.getString(fd, "strata_name");
+  const strataDomain = formdata.getString(fd, "strata_domain");
+  const isPublic = formdata.getBoolean(fd, "is_public");
+  const numUnits = formdata.getInteger(fd, "num_units");
+
+  if (strataName === "" || strataDomain === "" || isNaN(numUnits)) {
+    return { success: false, error: "missing or invalid fields" };
   }
 
-  const strataName = fd.get("strata_name");
-  let strataDomain = fd.get("strata_domain");
-  const isPublic = fd.get("is_public") === "on";
+  let userId: string;
 
-  const numUnits = fd.get("num_units");
+  if (!session) {
+    const newUser = await createUser({
+      accountType: "user",
+      name,
+      email,
+      password,
+    });
 
-  if (
-    typeof strataName !== "string" ||
-    strataName === "" ||
-    typeof strataDomain !== "string" ||
-    strataDomain === "" ||
-    typeof numUnits !== "string" ||
-    numUnits === ""
-  ) {
-    throw new Error("missing or invalid fields");
-  }
-
-  // ----
-
-  const { id: userId } = await createUser({ email, password });
-
-  if (!userId) {
-    throw new Error("failed to create user");
-  }
-
-  if (process.env.NODE_ENV === "development") {
-    strataDomain = "localhost:3000";
+    userId = newUser.id;
+  } else {
+    userId = session.user.id;
   }
 
   const { id: strataId } = await createStrata({
     domain: strataDomain,
     name: strataName,
-    numUnits: parseInt(numUnits, 10),
+    numUnits,
     isPublic: isPublic ? 1 : 0,
   });
 
   if (!strataId) {
-    throw new Error("failed to create strata");
+    return {
+      success: false,
+      error: "failed to create strata",
+    };
   }
 
   await createStrataMembership({
@@ -98,13 +104,19 @@ export async function submitGetStarted(fd: FormData) {
     );
 
     if (!createDnsRecordResponse.success) {
-      throw new Error("unable to create DNS record");
+      return {
+        success: false,
+        error: "unable to create DNS record",
+      };
     }
 
     const [rJson] = await addCustomDomain(strataDomain);
 
     if (!rJson.success) {
-      throw new Error("unable to create custom domain");
+      return {
+        success: false,
+        error: "unable to create custom domain",
+      };
     }
   }
 

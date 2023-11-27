@@ -7,7 +7,7 @@ export const plans = [
       { description: "unlimited files and events", included: true },
       { description: "strata directory", included: true },
       { description: "per unit pricing", included: true },
-      { description: "public or private content", included: false },
+      { description: "public or private content", included: true },
       { description: "email notifications", included: false },
       { description: "meetings dashboard & planner", included: false },
       { description: "strata message board", included: false },

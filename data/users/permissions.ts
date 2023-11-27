@@ -25,6 +25,7 @@ const roles = [
 ] as const;
 
 export type Role = (typeof roles)[number];
+export type AccountType = "user" | "realtor";
 
 export function p(): string;
 export function p(namespace: "stratas"): string;

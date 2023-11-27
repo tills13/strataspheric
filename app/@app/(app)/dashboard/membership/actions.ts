@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { auth } from "../../../../../auth";
+import { protocol, tld } from "../../../../../constants";
 import { StrataMembershipUpdate } from "../../../../../data";
 import { createStrataMembership } from "../../../../../data/strataMemberships/createStrataMembership";
 import { deleteStrataMember } from "../../../../../data/strataMemberships/deleteStrataMember";
@@ -22,11 +23,6 @@ export async function deleteStrataMemberAction(
   await deleteStrataMember(strataId, memberId);
   revalidatePath("/dashboard/membership");
 }
-
-const domain =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://strataspheric.app";
 
 export async function addStrataMemberAction(strataId: string, fd: FormData) {
   const session = await auth();
@@ -71,7 +67,7 @@ export async function addStrataMemberAction(strataId: string, fd: FormData) {
       
       <p>${session.user.name} has invited you to join <b>${strata.name}</b> on Strataspheric.</p>
     
-      <p>To finish setting up your account, <a href="${domain}/join?token=${token.token}">click here</a>.</p>
+      <p>To finish setting up your account, <a href="${protocol}//${tld}/join?token=${token.token}">click here</a>.</p>
     `,
     );
   }

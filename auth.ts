@@ -1,28 +1,36 @@
 import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
+import { findStrataMemberships } from "./data/strataMemberships/findStrataMemberships";
 import { roleScopeToScopes } from "./data/users/permissions";
 import { signInUser } from "./data/users/signInUser";
+import { getDomain } from "./utils/getDomain";
 
 const isNotDev = process.env.NODE_ENV !== "development";
 
 export const authOptions: NextAuthConfig = {
   callbacks: {
-    jwt({ user, token }) {
+    jwt({ user, token, ...rest }, ...other) {
       if (user) {
         token.id = user.id;
-        token.scopes = user.scopes;
       }
+
+      token.something;
 
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token, ...rest }, ...other) {
       if (!session.user) {
         return session;
       }
 
+      const [membership] = await findStrataMemberships({
+        domain: getDomain(),
+        userId: token.id as string,
+      });
+
       session.user.id = token.id as string;
-      session.user.scopes = token.scopes as string[];
+      session.user.scopes = roleScopeToScopes(membership?.role);
 
       return session;
     },
@@ -34,7 +42,7 @@ export const authOptions: NextAuthConfig = {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        domain: isNotDev ? ".strataspheric.app" : "",
+        domain: isNotDev ? ".strataspheric.app" : ".strataspheric.local",
         secure: isNotDev,
       },
     },
@@ -48,7 +56,7 @@ export const authOptions: NextAuthConfig = {
         email: { label: "Email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, request) {
+      authorize(credentials) {
         if (
           typeof credentials.email !== "string" ||
           typeof credentials.password !== "string"
@@ -56,19 +64,7 @@ export const authOptions: NextAuthConfig = {
           return null;
         }
 
-        const domain = request.headers.get("host")!;
-
-        const user = await signInUser(
-          credentials.email,
-          credentials.password,
-          domain,
-        );
-
-        return {
-          ...user,
-          scopes: roleScopeToScopes(user.role),
-          id: user.userId,
-        };
+        return signInUser(credentials.email, credentials.password);
       },
     }),
   ],

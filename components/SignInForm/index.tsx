@@ -5,15 +5,11 @@ import * as styles from "./style.css";
 import { signIn } from "next-auth/react";
 import React, { useState } from "react";
 
+import { protocol, tld } from "../../constants";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { Input } from "../Input";
 import { ExternalLink } from "../Link/ExternalLink";
-
-const domain =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://strataspheric.app";
 
 interface Props {
   className?: string;
@@ -38,9 +34,9 @@ export function SignInForm({ className }: Props) {
       setHasError(true);
     }
 
-    if (result?.ok && result.url) {
-      window.location.href = result.url;
-    }
+    // if (result?.ok && result.url) {
+    //   window.location.href = result.url;
+    // }
   }
 
   return (
@@ -68,7 +64,10 @@ export function SignInForm({ className }: Props) {
 
       <Button type="submit">Sign in</Button>
 
-      <ExternalLink className={styles.forgotLink} href={domain + "/forgot"}>
+      <ExternalLink
+        className={styles.forgotLink}
+        href={protocol + "//" + tld + "/forgot"}
+      >
         Forgot Password
       </ExternalLink>
     </form>

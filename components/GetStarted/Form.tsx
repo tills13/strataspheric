@@ -2,29 +2,39 @@
 
 import * as styles from "./style.css";
 
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { experimental_useFormState } from "react-dom";
 
+import { SubmitGetStartedState } from "../../app/@marketing/(marketing)/get-started/(get-started)/actions";
+import { tld } from "../../constants";
 import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 import { classnames } from "../../utils/classnames";
 import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
 import { pluralize } from "../../utils/pluralize";
-import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
+import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
 import { CycleIcon } from "../Icon/CycleIcon";
 import { Input } from "../Input";
+import { JoinFormFields } from "../JoinForm/JoinFormFields";
 import { Money } from "../Money";
-
-const rootDomain = "strataspheric.app";
+import { Panel } from "../Panel";
 
 interface Props {
   className?: string;
-  submitGetStarted: (fd: FormData) => void;
+  submitGetStarted: (
+    state: SubmitGetStartedState,
+    fd: FormData,
+  ) => Promise<SubmitGetStartedState>;
 }
 
 export function GetStartedForm({ className, submitGetStarted }: Props) {
+  const [state, action] = experimental_useFormState(submitGetStarted, null);
+
+  const { data: session } = useSession();
   const [strataName, setStrataName] = useState("");
   const [isDomainAvailable, setIsDomainAvailable] = useState(undefined);
   const deferredStrataName = useTimeDeferredValue(strataName);
@@ -38,7 +48,7 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
 
       const r = await fetch(
         "/api/stratas/domainAvailable?domain=" +
-          encodeURIComponent(`${suggestedSubdomain}.${rootDomain}`),
+          encodeURIComponent(`${suggestedSubdomain}.${tld}`),
       );
       const rJson = await r.json();
 
@@ -50,28 +60,17 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
 
   return (
     <form
-      action={submitGetStarted}
+      action={action}
       className={classnames(styles.getStartedForm, className)}
     >
-      <Header priority={2}>Let&apos;s get to know you...</Header>
+      {!session && <JoinFormFields />}
 
-      <Input name="name" placeholder="Name" required />
-
-      <Input name="email" placeholder="Email" required />
-
-      <Header priority={3}>A password to protect your account</Header>
-
-      <Input name="password" placeholder="Password" type="password" required />
-      <Input
-        name="confirm_password"
-        placeholder="Confirm Password"
-        type="password"
-        required
-      />
-
-      <Header priority={2}>Let&apos;s get to know your strata...</Header>
+      <Header className={styles.header2} priority={2}>
+        Let&apos;s get to know your strata...
+      </Header>
 
       <Input
+        className={styles.input}
         name="strata_name"
         placeholder="Strata Name"
         onChange={(e) => setStrataName(e.target.value)}
@@ -92,15 +91,13 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
             <span className={styles.subdomainFieldSubdomain}>
               {suggestedSubdomain}
             </span>
-            <span className={styles.subdomainFieldRootDomain}>
-              .{rootDomain}
-            </span>
+            <span className={styles.subdomainFieldRootDomain}>.{tld}</span>
           </div>
 
           <input
             name="strata_domain"
             type="hidden"
-            value={`${suggestedSubdomain}.${rootDomain}`}
+            value={`${suggestedSubdomain}.${tld}`}
           />
         </div>
       )}
@@ -112,9 +109,12 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
         <Checkbox id="is_public" name="is_public" defaultChecked />
       </label>
 
-      <Header priority={3}>How many units are in your strata?</Header>
+      <Header className={styles.header3} priority={3}>
+        How many units are in your strata?
+      </Header>
 
       <Input
+        className={styles.input}
         name="num_units"
         min={1}
         type="number"
@@ -124,7 +124,9 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
         }}
       />
 
-      <Header priority={3}>Estimate</Header>
+      <Header className={styles.header3} priority={3}>
+        Estimate
+      </Header>
 
       <div className={styles.estimateContainer}>
         <div className={styles.estimateSummary}>
@@ -138,9 +140,17 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
         </div>
       </div>
 
-      <Button type="submit" variant="primary" size="large">
+      {state?.error && <Panel>{state.error}</Panel>}
+
+      <FormSubmitStatusButton
+        className={styles.input}
+        type="submit"
+        variant="primary"
+        size="large"
+        success={undefined}
+      >
         Let&apos;s Get Started
-      </Button>
+      </FormSubmitStatusButton>
     </form>
   );
 }

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Strata } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
+import { DropdownButton } from "../DropdownButton";
 import { SignOutButton } from "../SignOutButton";
 
 interface Props {
@@ -20,6 +21,13 @@ export function GlobalHeaderActions({ className, session, strata }: Props) {
       {session ? (
         <>
           <span>{session.user?.name}</span>
+          <DropdownButton
+            panel={
+              <>
+                <pre>{JSON.stringify(session.user.scopes, undefined, 2)}</pre>
+              </>
+            }
+          />
           <SignOutButton className={styles.globalHeaderActionsButton} />
         </>
       ) : (

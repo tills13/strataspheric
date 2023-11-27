@@ -1,7 +1,7 @@
-// import "@auth/core";
+import "@auth/core";
 
-// declare module "@auth/core" {
-//   export interface User {
-//     scope: string;
-//   }
-// }
+declare module "@auth/core" {
+  export interface JWT {
+    something: string;
+  }
+}

@@ -6,16 +6,59 @@ import { findStrataMemberships } from "../../../../../data/strataMemberships/fin
 import { getStrataById } from "../../../../../data/stratas/getStrataById";
 import { deleteUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
 import { getUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/getUserPasswordResetToken";
+import { createUser } from "../../../../../data/users/createUser";
 import { updateUser } from "../../../../../data/users/updateUser";
+import * as formdata from "../../../../../utils/formdata";
 
-export async function resetPasswordAction(fd: FormData) {
-  const token = fd.get("token");
+export type JoinFormState =
+  | {
+      success: false;
+      error: string;
+    }
+  | {
+      success: true;
+    }
+  | null;
+
+export async function joinAction(
+  _formState: JoinFormState,
+  fd: FormData,
+): Promise<JoinFormState> {
+  const email = formdata.getString(fd, "email");
+  const name = formdata.getString(fd, "name");
+  const password = formdata.getString(fd, "password");
+  const confirmPassword = formdata.getString(fd, "confirmPassword");
+  const isRealtor = formdata.getBoolean(fd, "isRealtor");
+
+  if (password !== confirmPassword) {
+    return {
+      success: false,
+      error: "passwords do not match",
+    };
+  }
+
+  try {
+    await createUser({
+      email,
+      password,
+      accountType: isRealtor ? "realtor" : "user",
+      name,
+    });
+  } catch (e) {
+    return {
+      success: false,
+      error: e,
+    };
+  }
+
+  return { success: true };
+}
+
+export async function joinFromTokenAction(token: string, fd: FormData) {
   const password = fd.get("password");
   const confirmPassword = fd.get("confirm_password");
 
   if (
-    typeof token !== "string" ||
-    token === "" ||
     typeof password !== "string" ||
     typeof confirmPassword !== "string" ||
     password === "" ||

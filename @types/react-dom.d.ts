@@ -1,6 +1,7 @@
 import "react-dom";
 
 declare module "react-dom" {
+  var experimental_useFormStatus: typeof useFormStatus;
   function experimental_useFormState<State>(
     action: (state: State) => Promise<State>,
     initialState: State,

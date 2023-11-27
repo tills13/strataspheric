@@ -1,5 +1,6 @@
 import React from "react";
 
+import { protocol } from "../../constants";
 import { Strata } from "../../data";
 import { Button } from "../Button";
 import { ExternalLink } from "../Link/ExternalLink";
@@ -33,7 +34,7 @@ export function GoToStrataButton({
   }
 
   return (
-    <ExternalLink href={"https://" + strata.domain} target={target}>
+    <ExternalLink href={protocol + "//" + strata.domain} target={target}>
       <Button className={className} size={size} variant={variant}>
         Go to {strata.name}
       </Button>

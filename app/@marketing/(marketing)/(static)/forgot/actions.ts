@@ -1,16 +1,12 @@
 "use server";
 
+import { protocol, tld } from "../../../../../constants";
 import { createUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/createUserPasswordResetToken";
 import { deleteUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
 import { getUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/getUserPasswordResetToken";
 import { getUser } from "../../../../../data/users/getUser";
 import { updateUser } from "../../../../../data/users/updateUser";
 import { sendEmail } from "../../../../../utils/sendEmail";
-
-const domain =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://strataspheric.app";
 
 export interface RequestResetPasswordFormState {
   emailSent?: boolean;
@@ -45,7 +41,7 @@ export async function requestPasswordResetActionReducer(
     A password reset has been requested for your account on Strataspheric.
     If this was not you, you can ignore this email.
   
-    To reset your password, <a href="${domain}/forgot?token=${token.token}">click here</a>.
+    To reset your password, <a href="${protocol}//${tld}/forgot?token=${token.token}">click here</a>.
   `,
   );
 

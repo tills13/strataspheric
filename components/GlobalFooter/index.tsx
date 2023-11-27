@@ -2,8 +2,10 @@
 
 import * as styles from "./style.css";
 
+import { useSession } from "next-auth/react";
 import { useSelectedLayoutSegment } from "next/navigation";
 
+import { protocol, tld } from "../../constants";
 import { Strata } from "../../data";
 import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
@@ -18,10 +20,10 @@ interface Props {
   sessionStratas: Strata[];
 }
 
-const baseUrl =
-  process.env.NODE_ENV === "development" ? "" : "https://strataspheric.app";
+const baseUrl = protocol + "//" + tld;
 
 export function GlobalFooter({ sessionStratas }: Props) {
+  const { data: session } = useSession();
   const isMarketingSegment =
     useSelectedLayoutSegment("marketing") !== "__DEFAULT__";
 
@@ -57,31 +59,33 @@ export function GlobalFooter({ sessionStratas }: Props) {
         </p>
       </div>
 
-      <Panel className={styles.continuePanel}>
-        <Header className={styles.continuePanelHeader} priority={3}>
-          Continue where you left off...
-        </Header>
-        {isMarketingSegment && sessionStratas.length !== 0 ? (
-          <ElementGroup
-            className={styles.continuePanelList}
-            orientation="column"
-          >
-            {sessionStratas.map((strata) => (
-              <GoToStrataButton
-                key={strata.domain}
-                className={styles.continuePanelListButton}
-                strata={strata}
-              />
-            ))}
-          </ElementGroup>
-        ) : (
-          <ExternalLink href={baseUrl + "/find"}>
-            <Button className={styles.continuePanelListButton}>
-              Find Your Stratas
-            </Button>
-          </ExternalLink>
-        )}
-      </Panel>
+      {session && (
+        <Panel className={styles.continuePanel}>
+          <Header className={styles.continuePanelHeader} priority={3}>
+            Continue where you left off...
+          </Header>
+          {isMarketingSegment && sessionStratas.length !== 0 ? (
+            <ElementGroup
+              className={styles.continuePanelList}
+              orientation="column"
+            >
+              {sessionStratas.map((strata) => (
+                <GoToStrataButton
+                  key={strata.domain}
+                  className={styles.continuePanelListButton}
+                  strata={strata}
+                />
+              ))}
+            </ElementGroup>
+          ) : (
+            <ExternalLink href={baseUrl + "/find"}>
+              <Button className={styles.continuePanelListButton}>
+                Find Your Stratas
+              </Button>
+            </ExternalLink>
+          )}
+        </Panel>
+      )}
     </footer>
   );
 }

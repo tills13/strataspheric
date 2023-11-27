@@ -3,7 +3,7 @@
 import * as styles from "./style.css";
 
 import {
-  experimental_useFormState, // @ts-expect-error
+  experimental_useFormState,
   experimental_useFormStatus,
 } from "react-dom";
 

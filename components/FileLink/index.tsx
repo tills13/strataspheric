@@ -1,11 +1,7 @@
 import React from "react";
 
+import { assetsOrigin } from "../../constants";
 import { ExternalLink } from "../Link/ExternalLink";
-
-const domain =
-  process.env.NODE_ENV === "development"
-    ? ""
-    : "https://assets.strataspheric.app";
 
 interface Props {
   path: string;
@@ -17,7 +13,7 @@ export function FileLink({ children, path }: React.PropsWithChildren<Props>) {
   }
 
   return (
-    <ExternalLink target="_blank" href={domain + path}>
+    <ExternalLink target="_blank" href={assetsOrigin + path}>
       {children}
     </ExternalLink>
   );

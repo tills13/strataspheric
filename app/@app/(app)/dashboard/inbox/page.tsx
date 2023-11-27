@@ -8,16 +8,12 @@ import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { ElementGroup } from "../../../../../components/ElementGroup";
 import { Header } from "../../../../../components/Header";
 import { InboxThreads } from "../../../../../components/InboxThreads";
-import { ExternalLink } from "../../../../../components/Link/ExternalLink";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { Thread, getThreads } from "../../../../../data/inbox/getThreads";
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../../data/users/permissions";
 import { deleteThreadAction } from "./actions";
-
-const baseUrl =
-  process.env.NODE_ENV === "development" ? "" : "https://strataspheric.app";
 
 export const runtime = "edge";
 

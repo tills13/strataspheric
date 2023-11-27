@@ -25,18 +25,13 @@ export const logo = style({
   top: "-150px",
   fill: vars.colors.grey700,
   animation: `${animation} 72s linear infinite`,
+  pointerEvents: "none",
 
   "@media": {
     [breakpoints.tablet]: {
       width: "500px",
       left: "-250px",
       top: "-250px",
-    },
-  },
-
-  selectors: {
-    "&:hover": {
-      fill: vars.colors.grey600,
     },
   },
 });

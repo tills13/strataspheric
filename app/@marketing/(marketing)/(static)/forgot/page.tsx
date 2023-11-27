@@ -2,54 +2,18 @@
 
 import * as styles from "./style.css";
 
-import {
-  experimental_useFormState, // @ts-expect-error
-  experimental_useFormStatus,
-} from "react-dom";
+import { experimental_useFormState } from "react-dom";
 
-import { Button } from "../../../../../components/Button";
+import { FormSubmitStatusButton } from "../../../../../components/FormSubmitStatusButton";
 import { Header } from "../../../../../components/Header";
 import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
 import { Input } from "../../../../../components/Input";
-import { LoadingIcon } from "../../../../../components/LoadingIcon";
 import {
   requestPasswordResetActionReducer,
   resetPasswordAction,
 } from "./actions";
 
 export const runtime = "edge";
-
-function RequestPasswordFormSubmitStatus({
-  submitSuccess,
-}: {
-  submitSuccess: boolean;
-}) {
-  const s = experimental_useFormStatus();
-
-  if (s.pending) {
-    return (
-      <div className={styles.submitPendingContainer}>
-        <LoadingIcon />
-      </div>
-    );
-  }
-
-  return submitSuccess ? (
-    <>
-      <CircleCheckIcon className={styles.submitButtonIcon} /> an email has been
-      sent to the entered address if it exists in our system.
-    </>
-  ) : (
-    <Button
-      className={styles.submitButton}
-      type="submit"
-      size="large"
-      variant="primary"
-    >
-      Continue{" "}
-    </Button>
-  );
-}
 
 export default function Page({
   searchParams,
@@ -88,14 +52,13 @@ export default function Page({
           type="password"
         />
 
-        <Button
-          className={styles.submitButton}
-          type="submit"
+        <FormSubmitStatusButton
+          success={state.emailSent}
           size="large"
           variant="primary"
         >
           Reset Password
-        </Button>
+        </FormSubmitStatusButton>
       </form>
     );
   }
@@ -117,7 +80,20 @@ export default function Page({
         name="email_address"
       />
 
-      <RequestPasswordFormSubmitStatus submitSuccess={!!state.emailSent} />
+      {state.emailSent ? (
+        <>
+          <CircleCheckIcon className={styles.submitButtonIcon} /> an email has
+          been sent to the entered address if it exists in our system.
+        </>
+      ) : (
+        <FormSubmitStatusButton
+          success={state.emailSent}
+          size="large"
+          variant="primary"
+        >
+          Continue
+        </FormSubmitStatusButton>
+      )}
     </form>
   );
 }

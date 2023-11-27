@@ -3,24 +3,35 @@ import { keyframes, style } from "@vanilla-extract/css";
 
 import { important } from "../../theme";
 
-export const getStartedForm = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: vars.spacing.normal,
+export const getStartedForm = style({});
+
+export const header2 = style({
+  marginBottom: vars.spacing.normal,
 });
 
-export const isPublicField = style({
-  display: "flex",
-  gap: vars.spacing.normal,
-  alignItems: "center",
-  justifyContent: "space-between",
+export const header3 = style([header2]);
+
+export const input = style({
+  marginBottom: vars.spacing.normal,
+  width: "100%",
 });
+
+export const isPublicField = style([
+  input,
+  {
+    display: "flex",
+    gap: vars.spacing.normal,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+]);
 
 export const subdomainField = style({
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
   gap: vars.spacing.small,
+  marginBottom: vars.spacing.normal,
 });
 
 export const subdomainFieldRootDomain = style({
@@ -60,21 +71,12 @@ export const subdomainStatusError = style([
   },
 ]);
 
-export const numSeatsField = style({
-  display: "flex",
-  gap: vars.spacing.small,
-  width: "100%",
-});
-
-export const numSeatsInput = style({
-  flex: 1,
-});
-
 export const estimateContainer = style({
   display: "flex",
   justifyContent: "space-between",
   fontSize: vars.fontSizes.xxl,
   fontWeight: 400,
+  marginBottom: vars.spacing.normal,
 });
 export const estimateSummary = style({});
 export const estimateSummarySeats = style({ fontWeight: 700 });

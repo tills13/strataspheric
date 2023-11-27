@@ -24,6 +24,20 @@ export async function GET(req: Request) {
     return new Response("Bad Request", { status: 400 });
   }
 
+  if (process.env.NODE_ENV === "development") {
+    return new Response(
+      JSON.stringify({
+        status: "active",
+      } as GetDomainStatusResponseData),
+      {
+        status: 200,
+        headers: {
+          "content-type": "application/json",
+        },
+      },
+    );
+  }
+
   const [json] = await getCustomDomain(domain);
 
   if (!json.success) {

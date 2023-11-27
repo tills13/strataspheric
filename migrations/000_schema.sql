@@ -19,6 +19,7 @@ CREATE TABLE
     IF NOT EXISTS strata_plans (
         id text primary key,
         strataId text,
+        numSeats integer,
         enableInbox boolean DEFAULT FALSE
     );
 

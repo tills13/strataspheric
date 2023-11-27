@@ -3,7 +3,7 @@ import { ColumnType, Insertable, Kysely, Selectable, Updateable } from "kysely";
 
 import { D1Dialect } from "./d1";
 // import { D1Dialect } from "kysely-d1";
-import { Role } from "./users/permissions";
+import { AccountType, Role } from "./users/permissions";
 
 export interface EventsTable {
   id: string;
@@ -114,6 +114,8 @@ export interface UsersTable {
   id: ColumnType<string, string, never>;
   email: ColumnType<string, string, never>;
   password: string;
+  name: string | null;
+  accountType: ColumnType<AccountType, AccountType | null, AccountType>;
 }
 
 export type User = Selectable<UsersTable>;

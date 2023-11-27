@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "vercel-build": "next build",
-    "dev": "next",
+    "dev": "next -H 0.0.0.0",
     "lint": "next lint",
     "lint:typescript": "npx tsc --noEmit",
     "prettier": "prettier -l **/*",
