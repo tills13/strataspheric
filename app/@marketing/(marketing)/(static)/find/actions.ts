@@ -48,6 +48,7 @@ export async function findYourStratasActionReducer(
     .where(
       "stratas.id",
       "in",
+      // @ts-ignore
       membershipsQuery && stratasQuery
         ? membershipsQuery.union(stratasQuery)
         : membershipsQuery || stratasQuery,

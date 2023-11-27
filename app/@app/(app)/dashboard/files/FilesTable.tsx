@@ -15,7 +15,10 @@ interface Props {
 
 export async function FilesTable({ strataId }: Props) {
   const session = await auth();
-  const files = await getFiles(strataId);
+  const files = await getFiles(
+    strataId,
+    can(session?.user, p("stratas", "files", "delete")),
+  );
 
   return (
     <table className={styles.filesTable}>

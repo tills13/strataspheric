@@ -63,5 +63,5 @@ export function getThread(
     query = query.where("inbox_messages.senderUserId", "=", opts.senderUserId);
   }
 
-  return query.orderBy("inbox_messages.sentAt desc").executeTakeFirst();
+  return query.orderBy("inbox_messages.sentAt desc").executeTakeFirstOrThrow();
 }

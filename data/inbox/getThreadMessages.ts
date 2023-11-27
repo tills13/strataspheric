@@ -1,14 +1,17 @@
-import { db } from "..";
+import { InboxMessage, db } from "..";
 
-interface Opts {
-  senderUserId?: string;
-  viewId?: string;
-}
+type ThreadMessage = InboxMessage & {
+  senderEmail: string;
+  senderName: string;
+  fileName: string | null;
+  fileDescription: string | null;
+  filePath: string | null;
+};
 
 export function getThreadMessages(
   threadId: string,
   viewId?: string | undefined,
-) {
+): Promise<ThreadMessage[]> {
   let query = db
     .selectFrom("inbox_messages")
     .leftJoin(
@@ -27,6 +30,7 @@ export function getThreadMessages(
       "inbox_messages.sentAt",
       "inbox_messages.senderUserId",
       "inbox_messages.strataId",
+      "inbox_messages.fileId",
       "files.name as fileName",
       "files.description as fileDescription",
       "files.path as filePath",
@@ -49,5 +53,7 @@ export function getThreadMessages(
     query = query.where("inbox_messages.viewId", "=", viewId);
   }
 
-  return query.orderBy("inbox_messages.sentAt asc").execute();
+  return query
+    .orderBy("inbox_messages.sentAt asc")
+    .execute() as unknown as Promise<ThreadMessage[]>;
 }

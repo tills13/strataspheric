@@ -20,6 +20,7 @@ export const linksRail = style({
 
 export const subheaderLink = style({
   padding: `${vars.spacing.xs} ${vars.spacing.small}`,
+  whiteSpace: "nowrap",
 });
 
 export const activeSubheaderLink = style([

@@ -4,7 +4,9 @@ import * as styles from "./style.css";
 
 import { useEffect, useState } from "react";
 
+import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 import { classnames } from "../../utils/classnames";
+import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
 import { pluralize } from "../../utils/pluralize";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
@@ -13,11 +15,7 @@ import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
 import { CycleIcon } from "../Icon/CycleIcon";
 import { Input } from "../Input";
-import { InternalLink } from "../Link/InternalLink";
 import { Money } from "../Money";
-import { RangeInput } from "../RangeInput";
-import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
-import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 
 const rootDomain = "strataspheric.app";
 
@@ -31,7 +29,6 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
   const [isDomainAvailable, setIsDomainAvailable] = useState(undefined);
   const deferredStrataName = useTimeDeferredValue(strataName);
   const [numUnits, setNumUnits] = useState(0);
-  const [numSeats, setNumSeats] = useState(0);
 
   const suggestedSubdomain = normalizeStrataNameToSubdomain(deferredStrataName);
 
@@ -124,45 +121,19 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
         placeholder="# of Units"
         onChange={(e) => {
           setNumUnits(parseInt(e.target.value, 10));
-          setNumSeats(parseInt(e.target.value, 10));
         }}
       />
-
-      <Header priority={3}>Paid Seats</Header>
-
-      <p>
-        We recommend 1 seat per unit so that at least someone per unit can view
-        and download important documents, but you can choose as many or as few
-        seats as you&apos;d like. Non-paid seats will be able to sign in and
-        view content, but not download or interact with it. For more info on
-        pricing, refer to the{" "}
-        <InternalLink href="/pricing">pricing</InternalLink> page.
-      </p>
-
-      <div className={styles.numSeatsField}>
-        1
-        <RangeInput
-          className={styles.numSeatsInput}
-          name="num_seats"
-          min={1}
-          max={numUnits}
-          disabled={numUnits === 0}
-          onChange={(e) => setNumSeats(parseInt(e.target.value, 10))}
-          value={numSeats}
-        />
-        {numUnits}
-      </div>
 
       <Header priority={3}>Estimate</Header>
 
       <div className={styles.estimateContainer}>
         <div className={styles.estimateSummary}>
-          <span className={styles.estimateSummarySeats}>{numSeats}</span>{" "}
-          {pluralize("Seat", numSeats)}
+          <span className={styles.estimateSummarySeats}>{numUnits}</span>{" "}
+          {pluralize("Unit", numUnits)}
         </div>
 
         <div>
-          <Money amount={10 + numSeats * 1} />
+          <Money amount={numUnits * 1} />
           <span className={styles.estimatePeriod}>per month</span>
         </div>
       </div>

@@ -2,6 +2,7 @@ import "./globalStyles.css";
 import * as styles from "./style.css";
 import { fontHeaderVar, fontPrimaryVar } from "./theme.css";
 
+import { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 
 import { auth } from "../auth";
@@ -13,6 +14,17 @@ import { laila, sourceSans } from "./fonts";
 
 const fontPrimaryVariable = variable(fontPrimaryVar);
 const fontHeaderVariable = variable(fontHeaderVar);
+
+export const metadata: Metadata = {
+  title: "Strataspheric - Strata Management",
+  description: "Strata management that sparks joy",
+  openGraph: {
+    description: "Strata management that sparks joy",
+  },
+  twitter: {
+    description: "Strata management that sparks joy",
+  },
+};
 
 export default async function RootLayout({
   app,

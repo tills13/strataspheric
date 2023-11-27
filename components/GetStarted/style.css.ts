@@ -19,6 +19,7 @@ export const isPublicField = style({
 export const subdomainField = style({
   display: "flex",
   justifyContent: "flex-end",
+  alignItems: "center",
   gap: vars.spacing.small,
 });
 
@@ -29,7 +30,9 @@ export const subdomainFieldSubdomain = style({
   fontWeight: 700,
 });
 
-export const subdomainStatusIcon = style({});
+export const subdomainStatusIcon = style({
+  height: vars.sizes.small,
+});
 
 const spinAnimation = keyframes({
   "0%": { transform: "rotate(0deg)" },

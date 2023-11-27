@@ -7,16 +7,13 @@ import React from "react";
 import { auth } from "../../../../../auth";
 import { ApproveStrataMembershipButton } from "../../../../../components/ApproveStrataMembershipButton";
 import { Checkbox } from "../../../../../components/Checkbox";
-import { Header } from "../../../../../components/Header";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { StrataRoleSelect } from "../../../../../components/StrataRoleSelect";
-import { UpsertStrataMemberForm } from "../../../../../components/UpsertStrataMemberForm";
 import { StrataMembership } from "../../../../../data";
 import { getStrataMembership } from "../../../../../data/strataMemberships/getStrataMembership";
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../../data/users/permissions";
-import { pluralize } from "../../../../../utils/pluralize";
 import { MembershipHeader } from "./MembershipHeader";
 import {
   addStrataMemberAction,
@@ -46,11 +43,6 @@ export default async function Page() {
   );
 
   const memberships = await getStrataMembership(strata.id, canUpsert);
-
-  const numActivePaidSeats = memberships.reduce(
-    (acc, curr) => (curr.isPaid ? acc + 1 : acc),
-    0,
-  );
 
   const byUnit: Record<string, StrataMembership[]> = {};
 
@@ -87,7 +79,6 @@ export default async function Page() {
                       <th>Email</th>
                       <th>Phone #</th>
                       <th>Role</th>
-                      <th>Paid Seat</th>
 
                       {canDelete && <th></th>}
                     </tr>
@@ -132,9 +123,6 @@ export default async function Page() {
                             membership.role
                           )}
                         </td>
-                        <td>
-                          <Checkbox defaultChecked={membership.isPaid === 1} />
-                        </td>
                         {canDelete && (
                           <td
                             className={styles.membershipTableActionColumnCell}
@@ -155,16 +143,6 @@ export default async function Page() {
                 ))}
               </table>
             </div>
-
-            {/* <div className={styles.seatCountContainer}>
-              <Header priority={3}>You are using</Header>
-              <span className={styles.seatCountEmphasis}>
-                {numActivePaidSeats}
-              </span>{" "}
-              of{" "}
-              <span className={styles.seatCountEmphasis}>{plan?.numSeats}</span>{" "}
-              paid {pluralize("seat", plan?.numSeats || 0)}
-            </div> */}
           </div>
         </div>
       </div>

@@ -2,22 +2,21 @@
 
 import * as styles from "./style.css";
 
-import React, { useState } from "react";
+import React from "react";
 
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
+import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
+import { CircleXIcon } from "../Icon/CircleXIcon";
 import { InternalLink } from "../Link/InternalLink";
 import { Money } from "../Money";
 import { Panel } from "../Panel";
-import { RangeInput } from "../RangeInput";
-import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
-import { CircleXIcon } from "../Icon/CircleXIcon";
 
 interface Props {
   className?: string;
   features: Array<{ description: string; included: boolean }>;
   planName: string;
-  pricePerSeat?: number;
+  pricePerUnit?: number;
   pricingText?: React.ReactNode;
 }
 
@@ -26,19 +25,17 @@ export function PricingCard({
   features,
   planName,
   pricingText,
-  pricePerSeat,
+  pricePerUnit,
 }: Props) {
-  const [numSeats, setNumSeats] = useState(10);
-
   return (
     <Panel className={classnames(styles.pricingCard, className)}>
       <h3 className={styles.pricingCardPlanName}>{planName}</h3>
 
       <div className={styles.pricingContainer}>
-        {pricePerSeat !== undefined && (
+        {pricePerUnit !== undefined && (
           <div className={styles.perSeatPricingSummary}>
-            <Money amount={10} /> base + <Money amount={pricePerSeat} /> /
-            <span className={styles.estimateSummary}>seat</span>
+            <Money amount={pricePerUnit} /> /
+            <span className={styles.estimateSummary}>unit</span>
           </div>
         )}
         {pricingText}
@@ -68,9 +65,7 @@ export function PricingCard({
         </ul>
       </div>
 
-      <InternalLink
-        href={`/get-started?plan=${planName.toLowerCase()}&seats=${numSeats}`}
-      >
+      <InternalLink href={`/get-started?plan=${planName.toLowerCase()}`}>
         <Button
           className={styles.selectPlanButton}
           variant="primary"

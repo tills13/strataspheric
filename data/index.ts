@@ -19,6 +19,7 @@ export interface FilesTable {
   id: string;
   name: string;
   description: string;
+  isPublic: 0 | 1;
   path: string;
   strataId: string;
   createdAt: ColumnType<string, never, never>;
@@ -84,7 +85,6 @@ export interface StrataMembershipsTable {
   name: string;
   email: string;
   phoneNumber: string | null;
-  isPaid: ColumnType<0 | 1, 0 | 1 | null, 0 | 1 | null>;
 }
 
 export type StrataMembership = Selectable<StrataMembershipsTable>;
@@ -94,7 +94,6 @@ export type StrataMembershipUpdate = Updateable<StrataMembershipsTable>;
 export interface StrataPlansTable {
   id: string;
   strataId: string;
-  numSeats: number;
   enableInbox: 0 | 1;
 }
 

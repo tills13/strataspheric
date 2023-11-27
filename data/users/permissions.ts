@@ -39,10 +39,9 @@ export function p(
 }
 
 export function memberToScopes(membership: StrataMembership): string[] {
-  return [
-    roleScopeToScopes(membership.role),
-    membership.isPaid === 1 && p("stratas", "files", "view"),
-  ].filter((i): i is string => !!i);
+  return [...roleScopeToScopes(membership.role)].filter(
+    (i): i is string => !!i,
+  );
 }
 
 export function roleScopeToScopes(roleScope: Role | string | undefined) {

@@ -24,5 +24,6 @@ export async function createAndUpdloadFile(
     description: fileDescription,
     path: "/" + key,
     strataId,
+    isPublic: 1,
   });
 }

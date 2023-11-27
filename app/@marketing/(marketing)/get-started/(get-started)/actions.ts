@@ -50,12 +50,6 @@ export async function submitGetStarted(fd: FormData) {
     throw new Error("missing or invalid fields");
   }
 
-  const numSeats = fd.get("num_seats");
-
-  if (typeof numSeats !== "string" || numSeats === "") {
-    throw new Error("missing or invalid fields");
-  }
-
   // ----
 
   const { id: userId } = await createUser({ email, password });
@@ -85,7 +79,6 @@ export async function submitGetStarted(fd: FormData) {
     email,
     name,
     role: "administrator",
-    isPaid: 1,
   });
 
   await createWidget({ strataId, title: "Minutes", type: "file" });
@@ -95,7 +88,6 @@ export async function submitGetStarted(fd: FormData) {
   await createPlan({
     enableInbox: 1,
     strataId,
-    numSeats: parseInt(numSeats, 10),
   });
 
   if (process.env.NODE_ENV !== "development") {
