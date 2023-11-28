@@ -18,17 +18,29 @@ export const pricingPlanSelectorContainer = style({
 });
 
 export const pricingPlanSelectorLink = style({
+  color: "inherit",
   textDecoration: "none",
 });
 
 export const pricingPlanSelectorPlan = style({
   // height: 150,
   height: "100%",
+
+  selectors: {
+    "&:hover": {
+      borderColor: vars.colors.borderDefaultHover,
+    },
+  },
 });
 
 export const activePlan = style([
   pricingPlanSelectorPlan,
   {
     borderColor: vars.colors.primary,
+    selectors: {
+      "&:hover": {
+        borderColor: vars.colors.primary,
+      },
+    },
   },
 ]);

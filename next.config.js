@@ -4,9 +4,6 @@ const webpack = require("webpack");
 
 /** @type {import('next').NextConfig} */
 module.exports = withVanillaExtract({
-  experimental: {
-    serverActions: true,
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },

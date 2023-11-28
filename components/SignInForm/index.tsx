@@ -38,7 +38,7 @@ export function SignInForm({ className }: Props) {
       return;
     }
 
-    location.href = "/";
+    // location.href = "/";
     // router.push("/");
   }
 

@@ -5,7 +5,7 @@ import { style } from "@vanilla-extract/css";
 import { important } from "../../theme";
 
 export const formSubmitStatusButton = style([
-  buttonStyles.button,
+  buttonStyles.buttonFullWidth,
   {
     display: important("flex"),
     alignItems: "center",

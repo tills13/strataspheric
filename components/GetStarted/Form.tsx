@@ -4,7 +4,7 @@ import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { experimental_useFormState } from "react-dom";
+import { useFormState } from "react-dom";
 
 import { SubmitGetStartedState } from "../../app/@marketing/(marketing)/get-started/(get-started)/actions";
 import { tld } from "../../constants";
@@ -38,7 +38,7 @@ export function GetStartedForm({
   selectedPlan,
   submitGetStarted,
 }: Props) {
-  const [state, action] = experimental_useFormState(submitGetStarted, null);
+  const [state, action] = useFormState(submitGetStarted, null);
 
   const { data: session } = useSession();
   const [strataName, setStrataName] = useState("");
@@ -132,7 +132,7 @@ export function GetStartedForm({
 
       {selectedPlan.pricePerUnit !== undefined && (
         <div className={styles.estimateContainer}>
-          <div className={styles.estimateSummary}>
+          <div>
             <span className={styles.estimateSummarySeats}>{numUnits}</span>{" "}
             {pluralize("Unit", numUnits)}
           </div>

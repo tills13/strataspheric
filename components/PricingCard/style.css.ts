@@ -65,6 +65,8 @@ export const planFeaturesList = style({
 });
 
 export const planFeaturesFeature = style({
+  display: "flex",
+  gap: 0,
   padding: vars.spacing.small,
   opacity: 0.3,
 });
@@ -91,7 +93,6 @@ export const estimateContainer = style({
   fontSize: vars.fontSizes.xl,
   fontWeight: 400,
 });
-export const estimateSummary = style({});
 export const estimateSummarySeats = style({ fontWeight: 700 });
 
 export const estimatePeriod = style({
@@ -105,7 +106,7 @@ export const selectPlanButtonLink = style({
 });
 
 export const selectPlanButton = style([
-  buttonStyles.button,
+  buttonStyles.buttonFullWidth,
   buttonStyles.buttonSizes.normal,
   buttonStyles.buttonVariants.primary,
 ]);

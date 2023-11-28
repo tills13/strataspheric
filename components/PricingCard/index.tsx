@@ -37,8 +37,8 @@ export function PricingCard({
         <div className={styles.compactPricingContainer}>
           {pricePerUnit !== undefined && (
             <div className={styles.perSeatPricingSummary}>
-              <Money amount={pricePerUnit} /> /
-              <span className={styles.estimateSummary}>unit</span>
+              <Money amount={pricePerUnit} /> / <span>unit</span> /{" "}
+              <span>month</span>
             </div>
           )}
           {show === "text" ? pricingText : pricingHtml}
@@ -54,8 +54,8 @@ export function PricingCard({
       <div className={styles.pricingContainer}>
         {pricePerUnit !== undefined && (
           <div className={styles.perSeatPricingSummary}>
-            <Money amount={pricePerUnit} /> /
-            <span className={styles.estimateSummary}>unit</span>
+            <Money amount={pricePerUnit} /> / <span>unit</span> /{" "}
+            <span>month</span>
           </div>
         )}
         {show === "text" ? pricingText : pricingHtml}
@@ -67,10 +67,11 @@ export function PricingCard({
           {features.map(({ description, included }, idx) => (
             <li
               key={idx}
-              className={classnames(
-                styles.planFeaturesFeature,
-                included && styles.planFeaturesIncludedFeature,
-              )}
+              className={
+                included
+                  ? styles.planFeaturesIncludedFeature
+                  : styles.planFeaturesFeature
+              }
             >
               {included ? (
                 <CircleCheckIcon

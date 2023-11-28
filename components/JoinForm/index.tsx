@@ -5,7 +5,7 @@ import * as styles from "./style.css";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { experimental_useFormState as useFormState } from "react-dom";
+import { useFormState } from "react-dom";
 
 import { type JoinFormState } from "../../app/@marketing/(marketing)/(static)/join/actions";
 import { classnames } from "../../utils/classnames";

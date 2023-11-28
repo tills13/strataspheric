@@ -2,7 +2,7 @@
 
 import * as styles from "./style.css";
 
-import { experimental_useFormState } from "react-dom";
+import { useFormState } from "react-dom";
 
 import { FormSubmitStatusButton } from "../../../../../components/FormSubmitStatusButton";
 import { Header } from "../../../../../components/Header";
@@ -20,7 +20,7 @@ export default function Page({
 }: {
   searchParams: Record<string, string>;
 }) {
-  const [state, requestPasswordResetAction] = experimental_useFormState(
+  const [state, requestPasswordResetAction] = useFormState(
     requestPasswordResetActionReducer,
     { emailSent: false },
   );

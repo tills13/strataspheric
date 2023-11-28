@@ -1,8 +1,8 @@
 "use server";
 
-import { SelectQueryBuilder } from "kysely";
+import { type SelectQueryBuilder } from "kysely";
 
-import { Database, Strata, db } from "../../../../../data";
+import { Strata, db } from "../../../../../data";
 
 interface State {
   stratas: Strata[] | undefined;

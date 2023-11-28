@@ -6,6 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 import { Strata } from "../../data";
+import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
 import { ElementGroup } from "../ElementGroup";
@@ -57,6 +58,7 @@ export function ContinueWhereYouLeftOffWidget({
                   icon: <SignOutIcon />,
                 },
               ]}
+              className={styles.continueActionOverflow}
               direction="up"
             />
           </>

@@ -28,3 +28,7 @@ export const continueAction = style({
   width: "100%",
   textDecoration: "none",
 });
+
+export const continueActionOverflow = style({
+  flexShrink: 0,
+});

@@ -49,7 +49,7 @@ export const ctaLink = style({
   },
 });
 export const ctaButton = style([
-  buttonStyles.button,
+  buttonStyles.buttonFullWidth,
   buttonStyles.buttonSizes.large,
   buttonStyles.buttonVariants.primary,
 ]);

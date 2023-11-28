@@ -86,7 +86,6 @@ export const estimateContainer = style({
   fontWeight: 400,
   marginBottom: vars.spacing.normal,
 });
-export const estimateSummary = style({});
 export const estimateSummarySeats = style({ fontWeight: 700 });
 export const estimatePeriod = style({
   display: "block",

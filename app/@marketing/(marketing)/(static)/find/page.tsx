@@ -2,10 +2,7 @@
 
 import * as styles from "./style.css";
 
-import {
-  experimental_useFormState,
-  experimental_useFormStatus,
-} from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 
 import { Button } from "../../../../../components/Button";
 import { DividerText } from "../../../../../components/DividerText";
@@ -18,7 +15,7 @@ import { findYourStratasActionReducer } from "./actions";
 export const runtime = "edge";
 
 function FormLoadingIndicator() {
-  const s = experimental_useFormStatus();
+  const s = useFormStatus();
 
   return (
     s.pending && (
@@ -30,7 +27,7 @@ function FormLoadingIndicator() {
 }
 
 export default function Page() {
-  const [state, findYourStratasAction] = experimental_useFormState(
+  const [state, findYourStratasAction] = useFormState(
     findYourStratasActionReducer,
     { stratas: undefined },
   );

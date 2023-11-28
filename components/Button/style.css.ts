@@ -4,7 +4,6 @@ import { style, styleVariants } from "@vanilla-extract/css";
 export const button = style({
   position: "relative",
   display: "block",
-  width: "100%",
   fontWeight: 700,
   border: `2px solid ${vars.colors.borderDefault}`,
   outline: "none",
@@ -12,6 +11,13 @@ export const button = style({
   borderRadius: vars.borderRadius,
   textTransform: "uppercase",
 });
+
+export const buttonFullWidth = style([
+  button,
+  {
+    width: "100%",
+  },
+]);
 
 export const buttonSizes = styleVariants({
   small: {
