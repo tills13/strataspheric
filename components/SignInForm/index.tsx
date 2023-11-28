@@ -1,8 +1,10 @@
 "use client";
 
+import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 import { protocol, tld } from "../../constants";
@@ -17,6 +19,7 @@ interface Props {
 
 export function SignInForm({ className }: Props) {
   const [error, setHasError] = useState(false);
+  const router = useRouter();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,11 +35,11 @@ export function SignInForm({ className }: Props) {
 
     if (!result || result.error) {
       setHasError(true);
+      return;
     }
 
-    // if (result?.ok && result.url) {
-    //   window.location.href = result.url;
-    // }
+    location.href = "/";
+    // router.push("/");
   }
 
   return (
@@ -62,7 +65,16 @@ export function SignInForm({ className }: Props) {
 
       {error && <div>Incorrect username or password</div>}
 
-      <Button type="submit">Sign in</Button>
+      <Button
+        className={classnames(
+          buttonStyles.button,
+          buttonStyles.buttonSizes.large,
+          buttonStyles.buttonVariants.primary,
+        )}
+        type="submit"
+      >
+        Sign in
+      </Button>
 
       <ExternalLink
         className={styles.forgotLink}

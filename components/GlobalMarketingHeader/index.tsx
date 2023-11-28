@@ -1,18 +1,16 @@
+import * as linkStyles from "../Link/style.css";
 import * as styles from "./style.css";
-
-import Image from "next/image";
 
 import { GlobalHeader } from "../GlobalHeader";
 import { InternalLink } from "../Link/InternalLink";
 import { Logo } from "../Logo";
-import { Wordmark } from "../Wordmark";
 
 export function GlobalMarketingHeader() {
   return (
     <GlobalHeader className={styles.globalHeader}>
       <Logo className={styles.logo} />
 
-      <InternalLink href="/" noUnderline>
+      <InternalLink className={linkStyles.noUnderline} href="/">
         <h1 className={styles.globalHeaderTitle}>Strataspheric</h1>
       </InternalLink>
     </GlobalHeader>

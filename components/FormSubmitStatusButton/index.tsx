@@ -26,7 +26,7 @@ export function FormSubmitStatusButton({
   if (status.pending) {
     return (
       <Button
-        className={classnames(styles.formSubmitStatusButton, className)}
+        className={className || styles.formSubmitStatusButton}
         {...buttonProps}
         disabled
       >
@@ -36,7 +36,7 @@ export function FormSubmitStatusButton({
   } else if (success !== undefined) {
     return (
       <Button
-        className={classnames(styles.formSubmitStatusButton, className)}
+        className={className || styles.formSubmitStatusButton}
         {...buttonProps}
         // disabled={success}
       >
@@ -52,7 +52,7 @@ export function FormSubmitStatusButton({
 
   return (
     <Button
-      className={classnames(styles.formSubmitStatusButton, className)}
+      className={className || styles.formSubmitStatusButton}
       {...buttonProps}
     >
       {children}

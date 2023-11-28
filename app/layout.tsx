@@ -7,6 +7,7 @@ import { SessionProvider } from "next-auth/react";
 
 import { auth } from "../auth";
 import { GlobalFooter } from "../components/GlobalFooter";
+import { protocol, tld } from "../constants";
 import { getCurrentStrata } from "../data/stratas/getStrataByDomain";
 import { getUserStratas } from "../data/users/getUserStratas";
 import { variable } from "../theme";
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     description: "Strata management that sparks joy",
   },
+  metadataBase: new URL(protocol + "//" + tld),
 };
 
 export default async function RootLayout({

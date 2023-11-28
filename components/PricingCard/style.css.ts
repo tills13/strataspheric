@@ -1,4 +1,5 @@
 import { vars } from "../../app/theme.css";
+import * as buttonStyles from "../Button/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { border, important, padding } from "../../theme";
@@ -37,6 +38,14 @@ export const pricingContainer = style({
   textAlign: "center",
   fontWeight: 400,
 });
+
+export const compactPricingContainer = style([
+  pricingContainer,
+  {
+    paddingBottom: 0,
+    borderBottom: 0,
+  },
+]);
 
 export const perSeatPricingSummary = style({
   fontSize: vars.fontSizes.large,
@@ -91,6 +100,12 @@ export const estimatePeriod = style({
   textAlign: "end",
 });
 
-export const selectPlanButton = style({
-  width: "100%",
+export const selectPlanButtonLink = style({
+  textDecoration: "none",
 });
+
+export const selectPlanButton = style([
+  buttonStyles.button,
+  buttonStyles.buttonSizes.normal,
+  buttonStyles.buttonVariants.primary,
+]);

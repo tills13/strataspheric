@@ -1,6 +1,7 @@
+import * as buttonStyles from "../../../components/Button/style.css";
+import * as linkStyles from "../../../components/Link/style.css";
 import * as styles from "./style.css";
 
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import React from "react";
 
@@ -10,8 +11,10 @@ import { DividerText } from "../../../components/DividerText";
 import { ElementGroup } from "../../../components/ElementGroup";
 import { Header } from "../../../components/Header";
 import { JoinStrataForm } from "../../../components/JoinStrataForm";
+import { InternalLink } from "../../../components/Link/InternalLink";
 import { SignInForm } from "../../../components/SignInForm";
 import { getCurrentStrata } from "../../../data/stratas/getStrataByDomain";
+import { classnames } from "../../../utils/classnames";
 import { requestToJoinStrataAction } from "../../actions";
 
 export const runtime = "edge";
@@ -61,24 +64,46 @@ export default async function Page({
         {strata.isPublic && (
           <>
             <DividerText>or</DividerText>
-            <Link href="/dashboard">
-              <Button className={styles.actionButton}>
+            <InternalLink className={linkStyles.noUnderline} href="/dashboard">
+              <Button
+                className={classnames(
+                  buttonStyles.button,
+                  buttonStyles.buttonSizes.large,
+                )}
+              >
                 view public content
               </Button>
-            </Link>
+            </InternalLink>
           </>
         )}
 
         <DividerText>or</DividerText>
 
         {action === "join" ? (
-          <Link href="/?action=signin">
-            <Button className={styles.actionButton}>Sign In</Button>
-          </Link>
+          <InternalLink
+            className={linkStyles.noUnderline}
+            href="/?action=signin"
+          >
+            <Button
+              className={classnames(
+                buttonStyles.button,
+                buttonStyles.buttonSizes.large,
+              )}
+            >
+              Sign In
+            </Button>
+          </InternalLink>
         ) : (
-          <Link href="/?action=join">
-            <Button className={styles.actionButton}>Request to join</Button>
-          </Link>
+          <InternalLink className={linkStyles.noUnderline} href="/?action=join">
+            <Button
+              className={classnames(
+                buttonStyles.button,
+                buttonStyles.buttonSizes.large,
+              )}
+            >
+              Request to join
+            </Button>
+          </InternalLink>
         )}
       </ElementGroup>
     </div>

@@ -1,9 +1,11 @@
 import { vars } from "../../app/theme.css";
+import * as buttonStyles from "../Button/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { important } from "../../theme";
 
 export const formSubmitStatusButton = style([
+  buttonStyles.button,
   {
     display: important("flex"),
     alignItems: "center",

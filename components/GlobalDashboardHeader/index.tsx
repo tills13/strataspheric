@@ -19,11 +19,7 @@ export async function GlobalDashboardHeader() {
     <GlobalHeader className={styles.globalHeader}>
       <div>
         <h1>
-          <InternalLink
-            className={styles.globalHeaderTitle}
-            href="/"
-            noUnderline
-          >
+          <InternalLink className={styles.titleLink} href="/">
             {strata.name}
           </InternalLink>
         </h1>

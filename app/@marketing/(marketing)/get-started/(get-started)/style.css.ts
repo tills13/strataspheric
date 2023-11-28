@@ -2,18 +2,26 @@ import { breakpoints, vars } from "../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const layoutContainer = style({
-  marginTop: 100,
   padding: vars.spacing.normal,
 });
 
-export const centerColumnContainer = style({
-  marginBottom: 100,
+export const pricingPlanSelector = style({
+  marginBottom: vars.spacing.xl,
   "@media": {
     [breakpoints.tablet]: {
-      margin: "0 auto 100px",
-      width: "500px",
+      width: 650,
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+    [breakpoints.desktop]: {
+      width: 1200,
+      marginLeft: "auto",
+      marginRight: "auto",
     },
   },
 });
 
-export const getStartedForm = style({});
+export const getStartedForm = style({
+  maxWidth: 500,
+  margin: "auto",
+});

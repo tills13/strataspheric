@@ -4,6 +4,7 @@ import * as styles from "./style.css";
 
 import React from "react";
 
+import { PricingPlan } from "../../data/strataPlans/constants";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
@@ -12,24 +13,43 @@ import { InternalLink } from "../Link/InternalLink";
 import { Money } from "../Money";
 import { Panel } from "../Panel";
 
-interface Props {
+interface Props extends PricingPlan {
   className?: string;
-  features: Array<{ description: string; included: boolean }>;
-  planName: string;
-  pricePerUnit?: number;
-  pricingText?: React.ReactNode;
+  show?: "text" | "html";
+  compact?: boolean;
 }
 
 export function PricingCard({
   className,
+  compact,
   features,
-  planName,
+  name,
+  pricingHtml,
   pricingText,
   pricePerUnit,
+  show = "html",
 }: Props) {
+  if (compact) {
+    return (
+      <Panel className={classnames(styles.pricingCard, className)}>
+        <h3 className={styles.pricingCardPlanName}>{name}</h3>
+
+        <div className={styles.compactPricingContainer}>
+          {pricePerUnit !== undefined && (
+            <div className={styles.perSeatPricingSummary}>
+              <Money amount={pricePerUnit} /> /
+              <span className={styles.estimateSummary}>unit</span>
+            </div>
+          )}
+          {show === "text" ? pricingText : pricingHtml}
+        </div>
+      </Panel>
+    );
+  }
+
   return (
     <Panel className={classnames(styles.pricingCard, className)}>
-      <h3 className={styles.pricingCardPlanName}>{planName}</h3>
+      <h3 className={styles.pricingCardPlanName}>{name}</h3>
 
       <div className={styles.pricingContainer}>
         {pricePerUnit !== undefined && (
@@ -38,7 +58,7 @@ export function PricingCard({
             <span className={styles.estimateSummary}>unit</span>
           </div>
         )}
-        {pricingText}
+        {show === "text" ? pricingText : pricingHtml}
       </div>
 
       <div className={styles.featuresSection}>
@@ -65,14 +85,11 @@ export function PricingCard({
         </ul>
       </div>
 
-      <InternalLink href={`/get-started?plan=${planName.toLowerCase()}`}>
-        <Button
-          className={styles.selectPlanButton}
-          variant="primary"
-          size="large"
-        >
-          Select Plan
-        </Button>
+      <InternalLink
+        className={styles.selectPlanButtonLink}
+        href={`/get-started?plan=${name.toLowerCase()}`}
+      >
+        <Button className={styles.selectPlanButton}>Select Plan</Button>
       </InternalLink>
     </Panel>
   );

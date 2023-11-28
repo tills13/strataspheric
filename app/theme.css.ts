@@ -84,7 +84,7 @@ export const vars = createGlobalTheme(":root", {
   },
 
   fontColors: {
-    primary: "#495261",
+    primary: "#272b33",
     secondary: "#acacac",
     tertiary: "#8b8b8b",
     primaryInverse: "#111419",

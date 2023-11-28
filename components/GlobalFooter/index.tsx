@@ -1,19 +1,10 @@
-"use client";
-
 import * as styles from "./style.css";
-
-import { useSession } from "next-auth/react";
-import { useSelectedLayoutSegment } from "next/navigation";
 
 import { protocol, tld } from "../../constants";
 import { Strata } from "../../data";
-import { Button } from "../Button";
-import { ElementGroup } from "../ElementGroup";
-import { GoToStrataButton } from "../GoToStrataButton";
-import { Header } from "../Header";
+import { ContinueWhereYouLeftOffWidget } from "../ContinueWhereYouLeftOffWidget";
 import { HeartIcon } from "../Icon/HeartIcon";
 import { ExternalLink } from "../Link/ExternalLink";
-import { Panel } from "../Panel";
 import { Wordmark } from "../Wordmark";
 
 interface Props {
@@ -23,10 +14,6 @@ interface Props {
 const baseUrl = protocol + "//" + tld;
 
 export function GlobalFooter({ sessionStratas }: Props) {
-  const { data: session } = useSession();
-  const isMarketingSegment =
-    useSelectedLayoutSegment("marketing") !== "__DEFAULT__";
-
   return (
     <footer className={styles.footer}>
       <div>
@@ -59,33 +46,7 @@ export function GlobalFooter({ sessionStratas }: Props) {
         </p>
       </div>
 
-      {session && (
-        <Panel className={styles.continuePanel}>
-          <Header className={styles.continuePanelHeader} priority={3}>
-            Continue where you left off...
-          </Header>
-          {isMarketingSegment && sessionStratas.length !== 0 ? (
-            <ElementGroup
-              className={styles.continuePanelList}
-              orientation="column"
-            >
-              {sessionStratas.map((strata) => (
-                <GoToStrataButton
-                  key={strata.domain}
-                  className={styles.continuePanelListButton}
-                  strata={strata}
-                />
-              ))}
-            </ElementGroup>
-          ) : (
-            <ExternalLink href={baseUrl + "/find"}>
-              <Button className={styles.continuePanelListButton}>
-                Find Your Stratas
-              </Button>
-            </ExternalLink>
-          )}
-        </Panel>
-      )}
+      <ContinueWhereYouLeftOffWidget sessionStratas={sessionStratas} />
     </footer>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
@@ -7,6 +8,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 import { can } from "../../data/users/permissions";
+import { classnames } from "../../utils/classnames";
 import { DropdownActions } from "../DropdownActions";
 import { InternalLink } from "../Link/InternalLink";
 
@@ -56,7 +58,15 @@ export function DashboardHeader({ actions }: Props) {
         })}
       </div>
 
-      {actions && <DropdownActions actions={actions} />}
+      {actions && (
+        <DropdownActions
+          actions={actions}
+          buttonClassName={classnames(
+            iconButtonStyles.iconButton,
+            iconButtonStyles.iconButtonSizes.small,
+          )}
+        />
+      )}
     </div>
   );
 }

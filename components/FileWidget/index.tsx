@@ -1,6 +1,7 @@
 "use client";
 
 import * as abstractWidgetStyles from "../AbstractWidget/style.css";
+import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
@@ -8,6 +9,7 @@ import React, { useState } from "react";
 
 import { File, StrataWidget } from "../../data";
 import { can, p } from "../../data/users/permissions";
+import { classnames } from "../../utils/classnames";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
@@ -77,7 +79,12 @@ export function FileWidget({
             <div className={styles.fileActions}>
               {can(session?.user, p("stratas", "files", "view")) && (
                 <FileLink path={file.path}>
-                  <IconButton size="small">
+                  <IconButton
+                    className={classnames(
+                      iconButtonStyles.iconButton,
+                      iconButtonStyles.iconButtonSizes.small,
+                    )}
+                  >
                     <DownloadIcon />
                   </IconButton>
                 </FileLink>
@@ -85,7 +92,10 @@ export function FileWidget({
               {can(session?.user, p("stratas", "widgets", "edit")) && (
                 <RemoveButton
                   onClick={deleteFile.bind(undefined, file.id)}
-                  size="small"
+                  className={classnames(
+                    iconButtonStyles.iconButton,
+                    iconButtonStyles.iconButtonSizes.small,
+                  )}
                 />
               )}
             </div>

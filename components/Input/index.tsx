@@ -11,7 +11,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 export const Input = React.forwardRef<HTMLInputElement, Props>(
   ({ className, compact, ...rest }, ref) => (
     <input
-      className={classnames(compact ? styles.compact : styles.base, className)}
+      className={classnames(compact ? styles.compact : styles.input, className)}
       ref={ref}
       {...rest}
     />

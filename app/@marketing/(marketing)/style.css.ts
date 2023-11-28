@@ -1,21 +1,12 @@
+import * as buttonStyles from "../../../components/Button/style.css";
 import { breakpoints, vars } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { border } from "../../../theme";
-
-export const pageContainer = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: vars.spacing.normal,
+export const landingWrapper = style({
+  marginBottom: 100,
 });
 
-export const section = style({
-  selectors: {
-    [`${pageContainer} &:not(:last-child)`]: {
-      borderBottom: border("2px", "solid", vars.colors.borderDefault),
-    },
-  },
-});
+export const section = style({});
 
 export const sectionHeader = style({
   marginBottom: vars.spacing.normal,
@@ -45,14 +36,23 @@ export const ctaHeader = style([sectionHeader, {}]);
 export const ctaText = style({
   marginBottom: vars.spacing.normal,
 });
-export const ctaButton = style({
+
+export const ctaLink = style({
+  display: "block",
   width: "80%",
+  margin: "auto",
+  textDecoration: "none",
   "@media": {
     [breakpoints.tablet]: {
       width: "300px",
     },
   },
 });
+export const ctaButton = style([
+  buttonStyles.button,
+  buttonStyles.buttonSizes.large,
+  buttonStyles.buttonVariants.primary,
+]);
 
 export const plansContainer = style({
   display: "grid",

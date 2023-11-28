@@ -26,5 +26,6 @@ export const addWidgetWidgetContainer = style({
 });
 
 export const addWidgetWidgetIcon = style({
+  margin: "auto",
   height: vars.sizes.xl,
 });

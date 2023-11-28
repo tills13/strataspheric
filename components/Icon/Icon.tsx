@@ -17,7 +17,9 @@ export function Icon({
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 -960 960 960"
-      className={classnames(styles.icon, className)}
+      className={
+        className || classnames(styles.icon, styles.iconVariants.primary)
+      }
       {...rest}
     >
       {children}

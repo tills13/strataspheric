@@ -8,6 +8,7 @@ import { experimental_useFormState } from "react-dom";
 
 import { SubmitGetStartedState } from "../../app/@marketing/(marketing)/get-started/(get-started)/actions";
 import { tld } from "../../constants";
+import { PricingPlan } from "../../data/strataPlans/constants";
 import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 import { classnames } from "../../utils/classnames";
 import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
@@ -25,13 +26,18 @@ import { Panel } from "../Panel";
 
 interface Props {
   className?: string;
+  selectedPlan: PricingPlan;
   submitGetStarted: (
     state: SubmitGetStartedState,
     fd: FormData,
   ) => Promise<SubmitGetStartedState>;
 }
 
-export function GetStartedForm({ className, submitGetStarted }: Props) {
+export function GetStartedForm({
+  className,
+  selectedPlan,
+  submitGetStarted,
+}: Props) {
   const [state, action] = experimental_useFormState(submitGetStarted, null);
 
   const { data: session } = useSession();
@@ -124,29 +130,25 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
         }}
       />
 
-      <Header className={styles.header3} priority={3}>
-        Estimate
-      </Header>
+      {selectedPlan.pricePerUnit !== undefined && (
+        <div className={styles.estimateContainer}>
+          <div className={styles.estimateSummary}>
+            <span className={styles.estimateSummarySeats}>{numUnits}</span>{" "}
+            {pluralize("Unit", numUnits)}
+          </div>
 
-      <div className={styles.estimateContainer}>
-        <div className={styles.estimateSummary}>
-          <span className={styles.estimateSummarySeats}>{numUnits}</span>{" "}
-          {pluralize("Unit", numUnits)}
+          <div>
+            <Money amount={numUnits * selectedPlan.pricePerUnit} />
+            <span className={styles.estimatePeriod}>per month</span>
+          </div>
         </div>
-
-        <div>
-          <Money amount={numUnits * 1} />
-          <span className={styles.estimatePeriod}>per month</span>
-        </div>
-      </div>
+      )}
 
       {state?.error && <Panel>{state.error}</Panel>}
 
       <FormSubmitStatusButton
-        className={styles.input}
+        className={styles.submitButton}
         type="submit"
-        variant="primary"
-        size="large"
         success={undefined}
       >
         Let&apos;s Get Started

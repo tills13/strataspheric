@@ -1,12 +1,12 @@
+import * as linkStyles from "../Link/style.css";
 import * as styles from "./style.css";
 
 import { Session } from "next-auth";
-import Link from "next/link";
 
 import { Strata } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
-import { DropdownButton } from "../DropdownButton";
+import { InternalLink } from "../Link/InternalLink";
 import { SignOutButton } from "../SignOutButton";
 
 interface Props {
@@ -20,28 +20,24 @@ export function GlobalHeaderActions({ className, session, strata }: Props) {
     <div className={classnames(styles.globalHeaderActions, className)}>
       {session ? (
         <>
-          <span>{session.user?.name}</span>
-          <DropdownButton
-            panel={
-              <>
-                <pre>{JSON.stringify(session.user.scopes, undefined, 2)}</pre>
-              </>
-            }
-          />
+          <span className={styles.sessionUserName}>{session.user?.name}</span>
           <SignOutButton className={styles.globalHeaderActionsButton} />
         </>
       ) : (
         <>
-          <Link href="/?action=join">
+          <InternalLink className={linkStyles.noUnderline} href="/?action=join">
             <Button className={styles.globalHeaderActionsButton}>
               Join {strata.name}
             </Button>
-          </Link>
-          <Link href="/?action=signin">
+          </InternalLink>
+          <InternalLink
+            className={linkStyles.noUnderline}
+            href="/?action=signin"
+          >
             <Button className={styles.globalHeaderActionsButton}>
               Sign In
             </Button>
-          </Link>
+          </InternalLink>
         </>
       )}
     </div>

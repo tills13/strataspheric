@@ -1,4 +1,6 @@
 import { vars } from "../../app/theme.css";
+import * as buttonStyles from "../Button/style.css";
+import * as formSubmitStatusButtonStyles from "../FormSubmitStatusButton/style.css";
 import { keyframes, style } from "@vanilla-extract/css";
 
 import { important } from "../../theme";
@@ -15,6 +17,12 @@ export const input = style({
   marginBottom: vars.spacing.normal,
   width: "100%",
 });
+
+export const submitButton = style([
+  formSubmitStatusButtonStyles.formSubmitStatusButton,
+  buttonStyles.buttonSizes.large,
+  buttonStyles.buttonVariants.primary,
+]);
 
 export const isPublicField = style([
   input,

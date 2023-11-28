@@ -3,30 +3,24 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { classnames } from "../../utils/classnames";
+import { Button } from "../Button";
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
-  size?: keyof typeof styles.sizeVariants;
-}
+interface Props extends React.ComponentProps<typeof Button> {}
 
 export function IconButton({
   children,
   className,
-  size,
-  ...rest
+  ...delegateProps
 }: React.PropsWithChildren<Props>) {
-  let sizeClassName = styles.sizeVariants.normal;
-
-  if (size && styles.sizeVariants[size]) {
-    sizeClassName = styles.sizeVariants[size];
-  }
-
   return (
-    <button
-      className={classnames(styles.iconButton, sizeClassName, className)}
-      {...rest}
+    <Button
+      className={
+        className ||
+        classnames(styles.iconButton, styles.iconButtonSizes.normal)
+      }
+      {...delegateProps}
     >
       {children}
-    </button>
+    </Button>
   );
 }

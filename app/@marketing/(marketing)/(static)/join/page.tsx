@@ -1,7 +1,7 @@
 import * as styles from "./style.css";
 
-import { Header } from "../../../../../components/Header";
 import { JoinForm } from "../../../../../components/JoinForm";
+import { SignInJoinNavigation } from "../../../../../components/SignInJoinNavigation";
 import { JoinFromToken } from "./JoinFromToken";
 import { joinAction } from "./actions";
 
@@ -16,5 +16,10 @@ export default async function Page({
     return <JoinFromToken token={searchParams["token"]} />;
   }
 
-  return <JoinForm onSubmit={joinAction} />;
+  return (
+    <>
+      <SignInJoinNavigation className={styles.navigation} />
+      <JoinForm onSubmit={joinAction} />
+    </>
+  );
 }

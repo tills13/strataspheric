@@ -22,7 +22,7 @@ export const signInToStrataPageFormContainer = style({
   "@media": {
     [breakpoints.tablet]: {
       position: "relative",
-      width: 300,
+      width: 400,
     },
   },
 });
@@ -31,8 +31,4 @@ export const signInForm = style({});
 
 export const viewPublicLinkContainer = style({
   textAlign: "right",
-});
-
-export const actionButton = style({
-  width: "100%",
 });

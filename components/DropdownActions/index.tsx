@@ -14,11 +14,17 @@ type Action = {
   icon?: JSX.Element;
 };
 
-interface Props {
+interface Props
+  extends Omit<React.ComponentProps<typeof DropdownButton>, "panel"> {
   actions: Array<Action | undefined | false>;
+  className?: string;
 }
 
-export function DropdownActions({ actions }: Props) {
+export function DropdownActions({
+  actions,
+  className,
+  ...delegateProps
+}: Props) {
   const filteredActions = actions.filter(filterIsAction);
 
   if (filteredActions.length === 0) {
@@ -27,6 +33,7 @@ export function DropdownActions({ actions }: Props) {
 
   return (
     <DropdownButton
+      className={className}
       panel={
         <>
           {filteredActions.map((action, idx) => (
@@ -37,6 +44,7 @@ export function DropdownActions({ actions }: Props) {
           ))}
         </>
       }
+      {...delegateProps}
     />
   );
 }

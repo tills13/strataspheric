@@ -7,9 +7,7 @@ export const dropdownButton = style({
   position: "relative",
 });
 
-export const dropdownButtonIcon = style({});
-
-export const dropdownPanelWrapper = style({
+export const panelWrapper = style({
   position: "absolute",
   right: 0,
   marginTop: vars.spacing.xs,
@@ -19,3 +17,12 @@ export const dropdownPanelWrapper = style({
   minWidth: 200,
   zIndex: 1,
 });
+
+export const panelWrapperUp = style([
+  panelWrapper,
+  {
+    marginTop: "unset",
+    marginBottom: vars.spacing.xs,
+    bottom: "100%",
+  },
+]);

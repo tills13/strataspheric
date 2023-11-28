@@ -11,6 +11,7 @@ import { type JoinFormState } from "../../app/@marketing/(marketing)/(static)/jo
 import { classnames } from "../../utils/classnames";
 import { Checkbox } from "../Checkbox";
 import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
+import { Header } from "../Header";
 import { JoinFormFields } from "./JoinFormFields";
 
 interface Props {

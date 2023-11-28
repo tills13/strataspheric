@@ -1,6 +1,21 @@
+import React from "react";
+
 import { InternalLink } from "../../components/Link/InternalLink";
 
-export const plans = [
+export interface PricingPlanFeature {
+  description: string;
+  included: boolean;
+}
+
+export interface PricingPlan {
+  name: string;
+  features: PricingPlanFeature[];
+  pricePerUnit?: number;
+  pricingHtml?: React.ReactNode;
+  pricingText?: React.ReactNode;
+}
+
+export const plans: PricingPlan[] = [
   {
     name: "Basic",
     features: [
@@ -38,12 +53,13 @@ export const plans = [
       { description: "meetings dashboard & planner", included: true },
       { description: "strata message board", included: true },
     ],
-    pricingText: (
+    pricingHtml: (
       <>
         A plan based on the specific needs of your strata. Please{" "}
         <InternalLink href="/contact">reach out</InternalLink> to us to get
         started.
       </>
     ),
+    pricingText: "A plan based on the specific needs of your strata.",
   },
 ];

@@ -10,13 +10,7 @@ export default function Page() {
     <div>
       <div className={styles.plansContainer}>
         {plans.map((plan) => (
-          <PricingCard
-            key={plan.name}
-            features={plan.features}
-            planName={plan.name}
-            pricePerUnit={plan.pricePerUnit}
-            pricingText={plan.pricingText}
-          />
+          <PricingCard key={plan.name} {...plan} />
         ))}
       </div>
     </div>

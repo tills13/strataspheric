@@ -3,7 +3,7 @@ import * as buttonProps from "../Button/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
 export const iconButton = style([
-  buttonProps.base,
+  buttonProps.button,
   {
     display: "inline-flex",
     justifyContent: "center",
@@ -11,7 +11,7 @@ export const iconButton = style([
   },
 ]);
 
-export const sizeVariants = styleVariants({
+export const iconButtonSizes = styleVariants({
   small: {
     height: vars.sizes.small,
     width: vars.sizes.small,

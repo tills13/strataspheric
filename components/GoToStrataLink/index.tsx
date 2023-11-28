@@ -17,7 +17,7 @@ interface Props {
   variant?: ButtonProps["variant"];
 }
 
-export function GoToStrataButton({
+export function GoToStrataLink({
   className,
   disabled,
   size,
@@ -34,8 +34,12 @@ export function GoToStrataButton({
   }
 
   return (
-    <ExternalLink href={protocol + "//" + strata.domain} target={target}>
-      <Button className={className} size={size} variant={variant}>
+    <ExternalLink
+      className={className}
+      href={protocol + "//" + strata.domain}
+      target={target}
+    >
+      <Button size={size} variant={variant}>
         Go to {strata.name}
       </Button>
     </ExternalLink>

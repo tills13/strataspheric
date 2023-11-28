@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 import { GetDomainStatusResponseData } from "../../app/api/stratas/domainStatus/route";
 import { Strata } from "../../data";
-import { GoToStrataButton } from "../GoToStrataButton";
+import { GoToStrataLink } from "../GoToStrataLink";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { LoadingIcon } from "../LoadingIcon";
@@ -62,7 +62,7 @@ export function GetStartedStatus({ strata }: Props) {
         </p>
       )}
 
-      <GoToStrataButton
+      <GoToStrataLink
         className={styles.statusPageGoToStrataButton}
         disabled={domainStatus !== "active"}
         size="xl"

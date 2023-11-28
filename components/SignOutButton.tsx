@@ -9,7 +9,7 @@ type Props = Omit<React.ComponentProps<typeof Button>, "onClick">;
 
 export function SignOutButton(props: Props) {
   return (
-    <Button onClick={() => signOut()} {...props}>
+    <Button onClick={() => signOut({ redirect: false })} {...props}>
       Sign Out
     </Button>
   );

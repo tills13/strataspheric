@@ -1,4 +1,6 @@
 import { breakpoints, vars } from "../../app/theme.css";
+import * as buttonStyles from "../Button/style.css";
+import * as linkStyles from "../Link/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const globalHeader = style({
@@ -9,14 +11,21 @@ export const globalHeader = style({
   borderBottom: `1px solid ${vars.colors.grey100}`,
 });
 
-export const globalHeaderTitle = style({
-  whiteSpace: "nowrap",
-  fontFamily: vars.fontFamilies.primary,
-  fontSize: vars.fontSizes.xl,
-  fontWeight: vars.fontWeights.xbold,
-});
+export const titleLink = style([
+  linkStyles.noUnderline,
+  {
+    whiteSpace: "nowrap",
+    fontFamily: vars.fontFamilies.primary,
+    fontSize: vars.fontSizes.xl,
+    fontWeight: vars.fontWeights.xbold,
+  },
+]);
 
 export const globalHeaderActions = style({});
+
+export const sessionUserName = style({
+  whiteSpace: "nowrap",
+});
 
 export const globalHeaderDesktopActions = style({
   display: "none",
@@ -49,13 +58,17 @@ export const globalMobileHeaderModalActions = style({
   gap: vars.spacing.normal,
 });
 
-export const globalHeaderActionsButton = style({
-  selectors: {
-    [`${globalMobileHeaderModalActions} &`]: {
-      width: "100%",
+export const globalHeaderActionsButton = style([
+  buttonStyles.button,
+  buttonStyles.buttonSizes.normal,
+  {
+    selectors: {
+      [`${globalMobileHeaderModalActions} &`]: {
+        width: "100%",
+      },
     },
   },
-});
+]);
 
 export const breadcrumbs = style({
   display: "flex",

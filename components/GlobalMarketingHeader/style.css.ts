@@ -7,6 +7,13 @@ export const globalHeader = style({
   position: "relative",
   borderBottom: 0,
   padding: 0,
+  marginBottom: 80,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      marginBottom: 180,
+    },
+  },
 });
 
 const animation = keyframes({
@@ -47,8 +54,7 @@ export const globalHeaderTitle = style({
   fontSize: vars.fontSizes.xl,
   fontWeight: 900,
   textTransform: "uppercase",
-  // textShadow:
-  //   "-3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff, 3px 3px 0 #fff",
+
   "@media": {
     [breakpoints.tablet]: {
       textAlign: "center",

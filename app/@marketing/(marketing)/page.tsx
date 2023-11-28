@@ -1,6 +1,5 @@
 import * as styles from "./style.css";
 
-import { auth } from "../../../auth";
 import { Button } from "../../../components/Button";
 import { Header } from "../../../components/Header";
 import { InternalLink } from "../../../components/Link/InternalLink";
@@ -11,10 +10,8 @@ import { classnames } from "../../../utils/classnames";
 export const runtime = "edge";
 
 export default async function Page() {
-  const session = await auth();
-
   return (
-    <div>
+    <div className={styles.landingWrapper}>
       <section className={classnames(styles.ctaSection)}>
         <Header className={styles.ctaHeader} priority={2}>
           Take your strata to
@@ -22,10 +19,8 @@ export default async function Page() {
           all new heights.
         </Header>
         <p className={styles.ctaText}></p>
-        <InternalLink href="/get-started">
-          <Button className={styles.ctaButton} variant="primary" size="xl">
-            Begin Onboarding
-          </Button>
+        <InternalLink className={styles.ctaLink} href="/get-started?plan=basic">
+          <Button className={styles.ctaButton}>Begin Onboarding</Button>
         </InternalLink>
       </section>
 
@@ -34,13 +29,7 @@ export default async function Page() {
       >
         <div className={styles.plansContainer}>
           {plans.map((plan) => (
-            <PricingCard
-              key={plan.name}
-              features={plan.features}
-              planName={plan.name}
-              pricePerUnit={plan.pricePerUnit}
-              pricingText={plan.pricingText}
-            />
+            <PricingCard key={plan.name} {...plan} />
           ))}
         </div>
       </section>

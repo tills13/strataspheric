@@ -1,7 +1,6 @@
-import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const linkBase = style({
+export const link = style({
   color: "inherit",
   selectors: {
     "&:active": {
@@ -13,8 +12,8 @@ export const linkBase = style({
   },
 });
 
-export const linkNoUnderline = style([
-  linkBase,
+export const noUnderline = style([
+  link,
   {
     textDecoration: "none",
   },

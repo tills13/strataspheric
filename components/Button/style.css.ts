@@ -1,9 +1,10 @@
 import { vars } from "../../app/theme.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
-export const base = style({
+export const button = style({
   position: "relative",
-  display: "inline-block",
+  display: "block",
+  width: "100%",
   fontWeight: 700,
   border: `2px solid ${vars.colors.borderDefault}`,
   outline: "none",
@@ -12,7 +13,7 @@ export const base = style({
   textTransform: "uppercase",
 });
 
-export const sizeVariants = styleVariants({
+export const buttonSizes = styleVariants({
   small: {
     height: vars.sizes.small,
     padding: `0 ${vars.spacing.normal}`,
@@ -35,8 +36,8 @@ export const sizeVariants = styleVariants({
   },
 });
 
-export const variants = styleVariants({
-  base: {
+export const buttonVariants = styleVariants({
+  default: {
     borderColor: vars.colors.borderDefault,
     color: vars.fontColors.primary,
 
@@ -54,7 +55,7 @@ export const variants = styleVariants({
   primary: {
     backgroundColor: vars.colors.primary,
     color: vars.colors.white,
-    borderColor: vars.colors.grey800,
+    borderColor: vars.colors.primary,
 
     selectors: {
       "&:disabled": {

@@ -1,4 +1,5 @@
 import { vars } from "../../app/theme.css";
+import * as linkStyles from "../Link/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const subheader = style({
@@ -18,25 +19,35 @@ export const linksRail = style({
   overflow: "auto",
 });
 
-export const subheaderLink = style({
-  padding: `${vars.spacing.xs} ${vars.spacing.small}`,
-  whiteSpace: "nowrap",
-});
+export const baseSubheaderLink = style([
+  linkStyles.link,
+  {
+    padding: `${vars.spacing.xs} ${vars.spacing.small}`,
+    whiteSpace: "nowrap",
+  },
+]);
+
+export const subheaderLink = style([
+  baseSubheaderLink,
+  {
+    color: vars.fontColors.primary,
+  },
+]);
 
 export const activeSubheaderLink = style([
-  subheaderLink,
+  baseSubheaderLink,
   {
     background: vars.colors.grey700,
-    color: `${vars.colors.white} !important`,
+    color: vars.colors.white,
     borderRadius: vars.borderRadius,
     textDecoration: "none",
 
     selectors: {
-      "&& &:active": {
-        color: `${vars.colors.white} !important`,
+      "&:active": {
+        color: vars.colors.white,
       },
-      "&& &:visited": {
-        color: `${vars.colors.white} !important`,
+      "&:visited": {
+        color: vars.colors.white,
       },
     },
   },

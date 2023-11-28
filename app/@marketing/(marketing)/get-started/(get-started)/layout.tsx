@@ -7,9 +7,5 @@ export default function GetStartedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className={styles.layoutContainer}>
-      <div className={styles.centerColumnContainer}>{children}</div>
-    </div>
-  );
+  return <div className={styles.layoutContainer}>{children}</div>;
 }

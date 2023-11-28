@@ -1,8 +1,9 @@
 import { breakpoints, vars } from "../../app/theme.css";
+import * as iconStyles from "../Icon/style.css";
 import { colorVar } from "../Wordmark/style.css";
 import { style } from "@vanilla-extract/css";
 
-import { border, important, variable } from "../../theme";
+import { border, important } from "../../theme";
 
 export const footer = style({
   display: "flex",
@@ -54,27 +55,12 @@ export const madeWith = style({
   whiteSpace: "nowrap",
 });
 
-export const heartIcon = style({
-  position: "relative",
-  height: "1em",
-  fill: important(vars.colors.red),
-  verticalAlign: "middle",
-});
-
-export const continuePanel = style({
-  color: vars.fontColors.primary,
-  "@media": {
-    [breakpoints.tablet]: {
-      width: 400,
-    },
+export const heartIcon = style([
+  iconStyles.icon,
+  {
+    position: "relative",
+    height: vars.sizes.small,
+    fill: vars.colors.red,
+    verticalAlign: "middle",
   },
-});
-
-export const continuePanelHeader = style({
-  marginBottom: vars.spacing.normal,
-});
-
-export const continuePanelList = style({});
-export const continuePanelListButton = style({
-  width: "100%",
-});
+]);

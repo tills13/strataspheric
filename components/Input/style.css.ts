@@ -1,7 +1,8 @@
 import { vars } from "../../app/theme.css";
+import * as buttonStyles from "../Button/style.css";
 import { style } from "@vanilla-extract/css";
 
-export const base = style({
+export const input = style({
   display: "block",
   height: vars.sizes.normal,
   padding: `0 ${vars.spacing.small}`,
@@ -14,6 +15,16 @@ export const base = style({
   outline: "none",
 
   selectors: {
+    "&[type=file]": {
+      paddingTop: 6,
+      cursor: "pointer",
+    },
+    "&::file-selector-button": {
+      background: "none",
+      border: 0,
+      fontFamily: vars.fontFamilies.text,
+      fontWeight: vars.fontWeights.bold,
+    },
     "&::placeholder": {
       color: vars.fontColors.secondary,
     },
@@ -39,7 +50,7 @@ export const base = style({
 });
 
 export const textarea = style([
-  base,
+  input,
   {
     padding: `${vars.spacing.small} ${vars.spacing.normal}`,
     height: "auto",
@@ -47,7 +58,7 @@ export const textarea = style([
 ]);
 
 export const compact = style([
-  base,
+  input,
   {
     height: vars.sizes.small,
     padding: `0 ${vars.spacing.small}`,

@@ -22,7 +22,7 @@ export function NewWidgetWidget({ createWidget }: Props) {
       >
         <div className={styles.addWidgetWidgetContainer}>
           <AddIcon className={styles.addWidgetWidgetIcon} />
-          <div>Add Widget</div>
+          <span>Add Widget</span>
         </div>
       </div>
       {showNewWidgetModal && (
