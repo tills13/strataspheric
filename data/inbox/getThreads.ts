@@ -10,11 +10,7 @@ export function getThreads(
 ): Promise<Thread[]> {
   let query = db
     .selectFrom("inbox_messages")
-    .leftJoin(
-      "strata_memberships",
-      "inbox_messages.senderUserId",
-      "strata_memberships.userId",
-    )
+    .leftJoin("users", "inbox_messages.senderUserId", "users.id")
     .select((eb) => [
       "inbox_messages.id",
       "inbox_messages.subject",
@@ -24,20 +20,15 @@ export function getThreads(
       "inbox_messages.isUnread",
       "inbox_messages.sentAt",
       "inbox_messages.senderUserId",
+      "inbox_messages.senderPhoneNumber",
       "inbox_messages.strataId",
       "inbox_messages.fileId",
       eb.fn
-        .coalesce("strata_memberships.name", "inbox_messages.senderName")
+        .coalesce("users.name", "inbox_messages.senderName")
         .as("senderName"),
       eb.fn
-        .coalesce("strata_memberships.email", "inbox_messages.senderEmail")
+        .coalesce("users.email", "inbox_messages.senderEmail")
         .as("senderEmail"),
-      eb.fn
-        .coalesce(
-          "strata_memberships.phoneNumber",
-          "inbox_messages.senderPhoneNumber",
-        )
-        .as("senderPhoneNumber"),
       eb
         .selectFrom("inbox_thread_chats")
         .select((mEb) => mEb.fn.countAll<number>().as("count"))

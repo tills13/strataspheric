@@ -1,3 +1,4 @@
+import * as buttonStyles from "../../../../../components/Button/style.css";
 import * as styles from "./style.css";
 
 import { notFound, redirect } from "next/navigation";
@@ -13,6 +14,7 @@ import { Thread, getThreads } from "../../../../../data/inbox/getThreads";
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../../data/users/permissions";
+import { classnames } from "../../../../../utils/classnames";
 import { deleteThreadAction } from "./actions";
 
 export const runtime = "edge";
@@ -54,9 +56,11 @@ export default async function Page() {
 
             <InternalLink href={"/dashboard/settings#plan"}>
               <Button
-                className={styles.upsellButton}
-                variant="primary"
-                size="large"
+                className={classnames(
+                  buttonStyles.buttonFullWidth,
+                  buttonStyles.buttonSizes.large,
+                  buttonStyles.buttonVariants.primary,
+                )}
               >
                 Upgrade your plan today
               </Button>

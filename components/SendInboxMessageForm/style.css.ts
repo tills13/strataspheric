@@ -7,10 +7,6 @@ export const formHeader = style({
   marginBottom: vars.spacing.normal,
 });
 
-export const formButton = style({
-  width: "100%",
-});
-
 export const formInput = style({
   marginBottom: vars.spacing.small,
   width: "100%",

@@ -1,8 +1,13 @@
+"use client";
+
+import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
+import { useFormState } from "react-dom";
+
 import { classnames } from "../../utils/classnames";
-import { Button } from "../Button";
 import { FileSelect } from "../FileSelect";
+import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
 import { Header } from "../Header";
 import { Input } from "../Input";
 import { TextArea } from "../TextArea";
@@ -28,6 +33,12 @@ export function SendInboxMessageForm({
   showHeaders: showHeaders = true,
   showSubjectInput = true,
 }: Props) {
+  // const [state, action] = useFormState(async (state: {}, fd: FormData) => {
+  //   await sendInboxMessageAction(fd);
+
+  //   return { success: true };
+  // }, {});
+
   return (
     <form
       className={classnames(styles.form, className)}
@@ -86,9 +97,17 @@ export function SendInboxMessageForm({
 
       <FileSelect className={styles.formInput} name="fileId" />
 
-      <Button className={styles.formButton} type="submit" variant="primary">
+      <FormSubmitStatusButton
+        className={classnames(
+          buttonStyles.buttonFullWidth,
+          buttonStyles.buttonSizes.large,
+          buttonStyles.buttonVariants.primary,
+        )}
+        type="submit"
+        success={undefined}
+      >
         Send Message
-      </Button>
+      </FormSubmitStatusButton>
     </form>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { signIn } from "next-auth/react";
@@ -20,8 +21,6 @@ interface Props {
 }
 
 export function JoinForm({ className, onSubmit }: Props) {
-  const router = useRouter();
-
   const [state, wrappedOnSubmit] = useFormState(
     async (state: JoinFormState, fd: FormData) => {
       const nextState = await onSubmit(state, fd);
@@ -33,7 +32,7 @@ export function JoinForm({ className, onSubmit }: Props) {
           redirect: false,
         });
 
-        router.push("/");
+        location.href = "/";
       }
 
       return nextState;
@@ -51,9 +50,12 @@ export function JoinForm({ className, onSubmit }: Props) {
       </label>
 
       <FormSubmitStatusButton
+        className={classnames(
+          buttonStyles.buttonFullWidth,
+          buttonStyles.buttonSizes.large,
+          buttonStyles.buttonVariants.primary,
+        )}
         type="submit"
-        variant="primary"
-        size="large"
         success={state?.success}
       >
         Sign Up

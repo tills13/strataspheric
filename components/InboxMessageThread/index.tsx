@@ -1,7 +1,9 @@
+import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
 
 import { auth } from "../../auth";
 import { getThreadMessages } from "../../data/inbox/getThreadMessages";
+import { classnames } from "../../utils/classnames";
 import { ShareIcon } from "../Icon/ShareIcon";
 import { IconButton } from "../IconButton";
 import { ExternalLink } from "../Link/ExternalLink";
@@ -41,7 +43,12 @@ export async function InboxMessageThread({
             href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
             target="_blank"
           >
-            <IconButton size="small">
+            <IconButton
+              className={classnames(
+                iconButtonStyles.iconButton,
+                iconButtonStyles.iconButtonSizes.small,
+              )}
+            >
               <ShareIcon />
             </IconButton>
           </ExternalLink>

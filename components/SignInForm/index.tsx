@@ -19,7 +19,6 @@ interface Props {
 
 export function SignInForm({ className }: Props) {
   const [error, setHasError] = useState(false);
-  const router = useRouter();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -31,6 +30,7 @@ export function SignInForm({ className }: Props) {
       email: fd.get("email"),
       password: fd.get("password"),
       redirect: false,
+      // callbackUrl: "/dashboard",
     });
 
     if (!result || result.error) {
@@ -38,8 +38,7 @@ export function SignInForm({ className }: Props) {
       return;
     }
 
-    // location.href = "/";
-    // router.push("/");
+    location.href = "/";
   }
 
   return (

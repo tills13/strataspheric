@@ -1,3 +1,4 @@
+import * as iconButtonStyles from "../../../../../components/IconButton/style.css";
 import * as styles from "./style.css";
 
 import { auth } from "../../../../../auth";
@@ -7,6 +8,7 @@ import { DownloadIcon } from "../../../../../components/Icon/DownloadIcon";
 import { IconButton } from "../../../../../components/IconButton";
 import { getFiles } from "../../../../../data/files/getFiles";
 import { can, p } from "../../../../../data/users/permissions";
+import { classnames } from "../../../../../utils/classnames";
 import { deleteFileAction } from "./actions";
 
 interface Props {
@@ -15,10 +17,8 @@ interface Props {
 
 export async function FilesTable({ strataId }: Props) {
   const session = await auth();
-  const files = await getFiles(
-    strataId,
-    can(session?.user, p("stratas", "files", "delete")),
-  );
+  const canDelete = can(session?.user, p("stratas", "files", "delete"));
+  const files = await getFiles(strataId, canDelete);
 
   return (
     <table className={styles.filesTable}>
@@ -27,6 +27,7 @@ export async function FilesTable({ strataId }: Props) {
           <th className={styles.filesTableCell}>File Name</th>
           <th className={styles.descriptionCell}>Description</th>
           <th className={styles.filesTableCell}>Creation Date</th>
+          {canDelete && <th className={styles.filesTableCell}>Visibility</th>}
           <th className={styles.filesTableCell}></th>
         </tr>
       </thead>
@@ -38,11 +39,21 @@ export async function FilesTable({ strataId }: Props) {
             <td className={styles.filesTableCell}>
               {new Date(file.createdAt).toLocaleDateString()}
             </td>
+            {canDelete && (
+              <td className={styles.filesTableCell}>
+                {file.isPublic === 1 ? "Public" : "Private"}
+              </td>
+            )}
             <td className={styles.filesTableCell}>
               <div className={styles.fileActionsContainer}>
                 {can(session?.user, p("stratas", "files", "view")) && (
                   <FileLink path={file.path}>
-                    <IconButton size="small">
+                    <IconButton
+                      className={classnames(
+                        iconButtonStyles.iconButton,
+                        iconButtonStyles.iconButtonSizes.small,
+                      )}
+                    >
                       <DownloadIcon />
                     </IconButton>
                   </FileLink>
@@ -50,7 +61,10 @@ export async function FilesTable({ strataId }: Props) {
                 {can(session?.user, p("stratas", "files", "delete")) && (
                   <DeleteButton
                     onClick={deleteFileAction.bind(undefined, file.id)}
-                    size="small"
+                    className={classnames(
+                      iconButtonStyles.iconButton,
+                      iconButtonStyles.iconButtonSizes.small,
+                    )}
                   />
                 )}
               </div>

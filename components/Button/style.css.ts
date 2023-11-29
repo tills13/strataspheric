@@ -3,7 +3,6 @@ import { style, styleVariants } from "@vanilla-extract/css";
 
 export const button = style({
   position: "relative",
-  display: "block",
   fontWeight: 700,
   border: `2px solid ${vars.colors.borderDefault}`,
   outline: "none",

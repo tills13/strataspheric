@@ -13,7 +13,6 @@ import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { ChatIcon } from "../Icon/ChatIcon";
 import { IconButton } from "../IconButton";
 import { InboxMessageQuote } from "../InboxMessageQuote";
-import { ExternalLink } from "../Link/ExternalLink";
 import { Modal } from "../Modal";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
 
@@ -63,7 +62,6 @@ export function InboxMessageThreadMessage({
             <IconButton
               className={styles.chatActionButton}
               onClick={() => setShowChatReplyModal(true)}
-              size="small"
             >
               <ChatIcon />
             </IconButton>

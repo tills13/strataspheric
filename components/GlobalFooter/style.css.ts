@@ -28,6 +28,7 @@ export const footer = style({
 export const footerWordMark = style({
   display: "block",
   marginBottom: vars.spacing.normal,
+  textDecoration: "none",
   vars: {
     [colorVar]: vars.colors.white,
   },

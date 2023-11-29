@@ -24,6 +24,8 @@ export const inboxMessagesTableRow = style({
   flexWrap: "wrap",
   borderBottom: border("1px", "solid", vars.colors.borderDefault),
   textDecoration: "none",
+  color: vars.fontColors.primary,
+  position: "relative",
 
   "@media": {
     [breakpoints.tablet]: {
@@ -141,5 +143,16 @@ export const actionsCell = style([
   {
     display: "flex",
     alignItems: "center",
+    position: "absolute",
+    top: vars.spacing.normal,
+    right: vars.spacing.normal,
+
+    "@media": {
+      [breakpoints.tablet]: {
+        position: "relative",
+        top: 0,
+        right: 0,
+      },
+    },
   },
 ]);

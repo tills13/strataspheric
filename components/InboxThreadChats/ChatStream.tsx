@@ -2,6 +2,7 @@
 
 import * as styles from "./style.css";
 
+import { User } from "next-auth";
 import React, { useLayoutEffect, useRef } from "react";
 
 import { Chat } from "../../data/inbox/getThreadChats";
@@ -10,10 +11,11 @@ import { InboxThreadChat } from "./InboxThreadChat";
 
 interface Props {
   chats: Chat[];
+  currentUser: User;
   subject: React.ReactNode;
 }
 
-export function ChatStream({ chats, subject }: Props) {
+export function ChatStream({ chats, currentUser, subject }: Props) {
   const ref = useRef<HTMLDivElement>(null!);
 
   useLayoutEffect(() => {
@@ -35,7 +37,7 @@ export function ChatStream({ chats, subject }: Props) {
         </p>
       )}
       {chats.map((chat) => (
-        <InboxThreadChat key={chat.id} {...chat} />
+        <InboxThreadChat key={chat.id} currentUser={currentUser} {...chat} />
       ))}
     </div>
   );

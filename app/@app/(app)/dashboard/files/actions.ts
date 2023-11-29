@@ -6,6 +6,7 @@ import { createAndUpdloadFile } from "../../../../../data/files/createAndUploadF
 import { deleteFile } from "../../../../../data/files/deleteFile";
 import { getFile } from "../../../../../data/files/getFile";
 import { r2 } from "../../../../../data/r2";
+import * as formdata from "../../../../../utils/formdata";
 
 export async function deleteFileAction(fileId: string) {
   const f = await getFile(fileId);
@@ -21,17 +22,14 @@ export async function deleteFileAction(fileId: string) {
 }
 
 export async function createFileAction(strataId: string, formData: FormData) {
-  const name = formData.get("name");
-  const description = formData.get("description") || "";
-  const file = formData.get("file");
+  const name = formdata.getString(formData, "name");
+  const description = formdata.getString(formData, "description") || "";
+  const file = formdata.getFile(formData, "file");
+  const isPublic = formdata.getBoolean(formData, "isPublic");
 
   let fileId: string | undefined;
 
-  if (
-    typeof name !== "string" ||
-    name === "" ||
-    typeof description !== "string"
-  ) {
+  if (name === "" || !file) {
     throw new Error("invalid fields");
   }
 
@@ -39,8 +37,9 @@ export async function createFileAction(strataId: string, formData: FormData) {
     strataId,
     name,
     description,
-    (file as File).name,
+    file.name,
     file,
+    isPublic,
   );
 
   fileId = newFile.id;

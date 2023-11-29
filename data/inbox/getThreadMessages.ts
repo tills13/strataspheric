@@ -14,11 +14,7 @@ export function getThreadMessages(
 ): Promise<ThreadMessage[]> {
   let query = db
     .selectFrom("inbox_messages")
-    .leftJoin(
-      "strata_memberships",
-      "inbox_messages.senderUserId",
-      "strata_memberships.userId",
-    )
+    .innerJoin("users", "inbox_messages.senderUserId", "users.id")
     .leftJoin("files", "files.id", "inbox_messages.fileId")
     .select((eb) => [
       "inbox_messages.id",
@@ -29,23 +25,18 @@ export function getThreadMessages(
       "inbox_messages.isUnread",
       "inbox_messages.sentAt",
       "inbox_messages.senderUserId",
+      "inbox_messages.senderPhoneNumber",
       "inbox_messages.strataId",
       "inbox_messages.fileId",
       "files.name as fileName",
       "files.description as fileDescription",
       "files.path as filePath",
       eb.fn
-        .coalesce("strata_memberships.name", "inbox_messages.senderName")
+        .coalesce("users.name", "inbox_messages.senderName")
         .as("senderName"),
       eb.fn
-        .coalesce("strata_memberships.email", "inbox_messages.senderEmail")
+        .coalesce("users.email", "inbox_messages.senderEmail")
         .as("senderEmail"),
-      eb.fn
-        .coalesce(
-          "strata_memberships.phoneNumber",
-          "inbox_messages.senderPhoneNumber",
-        )
-        .as("senderPhoneNumber"),
     ])
     .where("inbox_messages.threadId", "=", threadId);
 

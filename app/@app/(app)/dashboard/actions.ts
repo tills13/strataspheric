@@ -10,18 +10,14 @@ import { createWidget } from "../../../../data/widgets/createWidget";
 import { deleteEventFromWidget } from "../../../../data/widgets/deleteEventFromWidget";
 import { deleteFileFromWidget } from "../../../../data/widgets/deleteFileFromWidget";
 import { deleteWidget } from "../../../../data/widgets/deleteWidget";
+import * as formdata from "../../../../utils/formdata";
 
 export async function createEventAction(widgetId: string, formData: FormData) {
-  const name = formData.get("name");
-  const description = formData.get("description");
-  const date = formData.get("date");
+  const name = formdata.getString(formData, "name");
+  const description = formdata.getString(formData, "description");
+  const date = formdata.getString(formData, "date");
 
-  if (
-    typeof name !== "string" ||
-    name === "" ||
-    typeof description !== "string" ||
-    typeof date !== "string"
-  ) {
+  if (name === "") {
     throw new Error("invalid fields");
   }
 
@@ -41,21 +37,18 @@ export async function createFileAction(
   widgetId: string,
   formData: FormData,
 ) {
-  const name = formData.get("name");
-  const description = formData.get("description") || "";
-  const file = formData.get("file");
-  const existingFileId = formData.get("existing_file");
+  const name = formdata.getString(formData, "name");
+  const description = formdata.getString(formData, "description") || "";
+  const file = formdata.getFile(formData, "file");
+  const existingFileId = formdata.getString(formData, "existing_file");
+  const isPublic = formdata.getBoolean(formData, "isPublic");
 
   let fileId: string | undefined;
 
   if (existingFileId && typeof existingFileId === "string") {
     fileId = existingFileId;
   } else if (file) {
-    if (
-      typeof name !== "string" ||
-      name === "" ||
-      typeof description !== "string"
-    ) {
+    if (name === "") {
       throw new Error("invalid fields");
     }
 
@@ -63,8 +56,9 @@ export async function createFileAction(
       strataId,
       name,
       description,
-      (file as File).name,
+      file.name,
       file,
+      isPublic,
     );
 
     fileId = newFile.id;

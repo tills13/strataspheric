@@ -52,7 +52,10 @@ export function ContinueWhereYouLeftOffWidget({
               actions={[
                 {
                   action() {
-                    signOut({ redirect: false });
+                    async () => {
+                      await signOut({ redirect: false });
+                      location.href = "/";
+                    };
                   },
                   label: "Sign Out",
                   icon: <SignOutIcon />,

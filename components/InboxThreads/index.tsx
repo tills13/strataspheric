@@ -1,10 +1,12 @@
 "use client";
 
+import * as iconButtonStyles from "../../components/IconButton/style.css";
 import * as styles from "./style.css";
 
 import { type Thread } from "../../data/inbox/getThreads";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
+import { classnames } from "../../utils/classnames";
 import { DeleteButton } from "../DeleteButton";
 import { InternalLink } from "../Link/InternalLink";
 
@@ -51,7 +53,10 @@ export function InboxThreads({ deleteThread, threads }: Props) {
               {can(p("stratas", "inbox_messages", "delete")) && (
                 <DeleteButton
                   onClick={deleteThread.bind(undefined, thread.threadId)}
-                  size="small"
+                  className={classnames(
+                    iconButtonStyles.iconButton,
+                    iconButtonStyles.iconButtonSizes.small,
+                  )}
                 />
               )}
             </div>

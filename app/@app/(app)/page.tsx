@@ -67,7 +67,7 @@ export default async function Page({
             <InternalLink className={linkStyles.noUnderline} href="/dashboard">
               <Button
                 className={classnames(
-                  buttonStyles.button,
+                  buttonStyles.buttonFullWidth,
                   buttonStyles.buttonSizes.large,
                 )}
               >
@@ -86,7 +86,7 @@ export default async function Page({
           >
             <Button
               className={classnames(
-                buttonStyles.button,
+                buttonStyles.buttonFullWidth,
                 buttonStyles.buttonSizes.large,
               )}
             >
@@ -97,7 +97,7 @@ export default async function Page({
           <InternalLink className={linkStyles.noUnderline} href="/?action=join">
             <Button
               className={classnames(
-                buttonStyles.button,
+                buttonStyles.buttonFullWidth,
                 buttonStyles.buttonSizes.large,
               )}
             >

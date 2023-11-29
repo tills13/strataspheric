@@ -40,7 +40,11 @@ export async function InboxThreadChats({
 
   return (
     <div className={styles.wrapper}>
-      <ChatStream chats={chats} subject={thread[0].subject} />
+      <ChatStream
+        chats={chats}
+        currentUser={session.user}
+        subject={thread[0].subject}
+      />
 
       <SendInboxThreadChatForm sendInboxThreadChat={sendInboxThreadChat} />
     </div>

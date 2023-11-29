@@ -1,8 +1,9 @@
+import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { classnames } from "../../utils/classnames";
-import { Button } from "../Button";
 import { FileSelect } from "../FileSelect";
+import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
 import { TextArea } from "../TextArea";
 
 interface Props {
@@ -29,9 +30,17 @@ export function SendInboxThreadChatForm({
 
       <FileSelect className={styles.formInput} name="fileId" />
 
-      <Button className={styles.formButton} type="submit" variant="primary">
+      <FormSubmitStatusButton
+        className={classnames(
+          buttonStyles.buttonFullWidth,
+          buttonStyles.buttonSizes.normal,
+          buttonStyles.buttonVariants.primary,
+        )}
+        type="submit"
+        success={undefined}
+      >
         Send Chat
-      </Button>
+      </FormSubmitStatusButton>
     </form>
   );
 }

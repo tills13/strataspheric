@@ -25,37 +25,30 @@ export function FormSubmitStatusButton({
 
   if (status.pending) {
     return (
-      <Button
-        className={className || styles.formSubmitStatusButton}
-        {...buttonProps}
-        disabled
-      >
-        <LoadingIcon className={styles.statusIcon} /> {children}
+      <Button className={className} {...buttonProps} disabled>
+        <div className={styles.formStatusButtonContainer}>
+          <LoadingIcon className={styles.statusIcon} /> {children}
+        </div>
       </Button>
     );
   } else if (success !== undefined) {
     return (
-      <Button
-        className={className || styles.formSubmitStatusButton}
-        {...buttonProps}
-        // disabled={success}
-      >
-        {success ? (
-          <CircleCheckIcon className={styles.statusIcon} />
-        ) : (
-          <CircleXIcon className={styles.statusIcon} />
-        )}
-        {children}
+      <Button className={className} {...buttonProps} disabled={success}>
+        <div className={styles.formStatusButtonContainer}>
+          {success ? (
+            <CircleCheckIcon className={styles.statusIcon} />
+          ) : (
+            <CircleXIcon className={styles.statusIcon} />
+          )}
+          {children}
+        </div>
       </Button>
     );
   }
 
   return (
-    <Button
-      className={className || styles.formSubmitStatusButton}
-      {...buttonProps}
-    >
-      {children}
+    <Button className={className} {...buttonProps}>
+      <div className={styles.formStatusButtonContainer}>{children}</div>
     </Button>
   );
 }

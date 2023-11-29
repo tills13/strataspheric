@@ -34,6 +34,7 @@ export const pageContainerFullWidthMobile = style([
 export const dashboardWidgetGridContainer = style({
   display: "grid",
   gridTemplateColumns: "repeat(1, 1fr)",
+  gridAutoRows: "200px",
   gap: vars.spacing.normal,
   overflow: "auto",
 

@@ -11,7 +11,3 @@ export const upsell = style({
   maxWidth: "600px",
   margin: "auto",
 });
-
-export const upsellButton = style({
-  width: "100%",
-});

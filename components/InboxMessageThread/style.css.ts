@@ -1,4 +1,5 @@
 import { breakpoints, vars } from "../../app/theme.css";
+import * as iconButtonStyles from "../IconButton/style.css";
 import { keyframes, style } from "@vanilla-extract/css";
 
 import { border } from "../../theme";
@@ -92,19 +93,23 @@ export const messageHeaderSentAt = style({
   color: vars.colors.grey500,
 });
 
-export const chatActionButton = style({
-  position: "absolute",
-  right: vars.spacing.normal,
-  top: vars.spacing.normal,
+export const chatActionButton = style([
+  iconButtonStyles.iconButton,
+  iconButtonStyles.iconButtonSizes.small,
+  {
+    position: "absolute",
+    right: vars.spacing.normal,
+    top: vars.spacing.normal,
 
-  "@media": {
-    [breakpoints.tablet]: {
-      position: "relative",
-      top: "unset",
-      right: "unset",
+    "@media": {
+      [breakpoints.tablet]: {
+        position: "relative",
+        top: "unset",
+        right: "unset",
+      },
     },
   },
-});
+]);
 
 export const messageSender = style({
   fontWeight: vars.fontWeights.bold,
