@@ -5,7 +5,7 @@ import { border, padding } from "../../../../../theme";
 
 export const meetingsList = style({});
 
-export const inboxMessagesContainer = style({
+export const meetingListContainer = style({
   width: "100%",
   height: "100%",
   overflow: "hidden",
@@ -18,10 +18,9 @@ export const inboxMessagesContainer = style({
   },
 });
 
-export const inboxMessagesTableRow = style({
-  display: "flex",
+export const meetingListRow = style({
+  display: "block",
   padding: vars.spacing.normal,
-  flexWrap: "wrap",
   borderBottom: border("1px", "solid", vars.colors.borderDefault),
   textDecoration: "none",
   color: vars.fontColors.primary,
@@ -52,7 +51,7 @@ export const tableCell = style({
   },
 });
 
-export const senderNameCell = style([
+export const purposeCell = style([
   tableCell,
   {
     marginBottom: vars.spacing.small,
@@ -80,15 +79,6 @@ export const subjectCell = style([
     },
   },
 ]);
-
-export const unreadDot = style({
-  display: "block",
-  content: "&nbsp;",
-  width: vars.sizes.xxs,
-  height: vars.sizes.xxs,
-  backgroundColor: vars.colors.grey700,
-  borderRadius: "50%",
-});
 
 export const statusCell = style([
   tableCell,
@@ -126,7 +116,7 @@ export const chatsCell = style([
   },
 ]);
 
-export const sentAtCell = style([
+export const dateCell = style([
   tableCell,
   {
     justifySelf: "flex-end",
@@ -152,6 +142,7 @@ export const actionsCell = style([
         position: "relative",
         top: 0,
         right: 0,
+        textAlign: "right",
       },
     },
   },

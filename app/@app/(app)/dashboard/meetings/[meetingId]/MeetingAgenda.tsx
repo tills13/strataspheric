@@ -3,7 +3,9 @@ import * as styles from "./style.css";
 import { Header } from "../../../../../../components/Header";
 import { MeetingAgendaItem } from "../../../../../../components/MeetingAgendaItem";
 import { getMeetingAgendaItems } from "../../../../../../data/meetings/getMeetingAgendaItems";
+import { AddNewMeetingAgendaItemButton } from "./AddNewMeetingAgendaItemButton";
 import {
+  createMeetingAgendaItemAction,
   imperativeUpdateAgendaItemAction,
   removeItemFromAgendaAction,
   updateAgendaItemAction,
@@ -44,6 +46,13 @@ export async function MeetingAgenda({ meetingId }: Props) {
             />
           </li>
         ))}
+
+        <AddNewMeetingAgendaItemButton
+          createMeetingAgendaItem={createMeetingAgendaItemAction.bind(
+            undefined,
+            meetingId,
+          )}
+        />
       </ul>
     </div>
   );

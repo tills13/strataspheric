@@ -48,7 +48,10 @@ export function MeetingAgendaItem({
           }}
           checked={agendaItem.done === 1}
         />
-        <Header priority={3}>{agendaItem.title}</Header>
+
+        <Header className={styles.headerHeader} priority={3}>
+          {agendaItem.title}
+        </Header>
 
         <div className={styles.agendaItemActions}>
           <EditMeetingAgendaItemButton
@@ -69,7 +72,9 @@ export function MeetingAgendaItem({
         </div>
       </div>
 
-      <p className={styles.agendaItemDescription}>{agendaItem.description}</p>
+      {agendaItem.description && (
+        <p className={styles.agendaItemDescription}>{agendaItem.description}</p>
+      )}
 
       {agendaItem.fileId && (
         <FileAttachmentChip

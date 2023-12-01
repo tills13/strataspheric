@@ -1,12 +1,16 @@
-import { vars } from "../../../../../theme.css";
+import { breakpoints, vars } from "../../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
 export const meetingLayoutContainer = style({
-  display: "grid",
-  gridTemplateColumns: "auto 400px",
-  overflow: "hidden",
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "grid",
+      gridTemplateColumns: "auto 400px",
+      overflow: "hidden",
+    },
+  },
 });
 
 export const meetingAgendaContainer = style({
@@ -30,10 +34,16 @@ export const header = style({
   marginBottom: vars.spacing.large,
 });
 
+export const headerHeader = style({
+  marginBottom: vars.spacing.small,
+});
+
 export const editMeetingButton = style({
-  position: "absolute",
-  right: 0,
-  top: 0,
+  float: "right",
+  clear: "both",
+  // position: "absolute",
+  // right: 0,
+  // top: 0,
 });
 
 export const meetingAgendaList = style({

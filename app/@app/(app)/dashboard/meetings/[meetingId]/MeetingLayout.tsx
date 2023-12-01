@@ -19,17 +19,18 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
     <div className={styles.meetingLayoutContainer}>
       <div className={styles.meetingAgendaContainer}>
         <div className={styles.header}>
-          <Header priority={2}>{meeting.purpose}</Header>
-          <p>
-            Called by {meeting.caller} on{" "}
-            {new Date(meeting.date).toLocaleString()}
-          </p>
-
           <EditMeetingButton
             className={styles.editMeetingButton}
             meeting={meeting}
             updateMeeting={updateMeetingAction.bind(undefined, meetingId)}
           />
+          <Header className={styles.headerHeader} priority={2}>
+            {meeting.purpose}
+          </Header>
+          <p>
+            Called by <b>{meeting.caller}</b> for
+            <br /> {new Date(meeting.date).toLocaleString()}
+          </p>
         </div>
 
         {meeting.notes && <p>{meeting.notes}</p>}

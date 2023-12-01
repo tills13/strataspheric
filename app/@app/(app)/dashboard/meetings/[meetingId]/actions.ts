@@ -15,24 +15,35 @@ import * as formdata from "../../../../../../utils/formdata";
 import { AgendaTimelineEntry } from "./MeetingTimelineSearch";
 
 export async function updateMeetingAction(meetingId: string, fd: FormData) {
-  const meetingUpdate: MeetingUpdate = {};
-  const purpose = formdata.getString(fd, "purpose");
-
-  if (purpose !== "") {
-    meetingUpdate.purpose = purpose;
-  }
-
-  const date = formdata.getString(fd, "date");
-
-  if (date !== "") {
-    meetingUpdate.date = date;
-  }
+  const meetingUpdate: MeetingUpdate = {
+    purpose: formdata.getString(fd, "purpose"),
+    date: formdata.getString(fd, "date"),
+  };
 
   if (Object.keys(meetingUpdate).length === 0) {
     return;
   }
 
   await updateMeeting(meetingId, meetingUpdate);
+  revalidatePath("/dashboard/meetings/" + meetingId);
+}
+
+export async function createMeetingAgendaItemAction(
+  meetingId: string,
+  fd: FormData,
+) {
+  const title = formdata.getString(fd, "title");
+  const description = formdata.getString(fd, "description");
+
+  if (title === "") {
+    throw new Error("invalid fields");
+  }
+
+  await addItemToMeetingAgenda(meetingId, {
+    title,
+    description,
+  });
+
   revalidatePath("/dashboard/meetings/" + meetingId);
 }
 
@@ -56,7 +67,7 @@ export async function addItemToAgendaAction(
     newItem.messageId = item.id;
   }
 
-  await addItemToMeetingAgenda(newItem);
+  await addItemToMeetingAgenda(meetingId, newItem);
 
   revalidatePath("/dashboard/meetings/" + meetingId);
 }
@@ -66,15 +77,10 @@ export async function updateAgendaItemAction(
   itemId: string,
   fd: FormData,
 ): Promise<void> {
-  const meetingAgendaItemUpdate: MeetingAgendaItemUpdate = {};
-
-  if (formdata.getString(fd, "title")) {
-    meetingAgendaItemUpdate.title = formdata.getString(fd, "title");
-  }
-
-  if (formdata.getString(fd, "description")) {
-    meetingAgendaItemUpdate.description = formdata.getString(fd, "description");
-  }
+  const meetingAgendaItemUpdate: MeetingAgendaItemUpdate = {
+    title: formdata.getString(fd, "title"),
+    description: formdata.getString(fd, "description"),
+  };
 
   if (Object.keys(meetingAgendaItemUpdate).length === 0) {
     return;
