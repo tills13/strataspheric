@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { auth } from "../../../../auth";
 import { createEvent } from "../../../../data/events/createEvent";
 import { createAndUpdloadFile } from "../../../../data/files/createAndUploadFile";
 import { addEventToWidget } from "../../../../data/widgets/addEventToWidget";
@@ -12,7 +13,17 @@ import { deleteFileFromWidget } from "../../../../data/widgets/deleteFileFromWid
 import { deleteWidget } from "../../../../data/widgets/deleteWidget";
 import * as formdata from "../../../../utils/formdata";
 
-export async function createEventAction(widgetId: string, formData: FormData) {
+export async function createEventAction(
+  strataId: string,
+  widgetId: string,
+  formData: FormData,
+) {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("not allowed");
+  }
+
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description");
   const date = formdata.getString(formData, "date");
@@ -21,7 +32,13 @@ export async function createEventAction(widgetId: string, formData: FormData) {
     throw new Error("invalid fields");
   }
 
-  const { id: eventId } = await createEvent({ name, description, date });
+  const { id: eventId } = await createEvent({
+    name,
+    description,
+    date,
+    strataId,
+    creatorId: session.user.id,
+  });
 
   if (!eventId) {
     throw new Error("error while creating event");
@@ -37,6 +54,12 @@ export async function createFileAction(
   widgetId: string,
   formData: FormData,
 ) {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("not allowed");
+  }
+
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description") || "";
   const file = formdata.getFile(formData, "file");
@@ -54,6 +77,7 @@ export async function createFileAction(
 
     const newFile = await createAndUpdloadFile(
       strataId,
+      session.user.id,
       name,
       description,
       file.name,

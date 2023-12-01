@@ -12,7 +12,7 @@ import { CircleXIcon } from "../Icon/CircleXIcon";
 import { LoadingIcon } from "../LoadingIcon";
 
 interface Props extends React.ComponentProps<typeof Button> {
-  success: boolean | undefined;
+  success?: boolean | undefined;
 }
 
 export function FormSubmitStatusButton({

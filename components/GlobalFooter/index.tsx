@@ -1,19 +1,21 @@
 import * as styles from "./style.css";
 
+import { auth } from "../../auth";
 import { protocol, tld } from "../../constants";
-import { Strata } from "../../data";
+import { getUserStratas } from "../../data/users/getUserStratas";
 import { ContinueWhereYouLeftOffWidget } from "../ContinueWhereYouLeftOffWidget";
 import { HeartIcon } from "../Icon/HeartIcon";
 import { ExternalLink } from "../Link/ExternalLink";
 import { Wordmark } from "../Wordmark";
 
-interface Props {
-  sessionStratas: Strata[];
-}
-
 const baseUrl = protocol + "//" + tld;
 
-export function GlobalFooter({ sessionStratas }: Props) {
+export async function GlobalFooter() {
+  const session = await auth();
+  const sessionStratas = session?.user?.id
+    ? await getUserStratas(session.user.id)
+    : [];
+
   return (
     <footer className={styles.footer}>
       <div>

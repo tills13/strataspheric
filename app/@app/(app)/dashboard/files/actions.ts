@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { auth } from "../../../../../auth";
 import { createAndUpdloadFile } from "../../../../../data/files/createAndUploadFile";
 import { deleteFile } from "../../../../../data/files/deleteFile";
 import { getFile } from "../../../../../data/files/getFile";
@@ -22,6 +23,12 @@ export async function deleteFileAction(fileId: string) {
 }
 
 export async function createFileAction(strataId: string, formData: FormData) {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("not allowed");
+  }
+
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description") || "";
   const file = formdata.getFile(formData, "file");
@@ -35,6 +42,7 @@ export async function createFileAction(strataId: string, formData: FormData) {
 
   const newFile = await createAndUpdloadFile(
     strataId,
+    session.user.id,
     name,
     description,
     file.name,

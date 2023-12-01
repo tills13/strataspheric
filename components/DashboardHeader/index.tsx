@@ -19,8 +19,9 @@ const links: Array<Link | LinkWithPermissions> = [
   ["/dashboard", "Dashboard"],
   ["/dashboard/files", "Files"],
   ["/dashboard/membership", "Membership"],
+  ["/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
   ["/dashboard/inbox", "Strata Inbox"],
-  ["/dashboard/settings", "Settings", ["stratas.edit"]],
+  ["/dashboard/settings", "Settings", ["stratas.strata.edit"]],
 ];
 
 interface Props {

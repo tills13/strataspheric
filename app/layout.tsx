@@ -4,12 +4,12 @@ import { fontHeaderVar, fontPrimaryVar } from "./theme.css";
 
 import { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
+import { Suspense } from "react";
 
 import { auth } from "../auth";
 import { GlobalFooter } from "../components/GlobalFooter";
 import { protocol, tld } from "../constants";
 import { getCurrentStrata } from "../data/stratas/getStrataByDomain";
-import { getUserStratas } from "../data/users/getUserStratas";
 import { variable } from "../theme";
 import { laila, sourceSans } from "./fonts";
 
@@ -40,12 +40,6 @@ export default async function RootLayout({
   console.log("t1", Date.now() - p0, "ms");
   const strata = await getCurrentStrata();
   console.log("t2", Date.now() - p0, "ms");
-
-  const sessionStratas = session?.user?.id
-    ? await getUserStratas(session.user.id)
-    : [];
-
-  console.log("t3", Date.now() - p0, "ms");
 
   return (
     <html lang="en">
@@ -85,7 +79,9 @@ export default async function RootLayout({
       <body>
         <SessionProvider session={session}>
           <div className={styles.body}>{strata ? app : marketing}</div>
-          <GlobalFooter sessionStratas={sessionStratas} />
+          <Suspense>
+            <GlobalFooter />
+          </Suspense>
         </SessionProvider>
 
         <div id="modal-root" />

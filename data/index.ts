@@ -2,11 +2,12 @@ import { D1Database } from "@cloudflare/workers-types";
 import { ColumnType, Insertable, Kysely, Selectable, Updateable } from "kysely";
 
 import { D1Dialect } from "./d1";
-// import { D1Dialect } from "kysely-d1";
 import { AccountType, Role } from "./users/permissions";
 
 export interface EventsTable {
   id: string;
+  strataId: string;
+  creatorId: string;
   name: string;
   description: string;
   date: ColumnType<string, string, string>;
@@ -17,11 +18,12 @@ export type NewEvent = Insertable<EventsTable>;
 
 export interface FilesTable {
   id: string;
+  strataId: string;
+  uploaderId: string | null;
   name: string;
   description: string;
   isPublic: 0 | 1;
   path: string;
-  strataId: string;
   createdAt: ColumnType<string, never, never>;
 }
 
@@ -60,6 +62,42 @@ export interface InboxThreadChatsTable {
 
 export type InboxThreadChat = Selectable<InboxThreadChatsTable>;
 export type NewInboxThreadChat = Insertable<InboxThreadChatsTable>;
+
+export interface MeetingsTable {
+  id: ColumnType<string, string, never>;
+  strataId: string;
+  callerId: string;
+  purpose: string;
+  notes: string | null;
+  date: string;
+}
+
+export type Meeting = Selectable<MeetingsTable>;
+export type NewMeeting = Insertable<MeetingsTable>;
+export type MeetingUpdate = Updateable<MeetingsTable>;
+
+export interface MeetingAgendaItemsTable {
+  id: ColumnType<string, string, never>;
+  meetingId: string;
+  title: string;
+  description: string;
+  eventId: string | null;
+  fileId: string | null;
+  messageId: string | null;
+  chatId: string | null;
+  done: ColumnType<0 | 1, 0 | 1 | undefined, 0 | 1 | undefined>;
+}
+
+export type MeetingAgendaItem = Selectable<MeetingAgendaItemsTable>;
+export type NewMeetingAgendaItem = Insertable<MeetingAgendaItemsTable>;
+export type MeetingAgendaItemUpdate = Updateable<MeetingAgendaItemsTable>;
+
+export interface MeetingFilesTable {
+  fileId: string;
+  meetingId: string;
+}
+
+export type NewMeetingFile = Insertable<MeetingFilesTable>;
 
 export interface StratasTable {
   id: ColumnType<string, string, never>;
@@ -151,6 +189,9 @@ export interface Database {
   files: FilesTable;
   inbox_thread_chats: InboxThreadChatsTable;
   inbox_messages: InboxMessagesTable;
+  meetings: MeetingsTable;
+  meeting_agenda_items: MeetingAgendaItemsTable;
+  meeting_files: MeetingFilesTable;
   strata_memberships: StrataMembershipsTable;
   strata_plans: StrataPlansTable;
   strata_widgets: StrataWidgetsTable;
