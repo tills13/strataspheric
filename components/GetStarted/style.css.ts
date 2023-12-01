@@ -19,7 +19,7 @@ export const input = style({
 });
 
 export const submitButton = style([
-  formSubmitStatusButtonStyles.formSubmitStatusButton,
+  formSubmitStatusButtonStyles.formStatusButtonContainer,
   buttonStyles.buttonSizes.large,
   buttonStyles.buttonVariants.primary,
 ]);
