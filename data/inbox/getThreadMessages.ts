@@ -14,7 +14,7 @@ export function getThreadMessages(
 ): Promise<ThreadMessage[]> {
   let query = db
     .selectFrom("inbox_messages")
-    .innerJoin("users", "inbox_messages.senderUserId", "users.id")
+    .leftJoin("users", "inbox_messages.senderUserId", "users.id")
     .leftJoin("files", "files.id", "inbox_messages.fileId")
     .select((eb) => [
       "inbox_messages.id",

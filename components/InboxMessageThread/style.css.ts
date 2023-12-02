@@ -48,6 +48,12 @@ export const pageHeaderSender = style({
   color: vars.colors.grey500,
 });
 
+export const outsideMessageWarning = style({
+  padding: vars.spacing.normal,
+  backgroundColor: vars.colors.red,
+  color: vars.colors.white,
+});
+
 export const message = style({
   selectors: {
     "&:not(:last-child)": {

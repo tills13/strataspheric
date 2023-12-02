@@ -23,12 +23,21 @@ export async function InboxMessageThread({
 }: Props) {
   const session = await auth();
   const messages = await getThreadMessages(threadId);
+
   const message0 = messages[0];
 
-  const { senderName, senderEmail, subject, sentAt, viewId } = message0;
+  const { senderUserId, senderName, senderEmail, subject, sentAt, viewId } =
+    message0;
 
   return (
     <div className={styles.inboxMessageThreadContainer}>
+      {!senderUserId && (
+        <div className={styles.outsideMessageWarning}>
+          This message is from outside your strata. Be careful sharing
+          information that might be private.
+        </div>
+      )}
+
       <div className={styles.pageHeader}>
         <div>
           <h2 className={styles.pageHeaderSubject}>{subject}</h2>
@@ -36,6 +45,7 @@ export async function InboxMessageThread({
             {senderName} ({senderEmail})
           </div>
         </div>
+
         <div className={styles.pageHeaderActions}>
           <span>Started {new Date(sentAt).toLocaleString()}</span>
 
