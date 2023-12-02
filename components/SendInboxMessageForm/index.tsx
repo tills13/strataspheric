@@ -7,6 +7,7 @@ import { useFormState } from "react-dom";
 
 import { classnames } from "../../utils/classnames";
 import { FileSelect } from "../FileSelect";
+import { FileSelectOrUpload } from "../FileSelectOrUpload";
 import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
 import { Header } from "../Header";
 import { Input } from "../Input";
@@ -18,7 +19,7 @@ interface Props {
   defaultEmail?: string;
   defaultPhoneNumber?: string;
   showContactInformationFields: boolean;
-  sendInboxMessageAction: (fd: FormData) => void;
+  sendInboxMessage: (fd: FormData) => void;
   showHeaders?: boolean;
   showSubjectInput?: boolean;
 }
@@ -29,20 +30,14 @@ export function SendInboxMessageForm({
   defaultEmail,
   defaultPhoneNumber,
   showContactInformationFields = false,
-  sendInboxMessageAction,
+  sendInboxMessage: sendInboxMessage,
   showHeaders: showHeaders = true,
   showSubjectInput = true,
 }: Props) {
-  // const [state, action] = useFormState(async (state: {}, fd: FormData) => {
-  //   await sendInboxMessageAction(fd);
-
-  //   return { success: true };
-  // }, {});
-
   return (
     <form
       className={classnames(styles.form, className)}
-      action={sendInboxMessageAction}
+      action={sendInboxMessage}
     >
       {showContactInformationFields && (
         <>
@@ -95,7 +90,7 @@ export function SendInboxMessageForm({
         required
       />
 
-      <FileSelect className={styles.formInput} name="fileId" />
+      <FileSelectOrUpload className={styles.formInput} baseName="file" />
 
       <FormSubmitStatusButton
         className={classnames(
@@ -104,7 +99,6 @@ export function SendInboxMessageForm({
           buttonStyles.buttonVariants.primary,
         )}
         type="submit"
-        success={undefined}
       >
         Send Message
       </FormSubmitStatusButton>

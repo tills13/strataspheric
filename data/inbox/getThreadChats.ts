@@ -1,15 +1,22 @@
 import { InboxThreadChat, User, db } from "..";
 
-interface BaseThreadChat extends User, InboxThreadChat {}
+interface BaseThreadChat extends InboxThreadChat {
+  name: string;
+  email: string;
+}
 
-interface TheadChatWithQuote extends User, InboxThreadChat {
+interface TheadChatWithQuote extends InboxThreadChat {
+  name: string;
+  email: string;
   quotedMessageId: string;
   quotedMessageMessage: string;
   quotedMessageTimestamp: string;
   quotedMessageSender: string;
 }
 
-interface TheadChatWithFile extends User, InboxThreadChat {
+interface TheadChatWithFile extends InboxThreadChat {
+  name: string;
+  email: string;
   filePath: string;
   fileName: string;
 }
@@ -41,8 +48,20 @@ export function getThreadChats(threadId: string): Promise<Chat[]> {
       "inbox_messages.senderUserId",
       "quotedMessageUsers.id",
     )
-    .selectAll(["inbox_thread_chats", "users"])
     .select((eb) => [
+      "inbox_thread_chats.id",
+      "inbox_thread_chats.message",
+      "inbox_thread_chats.threadId",
+      "inbox_thread_chats.userId",
+      "inbox_thread_chats.chatId",
+      "inbox_thread_chats.fileId",
+      "inbox_thread_chats.messageId",
+      "inbox_thread_chats.threadId",
+      "inbox_thread_chats.sentAt",
+
+      "users.name",
+      "users.email",
+
       "files.name as fileName",
       "files.description as fileDescription",
       "files.path as filePath",

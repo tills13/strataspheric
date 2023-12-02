@@ -8,6 +8,7 @@ import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { classnames } from "../../utils/classnames";
 import { DeleteButton } from "../DeleteButton";
+import { Header } from "../Header";
 import { InternalLink } from "../Link/InternalLink";
 
 interface Props {
@@ -20,13 +21,14 @@ export function InboxThreads({ deleteThread, threads }: Props) {
 
   return (
     <div className={styles.inboxMessages}>
-      <div className={styles.inboxMessagesContainer}>
-        {threads.length === 0 && (
-          <div className={styles.inboxMessagesTableRow}>
-            <div className={styles.tableCell}>No Messages</div>
-          </div>
-        )}
+      {threads.length === 0 && (
+        <div className={styles.inboxMessagesNoMessages}>
+          <Header priority={2}>Inbox Zero 🎉</Header>
+          <p>There are no messages in your inbox.</p>
+        </div>
+      )}
 
+      <div className={styles.inboxMessagesContainer}>
         {threads.map((thread) => (
           <InternalLink
             key={thread.id}

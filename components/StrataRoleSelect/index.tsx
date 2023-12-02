@@ -4,21 +4,11 @@ import { ChangeEvent, ComponentProps } from "react";
 
 import { Select } from "../Select";
 
-interface Props extends ComponentProps<typeof Select> {
-  submitOnChange?: boolean;
-}
+interface Props extends ComponentProps<typeof Select> {}
 
-export function StrataRoleSelect({ submitOnChange, ...delegateProps }: Props) {
-  function onChange(e: ChangeEvent<HTMLSelectElement>) {
-    if (submitOnChange) {
-      e.currentTarget.form?.submit();
-    }
-
-    delegateProps.onChange?.(e);
-  }
-
+export function StrataRoleSelect(props: Props) {
   return (
-    <Select {...delegateProps} onChange={onChange}>
+    <Select {...props}>
       <option value="owner">Owner</option>
       <option value="treasurer">Treasurer</option>
       <option value="vice_president">Vice President</option>

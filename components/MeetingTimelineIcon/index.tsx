@@ -10,34 +10,27 @@ import { ForumIcon } from "../Icon/ForumIcon";
 import { TextDocumentIcon } from "../Icon/TextDocumentIcon";
 
 interface Props {
-  className?: string;
   type: "event" | "file" | "inbox_message" | "chat";
 }
 
-export function MeetingTimelineIcon({ className, type }: Props) {
-  let icon: React.ReactNode | undefined;
+export function MeetingTimelineIcon({ type }: Props) {
+  const iconClassName = classnames(iconStyles.icon, styles.timelineIconIcon);
 
-  const iconClassName = classnames(
-    iconStyles.icon,
-    // iconStyles.iconVariants.primary,
-    styles.timelineIconIcon,
-  );
-
-  if (type === "chat") {
-    icon = <ChatIcon className={iconClassName} />;
-  } else if (type === "file") {
-    icon = <TextDocumentIcon className={iconClassName} />;
-  } else if (type === "event") {
-    icon = <EventIcon className={iconClassName} />;
-  } else if (type === "inbox_message") {
-    icon = <ForumIcon className={iconClassName} />;
+  switch (type) {
+    case "chat": {
+      return <ChatIcon className={iconClassName} />;
+    }
+    case "file": {
+      return <TextDocumentIcon className={iconClassName} />;
+    }
+    case "event": {
+      return <EventIcon className={iconClassName} />;
+    }
+    case "inbox_message": {
+      return <ForumIcon className={iconClassName} />;
+    }
+    default: {
+      return null;
+    }
   }
-
-  if (!icon) {
-    return null;
-  }
-
-  return (
-    <div className={classnames(styles.timelineIcon, className)}>{icon}</div>
-  );
 }

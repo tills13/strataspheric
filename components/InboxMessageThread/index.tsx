@@ -69,7 +69,7 @@ export async function InboxMessageThread({
       <SendInboxMessageForm
         className={styles.newMessageForm}
         showContactInformationFields={!session}
-        sendInboxMessageAction={sendNewMessageAction}
+        sendInboxMessage={sendNewMessageAction}
         showHeaders={false}
         showSubjectInput={false}
         {...(!session && {

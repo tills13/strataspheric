@@ -5,11 +5,13 @@ import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
 import { protocol, tld } from "../../../../../constants";
+import { createAndUpdloadFile } from "../../../../../data/files/createAndUploadFile";
 import { createThread } from "../../../../../data/inbox/createThread";
 import { deleteThread } from "../../../../../data/inbox/deleteThread";
 import { deleteThreadChats } from "../../../../../data/inbox/deleteThreadChats";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import * as formdata from "../../../../../utils/formdata";
 import { sendEmail } from "../../../../../utils/sendEmail";
 
 export async function deleteThreadAction(threadId: string) {
@@ -26,12 +28,15 @@ export async function sendInboxMessageAction(
 ) {
   const u = await auth();
 
-  const senderName = fd.get("name") ?? "";
-  const senderEmail = fd.get("email_address") ?? "";
-  const senderPhoneNumber = fd.get("phone_number") ?? "";
-  const message = fd.get("message");
-  const fileId = fd.get("fileId") || "";
-  const subject = fd.get("subject") ?? "";
+  const senderName = formdata.getString(fd, "name");
+  const senderEmail = formdata.getString(fd, "email_address");
+  const senderPhoneNumber = formdata.getString(fd, "phone_number");
+  const message = formdata.getString(fd, "message");
+
+  let existingFileId = formdata.getString(fd, "existing_file");
+  const newFile = formdata.getFile(fd, "new_file");
+
+  const subject = formdata.getString(fd, "subject");
 
   if (
     typeof senderName !== "string" ||
@@ -41,10 +46,26 @@ export async function sendInboxMessageAction(
     message === "" ||
     typeof subject !== "string" ||
     // subject is optional if threaded
-    (threadId === undefined && subject === "") ||
-    (fileId && typeof fileId !== "string")
+    (threadId === undefined && subject === "")
   ) {
     throw new Error("invalid data");
+  }
+
+  console.log({ existingFileId, newFile });
+  let fileId = existingFileId;
+
+  if (newFile && newFile.size !== 0) {
+    const file = await createAndUpdloadFile(
+      strataId,
+      u?.user?.id,
+      newFile.name,
+      "",
+      newFile.name,
+      newFile,
+      false,
+    );
+
+    fileId = file.id;
   }
 
   const newMessage = await createThread({

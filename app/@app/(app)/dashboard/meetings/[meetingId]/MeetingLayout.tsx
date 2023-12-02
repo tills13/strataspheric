@@ -4,6 +4,7 @@ import { EditMeetingButton } from "../../../../../../components/EditMeetingButto
 import { Header } from "../../../../../../components/Header";
 import { getMeeting } from "../../../../../../data/meetings/getMeeting";
 import { MeetingAgenda } from "./MeetingAgenda";
+// import { MeetingMinutes } from "./MeetingMinutes";
 import { MeetingTimelineSearch } from "./MeetingTimelineSearch";
 import { updateMeetingAction } from "./actions";
 
@@ -36,6 +37,8 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
         {meeting.notes && <p>{meeting.notes}</p>}
 
         <MeetingAgenda meetingId={meetingId} />
+
+        {/* <MeetingMinutes meetingId={meetingId} /> */}
       </div>
       <div className={styles.meetingTimelineSearchContainer}>
         <MeetingTimelineSearch meetingId={meetingId} strataId={strataId} />

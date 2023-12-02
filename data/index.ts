@@ -23,6 +23,7 @@ export interface FilesTable {
   name: string;
   description: string;
   isPublic: 0 | 1;
+  sizeBytes: number;
   path: string;
   createdAt: ColumnType<string, never, never>;
 }
@@ -98,6 +99,14 @@ export interface MeetingFilesTable {
 }
 
 export type NewMeetingFile = Insertable<MeetingFilesTable>;
+
+export interface MeetingMinutesTable {
+  fileId: string;
+  meetingId: string;
+  state: "draft" | "published";
+}
+
+export type NewMeetingMinutes = Insertable<MeetingMinutesTable>;
 
 export interface StratasTable {
   id: ColumnType<string, string, never>;

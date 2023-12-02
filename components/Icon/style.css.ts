@@ -2,10 +2,13 @@ import { vars } from "../../app/theme.css";
 import * as buttonStyles from "../Button/style.css";
 import * as dropdownActionsStyles from "../DropdownActions/style.css";
 import * as iconButtonStyles from "../IconButton/style.css";
-import { style, styleVariants } from "@vanilla-extract/css";
+import { createVar, style, styleVariants } from "@vanilla-extract/css";
+
+export const iconColorVar = createVar();
 
 export const icon = style({
   display: "inline",
+  fill: iconColorVar,
   selectors: {
     [`${buttonStyles.buttonVariants.primary} &`]: {
       fill: vars.colors.white,

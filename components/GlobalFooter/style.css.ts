@@ -61,7 +61,9 @@ export const heartIcon = style([
   {
     position: "relative",
     height: vars.sizes.small,
-    fill: vars.colors.red,
     verticalAlign: "middle",
+    vars: {
+      [iconStyles.iconColorVar]: vars.colors.red,
+    },
   },
 ]);

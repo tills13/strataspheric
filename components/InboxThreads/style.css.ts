@@ -4,9 +4,19 @@ import { style } from "@vanilla-extract/css";
 import { border, padding } from "../../theme";
 
 export const inboxMessages = style({
-  width: "100%",
-  height: "100%",
-  overflow: "hidden",
+  // "@media": {
+  //   [breakpoints.tablet]: {
+  //     width: "100%",
+  //     height: "100%",
+  //     overflow: "hidden",
+  //   },
+  // },
+});
+
+export const inboxMessagesNoMessages = style({
+  marginTop: 100,
+  padding: vars.spacing.normal,
+  textAlign: "center",
 });
 
 export const inboxMessagesContainer = style({

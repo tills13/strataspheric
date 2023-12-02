@@ -24,6 +24,7 @@ export function MeetingTimelineItem({
   title: itemTitle,
   description,
   type,
+  filePath,
 }: Props) {
   let title = sourceUserName || "Someone";
 
@@ -38,41 +39,37 @@ export function MeetingTimelineItem({
   }
 
   return (
-    <div className={styles.timelineItemContainer}>
-      <MeetingTimelineIcon className={styles.timelineIcon} type={type} />
-
-      <div className={styles.timelineItem}>
-        <div className={styles.timelineEntry}>
-          <div className={styles.timelineEntryHeader}>
-            <Header priority={3}>{title}</Header>
-            <span className={styles.timelineEntryDate}>
-              {new Date(date).toLocaleDateString()}
-            </span>
-          </div>
-
-          {type === "file" ? (
-            <FileAttachmentChip
-              className={styles.timelineAttachment}
-              fileName={itemTitle}
-              filePath={description}
-            />
-          ) : (
-            <p>{description}</p>
-          )}
+    <>
+      <div className={styles.timelineEntry}>
+        <div className={styles.timelineEntryHeader}>
+          <Header priority={3}>{title}</Header>
+          <span className={styles.timelineEntryDate}>
+            {new Date(date).toLocaleDateString()}
+          </span>
         </div>
 
-        <ElementGroup>
-          <Button
-            onClick={() =>
-              startTransition(() => {
-                addItemToAgenda();
-              })
-            }
-          >
-            Add to Agenda
-          </Button>
-        </ElementGroup>
+        {type === "file" ? (
+          <FileAttachmentChip
+            className={styles.timelineAttachment}
+            fileName={itemTitle}
+            filePath={filePath}
+          />
+        ) : (
+          <p>{description}</p>
+        )}
       </div>
-    </div>
+
+      <ElementGroup>
+        <Button
+          onClick={() =>
+            startTransition(() => {
+              addItemToAgenda();
+            })
+          }
+        >
+          Add to Agenda
+        </Button>
+      </ElementGroup>
+    </>
   );
 }

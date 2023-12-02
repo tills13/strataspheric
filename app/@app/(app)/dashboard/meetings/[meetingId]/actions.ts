@@ -7,6 +7,7 @@ import {
   MeetingUpdate,
   NewMeetingAgendaItem,
 } from "../../../../../../data";
+import { addFileToMeeting } from "../../../../../../data/meetings/addFileToMeeting";
 import { addItemToMeetingAgenda } from "../../../../../../data/meetings/addItemToMeetingAgenda";
 import { removeItemFromAgenda } from "../../../../../../data/meetings/removeItemFromMeetingAgenda";
 import { updateMeeting } from "../../../../../../data/meetings/updateMeeting";
@@ -106,6 +107,15 @@ export async function removeItemFromAgendaAction(
   itemId: string,
 ): Promise<void> {
   await removeItemFromAgenda(meetingId, itemId);
+
+  revalidatePath("/dashboard/meetings/" + meetingId);
+}
+
+export async function addFileToMeetingAction(
+  meetingId: string,
+  fileId: string,
+): Promise<void> {
+  await addFileToMeeting(meetingId, fileId);
 
   revalidatePath("/dashboard/meetings/" + meetingId);
 }

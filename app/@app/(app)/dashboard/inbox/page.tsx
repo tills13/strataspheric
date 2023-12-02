@@ -86,7 +86,24 @@ export default async function Page() {
   return (
     <>
       <DashboardHeader />
-      <InboxThreads deleteThread={deleteThreadAction} threads={threads} />
+
+      <div>
+        <InboxThreads deleteThread={deleteThreadAction} threads={threads} />
+
+        <div className={styles.newMessageContainer}>
+          <InternalLink href="/dashboard/inbox/send">
+            <Button
+              className={classnames(
+                buttonStyles.buttonFullWidth,
+                buttonStyles.buttonSizes.large,
+                buttonStyles.buttonVariants.primary,
+              )}
+            >
+              New Message to Strata
+            </Button>
+          </InternalLink>
+        </div>
+      </div>
     </>
   );
 }

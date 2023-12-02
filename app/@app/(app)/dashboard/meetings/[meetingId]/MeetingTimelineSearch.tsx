@@ -3,9 +3,10 @@ import * as styles from "./style.css";
 import { sql } from "kysely";
 
 import { Header } from "../../../../../../components/Header";
+import { MeetingTimelineIcon } from "../../../../../../components/MeetingTimelineIcon";
 import { MeetingTimelineItem } from "../../../../../../components/MeetingTimelineItem";
+import { Timeline } from "../../../../../../components/Timeline";
 import { db } from "../../../../../../data";
-import { getMeeting } from "../../../../../../data/meetings/getMeeting";
 import { addItemToAgendaAction } from "./actions";
 
 export type AgendaTimelineEntry = {
@@ -14,6 +15,7 @@ export type AgendaTimelineEntry = {
   date: string;
   description: string;
   sourceUserName: string | null;
+  filePath: string | null;
   type: "event" | "file" | "inbox_message" | "chat";
 };
 
@@ -23,8 +25,6 @@ export interface Props {
 }
 
 export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
-  // const meeting = await getMeeting(meetingId);
-
   const timeline: AgendaTimelineEntry[] = await db
     .selectFrom(
       // events in the future
@@ -35,6 +35,7 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
           "events.name as title",
           "events.description",
           "events.date as date",
+          sql.lit<string | null>(null).as("filePath"),
           eb
             .selectFrom("users")
             .select("users.name")
@@ -57,9 +58,9 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
             .select((eb) => [
               "files.id",
               "files.name as title",
-              // @todo maybe this is stupid -- kind of want both description and path, too
-              "files.path as description",
+              "files.description as description",
               "files.createdAt as date",
+              "files.path as filePath",
               // @todo coalesce
               eb
                 .selectFrom("users")
@@ -77,6 +78,7 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
             "inbox_messages.subject as title",
             "inbox_messages.message as description",
             "inbox_messages.sentAt as date",
+            sql.lit<string | null>(null).as("filePath"),
             // @todo coalesce
             eb
               .selectFrom("users")
@@ -95,6 +97,7 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
               sql.lit("").as("title"),
               "inbox_thread_chats.message as description",
               "inbox_thread_chats.sentAt as date",
+              sql.lit<string | null>(null).as("filePath"),
               eb
                 .selectFrom("users")
                 .select("users.name")
@@ -114,19 +117,22 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
       <Header className={styles.header} priority={2}>
         Timeline
       </Header>
-      <div className={styles.timeline}>
-        {timeline.map((timelineItem) => (
-          <MeetingTimelineItem
-            key={timelineItem.id}
-            addItemToAgenda={addItemToAgendaAction.bind(
-              undefined,
-              meetingId,
-              timelineItem,
-            )}
-            {...timelineItem}
-          />
-        ))}
-      </div>
+      <Timeline
+        items={timeline.map((item) => ({
+          icon: <MeetingTimelineIcon type={item.type} />,
+          contents: (
+            <MeetingTimelineItem
+              key={item.id}
+              addItemToAgenda={addItemToAgendaAction.bind(
+                undefined,
+                meetingId,
+                item,
+              )}
+              {...item}
+            />
+          ),
+        }))}
+      />
     </>
   );
 }

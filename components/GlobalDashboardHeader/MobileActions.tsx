@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Strata } from "../../data";
 import { MenuIcon } from "../Icon/MenuIcon";
 import { IconButton } from "../IconButton";
+import { Logo } from "../Logo";
 import { Modal } from "../Modal";
 import { GlobalHeaderActions } from "./Actions";
 
@@ -29,6 +30,8 @@ export function GlobalHeaderMobileActions({ session, strata }: Props) {
       {showMenu && (
         <Modal closeModal={() => setShowMenu(false)}>
           <div>
+            <Logo />
+
             <GlobalHeaderActions
               className={styles.globalMobileHeaderModalActions}
               session={session}

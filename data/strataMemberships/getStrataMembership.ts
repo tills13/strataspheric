@@ -1,11 +1,12 @@
-import { StrataMembership, db } from "..";
+import { StrataMembership, User, db } from "..";
 
 export async function getStrataMembership(
   strataId: string,
   showAll = false,
-): Promise<StrataMembership[]> {
+): Promise<Array<StrataMembership & User>> {
   let query = db
     .selectFrom("strata_memberships")
+    .innerJoin("users", "users.id", "strata_memberships.userId")
     .selectAll()
     .where("strata_memberships.strataId", "=", strataId)
     .orderBy("unit")

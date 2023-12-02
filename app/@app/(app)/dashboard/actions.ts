@@ -125,6 +125,8 @@ export async function deleteWidgetEventAction(
 
 export async function deleteWidgetFileAction(widgetId: string, fileId: string) {
   await deleteFileFromWidget(widgetId, fileId);
+
+  revalidatePath("/dashboard");
 }
 
 export async function deleteWidgetAction(widgetId: string) {

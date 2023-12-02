@@ -32,7 +32,7 @@ export default async function Page() {
         <div className={styles.formContainer}>
           <SendInboxMessageForm
             showContactInformationFields={!u?.user}
-            sendInboxMessageAction={sendInboxMessageAction.bind(
+            sendInboxMessage={sendInboxMessageAction.bind(
               undefined,
               strata.id,
               undefined,

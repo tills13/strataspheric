@@ -30,7 +30,12 @@ export function NewWidgetWidget({ createWidget }: Props) {
           closeModal={() => setShowNewWidgetModal(false)}
           title="New Widget"
         >
-          <NewWidgetForm createWidget={createWidget} />
+          <NewWidgetForm
+            createWidget={(fd) => {
+              createWidget(fd);
+              setShowNewWidgetModal(false);
+            }}
+          />
         </Modal>
       )}
     </>

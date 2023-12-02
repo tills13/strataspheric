@@ -7,7 +7,7 @@ import { createFile } from "./createFile";
 
 export async function createAndUpdloadFile(
   strataId: string,
-  uploaderId: string | null,
+  uploaderId: string | null | undefined,
   fileName: string,
   fileDescription: string,
   filePath: string,
@@ -27,6 +27,7 @@ export async function createAndUpdloadFile(
     path: "/" + key,
     strataId,
     uploaderId,
+    sizeBytes: file.size,
     isPublic: isPublic ? 1 : 0,
   });
 }
