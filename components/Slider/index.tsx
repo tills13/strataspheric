@@ -4,8 +4,6 @@ import * as styles from "./style.css";
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { variable } from "../../theme";
-
 export function Slider({
   children,
   timeout = 5000,
@@ -13,38 +11,25 @@ export function Slider({
   const numChildrne = React.Children.count(children);
   const [activeSlideIdx, setActiveSlideIdx] = useState(0);
   const activeChildRef = useRef<HTMLDivElement>(null!);
-  const [activeChildHeight, setActiveChildHeight] = useState<
-    string | undefined
-  >("271px");
-
-  useLayoutEffect(() => {
-    setActiveChildHeight(activeChildRef.current?.clientHeight + "px");
-  }, [activeSlideIdx]);
+  const timeoutRef = useRef<any>();
 
   useEffect(() => {
-    let t: any;
-
     function nextSlide() {
       setActiveSlideIdx(
         (currentActiveSlideIdx) => (currentActiveSlideIdx + 1) % numChildrne,
       );
-
-      t = setTimeout(nextSlide, timeout);
     }
 
-    t = setTimeout(nextSlide, timeout);
+    timeoutRef.current = setTimeout(nextSlide, timeout);
 
     return () => {
-      clearTimeout(t);
+      clearTimeout(timeoutRef.current);
     };
-  }, [numChildrne, timeout]);
+  });
 
   return (
     <div className={styles.slider}>
-      <div
-        style={{ [variable(styles.activeVar)]: activeChildHeight }}
-        className={styles.slideContainer}
-      >
+      <div className={styles.slideContainer}>
         {React.Children.map(children, (child, idx) => (
           <div
             key={idx}

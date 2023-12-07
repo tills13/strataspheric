@@ -11,15 +11,17 @@ export const slider = style({
 });
 
 export const slideContainer = style({
-  height: activeVar,
+  //   height: activeVar,
   marginBottom: vars.spacing.normal,
 });
 
 export const slide = style({
   position: "absolute",
   left: calc(vars.spacing.normal).negate().toString(),
+  top: 0,
   opacity: 0,
   overflow: "hidden",
+  pointerEvents: "none",
 
   transition: "left 0.25s ease, opacity 0.25s ease",
 });
@@ -27,6 +29,8 @@ export const slide = style({
 export const activeSlide = style([
   slide,
   {
+    position: "relative",
+    pointerEvents: "all",
     left: 0,
     opacity: 1,
   },
