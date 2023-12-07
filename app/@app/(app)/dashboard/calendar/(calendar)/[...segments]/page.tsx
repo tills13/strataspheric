@@ -34,7 +34,7 @@ export default async function Page({ searchParams, params }) {
   if (params.segments.length === 2) {
     [rawYear, rawMonth] = params.segments;
   } else if (params.segments.length === 1) {
-    [rawYear, rawMonth] = params.segments[0].split("/");
+    [rawYear, rawMonth] = params.segments[0].split("%2F");
   } else {
     notFound();
   }
