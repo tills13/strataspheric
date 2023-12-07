@@ -32,6 +32,7 @@ export default async function Page({ searchParams, params }) {
 
   const month = parseInt(rawMonth, 10);
   const year = parseInt(rawYear, 10);
+  console.log(month, year, params, searchParams);
 
   if (isNaN(month) || isNaN(year)) {
     notFound();
