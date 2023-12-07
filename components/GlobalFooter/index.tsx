@@ -48,7 +48,10 @@ export async function GlobalFooter() {
         </p>
       </div>
 
-      <ContinueWhereYouLeftOffWidget sessionStratas={sessionStratas} />
+      <ContinueWhereYouLeftOffWidget
+        session={session}
+        sessionStratas={sessionStratas}
+      />
     </footer>
   );
 }

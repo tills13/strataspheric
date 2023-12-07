@@ -2,12 +2,16 @@
 
 import * as styles from "./style.css";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+interface Props {
+  timeout?: number;
+}
 
 export function Slider({
   children,
   timeout = 5000,
-}: React.PropsWithChildren<{}>) {
+}: React.PropsWithChildren<Props>) {
   const numChildrne = React.Children.count(children);
   const [activeSlideIdx, setActiveSlideIdx] = useState(0);
   const activeChildRef = useRef<HTMLDivElement>(null!);

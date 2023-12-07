@@ -2,11 +2,11 @@
 
 import * as styles from "./style.css";
 
-import { signOut, useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 import { Strata } from "../../data";
-import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
 import { ElementGroup } from "../ElementGroup";
@@ -19,14 +19,15 @@ import { SignOutButton } from "../SignOutButton";
 
 interface Props {
   className?: string;
+  session: Session | null;
   sessionStratas: Strata[];
 }
 
 export function ContinueWhereYouLeftOffWidget({
   className,
+  session,
   sessionStratas,
 }: Props) {
-  const { data: session } = useSession();
   const isMarketingSegment =
     useSelectedLayoutSegment("marketing") !== "__DEFAULT__";
 

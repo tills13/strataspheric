@@ -2,7 +2,7 @@
 
 import * as styles from "./style.css";
 
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
@@ -27,6 +27,7 @@ import { Panel } from "../Panel";
 interface Props {
   className?: string;
   selectedPlan: PricingPlan;
+  session: Session | null;
   submitGetStarted: (
     state: SubmitGetStartedState,
     fd: FormData,
@@ -35,12 +36,12 @@ interface Props {
 
 export function GetStartedForm({
   className,
+  session,
   selectedPlan,
   submitGetStarted,
 }: Props) {
   const [state, action] = useFormState(submitGetStarted, null);
 
-  const { data: session } = useSession();
   const [strataName, setStrataName] = useState("");
   const [isDomainAvailable, setIsDomainAvailable] = useState(undefined);
   const deferredStrataName = useTimeDeferredValue(strataName);

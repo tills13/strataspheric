@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import * as styles from "./style.css";
 
 import { Button } from "../../../components/Button";
@@ -5,6 +6,8 @@ import { Header } from "../../../components/Header";
 import { InternalLink } from "../../../components/Link/InternalLink";
 import { PricingCard } from "../../../components/PricingCard";
 import { Slider } from "../../../components/Slider";
+import { TabLayout } from "../../../components/TabLayout";
+import { Tab } from "../../../components/TabLayout/Tab";
 import { plans } from "../../../data/strataPlans/constants";
 import { classnames } from "../../../utils/classnames";
 
@@ -32,38 +35,99 @@ export default async function Page() {
           styles.marginBottom.large,
         )}
       >
-        <Slider>
-          <div className={styles.sideBySideFeature}>
-            <div className={styles.sideBySideText}>
-              <p>
-                <b>Manage your files.</b> Stored securely and safely in the
-                cloud. There when you, or anyone else in your strata, needs
-                them.
-              </p>
+        <TabLayout
+          defaultTab="Files"
+          tabs={["Files", "Meetings", "Inbox", "Directory"]}
+        >
+          <Tab name="Files">
+            <div className={styles.sideBySideFeature}>
+              <div className={styles.sideBySideText}>
+                <p>
+                  <b>Manage your files.</b> Stored securely and safely in the
+                  cloud. There when you, or anyone else in your strata, needs
+                  them.
+                </p>
+              </div>
+
+              <img
+                alt="files view for organization of strata documents"
+                className={styles.sideBySideImage}
+                src="/images/files.png"
+              />
             </div>
 
-            <img
-              alt="files view for organization of strata documents"
-              className={styles.sideBySideImage}
-              src="/images/files.png"
-            />
-          </div>
+            <div className={styles.sideBySideFeature}>
+              <div className={styles.sideBySideText}>
+                <p>
+                  <b>Find exactly what you need.</b> Powerful filtering tools to
+                  find the documents you are looking for.
+                </p>
+              </div>
 
-          <div className={styles.sideBySideFeature}>
-            <div className={styles.sideBySideText}>
-              <p>
-                <b>Find exactly what you need.</b> Powerful filtering tools to
-                find the documents you are looking for.
-              </p>
+              <div className={styles.sideBySideImageStack}>
+                <img
+                  alt="files view for organization of strata documents"
+                  className={styles.sideBySideImage}
+                  src="/images/search.png"
+                />
+                <img
+                  alt="files view for organization of strata documents"
+                  className={styles.sideBySideImageStackRootImage}
+                  src="/images/files_filtered.png"
+                />
+              </div>
             </div>
+          </Tab>
 
-            <img
-              alt="files view for organization of strata documents"
-              className={styles.sideBySideImage}
-              src="/images/files.png"
-            />
-          </div>
-        </Slider>
+          <Tab name="Meetings">
+            <div className={styles.sideBySideFeature}>
+              <div className={styles.sideBySideText}>
+                <p>
+                  <b>Plan ahead.</b> Plan meetings based on what&apos;s
+                  happening in your strata&apos;s Strataspheric account.
+                </p>
+              </div>
+
+              <div className={styles.sideBySideImageStack}>
+                <img
+                  alt="files view for organization of strata documents"
+                  className={styles.sideBySideImage}
+                  src="/images/add_to_agenda.png"
+                />
+                <img
+                  alt="files view for organization of strata documents"
+                  className={styles.sideBySideImageStackRootImage}
+                  src="/images/agenda.png"
+                />
+              </div>
+            </div>
+          </Tab>
+
+          <Tab name="Inbox">
+            <div className={styles.sideBySideFeature}>
+              <div className={styles.sideBySideText}>
+                <p>
+                  <b>Stay connected.</b> Receieve, discuss, and respond to
+                  strata members. Archive messages to reference whenever you
+                  need to.
+                </p>
+              </div>
+
+              <div className={styles.sideBySideImageStack}>
+                <img
+                  alt="files view for organization of strata documents"
+                  className={styles.sideBySideImage}
+                  src="/images/inbox_chat.png"
+                />
+                <img
+                  alt="files view for organization of strata documents"
+                  className={styles.sideBySideImageStackRootImage}
+                  src="/images/inbox.png"
+                />
+              </div>
+            </div>
+          </Tab>
+        </TabLayout>
       </section>
 
       <section

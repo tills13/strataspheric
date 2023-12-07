@@ -36,8 +36,6 @@ export default async function RootLayout({
   marketing: React.ReactNode;
 }) {
   let p0 = Date.now();
-  const session = await auth();
-  console.log("t1", Date.now() - p0, "ms");
   const strata = await getCurrentStrata();
   console.log("t2", Date.now() - p0, "ms");
 
@@ -77,12 +75,11 @@ export default async function RootLayout({
         <meta name="theme-color" content="#272b33" />
       </head>
       <body>
-        <SessionProvider session={session}>
-          <div className={styles.body}>{strata ? app : marketing}</div>
-          <Suspense>
-            <GlobalFooter />
-          </Suspense>
-        </SessionProvider>
+        <div className={styles.body}>{strata ? app : marketing}</div>
+
+        <Suspense>
+          <GlobalFooter />
+        </Suspense>
 
         <div id="modal-root" />
       </body>

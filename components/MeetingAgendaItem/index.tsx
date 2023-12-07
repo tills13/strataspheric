@@ -13,6 +13,7 @@ import { Checkbox } from "../Checkbox";
 import { EditMeetingAgendaItemButton } from "../EditMeetingAgendaItemButton";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { Header } from "../Header";
+import { InboxMessageQuote } from "../InboxMessageQuote";
 import { RemoveButton } from "../RemoveButton";
 
 interface Props {
@@ -31,6 +32,7 @@ export function MeetingAgendaItem({
   removeAgendaItem,
   updateAgendaItem,
 }: Props) {
+  console.log(agendaItem.messageId);
   return (
     <div
       className={classnames(
@@ -76,6 +78,14 @@ export function MeetingAgendaItem({
 
       {agendaItem.description && (
         <p className={styles.agendaItemDescription}>{agendaItem.description}</p>
+      )}
+
+      {agendaItem.messageId && (
+        <InboxMessageQuote
+          message={agendaItem.messageMessage}
+          senderName={agendaItem.messageSenderName}
+          timestamp={agendaItem.messageSentAt}
+        />
       )}
 
       {agendaItem.fileId && agendaItem.filePath && (

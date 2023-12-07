@@ -1,3 +1,5 @@
+import { sql } from "kysely";
+
 import { db } from "..";
 
 export type MeetingAgendaItem = Awaited<
@@ -17,11 +19,16 @@ export function getMeetingAgendaItems(meetingId: string) {
           .select((eb) => [
             "inbox_messages.id",
             "inbox_messages.threadId",
+            "inbox_messages.senderUserId",
             "inbox_messages.subject",
+            "inbox_messages.message",
             "inbox_messages.sentAt",
-            eb.fn
-              .coalesce("inbox_messages.senderName", "users.name")
-              .as("senderName"),
+            sql<string>`
+              CASE 
+                WHEN inbox_messages.senderName = '' THEN users.name
+                ELSE coalesce(inbox_messages.senderName, users.name)
+              END
+            `.as("senderName"),
           ])
           .as("inbox_messages"),
       (join) =>
@@ -47,8 +54,10 @@ export function getMeetingAgendaItems(meetingId: string) {
       "files.path as filePath",
       "files.description as fileDescription",
 
+      "inbox_messages.id as messageId",
       "inbox_messages.threadId as messageThreadId",
       "inbox_messages.subject as messageSubject",
+      "inbox_messages.message as messageMessage",
       "inbox_messages.senderName as messageSenderName",
       "inbox_messages.sentAt as messageSentAt",
 
