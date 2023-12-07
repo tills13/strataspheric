@@ -8,9 +8,9 @@ import React from "react";
 import { Strata, StrataMembership } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
-import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
 import { Header } from "../Header";
 import { Input } from "../Input";
+import { StatusButton } from "../StatusButton";
 
 interface Props {
   className?: string;
@@ -49,7 +49,7 @@ export function JoinFromTokenForm({
         type="password"
       />
 
-      <FormSubmitStatusButton
+      <StatusButton
         className={classnames(
           buttonStyles.buttonFullWidth,
           buttonStyles.buttonVariants.primary,
@@ -58,7 +58,7 @@ export function JoinFromTokenForm({
         type="submit"
       >
         Set Password
-      </FormSubmitStatusButton>
+      </StatusButton>
     </form>
   );
 }

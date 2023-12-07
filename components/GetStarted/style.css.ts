@@ -1,6 +1,6 @@
 import { vars } from "../../app/theme.css";
 import * as buttonStyles from "../Button/style.css";
-import * as formSubmitStatusButtonStyles from "../FormSubmitStatusButton/style.css";
+import * as formSubmitStatusButtonStyles from "../StatusButton/style.css";
 import { keyframes, style } from "@vanilla-extract/css";
 
 import { important } from "../../theme";

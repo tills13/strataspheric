@@ -17,7 +17,7 @@ import { getCurrentStrata } from "../../../../../../data/stratas/getStrataByDoma
 import { classnames } from "../../../../../../utils/classnames";
 import { formatDateForBetween } from "../../../../../../utils/sql";
 import { Calendar } from "./Calendar";
-import { createEventAction } from "./actions";
+import { deleteEventAction, upsertEventAction } from "./actions";
 
 export const runtime = "edge";
 
@@ -40,6 +40,8 @@ export default async function Page({ searchParams, params }) {
   const startDate = new Date(year, month - 1, 1);
   const endDate = endOfMonth(startDate);
 
+  console.log(formatDateForBetween(startDate), formatDateForBetween(endDate));
+
   const events = await db
     .selectFrom("events")
     .selectAll()
@@ -53,6 +55,8 @@ export default async function Page({ searchParams, params }) {
     )
     .orderBy("events.date asc")
     .execute();
+
+  // console.log(events);
 
   const monthName = format(startDate, "LLLL");
 
@@ -99,11 +103,9 @@ export default async function Page({ searchParams, params }) {
           </div>
         </div>
         <Calendar
-          createEvent={createEventAction.bind(undefined, strata.id)}
-          events={events.map((e) => ({
-            date: new Date(e.date),
-            label: e.name,
-          }))}
+          upsertEvent={upsertEventAction.bind(undefined, strata.id)}
+          deleteEvent={deleteEventAction}
+          events={events}
           month={month}
           year={year}
         />

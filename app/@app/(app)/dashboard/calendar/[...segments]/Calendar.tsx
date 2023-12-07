@@ -7,28 +7,37 @@ import isSameDay from "date-fns/isSameDay";
 import sub from "date-fns/sub";
 import { useEffect, useState } from "react";
 
-import { Modal } from "../../../../../../components/Modal";
 import {
-  NewEventForm,
+  CreateOrUpdateEventForm,
   formatDefaultDate,
-} from "../../../../../../components/NewEventForm";
-import { createEventAction } from "./actions";
+} from "../../../../../../components/CreateOrUpdateEventForm";
+import { Modal } from "../../../../../../components/Modal";
+import { Event } from "../../../../../../data";
 
 interface Props {
-  createEvent: (fd: FormData) => void;
-  events: Array<{ date: Date; label: string }>;
+  upsertEvent: (eventId: string | undefined, fd: FormData) => void;
+  deleteEvent: (eventId: string) => void;
+  events: Event[];
   month: number;
   year: number;
 }
 
-export function Calendar({ createEvent, events, month, year }: Props) {
-  const [dateEditing, setDateEditing] = useState<Date>();
+export function Calendar({
+  upsertEvent,
+  deleteEvent,
+  events,
+  month,
+  year,
+}: Props) {
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedEvent, setSelectedEvent] = useState<Event>();
   const [showToday, setShowToday] = useState(false);
-  const selectedDate = new Date(year, month - 1, 1);
 
-  const numDaysPrevMonth = getDaysInMonth(sub(selectedDate, { months: 1 }));
-  const numDaysMonth = getDaysInMonth(selectedDate);
-  const firstDayOfMonth = selectedDate.getDay();
+  const currentDate = new Date(year, month - 1, 1);
+
+  const numDaysPrevMonth = getDaysInMonth(sub(currentDate, { months: 1 }));
+  const numDaysMonth = getDaysInMonth(currentDate);
+  const firstDayOfMonth = currentDate.getDay();
 
   useEffect(() => setShowToday(true), []);
 
@@ -50,15 +59,17 @@ export function Calendar({ createEvent, events, month, year }: Props) {
           }
 
           const date = new Date(
-            selectedDate.getMonth() +
+            currentDate.getMonth() +
               1 +
               "/" +
               displayDate +
               "/" +
-              selectedDate.getFullYear(),
+              currentDate.getFullYear(),
           );
           const isToday = isSameDay(new Date(), date);
-          const eventsOnDate = events.filter((e) => isSameDay(date, e.date));
+          const eventsOnDate = events.filter((e) =>
+            isSameDay(date, new Date(e.date)),
+          );
 
           return (
             <div
@@ -70,24 +81,45 @@ export function Calendar({ createEvent, events, month, year }: Props) {
                     ? styles.today
                     : styles.calendarDay
               }
-              onClick={() => setDateEditing(date)}
+              onClick={() => setSelectedDate(date)}
             >
               <span className={styles.calendarDate}>{displayDate}</span>
 
               {eventsOnDate.map((event, idx) => (
-                <div key={idx} className={styles.calendarEvent}>
-                  {event.label}
+                <div
+                  key={idx}
+                  className={styles.calendarEvent}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setSelectedEvent(event);
+                  }}
+                >
+                  {event.name}
                 </div>
               ))}
             </div>
           );
         })}
       </div>
-      {dateEditing && (
-        <Modal closeModal={() => setDateEditing(undefined)} title="New Event">
-          <NewEventForm
-            defaultDate={formatDefaultDate(dateEditing)}
-            createEvent={createEvent}
+      {selectedDate && (
+        <Modal closeModal={() => setSelectedDate(undefined)} title="New Event">
+          <CreateOrUpdateEventForm
+            defaultDate={formatDefaultDate(selectedDate)}
+            upsertEvent={upsertEvent.bind(undefined, undefined)}
+          />
+        </Modal>
+      )}
+
+      {selectedEvent && (
+        <Modal
+          closeModal={() => setSelectedEvent(undefined)}
+          title="Edit Event"
+        >
+          <CreateOrUpdateEventForm
+            upsertEvent={upsertEvent.bind(undefined, selectedEvent.id)}
+            deleteEvent={deleteEvent.bind(undefined, selectedEvent.id)}
+            event={selectedEvent}
           />
         </Modal>
       )}

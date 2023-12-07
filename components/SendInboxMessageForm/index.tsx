@@ -8,9 +8,9 @@ import { useFormState } from "react-dom";
 import { classnames } from "../../utils/classnames";
 import { FileSelect } from "../FileSelect";
 import { FileSelectOrUpload } from "../FileSelectOrUpload";
-import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
 import { Header } from "../Header";
 import { Input } from "../Input";
+import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
 interface Props {
@@ -92,7 +92,7 @@ export function SendInboxMessageForm({
 
       <FileSelectOrUpload className={styles.formInput} baseName="file" />
 
-      <FormSubmitStatusButton
+      <StatusButton
         className={classnames(
           buttonStyles.buttonFullWidth,
           buttonStyles.buttonSizes.large,
@@ -101,7 +101,7 @@ export function SendInboxMessageForm({
         type="submit"
       >
         Send Message
-      </FormSubmitStatusButton>
+      </StatusButton>
     </form>
   );
 }

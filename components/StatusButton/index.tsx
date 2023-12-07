@@ -13,17 +13,19 @@ import { LoadingIcon } from "../LoadingIcon";
 
 interface Props extends React.ComponentProps<typeof Button> {
   success?: boolean | undefined;
+  isPending?: boolean;
 }
 
-export function FormSubmitStatusButton({
+export function StatusButton({
   children,
   className,
   success,
+  isPending,
   ...buttonProps
 }: Props) {
   const status = useFormStatus();
 
-  if (status.pending) {
+  if (status.pending || isPending) {
     return (
       <Button className={className} {...buttonProps} disabled>
         <div className={styles.formStatusButtonContainer}>

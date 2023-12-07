@@ -3,7 +3,7 @@ import * as styles from "./style.css";
 
 import { classnames } from "../../utils/classnames";
 import { FileSelect } from "../FileSelect";
-import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
+import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
 interface Props {
@@ -30,7 +30,7 @@ export function SendInboxThreadChatForm({
 
       <FileSelect className={styles.formInput} name="fileId" />
 
-      <FormSubmitStatusButton
+      <StatusButton
         className={classnames(
           buttonStyles.buttonFullWidth,
           buttonStyles.buttonSizes.normal,
@@ -40,7 +40,7 @@ export function SendInboxThreadChatForm({
         success={undefined}
       >
         Send Chat
-      </FormSubmitStatusButton>
+      </StatusButton>
     </form>
   );
 }

@@ -14,7 +14,6 @@ import { classnames } from "../../utils/classnames";
 import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
 import { pluralize } from "../../utils/pluralize";
 import { Checkbox } from "../Checkbox";
-import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
@@ -23,6 +22,7 @@ import { Input } from "../Input";
 import { JoinFormFields } from "../JoinForm/JoinFormFields";
 import { Money } from "../Money";
 import { Panel } from "../Panel";
+import { StatusButton } from "../StatusButton";
 
 interface Props {
   className?: string;
@@ -147,13 +147,13 @@ export function GetStartedForm({
 
       {state?.error && <Panel>{state.error}</Panel>}
 
-      <FormSubmitStatusButton
+      <StatusButton
         className={styles.submitButton}
         type="submit"
         success={undefined}
       >
         Let&apos;s Get Started
-      </FormSubmitStatusButton>
+      </StatusButton>
     </form>
   );
 }

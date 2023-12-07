@@ -1,8 +1,8 @@
 import * as styles from "./style.css";
 
 import { Meeting } from "../../data";
-import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
 import { Input } from "../Input";
+import { StatusButton } from "../StatusButton";
 
 interface Props {
   createOrUpdateMeeting: (fd: FormData) => void;
@@ -29,9 +29,9 @@ export function CreateOrUpdateMeetingForm({
         defaultValue={meeting?.date}
       />
 
-      <FormSubmitStatusButton type="submit">
+      <StatusButton type="submit">
         {meeting ? "Update Meeting" : "Create Meeting"}
-      </FormSubmitStatusButton>
+      </StatusButton>
     </form>
   );
 }

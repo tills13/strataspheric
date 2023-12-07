@@ -4,10 +4,10 @@ import * as styles from "./style.css";
 
 import { useFormState } from "react-dom";
 
-import { FormSubmitStatusButton } from "../../../../../components/FormSubmitStatusButton";
 import { Header } from "../../../../../components/Header";
 import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
 import { Input } from "../../../../../components/Input";
+import { StatusButton } from "../../../../../components/StatusButton";
 import {
   requestPasswordResetActionReducer,
   resetPasswordAction,
@@ -52,13 +52,9 @@ export default function Page({
           type="password"
         />
 
-        <FormSubmitStatusButton
-          success={state.emailSent}
-          size="large"
-          variant="primary"
-        >
+        <StatusButton success={state.emailSent} size="large" variant="primary">
           Reset Password
-        </FormSubmitStatusButton>
+        </StatusButton>
       </form>
     );
   }
@@ -86,13 +82,9 @@ export default function Page({
           been sent to the entered address if it exists in our system.
         </>
       ) : (
-        <FormSubmitStatusButton
-          success={state.emailSent}
-          size="large"
-          variant="primary"
-        >
+        <StatusButton success={state.emailSent} size="large" variant="primary">
           Continue
-        </FormSubmitStatusButton>
+        </StatusButton>
       )}
     </form>
   );

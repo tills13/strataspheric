@@ -11,9 +11,9 @@ import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
 } from "../AbstractWidget";
+import { CreateOrUpdateEventForm } from "../CreateOrUpdateEventForm";
 import { AddIcon } from "../Icon/AddIcon";
 import { Modal } from "../Modal";
-import { NewEventForm } from "../NewEventForm";
 import { EventWidgetList } from "./EventWidgetList";
 
 interface Props extends AbstractWidgetProps {
@@ -57,7 +57,7 @@ export function EventWidget({
           closeModal={() => setShowCreateModal(false)}
           title={"Add Event to " + widget.title}
         >
-          <NewEventForm createEvent={createEvent} />
+          <CreateOrUpdateEventForm upsertEvent={createEvent} />
         </Modal>
       )}
     </AbstractWidget>

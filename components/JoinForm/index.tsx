@@ -10,7 +10,7 @@ import { useFormState } from "react-dom";
 import { type JoinFormState } from "../../app/@marketing/(marketing)/(static)/join/actions";
 import { classnames } from "../../utils/classnames";
 import { Checkbox } from "../Checkbox";
-import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
+import { StatusButton } from "../StatusButton";
 import { JoinFormFields } from "./JoinFormFields";
 
 interface Props {
@@ -47,7 +47,7 @@ export function JoinForm({ className, onSubmit }: Props) {
         <Checkbox id="isRealtor" name="isRealtor" defaultChecked={false} />
       </label>
 
-      <FormSubmitStatusButton
+      <StatusButton
         className={classnames(
           buttonStyles.buttonFullWidth,
           buttonStyles.buttonSizes.large,
@@ -57,7 +57,7 @@ export function JoinForm({ className, onSubmit }: Props) {
         success={state?.success}
       >
         Sign Up
-      </FormSubmitStatusButton>
+      </StatusButton>
     </form>
   );
 }
