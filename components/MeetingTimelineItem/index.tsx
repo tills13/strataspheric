@@ -9,6 +9,7 @@ import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { Header } from "../Header";
+import { InboxMessageQuote } from "../InboxMessageQuote";
 import { MeetingTimelineIcon } from "../MeetingTimelineIcon";
 
 interface Props extends AgendaTimelineEntry {
@@ -54,8 +55,14 @@ export function MeetingTimelineItem({
             fileName={itemTitle}
             filePath={filePath}
           />
+        ) : type === "inbox_message" ? (
+          <InboxMessageQuote
+            senderName={sourceUserName || "Someone"}
+            message={description}
+            timestamp={date}
+          />
         ) : (
-          <p>{description}</p>
+          <p className={styles.timelineEntryMessage}>{description}</p>
         )}
       </div>
 

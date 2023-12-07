@@ -6,7 +6,6 @@ import { style } from "@vanilla-extract/css";
 import { calc } from "@vanilla-extract/css-utils";
 
 export const timelineEntry = style({
-  padding: vars.spacing.normal,
   borderRadius: vars.borderRadius,
   backgroundColor: vars.colors.primary,
   color: vars.colors.white,
@@ -17,7 +16,12 @@ export const timelineEntryHeader = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "top",
-  marginBottom: vars.spacing.normal,
+  padding: vars.spacing.normal,
+});
+
+export const timelineEntryMessage = style({
+  padding: vars.spacing.normal,
+  whiteSpace: "pre-line",
 });
 
 export const timelineEntryDate = style({
@@ -29,6 +33,8 @@ export const timelineAttachment = style([
   fileAttachmentChipStyle.file,
   {
     backgroundColor: "rgba(255,255,255,0.1)",
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
     vars: {
       [iconColorVar]: vars.colors.white,
     },
