@@ -2,11 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 
-import { auth } from "../../../../../../auth";
-import { createEvent } from "../../../../../../data/events/createEvent";
-import { deleteEvent } from "../../../../../../data/events/deleteEvent";
-import { getEvent } from "../../../../../../data/events/getEvent";
-import * as formdata from "../../../../../../utils/formdata";
+import { auth } from "../../../../../../../auth";
+import { createEvent } from "../../../../../../../data/events/createEvent";
+import { deleteEvent } from "../../../../../../../data/events/deleteEvent";
+import { getEvent } from "../../../../../../../data/events/getEvent";
+import * as formdata from "../../../../../../../utils/formdata";
 
 export async function upsertEventAction(
   strataId: string,

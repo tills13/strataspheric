@@ -10,9 +10,9 @@ import { useEffect, useState } from "react";
 import {
   CreateOrUpdateEventForm,
   formatDefaultDate,
-} from "../../../../../../components/CreateOrUpdateEventForm";
-import { Modal } from "../../../../../../components/Modal";
-import { Event } from "../../../../../../data";
+} from "../../../../../../../components/CreateOrUpdateEventForm";
+import { Modal } from "../../../../../../../components/Modal";
+import { Event } from "../../../../../../../data";
 
 interface Props {
   upsertEvent: (eventId: string | undefined, fd: FormData) => void;

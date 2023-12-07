@@ -1,7 +1,7 @@
-import { vars } from "../../../../../theme.css";
+import { vars } from "../../../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { padding } from "../../../../../../theme";
+import { padding } from "../../../../../../../theme";
 
 export const calendarPageContainer = style({
   display: "grid",
