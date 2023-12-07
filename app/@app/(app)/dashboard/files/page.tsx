@@ -6,12 +6,17 @@ import { Suspense } from "react";
 import { TableSkeleton } from "../../../../../components/Skeleton/TableSkeleton";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { FilesHeader } from "./FilesHeader";
+import { FilesSearch } from "./FilesSearch";
 import { FilesTable } from "./FilesTable";
 import { createFileAction } from "./actions";
 
 export const runtime = "edge";
 
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { search?: string; visibility?: "private" | "public" };
+}) {
   const strata = await getCurrentStrata();
 
   if (!strata) {
@@ -21,18 +26,28 @@ export default async function Page() {
   return (
     <>
       <FilesHeader createFile={createFileAction.bind(undefined, strata.id)} />
-      <div className={styles.filesTableContainer}>
-        <Suspense
-          fallback={
-            <TableSkeleton
-              cellClassName={styles.filesTableCell}
-              columns={1}
-              rows={5}
+      <div>
+        <div className={styles.filesTableContainer}>
+          <Suspense
+            fallback={
+              <TableSkeleton
+                cellClassName={styles.filesTableCell}
+                columns={1}
+                rows={5}
+              />
+            }
+          >
+            <FilesTable
+              searchTerm={searchParams["search"]}
+              strataId={strata.id}
+              visibility={searchParams.visibility}
             />
-          }
-        >
-          <FilesTable strataId={strata.id} />
-        </Suspense>
+          </Suspense>
+        </div>
+        <FilesSearch
+          searchTerm={searchParams["search"]}
+          visibility={searchParams["visibility"]}
+        />
       </div>
     </>
   );

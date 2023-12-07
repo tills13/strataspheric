@@ -1,6 +1,7 @@
 "use client";
 
 import * as iconButtonStyles from "../../components/IconButton/style.css";
+import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { type Thread } from "../../data/inbox/getThreads";
@@ -58,6 +59,7 @@ export function InboxThreads({ deleteThread, threads }: Props) {
                   className={classnames(
                     iconButtonStyles.iconButton,
                     iconButtonStyles.iconButtonSizes.small,
+                    buttonStyles.buttonVariants.transparent,
                   )}
                 />
               )}

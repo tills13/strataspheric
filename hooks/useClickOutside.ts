@@ -11,6 +11,7 @@ export function useClickOutside<T extends HTMLElement = any>(
   useEffect(() => {
     const listener = (event: any) => {
       const { target } = event ?? {};
+
       if (Array.isArray(nodes)) {
         const shouldIgnore =
           target?.hasAttribute("data-ignore-outside-clicks") ||
@@ -18,11 +19,16 @@ export function useClickOutside<T extends HTMLElement = any>(
         const shouldTrigger = nodes.every(
           (node) => !!node && !event.composedPath().includes(node),
         );
-        shouldTrigger && !shouldIgnore && handler();
+
+        if (shouldTrigger && !shouldIgnore) {
+          handler();
+        }
       } else if (ref.current && !ref.current.contains(target)) {
         handler();
       }
     };
+
+    console.log(DEFAULT_EVENTS);
 
     DEFAULT_EVENTS.forEach((fn) => document.addEventListener(fn, listener));
 

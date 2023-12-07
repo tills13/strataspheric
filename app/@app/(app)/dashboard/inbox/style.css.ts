@@ -18,7 +18,7 @@ export const newMessageContainer = style({
   "@media": {
     [breakpoints.tablet]: {
       margin: "auto",
-      // marginTop: 100,
+      marginTop: 100,
       width: "600px",
     },
   },

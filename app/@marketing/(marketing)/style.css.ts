@@ -1,12 +1,68 @@
 import * as buttonStyles from "../../../components/Button/style.css";
 import { breakpoints, vars } from "../../theme.css";
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
+
+export const section = style({});
+export const sectionPadded = style([section, { padding: vars.spacing.normal }]);
+
+// util styles
+export const marginBottom = styleVariants({
+  normal: {
+    marginBottom: vars.spacing.normal,
+  },
+  large: {
+    marginBottom: vars.spacing.large,
+  },
+});
+
+export const centerContent = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      width: 600,
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+  },
+});
+
+export const featuresSection = style([
+  sectionPadded,
+  {
+    "@media": {
+      [breakpoints.tablet]: {
+        width: 1000,
+        margin: "auto",
+      },
+    },
+  },
+]);
+
+export const sideBySideFeature = style({
+  display: "grid",
+  gridTemplateColumns: "repeat(1, 1fr)",
+  gap: vars.spacing.normal,
+  width: "100%",
+  overflow: "hidden",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      gridTemplateColumns: "auto 60%",
+    },
+  },
+});
+
+export const sideBySideText = style({
+  paddingTop: vars.spacing.normal,
+  fontSize: vars.fontSizes.large,
+});
+
+export const sideBySideImage = style({
+  borderRadius: vars.borderRadius,
+});
 
 export const landingWrapper = style({
   marginBottom: 100,
 });
-
-export const section = style({});
 
 export const sectionHeader = style({
   marginBottom: vars.spacing.normal,
@@ -14,6 +70,7 @@ export const sectionHeader = style({
 
 export const plansSection = style({
   marginTop: 100,
+  textAlign: "center",
 });
 
 export const plansSectionHeader = style([
@@ -23,13 +80,12 @@ export const plansSectionHeader = style([
   },
 ]);
 
-export const sectionPadded = style([section, { padding: vars.spacing.normal }]);
-
 export const ctaSection = style([
   sectionPadded,
   {
     paddingTop: 100,
     textAlign: "center",
+    marginBottom: 100,
   },
 ]);
 export const ctaHeader = style([sectionHeader, {}]);
@@ -59,6 +115,7 @@ export const plansContainer = style({
   gridTemplateColumns: "repeat(1, 300px)",
   justifyContent: "center",
   gap: vars.spacing.normal,
+  marginBottom: vars.spacing.large,
   "@media": {
     [breakpoints.tablet]: {
       gridTemplateColumns: "repeat(3, 300px)",

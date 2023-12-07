@@ -1,27 +1,31 @@
 "use client";
 
+import * as buttonStyles from "../../../../../components/Button/style.css";
+import * as iconButtonStyles from "../../../../../components/IconButton/style.css";
 import * as styles from "./styles.css";
 
 import { useSession } from "next-auth/react";
 import { startTransition } from "react";
 
 import { ApproveStrataMembershipButton } from "../../../../../components/ApproveStrataMembershipButton";
+import { Input } from "../../../../../components/Input";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { StrataRoleSelect } from "../../../../../components/StrataRoleSelect";
 import { StrataMembership, User } from "../../../../../data";
 import { can } from "../../../../../data/users/permissions";
+import { classnames } from "../../../../../utils/classnames";
 
 interface Props {
   approveStrataMembership: (userId: string) => void;
-  removeStrataMember: (userId: string) => void;
   memberships: Array<StrataMembership & User>;
+  removeStrataMember: (userId: string) => void;
   updateStrataMember: (userId: string, formData: FormData) => void;
 }
 
 export function MembershipTable({
   approveStrataMembership,
-  removeStrataMember,
   memberships,
+  removeStrataMember,
   updateStrataMember,
 }: Props) {
   const { data: session } = useSession();
@@ -59,6 +63,7 @@ export function MembershipTable({
           <tr>
             <th>Name</th>
             <th>Email</th>
+            {canUpsert && <th>Unit</th>}
             <th>Phone #</th>
             <th>Role</th>
 
@@ -69,6 +74,21 @@ export function MembershipTable({
             <tr key={membership.userId}>
               <td>{membership.name}</td>
               <td>{canSeeMemberDetails ? membership.email : "****@***.***"}</td>
+              {canUpsert && (
+                <td>
+                  <Input
+                    onBlur={(e) =>
+                      startTransition(() => {
+                        const fd = new FormData();
+                        fd.set("unit", e.target.value);
+
+                        updateStrataMember(membership.userId, fd);
+                      })
+                    }
+                    defaultValue={membership.unit || ""}
+                  />
+                </td>
+              )}
               <td>
                 {canSeeMemberDetails ? membership.phoneNumber : "***-***-****"}
               </td>
@@ -100,6 +120,11 @@ export function MembershipTable({
               {canDelete && (
                 <td className={styles.membershipTableActionColumnCell}>
                   <RemoveButton
+                    className={classnames(
+                      iconButtonStyles.iconButton,
+                      iconButtonStyles.iconButtonSizes.small,
+                      buttonStyles.buttonVariants.transparent,
+                    )}
                     onClick={removeStrataMember.bind(
                       undefined,
                       membership.userId,

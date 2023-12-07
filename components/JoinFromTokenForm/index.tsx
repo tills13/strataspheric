@@ -1,11 +1,14 @@
 "use client";
 
+import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import React from "react";
 
 import { Strata, StrataMembership } from "../../data";
+import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
+import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
 import { Header } from "../Header";
 import { Input } from "../Input";
 
@@ -24,11 +27,11 @@ export function JoinFromTokenForm({
 }: Props) {
   return (
     <form action={onSubmit} className={className}>
-      <Header className={styles.header} priority={2}>
+      <Header className={styles.header0} priority={2}>
         Welcome to Strataspheric, {membership.name}
       </Header>
 
-      <Header className={styles.header} priority={2}>
+      <Header className={styles.header1} priority={3}>
         You have been invited to join {strata.name}
       </Header>
 
@@ -46,14 +49,16 @@ export function JoinFromTokenForm({
         type="password"
       />
 
-      <Button
-        className={styles.submitButton}
+      <FormSubmitStatusButton
+        className={classnames(
+          buttonStyles.buttonFullWidth,
+          buttonStyles.buttonVariants.primary,
+          buttonStyles.buttonSizes.large,
+        )}
         type="submit"
-        size="large"
-        variant="primary"
       >
         Set Password
-      </Button>
+      </FormSubmitStatusButton>
     </form>
   );
 }

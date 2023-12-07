@@ -1,3 +1,4 @@
+import * as buttonStyles from "../Button/style.css";
 import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
 
@@ -31,7 +32,7 @@ export async function InboxMessageThread({
 
   return (
     <div className={styles.inboxMessageThreadContainer}>
-      {!senderUserId && (
+      {session && !senderUserId && (
         <div className={styles.outsideMessageWarning}>
           This message is from outside your strata. Be careful sharing
           information that might be private.
@@ -57,6 +58,7 @@ export async function InboxMessageThread({
               className={classnames(
                 iconButtonStyles.iconButton,
                 iconButtonStyles.iconButtonSizes.small,
+                buttonStyles.buttonVariants.transparent,
               )}
             >
               <ShareIcon />

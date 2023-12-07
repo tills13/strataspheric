@@ -4,7 +4,6 @@ import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useFormState } from "react-dom";
 
@@ -12,7 +11,6 @@ import { type JoinFormState } from "../../app/@marketing/(marketing)/(static)/jo
 import { classnames } from "../../utils/classnames";
 import { Checkbox } from "../Checkbox";
 import { FormSubmitStatusButton } from "../FormSubmitStatusButton";
-import { Header } from "../Header";
 import { JoinFormFields } from "./JoinFormFields";
 
 interface Props {

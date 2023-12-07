@@ -26,7 +26,7 @@ export function Modal({
   return ReactDOM.createPortal(
     <div
       className={styles.modalWrapper}
-      onClick={(e) => {
+      onMouseDown={(e) => {
         if (e.target === wrapperRef.current) {
           closeModal();
         }

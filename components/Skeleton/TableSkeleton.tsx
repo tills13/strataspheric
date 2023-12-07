@@ -19,22 +19,26 @@ export function TableSkeleton({
 }: Props) {
   return (
     <table className={classnames(styles.tableSkeleton, className)}>
-      <tr>
-        {Array.from(new Array(columns)).map((_, i) => (
-          <th className={cellClassName} key={i}>
-            <div className={styles.skeletonBone} />
-          </th>
-        ))}
-      </tr>
-      {Array.from(new Array(rows)).map((_, rIdx) => (
-        <tr key={rIdx}>
-          {Array.from(new Array(columns)).map((_, cIdx) => (
-            <td className={cellClassName} key={cIdx}>
+      <thead>
+        <tr>
+          {Array.from(new Array(columns)).map((_, i) => (
+            <th className={cellClassName} key={i}>
               <div className={styles.skeletonBone} />
-            </td>
+            </th>
           ))}
         </tr>
-      ))}
+      </thead>
+      <tbody>
+        {Array.from(new Array(rows)).map((_, rIdx) => (
+          <tr key={rIdx}>
+            {Array.from(new Array(columns)).map((_, cIdx) => (
+              <td className={cellClassName} key={cIdx}>
+                <div className={styles.skeletonBone} />
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 }

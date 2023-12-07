@@ -7,6 +7,7 @@ import { getStrataById } from "../../../../../data/stratas/getStrataById";
 import { deleteUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
 import { getUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/getUserPasswordResetToken";
 import { createUser } from "../../../../../data/users/createUser";
+import { getUser } from "../../../../../data/users/getUser";
 import { updateUser } from "../../../../../data/users/updateUser";
 import * as formdata from "../../../../../utils/formdata";
 
@@ -38,12 +39,18 @@ export async function joinAction(
   }
 
   try {
-    await createUser({
-      email,
-      password,
-      accountType: isRealtor ? "realtor" : "user",
-      name,
-    });
+    const existingUser = await getUser(email);
+
+    if (existingUser) {
+      await updateUser(existingUser.id, { name, password });
+    } else {
+      await createUser({
+        email,
+        password,
+        accountType: isRealtor ? "realtor" : "user",
+        name,
+      });
+    }
   } catch (e) {
     return {
       success: false,

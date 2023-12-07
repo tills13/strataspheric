@@ -1,4 +1,5 @@
 import { breakpoints, vars } from "../../app/theme.css";
+import * as buttonStyles from "../Button/style.css";
 import * as iconButtonStyles from "../IconButton/style.css";
 import { keyframes, style } from "@vanilla-extract/css";
 
@@ -102,6 +103,7 @@ export const messageHeaderSentAt = style({
 export const chatActionButton = style([
   iconButtonStyles.iconButton,
   iconButtonStyles.iconButtonSizes.small,
+  buttonStyles.buttonVariants.transparent,
   {
     position: "absolute",
     right: vars.spacing.normal,

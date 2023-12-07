@@ -1,3 +1,4 @@
+import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const signInJoinNavigation = style({
@@ -8,6 +9,7 @@ export const signInJoinNavigation = style({
 export const navigationItem = style({
   textAlign: "center",
   textDecoration: "none",
+  color: vars.fontColors.primary,
 });
 
 export const activeNavigationItem = style([

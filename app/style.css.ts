@@ -8,7 +8,8 @@ export const body = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      height: "100vh",
+      // move to container that includes both the content and the footer
+      // height: "100vh",
     },
   },
 });

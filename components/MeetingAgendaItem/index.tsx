@@ -1,8 +1,8 @@
 "use client";
 
+import * as buttonStyles from "../Button/style.css";
 import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
-import { style } from "@vanilla-extract/css";
 
 import React, { startTransition } from "react";
 
@@ -59,6 +59,7 @@ export function MeetingAgendaItem({
             buttonClassName={classnames(
               iconButtonStyles.iconButton,
               iconButtonStyles.iconButtonSizes.small,
+              buttonStyles.buttonVariants.transparent,
             )}
             updateMeetingAgendaItem={updateAgendaItem}
           />
@@ -67,6 +68,7 @@ export function MeetingAgendaItem({
             className={classnames(
               iconButtonStyles.iconButton,
               iconButtonStyles.iconButtonSizes.small,
+              buttonStyles.buttonVariants.transparent,
             )}
           />
         </div>
@@ -76,7 +78,7 @@ export function MeetingAgendaItem({
         <p className={styles.agendaItemDescription}>{agendaItem.description}</p>
       )}
 
-      {agendaItem.fileId && (
+      {agendaItem.fileId && agendaItem.filePath && (
         <FileAttachmentChip
           fileName={agendaItem.fileName}
           filePath={agendaItem.filePath}

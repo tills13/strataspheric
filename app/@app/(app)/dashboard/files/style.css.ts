@@ -1,7 +1,17 @@
 import { breakpoints, vars } from "../../../../../app/theme.css";
-import { style } from "@vanilla-extract/css";
+import * as buttonStyles from "../../../../../components/Button/style.css";
+import { style, styleVariants } from "@vanilla-extract/css";
 
 import { padding } from "../../../../../theme";
+
+export const marginBottom = styleVariants({
+  small: {
+    marginBottom: vars.spacing.small,
+  },
+  normal: {
+    marginBottom: vars.spacing.normal,
+  },
+});
 
 export const filesTableContainer = style({
   width: "100vw",
@@ -44,4 +54,42 @@ export const descriptionCell = style([
   {
     width: "100%",
   },
+]);
+
+export const fileSearchContainer = style({
+  width: "100%",
+  padding: vars.spacing.normal,
+  margin: "auto",
+  "@media": {
+    [breakpoints.tablet]: {
+      width: 700,
+    },
+  },
+});
+
+export const filesSearchForm = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: vars.spacing.small,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      justifyContent: "flex-start",
+      flexDirection: "row",
+    },
+  },
+});
+
+export const filesSearchInput = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      flex: 1,
+    },
+  },
+});
+
+export const filesSearchSubmit = style([
+  buttonStyles.buttonFullWidth,
+  buttonStyles.buttonSizes.normal,
+  {},
 ]);

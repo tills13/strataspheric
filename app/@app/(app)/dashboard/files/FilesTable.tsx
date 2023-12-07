@@ -1,3 +1,4 @@
+import * as buttonStyles from "../../../../../components/Button/style.css";
 import * as iconButtonStyles from "../../../../../components/IconButton/style.css";
 import * as styles from "./style.css";
 
@@ -6,19 +7,21 @@ import { DeleteButton } from "../../../../../components/DeleteButton";
 import { FileLink } from "../../../../../components/FileLink";
 import { DownloadIcon } from "../../../../../components/Icon/DownloadIcon";
 import { IconButton } from "../../../../../components/IconButton";
-import { getFiles } from "../../../../../data/files/getFiles";
+import { searchFiles } from "../../../../../data/files/searchFiles";
 import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
 import { deleteFileAction } from "./actions";
 
 interface Props {
   strataId: string;
+  searchTerm?: string;
+  visibility?: "public" | "private";
 }
 
-export async function FilesTable({ strataId }: Props) {
+export async function FilesTable({ searchTerm, strataId, visibility }: Props) {
   const session = await auth();
   const canDelete = can(session?.user, p("stratas", "files", "delete"));
-  const files = await getFiles(strataId, canDelete);
+  const files = await searchFiles(strataId, canDelete, searchTerm, visibility);
 
   return (
     <table className={styles.filesTable}>
@@ -32,6 +35,15 @@ export async function FilesTable({ strataId }: Props) {
         </tr>
       </thead>
       <tbody>
+        {files.length === 0 && (
+          <tr>
+            <td className={styles.filesTableCell} colSpan={canDelete ? 5 : 4}>
+              {searchTerm || visibility
+                ? "No files match your search criteria"
+                : "No files"}
+            </td>
+          </tr>
+        )}
         {files.map((file) => (
           <tr key={file.id} className={styles.filesTableRow}>
             <td className={styles.filesTableCell}>{file.name}</td>
@@ -52,6 +64,7 @@ export async function FilesTable({ strataId }: Props) {
                       className={classnames(
                         iconButtonStyles.iconButton,
                         iconButtonStyles.iconButtonSizes.small,
+                        buttonStyles.buttonVariants.transparent,
                       )}
                     >
                       <DownloadIcon />
@@ -64,6 +77,7 @@ export async function FilesTable({ strataId }: Props) {
                     className={classnames(
                       iconButtonStyles.iconButton,
                       iconButtonStyles.iconButtonSizes.small,
+                      buttonStyles.buttonVariants.transparent,
                     )}
                   />
                 )}

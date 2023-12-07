@@ -63,6 +63,7 @@ export const chatBubbleHeader = style({
 
 export const chatMessage = style({
   padding: `0 ${vars.spacing.normal} ${vars.spacing.normal}`,
+  whiteSpace: "pre-line",
 });
 
 export const chatFile = style({

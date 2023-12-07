@@ -22,8 +22,8 @@ export function EditMeetingButton({
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className={className}>
-      <IconButton onClick={() => setShowModal(true)}>
+    <>
+      <IconButton className={className} onClick={() => setShowModal(true)}>
         <EditIcon />
       </IconButton>
       {showModal && (
@@ -34,6 +34,6 @@ export function EditMeetingButton({
           />
         </Modal>
       )}
-    </div>
+    </>
   );
 }

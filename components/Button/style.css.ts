@@ -57,6 +57,18 @@ export const buttonVariants = styleVariants({
     },
   },
 
+  transparent: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+
+    selectors: {
+      "&:hover": {
+        backgroundColor: vars.colors.grey100,
+        borderColor: vars.colors.borderDefault,
+      },
+    },
+  },
+
   primary: {
     backgroundColor: vars.colors.primary,
     color: vars.colors.white,

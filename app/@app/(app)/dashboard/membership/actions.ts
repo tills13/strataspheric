@@ -48,7 +48,7 @@ export async function addStrataMemberAction(strataId: string, fd: FormData) {
   if (existingUser) {
     userId = existingUser.id;
   } else {
-    const newUser = await createUser({ email, password });
+    const newUser = await createUser({ email, name, password });
     userId = newUser.id;
 
     const strata = await getStrataById(strataId);

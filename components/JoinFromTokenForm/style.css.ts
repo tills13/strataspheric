@@ -3,7 +3,11 @@ import { style } from "@vanilla-extract/css";
 
 import { important } from "../../theme";
 
-export const header = style({
+export const header0 = style({
+  marginBottom: vars.spacing.normal,
+});
+
+export const header1 = style({
   marginBottom: vars.spacing.large,
 });
 
@@ -13,10 +17,6 @@ export const blurb = style({
 
 export const input = style({
   marginBottom: vars.spacing.normal,
-  width: "100%",
-});
-
-export const submitButton = style({
   width: "100%",
 });
 
