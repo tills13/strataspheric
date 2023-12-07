@@ -28,7 +28,16 @@ export default async function Page({ searchParams, params }) {
     notFound();
   }
 
-  const [rawYear, rawMonth] = params.segments;
+  let rawYear: string;
+  let rawMonth: string;
+
+  if (params.segments.length === 2) {
+    [rawYear, rawMonth] = params.segments;
+  } else if (params.segments.length === 1) {
+    [rawYear, rawMonth] = params.segments[0].split("/");
+  } else {
+    notFound();
+  }
 
   const month = parseInt(rawMonth, 10);
   const year = parseInt(rawYear, 10);
