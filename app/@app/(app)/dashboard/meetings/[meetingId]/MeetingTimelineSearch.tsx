@@ -34,7 +34,7 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
           "events.id",
           "events.name as title",
           "events.description",
-          "events.date as date",
+          "events.startDate as date",
           sql.lit<string | null>(null).as("filePath"),
           eb
             .selectFrom("users")
@@ -43,8 +43,8 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
             .as("sourceUserName"),
           sql.lit<AgendaTimelineEntry["type"]>("event").as("type"),
         ])
-        .where("events.date", ">", "CURRENT_TIMESTAMP")
-        .where("events.date", "<", (eb) =>
+        .where("events.startDate", ">", "CURRENT_TIMESTAMP")
+        .where("events.startDate", "<", (eb) =>
           eb
             .selectFrom("meetings")
             .select("date")

@@ -42,6 +42,7 @@ export const marginBottom = styleVariants({
 });
 
 export const centerContent = style({
+  textAlign: "center",
   "@media": {
     [breakpoints.tablet]: {
       width: 600,
@@ -57,7 +58,8 @@ export const featuresSection = style([
     "@media": {
       [breakpoints.tablet]: {
         width: 1000,
-        margin: "auto",
+        marginLeft: "auto",
+        marginRight: "auto",
       },
     },
   },
@@ -153,7 +155,6 @@ export const sectionHeader = style({
 });
 
 export const plansSection = style({
-  marginTop: 100,
   textAlign: "center",
 });
 
@@ -188,10 +189,13 @@ export const ctaLink = style({
     },
   },
 });
+
 export const ctaButton = style([
-  buttonStyles.buttonFullWidth,
-  buttonStyles.buttonSizes.large,
-  buttonStyles.buttonVariants.primary,
+  buttonStyles.button,
+  {
+    width: "100%",
+    maxWidth: 300,
+  },
 ]);
 
 export const plansContainer = style({

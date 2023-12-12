@@ -51,7 +51,6 @@ export async function sendInboxMessageAction(
     throw new Error("invalid data");
   }
 
-  console.log({ existingFileId, newFile });
   let fileId = existingFileId;
 
   if (newFile && newFile.size !== 0) {

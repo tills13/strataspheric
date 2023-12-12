@@ -20,7 +20,16 @@ export const vars = createGlobalTheme(":root", {
     normal: "16px",
     large: "32px",
     xl: "64px",
+    xxl: "128px",
   },
+
+  // padding: {
+  //   xs: "4px",
+  //   small: "8px",
+  //   normal: `${this.spacing.small} ${vars.spacing.normal}`,
+  //   large: "32px",
+  //   xl: "64px",
+  // },
 
   sizes: {
     xxs: "16px",
@@ -49,45 +58,53 @@ export const vars = createGlobalTheme(":root", {
 
   colors: {
     white: "#fff",
-    // white_rgb
 
     black: "#000",
-    // black_rgb
 
-    red: "#f00",
-    green: "#0f0",
+    red100: "#E34141",
+    red300: "#CA3636",
+    red500: "#B12A2A",
+    red700: "#981F1F",
+    red900: "#7F1313",
 
-    yellow100: "#fffdf0",
-    yellow500: "#fff6bb",
+    green100: "#A0C99C",
+    green300: "#8CB988",
+    green500: "#78A973",
+    green700: "#64995F",
+    green900: "#50894A",
 
-    grey100: "#f5f6fa",
-    grey200: "#e3e7ee",
-    grey300: "#d4d9e2",
-    grey400: "#abb6c8",
-    grey500: "#6a7990",
-    grey600: "#495261",
-    grey700: "#272b33",
-    grey750: "#1c2027",
-    grey800: "#111419",
-    grey900: "#121418",
+    orange100: "#FFC778",
+    orange300: "#F9B75A",
+    orange500: "#F3A73C",
+    orange700: "#EC961E",
+    orange900: "#E68600",
 
-    globalBg: "#fff",
+    grey100: "#f2f3f3",
+    grey200: "#D6D7D8",
+    grey300: "#BABCBC",
+    grey400: "#9EA0A1",
+    grey500: "#828586",
+    grey600: "#66696A",
+    grey700: "#4A4D4F",
+    grey800: "#2E3233",
+    grey900: "#121618",
 
-    primary: "#2c333d",
-    primaryHover: "#454f5e",
+    primary: "#1F2526",
+    primaryHover: "#181C1D",
 
     secondary: "#393e46",
     secondaryHover: "#494f58",
 
-    borderDefault: "#e3e7ee",
-    borderDefaultHover: "#d4d9e2",
+    borderDefault: "#EAEDEE",
+    borderDefaultHover: "#D5DCDD",
   },
 
   fontColors: {
-    primary: "#272b33",
-    secondary: "#acacac",
-    tertiary: "#8b8b8b",
-    primaryInverse: "#111419",
+    primary: "#1F2526",
+    primaryHover: "#181C1D",
+    secondary: "#9EA0A1",
+    tertiary: "#6E8387",
+    primaryInverse: "#D5DCDD",
   },
 
   fontFamilies: {
@@ -97,14 +114,14 @@ export const vars = createGlobalTheme(":root", {
     text: fontPrimaryVar,
   },
 
-  states: {
-    default: "#073b4c",
-    hint: "#00000057",
-    info: "#1f4b5a",
-    error: "#ef476f",
-    success: "#06d6a0",
-    warning: "#ffd470",
-  },
+  // states: {
+  //   default: "#073b4c",
+  //   hint: "#00000057",
+  //   info: "#1f4b5a",
+  //   error: "#ef476f",
+  //   success: "#06d6a0",
+  //   warning: "#ffd470",
+  // },
 
   zIndex: {
     front: "100",

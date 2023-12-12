@@ -10,11 +10,13 @@ export interface EventsTable {
   creatorId: string;
   name: string;
   description: string;
-  date: ColumnType<string, string, string>;
+  startDate: ColumnType<string, string, string>;
+  endDate: ColumnType<string, string, string>;
 }
 
 export type Event = Selectable<EventsTable>;
 export type NewEvent = Insertable<EventsTable>;
+export type EventUpdate = Updateable<EventsTable>;
 
 export interface FilesTable {
   id: string;
@@ -68,9 +70,9 @@ export interface MeetingsTable {
   id: ColumnType<string, string, never>;
   strataId: string;
   callerId: string;
+  eventId: string;
   purpose: string;
   notes: string | null;
-  date: string;
 }
 
 export type Meeting = Selectable<MeetingsTable>;

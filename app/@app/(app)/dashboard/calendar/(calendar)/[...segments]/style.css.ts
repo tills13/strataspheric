@@ -29,7 +29,7 @@ export const calendar = style({
 });
 
 export const calendarDay = style({
-  padding: vars.spacing.small,
+  padding: 0,
   width: "100%",
   height: "100%",
   cursor: "pointer",
@@ -41,12 +41,7 @@ export const calendarDay = style({
   },
 });
 
-export const today = style([
-  calendarDay,
-  {
-    // border: "2px solid " + vars.colors.borderDefault,
-  },
-]);
+export const today = style([calendarDay, {}]);
 
 export const calendarDayOutOfScope = style([
   calendarDay,
@@ -60,16 +55,16 @@ export const calendarDayOutOfScope = style([
 export const calendarDate = style({
   position: "relative",
   display: "inline-block",
-  width: vars.sizes.small,
-  height: vars.sizes.small,
-  lineHeight: vars.sizes.small,
+  marginTop: vars.spacing.xs,
+  marginLeft: vars.spacing.xs,
+  padding: vars.spacing.small,
   textAlign: "center",
-  // padding: vars.spacing.small,
   borderRadius: vars.borderRadius,
   marginBottom: vars.spacing.small,
-  // backgroundColor: vars.colors.grey100,
   selectors: {
     [`${today} &`]: {
+      marginTop: vars.spacing.small,
+      padding: `${vars.spacing.xs} ${vars.spacing.small}`,
       backgroundColor: vars.colors.primary,
       color: vars.colors.white,
     },
@@ -81,7 +76,6 @@ export const calendarEvent = style({
   padding: padding(vars.spacing.xxs, vars.spacing.small),
   backgroundColor: vars.colors.primary,
   color: vars.colors.white,
-  borderRadius: vars.borderRadius,
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -91,4 +85,15 @@ export const calendarEvent = style({
       marginBottom: vars.spacing.small,
     },
   },
+});
+
+export const withLeftMargin = style({
+  borderTopLeftRadius: vars.borderRadius,
+  borderBottomLeftRadius: vars.borderRadius,
+  marginLeft: vars.spacing.small,
+});
+export const withRightMargin = style({
+  borderTopRightRadius: vars.borderRadius,
+  borderBottomRightRadius: vars.borderRadius,
+  marginRight: vars.spacing.small,
 });

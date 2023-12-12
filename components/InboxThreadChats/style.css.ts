@@ -10,7 +10,6 @@ export const wrapper = style({
   padding: vars.spacing.normal,
 
   overflow: "hidden",
-  borderLeft: border("1px", "solid", vars.colors.borderDefault),
 });
 
 export const chatsContainer = style({

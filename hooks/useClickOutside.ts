@@ -28,8 +28,6 @@ export function useClickOutside<T extends HTMLElement = any>(
       }
     };
 
-    console.log(DEFAULT_EVENTS);
-
     DEFAULT_EVENTS.forEach((fn) => document.addEventListener(fn, listener));
 
     return () => {

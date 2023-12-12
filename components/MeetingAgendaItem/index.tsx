@@ -32,7 +32,6 @@ export function MeetingAgendaItem({
   removeAgendaItem,
   updateAgendaItem,
 }: Props) {
-  console.log(agendaItem.messageId);
   return (
     <div
       className={classnames(
@@ -61,7 +60,7 @@ export function MeetingAgendaItem({
             buttonClassName={classnames(
               iconButtonStyles.iconButton,
               iconButtonStyles.iconButtonSizes.small,
-              buttonStyles.buttonVariants.transparent,
+              buttonStyles.buttonVariants.tertiary,
             )}
             updateMeetingAgendaItem={updateAgendaItem}
           />
@@ -70,7 +69,7 @@ export function MeetingAgendaItem({
             className={classnames(
               iconButtonStyles.iconButton,
               iconButtonStyles.iconButtonSizes.small,
-              buttonStyles.buttonVariants.transparent,
+              buttonStyles.buttonVariants.tertiary,
             )}
           />
         </div>

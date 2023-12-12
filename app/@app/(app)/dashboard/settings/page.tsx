@@ -50,10 +50,10 @@ export default async function Page() {
               />
             </label>
 
-            <Header priority={3}>Strata ID</Header>
+            <Header priority={3}>Strata Plan ID</Header>
             <Input
               name="strata_id"
-              placeholder="Strata ID (e.g. VIS...)"
+              placeholder="Strata Plan ID (e.g. VIS...)"
               defaultValue={strata.strataId || undefined}
             />
 

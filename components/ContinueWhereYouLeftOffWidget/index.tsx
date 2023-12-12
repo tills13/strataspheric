@@ -1,5 +1,8 @@
 "use client";
 
+import { vars } from "../../app/theme.css";
+import { buttonVariants } from "../Button/style.css";
+import { iconButton, iconButtonSizes } from "../IconButton/style.css";
 import * as styles from "./style.css";
 
 import { Session } from "next-auth";
@@ -7,6 +10,7 @@ import { signOut } from "next-auth/react";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 import { Strata } from "../../data";
+import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
 import { ElementGroup } from "../ElementGroup";
@@ -41,7 +45,7 @@ export function ContinueWhereYouLeftOffWidget({
         Continue where you left off...
       </Header>
       <div className={styles.spacer} />
-      <ElementGroup className={styles.continuePanelList}>
+      <ElementGroup className={styles.continuePanelList} gap="small">
         {session && sessionStratas.length !== 0 ? (
           <>
             <GoToStrataLink
@@ -62,6 +66,11 @@ export function ContinueWhereYouLeftOffWidget({
                   icon: <SignOutIcon />,
                 },
               ]}
+              buttonClassName={classnames(
+                iconButton,
+                iconButtonSizes.normal,
+                buttonVariants.tertiary,
+              )}
               className={styles.continueActionOverflow}
               direction="up"
             />

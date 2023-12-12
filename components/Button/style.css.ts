@@ -1,17 +1,58 @@
 import { vars } from "../../app/theme.css";
-import { style, styleVariants } from "@vanilla-extract/css";
+import {
+  assignVars,
+  createThemeContract,
+  fallbackVar,
+  style,
+  styleVariants,
+} from "@vanilla-extract/css";
+
+const buttonThemeContract = createThemeContract({
+  color: null,
+  colorHover: null,
+  textColor: null,
+  textColorHover: null,
+  borderColor: null,
+  borderColorHover: null,
+});
 
 export const button = style({
+  vars: assignVars(buttonThemeContract, {
+    color: vars.colors.grey100,
+    colorHover: vars.colors.grey200,
+    textColor: vars.fontColors.primary,
+    textColorHover: vars.fontColors.primaryHover,
+    borderColor: vars.colors.borderDefault,
+    borderColorHover: vars.colors.borderDefaultHover,
+  }),
+
   position: "relative",
   fontWeight: 700,
-  border: `2px solid ${vars.colors.borderDefault}`,
+  borderWidth: 2,
+  borderStyle: "solid",
+  borderColor: buttonThemeContract.borderColor,
   outline: "none",
   cursor: "pointer",
   borderRadius: vars.borderRadius,
   textTransform: "uppercase",
+
+  backgroundColor: buttonThemeContract.color,
+  color: buttonThemeContract.textColor,
+
+  selectors: {
+    "&:disabled": {
+      opacity: 0.5,
+    },
+
+    "&:hover": {
+      backgroundColor: buttonThemeContract.colorHover,
+      borderColor: buttonThemeContract.borderColorHover,
+      color: buttonThemeContract.textColorHover,
+    },
+  },
 });
 
-export const buttonFullWidth = style([
+export const fullWidth = style([
   button,
   {
     width: "100%",
@@ -20,70 +61,78 @@ export const buttonFullWidth = style([
 
 export const buttonSizes = styleVariants({
   small: {
-    height: vars.sizes.small,
-    padding: `0 ${vars.spacing.normal}`,
+    padding: `${vars.spacing.xs} ${vars.spacing.small}`,
   },
   normal: {
-    height: vars.sizes.normal,
-    padding: `0 ${vars.spacing.normal}`,
+    padding: `${vars.spacing.small} ${vars.spacing.normal}`,
   },
   large: {
-    height: vars.sizes.large,
-    padding: `0 ${vars.spacing.normal}`,
+    padding: `${vars.spacing.normal} ${vars.spacing.large}`,
   },
   xl: {
-    height: vars.sizes.xl,
-    padding: `0 ${vars.spacing.normal}`,
+    padding: `${vars.spacing.large} ${vars.spacing.xl}`,
   },
   xxl: {
-    height: vars.sizes.xxl,
-    padding: `0 ${vars.spacing.normal}`,
+    padding: `${vars.spacing.xl} ${vars.spacing.xxl}`,
+  },
+});
+
+export const colors = styleVariants({
+  primary: {
+    vars: assignVars(buttonThemeContract, {
+      color: vars.colors.primary,
+      colorHover: vars.colors.primaryHover,
+      textColor: vars.colors.white,
+      textColorHover: vars.colors.white,
+      borderColor: vars.colors.primary,
+      borderColorHover: vars.colors.primaryHover,
+    }),
+  },
+  error: {
+    vars: assignVars(buttonThemeContract, {
+      color: vars.colors.red500,
+      colorHover: vars.colors.red700,
+      textColor: vars.fontColors.primary,
+      textColorHover: vars.fontColors.primary,
+      borderColor: vars.colors.red500,
+      borderColorHover: vars.colors.red700,
+    }),
   },
 });
 
 export const buttonVariants = styleVariants({
-  default: {
-    borderColor: vars.colors.borderDefault,
+  primary: {},
+
+  secondary: {
+    backgroundColor: "transparent",
+    borderColor: fallbackVar(
+      buttonThemeContract.color,
+      vars.colors.borderDefault,
+    ),
+    color: fallbackVar(buttonThemeContract.color, vars.colors.grey600),
+
+    selectors: {
+      "&:hover": {
+        backgroundColor: "transparent",
+        borderColor: fallbackVar(
+          buttonThemeContract.colorHover,
+          vars.colors.borderDefaultHover,
+        ),
+        color: fallbackVar(buttonThemeContract.colorHover, vars.colors.grey700),
+      },
+    },
+  },
+
+  tertiary: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
     color: vars.fontColors.primary,
 
     selectors: {
-      "&:disabled": {
-        opacity: 0.9,
-      },
       "&:hover": {
-        color: vars.fontColors.primary,
-        borderColor: vars.colors.borderDefaultHover,
-      },
-    },
-  },
-
-  transparent: {
-    backgroundColor: "transparent",
-    borderColor: "transparent",
-
-    selectors: {
-      "&:hover": {
+        color: vars.colors.grey700,
         backgroundColor: vars.colors.grey100,
-        borderColor: vars.colors.borderDefault,
-      },
-    },
-  },
-
-  primary: {
-    backgroundColor: vars.colors.primary,
-    color: vars.colors.white,
-    borderColor: vars.colors.primary,
-
-    selectors: {
-      "&:disabled": {
-        opacity: 0.4,
-        // backgroundColor: vars.colors.grey500,
-        // borderColor: vars.colors.grey500,
-      },
-
-      "&:hover": {
-        color: vars.colors.grey200,
-        borderColor: vars.colors.grey900,
+        borderColor: "transparent",
       },
     },
   },

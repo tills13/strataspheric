@@ -41,7 +41,6 @@ export default async function Page({ searchParams, params }) {
 
   const month = parseInt(rawMonth, 10);
   const year = parseInt(rawYear, 10);
-  console.log(month, year, params, searchParams);
 
   if (isNaN(month) || isNaN(year)) {
     notFound();
@@ -50,23 +49,37 @@ export default async function Page({ searchParams, params }) {
   const startDate = new Date(year, month - 1, 1);
   const endDate = endOfMonth(startDate);
 
-  console.log(formatDateForBetween(startDate), formatDateForBetween(endDate));
-
-  const events = await db
+  const q = db
     .selectFrom("events")
     .selectAll()
     .where("strataId", "=", strata.id)
     .where((eb) =>
-      eb.between(
-        "events.date",
-        formatDateForBetween(startDate),
-        formatDateForBetween(endDate),
-      ),
-    )
-    .orderBy("events.date asc")
-    .execute();
+      eb.or([
+        // startDate is before month but endDate is during month or after month
+        eb.and([
+          eb("events.startDate", "<", formatDateForBetween(startDate)),
+          eb.or([
+            eb("events.endDate", ">", formatDateForBetween(endDate)),
+            eb.between(
+              "events.endDate",
+              formatDateForBetween(startDate),
+              formatDateForBetween(endDate),
+            ),
+          ]),
+        ]),
 
-  // console.log(events);
+        // start date is during month
+        eb.between(
+          "events.startDate",
+          formatDateForBetween(startDate),
+          formatDateForBetween(endDate),
+        ),
+      ]),
+    )
+    .orderBy("events.startDate", "asc")
+    .orderBy("events.endDate", "asc");
+
+  const events = await q.execute();
 
   const monthName = format(startDate, "LLLL");
 
@@ -93,7 +106,7 @@ export default async function Page({ searchParams, params }) {
                 className={classnames(
                   iconButtonStyles.iconButton,
                   iconButtonStyles.iconButtonSizes.small,
-                  buttonStyles.buttonVariants.transparent,
+                  buttonStyles.buttonVariants.tertiary,
                 )}
               >
                 <LeftIcon />
@@ -104,7 +117,7 @@ export default async function Page({ searchParams, params }) {
                 className={classnames(
                   iconButtonStyles.iconButton,
                   iconButtonStyles.iconButtonSizes.small,
-                  buttonStyles.buttonVariants.transparent,
+                  buttonStyles.buttonVariants.tertiary,
                 )}
               >
                 <RightIcon />

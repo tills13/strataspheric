@@ -4,8 +4,7 @@ import { style } from "@vanilla-extract/css";
 
 export const input = style({
   display: "block",
-  height: vars.sizes.normal,
-  padding: `0 ${vars.spacing.small}`,
+  padding: `${vars.spacing.small} ${vars.spacing.normal}`,
   color: vars.fontColors.primary,
   background: "none",
   backgroundColor: vars.colors.white,
@@ -30,16 +29,10 @@ export const input = style({
     },
     "&:hover": {
       backgroundColor: vars.colors.white,
-      color: vars.fontColors.primaryInverse,
-      opacity: 0.9,
       borderColor: vars.colors.borderDefaultHover,
     },
-    // "&:hover::placeholder": {
-    //     color: vars.fontColors.primaryInverse,
-    // },
     "&:focus": {
       backgroundColor: vars.colors.white,
-      color: vars.fontColors.primaryInverse,
       opacity: 1,
     },
     "&:disabled": {

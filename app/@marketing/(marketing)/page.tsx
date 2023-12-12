@@ -1,4 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+import {
+  button,
+  buttonSizes,
+  buttonVariants,
+  colors,
+} from "../../../components/Button/style.css";
 import * as styles from "./style.css";
 
 import { Button } from "../../../components/Button";
@@ -24,7 +30,16 @@ export default async function Page() {
         </Header>
         <p className={styles.ctaText}></p>
         <InternalLink className={styles.ctaLink} href="/get-started?plan=basic">
-          <Button className={styles.ctaButton}>Begin Onboarding</Button>
+          <Button
+            className={classnames(
+              button,
+              buttonSizes.large,
+              colors.primary,
+              styles.ctaButton,
+            )}
+          >
+            Begin Onboarding
+          </Button>
         </InternalLink>
       </section>
 
@@ -37,15 +52,16 @@ export default async function Page() {
       >
         <TabLayout
           defaultTab="Files"
-          tabs={["Files", "Meetings", "Inbox", "Directory"]}
+          tabs={["Files", "Events", "Meetings", "Inbox", "Directory"]}
         >
           <Tab name="Files">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideText}>
                 <p>
-                  <b>Manage your files.</b> Stored securely and safely in the
-                  cloud. There when you, or anyone else in your strata, needs
-                  them.
+                  <b>Manage your files.</b>
+                  <br />
+                  Stored securely and safely in the cloud. There when you, or
+                  anyone else in your strata, needs them.
                 </p>
               </div>
 
@@ -59,8 +75,53 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideText}>
                 <p>
-                  <b>Find exactly what you need.</b> Powerful filtering tools to
-                  find the documents you are looking for.
+                  <b>Find exactly what you need.</b>
+                  <br />
+                  Powerful filtering tools to find the documents you are looking
+                  for.
+                </p>
+              </div>
+
+              <div className={styles.sideBySideImageStack}>
+                <img
+                  alt="files view for organization of strata documents"
+                  className={styles.sideBySideImage}
+                  src="/images/search.png"
+                />
+                <img
+                  alt="files view for organization of strata documents"
+                  className={styles.sideBySideImageStackRootImage}
+                  src="/images/files_filtered.png"
+                />
+              </div>
+            </div>
+          </Tab>
+
+          <Tab name="Events">
+            <div className={styles.sideBySideFeature}>
+              <div className={styles.sideBySideText}>
+                <p>
+                  <b>See the future.</b>
+                  <br />
+                  Easily share information about upcoming Strata events.
+                  Automatically send email reminders before an important date.
+                </p>
+              </div>
+
+              <img
+                alt="files view for organization of strata documents"
+                className={styles.sideBySideImage}
+                src="/images/files.png"
+              />
+            </div>
+
+            <div className={styles.sideBySideFeature}>
+              <div className={styles.sideBySideText}>
+                <p>
+                  <b>Amentity booking.</b>
+                  <br />
+                  Specify bookable amenities and allow members to automatically
+                  book them with or without strata approval.
                 </p>
               </div>
 
@@ -83,8 +144,10 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideText}>
                 <p>
-                  <b>Plan ahead.</b> Plan meetings based on what&apos;s
-                  happening in your strata&apos;s Strataspheric account.
+                  <b>Plan ahead.</b>
+                  <br />
+                  Plan meetings based on what&apos;s happening in your
+                  strata&apos;s Strataspheric account.
                 </p>
               </div>
 
@@ -107,9 +170,10 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideText}>
                 <p>
-                  <b>Stay connected.</b> Receieve, discuss, and respond to
-                  strata members. Archive messages to reference whenever you
-                  need to.
+                  <b>Stay connected.</b>
+                  <br />
+                  Receieve, discuss, and respond to strata members. Archive
+                  messages to reference whenever you need to.
                 </p>
               </div>
 
@@ -128,6 +192,50 @@ export default async function Page() {
             </div>
           </Tab>
         </TabLayout>
+      </section>
+
+      <section
+        className={classnames(
+          styles.sectionPadded,
+          styles.centerContent,
+          styles.marginBottom.large,
+        )}
+      >
+        <Header className={styles.marginBottom.normal} priority={2}>
+          For Professionals
+        </Header>
+        <p className={styles.marginBottom.large}>
+          Supports Strata management through 3rd party services via a powerful,
+          permissions-based usage model. Realtors can easily search for Stratas
+          and request important documents through the portal.
+        </p>
+
+        <InternalLink href="/find">
+          <Button
+            className={classnames(
+              button,
+              buttonSizes.large,
+              colors.primary,
+              styles.marginBottom.normal,
+              styles.ctaButton,
+            )}
+          >
+            Connect with a Strata
+          </Button>
+        </InternalLink>
+
+        <InternalLink href="/join">
+          <Button
+            className={classnames(
+              button,
+              buttonSizes.normal,
+              buttonVariants.tertiary,
+              styles.ctaButton,
+            )}
+          >
+            Join Strataspheric
+          </Button>
+        </InternalLink>
       </section>
 
       <section

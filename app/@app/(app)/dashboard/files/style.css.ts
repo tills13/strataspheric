@@ -89,7 +89,11 @@ export const filesSearchInput = style({
 });
 
 export const filesSearchSubmit = style([
-  buttonStyles.buttonFullWidth,
+  buttonStyles.fullWidth,
   buttonStyles.buttonSizes.normal,
   {},
 ]);
+
+export const filesSearchClear = style({
+  flexShrink: 0,
+});

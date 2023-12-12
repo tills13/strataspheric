@@ -32,9 +32,9 @@ export function SendInboxThreadChatForm({
 
       <StatusButton
         className={classnames(
-          buttonStyles.buttonFullWidth,
+          buttonStyles.fullWidth,
           buttonStyles.buttonSizes.normal,
-          buttonStyles.buttonVariants.primary,
+          buttonStyles.colors.primary,
         )}
         type="submit"
         success={undefined}

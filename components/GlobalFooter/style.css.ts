@@ -12,7 +12,7 @@ export const footer = style({
   padding: vars.spacing.normal,
   borderTop: border("1px", "solid", vars.colors.borderDefault),
 
-  backgroundColor: vars.colors.grey700,
+  backgroundColor: vars.colors.primary,
   color: vars.colors.white,
 
   "@media": {
@@ -35,7 +35,7 @@ export const footerWordMark = style({
   "@media": {
     [breakpoints.tablet]: {
       vars: {
-        [colorVar]: vars.colors.grey700,
+        [colorVar]: vars.colors.primary,
       },
     },
   },
@@ -63,7 +63,7 @@ export const heartIcon = style([
     height: vars.sizes.small,
     verticalAlign: "middle",
     vars: {
-      [iconStyles.iconColorVar]: vars.colors.red,
+      [iconStyles.iconColorVar]: vars.colors.red500,
     },
   },
 ]);

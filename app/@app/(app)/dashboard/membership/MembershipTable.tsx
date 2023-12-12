@@ -123,7 +123,7 @@ export function MembershipTable({
                     className={classnames(
                       iconButtonStyles.iconButton,
                       iconButtonStyles.iconButtonSizes.small,
-                      buttonStyles.buttonVariants.transparent,
+                      buttonStyles.buttonVariants.tertiary,
                     )}
                     onClick={removeStrataMember.bind(
                       undefined,

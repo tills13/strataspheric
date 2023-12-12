@@ -1,18 +1,16 @@
 "use client";
 
+import { button, buttonVariants, colors, fullWidth } from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { useTransition } from "react";
 
 import { Event } from "../../data";
-import { Button } from "../Button";
+import { classnames } from "../../utils/classnames";
+import { formatDateForDatetime } from "../../utils/datetime";
 import { ElementGroup } from "../ElementGroup";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
-
-export function formatDefaultDate(d: Date) {
-  return d.toISOString().substring(0, 16);
-}
 
 interface Props {
   defaultDate?: string;
@@ -32,15 +30,31 @@ export function CreateOrUpdateEventForm({
   return (
     <form className={styles.newEventForm} action={upsertEvent}>
       <Input name="name" placeholder="Name" defaultValue={event?.name} />
-      <Input
-        name="date"
-        type="datetime-local"
-        placeholder="Date"
-        defaultValue={
-          defaultDate ||
-          (event ? formatDefaultDate(new Date(event.date)) : undefined)
-        }
-      />
+
+      <ElementGroup className={styles.fullWidth} gap="small">
+        <Input
+          className={styles.fullWidth}
+          name="startDate"
+          type="datetime-local"
+          placeholder="Start Date"
+          defaultValue={
+            defaultDate ||
+            (event
+              ? formatDateForDatetime(new Date(event.startDate))
+              : undefined)
+          }
+        />
+        <Input
+          className={styles.fullWidth}
+          name="endDate"
+          type="datetime-local"
+          placeholder="End Date"
+          defaultValue={
+            defaultDate ||
+            (event ? formatDateForDatetime(new Date(event.endDate)) : undefined)
+          }
+        />
+      </ElementGroup>
 
       <Input
         name="description"
@@ -48,7 +62,7 @@ export function CreateOrUpdateEventForm({
         defaultValue={event?.description}
       />
 
-      <ElementGroup>
+      <ElementGroup gap="small">
         <StatusButton type="submit">{event ? "Update" : "Create"}</StatusButton>
 
         {event && deleteEvent && (
@@ -58,6 +72,11 @@ export function CreateOrUpdateEventForm({
                 deleteEvent();
               });
             }}
+            className={classnames(
+              fullWidth,
+              buttonVariants.secondary,
+              colors.error,
+            )}
             isPending={deletePending}
             type="button"
           >

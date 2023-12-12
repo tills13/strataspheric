@@ -17,11 +17,12 @@ import { Header } from "../Header";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
 
-interface Props {
-  currentUser: User;
-}
+interface Props {}
 
-export function InboxThreadChat({ currentUser, ...chat }: Props & Chat) {
+export function InboxThreadChat({ ...chat }: Props & Chat) {
+  const { data: session } = useSession();
+  const currentUser = session?.user!;
+
   return (
     <div
       className={classnames(

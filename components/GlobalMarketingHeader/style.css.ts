@@ -30,7 +30,7 @@ export const logo = style({
   width: "300px",
   left: "-150px",
   top: "-150px",
-  fill: vars.colors.grey700,
+  fill: vars.colors.primary,
   animation: `${animation} 72s linear infinite`,
   pointerEvents: "none",
 

@@ -8,7 +8,7 @@ export const globalHeader = style({
   alignItems: "center",
   justifyContent: "space-between",
   padding: vars.spacing.normal,
-  borderBottom: `1px solid ${vars.colors.grey100}`,
+  borderBottom: `1px solid ${vars.colors.borderDefault}`,
 });
 
 export const titleLink = style([
@@ -60,6 +60,7 @@ export const globalMobileHeaderModalActions = style({
 
 export const globalHeaderActionsButton = style([
   buttonStyles.button,
+  buttonStyles.buttonVariants.secondary,
   buttonStyles.buttonSizes.normal,
   {
     selectors: {

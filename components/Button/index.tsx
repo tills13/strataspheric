@@ -18,7 +18,7 @@ export function Button({
       className={
         className ||
         classnames(
-          styles.buttonFullWidth,
+          styles.fullWidth,
           styles.buttonSizes.normal,
           styles.buttonVariants.default,
         )

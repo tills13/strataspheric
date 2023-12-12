@@ -67,8 +67,8 @@ export function SignInForm({ className }: Props) {
       <Button
         className={classnames(
           buttonStyles.button,
-          buttonStyles.buttonSizes.large,
-          buttonStyles.buttonVariants.primary,
+          buttonStyles.buttonSizes.normal,
+          buttonStyles.colors.primary,
         )}
         type="submit"
       >
@@ -79,7 +79,16 @@ export function SignInForm({ className }: Props) {
         className={styles.forgotLink}
         href={protocol + "//" + tld + "/forgot"}
       >
-        Forgot Password
+        <Button
+          className={classnames(
+            buttonStyles.fullWidth,
+            buttonStyles.buttonSizes.normal,
+            buttonStyles.buttonVariants.tertiary,
+          )}
+          type="button"
+        >
+          Forgot Password
+        </Button>
       </ExternalLink>
     </form>
   );

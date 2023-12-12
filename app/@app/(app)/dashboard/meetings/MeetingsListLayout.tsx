@@ -40,7 +40,7 @@ export async function MeetingListLayout({ strataId }: Props) {
           >
             <div className={styles.purposeCell}>{meeting.purpose}</div>
             <div className={styles.dateCell}>
-              {new Date(meeting.date).toLocaleString()}
+              {new Date(meeting.startDate).toLocaleString()}
             </div>
             <div className={styles.actionsCell}>
               {can(session?.user, p("stratas", "meetings", "delete")) && (

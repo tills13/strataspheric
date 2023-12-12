@@ -55,7 +55,7 @@ export default async function Page({
             <InternalLink className={linkStyles.noUnderline} href="/dashboard">
               <Button
                 className={classnames(
-                  buttonStyles.buttonFullWidth,
+                  buttonStyles.fullWidth,
                   buttonStyles.buttonSizes.large,
                 )}
               >

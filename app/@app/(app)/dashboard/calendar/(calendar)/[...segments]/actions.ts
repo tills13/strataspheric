@@ -6,6 +6,7 @@ import { auth } from "../../../../../../../auth";
 import { createEvent } from "../../../../../../../data/events/createEvent";
 import { deleteEvent } from "../../../../../../../data/events/deleteEvent";
 import { getEvent } from "../../../../../../../data/events/getEvent";
+import { updateEvent } from "../../../../../../../data/events/updateEvent";
 import * as formdata from "../../../../../../../utils/formdata";
 
 export async function upsertEventAction(
@@ -21,29 +22,35 @@ export async function upsertEventAction(
 
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description");
-  const date = formdata.getString(formData, "date");
+  const startDate = formdata.getString(formData, "startDate");
+  const endDate = formdata.getString(formData, "endDate") || startDate;
 
-  if (name === "") {
-    throw new Error("invalid fields");
+  const d = new Date(startDate);
+
+  if (eventId) {
+    await updateEvent(eventId, { name, description, startDate, endDate });
+  } else {
+    if (name === "") {
+      throw new Error("invalid fields");
+    }
+
+    await createEvent({
+      name,
+      description,
+      startDate,
+      endDate,
+      strataId,
+      creatorId: session.user.id,
+    });
   }
 
-  await createEvent({
-    name,
-    description,
-    date,
-    strataId,
-    creatorId: session.user.id,
-  });
-
-  const d = new Date(date);
-
+  // @todo invalidate all months between start and end date
   revalidatePath(
     "/dashboard/calendar/" + d.getFullYear() + "/" + (d.getMonth() + 1),
   );
 }
 
 export async function deleteEventAction(eventId: string) {
-  console.log("delete");
   const session = await auth();
 
   if (!session) {
@@ -51,16 +58,15 @@ export async function deleteEventAction(eventId: string) {
   }
 
   const e = await getEvent(eventId);
-  console.log(e);
 
   if (!e) {
     return;
   }
 
-  const d = new Date(e.date);
-
   await deleteEvent(eventId);
 
+  const d = new Date(e.startDate);
+  // @todo invalidate all months between start and end date
   revalidatePath(
     "/dashboard/calendar/" + d.getFullYear() + "/" + (d.getMonth() + 1),
   );

@@ -6,3 +6,7 @@ export const newEventForm = style({
   flexDirection: "column",
   gap: vars.spacing.small,
 });
+
+export const fullWidth = style({
+  width: "100%",
+});

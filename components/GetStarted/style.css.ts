@@ -20,8 +20,9 @@ export const input = style({
 
 export const submitButton = style([
   formSubmitStatusButtonStyles.formStatusButtonContainer,
+  buttonStyles.fullWidth,
   buttonStyles.buttonSizes.large,
-  buttonStyles.buttonVariants.primary,
+  buttonStyles.colors.primary,
 ]);
 
 export const isPublicField = style([
@@ -68,14 +69,14 @@ export const subdomainStatusLoading = style([
 export const subdomainStatusOk = style([
   subdomainStatusIcon,
   {
-    fill: important(vars.colors.green),
+    fill: important(vars.colors.green500),
   },
 ]);
 
 export const subdomainStatusError = style([
   subdomainStatusIcon,
   {
-    fill: important(vars.colors.red),
+    fill: important(vars.colors.red500),
   },
 ]);
 
@@ -110,7 +111,7 @@ export const statusPageLoadingIcon = style([statusPageStatusIcon, {}]);
 export const statusPageCheckIcon = style([
   statusPageStatusIcon,
   {
-    fill: important(vars.colors.green),
+    fill: important(vars.colors.green500),
   },
 ]);
 

@@ -35,9 +35,7 @@ export default async function RootLayout({
   app: React.ReactNode;
   marketing: React.ReactNode;
 }) {
-  let p0 = Date.now();
   const strata = await getCurrentStrata();
-  console.log("t2", Date.now() - p0, "ms");
 
   return (
     <html lang="en">

@@ -1,16 +1,28 @@
+import {
+  buttonSizes,
+  buttonVariants,
+  colors,
+  fullWidth,
+} from "../../../../../components/Button/style.css";
+import { icon } from "../../../../../components/Icon/style.css";
 import { vars } from "../../../../theme.css";
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 
-export const header = style({
-  marginBottom: vars.spacing.large,
+export const marginBottom = styleVariants({
+  small: {
+    marginBottom: vars.spacing.small,
+  },
+  normal: {
+    marginBottom: vars.spacing.normal,
+  },
+  large: {
+    marginBottom: vars.spacing.large,
+  },
 });
 
-export const blurb = style({
-  marginBottom: vars.spacing.large,
-});
+export const header = style({});
 
 export const input = style({
-  marginBottom: vars.spacing.normal,
   width: "100%",
 });
 
@@ -19,14 +31,46 @@ export const divider = style({
   width: "100%",
 });
 
-export const submitButton = style({
-  width: "100%",
-  marginBottom: vars.spacing.normal,
-});
+export const submitButton = style([
+  fullWidth,
+  buttonSizes.normal,
+  colors.primary,
+  {
+    width: "100%",
+    marginBottom: vars.spacing.normal,
+  },
+]);
 
 export const stratasList = style({
-  marginLeft: vars.spacing.normal,
+  listStyle: "none",
+  marginLeft: 0,
 });
+
+export const stratasListItem = style({
+  display: "block",
+  padding: vars.spacing.normal,
+  color: vars.fontColors.primary,
+  textDecoration: "none",
+  backgroundColor: vars.colors.grey100,
+  borderRadius: vars.borderRadius,
+});
+
+export const stratasListItemContainer = style({
+  selectors: {
+    "&:not(:last-child)": {
+      marginBottom: vars.spacing.normal,
+    },
+  },
+});
+
+export const stratasListItemArrow = style([
+  icon,
+  {
+    height: vars.fontSizes.large,
+    float: "right",
+    clear: "both",
+  },
+]);
 
 export const loadingContainer = style({
   textAlign: "center",

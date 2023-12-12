@@ -11,6 +11,7 @@ import { Thread } from "../../../../../../data/inbox/getThreads";
 import { getCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../../../data/users/permissions";
 import { sendInboxMessageAction } from "../actions";
+import InboxThreadChatPanel from "./InboxThreadChatPanel";
 import { sendInboxThreadChatAction } from "./actions";
 
 export const runtime = "edge";
@@ -64,14 +65,7 @@ export default async function Page({
           )}
           threadId={threadId}
         />
-        <InboxThreadChats
-          sendInboxThreadChat={sendInboxThreadChatAction.bind(
-            undefined,
-            threadId,
-            undefined,
-          )}
-          threadId={threadId}
-        />
+        <InboxThreadChatPanel threadId={threadId} />
       </div>
     </>
   );

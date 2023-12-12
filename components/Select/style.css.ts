@@ -2,8 +2,7 @@ import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const baseSelect = style({
-  padding: `0 ${vars.spacing.large} 0 ${vars.spacing.normal}`,
-  height: vars.sizes.normal,
+  padding: `${vars.spacing.small} ${vars.spacing.large} ${vars.spacing.small} ${vars.spacing.normal}`,
   color: vars.fontColors.primary,
   backgroundColor: vars.colors.globalBg,
   borderWidth: 2,

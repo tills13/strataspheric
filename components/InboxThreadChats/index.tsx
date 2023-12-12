@@ -1,52 +1,50 @@
+"use client";
+
 import * as styles from "./style.css";
 
-import { auth } from "../../auth";
-import { getThreadChats } from "../../data/inbox/getThreadChats";
-import { getThreadMessages } from "../../data/inbox/getThreadMessages";
-import { can, p } from "../../data/users/permissions";
-import { classnames } from "../../utils/classnames";
+import { useOptimistic } from "react";
+
+import { InboxMessage } from "../../data";
+import { Chat } from "../../data/inbox/getThreadChats";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
 import { ChatStream } from "./ChatStream";
 
 interface Props {
-  className?: string;
+  chats: Chat[];
   sendInboxThreadChat: (fd: FormData) => void;
-  threadId: string;
+  thread: InboxMessage[];
 }
 
-export async function InboxThreadChats({
-  className,
+export function InboxThreadChats({
+  chats,
   sendInboxThreadChat,
-  threadId,
+  thread,
 }: Props) {
-  const session = await auth();
+  const [optisticChats, addOptimisticChat] = useOptimistic(
+    chats,
+    (chats, newChat: Chat) => {
+      return [...chats, newChat];
+    },
+  );
 
-  if (!session) {
-    return (
-      <div className={classnames(styles.wrapper, className)}>
-        Sign in to view message chats
-      </div>
-    );
-  } else if (!can(session.user, p("stratas", "inbox_thread_chats", "view"))) {
-    return (
-      <div className={classnames(styles.wrapper, className)}>
-        You don&apos;t have permission to see chats
-      </div>
-    );
+  function optimisticSendInboxThreadChat(fd: FormData) {
+    addOptimisticChat({
+      chatId: "tmp",
+      email: "s",
+      id: "tmp",
+      message: fd.get("message") as string,
+      name: "You",
+    });
+    sendInboxThreadChat(fd);
   }
-
-  const thread = await getThreadMessages(threadId);
-  const chats = await getThreadChats(threadId);
 
   return (
     <div className={styles.wrapper}>
-      <ChatStream
-        chats={chats}
-        currentUser={session.user}
-        subject={thread[0].subject}
-      />
+      <ChatStream chats={optisticChats} subject={thread[0].subject} />
 
-      <SendInboxThreadChatForm sendInboxThreadChat={sendInboxThreadChat} />
+      <SendInboxThreadChatForm
+        sendInboxThreadChat={optimisticSendInboxThreadChat}
+      />
     </div>
   );
 }

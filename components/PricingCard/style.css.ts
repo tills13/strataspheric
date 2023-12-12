@@ -16,7 +16,7 @@ export const pricingCardPlanName = style({
   textAlign: "center",
   fontFamily: vars.fontFamilies.primary,
   backgroundColor: vars.colors.grey100,
-  color: vars.colors.grey700,
+  color: vars.fontColors.primary,
   textTransform: "uppercase",
   padding: padding(vars.spacing.small, vars.spacing.normal),
 });
@@ -84,7 +84,7 @@ export const planFeaturesFeatureIcon = style({
 });
 export const planFeaturesFeatureIconIncluded = style([
   planFeaturesFeatureIcon,
-  { fill: important(vars.colors.green) },
+  { fill: important(vars.colors.green500) },
 ]);
 
 export const estimateContainer = style({
@@ -106,7 +106,7 @@ export const selectPlanButtonLink = style({
 });
 
 export const selectPlanButton = style([
-  buttonStyles.buttonFullWidth,
+  buttonStyles.fullWidth,
   buttonStyles.buttonSizes.normal,
-  buttonStyles.buttonVariants.primary,
+  buttonStyles.colors.primary,
 ]);

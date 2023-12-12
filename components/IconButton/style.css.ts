@@ -13,23 +13,18 @@ export const iconButton = style([
 
 export const iconButtonSizes = styleVariants({
   small: {
-    height: vars.sizes.small,
-    width: vars.sizes.small,
+    padding: `${vars.spacing.xs} ${vars.spacing.xs}`,
   },
   normal: {
-    height: vars.sizes.normal,
-    width: vars.sizes.normal,
+    padding: `${vars.spacing.small} ${vars.spacing.small}`,
   },
   large: {
-    height: vars.sizes.large,
-    width: vars.sizes.large,
+    padding: `${vars.spacing.normal} ${vars.spacing.normal}`,
   },
   xl: {
-    height: vars.sizes.xl,
-    width: vars.sizes.xl,
+    padding: `${vars.spacing.large} ${vars.spacing.large}`,
   },
   xxl: {
-    height: vars.sizes.xxl,
-    width: vars.sizes.xxl,
+    padding: `${vars.spacing.xl} ${vars.spacing.xl}`,
   },
 });

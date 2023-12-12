@@ -22,7 +22,7 @@ export const submitButton = style({
 
 export const submitButtonIcon = style({
   verticalAlign: "top",
-  fill: important(vars.colors.green),
+  fill: important(vars.colors.green500),
 });
 
 export const submitPendingContainer = style({

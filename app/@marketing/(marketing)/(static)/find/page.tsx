@@ -1,91 +1,73 @@
-"use client";
-
 import * as styles from "./style.css";
 
-import { useFormState, useFormStatus } from "react-dom";
-
-import { Button } from "../../../../../components/Button";
-import { DividerText } from "../../../../../components/DividerText";
 import { Header } from "../../../../../components/Header";
-import { Input } from "../../../../../components/Input";
+import { RightIcon } from "../../../../../components/Icon/RightIcon";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
-import { LoadingIcon } from "../../../../../components/LoadingIcon";
-import { findYourStratasActionReducer } from "./actions";
+import { protocol } from "../../../../../constants";
+import { findStratas } from "../../../../../data/stratas/findStratas";
+import { classnames } from "../../../../../utils/classnames";
+import { StrataSearchForm } from "./StrataSearchForm";
 
 export const runtime = "edge";
 
-function FormLoadingIndicator() {
-  const s = useFormStatus();
+export default async function Page({ searchParams }) {
+  const stratas = await findStratas({
+    nameish: searchParams["name"],
+    planish: searchParams["strataPlan"],
+    address: searchParams["address"],
+  });
 
   return (
-    s.pending && (
-      <div className={styles.loadingContainer}>
-        <LoadingIcon />
-      </div>
-    )
-  );
-}
-
-export default function Page() {
-  const [state, findYourStratasAction] = useFormState(
-    findYourStratasActionReducer,
-    { stratas: undefined },
-  );
-
-  return (
-    <form action={findYourStratasAction}>
-      <Header className={styles.header} priority={2}>
-        Find Your Stratas
+    <div>
+      <Header
+        className={classnames(styles.header, styles.marginBottom.large)}
+        priority={2}
+      >
+        Find a Strata
       </Header>
 
-      <p className={styles.blurb}>
-        Enter the email address associated with your account or the name of your
-        strata and we&apos;ll attempt to find your stratas.
-      </p>
-
-      <Input
-        className={styles.input}
-        placeholder="Email Address"
-        name="email_address"
-        type="email"
+      <StrataSearchForm
+        className={styles.marginBottom.large}
+        name={searchParams["name"]}
+        strataPlan={searchParams["strataPlan"]}
+        address={searchParams["address"]}
       />
 
-      <DividerText className={styles.divider}>or</DividerText>
-
-      <Input
-        className={styles.input}
-        placeholder="Strata Name"
-        name="strata_name"
-      />
-
-      <Button
-        className={styles.submitButton}
-        type="submit"
-        size="large"
-        variant="primary"
-      >
-        Find
-      </Button>
-
-      <FormLoadingIndicator />
-
-      {state.stratas !== undefined && (
+      {stratas !== undefined && (
         <>
-          <Header priority={2}>Stratas</Header>
+          <Header
+            className={classnames(styles.header, styles.marginBottom.large)}
+            priority={2}
+          >
+            Stratas
+          </Header>
 
-          {state.stratas.length === 0 && <div>no stratas found</div>}
+          {stratas.length === 0 && <div>no stratas found</div>}
 
           <ul className={styles.stratasList}>
-            {state.stratas.map((strata) => (
-              <li key={strata.id}>
-                <ExternalLink href={"https://" + strata.domain}>
-                  {strata.name}
+            {stratas.map((strata) => (
+              <li className={styles.stratasListItemContainer} key={strata.id}>
+                <ExternalLink
+                  className={styles.stratasListItem}
+                  href={protocol + "//" + strata.domain + "/dashboard"}
+                  target="_blank"
+                >
+                  <Header priority={3}>
+                    {strata.name}
+                    {strata.strataId && ` - ${strata.strataId}`}
+
+                    <RightIcon className={styles.stratasListItemArrow} />
+                  </Header>
+                  <p>
+                    {strata.streetAddress} {strata.provinceState}{" "}
+                    {strata.postalCode}
+                  </p>
                 </ExternalLink>
               </li>
             ))}
           </ul>
         </>
       )}
-    </form>
+    </div>
   );
 }

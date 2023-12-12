@@ -9,7 +9,7 @@ export const base = style({
 
   selectors: {
     "&::-webkit-slider-runnable-track": {
-      backgroundColor: vars.colors.grey700,
+      backgroundColor: vars.colors.grey600,
       borderRadius: "0.5rem",
       height: "0.5rem",
     },
@@ -17,7 +17,7 @@ export const base = style({
       appearance: "none",
       marginTop: -8,
       borderRadius: 2,
-      backgroundColor: vars.colors.grey750,
+      backgroundColor: vars.colors.grey700,
       height: vars.sizes.xs,
       width: vars.sizes.xs,
     },

@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  buttonSizes,
+  colors,
+  fullWidth,
+} from "../../../../../components/Button/style.css";
 import * as styles from "./style.css";
 
 import { useFormState } from "react-dom";
@@ -8,6 +13,7 @@ import { Header } from "../../../../../components/Header";
 import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
 import { Input } from "../../../../../components/Input";
 import { StatusButton } from "../../../../../components/StatusButton";
+import { classnames } from "../../../../../utils/classnames";
 import {
   requestPasswordResetActionReducer,
   resetPasswordAction,
@@ -22,7 +28,7 @@ export default function Page({
 }) {
   const [state, requestPasswordResetAction] = useFormState(
     requestPasswordResetActionReducer,
-    { emailSent: false },
+    { emailSent: undefined },
   );
 
   if (searchParams["token"]) {
@@ -52,7 +58,10 @@ export default function Page({
           type="password"
         />
 
-        <StatusButton success={state.emailSent} size="large" variant="primary">
+        <StatusButton
+          className={classnames(fullWidth, buttonSizes.large, colors.primary)}
+          success={state.emailSent}
+        >
           Reset Password
         </StatusButton>
       </form>
@@ -82,7 +91,10 @@ export default function Page({
           been sent to the entered address if it exists in our system.
         </>
       ) : (
-        <StatusButton success={state.emailSent} size="large" variant="primary">
+        <StatusButton
+          className={classnames(fullWidth, buttonSizes.normal, colors.primary)}
+          success={state.emailSent}
+        >
           Continue
         </StatusButton>
       )}

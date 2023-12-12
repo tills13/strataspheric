@@ -3,6 +3,8 @@
 import * as styles from "./style.css";
 
 import getDaysInMonth from "date-fns/getDaysInMonth";
+import isAfter from "date-fns/isAfter";
+import isBefore from "date-fns/isBefore";
 import isSameDay from "date-fns/isSameDay";
 import sub from "date-fns/sub";
 import { useEffect, useState } from "react";
@@ -13,6 +15,7 @@ import {
 } from "../../../../../../../components/CreateOrUpdateEventForm";
 import { Modal } from "../../../../../../../components/Modal";
 import { Event } from "../../../../../../../data";
+import { classnames } from "../../../../../../../utils/classnames";
 
 interface Props {
   upsertEvent: (eventId: string | undefined, fd: FormData) => void;
@@ -67,8 +70,12 @@ export function Calendar({
               currentDate.getFullYear(),
           );
           const isToday = isSameDay(new Date(), date);
-          const eventsOnDate = events.filter((e) =>
-            isSameDay(date, new Date(e.date)),
+          const eventsOnDate = events.filter(
+            (e) =>
+              isSameDay(date, new Date(e.startDate)) ||
+              (isAfter(date, new Date(e.startDate)) &&
+                (isBefore(date, new Date(e.endDate)) ||
+                  isSameDay(date, new Date(e.endDate)))),
           );
 
           return (
@@ -85,19 +92,34 @@ export function Calendar({
             >
               <span className={styles.calendarDate}>{displayDate}</span>
 
-              {eventsOnDate.map((event, idx) => (
-                <div
-                  key={idx}
-                  className={styles.calendarEvent}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setSelectedEvent(event);
-                  }}
-                >
-                  {event.name}
-                </div>
-              ))}
+              {eventsOnDate.map((event, idx) => {
+                return (
+                  <div
+                    key={idx}
+                    className={classnames(styles.calendarEvent, {
+                      [styles.withLeftMargin]: isSameDay(
+                        date,
+                        new Date(event.startDate),
+                      ),
+                      [styles.withRightMargin]: isSameDay(
+                        date,
+                        new Date(event.endDate),
+                      ),
+                    })}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setSelectedEvent(event);
+                    }}
+                  >
+                    {isSameDay(date, new Date(event.startDate)) ? (
+                      event.name
+                    ) : (
+                      <>&nbsp;</>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           );
         })}

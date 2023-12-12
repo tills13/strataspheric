@@ -1,4 +1,5 @@
 import { vars } from "../../app/theme.css";
+import { icon } from "../Icon/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { border } from "../../theme";
@@ -22,10 +23,13 @@ export const addWidgetWidgetContainer = style({
   width: 100,
   textAlign: "center",
   fontSize: vars.fontSizes.normal,
-  color: vars.colors.grey500,
 });
 
-export const addWidgetWidgetIcon = style({
-  margin: "auto",
-  height: vars.sizes.xl,
-});
+export const addWidgetWidgetIcon = style([
+  icon,
+  {
+    display: "block",
+    margin: "auto",
+    height: vars.sizes.xl,
+  },
+]);

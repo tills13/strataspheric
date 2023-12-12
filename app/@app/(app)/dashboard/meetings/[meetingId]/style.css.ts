@@ -3,6 +3,8 @@ import * as iconButtonStyles from "../../../../../../components/IconButton/style
 import { breakpoints, vars } from "../../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { calc } from "@vanilla-extract/css-utils";
+
 export const meetingLayoutContainer = style({
   "@media": {
     [breakpoints.tablet]: {
@@ -14,12 +16,15 @@ export const meetingLayoutContainer = style({
 });
 
 export const meetingAgendaContainer = style({
+  position: "sticky",
+  top: 0,
   padding: vars.spacing.normal,
 });
 
 export const meetingTimelineSearchContainer = style({
   overflow: "auto",
   padding: vars.spacing.normal,
+  // height: `calc(100vh - 81px - 49px)`,
 });
 
 export const header = style({
@@ -34,7 +39,7 @@ export const headerHeader = style({
 export const editMeetingButton = style([
   iconButtonStyles.iconButton,
   iconButtonStyles.iconButtonSizes.small,
-  buttonStyles.buttonVariants.transparent,
+  buttonStyles.buttonVariants.tertiary,
   {
     float: "right",
     clear: "both",

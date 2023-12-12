@@ -22,9 +22,9 @@ export function AddNewMeetingAgendaItemButton({
     <>
       <Button
         className={classnames(
-          buttonStyles.buttonFullWidth,
+          buttonStyles.fullWidth,
           buttonStyles.buttonSizes.large,
-          buttonStyles.buttonVariants.primary,
+          buttonStyles.colors.primary,
         )}
         onClick={() => setShowModal(true)}
       >

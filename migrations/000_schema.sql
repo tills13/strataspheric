@@ -61,7 +61,7 @@ CREATE TABLE
         id text primary key,
         name text,
         description text,
-        date text
+        date text not null
     );
 
 DROP TABLE IF EXISTS widget_events;

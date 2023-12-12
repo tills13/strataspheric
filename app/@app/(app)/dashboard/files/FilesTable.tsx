@@ -64,7 +64,7 @@ export async function FilesTable({ searchTerm, strataId, visibility }: Props) {
                       className={classnames(
                         iconButtonStyles.iconButton,
                         iconButtonStyles.iconButtonSizes.small,
-                        buttonStyles.buttonVariants.transparent,
+                        buttonStyles.buttonVariants.tertiary,
                       )}
                     >
                       <DownloadIcon />
@@ -77,7 +77,7 @@ export async function FilesTable({ searchTerm, strataId, visibility }: Props) {
                     className={classnames(
                       iconButtonStyles.iconButton,
                       iconButtonStyles.iconButtonSizes.small,
-                      buttonStyles.buttonVariants.transparent,
+                      buttonStyles.buttonVariants.tertiary,
                     )}
                   />
                 )}

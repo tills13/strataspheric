@@ -57,9 +57,9 @@ export default async function Page() {
             <InternalLink href={"/dashboard/settings#plan"}>
               <Button
                 className={classnames(
-                  buttonStyles.buttonFullWidth,
+                  buttonStyles.fullWidth,
                   buttonStyles.buttonSizes.large,
-                  buttonStyles.buttonVariants.primary,
+                  buttonStyles.colors.primary,
                 )}
               >
                 Upgrade your plan today
@@ -94,9 +94,9 @@ export default async function Page() {
           <InternalLink href="/dashboard/inbox/send">
             <Button
               className={classnames(
-                buttonStyles.buttonFullWidth,
+                buttonStyles.fullWidth,
                 buttonStyles.buttonSizes.large,
-                buttonStyles.buttonVariants.primary,
+                buttonStyles.colors.primary,
               )}
             >
               New Message to Strata

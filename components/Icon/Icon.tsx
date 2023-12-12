@@ -2,8 +2,6 @@ import * as styles from "./style.css";
 
 import React from "react";
 
-import { classnames } from "../../utils/classnames";
-
 interface Props extends React.SVGAttributes<SVGElement> {
   className?: string;
 }
@@ -17,9 +15,7 @@ export function Icon({
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 -960 960 960"
-      className={
-        className || classnames(styles.icon, styles.iconVariants.primary)
-      }
+      className={className || styles.icon}
       {...rest}
     >
       {children}

@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 
 import {
   MeetingAgendaItemUpdate,
-  MeetingUpdate,
   NewMeetingAgendaItem,
 } from "../../../../../../data";
 import { addFileToMeeting } from "../../../../../../data/meetings/addFileToMeeting";
@@ -12,20 +11,20 @@ import { addItemToMeetingAgenda } from "../../../../../../data/meetings/addItemT
 import { removeItemFromAgenda } from "../../../../../../data/meetings/removeItemFromMeetingAgenda";
 import { updateMeeting } from "../../../../../../data/meetings/updateMeeting";
 import { updateMeetingAgendaItem } from "../../../../../../data/meetings/updateMeetingAgendaItem";
+import { updateMeetingEvent } from "../../../../../../data/meetings/updateMeetingEvent";
 import * as formdata from "../../../../../../utils/formdata";
 import { AgendaTimelineEntry } from "./MeetingTimelineSearch";
 
 export async function updateMeetingAction(meetingId: string, fd: FormData) {
-  const meetingUpdate: MeetingUpdate = {
-    purpose: formdata.getString(fd, "purpose"),
-    date: formdata.getString(fd, "date"),
-  };
+  const purpose = formdata.getString(fd, "purpose");
 
-  if (Object.keys(meetingUpdate).length === 0) {
-    return;
-  }
+  await updateMeeting(meetingId, { purpose });
+  await updateMeetingEvent(meetingId, {
+    name: purpose,
+    startDate: formdata.getString(fd, "startDate"),
+    endDate: formdata.getString(fd, "endDate"),
+  });
 
-  await updateMeeting(meetingId, meetingUpdate);
   revalidatePath("/dashboard/meetings/" + meetingId);
 }
 

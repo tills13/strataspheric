@@ -51,7 +51,7 @@ export const pageHeaderSender = style({
 
 export const outsideMessageWarning = style({
   padding: vars.spacing.normal,
-  backgroundColor: vars.colors.red,
+  backgroundColor: vars.colors.red500,
   color: vars.colors.white,
 });
 
@@ -65,10 +65,10 @@ export const message = style({
 
 export const highlightAnimation = keyframes({
   "25%": {
-    backgroundColor: vars.colors.yellow500,
+    backgroundColor: vars.colors.orange500,
   },
   "100%": {
-    backgroundColor: vars.colors.yellow100,
+    backgroundColor: vars.colors.orange100,
   },
 });
 
@@ -103,7 +103,7 @@ export const messageHeaderSentAt = style({
 export const chatActionButton = style([
   iconButtonStyles.iconButton,
   iconButtonStyles.iconButtonSizes.small,
-  buttonStyles.buttonVariants.transparent,
+  buttonStyles.buttonVariants.tertiary,
   {
     position: "absolute",
     right: vars.spacing.normal,

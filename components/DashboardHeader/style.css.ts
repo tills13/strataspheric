@@ -9,7 +9,7 @@ export const subheader = style({
   width: "100vw",
   gap: vars.spacing.normal,
   padding: `${vars.spacing.small} ${vars.spacing.normal}`,
-  borderBottom: `1px solid ${vars.colors.grey100}`,
+  borderBottom: `1px solid ${vars.colors.borderDefault}`,
 });
 
 export const linksRail = style({
@@ -37,7 +37,7 @@ export const subheaderLink = style([
 export const activeSubheaderLink = style([
   baseSubheaderLink,
   {
-    background: vars.colors.grey700,
+    background: vars.colors.primary,
     color: vars.colors.white,
     borderRadius: vars.borderRadius,
     textDecoration: "none",

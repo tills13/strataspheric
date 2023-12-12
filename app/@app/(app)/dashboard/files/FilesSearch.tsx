@@ -70,7 +70,10 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
           >
             Search
           </Button>
-          <InternalLink href="/dashboard/files">
+          <InternalLink
+            className={styles.filesSearchClear}
+            href="/dashboard/files"
+          >
             <IconButton>
               <RemoveIcon />
             </IconButton>

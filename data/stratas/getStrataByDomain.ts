@@ -1,6 +1,6 @@
 import { Strata } from "..";
 import { getDomain } from "../../utils/getDomain";
-import { findStrata } from "./findStrata";
+import { findStratas } from "./findStratas";
 
 export function getCurrentStrata() {
   return getStrataByDomain(getDomain());
@@ -9,5 +9,6 @@ export function getCurrentStrata() {
 export async function getStrataByDomain(
   domain: string,
 ): Promise<Strata | undefined> {
-  return findStrata({ domain });
+  const stratas = await findStratas({ domain });
+  return stratas?.[0];
 }

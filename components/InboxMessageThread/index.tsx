@@ -58,7 +58,7 @@ export async function InboxMessageThread({
               className={classnames(
                 iconButtonStyles.iconButton,
                 iconButtonStyles.iconButtonSizes.small,
-                buttonStyles.buttonVariants.transparent,
+                buttonStyles.buttonVariants.tertiary,
               )}
             >
               <ShareIcon />

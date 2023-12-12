@@ -2,8 +2,8 @@
 
 migrations_dir=$( dirname $0 )
 migrations=($( ls $migrations_dir ))
-target=
-# target="--local "
+target="--local "
+# target=
 
 # if [ "$1" == "production" ]; then
 #     target=
@@ -40,6 +40,8 @@ for file in "${migrations[@]}"; do
     if [ $already_run -eq 1 ]; then
         continue
     fi 
+
+    echo "running $file"
 
     npx wrangler d1 execute strataspheric ${target}--file $migrations_dir/$file
 

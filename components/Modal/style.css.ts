@@ -9,7 +9,7 @@ export const modalWrapper = style({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: `rgba(255, 255, 255, 0.4)`,
+  backdropFilter: "blur(3px)",
   zIndex: vars.zIndex.front,
 });
 

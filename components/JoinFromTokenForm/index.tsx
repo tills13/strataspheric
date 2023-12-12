@@ -51,8 +51,8 @@ export function JoinFromTokenForm({
 
       <StatusButton
         className={classnames(
-          buttonStyles.buttonFullWidth,
-          buttonStyles.buttonVariants.primary,
+          buttonStyles.fullWidth,
+          buttonStyles.colors.primary,
           buttonStyles.buttonSizes.large,
         )}
         type="submit"

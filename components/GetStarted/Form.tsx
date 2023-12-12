@@ -147,11 +147,7 @@ export function GetStartedForm({
 
       {state?.error && <Panel>{state.error}</Panel>}
 
-      <StatusButton
-        className={styles.submitButton}
-        type="submit"
-        success={undefined}
-      >
+      <StatusButton className={styles.submitButton} type="submit">
         Let&apos;s Get Started
       </StatusButton>
     </form>

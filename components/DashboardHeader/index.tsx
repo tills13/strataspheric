@@ -1,5 +1,6 @@
 "use client";
 
+import { buttonVariants } from "../Button/style.css";
 import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
 
@@ -66,6 +67,7 @@ export function DashboardHeader({ actions }: Props) {
           buttonClassName={classnames(
             iconButtonStyles.iconButton,
             iconButtonStyles.iconButtonSizes.small,
+            buttonVariants.tertiary,
           )}
         />
       )}

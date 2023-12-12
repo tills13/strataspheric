@@ -4,7 +4,7 @@ CREATE TABLE
         strataId text,
         purpose text,
         notes text,
-        date datetime not null
+        date text not null
     );
 
 CREATE TABLE

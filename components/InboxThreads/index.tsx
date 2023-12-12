@@ -59,7 +59,7 @@ export function InboxThreads({ deleteThread, threads }: Props) {
                   className={classnames(
                     iconButtonStyles.iconButton,
                     iconButtonStyles.iconButtonSizes.small,
-                    buttonStyles.buttonVariants.transparent,
+                    buttonStyles.buttonVariants.tertiary,
                   )}
                 />
               )}

@@ -1,12 +1,14 @@
 import * as styles from "./style.css";
 
-import { Meeting } from "../../data";
+import { Event, Meeting } from "../../data";
+import { formatDateForDatetime } from "../../utils/datetime";
+import { ElementGroup } from "../ElementGroup";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
 
 interface Props {
   createOrUpdateMeeting: (fd: FormData) => void;
-  meeting?: Meeting;
+  meeting?: Meeting & Pick<Event, "startDate" | "endDate">;
 }
 
 export function CreateOrUpdateMeetingForm({
@@ -21,13 +23,31 @@ export function CreateOrUpdateMeetingForm({
         placeholder="Purpose"
         defaultValue={meeting?.purpose}
       />
-      <Input
-        className={styles.input}
-        name="date"
-        placeholder="Date"
-        type="date"
-        defaultValue={meeting?.date}
-      />
+
+      <ElementGroup gap="small">
+        <Input
+          className={styles.input}
+          name="startDate"
+          placeholder="Scheduled Start"
+          type="datetime-local"
+          defaultValue={
+            meeting?.startDate
+              ? formatDateForDatetime(new Date(meeting.startDate))
+              : undefined
+          }
+        />
+        <Input
+          className={styles.input}
+          name="endDate"
+          placeholder="Scheduled End"
+          type="datetime-local"
+          defaultValue={
+            meeting?.endDate
+              ? formatDateForDatetime(new Date(meeting.endDate))
+              : undefined
+          }
+        />
+      </ElementGroup>
 
       <StatusButton type="submit">
         {meeting ? "Update Meeting" : "Create Meeting"}
