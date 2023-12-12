@@ -8,8 +8,8 @@ import {
 } from "@vanilla-extract/css";
 
 const buttonThemeContract = createThemeContract({
-  color: null,
-  colorHover: null,
+  backgroundColor: null,
+  backgroundColorHover: null,
   textColor: null,
   textColorHover: null,
   borderColor: null,
@@ -18,10 +18,10 @@ const buttonThemeContract = createThemeContract({
 
 export const button = style({
   vars: assignVars(buttonThemeContract, {
-    color: vars.colors.grey100,
-    colorHover: vars.colors.grey200,
-    textColor: vars.fontColors.primary,
-    textColorHover: vars.fontColors.primaryHover,
+    backgroundColor: vars.colors.grey100,
+    backgroundColorHover: vars.colors.grey200,
+    textColor: vars.colors.grey800,
+    textColorHover: vars.colors.grey900,
     borderColor: vars.colors.borderDefault,
     borderColorHover: vars.colors.borderDefaultHover,
   }),
@@ -36,7 +36,7 @@ export const button = style({
   borderRadius: vars.borderRadius,
   textTransform: "uppercase",
 
-  backgroundColor: buttonThemeContract.color,
+  backgroundColor: buttonThemeContract.backgroundColor,
   color: buttonThemeContract.textColor,
 
   selectors: {
@@ -45,7 +45,7 @@ export const button = style({
     },
 
     "&:hover": {
-      backgroundColor: buttonThemeContract.colorHover,
+      backgroundColor: buttonThemeContract.backgroundColorHover,
       borderColor: buttonThemeContract.borderColorHover,
       color: buttonThemeContract.textColorHover,
     },
@@ -80,8 +80,8 @@ export const buttonSizes = styleVariants({
 export const colors = styleVariants({
   primary: {
     vars: assignVars(buttonThemeContract, {
-      color: vars.colors.primary,
-      colorHover: vars.colors.primaryHover,
+      backgroundColor: vars.colors.primary,
+      backgroundColorHover: vars.colors.primaryHover,
       textColor: vars.colors.white,
       textColorHover: vars.colors.white,
       borderColor: vars.colors.primary,
@@ -90,8 +90,8 @@ export const colors = styleVariants({
   },
   error: {
     vars: assignVars(buttonThemeContract, {
-      color: vars.colors.red500,
-      colorHover: vars.colors.red700,
+      backgroundColor: vars.colors.red500,
+      backgroundColorHover: vars.colors.red700,
       textColor: vars.fontColors.primary,
       textColorHover: vars.fontColors.primary,
       borderColor: vars.colors.red500,
@@ -106,19 +106,22 @@ export const buttonVariants = styleVariants({
   secondary: {
     backgroundColor: "transparent",
     borderColor: fallbackVar(
-      buttonThemeContract.color,
+      buttonThemeContract.borderColor,
       vars.colors.borderDefault,
     ),
-    color: fallbackVar(buttonThemeContract.color, vars.colors.grey600),
+    color: fallbackVar(buttonThemeContract.textColor, vars.colors.grey600),
 
     selectors: {
       "&:hover": {
         backgroundColor: "transparent",
         borderColor: fallbackVar(
-          buttonThemeContract.colorHover,
+          buttonThemeContract.borderColorHover,
           vars.colors.borderDefaultHover,
         ),
-        color: fallbackVar(buttonThemeContract.colorHover, vars.colors.grey700),
+        color: fallbackVar(
+          buttonThemeContract.textColorHover,
+          vars.colors.grey700,
+        ),
       },
     },
   },

@@ -1,3 +1,8 @@
+import {
+  buttonSizes,
+  colors,
+  fullWidth,
+} from "../../../../../components/Button/style.css";
 import * as parentStyles from "../style.css";
 import * as styles from "./styles.css";
 
@@ -12,6 +17,7 @@ import { Header } from "../../../../../components/Header";
 import { Input } from "../../../../../components/Input";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../../data/users/permissions";
+import { classnames } from "../../../../../utils/classnames";
 import { updateStrataAction } from "./actions";
 
 export const runtime = "edge";
@@ -33,10 +39,12 @@ export default async function Page() {
       <DashboardHeader />
       <div className={parentStyles.pageContainer}>
         <form className={styles.form} action={updateStrataAction}>
-          <ElementGroup orientation="column">
+          <ElementGroup orientation="column" gap="small">
             <input name="id" type="hidden" defaultValue={strata.id} />
 
-            <Header priority={3}>Strata Name</Header>
+            <Header className={styles.header} priority={3}>
+              Strata Name
+            </Header>
             <Input name="name" defaultValue={strata.name} />
 
             <label className={styles.isPublicField} htmlFor="is_public">
@@ -50,14 +58,18 @@ export default async function Page() {
               />
             </label>
 
-            <Header priority={3}>Strata Plan ID</Header>
+            <Header className={styles.header} priority={3}>
+              Strata Plan ID
+            </Header>
             <Input
               name="strata_id"
               placeholder="Strata Plan ID (e.g. VIS...)"
               defaultValue={strata.strataId || undefined}
             />
 
-            <Header priority={3}>Address</Header>
+            <Header className={styles.header} priority={3}>
+              Address
+            </Header>
 
             <Input
               name="strata_address_street_address"
@@ -76,7 +88,16 @@ export default async function Page() {
               placeholder="Province / State"
               defaultValue={strata.provinceState || undefined}
             />
-            <Button type="submit">Update Strata</Button>
+            <Button
+              className={classnames(
+                fullWidth,
+                buttonSizes.normal,
+                colors.primary,
+              )}
+              type="submit"
+            >
+              Update Strata
+            </Button>
           </ElementGroup>
         </form>
       </div>

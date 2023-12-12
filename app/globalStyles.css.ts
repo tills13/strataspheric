@@ -17,7 +17,6 @@ globalStyle("body", {
   fontSmooth: "always",
   MozOsxFontSmoothing: "always",
   WebkitFontSmoothing: "always",
-  backgroundColor: vars.colors.globalBg,
   color: vars.fontColors.primary,
   fontFamily: vars.fontFamilies.text,
   fontSize: vars.fontSizes.normal,

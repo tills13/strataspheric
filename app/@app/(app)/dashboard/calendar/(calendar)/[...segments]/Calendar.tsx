@@ -9,13 +9,11 @@ import isSameDay from "date-fns/isSameDay";
 import sub from "date-fns/sub";
 import { useEffect, useState } from "react";
 
-import {
-  CreateOrUpdateEventForm,
-  formatDefaultDate,
-} from "../../../../../../../components/CreateOrUpdateEventForm";
+import { CreateOrUpdateEventForm } from "../../../../../../../components/CreateOrUpdateEventForm";
 import { Modal } from "../../../../../../../components/Modal";
 import { Event } from "../../../../../../../data";
 import { classnames } from "../../../../../../../utils/classnames";
+import { formatDateForDatetime } from "../../../../../../../utils/datetime";
 
 interface Props {
   upsertEvent: (eventId: string | undefined, fd: FormData) => void;
@@ -127,7 +125,7 @@ export function Calendar({
       {selectedDate && (
         <Modal closeModal={() => setSelectedDate(undefined)} title="New Event">
           <CreateOrUpdateEventForm
-            defaultDate={formatDefaultDate(selectedDate)}
+            defaultDate={formatDateForDatetime(selectedDate)}
             upsertEvent={upsertEvent.bind(undefined, undefined)}
           />
         </Modal>

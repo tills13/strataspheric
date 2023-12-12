@@ -9,17 +9,28 @@ import { Tabs } from "./Tabs";
 export const TabContext = React.createContext<string>(null!);
 
 interface Props {
-  tabs: string[];
   defaultTab: string;
+  tabs: string[];
+  tabsClassName?: string;
 }
 
-export function TabLayout({ defaultTab, children, tabs }) {
+export function TabLayout({
+  defaultTab,
+  children,
+  tabs,
+  tabsClassName,
+}: React.PropsWithChildren<Props>) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]);
 
   return (
     <div className={styles.tabLayout}>
       <div className={styles.tabsContainer}>
-        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
+        <Tabs
+          activeTab={activeTab}
+          className={tabsClassName}
+          setActiveTab={setActiveTab}
+          tabs={tabs}
+        />
       </div>
 
       <TabContext.Provider value={activeTab}>

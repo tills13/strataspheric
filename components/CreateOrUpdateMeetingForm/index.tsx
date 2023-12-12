@@ -1,6 +1,7 @@
 import * as styles from "./style.css";
 
 import { Event, Meeting } from "../../data";
+import { classnames } from "../../utils/classnames";
 import { formatDateForDatetime } from "../../utils/datetime";
 import { ElementGroup } from "../ElementGroup";
 import { Input } from "../Input";
@@ -18,15 +19,15 @@ export function CreateOrUpdateMeetingForm({
   return (
     <form action={createOrUpdateMeeting}>
       <Input
-        className={styles.input}
+        className={classnames(styles.fullWidth, styles.withBottomMargin)}
         name="purpose"
         placeholder="Purpose"
         defaultValue={meeting?.purpose}
       />
 
-      <ElementGroup gap="small">
+      <div className={classnames(styles.dateWrapper, styles.withBottomMargin)}>
         <Input
-          className={styles.input}
+          className={styles.fullWidth}
           name="startDate"
           placeholder="Scheduled Start"
           type="datetime-local"
@@ -37,7 +38,7 @@ export function CreateOrUpdateMeetingForm({
           }
         />
         <Input
-          className={styles.input}
+          className={styles.fullWidth}
           name="endDate"
           placeholder="Scheduled End"
           type="datetime-local"
@@ -47,7 +48,7 @@ export function CreateOrUpdateMeetingForm({
               : undefined
           }
         />
-      </ElementGroup>
+      </div>
 
       <StatusButton type="submit">
         {meeting ? "Update Meeting" : "Create Meeting"}

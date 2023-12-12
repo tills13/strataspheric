@@ -26,7 +26,7 @@ export async function createEventAction(
 
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description");
-  const date = formdata.getString(formData, "date");
+  const startDate = formdata.getString(formData, "date");
 
   if (name === "") {
     throw new Error("invalid fields");
@@ -35,7 +35,8 @@ export async function createEventAction(
   const { id: eventId } = await createEvent({
     name,
     description,
-    date,
+    startDate,
+    endDate: startDate,
     strataId,
     creatorId: session.user.id,
   });

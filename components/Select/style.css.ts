@@ -4,7 +4,7 @@ import { style } from "@vanilla-extract/css";
 export const baseSelect = style({
   padding: `${vars.spacing.small} ${vars.spacing.large} ${vars.spacing.small} ${vars.spacing.normal}`,
   color: vars.fontColors.primary,
-  backgroundColor: vars.colors.globalBg,
+  backgroundColor: vars.colors.white,
   borderWidth: 2,
   borderStyle: "solid",
   borderColor: vars.colors.borderDefault,
@@ -19,8 +19,6 @@ export const baseSelect = style({
 
   selectors: {
     "&:hover": {
-      // backgroundColor: vars.colors.white,
-      // color: vars.colors.globalBg,
       borderColor: vars.colors.borderDefaultHover,
     },
     "&:disabled": {

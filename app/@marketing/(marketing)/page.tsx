@@ -45,7 +45,6 @@ export default async function Page() {
 
       <section
         className={classnames(
-          styles.sectionPadded,
           styles.featuresSection,
           styles.marginBottom.large,
         )}
@@ -53,6 +52,7 @@ export default async function Page() {
         <TabLayout
           defaultTab="Files"
           tabs={["Files", "Events", "Meetings", "Inbox", "Directory"]}
+          tabsClassName={styles.tabLayoutTabs}
         >
           <Tab name="Files">
             <div className={styles.sideBySideFeature}>

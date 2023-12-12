@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Meeting } from "../../data";
+import { Event, Meeting } from "../../data";
 import { CreateOrUpdateMeetingForm } from "../CreateOrUpdateMeetingForm";
 import { EditIcon } from "../Icon/EditIcon";
 import { IconButton } from "../IconButton";
@@ -10,7 +10,7 @@ import { Modal } from "../Modal";
 
 interface Props {
   className?: string;
-  meeting: Meeting;
+  meeting: Meeting & Pick<Event, "startDate" | "endDate">;
   updateMeeting: (fd: FormData) => void;
 }
 

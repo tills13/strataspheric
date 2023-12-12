@@ -1,14 +1,21 @@
-import { vars } from "../../app/theme.css";
+import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
-export const tabLayout = style({});
+export const tabLayout = style({
+  overflow: "hidden",
+});
 
 export const tabsContainer = style({
   display: "flex",
   justifyContent: "center",
-  marginBottom: vars.spacing.xl,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      marginBottom: vars.spacing.xl,
+    },
+  },
 });
 
 export const tabs = style({

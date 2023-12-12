@@ -6,6 +6,11 @@ export const form = style({
   margin: "auto",
 });
 
+export const header = style({
+  marginTop: vars.spacing.small,
+  marginBottom: vars.spacing.small,
+});
+
 export const visibilityLabel = style({
   display: "flex",
   justifyContent: "space-between",
@@ -17,4 +22,5 @@ export const isPublicField = style({
   gap: vars.spacing.normal,
   alignItems: "center",
   justifyContent: "space-between",
+  marginTop: vars.spacing.small,
 });

@@ -2,15 +2,18 @@
 
 import * as styles from "./style.css";
 
+import { classnames } from "../../utils/classnames";
+
 interface Props {
   activeTab: string;
+  className?: string;
   setActiveTab: (nextTab: string) => void;
   tabs: string[];
 }
 
-export function Tabs({ activeTab, setActiveTab, tabs }: Props) {
+export function Tabs({ activeTab, className, setActiveTab, tabs }: Props) {
   return (
-    <div className={styles.tabs}>
+    <div className={classnames(styles.tabs, className)}>
       {tabs.map((t) => (
         <div
           key={t}

@@ -46,9 +46,9 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
         .where("events.startDate", ">", "CURRENT_TIMESTAMP")
         .where("events.startDate", "<", (eb) =>
           eb
-            .selectFrom("meetings")
-            .select("date")
-            .where("meetings.id", "=", "meetingId"),
+            .selectFrom("events")
+            .select("startDate")
+            .where("events.id", "=", "meetings.eventId"),
         )
         .where("events.strataId", "=", strataId)
         .union(

@@ -95,7 +95,7 @@ export function SendInboxMessageForm({
       <StatusButton
         className={classnames(
           buttonStyles.fullWidth,
-          buttonStyles.buttonSizes.large,
+          buttonStyles.buttonSizes.normal,
           buttonStyles.colors.primary,
         )}
         type="submit"

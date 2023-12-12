@@ -33,7 +33,9 @@ export function EventWidgetList({ deleteEvent, events }: Props) {
             <p>{event.description}</p>
           </div>
           <div className={styles.eventWidgetListActions}>
-            <span suppressHydrationWarning>{event.date.toLocaleString()}</span>
+            <span suppressHydrationWarning>
+              {event.startDate.toLocaleString()}
+            </span>
             <DropdownActions
               actions={[
                 can(session?.user, p("stratas", "widgets", "edit")) && {

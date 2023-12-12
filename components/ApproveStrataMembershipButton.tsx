@@ -18,7 +18,6 @@ export function ApproveStrataMembershipButton({
           approveStrataMembership();
         })
       }
-      size="small"
     >
       Approve
     </Button>

@@ -16,8 +16,8 @@ export const meetingLayoutContainer = style({
 });
 
 export const meetingAgendaContainer = style({
-  position: "sticky",
-  top: 0,
+  // position: "sticky",
+  // top: 0,
   padding: vars.spacing.normal,
 });
 

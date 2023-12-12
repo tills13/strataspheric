@@ -53,7 +53,7 @@ export const centerContent = style({
 });
 
 export const featuresSection = style([
-  sectionPadded,
+  section,
   {
     "@media": {
       [breakpoints.tablet]: {
@@ -65,11 +65,25 @@ export const featuresSection = style([
   },
 ]);
 
+export const tabLayoutTabs = style({
+  width: "100vw",
+  overflow: "auto",
+  borderRadius: 0,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      width: "auto",
+      borderRadius: vars.borderRadius,
+    },
+  },
+});
+
 export const sideBySideFeature = style({
   display: "grid",
   gridTemplateColumns: "repeat(1, 1fr)",
   gap: vars.spacing.normal,
   width: "100%",
+  padding: vars.spacing.normal,
 
   "@media": {
     [breakpoints.tablet]: {
@@ -79,7 +93,7 @@ export const sideBySideFeature = style({
 
   selectors: {
     "&:not(:last-child)": {
-      marginBottom: vars.spacing.xl,
+      marginBottom: vars.spacing.large,
     },
   },
 });

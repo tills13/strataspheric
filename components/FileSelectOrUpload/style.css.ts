@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const wrapper = style({
   display: "flex",
-  gap: vars.spacing.normal,
+  gap: vars.spacing.small,
   flexDirection: "column",
 
   "@media": {

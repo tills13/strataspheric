@@ -2,10 +2,20 @@ import type { OperandExpression, SqlBool } from "kysely";
 
 import { Strata, db } from "..";
 
-export async function findStratas(filter: {
+type Filter = {
+  address?: string;
   domain?: string;
+  domainish?: string;
   id?: string;
-}): Promise<Strata[] | undefined> {
+  name?: string;
+  nameish?: string;
+  plan?: string;
+  planish?: string;
+};
+
+export async function findStratas(
+  filter: Filter,
+): Promise<Strata[] | undefined> {
   let query = db
     .selectFrom("stratas")
     .selectAll()

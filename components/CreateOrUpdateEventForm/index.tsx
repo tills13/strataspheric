@@ -31,7 +31,7 @@ export function CreateOrUpdateEventForm({
     <form className={styles.newEventForm} action={upsertEvent}>
       <Input name="name" placeholder="Name" defaultValue={event?.name} />
 
-      <ElementGroup className={styles.fullWidth} gap="small">
+      <div className={styles.dateWrapper}>
         <Input
           className={styles.fullWidth}
           name="startDate"
@@ -54,7 +54,7 @@ export function CreateOrUpdateEventForm({
             (event ? formatDateForDatetime(new Date(event.endDate)) : undefined)
           }
         />
-      </ElementGroup>
+      </div>
 
       <Input
         name="description"
