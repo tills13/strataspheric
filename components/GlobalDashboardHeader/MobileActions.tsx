@@ -6,8 +6,8 @@ import { Session } from "next-auth";
 import { useState } from "react";
 
 import { Strata } from "../../data";
+import { Button } from "../Button";
 import { MenuIcon } from "../Icon/MenuIcon";
-import { IconButton } from "../IconButton";
 import { Logo } from "../Logo";
 import { Modal } from "../Modal";
 import { GlobalHeaderActions } from "./Actions";
@@ -23,9 +23,10 @@ export function GlobalHeaderMobileActions({ session, strata }: Props) {
   return (
     <>
       <div className={styles.globalMobileHeaderActions}>
-        <IconButton onClick={() => setShowMenu(!showMenu)}>
-          <MenuIcon className={styles.hamburgerIcon} />
-        </IconButton>
+        <Button
+          icon={<MenuIcon className={styles.hamburgerIcon} />}
+          onClick={() => setShowMenu(!showMenu)}
+        />
       </div>
       {showMenu && (
         <Modal closeModal={() => setShowMenu(false)}>

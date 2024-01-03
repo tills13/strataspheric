@@ -1,9 +1,3 @@
-import {
-  buttonSizes,
-  buttonVariants,
-  colors,
-  fullWidth,
-} from "../../../../../components/Button/style.css";
 import { icon } from "../../../../../components/Icon/style.css";
 import { vars } from "../../../../theme.css";
 import { style, styleVariants } from "@vanilla-extract/css";
@@ -31,15 +25,10 @@ export const divider = style({
   width: "100%",
 });
 
-export const submitButton = style([
-  fullWidth,
-  buttonSizes.normal,
-  colors.primary,
-  {
-    width: "100%",
-    marginBottom: vars.spacing.normal,
-  },
-]);
+export const submitButton = style({
+  width: "100%",
+  marginBottom: vars.spacing.normal,
+});
 
 export const stratasList = style({
   listStyle: "none",

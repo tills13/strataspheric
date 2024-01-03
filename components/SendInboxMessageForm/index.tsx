@@ -1,14 +1,11 @@
 "use client";
 
-import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
-import { useFormState } from "react-dom";
-
 import { classnames } from "../../utils/classnames";
-import { FileSelect } from "../FileSelect";
 import { FileSelectOrUpload } from "../FileSelectOrUpload";
 import { Header } from "../Header";
+import { SendIcon } from "../Icon/SendIcon";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
@@ -92,14 +89,7 @@ export function SendInboxMessageForm({
 
       <FileSelectOrUpload className={styles.formInput} baseName="file" />
 
-      <StatusButton
-        className={classnames(
-          buttonStyles.fullWidth,
-          buttonStyles.buttonSizes.normal,
-          buttonStyles.colors.primary,
-        )}
-        type="submit"
-      >
+      <StatusButton color="primary" iconRight={<SendIcon />} type="submit">
         Send Message
       </StatusButton>
     </form>

@@ -1,7 +1,5 @@
 "use client";
 
-import { buttonVariants } from "../Button/style.css";
-import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
@@ -50,11 +48,8 @@ export function AbstractWidget({
         {widgetActions.length !== 0 && (
           <DropdownActions
             actions={widgetActions}
-            buttonClassName={classnames(
-              iconButtonStyles.iconButton,
-              iconButtonStyles.iconButtonSizes.small,
-              buttonVariants.tertiary,
-            )}
+            buttonSize="small"
+            buttonStyle="tertiary"
           />
         )}
       </div>

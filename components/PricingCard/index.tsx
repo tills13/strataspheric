@@ -9,6 +9,7 @@ import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleXIcon } from "../Icon/CircleXIcon";
+import { RightIcon } from "../Icon/RightIcon";
 import { InternalLink } from "../Link/InternalLink";
 import { Money } from "../Money";
 import { Panel } from "../Panel";
@@ -90,7 +91,9 @@ export function PricingCard({
         className={styles.selectPlanButtonLink}
         href={`/get-started?plan=${name.toLowerCase()}`}
       >
-        <Button className={styles.selectPlanButton}>Select Plan</Button>
+        <Button color="primary" iconRight={<RightIcon />} fullWidth>
+          Select Plan
+        </Button>
       </InternalLink>
     </Panel>
   );

@@ -1,4 +1,3 @@
-import * as buttonStyles from "../../../components/Button/style.css";
 import * as linkStyles from "../../../components/Link/style.css";
 import * as styles from "./style.css";
 
@@ -53,12 +52,7 @@ export default async function Page({
           <>
             <DividerText>or</DividerText>
             <InternalLink className={linkStyles.noUnderline} href="/dashboard">
-              <Button
-                className={classnames(
-                  buttonStyles.fullWidth,
-                  buttonStyles.buttonSizes.large,
-                )}
-              >
+              <Button fullWidth size="large">
                 view public content
               </Button>
             </InternalLink>

@@ -8,10 +8,10 @@ import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { useHash } from "../../hooks/useHash";
 import { classnames } from "../../utils/classnames";
+import { Button } from "../Button";
 import { FileLink } from "../FileLink";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { ChatIcon } from "../Icon/ChatIcon";
-import { IconButton } from "../IconButton";
 import { InboxMessageQuote } from "../InboxMessageQuote";
 import { Modal } from "../Modal";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
@@ -59,12 +59,13 @@ export function InboxMessageThreadMessage({
             Sent {new Date(sentAt).toLocaleString()}
           </span>
           {can(p("stratas", "inbox_thread_chats", "view")) && (
-            <IconButton
+            <Button
               className={styles.chatActionButton}
+              icon={<ChatIcon />}
               onClick={() => setShowChatReplyModal(true)}
-            >
-              <ChatIcon />
-            </IconButton>
+              size="small"
+              style="tertiary"
+            />
           )}
         </div>
       </div>

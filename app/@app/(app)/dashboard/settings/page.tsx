@@ -1,8 +1,3 @@
-import {
-  buttonSizes,
-  colors,
-  fullWidth,
-} from "../../../../../components/Button/style.css";
 import * as parentStyles from "../style.css";
 import * as styles from "./styles.css";
 
@@ -88,14 +83,7 @@ export default async function Page() {
               placeholder="Province / State"
               defaultValue={strata.provinceState || undefined}
             />
-            <Button
-              className={classnames(
-                fullWidth,
-                buttonSizes.normal,
-                colors.primary,
-              )}
-              type="submit"
-            >
+            <Button color="success" style="secondary" type="submit">
               Update Strata
             </Button>
           </ElementGroup>

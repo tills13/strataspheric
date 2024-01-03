@@ -1,4 +1,3 @@
-import * as iconButtonStyles from "../../../../../components/IconButton/style.css";
 import * as styles from "./style.css";
 
 import { auth } from "../../../../../auth";
@@ -46,10 +45,9 @@ export async function MeetingListLayout({ strataId }: Props) {
               {can(session?.user, p("stratas", "meetings", "delete")) && (
                 <DeleteButton
                   onClick={deleteMeetingAction.bind(undefined, meeting.id)}
-                  className={classnames(
-                    iconButtonStyles.iconButton,
-                    iconButtonStyles.iconButtonSizes.small,
-                  )}
+                  color="error"
+                  size="small"
+                  style="tertiary"
                 />
               )}
             </div>

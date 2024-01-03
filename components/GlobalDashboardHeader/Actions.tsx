@@ -21,12 +21,18 @@ export function GlobalHeaderActions({ className, session, strata }: Props) {
       {session ? (
         <>
           <span className={styles.sessionUserName}>{session.user?.name}</span>
-          <SignOutButton className={styles.globalHeaderActionsButton} />
+          <SignOutButton
+            className={styles.globalHeaderActionsButton}
+            style="secondary"
+          />
         </>
       ) : (
         <>
           <InternalLink className={linkStyles.noUnderline} href="/?action=join">
-            <Button className={styles.globalHeaderActionsButton}>
+            <Button
+              className={styles.globalHeaderActionsButton}
+              style="secondary"
+            >
               Join {strata.name}
             </Button>
           </InternalLink>
@@ -34,7 +40,10 @@ export function GlobalHeaderActions({ className, session, strata }: Props) {
             className={linkStyles.noUnderline}
             href="/?action=signin"
           >
-            <Button className={styles.globalHeaderActionsButton}>
+            <Button
+              className={styles.globalHeaderActionsButton}
+              style="secondary"
+            >
               Sign In
             </Button>
           </InternalLink>

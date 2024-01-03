@@ -18,6 +18,7 @@ import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
 import { CycleIcon } from "../Icon/CycleIcon";
+import { RightIcon } from "../Icon/RightIcon";
 import { Input } from "../Input";
 import { JoinFormFields } from "../JoinForm/JoinFormFields";
 import { Money } from "../Money";
@@ -147,7 +148,7 @@ export function GetStartedForm({
 
       {state?.error && <Panel>{state.error}</Panel>}
 
-      <StatusButton className={styles.submitButton} type="submit">
+      <StatusButton color="primary" iconRight={<RightIcon />} type="submit">
         Let&apos;s Get Started
       </StatusButton>
     </form>

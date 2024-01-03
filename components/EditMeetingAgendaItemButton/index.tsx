@@ -1,23 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { MeetingAgendaItem } from "../../data";
+import { Button } from "../Button";
 import { CreateOrUpdateMeetingAgendaItemForm } from "../CreateOrUpdateMeetingAgendaItemForm";
 import { EditIcon } from "../Icon/EditIcon";
-import { IconButton } from "../IconButton";
 import { Modal } from "../Modal";
+
+type ButtonProps = React.ComponentProps<typeof Button>;
 
 interface Props {
   agendaItem: MeetingAgendaItem;
   className?: string;
   buttonClassName?: string;
+  size?: ButtonProps["size"];
+  style?: ButtonProps["style"];
   updateMeetingAgendaItem: (fd: FormData) => void;
 }
 
 export function EditMeetingAgendaItemButton({
   className,
   buttonClassName,
+  size,
+  style,
   agendaItem,
   updateMeetingAgendaItem,
 }: Props) {
@@ -25,12 +31,13 @@ export function EditMeetingAgendaItemButton({
 
   return (
     <div className={className}>
-      <IconButton
+      <Button
         className={buttonClassName}
+        icon={<EditIcon />}
         onClick={() => setShowModal(true)}
-      >
-        <EditIcon />
-      </IconButton>
+        size={size}
+        style={style}
+      />
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="Edit Agenda Item">
           <CreateOrUpdateMeetingAgendaItemForm

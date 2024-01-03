@@ -6,6 +6,7 @@ import { auth } from "../../../../../../auth";
 import { DashboardHeader } from "../../../../../../components/DashboardHeader";
 import { InboxMessageThread } from "../../../../../../components/InboxMessageThread";
 import { InboxThreadChats } from "../../../../../../components/InboxThreadChats";
+import { getThreadEmailParticipants } from "../../../../../../data/emails/getThreadEmailParticipants";
 import { getThread } from "../../../../../../data/inbox/getThread";
 import { Thread } from "../../../../../../data/inbox/getThreads";
 import { getCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";

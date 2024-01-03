@@ -1,4 +1,3 @@
-import * as buttonStyles from "../../../../../components/Button/style.css";
 import * as styles from "./style.css";
 
 import { notFound, redirect } from "next/navigation";
@@ -8,6 +7,7 @@ import { Button } from "../../../../../components/Button";
 import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { ElementGroup } from "../../../../../components/ElementGroup";
 import { Header } from "../../../../../components/Header";
+import { AddIcon } from "../../../../../components/Icon/AddIcon";
 import { InboxThreads } from "../../../../../components/InboxThreads";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { Thread, getThreads } from "../../../../../data/inbox/getThreads";
@@ -55,13 +55,7 @@ export default async function Page() {
             </p>
 
             <InternalLink href={"/dashboard/settings#plan"}>
-              <Button
-                className={classnames(
-                  buttonStyles.fullWidth,
-                  buttonStyles.buttonSizes.large,
-                  buttonStyles.colors.primary,
-                )}
-              >
+              <Button fullWidth color="primary">
                 Upgrade your plan today
               </Button>
             </InternalLink>
@@ -92,13 +86,7 @@ export default async function Page() {
 
         <div className={styles.newMessageContainer}>
           <InternalLink href="/dashboard/inbox/send">
-            <Button
-              className={classnames(
-                buttonStyles.fullWidth,
-                buttonStyles.buttonSizes.large,
-                buttonStyles.colors.primary,
-              )}
-            >
+            <Button color="primary" iconRight={<AddIcon />} fullWidth>
               New Message to Strata
             </Button>
           </InternalLink>

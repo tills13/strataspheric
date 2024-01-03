@@ -1,8 +1,8 @@
-import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { classnames } from "../../utils/classnames";
 import { FileSelect } from "../FileSelect";
+import { SendIcon } from "../Icon/SendIcon";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
@@ -31,13 +31,10 @@ export function SendInboxThreadChatForm({
       <FileSelect className={styles.formInput} name="fileId" />
 
       <StatusButton
-        className={classnames(
-          buttonStyles.fullWidth,
-          buttonStyles.buttonSizes.normal,
-          buttonStyles.colors.primary,
-        )}
+        color="primary"
+        style="secondary"
+        iconRight={<SendIcon />}
         type="submit"
-        success={undefined}
       >
         Send Chat
       </StatusButton>

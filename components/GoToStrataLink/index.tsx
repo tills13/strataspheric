@@ -3,6 +3,7 @@ import React from "react";
 import { protocol } from "../../constants";
 import { Strata } from "../../data";
 import { Button } from "../Button";
+import { RightIcon } from "../Icon/RightIcon";
 import { ExternalLink } from "../Link/ExternalLink";
 
 type ExternalLinkProps = React.ComponentProps<typeof ExternalLink>;
@@ -34,7 +35,7 @@ export function GoToStrataLink({
       href={protocol + "//" + strata.domain}
       target={target}
     >
-      <Button>Go to {strata.name}</Button>
+      <Button iconRight={<RightIcon />}>Go to {strata.name}</Button>
     </ExternalLink>
   );
 }

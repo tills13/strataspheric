@@ -4,6 +4,17 @@ import { ColumnType, Insertable, Kysely, Selectable, Updateable } from "kysely";
 import { D1Dialect } from "./d1";
 import { AccountType, Role } from "./users/permissions";
 
+export interface EmailsTable {
+  id: string;
+  lastStatus: string | null;
+  updatedAt: ColumnType<string, never, never>;
+  sentAt: ColumnType<string, never, never>;
+}
+
+export type Email = Selectable<EmailsTable>;
+export type NewEmail = Insertable<EmailsTable>;
+export type EmailUpdate = Updateable<EmailsTable>;
+
 export interface EventsTable {
   id: string;
   strataId: string;
@@ -126,13 +137,21 @@ export type Strata = Selectable<StratasTable>;
 export type NewStrata = Insertable<StratasTable>;
 export type StrataUpdate = Updateable<StratasTable>;
 
+export interface ThreadEmailsTable {
+  threadId: string;
+  emailId: string;
+  userId: string | null;
+}
+
+export type ThreadEmail = Selectable<ThreadEmailsTable>;
+export type NewThreadEmail = Insertable<ThreadEmailsTable>;
+export type ThreadEmailUpdate = Updateable<ThreadEmailsTable>;
+
 export interface StrataMembershipsTable {
   strataId: ColumnType<string, string, never>;
   userId: ColumnType<string, string, never>;
   unit: string | null;
   role: Role;
-  name: string;
-  email: string;
   phoneNumber: string | null;
 }
 
@@ -163,7 +182,7 @@ export interface UsersTable {
   id: ColumnType<string, string, never>;
   email: ColumnType<string, string, never>;
   password: string;
-  name: string | null;
+  name: string;
   accountType: ColumnType<AccountType, AccountType | null, AccountType>;
 }
 
@@ -196,6 +215,7 @@ export interface WidgetFilesTable {
 export type NewWidgetFile = Insertable<WidgetFilesTable>;
 
 export interface Database {
+  emails: EmailsTable;
   events: EventsTable;
   files: FilesTable;
   inbox_thread_chats: InboxThreadChatsTable;
@@ -203,6 +223,7 @@ export interface Database {
   meetings: MeetingsTable;
   meeting_agenda_items: MeetingAgendaItemsTable;
   meeting_files: MeetingFilesTable;
+  thread_emails: ThreadEmailsTable;
   strata_memberships: StrataMembershipsTable;
   strata_plans: StrataPlansTable;
   strata_widgets: StrataWidgetsTable;

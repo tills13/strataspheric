@@ -5,7 +5,6 @@ import * as styles from "./style.css";
 import React from "react";
 import { useFormStatus } from "react-dom";
 
-import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleXIcon } from "../Icon/CircleXIcon";

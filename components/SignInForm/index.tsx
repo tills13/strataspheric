@@ -1,6 +1,5 @@
 "use client";
 
-import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { signIn } from "next-auth/react";
@@ -64,14 +63,7 @@ export function SignInForm({ className }: Props) {
 
       {error && <div>Incorrect username or password</div>}
 
-      <Button
-        className={classnames(
-          buttonStyles.button,
-          buttonStyles.buttonSizes.normal,
-          buttonStyles.colors.primary,
-        )}
-        type="submit"
-      >
+      <Button color="primary" type="submit">
         Sign in
       </Button>
 
@@ -79,14 +71,7 @@ export function SignInForm({ className }: Props) {
         className={styles.forgotLink}
         href={protocol + "//" + tld + "/forgot"}
       >
-        <Button
-          className={classnames(
-            buttonStyles.fullWidth,
-            buttonStyles.buttonSizes.normal,
-            buttonStyles.buttonVariants.tertiary,
-          )}
-          type="button"
-        >
+        <Button style="tertiary" type="button">
           Forgot Password
         </Button>
       </ExternalLink>

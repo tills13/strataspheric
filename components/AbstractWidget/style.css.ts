@@ -7,8 +7,6 @@ export const abstractWidget = style({
   display: "flex",
   flexDirection: "column",
   padding: vars.spacing.normal,
-  backgroundColor: vars.colors.grey100,
-  // color: vars.colors.white,
   borderRadius: vars.borderRadius,
   border: `2px solid ${vars.colors.borderDefault}`,
   overflow: "hidden",

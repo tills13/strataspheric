@@ -5,12 +5,17 @@ import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
 import { protocol, tld } from "../../../../../constants";
+import { StrataMembership, User } from "../../../../../data";
+import { createThreadEmail } from "../../../../../data/emails/createThreadEmail";
 import { createAndUpdloadFile } from "../../../../../data/files/createAndUploadFile";
 import { createThread } from "../../../../../data/inbox/createThread";
 import { deleteThread } from "../../../../../data/inbox/deleteThread";
 import { deleteThreadChats } from "../../../../../data/inbox/deleteThreadChats";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
+import { getStrataMembership } from "../../../../../data/strataMemberships/getStrataMembership";
+import { createStrata } from "../../../../../data/stratas/createStrata";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { getStrataById } from "../../../../../data/stratas/getStrataById";
 import * as formdata from "../../../../../utils/formdata";
 import { sendEmail } from "../../../../../utils/sendEmail";
 
@@ -37,6 +42,9 @@ export async function sendInboxMessageAction(
   const newFile = formdata.getFile(fd, "new_file");
 
   const subject = formdata.getString(fd, "subject");
+  const recipients = Object.entries(formdata.getObject(fd, "recipients"))
+    .filter(([, v]) => v === "on")
+    .map(([v]) => v);
 
   if (
     typeof senderName !== "string" ||
@@ -67,7 +75,7 @@ export async function sendInboxMessageAction(
     fileId = file.id;
   }
 
-  const newMessage = await createThread({
+  const newThread = await createThread({
     senderName,
     senderEmail,
     senderPhoneNumber,
@@ -79,11 +87,43 @@ export async function sendInboxMessageAction(
     ...(threadId && { threadId }),
   });
 
-  if (threadId) {
-    const [message0] = await getThreadMessages(threadId);
-    const strata = await getCurrentStrata();
+  const [message0] = await getThreadMessages(threadId || newThread.threadId);
+  const strata = (await getStrataById(strataId))!;
 
-    if (message0.senderUserId === undefined && message0.senderEmail && strata) {
+  let viewPath = `/dashboard/inbox/${threadId || newThread.threadId}`;
+
+  if (newThread.viewId) {
+    viewPath += "?viewId=" + newThread.viewId;
+  }
+
+  const viewUrl = `${protocol}//${strata.domain}${viewPath}`;
+
+  console.log(recipients);
+
+  if (recipients.length) {
+    const memberRecipients = (
+      await Promise.all(recipients.map((r) => getStrataMembership(strataId, r)))
+    )
+      .filter((r): r is StrataMembership & User => !!r)
+      .map((r) => r.email);
+
+    for (const recipient of memberRecipients) {
+      const r = await sendEmail(
+        recipient,
+        subject,
+        message + `<br /> ${viewUrl}`,
+      );
+
+      await createThreadEmail({
+        emailId: r.id,
+        threadId: threadId || newThread.threadId,
+        userId: u?.user.id,
+      });
+    }
+  }
+
+  if (threadId) {
+    if (message0.senderUserId === undefined && message0.senderEmail) {
       // if the original message was from a non-member, generate an email for them
 
       await sendEmail(
@@ -95,23 +135,14 @@ export async function sendInboxMessageAction(
 
         <br />
 
-        ${protocol}//${tld}/dashboard/inbox/${threadId}?viewId=${message0.viewId}
+        ${viewUrl}
       `,
       );
     }
-  }
 
-  revalidatePath("/dashboard/inbox");
-
-  if (threadId) {
     revalidatePath("/dashboard/inbox/" + threadId);
   }
 
-  let redirectLoc = "/dashboard/inbox/" + newMessage.threadId;
-
-  if (newMessage.viewId) {
-    redirectLoc += "?viewId=" + newMessage.viewId;
-  }
-
-  redirect(redirectLoc);
+  revalidatePath("/dashboard/inbox");
+  redirect(viewPath);
 }

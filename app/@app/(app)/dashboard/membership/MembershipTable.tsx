@@ -1,7 +1,5 @@
 "use client";
 
-import * as buttonStyles from "../../../../../components/Button/style.css";
-import * as iconButtonStyles from "../../../../../components/IconButton/style.css";
 import * as styles from "./styles.css";
 
 import { useSession } from "next-auth/react";
@@ -38,7 +36,7 @@ export function MembershipTable({
     "stratas.memberships.edit",
   );
 
-  const byUnit: Record<string, StrataMembership[]> = {};
+  const byUnit: Record<string, Array<StrataMembership & User>> = {};
 
   for (const membership of memberships) {
     const unit =
@@ -120,15 +118,12 @@ export function MembershipTable({
               {canDelete && (
                 <td className={styles.membershipTableActionColumnCell}>
                   <RemoveButton
-                    className={classnames(
-                      iconButtonStyles.iconButton,
-                      iconButtonStyles.iconButtonSizes.small,
-                      buttonStyles.buttonVariants.tertiary,
-                    )}
+                    color="error"
                     onClick={removeStrataMember.bind(
                       undefined,
                       membership.userId,
                     )}
+                    style="tertiary"
                   />
                 </td>
               )}

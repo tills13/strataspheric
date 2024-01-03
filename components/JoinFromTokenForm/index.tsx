@@ -1,11 +1,10 @@
 "use client";
 
-import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import React from "react";
 
-import { Strata, StrataMembership } from "../../data";
+import { Strata, StrataMembership, User } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { Header } from "../Header";
@@ -14,7 +13,7 @@ import { StatusButton } from "../StatusButton";
 
 interface Props {
   className?: string;
-  membership: StrataMembership;
+  membership: StrataMembership & User;
   onSubmit: (fd: FormData) => void;
   strata: Strata;
 }
@@ -49,14 +48,7 @@ export function JoinFromTokenForm({
         type="password"
       />
 
-      <StatusButton
-        className={classnames(
-          buttonStyles.fullWidth,
-          buttonStyles.colors.primary,
-          buttonStyles.buttonSizes.large,
-        )}
-        type="submit"
-      >
+      <StatusButton color="primary" size="large" type="submit">
         Set Password
       </StatusButton>
     </form>

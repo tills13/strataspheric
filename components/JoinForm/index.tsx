@@ -1,6 +1,5 @@
 "use client";
 
-import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { signIn } from "next-auth/react";
@@ -48,13 +47,10 @@ export function JoinForm({ className, onSubmit }: Props) {
       </label>
 
       <StatusButton
-        className={classnames(
-          buttonStyles.fullWidth,
-          buttonStyles.buttonSizes.large,
-          buttonStyles.colors.primary,
-        )}
-        type="submit"
+        color="primary"
+        size="large"
         success={state?.success}
+        type="submit"
       >
         Sign Up
       </StatusButton>

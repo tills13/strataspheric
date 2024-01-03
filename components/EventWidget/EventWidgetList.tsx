@@ -11,6 +11,7 @@ import { can, p } from "../../data/users/permissions";
 import { DropdownActions } from "../DropdownActions";
 import { Header } from "../Header";
 import { DeleteIcon } from "../Icon/DeleteIcon";
+import { InfoPanel } from "../InfoPanel";
 
 interface Props {
   deleteEvent: (eventId: string) => void;
@@ -21,7 +22,11 @@ export function EventWidgetList({ deleteEvent, events }: Props) {
   const { data: session } = useSession();
   return (
     <div className={abstractWidgetStyles.abstractWidgetList}>
-      {events.length === 0 && <div>no events</div>}
+      {events.length === 0 && (
+        <InfoPanel alignment="center" level="info">
+          There are no selected or upcoming events.
+        </InfoPanel>
+      )}
 
       {events.map((event) => (
         <div
@@ -47,6 +52,8 @@ export function EventWidgetList({ deleteEvent, events }: Props) {
                   icon: <DeleteIcon />,
                 },
               ]}
+              buttonSize="small"
+              buttonStyle="tertiary"
             />
           </div>
         </div>

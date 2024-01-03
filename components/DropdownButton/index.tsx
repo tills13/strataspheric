@@ -5,11 +5,13 @@ import * as styles from "./style.css";
 import React, { useCallback, useState } from "react";
 
 import { useClickOutside } from "../../hooks/useClickOutside";
+import { Button } from "../Button";
 import { MoreVerticalIcon } from "../Icon/MoreVerticalIcon";
-import { IconButton } from "../IconButton";
 
 interface Props {
   buttonClassName?: string;
+  buttonSize?: React.ComponentProps<typeof Button>["size"];
+  buttonStyle?: React.ComponentProps<typeof Button>["style"];
   className?: string;
   direction?: "up" | "down";
   panel: JSX.Element;
@@ -17,6 +19,8 @@ interface Props {
 
 export function DropdownButton({
   buttonClassName,
+  buttonSize,
+  buttonStyle,
   className,
   direction,
   panel,
@@ -28,9 +32,13 @@ export function DropdownButton({
 
   return (
     <div className={className || styles.dropdownButton} ref={ref}>
-      <IconButton className={buttonClassName} onClick={() => setOpen(!open)}>
-        <MoreVerticalIcon />
-      </IconButton>
+      <Button
+        className={buttonClassName}
+        icon={<MoreVerticalIcon />}
+        onClick={() => setOpen(!open)}
+        size={buttonSize}
+        style={buttonStyle}
+      />
 
       {open && (
         <div

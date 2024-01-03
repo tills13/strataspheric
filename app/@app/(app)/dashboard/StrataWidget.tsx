@@ -23,7 +23,7 @@ export async function StrataWidgets({ strataId }: Props) {
       {widgets.map((widget) => (
         <Widget
           key={widget.id}
-          createEvent={createEventAction.bind(undefined, widget.id)}
+          createEvent={createEventAction.bind(undefined, strataId, widget.id)}
           createFile={createFileAction.bind(undefined, strataId, widget.id)}
           deleteEvent={deleteWidgetEventAction.bind(undefined, widget.id)}
           deleteFile={deleteWidgetFileAction.bind(undefined, widget.id)}

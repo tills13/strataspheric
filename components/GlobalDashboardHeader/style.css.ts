@@ -1,5 +1,4 @@
 import { breakpoints, vars } from "../../app/theme.css";
-import * as buttonStyles from "../Button/style.css";
 import * as linkStyles from "../Link/style.css";
 import { style } from "@vanilla-extract/css";
 
@@ -58,18 +57,13 @@ export const globalMobileHeaderModalActions = style({
   gap: vars.spacing.normal,
 });
 
-export const globalHeaderActionsButton = style([
-  buttonStyles.button,
-  buttonStyles.buttonVariants.secondary,
-  buttonStyles.buttonSizes.normal,
-  {
-    selectors: {
-      [`${globalMobileHeaderModalActions} &`]: {
-        width: "100%",
-      },
+export const globalHeaderActionsButton = style({
+  selectors: {
+    [`${globalMobileHeaderModalActions} &`]: {
+      width: "100%",
     },
   },
-]);
+});
 
 export const breadcrumbs = style({
   display: "flex",

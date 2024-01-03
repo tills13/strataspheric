@@ -71,7 +71,11 @@ export function StrataSearchForm({
         defaultValue={address}
       />
 
-      <StatusButton className={styles.submitButton} type="submit">
+      <StatusButton
+        className={styles.submitButton}
+        color="primary"
+        type="submit"
+      >
         Find
       </StatusButton>
     </form>

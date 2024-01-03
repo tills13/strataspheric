@@ -1,6 +1,4 @@
 import { breakpoints, vars } from "../../app/theme.css";
-import * as buttonStyles from "../Button/style.css";
-import * as iconButtonStyles from "../IconButton/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const continuePanel = style({
@@ -30,5 +28,6 @@ export const continueAction = style({
 });
 
 export const continueActionOverflow = style({
+  position: "relative",
   flexShrink: 0,
 });

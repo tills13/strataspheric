@@ -1,9 +1,6 @@
-import { vars } from "../../app/theme.css";
+import { iconColorVar, vars } from "../../app/theme.css";
 import * as fileAttachmentChipStyle from "../FileAttachmentChip/style.css";
-import { iconColorVar } from "../Icon/style.css";
 import { style } from "@vanilla-extract/css";
-
-import { calc } from "@vanilla-extract/css-utils";
 
 export const timelineEntry = style({
   borderRadius: vars.borderRadius,

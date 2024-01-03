@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 import { auth } from "../../../../../../auth";
 import { createThreadChat } from "../../../../../../data/inbox/createThreadChat";
@@ -36,6 +36,5 @@ export async function sendInboxThreadChatAction(
     userId: session.user.id,
   });
 
-  // revalidateTag("chats");
   revalidatePath("/dashboard/inbox/" + threadId);
 }

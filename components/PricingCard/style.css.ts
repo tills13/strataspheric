@@ -1,5 +1,4 @@
 import { vars } from "../../app/theme.css";
-import * as buttonStyles from "../Button/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { border, important, padding } from "../../theme";
@@ -104,9 +103,3 @@ export const estimatePeriod = style({
 export const selectPlanButtonLink = style({
   textDecoration: "none",
 });
-
-export const selectPlanButton = style([
-  buttonStyles.fullWidth,
-  buttonStyles.buttonSizes.normal,
-  buttonStyles.colors.primary,
-]);

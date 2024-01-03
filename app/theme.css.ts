@@ -5,6 +5,7 @@ export const breakpoints = {
   desktop: "(min-width: 1200px)",
 };
 
+export const iconColorVar = createVar();
 export const fontHeaderVar = createVar();
 export const fontPrimaryVar = createVar();
 // export const fontSecondaryVar = createVar();
@@ -35,7 +36,7 @@ export const vars = createGlobalTheme(":root", {
     xxs: "16px",
     xs: "24px",
     small: "32px",
-    normal: "40px",
+    normal: "44px",
     large: "48px",
     xl: "56px",
     xxl: "64px",

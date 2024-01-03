@@ -4,6 +4,7 @@ import * as styles from "./style.css";
 
 import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
+import { AddIcon } from "../Icon/AddIcon";
 import { Input } from "../Input";
 import { Select } from "../Select";
 
@@ -22,7 +23,14 @@ export function NewWidgetForm({ createWidget }: Props) {
           <option value="event">Events</option>
         </Select>
 
-        <Button type="submit">Create Widget</Button>
+        <Button
+          color="success"
+          iconRight={<AddIcon />}
+          style="secondary"
+          type="submit"
+        >
+          Create Widget
+        </Button>
       </ElementGroup>
     </form>
   );

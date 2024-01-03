@@ -2,6 +2,7 @@ import * as styles from "./style.css";
 
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
+import { Header } from "../Header";
 import { Input } from "../Input";
 
 interface Props {
@@ -15,7 +16,7 @@ export function NewFileForm({ createFile }: Props) {
       <Input name="description" placeholder="Description" />
       <Input name="file" type="file" />
       <label className={styles.isPublicWrapper} htmlFor="isPublic">
-        Public
+        <Header priority={3}>File is public</Header>
         <Checkbox id="isPublic" name="isPublic" defaultChecked={false} />
       </label>
       <Button type="submit">Create</Button>

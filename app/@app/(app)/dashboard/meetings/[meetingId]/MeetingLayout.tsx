@@ -4,7 +4,6 @@ import { EditMeetingButton } from "../../../../../../components/EditMeetingButto
 import { Header } from "../../../../../../components/Header";
 import { getMeeting } from "../../../../../../data/meetings/getMeeting";
 import { MeetingAgenda } from "./MeetingAgenda";
-// import { MeetingMinutes } from "./MeetingMinutes";
 import { MeetingTimelineSearch } from "./MeetingTimelineSearch";
 import { updateMeetingAction } from "./actions";
 

@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 import { Event, Meeting } from "../../data";
+import { Button } from "../Button";
 import { CreateOrUpdateMeetingForm } from "../CreateOrUpdateMeetingForm";
 import { EditIcon } from "../Icon/EditIcon";
-import { IconButton } from "../IconButton";
 import { Modal } from "../Modal";
 
 interface Props {
@@ -23,9 +23,13 @@ export function EditMeetingButton({
 
   return (
     <>
-      <IconButton className={className} onClick={() => setShowModal(true)}>
-        <EditIcon />
-      </IconButton>
+      <Button
+        className={className}
+        icon={<EditIcon />}
+        onClick={() => setShowModal(true)}
+        style="tertiary"
+        size="small"
+      />
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="Edit Meeting">
           <CreateOrUpdateMeetingForm

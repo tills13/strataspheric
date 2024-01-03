@@ -1,7 +1,5 @@
 "use client";
 
-import * as buttonStyles from "../Button/style.css";
-import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
 
 import React, { startTransition } from "react";
@@ -57,20 +55,15 @@ export function MeetingAgendaItem({
         <div className={styles.agendaItemActions}>
           <EditMeetingAgendaItemButton
             agendaItem={agendaItem}
-            buttonClassName={classnames(
-              iconButtonStyles.iconButton,
-              iconButtonStyles.iconButtonSizes.small,
-              buttonStyles.buttonVariants.tertiary,
-            )}
             updateMeetingAgendaItem={updateAgendaItem}
+            size="small"
+            style="tertiary"
           />
           <RemoveButton
             onClick={removeAgendaItem}
-            className={classnames(
-              iconButtonStyles.iconButton,
-              iconButtonStyles.iconButtonSizes.small,
-              buttonStyles.buttonVariants.tertiary,
-            )}
+            color="error"
+            size="small"
+            style="tertiary"
           />
         </div>
       </div>

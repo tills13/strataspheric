@@ -1,7 +1,6 @@
 "use client";
 
 import * as abstractWidgetStyles from "../AbstractWidget/style.css";
-import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
@@ -15,11 +14,12 @@ import {
   type Props as AbstractWidgetProps,
 } from "../AbstractWidget";
 import { AddFileToWidgetForm } from "../AddFileToWidgetForm";
+import { Button } from "../Button";
 import { FileLink } from "../FileLink";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
 import { DownloadIcon } from "../Icon/DownloadIcon";
-import { IconButton } from "../IconButton";
+import { InfoPanel } from "../InfoPanel";
 import { Modal } from "../Modal";
 import { RemoveButton } from "../RemoveButton";
 
@@ -58,7 +58,11 @@ export function FileWidget({
       widgetTitle={widget.title}
     >
       <div className={abstractWidgetStyles.abstractWidgetList}>
-        {files.length === 0 && <div>no files</div>}
+        {files.length === 0 && (
+          <InfoPanel alignment="center" level="info">
+            There are no selected files.
+          </InfoPanel>
+        )}
 
         {files.map((file) => (
           <div
@@ -79,23 +83,19 @@ export function FileWidget({
             <div className={styles.fileActions}>
               {can(session?.user, p("stratas", "files", "view")) && (
                 <FileLink path={file.path}>
-                  <IconButton
-                    className={classnames(
-                      iconButtonStyles.iconButton,
-                      iconButtonStyles.iconButtonSizes.small,
-                    )}
-                  >
-                    <DownloadIcon />
-                  </IconButton>
+                  <Button
+                    icon={<DownloadIcon />}
+                    size="small"
+                    style="tertiary"
+                  />
                 </FileLink>
               )}
               {can(session?.user, p("stratas", "widgets", "edit")) && (
                 <RemoveButton
                   onClick={deleteFile.bind(undefined, file.id)}
-                  className={classnames(
-                    iconButtonStyles.iconButton,
-                    iconButtonStyles.iconButtonSizes.small,
-                  )}
+                  color="error"
+                  size="small"
+                  style="tertiary"
                 />
               )}
             </div>

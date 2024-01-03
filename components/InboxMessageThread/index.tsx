@@ -1,12 +1,10 @@
-import * as buttonStyles from "../Button/style.css";
-import * as iconButtonStyles from "../IconButton/style.css";
 import * as styles from "./style.css";
 
 import { auth } from "../../auth";
+import { getThreadEmailParticipants } from "../../data/emails/getThreadEmailParticipants";
 import { getThreadMessages } from "../../data/inbox/getThreadMessages";
-import { classnames } from "../../utils/classnames";
+import { Button } from "../Button";
 import { ShareIcon } from "../Icon/ShareIcon";
-import { IconButton } from "../IconButton";
 import { ExternalLink } from "../Link/ExternalLink";
 import { SendInboxMessageForm } from "../SendInboxMessageForm";
 import { InboxMessageThreadMessage } from "./InboxMessageThreadMessage";
@@ -29,6 +27,9 @@ export async function InboxMessageThread({
 
   const { senderUserId, senderName, senderEmail, subject, sentAt, viewId } =
     message0;
+
+  const emailParticipants = await getThreadEmailParticipants(threadId);
+  console.log(emailParticipants);
 
   return (
     <div className={styles.inboxMessageThreadContainer}>
@@ -54,15 +55,7 @@ export async function InboxMessageThread({
             href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
             target="_blank"
           >
-            <IconButton
-              className={classnames(
-                iconButtonStyles.iconButton,
-                iconButtonStyles.iconButtonSizes.small,
-                buttonStyles.buttonVariants.tertiary,
-              )}
-            >
-              <ShareIcon />
-            </IconButton>
+            <Button icon={<ShareIcon />} size="small" style="tertiary" />
           </ExternalLink>
         </div>
       </div>

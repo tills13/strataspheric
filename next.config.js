@@ -1,5 +1,5 @@
 const { createVanillaExtractPlugin } = require("@vanilla-extract/next-plugin");
-const withVanillaExtract = createVanillaExtractPlugin();
+const withVanillaExtract = createVanillaExtractPlugin({});
 const webpack = require("webpack");
 
 /** @type {import('next').NextConfig} */

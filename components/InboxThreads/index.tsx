@@ -1,7 +1,5 @@
 "use client";
 
-import * as iconButtonStyles from "../../components/IconButton/style.css";
-import * as buttonStyles from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { type Thread } from "../../data/inbox/getThreads";
@@ -56,11 +54,9 @@ export function InboxThreads({ deleteThread, threads }: Props) {
               {can(p("stratas", "inbox_messages", "delete")) && (
                 <DeleteButton
                   onClick={deleteThread.bind(undefined, thread.threadId)}
-                  className={classnames(
-                    iconButtonStyles.iconButton,
-                    iconButtonStyles.iconButtonSizes.small,
-                    buttonStyles.buttonVariants.tertiary,
-                  )}
+                  color="error"
+                  size="small"
+                  style="tertiary"
                 />
               )}
             </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import { button, buttonVariants, colors, fullWidth } from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { useTransition } from "react";
@@ -72,11 +71,8 @@ export function CreateOrUpdateEventForm({
                 deleteEvent();
               });
             }}
-            className={classnames(
-              fullWidth,
-              buttonVariants.secondary,
-              colors.error,
-            )}
+            color="error"
+            style="secondary"
             isPending={deletePending}
             type="button"
           >

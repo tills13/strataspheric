@@ -1,5 +1,4 @@
 import { vars } from "../../app/theme.css";
-import * as buttonStyles from "../Button/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const input = style({

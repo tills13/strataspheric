@@ -1,19 +1,14 @@
-import { vars } from "../../app/theme.css";
+import { iconColorVar, vars } from "../../app/theme.css";
 import * as buttonStyles from "../Button/style.css";
 import * as dropdownActionsStyles from "../DropdownActions/style.css";
-import * as iconButtonStyles from "../IconButton/style.css";
-import { createVar, fallbackVar, style } from "@vanilla-extract/css";
-
-export const iconColorVar = createVar();
+import { fallbackVar, style } from "@vanilla-extract/css";
 
 export const icon = style({
   display: "inline",
   fill: fallbackVar(iconColorVar, vars.colors.primary),
+  maxWidth: "unset",
   selectors: {
-    [`${buttonStyles.colors.primary} &`]: {
-      fill: vars.colors.white,
-    },
-    [`${iconButtonStyles.iconButton} &`]: {
+    [`${buttonStyles.button.classNames.base} &`]: {
       height: "24px",
       margin: "auto",
     },

@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const base = style({
   display: "block",
-  padding: `${vars.spacing.small} ${vars.spacing.small}`,
+  padding: `${vars.spacing.small} ${vars.spacing.normal}`,
   color: vars.fontColors.primary,
   background: "none",
   backgroundColor: vars.colors.white,
@@ -17,18 +17,7 @@ export const base = style({
       color: vars.fontColors.secondary,
     },
     "&:hover": {
-      backgroundColor: vars.colors.white,
-      color: vars.fontColors.primaryInverse,
-      opacity: 0.9,
       borderColor: vars.colors.borderDefaultHover,
-    },
-    // "&:hover::placeholder": {
-    //     color: vars.fontColors.primaryInverse,
-    // },
-    "&:focus": {
-      backgroundColor: vars.colors.white,
-      color: vars.fontColors.primaryInverse,
-      opacity: 1,
     },
     "&:disabled": {
       opacity: 0.7,

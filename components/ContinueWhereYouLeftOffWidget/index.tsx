@@ -1,8 +1,5 @@
 "use client";
 
-import { vars } from "../../app/theme.css";
-import { buttonVariants } from "../Button/style.css";
-import { iconButton, iconButtonSizes } from "../IconButton/style.css";
 import * as styles from "./style.css";
 
 import { Session } from "next-auth";
@@ -19,7 +16,6 @@ import { Header } from "../Header";
 import { SignOutIcon } from "../Icon/SignOutIcon";
 import { InternalLink } from "../Link/InternalLink";
 import { Panel } from "../Panel";
-import { SignOutButton } from "../SignOutButton";
 
 interface Props {
   className?: string;
@@ -66,13 +62,9 @@ export function ContinueWhereYouLeftOffWidget({
                   icon: <SignOutIcon />,
                 },
               ]}
-              buttonClassName={classnames(
-                iconButton,
-                iconButtonSizes.normal,
-                buttonVariants.tertiary,
-              )}
               className={styles.continueActionOverflow}
               direction="up"
+              buttonStyle="tertiary"
             />
           </>
         ) : (

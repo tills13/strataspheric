@@ -41,6 +41,6 @@ export const modalHeader = style({
 });
 
 export const modalHeaderCloseIcon = style({
-  height: vars.sizes.normal,
+  height: vars.sizes.small,
   cursor: "pointer",
 });

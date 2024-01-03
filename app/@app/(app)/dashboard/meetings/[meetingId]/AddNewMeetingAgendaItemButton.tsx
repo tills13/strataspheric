@@ -1,7 +1,5 @@
 "use client";
 
-import * as buttonStyles from "../../../../../../components/Button/style.css";
-
 import { useState } from "react";
 
 import { Button } from "../../../../../../components/Button";
@@ -20,14 +18,7 @@ export function AddNewMeetingAgendaItemButton({
 
   return (
     <>
-      <Button
-        className={classnames(
-          buttonStyles.fullWidth,
-          buttonStyles.buttonSizes.large,
-          buttonStyles.colors.primary,
-        )}
-        onClick={() => setShowModal(true)}
-      >
+      <Button color="primary" size="large" onClick={() => setShowModal(true)}>
         Add New Agenda Item
       </Button>
       {showModal && (

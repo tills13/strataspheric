@@ -1,6 +1,5 @@
 "use client";
 
-import * as buttonStyles from "../../../../../components/Button/style.css";
 import * as styles from "./style.css";
 
 import { useRouter } from "next/navigation";
@@ -9,12 +8,9 @@ import { Button } from "../../../../../components/Button";
 import { ElementGroup } from "../../../../../components/ElementGroup";
 import { Header } from "../../../../../components/Header";
 import { RemoveIcon } from "../../../../../components/Icon/RemoveIcon";
-import { IconButton } from "../../../../../components/IconButton";
 import { Input } from "../../../../../components/Input";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
-import { RemoveButton } from "../../../../../components/RemoveButton";
 import { Select } from "../../../../../components/Select";
-import { classnames } from "../../../../../utils/classnames";
 import * as formdata from "../../../../../utils/formdata";
 
 interface Props {
@@ -63,20 +59,14 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
           <option value="public">Public</option>
         </Select>
         <ElementGroup gap="small">
-          <Button
-            className={styles.filesSearchSubmit}
-            type="submit"
-            defaultValue={visibility}
-          >
+          <Button type="submit" defaultValue={visibility} fullWidth>
             Search
           </Button>
           <InternalLink
             className={styles.filesSearchClear}
             href="/dashboard/files"
           >
-            <IconButton>
-              <RemoveIcon />
-            </IconButton>
+            <Button color="error" icon={<RemoveIcon />} style="secondary" />
           </InternalLink>
         </ElementGroup>
       </form>

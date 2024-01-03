@@ -1,5 +1,4 @@
 import { breakpoints, vars } from "../../../../../app/theme.css";
-import * as buttonStyles from "../../../../../components/Button/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
 import { padding } from "../../../../../theme";
@@ -87,12 +86,6 @@ export const filesSearchInput = style({
     },
   },
 });
-
-export const filesSearchSubmit = style([
-  buttonStyles.fullWidth,
-  buttonStyles.buttonSizes.normal,
-  {},
-]);
 
 export const filesSearchClear = style({
   flexShrink: 0,

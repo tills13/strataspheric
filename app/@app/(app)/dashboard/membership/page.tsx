@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 import { auth } from "../../../../../auth";
-import { getStrataMembership } from "../../../../../data/strataMemberships/getStrataMembership";
+import { getStrataMemberships } from "../../../../../data/strataMemberships/getStrataMemberships";
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../../data/users/permissions";
@@ -35,7 +35,7 @@ export default async function Page() {
     "stratas.memberships.edit",
   );
 
-  const memberships = await getStrataMembership(strata.id, canUpsert);
+  const memberships = await getStrataMemberships(strata.id, canUpsert);
 
   return (
     <>

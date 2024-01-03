@@ -2,23 +2,27 @@
 
 import React, { startTransition } from "react";
 
+import { Button } from "../Button";
 import { DeleteIcon } from "../Icon/DeleteIcon";
-import { IconButton } from "../IconButton";
 
-interface Props extends React.ComponentProps<typeof IconButton> {
+type ButtonProps = Omit<
+  React.ComponentProps<typeof Button>,
+  "icon" | "iconLeft" | "iconRight"
+>;
+
+interface Props extends ButtonProps {
   onClick: () => void;
 }
 
 export function DeleteButton({ onClick, ...delegateProps }: Props) {
   return (
-    <IconButton
+    <Button
       {...delegateProps}
+      icon={<DeleteIcon />}
       onClick={(e) => {
         e.preventDefault();
         startTransition(() => onClick());
       }}
-    >
-      <DeleteIcon />
-    </IconButton>
+    />
   );
 }

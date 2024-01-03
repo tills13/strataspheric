@@ -1,10 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  button,
-  buttonSizes,
-  buttonVariants,
-  colors,
-} from "../../../components/Button/style.css";
 import * as styles from "./style.css";
 
 import { Button } from "../../../components/Button";
@@ -30,14 +24,7 @@ export default async function Page() {
         </Header>
         <p className={styles.ctaText}></p>
         <InternalLink className={styles.ctaLink} href="/get-started?plan=basic">
-          <Button
-            className={classnames(
-              button,
-              buttonSizes.large,
-              colors.primary,
-              styles.ctaButton,
-            )}
-          >
+          <Button className={styles.ctaButton} color="primary" size="large">
             Begin Onboarding
           </Button>
         </InternalLink>
@@ -72,7 +59,7 @@ export default async function Page() {
               />
             </div>
 
-            <div className={styles.sideBySideFeature}>
+            <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideText}>
                 <p>
                   <b>Find exactly what you need.</b>
@@ -115,7 +102,7 @@ export default async function Page() {
               />
             </div>
 
-            <div className={styles.sideBySideFeature}>
+            <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideText}>
                 <p>
                   <b>Amentity booking.</b>
@@ -212,27 +199,16 @@ export default async function Page() {
 
         <InternalLink href="/find">
           <Button
-            className={classnames(
-              button,
-              buttonSizes.large,
-              colors.primary,
-              styles.marginBottom.normal,
-              styles.ctaButton,
-            )}
+            className={classnames(styles.marginBottom.normal, styles.ctaButton)}
+            color="primary"
+            size="large"
           >
             Connect with a Strata
           </Button>
         </InternalLink>
 
         <InternalLink href="/join">
-          <Button
-            className={classnames(
-              button,
-              buttonSizes.normal,
-              buttonVariants.tertiary,
-              styles.ctaButton,
-            )}
-          >
+          <Button className={classnames(styles.ctaButton)} style="tertiary">
             Join Strataspheric
           </Button>
         </InternalLink>

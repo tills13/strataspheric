@@ -1,15 +1,12 @@
-import * as buttonStyles from "../../../../../components/Button/style.css";
-import * as iconButtonStyles from "../../../../../components/IconButton/style.css";
 import * as styles from "./style.css";
 
 import { auth } from "../../../../../auth";
+import { Button } from "../../../../../components/Button";
 import { DeleteButton } from "../../../../../components/DeleteButton";
 import { FileLink } from "../../../../../components/FileLink";
 import { DownloadIcon } from "../../../../../components/Icon/DownloadIcon";
-import { IconButton } from "../../../../../components/IconButton";
 import { searchFiles } from "../../../../../data/files/searchFiles";
 import { can, p } from "../../../../../data/users/permissions";
-import { classnames } from "../../../../../utils/classnames";
 import { deleteFileAction } from "./actions";
 
 interface Props {
@@ -60,25 +57,19 @@ export async function FilesTable({ searchTerm, strataId, visibility }: Props) {
               <div className={styles.fileActionsContainer}>
                 {can(session?.user, p("stratas", "files", "view")) && (
                   <FileLink path={file.path}>
-                    <IconButton
-                      className={classnames(
-                        iconButtonStyles.iconButton,
-                        iconButtonStyles.iconButtonSizes.small,
-                        buttonStyles.buttonVariants.tertiary,
-                      )}
-                    >
-                      <DownloadIcon />
-                    </IconButton>
+                    <Button
+                      icon={<DownloadIcon />}
+                      size="small"
+                      style="tertiary"
+                    />
                   </FileLink>
                 )}
                 {can(session?.user, p("stratas", "files", "delete")) && (
                   <DeleteButton
                     onClick={deleteFileAction.bind(undefined, file.id)}
-                    className={classnames(
-                      iconButtonStyles.iconButton,
-                      iconButtonStyles.iconButtonSizes.small,
-                      buttonStyles.buttonVariants.tertiary,
-                    )}
+                    color="error"
+                    size="small"
+                    style="tertiary"
                   />
                 )}
               </div>
