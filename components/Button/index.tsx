@@ -47,7 +47,7 @@ export function Button({
           fullWidth,
           size,
           iconOnly,
-          style: style,
+          style,
           withIcon,
         }),
       )}

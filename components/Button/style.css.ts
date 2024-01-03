@@ -10,28 +10,31 @@ export const button = recipe({
     fontWeight: 700,
     borderWidth: 2,
     borderStyle: "solid",
-    borderColor: vars.colors.borderDefault,
+
     outline: "none",
     cursor: "pointer",
     borderRadius: vars.borderRadius,
     textTransform: "capitalize",
-    color: vars.fontColors.primary,
 
     selectors: {
       "&:disabled": {
         opacity: 0.5,
-      },
-
-      "&:hover": {
-        backgroundColor: vars.colors.borderDefaultHover,
-        borderColor: vars.colors.borderDefaultHover,
-        color: vars.fontColors.primaryHover,
       },
     },
   },
 
   variants: {
     color: {
+      default: {
+        borderColor: vars.colors.borderDefault,
+        color: vars.fontColors.primary,
+
+        "&:hover": {
+          backgroundColor: vars.colors.borderDefaultHover,
+          borderColor: vars.colors.borderDefaultHover,
+          color: vars.fontColors.primaryHover,
+        },
+      },
       error: {
         borderColor: vars.colors.red500,
         backgroundColor: vars.colors.red500,
@@ -423,6 +426,7 @@ export const button = recipe({
   ],
 
   defaultVariants: {
+    color: "default",
     size: "normal",
     style: "primary",
     fullWidth: true,
