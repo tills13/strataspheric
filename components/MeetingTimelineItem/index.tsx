@@ -43,7 +43,7 @@ export function MeetingTimelineItem({
     title += " chatted about a received message";
   }
 
-  console.log(parseTimestamp(date).toLocaleString());
+  console.log(date, parseTimestamp(date).toLocaleString());
 
   return (
     <>
