@@ -2,6 +2,7 @@ import * as styles from "./style.css";
 
 import { auth } from "../../../../../auth";
 import { Button } from "../../../../../components/Button";
+import { Date } from "../../../../../components/Date";
 import { DeleteButton } from "../../../../../components/DeleteButton";
 import { FileLink } from "../../../../../components/FileLink";
 import { DownloadIcon } from "../../../../../components/Icon/DownloadIcon";
@@ -46,8 +47,8 @@ export async function FilesTable({ searchTerm, strataId, visibility }: Props) {
           <tr key={file.id} className={styles.filesTableRow}>
             <td className={styles.filesTableCell}>{file.name}</td>
             <td className={styles.descriptionCell}>{file.description}</td>
-            <td className={styles.filesTableCell} suppressHydrationWarning>
-              {parseTimestamp(file.createdAt).toLocaleDateString()}
+            <td className={styles.filesTableCell}>
+              <Date output="date" timestamp={file.createdAt} />
             </td>
             {canDelete && (
               <td className={styles.filesTableCell}>

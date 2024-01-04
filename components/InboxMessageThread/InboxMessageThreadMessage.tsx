@@ -10,6 +10,7 @@ import { useHash } from "../../hooks/useHash";
 import { classnames } from "../../utils/classnames";
 import { parseTimestamp } from "../../utils/datetime";
 import { Button } from "../Button";
+import { Date } from "../Date";
 import { FileLink } from "../FileLink";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { ChatIcon } from "../Icon/ChatIcon";
@@ -56,8 +57,8 @@ export function InboxMessageThreadMessage({
           <div>{senderEmail}</div>
         </div>
         <div className={styles.messageHeaderActions}>
-          <span className={styles.messageHeaderSentAt} suppressHydrationWarning>
-            Sent {parseTimestamp(sentAt).toLocaleString()}
+          <span className={styles.messageHeaderSentAt}>
+            Sent <Date timestamp={sentAt} />
           </span>
           {can(p("stratas", "inbox_thread_chats", "view")) && (
             <Button

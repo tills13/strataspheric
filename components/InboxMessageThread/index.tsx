@@ -5,6 +5,7 @@ import { getThreadEmailParticipants } from "../../data/emails/getThreadEmailPart
 import { getThreadMessages } from "../../data/inbox/getThreadMessages";
 import { parseTimestamp } from "../../utils/datetime";
 import { Button } from "../Button";
+import { Date } from "../Date";
 import { ShareIcon } from "../Icon/ShareIcon";
 import { ExternalLink } from "../Link/ExternalLink";
 import { SendInboxMessageForm } from "../SendInboxMessageForm";
@@ -50,9 +51,9 @@ export async function InboxMessageThread({
         </div>
 
         <div className={styles.pageHeaderActions}>
-          <span suppressHydrationWarning>
-            Started {parseTimestamp(sentAt).toLocaleString()}
-          </span>
+          <div>
+            Started <Date timestamp={sentAt} />
+          </div>
 
           <ExternalLink
             href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}

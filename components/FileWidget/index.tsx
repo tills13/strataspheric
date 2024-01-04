@@ -15,6 +15,7 @@ import {
 } from "../AbstractWidget";
 import { AddFileToWidgetForm } from "../AddFileToWidgetForm";
 import { Button } from "../Button";
+import { Date } from "../Date";
 import { FileLink } from "../FileLink";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
@@ -72,12 +73,11 @@ export function FileWidget({
             <div>
               <Header priority={3}>{file.name}</Header>
               {file.description && <p>{file.description}</p>}
-              <span
+              <Date
                 className={styles.fileWidgetListItemDate}
-                suppressHydrationWarning
-              >
-                {new Date(file.createdAt).toLocaleDateString()}
-              </span>
+                output="date"
+                timestamp={file.createdAt}
+              />
             </div>
 
             <div className={styles.fileActions}>

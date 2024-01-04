@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 import { classnames } from "../../utils/classnames";
 import { parseTimestamp } from "../../utils/datetime";
 import { truncate } from "../../utils/truncate";
+import { Date } from "../Date";
 import { Header } from "../Header";
 import { QuoteIcon } from "../Icon/QuoteIcon";
 
@@ -33,12 +34,11 @@ export function InboxMessageQuote({
           <QuoteIcon className={styles.quotedMessageIcon} /> {senderName}{" "}
           sent...
         </Header>
-        <span
+        <Date
           className={styles.quotedMessageTimestamp}
-          suppressHydrationWarning
-        >
-          {parseTimestamp(timestamp).toDateString()}
-        </span>
+          output="date"
+          timestamp={timestamp}
+        />
       </div>
 
       <p className={styles.quotedMessageMessage}>

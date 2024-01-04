@@ -1,7 +1,7 @@
 import { s } from "../../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { Button } from "../../../../../../components/Button";
+import { Date } from "../../../../../../components/Date";
 import { EditMeetingButton } from "../../../../../../components/EditMeetingButton";
 import { Header } from "../../../../../../components/Header";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
@@ -35,10 +35,7 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           </Header>
           <p>
             Called by <b>{meeting.caller}</b> for
-            <br />{" "}
-            <span suppressHydrationWarning>
-              {parseTimestamp(meeting.startDate).toString()}
-            </span>
+            <br /> <Date timestamp={meeting.startDate} />
           </p>
         </div>
 

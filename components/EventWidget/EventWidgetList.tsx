@@ -8,6 +8,7 @@ import { startTransition } from "react";
 
 import { Event } from "../../data";
 import { can, p } from "../../data/users/permissions";
+import { Date } from "../Date";
 import { DropdownActions } from "../DropdownActions";
 import { Header } from "../Header";
 import { DeleteIcon } from "../Icon/DeleteIcon";
@@ -38,9 +39,7 @@ export function EventWidgetList({ deleteEvent, events }: Props) {
             <p>{event.description}</p>
           </div>
           <div className={styles.eventWidgetListActions}>
-            <span suppressHydrationWarning>
-              {event.startDate.toLocaleString()}
-            </span>
+            <Date timestamp={event.startDate} />
             <DropdownActions
               actions={[
                 can(session?.user, p("stratas", "widgets", "edit")) && {

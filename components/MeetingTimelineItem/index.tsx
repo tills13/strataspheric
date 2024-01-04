@@ -9,6 +9,7 @@ import { type AgendaTimelineEntry } from "../../app/@app/(app)/dashboard/meeting
 import { classnames } from "../../utils/classnames";
 import { parseTimestamp } from "../../utils/datetime";
 import { Button } from "../Button";
+import { Date } from "../Date";
 import { ElementGroup } from "../ElementGroup";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { Header } from "../Header";
@@ -50,9 +51,11 @@ export function MeetingTimelineItem({
       <div className={classnames(styles.timelineEntry, s({ mb: "small" }))}>
         <div className={styles.timelineEntryHeader}>
           <Header priority={3}>{title}</Header>
-          <span className={styles.timelineEntryDate} suppressHydrationWarning>
-            {parseTimestamp(date).toLocaleString()}
-          </span>
+          <Date
+            className={styles.timelineEntryDate}
+            output="date"
+            timestamp={date}
+          />
         </div>
 
         {type === "file" ? (

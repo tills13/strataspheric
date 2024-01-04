@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 
 import { auth } from "../../../../../auth";
 import { Button } from "../../../../../components/Button";
+import { Date } from "../../../../../components/Date";
 import { DeleteButton } from "../../../../../components/DeleteButton";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
@@ -41,8 +42,8 @@ export async function MeetingListLayout({ strataId }: Props) {
             }}
           >
             <div className={styles.purposeCell}>{meeting.purpose}</div>
-            <div className={styles.dateCell} suppressHydrationWarning>
-              {parseTimestamp(meeting.startDate).toLocaleString()}
+            <div className={styles.dateCell}>
+              <Date timestamp={meeting.startDate} />
             </div>
             <div className={styles.actionsCell}>
               {can(session?.user, p("stratas", "meetings", "delete")) && (
