@@ -41,7 +41,7 @@ export async function MeetingListLayout({ strataId }: Props) {
             }}
           >
             <div className={styles.purposeCell}>{meeting.purpose}</div>
-            <div className={styles.dateCell}>
+            <div className={styles.dateCell} suppressHydrationWarning>
               {parseTimestamp(meeting.startDate).toLocaleString()}
             </div>
             <div className={styles.actionsCell}>

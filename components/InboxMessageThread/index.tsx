@@ -50,7 +50,9 @@ export async function InboxMessageThread({
         </div>
 
         <div className={styles.pageHeaderActions}>
-          <span>Started {parseTimestamp(sentAt).toLocaleString()}</span>
+          <span suppressHydrationWarning>
+            Started {parseTimestamp(sentAt).toLocaleString()}
+          </span>
 
           <ExternalLink
             href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}

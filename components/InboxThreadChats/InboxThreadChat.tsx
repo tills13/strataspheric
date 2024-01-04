@@ -34,7 +34,7 @@ export function InboxThreadChat({ ...chat }: Props & Chat) {
     >
       <div className={styles.chatBubbleHeader}>
         <Header priority={3}>{chat.name} said...</Header>
-        <span className={styles.chatBubbleTimestamp}>
+        <span className={styles.chatBubbleTimestamp} suppressHydrationWarning>
           {parseTimestamp(chat.sentAt).toDateString()}
         </span>
       </div>

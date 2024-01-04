@@ -50,7 +50,7 @@ export function MeetingTimelineItem({
       <div className={classnames(styles.timelineEntry, s({ mb: "small" }))}>
         <div className={styles.timelineEntryHeader}>
           <Header priority={3}>{title}</Header>
-          <span className={styles.timelineEntryDate}>
+          <span className={styles.timelineEntryDate} suppressHydrationWarning>
             {parseTimestamp(date).toLocaleString()}
           </span>
         </div>

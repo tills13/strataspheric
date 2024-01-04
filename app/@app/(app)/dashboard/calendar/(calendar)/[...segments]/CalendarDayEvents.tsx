@@ -12,18 +12,12 @@ import { classnames } from "../../../../../../../utils/classnames";
 import { parseTimestamp } from "../../../../../../../utils/datetime";
 
 interface Props {
-  currentDate: Date;
   events: Event[];
   date: Date;
   onClickEvent: (event: Event) => void;
 }
 
-export function CalendarDayEvents({
-  currentDate,
-  events,
-  date,
-  onClickEvent,
-}: Props) {
+export function CalendarDayEvents({ events, date, onClickEvent }: Props) {
   const eventsOnDay = events
     .filter(
       (e) =>

@@ -56,7 +56,7 @@ export function InboxMessageThreadMessage({
           <div>{senderEmail}</div>
         </div>
         <div className={styles.messageHeaderActions}>
-          <span className={styles.messageHeaderSentAt}>
+          <span className={styles.messageHeaderSentAt} suppressHydrationWarning>
             Sent {parseTimestamp(sentAt).toLocaleString()}
           </span>
           {can(p("stratas", "inbox_thread_chats", "view")) && (

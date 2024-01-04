@@ -33,7 +33,10 @@ export function InboxMessageQuote({
           <QuoteIcon className={styles.quotedMessageIcon} /> {senderName}{" "}
           sent...
         </Header>
-        <span className={styles.quotedMessageTimestamp}>
+        <span
+          className={styles.quotedMessageTimestamp}
+          suppressHydrationWarning
+        >
           {parseTimestamp(timestamp).toDateString()}
         </span>
       </div>

@@ -46,7 +46,7 @@ export async function FilesTable({ searchTerm, strataId, visibility }: Props) {
           <tr key={file.id} className={styles.filesTableRow}>
             <td className={styles.filesTableCell}>{file.name}</td>
             <td className={styles.descriptionCell}>{file.description}</td>
-            <td className={styles.filesTableCell}>
+            <td className={styles.filesTableCell} suppressHydrationWarning>
               {parseTimestamp(file.createdAt).toLocaleDateString()}
             </td>
             {canDelete && (

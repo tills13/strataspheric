@@ -48,7 +48,7 @@ export function InboxThreads({ deleteThread, threads }: Props) {
             <div className={styles.chatsCell}>
               {(thread.numChats || 0).toString()} chats
             </div>
-            <div className={styles.sentAtCell}>
+            <div className={styles.sentAtCell} suppressHydrationWarning>
               {parseTimestamp(thread.sentAt).toLocaleString()}
             </div>
             <div className={styles.actionsCell}>
