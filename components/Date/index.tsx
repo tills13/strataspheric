@@ -28,7 +28,7 @@ export function Date({ className, output, timestamp }: Props) {
 
   return (
     <span className={className} suppressHydrationWarning>
-      {dateStr}
+      {typeof window === "undefined" ? "" : dateStr}
     </span>
   );
 }
