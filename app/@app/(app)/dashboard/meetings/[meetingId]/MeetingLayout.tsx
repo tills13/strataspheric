@@ -35,7 +35,7 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           </Header>
           <p>
             Called by <b>{meeting.caller}</b> for
-            <br /> {parseTimestamp(meeting.startDate).toLocaleString()}
+            <br /> {parseTimestamp(meeting.startDate).toString()}
           </p>
         </div>
 

@@ -12,7 +12,7 @@ import { addItemToAgendaAction } from "./actions";
 export type AgendaTimelineEntry = {
   id: string;
   title: string;
-  date: string;
+  date: number;
   description: string;
   sourceUserName: string | null;
   filePath: string | null;
@@ -43,7 +43,7 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
             .as("sourceUserName"),
           sql.lit<AgendaTimelineEntry["type"]>("event").as("type"),
         ])
-        .where("events.startDate", ">", "CURRENT_TIMESTAMP")
+        .where("events.startDate", ">", "now")
         .where("events.startDate", "<", (eb) =>
           eb
             .selectFrom("events")

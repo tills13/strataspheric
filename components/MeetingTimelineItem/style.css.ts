@@ -6,7 +6,6 @@ export const timelineEntry = style({
   borderRadius: vars.borderRadius,
   backgroundColor: vars.colors.primary,
   color: vars.colors.white,
-  marginBottom: vars.spacing.normal,
 });
 
 export const timelineEntryHeader = style({

@@ -1,14 +1,18 @@
 "use client";
 
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import React, { startTransition } from "react";
 
 import { type AgendaTimelineEntry } from "../../app/@app/(app)/dashboard/meetings/[meetingId]/MeetingTimelineSearch";
+import { classnames } from "../../utils/classnames";
+import { parseTimestamp } from "../../utils/datetime";
 import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { Header } from "../Header";
+import { AddIcon } from "../Icon/AddIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
 import { MeetingTimelineIcon } from "../MeetingTimelineIcon";
 
@@ -41,11 +45,11 @@ export function MeetingTimelineItem({
 
   return (
     <>
-      <div className={styles.timelineEntry}>
+      <div className={classnames(styles.timelineEntry, s({ mb: "small" }))}>
         <div className={styles.timelineEntryHeader}>
           <Header priority={3}>{title}</Header>
           <span className={styles.timelineEntryDate}>
-            {new Date(date).toLocaleDateString()}
+            {parseTimestamp(date).toLocaleDateString()}
           </span>
         </div>
 
@@ -68,6 +72,9 @@ export function MeetingTimelineItem({
 
       <ElementGroup>
         <Button
+          color="primary"
+          style="secondary"
+          iconRight={<AddIcon />}
           onClick={() =>
             startTransition(() => {
               addItemToAgenda();

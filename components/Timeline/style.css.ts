@@ -8,7 +8,7 @@ export const timeline = style({});
 export const timelineItem = style({
   position: "relative",
   padding: vars.spacing.normal,
-  paddingLeft: vars.spacing.xl,
+  paddingLeft: calc(vars.sizes.small).add(vars.spacing.normal).toString(),
   paddingRight: 0,
 
   selectors: {
