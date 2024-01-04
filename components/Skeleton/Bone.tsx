@@ -1,5 +1,11 @@
 import * as styles from "./style.css";
 
-export function Bone() {
-  return <div className={styles.skeletonBone} />;
+import { classnames } from "../../utils/classnames";
+
+interface Props {
+  className?: string;
+}
+
+export function Bone({ className }: Props) {
+  return <span className={classnames(className, styles.skeletonBone)} />;
 }
