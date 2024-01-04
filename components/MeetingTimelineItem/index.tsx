@@ -43,13 +43,15 @@ export function MeetingTimelineItem({
     title += " chatted about a received message";
   }
 
+  console.log(parseTimestamp(date).toLocaleString());
+
   return (
     <>
       <div className={classnames(styles.timelineEntry, s({ mb: "small" }))}>
         <div className={styles.timelineEntryHeader}>
           <Header priority={3}>{title}</Header>
           <span className={styles.timelineEntryDate}>
-            {parseTimestamp(date).toLocaleDateString()}
+            {parseTimestamp(date).toLocaleString()}
           </span>
         </div>
 

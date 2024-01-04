@@ -5,12 +5,6 @@ export function formatDateForDatetime(d: Date | number) {
     d = parseTimestamp(d);
   }
 
-  console.log(
-    d,
-    d.toISOString().substring(0, 16),
-    d.toLocaleString("sv").substring(0, 16),
-  );
-
   return d.toLocaleString("sv").substring(0, 16);
 }
 
