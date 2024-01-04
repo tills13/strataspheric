@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { Panel } from "../Panel";
+import { Bone } from "./Bone";
 
 interface Props {
   title?: React.ReactNode;
@@ -17,9 +18,9 @@ export function WidgetSkeleton({ title }: Props) {
         <div className={styles.skeletonBoneHeader} />
       )}
 
-      <div className={styles.skeletonBone} />
-      <div className={styles.skeletonBone} />
-      <div className={styles.skeletonBone} />
+      <Bone />
+      <Bone />
+      <Bone />
     </Panel>
   );
 }

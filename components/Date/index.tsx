@@ -2,6 +2,8 @@
 
 import { parseTimestamp } from "../../utils/datetime";
 import { ClientOnly } from "../ClientOnly";
+import { Bone } from "../Skeleton/Bone";
+import { WidgetSkeleton } from "../Skeleton/WidgetSkeleton";
 
 function formatDate(d: Date, output: Props["output"]) {
   if (output === "date") {
@@ -25,9 +27,7 @@ export function Date({ className, output, timestamp }: Props) {
       className={className}
       dateTime={parseTimestamp(timestamp).toISOString()}
     >
-      <ClientOnly
-        fallback={() => formatDate(parseTimestamp(timestamp), output)}
-      >
+      <ClientOnly fallback={() => <Bone />}>
         {() => formatDate(parseTimestamp(timestamp), output)}
       </ClientOnly>
     </time>
