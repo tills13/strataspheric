@@ -33,7 +33,10 @@ export async function deleteStrataAction() {
   }
 
   const files = await getFiles(currentStrata.id, true);
-  await r2.delete(files.map((file) => file.path));
+
+  if (files.length !== 0) {
+    await r2.delete(files.map((file) => file.path));
+  }
 
   // await deleteAllEmails();
   await deleteAllEvents(currentStrata.id);

@@ -41,6 +41,7 @@ export async function GlobalHeaderActions({ className, joinStrata }: Props) {
         joinStrata={joinStrata}
         strata={strata}
         strataMembership={strataMemebership}
+        user={session?.user}
       />
 
       {session ? (
