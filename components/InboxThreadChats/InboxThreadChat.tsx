@@ -2,9 +2,7 @@
 
 import * as styles from "./style.css";
 
-import { User } from "next-auth";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 import {
   type Chat,
@@ -12,7 +10,6 @@ import {
   isThreadChatWithQuote,
 } from "../../data/inbox/getThreadChats";
 import { classnames } from "../../utils/classnames";
-import { parseTimestamp } from "../../utils/datetime";
 import { Date } from "../Date";
 import { FileLink } from "../FileLink";
 import { Header } from "../Header";

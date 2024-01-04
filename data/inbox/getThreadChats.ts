@@ -10,7 +10,7 @@ interface TheadChatWithQuote extends InboxThreadChat {
   email: string;
   quotedMessageId: string;
   quotedMessageMessage: string;
-  quotedMessageTimestamp: string;
+  quotedMessageTimestamp: number;
   quotedMessageSender: string;
 }
 
