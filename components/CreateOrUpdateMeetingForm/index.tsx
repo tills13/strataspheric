@@ -2,8 +2,11 @@ import * as styles from "./style.css";
 
 import { Event, Meeting } from "../../data";
 import { classnames } from "../../utils/classnames";
-import { formatDateForDatetime } from "../../utils/datetime";
-import { ElementGroup } from "../ElementGroup";
+import {
+  formatDateForDatetime,
+  patchTimezoneOffset,
+} from "../../utils/datetime";
+import { AddIcon } from "../Icon/AddIcon";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
 
@@ -17,7 +20,14 @@ export function CreateOrUpdateMeetingForm({
   meeting,
 }: Props) {
   return (
-    <form action={createOrUpdateMeeting}>
+    <form
+      action={async (fd) => {
+        patchTimezoneOffset(fd, "startDate");
+        patchTimezoneOffset(fd, "endDate");
+
+        await createOrUpdateMeeting(fd);
+      }}
+    >
       <Input
         className={classnames(styles.fullWidth, styles.withBottomMargin)}
         name="purpose"
@@ -33,7 +43,7 @@ export function CreateOrUpdateMeetingForm({
           type="datetime-local"
           defaultValue={
             meeting?.startDate
-              ? formatDateForDatetime(new Date(meeting.startDate))
+              ? formatDateForDatetime(meeting.startDate)
               : undefined
           }
         />
@@ -44,13 +54,18 @@ export function CreateOrUpdateMeetingForm({
           type="datetime-local"
           defaultValue={
             meeting?.endDate
-              ? formatDateForDatetime(new Date(meeting.endDate))
+              ? formatDateForDatetime(meeting.endDate)
               : undefined
           }
         />
       </div>
 
-      <StatusButton type="submit">
+      <StatusButton
+        iconRight={<AddIcon />}
+        color="primary"
+        style="secondary"
+        type="submit"
+      >
         {meeting ? "Update Meeting" : "Create Meeting"}
       </StatusButton>
     </form>

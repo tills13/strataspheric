@@ -1,6 +1,7 @@
 import * as styles from "./style.css";
 
 import { classnames } from "../../utils/classnames";
+import { parseTimestamp } from "../../utils/datetime";
 import { truncate } from "../../utils/truncate";
 import { Header } from "../Header";
 import { QuoteIcon } from "../Icon/QuoteIcon";
@@ -11,7 +12,7 @@ interface Props {
   messageId: string;
   message: string;
   senderName: string;
-  timestamp: string;
+  timestamp: number;
 }
 
 export function InboxMessageQuote({
@@ -33,7 +34,7 @@ export function InboxMessageQuote({
           sent...
         </Header>
         <span className={styles.quotedMessageTimestamp}>
-          {new Date(timestamp).toDateString()}
+          {parseTimestamp(timestamp).toDateString()}
         </span>
       </div>
 

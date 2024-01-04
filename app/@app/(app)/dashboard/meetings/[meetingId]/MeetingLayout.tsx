@@ -1,8 +1,14 @@
+import { s } from "../../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
+import { Button } from "../../../../../../components/Button";
 import { EditMeetingButton } from "../../../../../../components/EditMeetingButton";
 import { Header } from "../../../../../../components/Header";
+import { InfoPanel } from "../../../../../../components/InfoPanel";
 import { getMeeting } from "../../../../../../data/meetings/getMeeting";
+import { parseTimestamp } from "../../../../../../utils/datetime";
+import { deleteMeetingAction } from "../actions";
+import { DeleteMeetingButton } from "./DeleteMeetingButton";
 import { MeetingAgenda } from "./MeetingAgenda";
 import { MeetingTimelineSearch } from "./MeetingTimelineSearch";
 import { updateMeetingAction } from "./actions";
@@ -29,15 +35,30 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           </Header>
           <p>
             Called by <b>{meeting.caller}</b> for
-            <br /> {new Date(meeting.startDate).toLocaleString()}
+            <br /> {parseTimestamp(meeting.startDate).toLocaleString()}
           </p>
         </div>
 
         {meeting.notes && <p>{meeting.notes}</p>}
 
-        <MeetingAgenda meetingId={meetingId} />
+        <MeetingAgenda className={s({ mb: "normal" })} meetingId={meetingId} />
 
         {/* <MeetingMinutes meetingId={meetingId} /> */}
+
+        <InfoPanel level="error">
+          <Header className={s({ mb: "small" })} priority={3}>
+            Delete Meeting
+          </Header>
+
+          <p className={s({ mb: "normal" })}>
+            Deleting this meeting will delete all associated agenda items, but
+            leave any files created during planning.
+          </p>
+
+          <DeleteMeetingButton
+            deleteMeeting={deleteMeetingAction.bind(undefined, meeting.id)}
+          />
+        </InfoPanel>
       </div>
       <div className={styles.meetingTimelineSearchContainer}>
         <MeetingTimelineSearch meetingId={meetingId} strataId={strataId} />

@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 import { auth } from "../../auth";
 import { getThreadEmailParticipants } from "../../data/emails/getThreadEmailParticipants";
 import { getThreadMessages } from "../../data/inbox/getThreadMessages";
+import { parseTimestamp } from "../../utils/datetime";
 import { Button } from "../Button";
 import { ShareIcon } from "../Icon/ShareIcon";
 import { ExternalLink } from "../Link/ExternalLink";
@@ -49,7 +50,7 @@ export async function InboxMessageThread({
         </div>
 
         <div className={styles.pageHeaderActions}>
-          <span>Started {new Date(sentAt).toLocaleString()}</span>
+          <span>Started {parseTimestamp(sentAt).toLocaleString()}</span>
 
           <ExternalLink
             href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}

@@ -5,12 +5,15 @@ import * as styles from "./style.css";
 import { useTransition } from "react";
 
 import { Event } from "../../data";
-import { classnames } from "../../utils/classnames";
-import { formatDateForDatetime } from "../../utils/datetime";
-import { getString } from "../../utils/formdata";
+import {
+  formatDateForDatetime,
+  patchTimezoneOffset,
+} from "../../utils/datetime";
 import { ElementGroup } from "../ElementGroup";
+import { AddIcon } from "../Icon/AddIcon";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
+import { TextArea } from "../TextArea";
 
 interface Props {
   defaultDate?: string;
@@ -31,25 +34,10 @@ export function CreateOrUpdateEventForm({
     <form
       className={styles.newEventForm}
       action={async (fd) => {
-        const startDate = getString(fd, "startDate");
-        const endDate = getString(fd, "endDate");
-
-        // const tzOffset = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const rawTzOffset = new Date().getTimezoneOffset() / 60;
-        const isNegative = rawTzOffset >= 0;
-
-        const tzOffset =
-          (isNegative ? "-" : "") +
-          rawTzOffset.toString().padStart(2, "0") +
-          ":00";
-
-        console.log(startDate + tzOffset);
-
-        fd.set("startDate", startDate + tzOffset);
-        fd.set("endDate", endDate + tzOffset);
+        patchTimezoneOffset(fd, "startDate");
+        patchTimezoneOffset(fd, "endDate");
 
         const u = await upsertEvent(fd);
-        console.log(u);
       }}
     >
       <Input name="name" placeholder="Name" defaultValue={event?.name} />
@@ -62,9 +50,7 @@ export function CreateOrUpdateEventForm({
           placeholder="Start Date"
           defaultValue={
             defaultDate ||
-            (event
-              ? formatDateForDatetime(new Date(event.startDate))
-              : undefined)
+            (event ? formatDateForDatetime(event.startDate) : undefined)
           }
         />
         <Input
@@ -74,19 +60,26 @@ export function CreateOrUpdateEventForm({
           placeholder="End Date"
           defaultValue={
             defaultDate ||
-            (event ? formatDateForDatetime(new Date(event.endDate)) : undefined)
+            (event ? formatDateForDatetime(event.endDate) : undefined)
           }
         />
       </div>
 
-      <Input
+      <TextArea
         name="description"
         placeholder="Description"
         defaultValue={event?.description}
       />
 
       <ElementGroup gap="small">
-        <StatusButton type="submit">{event ? "Update" : "Create"}</StatusButton>
+        <StatusButton
+          color="primary"
+          iconRight={<AddIcon />}
+          style="secondary"
+          type="submit"
+        >
+          {event ? "Update Event" : "Create Event"}
+        </StatusButton>
 
         {event && deleteEvent && (
           <StatusButton

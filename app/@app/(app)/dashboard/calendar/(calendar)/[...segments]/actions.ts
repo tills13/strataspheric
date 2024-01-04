@@ -7,6 +7,7 @@ import { createEvent } from "../../../../../../../data/events/createEvent";
 import { deleteEvent } from "../../../../../../../data/events/deleteEvent";
 import { getEvent } from "../../../../../../../data/events/getEvent";
 import { updateEvent } from "../../../../../../../data/events/updateEvent";
+import { parseTimestamp } from "../../../../../../../utils/datetime";
 import * as formdata from "../../../../../../../utils/formdata";
 
 export async function upsertEventAction(
@@ -22,15 +23,19 @@ export async function upsertEventAction(
 
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description");
-  const startDate = formdata.getString(formData, "startDate");
-  const endDate = formdata.getString(formData, "endDate") || startDate;
 
-  const d = new Date(startDate);
+  const startDateTs = formdata.getTimestamp(formData, "startDate");
+  const endDateTs = formdata.getTimestamp(formData, "endDate") || startDateTs;
 
-  console.log(d, startDate, endDate);
+  const d = parseTimestamp(startDateTs);
 
   if (eventId) {
-    await updateEvent(eventId, { name, description, startDate, endDate });
+    await updateEvent(eventId, {
+      name,
+      description,
+      startDate: startDateTs,
+      endDate: endDateTs,
+    });
   } else {
     if (name === "") {
       throw new Error("invalid fields");
@@ -39,8 +44,8 @@ export async function upsertEventAction(
     const event = await createEvent({
       name,
       description,
-      startDate,
-      endDate,
+      startDate: startDateTs,
+      endDate: endDateTs,
       strataId,
       creatorId: session.user.id,
     });

@@ -1,3 +1,19 @@
+export function getTimestamp(fd: FormData, name: string): number {
+  const dateStr = getString(fd, name);
+
+  if (!dateStr) {
+    return 0;
+  }
+
+  const d = new Date(dateStr);
+
+  if (isNaN(d.getTime())) {
+    return 0;
+  }
+
+  return d.getTime() / 1000;
+}
+
 export function getString(fd: FormData, name: string): string {
   const d = fd.get(name);
 

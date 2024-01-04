@@ -33,8 +33,6 @@ export const chatStream = style({
 export const chatBubble = style({
   display: "flex",
   flexDirection: "column",
-  // gap: vars.spacing.normal,
-  // padding: vars.spacing.normal,
   backgroundColor: vars.colors.grey100,
   color: vars.colors.grey700,
   borderRadius: vars.borderRadius,
@@ -43,14 +41,14 @@ export const chatBubble = style({
 export const selfChatBubble = style([
   chatBubble,
   {
-    backgroundColor: vars.colors.grey700,
+    backgroundColor: vars.colors.primary,
     color: vars.colors.white,
   },
 ]);
 
 export const chatBubbleTimestamp = style({
   fontSize: vars.fontSizes.small,
-  opacity: 0.5,
+  color: vars.colors.grey500,
 });
 
 export const chatBubbleHeader = style({

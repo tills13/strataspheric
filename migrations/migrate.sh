@@ -2,23 +2,20 @@
 
 migrations_dir=$( dirname $0 )
 migrations=($( ls $migrations_dir ))
-# target="--local "
-target=
+target="--local "
+# target=
 
 # if [ "$1" == "production" ]; then
 #     target=
 # fi
-
-if [ "$1" == "init" ]; then
-    npx wrangler d1 execute strataspheric ${target}\
-        --command "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key)"
-
-    exit 1
-elif [ "$1" == "create" ]; then
+if [ "$1" == "create" ]; then
     
 
     exit 1
 fi
+
+npx wrangler d1 execute strataspheric ${target}\
+    --command "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key)"
 
 executed_migrations=($( npx wrangler d1 execute strataspheric ${target}--json \
     --command "SELECT migration_name FROM migrations ORDER BY migration_name ASC" | \

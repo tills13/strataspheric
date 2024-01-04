@@ -74,7 +74,7 @@ export default async function Page({ searchParams }) {
                     <RightIcon className={styles.stratasListItemArrow} />
                   </Header>
                   <p>
-                    {strata.streetAddress} {strata.provinceState}{" "}
+                    {strata.streetAddress} {strata.city}, {strata.provinceState}{" "}
                     {strata.postalCode}
                   </p>
                 </ExternalLink>

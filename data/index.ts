@@ -7,8 +7,8 @@ import { AccountType, Role } from "./users/permissions";
 export interface EmailsTable {
   id: string;
   lastStatus: string | null;
-  updatedAt: ColumnType<string, never, never>;
-  sentAt: ColumnType<string, never, never>;
+  updatedAt: ColumnType<number, never, number>;
+  sentAt: ColumnType<number, never, never>;
 }
 
 export type Email = Selectable<EmailsTable>;
@@ -21,8 +21,8 @@ export interface EventsTable {
   creatorId: string;
   name: string;
   description: string;
-  startDate: ColumnType<string, string, string>;
-  endDate: ColumnType<string, string, string>;
+  startDate: ColumnType<number, number, number>;
+  endDate: ColumnType<number, number, number>;
 }
 
 export type Event = Selectable<EventsTable>;
@@ -38,7 +38,7 @@ export interface FilesTable {
   isPublic: 0 | 1;
   sizeBytes: number;
   path: string;
-  createdAt: ColumnType<string, never, never>;
+  createdAt: ColumnType<number, never, never>;
 }
 
 export type File = Selectable<FilesTable>;
@@ -56,7 +56,7 @@ export interface InboxMessagesTable {
   senderName: string | null;
   senderEmail: string | null;
   senderPhoneNumber: string | null;
-  sentAt: ColumnType<string, never, never>;
+  sentAt: ColumnType<number, never, never>;
   isUnread: ColumnType<0 | 1, never, never>;
 }
 
@@ -71,7 +71,7 @@ export interface InboxThreadChatsTable {
   fileId: string | undefined;
   message: string;
   userId: string;
-  sentAt: ColumnType<string, never, never>;
+  sentAt: ColumnType<number, never, never>;
 }
 
 export type InboxThreadChat = Selectable<InboxThreadChatsTable>;
@@ -123,6 +123,7 @@ export type NewMeetingMinutes = Insertable<MeetingMinutesTable>;
 
 export interface StratasTable {
   id: ColumnType<string, string, never>;
+  status: string;
   name: string;
   domain: string;
   domainRecordId: string;
@@ -130,8 +131,11 @@ export interface StratasTable {
   strataId: string | null;
   streetAddress: string | null;
   postalCode: string | null;
+  city: string | null;
   provinceState: string | null;
   isPublic: 0 | 1;
+  strataActiveEmailSent: 0 | 1;
+  createdAt: ColumnType<number, never, never>;
 }
 
 export type Strata = Selectable<StratasTable>;
@@ -194,7 +198,7 @@ export type UserUpdate = Updateable<UsersTable>;
 export interface UserPasswordResetTokensTable {
   userId: string;
   token: string;
-  createdAt: ColumnType<string, never, never>;
+  createdAt: ColumnType<number, never, never>;
 }
 
 export type UserPasswordResetToken = Selectable<UserPasswordResetTokensTable>;

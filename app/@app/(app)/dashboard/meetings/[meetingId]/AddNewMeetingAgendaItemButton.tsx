@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Button } from "../../../../../../components/Button";
 import { CreateOrUpdateMeetingAgendaItemForm } from "../../../../../../components/CreateOrUpdateMeetingAgendaItemForm";
+import { AddIcon } from "../../../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../../../components/Modal";
 import { classnames } from "../../../../../../utils/classnames";
 
@@ -18,7 +19,12 @@ export function AddNewMeetingAgendaItemButton({
 
   return (
     <>
-      <Button color="primary" size="large" onClick={() => setShowModal(true)}>
+      <Button
+        iconRight={<AddIcon />}
+        color="primary"
+        size="large"
+        onClick={() => setShowModal(true)}
+      >
         Add New Agenda Item
       </Button>
       {showModal && (

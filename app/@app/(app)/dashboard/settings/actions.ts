@@ -19,8 +19,9 @@ import { updateStrataMembership } from "../../../../../data/strataMemberships/up
 import { deleteStrata } from "../../../../../data/stratas/deleteStrata";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { updateStrata } from "../../../../../data/stratas/updateStrata";
-import { can, p } from "../../../../../data/users/permissions";
+import { can } from "../../../../../data/users/permissions";
 import { deleteAllWidgets } from "../../../../../data/widgets/deleteAllWidgets";
+import { getBoolean, getString } from "../../../../../utils/formdata";
 
 const NotAuthorized = new Error("not authorized");
 
@@ -56,25 +57,17 @@ export async function deleteStrataAction() {
   redirect(`${protocol}//${tld}`);
 }
 
-export async function updateStrataAction(formData: FormData) {
-  const id = formData.get("id");
-  const strataId = formData.get("strata_id") || "";
-  const streetAddress = formData.get("strata_address_street_address") || "";
-  const postalCode = formData.get("strata_address_postal_code") || "";
-  const provinceState = formData.get("strata_address_province_state") || "";
-  const strataName = formData.get("name");
-  const isPublic = formData.get("is_public") === "on";
+export async function updateStrataAction(fd: FormData) {
+  const id = getString(fd, "id");
+  const strataId = getString(fd, "strata_id");
+  const streetAddress = getString(fd, "strata_address_street_address");
+  const postalCode = getString(fd, "strata_address_postal_code");
+  const provinceState = getString(fd, "strata_address_province_state");
+  const city = getString(fd, "strata_address_city");
+  const strataName = getString(fd, "name");
+  const isPublic = getBoolean(fd, "is_public");
 
-  if (
-    typeof id !== "string" ||
-    id === "" ||
-    typeof strataId !== "string" ||
-    typeof streetAddress !== "string" ||
-    typeof postalCode !== "string" ||
-    typeof provinceState !== "string" ||
-    typeof strataName !== "string" ||
-    strataName === ""
-  ) {
+  if (id === "" || strataName === "") {
     throw new Error("invalid fields");
   }
 
@@ -83,6 +76,7 @@ export async function updateStrataAction(formData: FormData) {
     strataId,
     streetAddress,
     postalCode,
+    city,
     provinceState,
     isPublic: isPublic ? 1 : 0,
   });

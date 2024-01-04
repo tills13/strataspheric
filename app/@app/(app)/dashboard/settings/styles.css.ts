@@ -16,6 +16,10 @@ export const header = style({
   marginBottom: vars.spacing.small,
 });
 
+export const formElement = style({
+  width: "100%",
+});
+
 export const visibilityLabel = style({
   display: "flex",
   justifyContent: "space-between",

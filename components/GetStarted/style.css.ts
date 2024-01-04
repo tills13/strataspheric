@@ -105,7 +105,3 @@ export const statusPageCheckIcon = style([
     fill: important(vars.colors.green500),
   },
 ]);
-
-export const statusPageGoToStrataButton = style({
-  width: "100%",
-});

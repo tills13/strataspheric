@@ -8,6 +8,7 @@ import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { useHash } from "../../hooks/useHash";
 import { classnames } from "../../utils/classnames";
+import { parseTimestamp } from "../../utils/datetime";
 import { Button } from "../Button";
 import { FileLink } from "../FileLink";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
@@ -23,7 +24,7 @@ interface Props {
   message: string;
   senderName: string;
   senderEmail: string;
-  sentAt: string;
+  sentAt: number;
   sendInboxThreadChat: (fd: FormData) => void;
 }
 
@@ -56,7 +57,7 @@ export function InboxMessageThreadMessage({
         </div>
         <div className={styles.messageHeaderActions}>
           <span className={styles.messageHeaderSentAt}>
-            Sent {new Date(sentAt).toLocaleString()}
+            Sent {parseTimestamp(sentAt).toLocaleString()}
           </span>
           {can(p("stratas", "inbox_thread_chats", "view")) && (
             <Button

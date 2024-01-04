@@ -1,5 +1,6 @@
 import * as parentStyles from "../style.css";
 import * as styles from "./styles.css";
+import { style } from "@vanilla-extract/css";
 
 import { notFound, redirect } from "next/navigation";
 
@@ -83,11 +84,25 @@ export default async function Page() {
                 defaultValue={strata.postalCode || undefined}
               />
 
-              <Input
-                name="strata_address_province_state"
-                placeholder="Province / State"
-                defaultValue={strata.provinceState || undefined}
-              />
+              <ElementGroup
+                className={styles.formElement}
+                gap="small"
+                equalWidthChildren
+              >
+                <Input
+                  className={styles.formElement}
+                  name="strata_address_city"
+                  placeholder="City"
+                  defaultValue={strata.city || undefined}
+                />
+                <Input
+                  className={styles.formElement}
+                  name="strata_address_province_state"
+                  placeholder="Province / State"
+                  defaultValue={strata.provinceState || undefined}
+                />
+              </ElementGroup>
+
               <StatusButton color="primary" style="secondary" type="submit">
                 Update Strata
               </StatusButton>

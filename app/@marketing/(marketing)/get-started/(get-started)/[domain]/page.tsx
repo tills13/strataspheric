@@ -1,3 +1,5 @@
+import * as styles from "./style.css";
+
 import { redirect } from "next/navigation";
 
 import { GetStartedStatus } from "../../../../../../components/GetStarted/Status";
@@ -12,5 +14,9 @@ export default async function Page({ params }: { params: { domain: string } }) {
     redirect("/get-started");
   }
 
-  return <GetStartedStatus strata={strata} />;
+  return (
+    <div className={styles.pageContainer}>
+      <GetStartedStatus strata={strata} />
+    </div>
+  );
 }

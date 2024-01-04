@@ -12,14 +12,15 @@ import {
 } from "./actions";
 
 interface Props {
+  className?: string;
   meetingId: string;
 }
 
-export async function MeetingAgenda({ meetingId }: Props) {
+export async function MeetingAgenda({ className, meetingId }: Props) {
   const agendaItems = await getMeetingAgendaItems(meetingId);
 
   return (
-    <div>
+    <div className={className}>
       <Header className={styles.header} priority={2}>
         Agenda
       </Header>

@@ -12,6 +12,7 @@ import {
   isThreadChatWithQuote,
 } from "../../data/inbox/getThreadChats";
 import { classnames } from "../../utils/classnames";
+import { parseTimestamp } from "../../utils/datetime";
 import { FileLink } from "../FileLink";
 import { Header } from "../Header";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
@@ -34,7 +35,7 @@ export function InboxThreadChat({ ...chat }: Props & Chat) {
       <div className={styles.chatBubbleHeader}>
         <Header priority={3}>{chat.name} said...</Header>
         <span className={styles.chatBubbleTimestamp}>
-          {new Date(chat.sentAt).toDateString()}
+          {parseTimestamp(chat.sentAt).toDateString()}
         </span>
       </div>
 

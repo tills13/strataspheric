@@ -1,6 +1,7 @@
 import * as styles from "./style.css";
 
 import endOfMonth from "date-fns/endOfMonth";
+import { getMonth } from "date-fns/esm";
 import format from "date-fns/format";
 import { notFound } from "next/navigation";
 
@@ -43,8 +44,14 @@ export default async function Page({ searchParams, params }) {
     notFound();
   }
 
-  const startDate = new Date(year, month - 1, 1);
-  const endDate = endOfMonth(startDate);
+  const startDate = new Date(Date.UTC(year, month - 1, 1));
+  const startDateWithOffset = new Date(
+    startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000,
+  );
+  const endDate = endOfMonth(startDateWithOffset);
+
+  const startDateTimestamp = Math.round(startDate.getTime() / 1000);
+  const endDateTimestamp = Math.round(endDate.getTime() / 1000);
 
   const q = db
     .selectFrom("events")
@@ -54,31 +61,22 @@ export default async function Page({ searchParams, params }) {
       eb.or([
         // startDate is before month but endDate is during month or after month
         eb.and([
-          eb("events.startDate", "<", formatDateForBetween(startDate)),
+          eb("events.startDate", "<", startDateTimestamp),
           eb.or([
-            eb("events.endDate", ">", formatDateForBetween(endDate)),
-            eb.between(
-              "events.endDate",
-              formatDateForBetween(startDate),
-              formatDateForBetween(endDate),
-            ),
+            eb("events.endDate", ">", endDateTimestamp),
+            eb.between("events.endDate", startDateTimestamp, endDateTimestamp),
           ]),
         ]),
 
         // start date is during month
-        eb.between(
-          "events.startDate",
-          formatDateForBetween(startDate),
-          formatDateForBetween(endDate),
-        ),
+        eb.between("events.startDate", startDateTimestamp, endDateTimestamp),
       ]),
     )
     .orderBy("events.startDate", "asc")
     .orderBy("events.endDate", "asc");
 
   const events = await q.execute();
-
-  const monthName = format(startDate, "LLLL");
+  const monthName = format(startDateWithOffset, "LLLL");
 
   const nextLink =
     "/dashboard/calendar/" +
@@ -91,6 +89,7 @@ export default async function Page({ searchParams, params }) {
   return (
     <>
       <DashboardHeader />
+
       <div className={styles.calendarPageContainer}>
         <div className={styles.calendarPageHeader}>
           <Header priority={2}>

@@ -12,7 +12,7 @@ import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
 import { ElementGroup } from "../ElementGroup";
-import { GoToStrataLink } from "../GoToStrataLink";
+import { GoToStrataLinkButton } from "../GoToStrataLinkButton";
 import { Header } from "../Header";
 import { SignOutIcon } from "../Icon/SignOutIcon";
 import { InternalLink } from "../Link/InternalLink";
@@ -46,7 +46,7 @@ export function ContinueWhereYouLeftOffWidget({
         {session ? (
           <>
             {sessionStratas.length ? (
-              <GoToStrataLink
+              <GoToStrataLinkButton
                 key={sessionStratas[0].domain}
                 className={styles.continueAction}
                 strata={sessionStratas[0]}

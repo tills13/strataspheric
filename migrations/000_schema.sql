@@ -10,7 +10,8 @@ CREATE TABLE
         streetAddress text,
         postalCode text,
         provinceState text,
-        isPublic boolean
+        isPublic boolean,
+        createdAt INTEGER NOT NULL DEFAULT (strftime ('%s', 'now'))
     );
 
 DROP TABLE IF EXISTS strata_plans;
@@ -42,7 +43,7 @@ CREATE TABLE
         description text,
         path text,
         strataId text,
-        createdAt text DEFAULT CURRENT_TIMESTAMP
+        createdAt INTEGER NOT NULL DEFAULT (strftime ('%s', 'now'))
     );
 
 DROP TABLE IF EXISTS widget_files;
@@ -61,7 +62,8 @@ CREATE TABLE
         id text primary key,
         name text,
         description text,
-        date text not null
+        startDate INTEGER NOT NULL DEFAULT (strftime ('%s', 'now')),
+        endDate INTEGER NOT NULL DEFAULT (strftime ('%s', 'now'))
     );
 
 DROP TABLE IF EXISTS widget_events;
@@ -84,7 +86,7 @@ CREATE TABLE
     IF NOT EXISTS user_password_reset_tokens (
         token text primary key,
         userId text,
-        createdAt text DEFAULT CURRENT_TIMESTAMP
+        createdAt INTEGER NOT NULL DEFAULT (strftime ('%s', 'now'))
     );
 
 DROP TABLE IF EXISTS strata_memberships;
@@ -117,7 +119,7 @@ CREATE TABLE
         senderName text,
         senderEmail text,
         senderPhoneNumber text,
-        sentAt text DEFAULT CURRENT_TIMESTAMP,
+        sentAt INTEGER NOT NULL DEFAULT (strftime ('%s', 'now')),
         isUnread boolean DEFAULT TRUE
     );
 
@@ -132,5 +134,5 @@ CREATE TABLE
         fileId text,
         message text,
         userId text,
-        sentAt text DEFAULT CURRENT_TIMESTAMP
+        sentAt INTEGER NOT NULL DEFAULT (strftime ('%s', 'now'))
     );

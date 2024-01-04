@@ -7,6 +7,7 @@ import { FileLink } from "../../../../../components/FileLink";
 import { DownloadIcon } from "../../../../../components/Icon/DownloadIcon";
 import { searchFiles } from "../../../../../data/files/searchFiles";
 import { can, p } from "../../../../../data/users/permissions";
+import { parseTimestamp } from "../../../../../utils/datetime";
 import { deleteFileAction } from "./actions";
 
 interface Props {
@@ -26,7 +27,7 @@ export async function FilesTable({ searchTerm, strataId, visibility }: Props) {
         <tr>
           <th className={styles.filesTableCell}>File Name</th>
           <th className={styles.descriptionCell}>Description</th>
-          <th className={styles.filesTableCell}>Creation Date</th>
+          <th className={styles.filesTableCell}>Upload Date</th>
           {canDelete && <th className={styles.filesTableCell}>Visibility</th>}
           <th className={styles.filesTableCell}></th>
         </tr>
@@ -46,7 +47,7 @@ export async function FilesTable({ searchTerm, strataId, visibility }: Props) {
             <td className={styles.filesTableCell}>{file.name}</td>
             <td className={styles.descriptionCell}>{file.description}</td>
             <td className={styles.filesTableCell}>
-              {new Date(file.createdAt).toLocaleDateString()}
+              {parseTimestamp(file.createdAt).toLocaleDateString()}
             </td>
             {canDelete && (
               <td className={styles.filesTableCell}>

@@ -1,16 +1,16 @@
 import * as styles from "./style.css";
 
+import { isSameMonth } from "date-fns/esm";
 import isSameDay from "date-fns/isSameDay";
 
-import { Event } from "../../../../../../../data";
-
 interface Props {
+  currentDate: Date;
   date: Date;
-  isOutOfContext?: boolean;
   onClickDate: (date: Date) => void;
 }
 
-export function CalendarDay({ date, isOutOfContext, onClickDate }: Props) {
+export function CalendarDay({ currentDate, date, onClickDate }: Props) {
+  const isOutOfContext = !isSameMonth(date, currentDate);
   const isToday = isSameDay(new Date(), date);
   const showToday = false;
 

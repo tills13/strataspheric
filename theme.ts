@@ -8,16 +8,21 @@ export function border(width: string, style: string, color: string): string {
   return `${width} ${style} ${color}`;
 }
 
-export function padding(vertical: string, horizontal: string): string;
 export function padding(
-  top: string,
-  right: string,
-  bottom: string,
-  left: string,
+  vertical: string | number,
+  horizontal: string | number,
+): string;
+export function padding(
+  top: string | number,
+  right: string | number,
+  bottom: string | number,
+  left: string | number,
 ): string;
 
 export function padding(
-  ...args: [string, string] | [string, string, string, string]
+  ...args:
+    | [string | number, string | number]
+    | [string | number, string | number, string | number, string | number]
 ): string {
   if (args.length === 2) {
     const [vertical, horizontal] = args;

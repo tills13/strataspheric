@@ -1,4 +1,4 @@
-import { vars } from "../../../../../../theme.css";
+import { breakpoints, vars } from "../../../../../../theme.css";
 import { createVar, style } from "@vanilla-extract/css";
 
 import { padding } from "../../../../../../../theme";
@@ -103,7 +103,9 @@ export const calendarEvent = style({
   position: "absolute",
   left: 0,
   display: "block",
-  padding: padding(vars.spacing.xxs, vars.spacing.small),
+  padding: padding(0, vars.spacing.small),
+  lineHeight: vars.sizes.xs,
+  fontSize: vars.fontSizes.small,
   backgroundColor: vars.colors.primary,
   color: vars.colors.white,
   whiteSpace: "nowrap",
@@ -111,6 +113,12 @@ export const calendarEvent = style({
   textOverflow: "ellipsis",
   zIndex: 2,
   cursor: "pointer",
+  "@media": {
+    [breakpoints.tablet]: {
+      fontSize: vars.fontSizes.normal,
+    },
+  },
+
   selectors: {
     "&:hover": {
       backgroundColor: vars.colors.primaryHover,
@@ -121,13 +129,11 @@ export const calendarEvent = style({
   },
 });
 
-export const startsOnDay = style({
+export const withLeftMarginAndBorderRadius = style({
   borderTopLeftRadius: vars.borderRadius,
   borderBottomLeftRadius: vars.borderRadius,
-  marginLeft: vars.spacing.small,
 });
-export const endsOnDay = style({
+export const withRightMarginAndBorderRadius = style({
   borderTopRightRadius: vars.borderRadius,
   borderBottomRightRadius: vars.borderRadius,
-  marginRight: vars.spacing.small,
 });

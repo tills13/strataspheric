@@ -5,6 +5,10 @@ import { border, padding } from "../../../../../theme";
 
 export const meetingsList = style({});
 
+export const noMeetingsMessage = style({
+  margin: vars.spacing.normal,
+});
+
 export const meetingListContainer = style({
   width: "100%",
   height: "100%",

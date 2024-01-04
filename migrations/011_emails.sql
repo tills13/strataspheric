@@ -2,7 +2,8 @@ CREATE TABLE
     emails (
         id text,
         lastStatus text,
-        sentAt text DEFAULT CURRENT_TIMESTAMP
+        sentAt INTEGER NOT NULL DEFAULT (strftime ('%s', 'now')),
+        updatedAt INTEGER NOT NULL DEFAULT (strftime ('%s', 'now'))
     );
 
 CREATE TABLE

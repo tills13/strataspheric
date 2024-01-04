@@ -6,6 +6,7 @@ import { type Thread } from "../../data/inbox/getThreads";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { classnames } from "../../utils/classnames";
+import { parseTimestamp } from "../../utils/datetime";
 import { DeleteButton } from "../DeleteButton";
 import { Header } from "../Header";
 import { InternalLink } from "../Link/InternalLink";
@@ -48,7 +49,7 @@ export function InboxThreads({ deleteThread, threads }: Props) {
               {(thread.numChats || 0).toString()} chats
             </div>
             <div className={styles.sentAtCell}>
-              {new Date(thread.sentAt).toLocaleString()}
+              {parseTimestamp(thread.sentAt).toLocaleString()}
             </div>
             <div className={styles.actionsCell}>
               {can(p("stratas", "inbox_messages", "delete")) && (
