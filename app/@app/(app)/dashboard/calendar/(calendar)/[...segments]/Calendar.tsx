@@ -1,7 +1,11 @@
 "use client";
 
+import { vars } from "../../../../../../theme.css";
 import * as styles from "./style.css";
 
+import { calc } from "@vanilla-extract/css-utils";
+import differenceInDays from "date-fns/differenceInDays";
+import { getWeek } from "date-fns/esm";
 import getDaysInMonth from "date-fns/getDaysInMonth";
 import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
@@ -14,6 +18,7 @@ import { Modal } from "../../../../../../../components/Modal";
 import { Event } from "../../../../../../../data";
 import { classnames } from "../../../../../../../utils/classnames";
 import { formatDateForDatetime } from "../../../../../../../utils/datetime";
+import { CalendarDay } from "./CalendarDay";
 
 interface Props {
   upsertEvent: (eventId: string | undefined, fd: FormData) => void;
@@ -21,6 +26,14 @@ interface Props {
   events: Event[];
   month: number;
   year: number;
+}
+
+function dateFromDayAndWeekIdx(
+  weekIdx: number,
+  dayIdx: number,
+  firstDayInMonth: number,
+) {
+  return weekIdx * 7 - firstDayInMonth + dayIdx + 1;
 }
 
 export function Calendar({
@@ -45,79 +58,133 @@ export function Calendar({
   return (
     <>
       <div className={styles.calendar}>
-        {Array.from(new Array(7 * 6)).map((_, idx) => {
-          let displayDate: number;
-          let isOutOfContext = false;
-
-          if (idx < firstDayOfMonth) {
-            isOutOfContext = true;
-            displayDate = numDaysPrevMonth - (firstDayOfMonth - idx) + 1;
-          } else if (idx - firstDayOfMonth + 1 > numDaysMonth) {
-            isOutOfContext = true;
-            displayDate = idx - firstDayOfMonth - numDaysMonth + 1;
-          } else {
-            displayDate = idx - firstDayOfMonth + 1;
-          }
-
-          const date = new Date(
-            currentDate.getMonth() +
-              1 +
-              "/" +
-              displayDate +
-              "/" +
-              currentDate.getFullYear(),
-          );
-          const isToday = isSameDay(new Date(), date);
-          const eventsOnDate = events.filter(
-            (e) =>
-              isSameDay(date, new Date(e.startDate)) ||
-              (isAfter(date, new Date(e.startDate)) &&
-                (isBefore(date, new Date(e.endDate)) ||
-                  isSameDay(date, new Date(e.endDate)))),
-          );
-
+        {Array.from(new Array(6)).map((_, weekIdx) => {
           return (
-            <div
-              key={idx}
-              className={
-                isOutOfContext
-                  ? styles.calendarDayOutOfScope
-                  : showToday && isToday
-                    ? styles.today
-                    : styles.calendarDay
-              }
-              onClick={() => setSelectedDate(date)}
-            >
-              <span className={styles.calendarDate}>{displayDate}</span>
+            <div key={weekIdx} className={styles.calendarRow}>
+              <div className={styles.calendarWeek}>
+                {Array.from(new Array(7)).map((_, dayIdx) => {
+                  let isOutOfContext = false;
+                  let displayDate = dateFromDayAndWeekIdx(
+                    weekIdx,
+                    dayIdx,
+                    firstDayOfMonth,
+                  );
 
-              {eventsOnDate.map((event, idx) => {
-                return (
-                  <div
-                    key={idx}
-                    className={classnames(styles.calendarEvent, {
-                      [styles.withLeftMargin]: isSameDay(
-                        date,
-                        new Date(event.startDate),
-                      ),
-                      [styles.withRightMargin]: isSameDay(
-                        date,
-                        new Date(event.endDate),
-                      ),
-                    })}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setSelectedEvent(event);
-                    }}
-                  >
-                    {isSameDay(date, new Date(event.startDate)) ? (
-                      event.name
-                    ) : (
-                      <>&nbsp;</>
-                    )}
-                  </div>
-                );
-              })}
+                  if (displayDate <= 0) {
+                    isOutOfContext = true;
+                    displayDate = numDaysPrevMonth + displayDate;
+                  } else if (displayDate > numDaysMonth) {
+                    isOutOfContext = true;
+                    displayDate = displayDate % numDaysMonth;
+                  }
+
+                  const date = new Date(
+                    currentDate.getMonth() +
+                      1 +
+                      "/" +
+                      displayDate +
+                      "/" +
+                      currentDate.getFullYear(),
+                  );
+
+                  return (
+                    <CalendarDay
+                      key={dayIdx}
+                      date={date}
+                      isOutOfContext={isOutOfContext}
+                      onClickDate={setSelectedDate}
+                    />
+                  );
+                })}
+              </div>
+              <div className={styles.calendarEventTrack}>
+                {Array.from(new Array(7)).map((_, dayIdx) => {
+                  const displayDate = dateFromDayAndWeekIdx(
+                    weekIdx,
+                    dayIdx,
+                    firstDayOfMonth,
+                  );
+
+                  const date = new Date(
+                    currentDate.getMonth() +
+                      1 +
+                      "/" +
+                      displayDate +
+                      "/" +
+                      currentDate.getFullYear(),
+                  );
+
+                  const eventsOnDay = events
+                    .filter(
+                      (e) =>
+                        isSameDay(date, new Date(e.startDate)) ||
+                        (isAfter(date, new Date(e.startDate)) &&
+                          (isBefore(date, new Date(e.endDate)) ||
+                            isSameDay(date, new Date(e.endDate)))),
+                    )
+                    .sort((a, b) => (a.startDate > b.startDate ? 0 : 1));
+
+                  return (
+                    <div key={dayIdx} className={styles.calendarEventTrackDay}>
+                      {eventsOnDay.map((event, idx) => {
+                        const startDate = new Date(event.startDate);
+                        const endDate = new Date(event.endDate);
+
+                        const lengthInDays =
+                          differenceInDays(endDate, startDate) + 1;
+
+                        const eventWrapsToFollowingWeek =
+                          startDate.getDay() + lengthInDays > 7;
+                        const eventWrapsFromPrevWeek =
+                          getWeek(endDate) > getWeek(startDate);
+
+                        if (
+                          !(
+                            (dayIdx === 0 && eventWrapsFromPrevWeek) ||
+                            isSameDay(startDate, date)
+                          )
+                        ) {
+                          return null;
+                        }
+
+                        const width = calc(lengthInDays)
+                          .divide(7)
+                          .multiply("100vw")
+                          .subtract(calc(2).multiply(vars.spacing.small))
+                          .toString();
+                        console.log(event);
+
+                        return (
+                          <div
+                            key={idx}
+                            className={classnames(styles.calendarEvent, {
+                              [styles.startsOnDay]: isSameDay(date, startDate),
+                              [styles.endsOnDay]: isSameDay(date, endDate),
+                            })}
+                            style={{
+                              top: calc(vars.sizes.small)
+                                .multiply(idx)
+                                .toString(),
+                              width,
+                              maxWidth: calc("100vw")
+                                .subtract((startDate.getDay() / 7) * 100 + "vw")
+                                .toString(),
+                            }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+
+                              setSelectedEvent(event);
+                            }}
+                          >
+                            {event.name}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           );
         })}

@@ -1,10 +1,6 @@
 import { db } from "..";
-import { auth } from "../../auth";
-import { assertCan } from "../users/permissions";
 
 export async function deleteWidget(widgetId: string) {
-  assertCan((await auth())?.user, "stratas.widgets.delete");
-
   return db.transaction().execute(async (t) => {
     await t
       .deleteFrom("widget_events")

@@ -8,7 +8,6 @@ import { Header } from "../../../../../components/Header";
 import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
 import { Input } from "../../../../../components/Input";
 import { StatusButton } from "../../../../../components/StatusButton";
-import { classnames } from "../../../../../utils/classnames";
 import {
   requestPasswordResetActionReducer,
   resetPasswordAction,

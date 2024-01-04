@@ -6,7 +6,7 @@ import { auth } from "../../../../../auth";
 import { protocol, tld } from "../../../../../constants";
 import { StrataMembershipUpdate } from "../../../../../data";
 import { createStrataMembership } from "../../../../../data/strataMemberships/createStrataMembership";
-import { deleteStrataMember } from "../../../../../data/strataMemberships/deleteStrataMember";
+import { deleteStrataMembership } from "../../../../../data/strataMemberships/deleteStrataMembership";
 import { updateStrataMembership } from "../../../../../data/strataMemberships/updateStrataMembership";
 import { getStrataById } from "../../../../../data/stratas/getStrataById";
 import { createUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/createUserPasswordResetToken";
@@ -20,7 +20,7 @@ export async function deleteStrataMemberAction(
   strataId: string,
   memberId: string,
 ) {
-  await deleteStrataMember(strataId, memberId);
+  await deleteStrataMembership(strataId, memberId);
   revalidatePath("/dashboard/membership");
 }
 
@@ -75,8 +75,6 @@ export async function addStrataMemberAction(strataId: string, fd: FormData) {
   await createStrataMembership({
     strataId,
     userId,
-    email,
-    name,
     phoneNumber,
     unit,
     role: role as Role,
@@ -90,21 +88,11 @@ export async function updateStrataMemberAction(
   userId: string,
   fd: FormData,
 ) {
-  const email = formdata.getString(fd, "email");
-  const name = formdata.getString(fd, "name");
   const phoneNumber = formdata.getString(fd, "phone_number");
   const unit = formdata.getString(fd, "unit");
   const role = formdata.getString(fd, "role");
 
   let update: StrataMembershipUpdate = {};
-
-  if (email !== "") {
-    update.email = email;
-  }
-
-  if (name !== "") {
-    update.name = name;
-  }
 
   if (phoneNumber !== "") {
     update.phoneNumber = phoneNumber;

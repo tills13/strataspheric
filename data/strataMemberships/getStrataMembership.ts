@@ -10,7 +10,6 @@ export async function getStrataMembership(
     .selectAll()
     .where("strata_memberships.strataId", "=", strataId)
     .where("strata_memberships.userId", "=", userId)
-    .where("strata_memberships.role", "!=", "pending")
     .orderBy("unit")
     .orderBy("name asc");
 

@@ -9,6 +9,7 @@ import { addCustomDomain } from "../../../../../cloudflare/pages/addCustomDomain
 import { createStrataMembership } from "../../../../../data/strataMemberships/createStrataMembership";
 import { createPlan } from "../../../../../data/strataPlans/createStrataPlan";
 import { createStrata } from "../../../../../data/stratas/createStrata";
+import { updateStrata } from "../../../../../data/stratas/updateStrata";
 import { createUser } from "../../../../../data/users/createUser";
 import { createWidget } from "../../../../../data/widgets/createWidget";
 import * as formdata from "../../../../../utils/formdata";
@@ -67,6 +68,7 @@ export async function submitGetStarted(
 
   const { id: strataId } = await createStrata({
     domain: strataDomain,
+    domainRecordId: "",
     name: strataName,
     numUnits,
     isPublic: isPublic ? 1 : 0,
@@ -82,8 +84,6 @@ export async function submitGetStarted(
   await createStrataMembership({
     strataId,
     userId,
-    email,
-    name,
     role: "administrator",
   });
 
@@ -109,6 +109,10 @@ export async function submitGetStarted(
         error: "unable to create DNS record",
       };
     }
+
+    await updateStrata(strataId, {
+      domainRecordId: createDnsRecordResponse.result.id,
+    });
 
     const [rJson] = await addCustomDomain(strataDomain);
 

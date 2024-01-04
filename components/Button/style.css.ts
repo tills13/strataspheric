@@ -15,10 +15,12 @@ export const button = recipe({
     cursor: "pointer",
     borderRadius: vars.borderRadius,
     textTransform: "capitalize",
+    whiteSpace: "nowrap",
 
     selectors: {
       "&:disabled": {
-        opacity: 0.5,
+        cursor: "not-allowed",
+        opacity: 0.7,
       },
     },
   },

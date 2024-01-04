@@ -23,6 +23,7 @@ export const titleLink = style([
 export const globalHeaderActions = style({});
 
 export const sessionUserName = style({
+  color: vars.colors.primary,
   whiteSpace: "nowrap",
 });
 

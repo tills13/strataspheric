@@ -7,6 +7,7 @@ import { useTransition } from "react";
 import { Event } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { formatDateForDatetime } from "../../utils/datetime";
+import { getString } from "../../utils/formdata";
 import { ElementGroup } from "../ElementGroup";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
@@ -27,7 +28,30 @@ export function CreateOrUpdateEventForm({
   const [deletePending, startTransition] = useTransition();
 
   return (
-    <form className={styles.newEventForm} action={upsertEvent}>
+    <form
+      className={styles.newEventForm}
+      action={async (fd) => {
+        const startDate = getString(fd, "startDate");
+        const endDate = getString(fd, "endDate");
+
+        // const tzOffset = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const rawTzOffset = new Date().getTimezoneOffset() / 60;
+        const isNegative = rawTzOffset >= 0;
+
+        const tzOffset =
+          (isNegative ? "-" : "") +
+          rawTzOffset.toString().padStart(2, "0") +
+          ":00";
+
+        console.log(startDate + tzOffset);
+
+        fd.set("startDate", startDate + tzOffset);
+        fd.set("endDate", endDate + tzOffset);
+
+        const u = await upsertEvent(fd);
+        console.log(u);
+      }}
+    >
       <Input name="name" placeholder="Name" defaultValue={event?.name} />
 
       <div className={styles.dateWrapper}>

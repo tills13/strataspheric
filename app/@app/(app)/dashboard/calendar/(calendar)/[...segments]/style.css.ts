@@ -1,5 +1,5 @@
 import { vars } from "../../../../../../theme.css";
-import { style } from "@vanilla-extract/css";
+import { createVar, style } from "@vanilla-extract/css";
 
 import { padding } from "../../../../../../../theme";
 
@@ -22,18 +22,42 @@ export const headerActions = style({
 
 export const calendar = style({
   display: "grid",
-  gridTemplateColumns: "repeat(7, 1fr)",
-  gridTemplateRows: "repeat(6, 1fr)",
+  gridTemplateRows: "repeat(6, minmax(0, 1fr))",
   width: "100vw",
   height: "100%",
 });
 
+export const calendarRow = style({
+  position: "relative",
+});
+
+export const calendarWeek = style({
+  position: "absolute",
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  display: "grid",
+  gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
+  height: "100%",
+  zIndex: 1,
+});
+
+export const calendarEventTrack = style({
+  position: "relative",
+  zIndex: 2,
+  display: "grid",
+  gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
+  marginTop: "40px",
+});
+
 export const calendarDay = style({
+  position: "relative",
   padding: 0,
   width: "100%",
   height: "100%",
   cursor: "pointer",
-  overflow: "hidden",
+  zIndex: 1,
   selectors: {
     "&:hover": {
       backgroundColor: vars.colors.grey100,
@@ -71,7 +95,13 @@ export const calendarDate = style({
   },
 });
 
+export const calendarEventTrackDay = style({
+  position: "relative",
+});
+
 export const calendarEvent = style({
+  position: "absolute",
+  left: 0,
   display: "block",
   padding: padding(vars.spacing.xxs, vars.spacing.small),
   backgroundColor: vars.colors.primary,
@@ -79,20 +109,24 @@ export const calendarEvent = style({
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
-  maxWidth: "100%",
+  zIndex: 2,
+  cursor: "pointer",
   selectors: {
+    "&:hover": {
+      backgroundColor: vars.colors.primaryHover,
+    },
     "&:not(:last-child)": {
       marginBottom: vars.spacing.small,
     },
   },
 });
 
-export const withLeftMargin = style({
+export const startsOnDay = style({
   borderTopLeftRadius: vars.borderRadius,
   borderBottomLeftRadius: vars.borderRadius,
   marginLeft: vars.spacing.small,
 });
-export const withRightMargin = style({
+export const endsOnDay = style({
   borderTopRightRadius: vars.borderRadius,
   borderBottomRightRadius: vars.borderRadius,
   marginRight: vars.spacing.small,

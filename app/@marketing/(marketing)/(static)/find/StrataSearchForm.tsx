@@ -1,5 +1,6 @@
 "use client";
 
+import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { useRouter } from "next/navigation";
@@ -51,21 +52,21 @@ export function StrataSearchForm({
       }}
     >
       <Input
-        className={classnames(styles.input, styles.marginBottom.small)}
+        className={classnames(styles.input, s({ mb: "small" }))}
         placeholder="Strata Name"
         name="name"
         defaultValue={name}
       />
 
       <Input
-        className={classnames(styles.input, styles.marginBottom.small)}
+        className={classnames(styles.input, s({ mb: "small" }))}
         placeholder="Strata Plan ID"
         name="strataPlan"
         defaultValue={strataPlan}
       />
 
       <Input
-        className={classnames(styles.input, styles.marginBottom.small)}
+        className={classnames(styles.input, s({ mb: "small" }))}
         placeholder="Address"
         name="address"
         defaultValue={address}

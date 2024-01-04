@@ -125,6 +125,7 @@ export interface StratasTable {
   id: ColumnType<string, string, never>;
   name: string;
   domain: string;
+  domainRecordId: string;
   numUnits: number;
   strataId: string | null;
   streetAddress: string | null;

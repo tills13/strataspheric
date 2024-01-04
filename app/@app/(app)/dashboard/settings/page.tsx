@@ -4,16 +4,17 @@ import * as styles from "./styles.css";
 import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
-import { Button } from "../../../../../components/Button";
 import { Checkbox } from "../../../../../components/Checkbox";
 import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { ElementGroup } from "../../../../../components/ElementGroup";
 import { Header } from "../../../../../components/Header";
+import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Input } from "../../../../../components/Input";
+import { StatusButton } from "../../../../../components/StatusButton";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
-import { updateStrataAction } from "./actions";
+import { deleteStrataAction, updateStrataAction } from "./actions";
 
 export const runtime = "edge";
 
@@ -33,61 +34,83 @@ export default async function Page() {
     <>
       <DashboardHeader />
       <div className={parentStyles.pageContainer}>
-        <form className={styles.form} action={updateStrataAction}>
-          <ElementGroup orientation="column" gap="small">
-            <input name="id" type="hidden" defaultValue={strata.id} />
+        <div className={styles.centerContainer}>
+          <form
+            className={classnames(styles.form, styles.marginBottomLarge)}
+            action={updateStrataAction}
+          >
+            <ElementGroup orientation="column" gap="small">
+              <input name="id" type="hidden" defaultValue={strata.id} />
 
-            <Header className={styles.header} priority={3}>
-              Strata Name
-            </Header>
-            <Input name="name" defaultValue={strata.name} />
-
-            <label className={styles.isPublicField} htmlFor="is_public">
-              <Header priority={3}>
-                I want my strata&apos;s content to be public
+              <Header className={styles.header} priority={3}>
+                Strata Name
               </Header>
-              <Checkbox
-                id="is_public"
-                name="is_public"
-                defaultChecked={strata.isPublic === 1}
+              <Input name="name" defaultValue={strata.name} />
+
+              <label className={styles.isPublicField} htmlFor="is_public">
+                <Header priority={3}>
+                  I want my strata&apos;s content to be public
+                </Header>
+                <Checkbox
+                  id="is_public"
+                  name="is_public"
+                  defaultChecked={strata.isPublic === 1}
+                />
+              </label>
+
+              <Header className={styles.header} priority={3}>
+                Strata Plan ID
+              </Header>
+              <Input
+                name="strata_id"
+                placeholder="Strata Plan ID (e.g. VIS...)"
+                defaultValue={strata.strataId || undefined}
               />
-            </label>
 
-            <Header className={styles.header} priority={3}>
-              Strata Plan ID
-            </Header>
-            <Input
-              name="strata_id"
-              placeholder="Strata Plan ID (e.g. VIS...)"
-              defaultValue={strata.strataId || undefined}
-            />
+              <Header className={styles.header} priority={3}>
+                Address
+              </Header>
 
-            <Header className={styles.header} priority={3}>
-              Address
-            </Header>
+              <Input
+                name="strata_address_street_address"
+                placeholder="Street Address"
+                defaultValue={strata.streetAddress || undefined}
+              />
 
-            <Input
-              name="strata_address_street_address"
-              placeholder="Street Address"
-              defaultValue={strata.streetAddress || undefined}
-            />
+              <Input
+                name="strata_address_postal_code"
+                placeholder="Postal Code"
+                defaultValue={strata.postalCode || undefined}
+              />
 
-            <Input
-              name="strata_address_postal_code"
-              placeholder="Postal Code"
-              defaultValue={strata.postalCode || undefined}
-            />
+              <Input
+                name="strata_address_province_state"
+                placeholder="Province / State"
+                defaultValue={strata.provinceState || undefined}
+              />
+              <StatusButton color="primary" style="secondary" type="submit">
+                Update Strata
+              </StatusButton>
+            </ElementGroup>
+          </form>
 
-            <Input
-              name="strata_address_province_state"
-              placeholder="Province / State"
-              defaultValue={strata.provinceState || undefined}
-            />
-            <Button color="success" style="secondary" type="submit">
-              Update Strata
-            </Button>
-          </ElementGroup>
-        </form>
+          <InfoPanel level="error">
+            <form action={deleteStrataAction}>
+              <ElementGroup orientation="column">
+                <Header priority={3}>Danger Zone</Header>
+
+                <p>
+                  Deleting your Strata will delete all information and files
+                  associated with your strata unrecoverably.
+                </p>
+
+                <StatusButton color="error" style="secondary">
+                  Delete Strata
+                </StatusButton>
+              </ElementGroup>
+            </form>
+          </InfoPanel>
+        </div>
       </div>
     </>
   );

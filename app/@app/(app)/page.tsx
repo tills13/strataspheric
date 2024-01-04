@@ -11,8 +11,8 @@ import { ElementGroup } from "../../../components/ElementGroup";
 import { Header } from "../../../components/Header";
 import { InternalLink } from "../../../components/Link/InternalLink";
 import { SignInForm } from "../../../components/SignInForm";
+import { protocol, tld } from "../../../constants";
 import { getCurrentStrata } from "../../../data/stratas/getStrataByDomain";
-import { classnames } from "../../../utils/classnames";
 
 export const runtime = "edge";
 
@@ -31,10 +31,10 @@ export default async function Page({
   const strata = await getCurrentStrata();
 
   if (!strata) {
-    notFound();
+    redirect(protocol + "//" + tld);
   }
 
-  if (strata?.isPublic && action === undefined) {
+  if (strata.isPublic && action === undefined) {
     redirect("/dashboard");
   }
 

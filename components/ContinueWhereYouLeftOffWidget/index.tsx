@@ -6,6 +6,7 @@ import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { useSelectedLayoutSegment } from "next/navigation";
 
+import { protocol, tld } from "../../constants";
 import { Strata } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
@@ -42,21 +43,25 @@ export function ContinueWhereYouLeftOffWidget({
       </Header>
       <div className={styles.spacer} />
       <ElementGroup className={styles.continuePanelList} gap="small">
-        {session && sessionStratas.length !== 0 ? (
+        {session ? (
           <>
-            <GoToStrataLink
-              key={sessionStratas[0].domain}
-              className={styles.continueAction}
-              strata={sessionStratas[0]}
-            />
+            {sessionStratas.length ? (
+              <GoToStrataLink
+                key={sessionStratas[0].domain}
+                className={styles.continueAction}
+                strata={sessionStratas[0]}
+              />
+            ) : (
+              <InternalLink className={styles.continueAction} href="/find">
+                <Button>Find a Strata</Button>
+              </InternalLink>
+            )}
             <DropdownActions
               actions={[
                 {
-                  action() {
-                    async () => {
-                      await signOut({ redirect: false });
-                      location.href = "/";
-                    };
+                  async action() {
+                    await signOut({ redirect: false });
+                    location.href = protocol + "//" + tld;
                   },
                   label: "Sign Out",
                   icon: <SignOutIcon />,

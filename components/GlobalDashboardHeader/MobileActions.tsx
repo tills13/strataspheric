@@ -2,7 +2,6 @@
 
 import * as styles from "./style.css";
 
-import { Session } from "next-auth";
 import { useState } from "react";
 
 import { Strata } from "../../data";
@@ -10,14 +9,14 @@ import { Button } from "../Button";
 import { MenuIcon } from "../Icon/MenuIcon";
 import { Logo } from "../Logo";
 import { Modal } from "../Modal";
-import { GlobalHeaderActions } from "./Actions";
+
+// import { GlobalHeaderActions } from "./Actions";
 
 interface Props {
-  session: Session | null;
   strata: Strata;
 }
 
-export function GlobalHeaderMobileActions({ session, strata }: Props) {
+export function GlobalHeaderMobileActions({ strata }: Props) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -33,11 +32,11 @@ export function GlobalHeaderMobileActions({ session, strata }: Props) {
           <div>
             <Logo />
 
-            <GlobalHeaderActions
+            {/* <GlobalHeaderActions
               className={styles.globalMobileHeaderModalActions}
               session={session}
               strata={strata}
-            />
+            /> */}
           </div>
         </Modal>
       )}

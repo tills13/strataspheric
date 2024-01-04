@@ -35,7 +35,7 @@ export default async function Page() {
 
       <div className={styles.pageContainer}>
         <div className={styles.formContainer}>
-          <SendStrataEmailBlastForm
+          {/* <SendStrataEmailBlastForm
             recipients={memberships.map((m) => ({
               userId: m.userId,
               name: m.name,
@@ -46,16 +46,16 @@ export default async function Page() {
               strata.id,
               undefined,
             )}
-          />
+          /> */}
 
-          {/* <SendInboxMessageForm
+          <SendInboxMessageForm
             showContactInformationFields={!u?.user}
             sendInboxMessage={sendInboxMessageAction.bind(
               undefined,
               strata.id,
               undefined,
             )}
-          /> */}
+          />
         </div>
       </div>
     </>

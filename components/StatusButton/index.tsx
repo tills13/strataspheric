@@ -26,23 +26,33 @@ export function StatusButton({
 
   if (status.pending || isPending) {
     return (
-      <Button className={className} {...buttonProps} disabled>
-        <div className={styles.formStatusButtonContainer}>
-          <LoadingIcon className={styles.statusIcon} /> {children}
-        </div>
+      <Button
+        className={className}
+        iconTextBehaviour="centerGlobal"
+        {...buttonProps}
+        iconRight={<LoadingIcon className={styles.statusIcon} />}
+        disabled
+      >
+        {children}
       </Button>
     );
   } else if (success !== undefined) {
     return (
-      <Button className={className} {...buttonProps} disabled={success}>
-        <div className={styles.formStatusButtonContainer}>
-          {success ? (
+      <Button
+        className={className}
+        {...buttonProps}
+        color={success ? "success" : "error"}
+        disabled={success}
+        iconRight={
+          success ? (
             <CircleCheckIcon className={styles.statusIcon} />
           ) : (
             <CircleXIcon className={styles.statusIcon} />
-          )}
-          {children}
-        </div>
+          )
+        }
+        iconTextBehaviour="centerGlobal"
+      >
+        <div className={styles.formStatusButtonContainer}>{children}</div>
       </Button>
     );
   }

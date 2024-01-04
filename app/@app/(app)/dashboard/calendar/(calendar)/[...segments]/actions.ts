@@ -27,6 +27,8 @@ export async function upsertEventAction(
 
   const d = new Date(startDate);
 
+  console.log(d, startDate, endDate);
+
   if (eventId) {
     await updateEvent(eventId, { name, description, startDate, endDate });
   } else {
@@ -34,7 +36,7 @@ export async function upsertEventAction(
       throw new Error("invalid fields");
     }
 
-    await createEvent({
+    const event = await createEvent({
       name,
       description,
       startDate,
@@ -42,12 +44,16 @@ export async function upsertEventAction(
       strataId,
       creatorId: session.user.id,
     });
+
+    eventId = event.id;
   }
 
   // @todo invalidate all months between start and end date
   revalidatePath(
     "/dashboard/calendar/" + d.getFullYear() + "/" + (d.getMonth() + 1),
   );
+
+  return eventId;
 }
 
 export async function deleteEventAction(eventId: string) {

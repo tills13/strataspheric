@@ -38,4 +38,8 @@ export const infoPanel = recipe({
       },
     },
   },
+
+  defaultVariants: {
+    level: "info",
+  },
 });

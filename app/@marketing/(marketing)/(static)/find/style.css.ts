@@ -1,18 +1,6 @@
 import { icon } from "../../../../../components/Icon/style.css";
 import { vars } from "../../../../theme.css";
-import { style, styleVariants } from "@vanilla-extract/css";
-
-export const marginBottom = styleVariants({
-  small: {
-    marginBottom: vars.spacing.small,
-  },
-  normal: {
-    marginBottom: vars.spacing.normal,
-  },
-  large: {
-    marginBottom: vars.spacing.large,
-  },
-});
+import { style } from "@vanilla-extract/css";
 
 export const header = style({});
 

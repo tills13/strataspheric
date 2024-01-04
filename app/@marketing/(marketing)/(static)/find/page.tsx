@@ -1,9 +1,12 @@
+import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Header } from "../../../../../components/Header";
 import { RightIcon } from "../../../../../components/Icon/RightIcon";
+import { InfoPanel } from "../../../../../components/InfoPanel";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
 import { protocol } from "../../../../../constants";
+import { Strata } from "../../../../../data";
 import { findStratas } from "../../../../../data/stratas/findStratas";
 import { classnames } from "../../../../../utils/classnames";
 import { StrataSearchForm } from "./StrataSearchForm";
@@ -11,38 +14,50 @@ import { StrataSearchForm } from "./StrataSearchForm";
 export const runtime = "edge";
 
 export default async function Page({ searchParams }) {
-  const stratas = await findStratas({
-    nameish: searchParams["name"],
-    planish: searchParams["strataPlan"],
-    address: searchParams["address"],
-  });
+  let stratas: Strata[] | undefined = undefined;
+
+  if (
+    searchParams["name"] ||
+    searchParams["strataPlan"] ||
+    searchParams["address"]
+  ) {
+    stratas = await findStratas({
+      nameish: searchParams["name"],
+      planish: searchParams["strataPlan"],
+      address: searchParams["address"],
+    });
+  }
 
   return (
     <div>
       <Header
-        className={classnames(styles.header, styles.marginBottom.large)}
+        className={classnames(styles.header, s({ mb: "large" }))}
         priority={2}
       >
         Find a Strata
       </Header>
 
       <StrataSearchForm
-        className={styles.marginBottom.large}
+        className={s({ mb: "large" })}
         name={searchParams["name"]}
         strataPlan={searchParams["strataPlan"]}
         address={searchParams["address"]}
       />
 
-      {stratas !== undefined && (
+      {stratas && (
         <>
           <Header
-            className={classnames(styles.header, styles.marginBottom.large)}
+            className={classnames(styles.header, s({ mb: "large" }))}
             priority={2}
           >
             Stratas
           </Header>
 
-          {stratas.length === 0 && <div>no stratas found</div>}
+          {stratas.length === 0 && (
+            <InfoPanel alignment="center">
+              No stratas match search criteria.
+            </InfoPanel>
+          )}
 
           <ul className={styles.stratasList}>
             {stratas.map((strata) => (

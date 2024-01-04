@@ -7,8 +7,11 @@ import { InternalLink } from "../Link/InternalLink";
 import { GlobalHeaderActions } from "./Actions";
 import { GlobalHeaderMobileActions } from "./MobileActions";
 
-export async function GlobalDashboardHeader() {
-  const session = await auth();
+interface Props {
+  joinStrata: () => void;
+}
+
+export async function GlobalDashboardHeader({ joinStrata }: Props) {
   const strata = await getCurrentStrata();
 
   if (!strata) {
@@ -26,10 +29,9 @@ export async function GlobalDashboardHeader() {
       </div>
       <GlobalHeaderActions
         className={styles.globalHeaderDesktopActions}
-        session={session}
-        strata={strata}
+        joinStrata={joinStrata}
       />
-      <GlobalHeaderMobileActions session={session} strata={strata} />
+      <GlobalHeaderMobileActions strata={strata} />
     </GlobalHeader>
   );
 }
