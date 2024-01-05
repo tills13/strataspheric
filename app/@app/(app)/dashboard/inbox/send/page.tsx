@@ -5,11 +5,11 @@ import { notFound, redirect } from "next/navigation";
 import { auth } from "../../../../../../auth";
 import { DashboardHeader } from "../../../../../../components/DashboardHeader";
 import { SendInboxMessageForm } from "../../../../../../components/SendInboxMessageForm";
-import { SendStrataEmailBlastForm } from "../../../../../../components/SendStrataEmailBlastForm";
 import { getStrataMemberships } from "../../../../../../data/strataMemberships/getStrataMemberships";
 import { getStrataPlan } from "../../../../../../data/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";
-import { sendInboxMessageAction } from "../actions";
+import { upsertFileAction } from "../../actions";
+import { createInboxMessageAction } from "../actions";
 
 export const runtime = "edge";
 
@@ -50,9 +50,9 @@ export default async function Page() {
 
           <SendInboxMessageForm
             showContactInformationFields={!u?.user}
-            sendInboxMessage={sendInboxMessageAction.bind(
+            upsertFile={upsertFileAction.bind(undefined, undefined)}
+            sendInboxMessage={createInboxMessageAction.bind(
               undefined,
-              strata.id,
               undefined,
             )}
           />

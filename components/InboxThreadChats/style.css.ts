@@ -12,6 +12,11 @@ export const wrapper = style({
   overflow: "hidden",
 });
 
+export const form = style({
+  width: "100%",
+  overflow: "hidden",
+});
+
 export const chatsContainer = style({
   "@media": {
     [breakpoints.tablet]: {

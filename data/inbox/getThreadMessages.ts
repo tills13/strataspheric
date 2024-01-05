@@ -15,7 +15,8 @@ export function getThreadMessages(
   let query = db
     .selectFrom("inbox_messages")
     .leftJoin("users", "inbox_messages.senderUserId", "users.id")
-    .leftJoin("files", "files.id", "inbox_messages.fileId")
+    .leftJoin("files", "inbox_messages.fileId", "files.id")
+    .leftJoin("invoices", "inbox_messages.invoiceId", "invoices.id")
     .select((eb) => [
       "inbox_messages.id",
       "inbox_messages.subject",
@@ -28,9 +29,18 @@ export function getThreadMessages(
       "inbox_messages.senderPhoneNumber",
       "inbox_messages.strataId",
       "inbox_messages.fileId",
+
       "files.name as fileName",
       "files.description as fileDescription",
       "files.path as filePath",
+
+      "invoices.id as invoiceId",
+      "invoices.identifier as invoiceIdentifier",
+      "invoices.description as invoiceDescription",
+      "invoices.amount as invoiceAmount",
+      "invoices.dueBy as invoiceDueBy",
+      "invoices.isPaid as invoiceIsPaid",
+
       eb.fn
         .coalesce("users.name", "inbox_messages.senderName")
         .as("senderName"),

@@ -6,11 +6,13 @@ import { File } from "../../data";
 import { Select } from "../Select";
 
 interface Props extends React.ComponentProps<typeof Select> {
+  onSelectFile?: (file: File) => void;
   className?: string;
 }
 
 export function FileSelect({
   className,
+  onSelectFile,
   placeholder,
   ...delegateProps
 }: Props) {
@@ -28,7 +30,13 @@ export function FileSelect({
   }, []);
 
   return (
-    <Select className={className} {...delegateProps}>
+    <Select
+      className={className}
+      onChange={(e) => {
+        onSelectFile(files.find((file) => file.id === e.currentTarget.value));
+      }}
+      {...delegateProps}
+    >
       <option value="">{placeholder || "Attach a File"}</option>
       {files.map((file) => (
         <option key={file.id} value={file.id}>

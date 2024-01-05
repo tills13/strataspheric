@@ -12,6 +12,10 @@ export const icon = style({
       height: "24px",
       margin: "auto",
     },
+    [`${buttonStyles.button.classNames.variants.size.small} &`]: {
+      height: "18px",
+      margin: "auto",
+    },
     [`${dropdownActionsStyles.actionRow} &`]: {
       height: "24px",
     },

@@ -4,14 +4,14 @@ import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../../../../auth";
 import { DashboardHeader } from "../../../../../../components/DashboardHeader";
-import { InboxMessageThread } from "../../../../../../components/InboxMessageThread";
 import { InboxThreadChats } from "../../../../../../components/InboxThreadChats";
 import { getThreadEmailParticipants } from "../../../../../../data/emails/getThreadEmailParticipants";
 import { getThread } from "../../../../../../data/inbox/getThread";
 import { Thread } from "../../../../../../data/inbox/getThreads";
 import { getCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../../../data/users/permissions";
-import { sendInboxMessageAction } from "../actions";
+import { createInboxMessageAction } from "../actions";
+import { InboxMessageThread } from "./InboxMessageThread";
 import InboxThreadChatPanel from "./InboxThreadChatPanel";
 import { sendInboxThreadChatAction } from "./actions";
 
@@ -59,9 +59,8 @@ export default async function Page({
             undefined,
             threadId,
           )}
-          sendNewMessageAction={sendInboxMessageAction.bind(
+          sendNewMessageAction={createInboxMessageAction.bind(
             undefined,
-            strata.id,
             threadId,
           )}
           threadId={threadId}

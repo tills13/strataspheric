@@ -6,8 +6,8 @@ export const agendaItem = style({
   flexDirection: "column",
   gap: vars.spacing.normal,
   padding: vars.spacing.normal,
+  border: `2px solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius,
-  backgroundColor: vars.colors.grey100,
   marginBottom: vars.spacing.normal,
   position: "relative",
 });

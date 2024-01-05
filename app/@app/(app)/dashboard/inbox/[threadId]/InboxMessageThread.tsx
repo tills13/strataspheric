@@ -1,15 +1,17 @@
+import { s } from "../../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { auth } from "../../auth";
-import { getThreadEmailParticipants } from "../../data/emails/getThreadEmailParticipants";
-import { getThreadMessages } from "../../data/inbox/getThreadMessages";
-import { parseTimestamp } from "../../utils/datetime";
-import { Button } from "../Button";
-import { Date } from "../Date";
-import { ShareIcon } from "../Icon/ShareIcon";
-import { ExternalLink } from "../Link/ExternalLink";
-import { SendInboxMessageForm } from "../SendInboxMessageForm";
-import { InboxMessageThreadMessage } from "./InboxMessageThreadMessage";
+import { auth } from "../../../../../../auth";
+import { Button } from "../../../../../../components/Button";
+import { Date } from "../../../../../../components/Date";
+import { ShareIcon } from "../../../../../../components/Icon/ShareIcon";
+import { ExternalLink } from "../../../../../../components/Link/ExternalLink";
+import { SendInboxMessageForm } from "../../../../../../components/SendInboxMessageForm";
+import { ThreadMessage } from "../../../../../../components/ThreadMessage";
+import { getThreadEmailParticipants } from "../../../../../../data/emails/getThreadEmailParticipants";
+import { getThreadMessages } from "../../../../../../data/inbox/getThreadMessages";
+import { upsertFileAction } from "../../actions";
+import { markInvoiceAsPaidAction, upsertInvoiceAction } from "../actions";
 
 interface Props {
   sendInboxThreadChatAction: (messageId: string, fd: FormData) => void;
@@ -31,7 +33,6 @@ export async function InboxMessageThread({
     message0;
 
   const emailParticipants = await getThreadEmailParticipants(threadId);
-  console.log(emailParticipants);
 
   return (
     <div className={styles.inboxMessageThreadContainer}>
@@ -65,26 +66,26 @@ export async function InboxMessageThread({
       </div>
 
       {messages.map((message) => (
-        <InboxMessageThreadMessage
+        <ThreadMessage
           key={message.id}
           {...message}
-          sendInboxThreadChat={sendInboxThreadChatAction.bind(
-            undefined,
-            message.id,
-          )}
+          markInvoiceAsPaid={markInvoiceAsPaidAction}
+          sendThreadChat={sendInboxThreadChatAction.bind(undefined, message.id)}
         />
       ))}
 
       <SendInboxMessageForm
-        className={styles.newMessageForm}
+        className={s({ p: "normal" })}
         showContactInformationFields={!session}
         sendInboxMessage={sendNewMessageAction}
         showHeaders={false}
         showSubjectInput={false}
+        upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
+        upsertFile={upsertFileAction.bind(undefined, undefined)}
         {...(!session && {
-          defaultEmail: message0.senderEmail ?? undefined,
-          defaultName: message0.senderName ?? undefined,
-          defaultPhoneNumber: message0.senderPhoneNumber ?? undefined,
+          defaultEmail: message0.senderEmail,
+          defaultName: message0.senderName,
+          defaultPhoneNumber: message0.senderPhoneNumber,
         })}
       />
     </div>

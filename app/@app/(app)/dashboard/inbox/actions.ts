@@ -4,20 +4,62 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
-import { protocol, tld } from "../../../../../constants";
-import { StrataMembership, User } from "../../../../../data";
+import { protocol } from "../../../../../constants";
+import { Invoice, StrataMembership, User } from "../../../../../data";
 import { createThreadEmail } from "../../../../../data/emails/createThreadEmail";
-import { createAndUpdloadFile } from "../../../../../data/files/createAndUploadFile";
-import { createThread } from "../../../../../data/inbox/createThread";
+import { createThreadMessage } from "../../../../../data/inbox/createThreadMessage";
 import { deleteThread } from "../../../../../data/inbox/deleteThread";
 import { deleteThreadChats } from "../../../../../data/inbox/deleteThreadChats";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
+import { createInvoice } from "../../../../../data/invoices/createInvoice";
+import { updateInvoice } from "../../../../../data/invoices/updateInvoice";
 import { getStrataMembership } from "../../../../../data/strataMemberships/getStrataMembership";
-import { createStrata } from "../../../../../data/stratas/createStrata";
-import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
-import { getStrataById } from "../../../../../data/stratas/getStrataById";
+import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { can, p } from "../../../../../data/users/permissions";
 import * as formdata from "../../../../../utils/formdata";
 import { sendEmail } from "../../../../../utils/sendEmail";
+
+export async function markInvoiceAsPaidAction(invoiceId: string) {
+  const session = await auth();
+
+  if (!can(session?.user, p("stratas", "invoices", "edit"))) {
+    return;
+  }
+
+  await updateInvoice(invoiceId, { isPaid: 1 });
+
+  revalidatePath("/dashboard/inbox/*");
+}
+
+export async function upsertInvoiceAction(
+  invoiceId: string | undefined,
+  fd: FormData,
+): Promise<Invoice | undefined> {
+  const strata = await mustGetCurrentStrata();
+
+  const identifier = formdata.getString(fd, "identifier");
+  const description = formdata.getString(fd, "description");
+  const amount = formdata.getFloat(fd, "amount");
+  const dueBy = formdata.getTimestamp(fd, "dueBy");
+
+  if (invoiceId) {
+    return updateInvoice(invoiceId, {
+      identifier,
+      description,
+      amount,
+      dueBy,
+    });
+  }
+
+  return createInvoice({
+    strataId: strata.id,
+    type: "incoming",
+    identifier,
+    description,
+    amount,
+    dueBy,
+  });
+}
 
 export async function deleteThreadAction(threadId: string) {
   await deleteThread(threadId);
@@ -26,11 +68,11 @@ export async function deleteThreadAction(threadId: string) {
   revalidatePath("/dashboard/inbox");
 }
 
-export async function sendInboxMessageAction(
-  strataId: string,
+export async function createInboxMessageAction(
   threadId: string | undefined,
   fd: FormData,
 ) {
+  const strata = await mustGetCurrentStrata();
   const u = await auth();
 
   const senderName = formdata.getString(fd, "name");
@@ -38,71 +80,50 @@ export async function sendInboxMessageAction(
   const senderPhoneNumber = formdata.getString(fd, "phone_number");
   const message = formdata.getString(fd, "message");
 
-  let existingFileId = formdata.getString(fd, "existing_file");
-  const newFile = formdata.getFile(fd, "new_file");
-
+  const fileId = formdata.getString(fd, "fileId");
+  const invoiceId = formdata.getString(fd, "invoiceId");
   const subject = formdata.getString(fd, "subject");
-  const recipients = Object.entries(formdata.getObject(fd, "recipients"))
-    .filter(([, v]) => v === "on")
-    .map(([v]) => v);
 
   if (
-    typeof senderName !== "string" ||
-    typeof senderEmail !== "string" ||
-    typeof senderPhoneNumber !== "string" ||
-    typeof message !== "string" ||
     message === "" ||
-    typeof subject !== "string" ||
     // subject is optional if threaded
     (threadId === undefined && subject === "")
   ) {
     throw new Error("invalid data");
   }
 
-  let fileId = existingFileId;
-
-  if (newFile && newFile.size !== 0) {
-    const file = await createAndUpdloadFile(
-      strataId,
-      u?.user?.id,
-      newFile.name,
-      "",
-      newFile.name,
-      newFile,
-      false,
-    );
-
-    fileId = file.id;
-  }
-
-  const newThread = await createThread({
+  const newMessage = await createThreadMessage({
     senderName,
     senderEmail,
     senderPhoneNumber,
     message,
     subject,
     senderUserId: u?.user?.id,
-    strataId,
+    strataId: strata.id,
     fileId,
+    invoiceId,
     ...(threadId && { threadId }),
   });
 
-  const [message0] = await getThreadMessages(threadId || newThread.threadId);
-  const strata = (await getStrataById(strataId))!;
+  const [message0] = await getThreadMessages(threadId || newMessage.threadId);
 
-  let viewPath = `/dashboard/inbox/${threadId || newThread.threadId}`;
+  let viewPath = `/dashboard/inbox/${threadId || newMessage.threadId}`;
 
-  if (newThread.viewId) {
-    viewPath += "?viewId=" + newThread.viewId;
+  if (newMessage.viewId) {
+    viewPath += "?viewId=" + newMessage.viewId;
   }
 
   const viewUrl = `${protocol}//${strata.domain}${viewPath}`;
 
-  console.log(recipients);
+  const recipients = Object.entries(formdata.getObject(fd, "recipients"))
+    .filter(([, v]) => v === "on")
+    .map(([v]) => v);
 
   if (recipients.length) {
     const memberRecipients = (
-      await Promise.all(recipients.map((r) => getStrataMembership(strataId, r)))
+      await Promise.all(
+        recipients.map((r) => getStrataMembership(strata.id, r)),
+      )
     )
       .filter((r): r is StrataMembership & User => !!r)
       .map((r) => r.email);
@@ -116,7 +137,7 @@ export async function sendInboxMessageAction(
 
       await createThreadEmail({
         emailId: r.id,
-        threadId: threadId || newThread.threadId,
+        threadId: threadId || newMessage.threadId,
         userId: u?.user.id,
       });
     }
@@ -141,6 +162,7 @@ export async function sendInboxMessageAction(
     }
 
     revalidatePath("/dashboard/inbox/" + threadId);
+    return;
   }
 
   revalidatePath("/dashboard/inbox");

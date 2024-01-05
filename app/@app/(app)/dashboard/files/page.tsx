@@ -5,10 +5,10 @@ import { Suspense } from "react";
 
 import { TableSkeleton } from "../../../../../components/Skeleton/TableSkeleton";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { upsertFileAction } from "../actions";
 import { FilesHeader } from "./FilesHeader";
 import { FilesSearch } from "./FilesSearch";
 import { FilesTable } from "./FilesTable";
-import { createFileAction } from "./actions";
 
 export const runtime = "edge";
 
@@ -25,7 +25,7 @@ export default async function Page({
 
   return (
     <>
-      <FilesHeader createFile={createFileAction.bind(undefined, strata.id)} />
+      <FilesHeader upsertFile={upsertFileAction.bind(undefined, undefined)} />
       <div>
         <div className={styles.filesTableContainer}>
           <Suspense

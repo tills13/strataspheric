@@ -3,19 +3,17 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import React, { startTransition } from "react";
+import React, { useTransition } from "react";
 
 import { type AgendaTimelineEntry } from "../../app/@app/(app)/dashboard/meetings/[meetingId]/MeetingTimelineSearch";
 import { classnames } from "../../utils/classnames";
-import { parseTimestamp } from "../../utils/datetime";
-import { Button } from "../Button";
 import { Date } from "../Date";
 import { ElementGroup } from "../ElementGroup";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
-import { MeetingTimelineIcon } from "../MeetingTimelineIcon";
+import { StatusButton } from "../StatusButton";
 
 interface Props extends AgendaTimelineEntry {
   addItemToAgenda: () => void;
@@ -32,6 +30,7 @@ export function MeetingTimelineItem({
   type,
   filePath,
 }: Props) {
+  const [isPending, startTransition] = useTransition();
   let title = sourceUserName || "Someone";
 
   if (type === "event") {
@@ -43,8 +42,6 @@ export function MeetingTimelineItem({
   } else if (type === "chat") {
     title += " chatted about a received message";
   }
-
-  console.log(date, parseTimestamp(date).toLocaleString());
 
   return (
     <>
@@ -76,7 +73,7 @@ export function MeetingTimelineItem({
       </div>
 
       <ElementGroup>
-        <Button
+        <StatusButton
           color="primary"
           style="secondary"
           iconRight={<AddIcon />}
@@ -85,9 +82,10 @@ export function MeetingTimelineItem({
               addItemToAgenda();
             })
           }
+          isPending={isPending}
         >
           Add to Agenda
-        </Button>
+        </StatusButton>
       </ElementGroup>
     </>
   );

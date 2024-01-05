@@ -7,6 +7,7 @@ import { getThreadChats } from "../../../../../../data/inbox/getThreadChats";
 import { getThreadMessages } from "../../../../../../data/inbox/getThreadMessages";
 import { can, p } from "../../../../../../data/users/permissions";
 import { classnames } from "../../../../../../utils/classnames";
+import { upsertFileAction } from "../../actions";
 import { sendInboxThreadChatAction } from "./actions";
 
 export default async function InboxThreadChatPanel({ threadId }) {
@@ -33,6 +34,7 @@ export default async function InboxThreadChatPanel({ threadId }) {
     <div className={styles.chatPanelWrapper}>
       <InboxThreadChats
         chats={chats}
+        upsertFile={upsertFileAction.bind(undefined, undefined)}
         sendInboxThreadChat={sendInboxThreadChatAction.bind(
           undefined,
           threadId,

@@ -4,10 +4,11 @@ import { revalidatePath } from "next/cache";
 
 import { auth } from "../../../../../../auth";
 import { createThreadChat } from "../../../../../../data/inbox/createThreadChat";
+import { getString } from "../../../../../../utils/formdata";
 
 export async function sendInboxThreadChatAction(
   threadId: string,
-  messageId: string,
+  messageId: string | undefined,
   fd: FormData,
 ) {
   const session = await auth();
@@ -16,15 +17,10 @@ export async function sendInboxThreadChatAction(
     throw new Error("unauthorized");
   }
 
-  const message = fd.get("message");
-  const fileId = fd.get("fileId") || "";
+  const message = getString(fd, "message");
+  const fileId = getString(fd, "fileId");
 
-  if (
-    typeof message !== "string" ||
-    message === "" ||
-    (messageId && typeof messageId !== "string") ||
-    (fileId && typeof fileId !== "string")
-  ) {
+  if (message === "") {
     throw new Error("invalid data");
   }
 

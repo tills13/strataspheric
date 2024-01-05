@@ -1,7 +1,11 @@
-import * as styles from "./style.css";
+"use client";
 
-import { classnames } from "../../utils/classnames";
-import { FileSelect } from "../FileSelect";
+import { s } from "../../sprinkles.css";
+
+import { useState } from "react";
+
+import { File } from "../../data";
+import { AttachFileButton } from "../AttachFileButton";
 import { SendIcon } from "../Icon/SendIcon";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
@@ -9,26 +13,36 @@ import { TextArea } from "../TextArea";
 interface Props {
   className?: string;
   sendInboxThreadChat: (fd: FormData) => void;
+  upsertFile: (fd: FormData) => Promise<File>;
 }
 
 export function SendInboxThreadChatForm({
   className,
   sendInboxThreadChat,
+  upsertFile,
 }: Props) {
+  const [selectedFile, setSelectedFile] = useState<File>();
+
   return (
-    <form
-      className={classnames(styles.form, className)}
-      action={sendInboxThreadChat}
-    >
+    <form className={className} action={sendInboxThreadChat}>
       <TextArea
-        className={styles.formInput}
+        className={s({ mb: "small", w: "full" })}
         name="message"
         placeholder="Message"
         rows={3}
         required
       />
 
-      <FileSelect className={styles.formInput} name="fileId" />
+      <AttachFileButton
+        className={s({ mb: "small" })}
+        onSelectFile={setSelectedFile}
+        upsertFile={upsertFile}
+        selectedFile={selectedFile}
+      />
+
+      {selectedFile && (
+        <input type="hidden" name="fileId" value={selectedFile.id} />
+      )}
 
       <StatusButton
         color="primary"

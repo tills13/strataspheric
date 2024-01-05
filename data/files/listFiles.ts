@@ -1,6 +1,6 @@
 import { db } from "..";
 
-export function getFiles(
+export function listFiles(
   strataId: string,
   includePrivateFiles: boolean | undefined = true,
 ) {

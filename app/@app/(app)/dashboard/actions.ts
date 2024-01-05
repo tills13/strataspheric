@@ -3,8 +3,11 @@
 import { revalidatePath } from "next/cache";
 
 import { auth } from "../../../../auth";
+import { File } from "../../../../data";
 import { createEvent } from "../../../../data/events/createEvent";
-import { createAndUpdloadFile } from "../../../../data/files/createAndUploadFile";
+import { createAndUploadFile } from "../../../../data/files/createAndUploadFile";
+import { updateFile } from "../../../../data/files/updateFile";
+import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { addEventToWidget } from "../../../../data/widgets/addEventToWidget";
 import { addFileToWidget } from "../../../../data/widgets/addFileToWidget";
 import { createWidget } from "../../../../data/widgets/createWidget";
@@ -26,7 +29,7 @@ export async function createEventAction(
 
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description");
-  const startDate = formdata.getString(formData, "date");
+  const startDate = formdata.getTimestamp(formData, "date");
 
   if (name === "") {
     throw new Error("invalid fields");
@@ -48,6 +51,51 @@ export async function createEventAction(
   await addEventToWidget({ widgetId, eventId });
 
   revalidatePath("/dashboard");
+}
+
+export async function upsertFileAction(
+  fileId: string | undefined,
+  formData: FormData,
+) {
+  const strata = await mustGetCurrentStrata();
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("not allowed");
+  }
+
+  const name = formdata.getString(formData, "name");
+  const description = formdata.getString(formData, "description") || "";
+  const uploadedFile = formdata.getFile(formData, "file");
+  const isPublic = formdata.getBoolean(formData, "isPublic");
+
+  let file: File | undefined;
+
+  if (fileId) {
+    file = await updateFile(fileId, {
+      name,
+      description,
+      isPublic: isPublic ? 0 : 1,
+    });
+  } else {
+    if (name === "" || !uploadedFile) {
+      throw new Error("invalid fields");
+    }
+
+    file = await createAndUploadFile(
+      strata.id,
+      session.user.id,
+      name,
+      description,
+      uploadedFile.name,
+      uploadedFile,
+      isPublic,
+    );
+  }
+
+  revalidatePath("/dashboard/files");
+
+  return file;
 }
 
 export async function createFileAction(
@@ -76,7 +124,7 @@ export async function createFileAction(
       throw new Error("invalid fields");
     }
 
-    const newFile = await createAndUpdloadFile(
+    const newFile = await createAndUploadFile(
       strataId,
       session.user.id,
       name,

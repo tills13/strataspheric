@@ -3,17 +3,17 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
+import { CreateOrUpdateFileForm } from "../../../../../components/CreateOrUpdateFileForm";
 import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { AddIcon } from "../../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../../components/Modal";
-import { NewFileForm } from "../../../../../components/NewFileForm";
 import { can, p } from "../../../../../data/users/permissions";
 
 interface Props {
-  createFile: (fd: FormData) => void;
+  upsertFile: (fd: FormData) => any;
 }
 
-export function FilesHeader({ createFile }: Props) {
+export function FilesHeader({ upsertFile }: Props) {
   const { data: session } = useSession();
   const [showNewFileModal, setShowNewFileModal] = useState(false);
 
@@ -30,7 +30,10 @@ export function FilesHeader({ createFile }: Props) {
       />
       {showNewFileModal && (
         <Modal closeModal={() => setShowNewFileModal(false)} title="New File">
-          <NewFileForm createFile={createFile} />
+          <CreateOrUpdateFileForm
+            onCreateOrUpdateFile={() => setShowNewFileModal(false)}
+            upsertFile={upsertFile}
+          />
         </Modal>
       )}
     </>

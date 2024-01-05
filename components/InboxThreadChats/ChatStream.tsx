@@ -6,6 +6,7 @@ import React, { useLayoutEffect, useRef } from "react";
 
 import { Chat } from "../../data/inbox/getThreadChats";
 import { Header } from "../Header";
+import { InfoPanel } from "../InfoPanel";
 import { InboxThreadChat } from "./InboxThreadChat";
 
 interface Props {
@@ -26,12 +27,15 @@ export function ChatStream({ chats, subject }: Props) {
         Chat about &quot;{subject}&quot;
       </Header>
 
+      <InfoPanel level="info">
+        Chats are private with authorized members of the council or individuals
+        who are explicitly given the ability to see and engage with chats.
+      </InfoPanel>
+
       {chats.length === 0 && (
         <p>
           No chats, yet. Start a conversation about this thread using the form
-          below. Chats are private with authorized members of the council or
-          individuals who are explicitly given the ability to see and engage
-          with chats.
+          below.
         </p>
       )}
       {chats.map((chat) => (

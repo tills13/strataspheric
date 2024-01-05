@@ -1,7 +1,19 @@
-import { vars } from "../../app/theme.css";
+import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const form = style({});
+
+export const formActionsContainer = style({
+  display: "flex",
+  gap: vars.spacing.small,
+  flexDirection: "column",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      flexDirection: "row",
+    },
+  },
+});
 
 export const formHeader = style({
   marginBottom: vars.spacing.normal,

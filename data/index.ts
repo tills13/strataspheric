@@ -43,12 +43,14 @@ export interface FilesTable {
 
 export type File = Selectable<FilesTable>;
 export type NewFile = Insertable<FilesTable>;
+export type FileUpdate = Updateable<FilesTable>;
 
 export interface InboxMessagesTable {
   id: string;
   strataId: string;
   threadId: string;
   fileId: string | null;
+  invoiceId: string | null;
   viewId: string | null;
   subject: string;
   message: string;
@@ -66,9 +68,9 @@ export type NewInboxMessage = Insertable<InboxMessagesTable>;
 export interface InboxThreadChatsTable {
   id: string;
   threadId: string;
-  messageId: string | undefined;
-  chatId: string | undefined;
-  fileId: string | undefined;
+  messageId: string | null;
+  chatId: string | null;
+  fileId: string | null;
   message: string;
   userId: string;
   sentAt: ColumnType<number, never, never>;
@@ -76,6 +78,23 @@ export interface InboxThreadChatsTable {
 
 export type InboxThreadChat = Selectable<InboxThreadChatsTable>;
 export type NewInboxThreadChat = Insertable<InboxThreadChatsTable>;
+
+export interface InvoicesTable {
+  id: ColumnType<string, string, never>;
+  strataId: string;
+  type: "incoming" | "outgoing";
+  identifier: string;
+  description: string | null;
+  amount: number;
+  fileId: string | null;
+  isPaid: ColumnType<0 | 1, 0 | 1 | undefined>;
+  createdAt: ColumnType<number, never, never>;
+  dueBy: number | null;
+}
+
+export type Invoice = Selectable<InvoicesTable>;
+export type NewInvoice = Insertable<InvoicesTable>;
+export type InvoiceUpdate = Updateable<InvoicesTable>;
 
 export interface MeetingsTable {
   id: ColumnType<string, string, never>;
@@ -225,6 +244,7 @@ export interface Database {
   files: FilesTable;
   inbox_thread_chats: InboxThreadChatsTable;
   inbox_messages: InboxMessagesTable;
+  invoices: InvoicesTable;
   meetings: MeetingsTable;
   meeting_agenda_items: MeetingAgendaItemsTable;
   meeting_files: MeetingFilesTable;

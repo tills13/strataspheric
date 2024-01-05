@@ -8,6 +8,7 @@ type Scope =
   | "files"
   | "inbox_messages"
   | "inbox_thread_chats"
+  | "invoices"
   | "meetings"
   | "memberships"
   | "widgets";

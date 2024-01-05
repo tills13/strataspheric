@@ -9,7 +9,7 @@ import { removeCustomDomain } from "../../../../../cloudflare/pages/removeCustom
 import { protocol, tld } from "../../../../../constants";
 import { deleteAllEvents } from "../../../../../data/events/deleteAllEvents";
 import { deleteAllFiles } from "../../../../../data/files/deleteAllFiles";
-import { getFiles } from "../../../../../data/files/getFiles";
+import { listFiles } from "../../../../../data/files/listFiles";
 import { deleteAllThreadChats } from "../../../../../data/inbox/deleteAllThreadChats";
 import { deleteAllThreads } from "../../../../../data/inbox/deleteAllThreads";
 import { deleteAllMeetings } from "../../../../../data/meetings/deleteAllMeetings";
@@ -33,7 +33,7 @@ export async function deleteStrataAction() {
     throw NotAuthorized;
   }
 
-  const files = await getFiles(currentStrata.id, true);
+  const files = await listFiles(currentStrata.id, true);
 
   if (files.length !== 0) {
     await r2.delete(files.map((file) => file.path));

@@ -2,7 +2,7 @@ import { uuidv7 } from "uuidv7";
 
 import { NewInboxMessage, db } from "..";
 
-export function createThread({
+export function createThreadMessage({
   threadId,
   ...rest
 }: Omit<NewInboxMessage, "id" | "threadId" | "viewId"> & {

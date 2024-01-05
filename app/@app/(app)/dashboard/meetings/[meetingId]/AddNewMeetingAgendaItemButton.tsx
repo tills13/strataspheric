@@ -27,6 +27,7 @@ export function AddNewMeetingAgendaItemButton({
       >
         Add New Agenda Item
       </Button>
+
       {showModal && (
         <Modal
           closeModal={() => setShowModal(false)}

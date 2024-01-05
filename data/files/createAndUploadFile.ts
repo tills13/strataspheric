@@ -5,7 +5,7 @@ import { extname } from "../../utils/extname";
 import { r2 } from "../r2";
 import { createFile } from "./createFile";
 
-export async function createAndUpdloadFile(
+export async function createAndUploadFile(
   strataId: string,
   uploaderId: string | null | undefined,
   fileName: string,

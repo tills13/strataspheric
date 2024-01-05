@@ -1,59 +1,10 @@
-import { breakpoints, vars } from "../../app/theme.css";
+import { breakpoints, iconColorVar, vars } from "../../app/theme.css";
 import { keyframes, style } from "@vanilla-extract/css";
 
-import { border } from "../../theme";
-
-export const inboxMessageThreadContainer = style({
-  paddingBottom: vars.spacing.normal,
-  overflow: "auto",
-});
-
-export const pageHeader = style({
-  display: "flex",
-  flexDirection: "column",
-  padding: vars.spacing.normal,
-  borderBottom: border("1px", "solid", vars.colors.borderDefault),
-
-  "@media": {
-    [breakpoints.tablet]: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-    },
-  },
-});
-
-export const pageHeaderActions = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: vars.spacing.normal,
-  // lineHeight: vars.sizes.small,
-
-  "@media": {
-    [breakpoints.tablet]: {
-      justifyContent: "unset",
-    },
-  },
-});
-
-export const pageHeaderSubject = style({
-  marginBottom: vars.spacing.small,
-  lineHeight: vars.fontSizes.large,
-  fontSize: vars.fontSizes.large,
-  fontWeight: vars.fontWeights.bold,
-});
-
-export const pageHeaderSender = style({
-  color: vars.colors.grey500,
-});
-
-export const outsideMessageWarning = style({
-  padding: vars.spacing.normal,
-  backgroundColor: vars.colors.red500,
-  color: vars.colors.white,
-});
+import { border, padding } from "../../theme";
 
 export const message = style({
+  paddingTop: vars.spacing.normal,
   selectors: {
     "&:not(:last-child)": {
       borderBottom: border("1px", "solid", vars.colors.borderDefault),
@@ -79,7 +30,8 @@ export const messageHighighted = style([
 
 export const messageHeader = style({
   position: "relative",
-  padding: vars.spacing.normal,
+  padding: padding(0, vars.spacing.normal),
+  marginBottom: vars.spacing.normal,
   "@media": {
     [breakpoints.tablet]: {
       display: "flex",
@@ -118,15 +70,59 @@ export const messageSender = style({
 });
 
 export const messageText = style({
-  padding: vars.spacing.normal,
-  paddingTop: 0,
+  padding: padding(0, vars.spacing.normal),
+  marginBottom: vars.spacing.normal,
   whiteSpace: "pre-wrap",
 });
 
-export const messageChatForm = style({});
+export const messageInvoice = style({
+  paddingLeft: vars.spacing.normal,
+  paddingRight: vars.spacing.normal,
+  marginBottom: vars.spacing.normal,
+});
 
-export const newMessageForm = style({
-  padding: vars.spacing.normal,
+export const invoiceHeader = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginBottom: vars.spacing.normal,
+});
+
+export const invoiceBody = style({
+  display: "flex",
+  gap: vars.spacing.normal,
+  flexDirection: "column",
+  width: "100%",
+  "@media": {
+    [breakpoints.tablet]: {
+      flexDirection: "row",
+    },
+  },
+});
+
+export const invoiceDescription = style({
+  flex: 1,
+});
+
+export const invoiceAmountContainer = style({
+  fontSize: vars.fontSizes.large,
+  padding: padding(vars.spacing.small, vars.spacing.normal),
+  borderRadius: vars.borderRadius,
+  backgroundColor: vars.colors.grey100,
+  textAlign: "center",
+});
+
+export const invoiceHeaderStatus = style({
+  display: "flex",
+  alignItems: "center",
+  gap: vars.spacing.small,
+});
+
+export const invoiceStatusIcon = style({
+  height: "24px",
+  vars: {
+    [iconColorVar]: vars.colors.green500,
+  },
 });
 
 export const messageFile = style({

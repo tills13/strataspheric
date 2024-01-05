@@ -66,6 +66,10 @@ export const button = recipe({
         backgroundColor: vars.colors.green500,
         color: vars.colors.white,
 
+        vars: {
+          [iconColorVar]: vars.colors.white,
+        },
+
         "&:hover": {
           borderColor: vars.colors.green700,
           backgroundColor: vars.colors.green700,
@@ -379,7 +383,7 @@ export const button = recipe({
       },
     },
 
-    // icon=true x size
+    // withIcon=true x size
     {
       variants: {
         size: "small",
@@ -387,6 +391,8 @@ export const button = recipe({
       },
       style: {
         height: vars.sizes.small,
+        padding: vars.spacing.xxs,
+        paddingLeft: vars.spacing.xs,
       },
     },
     {
@@ -469,6 +475,7 @@ export const buttonContentContainer = style({
   alignItems: "center",
   justifyContent: "center",
   flex: 1,
+  overflow: "hidden",
 });
 
 export const remainderPaddingLeft = style({

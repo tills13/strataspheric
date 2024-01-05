@@ -27,6 +27,9 @@ export function getString(fd: FormData, name: string): string {
 export function getBoolean(fd: FormData, name: string): boolean {
   return getString(fd, name) === "on";
 }
+export function getFloat(fd: FormData, name: string): number {
+  return parseFloat(getString(fd, name));
+}
 
 export function getInteger(fd: FormData, name: string): number {
   return parseInt(getString(fd, name), 10);
