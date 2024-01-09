@@ -6,14 +6,15 @@ import { Button } from "../../../../../../components/Button";
 import { CreateOrUpdateMeetingAgendaItemForm } from "../../../../../../components/CreateOrUpdateMeetingAgendaItemForm";
 import { AddIcon } from "../../../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../../../components/Modal";
-import { classnames } from "../../../../../../utils/classnames";
 
 interface Props {
-  createMeetingAgendaItem: (fd: FormData) => void;
+  upsertFile: (fd: FormData) => any;
+  upsertMeetingAgendaItem: (fd: FormData) => void;
 }
 
 export function AddNewMeetingAgendaItemButton({
-  createMeetingAgendaItem,
+  upsertFile,
+  upsertMeetingAgendaItem,
 }: Props) {
   const [showModal, setShowModal] = useState(false);
 
@@ -34,7 +35,8 @@ export function AddNewMeetingAgendaItemButton({
           title="Add New Agenda Item"
         >
           <CreateOrUpdateMeetingAgendaItemForm
-            createOrUpdateMeetingAgendaItem={createMeetingAgendaItem}
+            upsertFile={upsertFile}
+            upsertMeetingAgendaItem={upsertMeetingAgendaItem}
           />
         </Modal>
       )}

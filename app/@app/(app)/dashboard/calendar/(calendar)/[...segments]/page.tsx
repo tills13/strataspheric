@@ -55,8 +55,10 @@ export default async function Page({ searchParams, params }) {
 
   const q = db
     .selectFrom("events")
-    .selectAll()
-    .where("strataId", "=", strata.id)
+    .selectAll("events")
+    .leftJoin("meetings", "meetings.eventId", "events.id")
+    .select("meetings.id as meetingId")
+    .where("events.strataId", "=", strata.id)
     .where((eb) =>
       eb.or([
         // startDate is before month but endDate is during month or after month

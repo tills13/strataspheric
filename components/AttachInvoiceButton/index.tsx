@@ -13,12 +13,14 @@ import { InvoiceSelect } from "../InvoiceSelect";
 import { Modal } from "../Modal";
 
 interface Props {
+  className?: string;
   onSelectInvoice: (file: Invoice | undefined) => void;
   selectedInvoice?: Invoice;
   upsertInvoice: (fd: FormData) => Promise<Invoice>;
 }
 
 export function AttachInvoiceButton({
+  className,
   onSelectInvoice,
   selectedInvoice,
   upsertInvoice,
@@ -29,6 +31,7 @@ export function AttachInvoiceButton({
     <>
       {selectedInvoice ? (
         <Button
+          className={className}
           color="error"
           style="secondary"
           iconRight={<PaidDocumentIcon />}
@@ -39,6 +42,7 @@ export function AttachInvoiceButton({
         </Button>
       ) : (
         <Button
+          className={className}
           color="primary"
           style="secondary"
           iconRight={<PaidDocumentIcon />}

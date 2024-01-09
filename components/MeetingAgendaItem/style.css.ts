@@ -17,6 +17,10 @@ export const agendaItemDone = style([
   { opacity: 0.5, textDecoration: "line-through" },
 ]);
 
+export const agendaItemCheckboxPendingIcon = style({
+  height: vars.sizes.xs,
+});
+
 export const header = style({
   display: "flex",
   gap: vars.spacing.normal,

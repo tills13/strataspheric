@@ -1,6 +1,10 @@
 import { getString } from "./formdata";
 
-export function formatDateForDatetime(d: Date | number) {
+export function formatDateForDatetime(d: Date | number | string) {
+  if (typeof d === "string") {
+    d = parseInt(d, 10);
+  }
+
   if (typeof d === "number") {
     d = parseTimestamp(d);
   }

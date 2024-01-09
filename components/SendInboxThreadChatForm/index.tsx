@@ -1,11 +1,7 @@
-"use client";
-
 import { s } from "../../sprinkles.css";
 
-import { useState } from "react";
-
 import { File } from "../../data";
-import { AttachFileButton } from "../AttachFileButton";
+import { AttachFileField } from "../AttachFileField";
 import { SendIcon } from "../Icon/SendIcon";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
@@ -21,8 +17,6 @@ export function SendInboxThreadChatForm({
   sendInboxThreadChat,
   upsertFile,
 }: Props) {
-  const [selectedFile, setSelectedFile] = useState<File>();
-
   return (
     <form className={className} action={sendInboxThreadChat}>
       <TextArea
@@ -33,16 +27,11 @@ export function SendInboxThreadChatForm({
         required
       />
 
-      <AttachFileButton
-        className={s({ mb: "small" })}
-        onSelectFile={setSelectedFile}
+      <AttachFileField
+        buttonClassName={s({ mb: "small" })}
+        name="fileId"
         upsertFile={upsertFile}
-        selectedFile={selectedFile}
       />
-
-      {selectedFile && (
-        <input type="hidden" name="fileId" value={selectedFile.id} />
-      )}
 
       <StatusButton
         color="primary"

@@ -17,7 +17,7 @@ import { Modal } from "../Modal";
 interface Props {
   className?: string;
   onSelectFile: (file: File | undefined) => void;
-  selectedFile?: File;
+  selectedFile?: { id: string; name: string };
   upsertFile: (fd: FormData) => Promise<File>;
 }
 

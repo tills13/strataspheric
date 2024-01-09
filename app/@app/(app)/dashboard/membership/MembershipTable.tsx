@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { startTransition } from "react";
 
 import { ApproveStrataMembershipButton } from "../../../../../components/ApproveStrataMembershipButton";
+import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
 import { Input } from "../../../../../components/Input";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { StrataRoleSelect } from "../../../../../components/StrataRoleSelect";
@@ -75,6 +76,7 @@ export function MembershipTable({
               {canUpsert && (
                 <td>
                   <Input
+                    placeholder="Unit"
                     onBlur={(e) =>
                       startTransition(() => {
                         const fd = new FormData();
@@ -92,12 +94,7 @@ export function MembershipTable({
               </td>
               <td>
                 {membership.role === "pending" ? (
-                  <ApproveStrataMembershipButton
-                    approveStrataMembership={approveStrataMembership.bind(
-                      undefined,
-                      membership.userId,
-                    )}
-                  />
+                  <>Pending</>
                 ) : canUpsert ? (
                   <StrataRoleSelect
                     name="role"
@@ -117,14 +114,29 @@ export function MembershipTable({
               </td>
               {canDelete && (
                 <td className={styles.membershipTableActionColumnCell}>
-                  <RemoveButton
-                    color="error"
-                    onClick={removeStrataMember.bind(
-                      undefined,
-                      membership.userId,
+                  <div className={styles.actionsContainer}>
+                    {membership.role === "pending" && (
+                      <ApproveStrataMembershipButton
+                        approveStrataMembership={approveStrataMembership.bind(
+                          undefined,
+                          membership.userId,
+                        )}
+                        color="success"
+                        iconRight={<CircleCheckIcon />}
+                        style="secondary"
+                        size="small"
+                      />
                     )}
-                    style="tertiary"
-                  />
+                    <RemoveButton
+                      color="error"
+                      onClick={removeStrataMember.bind(
+                        undefined,
+                        membership.userId,
+                      )}
+                      style="tertiary"
+                      size="small"
+                    />
+                  </div>
                 </td>
               )}
             </tr>

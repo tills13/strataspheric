@@ -1,25 +1,32 @@
 "use client";
 
-import { startTransition } from "react";
+import React, { useTransition } from "react";
 
-import { Button } from "./Button";
+import { StatusButton } from "./StatusButton";
 
-interface Props {
+type StatusButtonProps = React.ComponentProps<typeof StatusButton>;
+
+interface Props extends Omit<StatusButtonProps, "isPending" | "onClick"> {
   approveStrataMembership: () => void;
 }
 
 export function ApproveStrataMembershipButton({
   approveStrataMembership,
+  ...delegateProps
 }: Props) {
+  const [isPending, startTransition] = useTransition();
+
   return (
-    <Button
+    <StatusButton
       onClick={() =>
         startTransition(() => {
           approveStrataMembership();
         })
       }
+      isPending={isPending}
+      {...delegateProps}
     >
       Approve
-    </Button>
+    </StatusButton>
   );
 }

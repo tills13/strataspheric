@@ -1,20 +1,27 @@
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { MeetingAgendaItem } from "../../data";
+import React, { useState } from "react";
+
+import { MeetingAgendaItem } from "../../data/meetings/getMeetingAgendaItems";
+import { AttachFileField } from "../AttachFileField";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
+import { TextArea } from "../TextArea";
 
 interface Props {
-  createOrUpdateMeetingAgendaItem: (fd: FormData) => void;
+  upsertFile: (fd: FormData) => any;
+  upsertMeetingAgendaItem: (fd: FormData) => void;
   agendaItem?: MeetingAgendaItem;
 }
 
 export function CreateOrUpdateMeetingAgendaItemForm({
-  createOrUpdateMeetingAgendaItem,
+  upsertFile,
+  upsertMeetingAgendaItem,
   agendaItem,
 }: Props) {
   return (
-    <form action={createOrUpdateMeetingAgendaItem}>
+    <form action={upsertMeetingAgendaItem}>
       <Input
         className={styles.input}
         name="title"
@@ -22,11 +29,22 @@ export function CreateOrUpdateMeetingAgendaItemForm({
         defaultValue={agendaItem?.title}
       />
 
-      <Input
+      <TextArea
         className={styles.input}
         name="description"
         placeholder="Description"
         defaultValue={agendaItem?.description}
+      />
+
+      <AttachFileField
+        buttonClassName={s({ mb: "small" })}
+        defaultValue={
+          agendaItem?.fileId && agendaItem?.fileName
+            ? { id: agendaItem.fileId, name: agendaItem.fileName }
+            : undefined
+        }
+        name="fileId"
+        upsertFile={upsertFile}
       />
 
       <StatusButton type="submit">

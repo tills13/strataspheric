@@ -75,6 +75,12 @@ export const membershipTableActionColumnCell = style({
   textAlign: "right",
 });
 
+export const actionsContainer = style({
+  display: "flex",
+  gap: vars.spacing.small,
+  justifyContent: "flex-end",
+});
+
 export const seatCountContainer = style({
   textAlign: "center",
   fontSize: vars.fontSizes.xxl,

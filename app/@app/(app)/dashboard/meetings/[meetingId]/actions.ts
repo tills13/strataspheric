@@ -17,12 +17,14 @@ import { AgendaTimelineEntry } from "./MeetingTimelineSearch";
 
 export async function updateMeetingAction(meetingId: string, fd: FormData) {
   const purpose = formdata.getString(fd, "purpose");
+  const startDate = formdata.getTimestamp(fd, "startDate");
+  const endDate = formdata.getTimestamp(fd, "endDate") || startDate;
 
   await updateMeeting(meetingId, { purpose });
   await updateMeetingEvent(meetingId, {
     name: purpose,
-    startDate: formdata.getString(fd, "startDate"),
-    endDate: formdata.getString(fd, "endDate"),
+    startDate,
+    endDate,
   });
 
   revalidatePath("/dashboard/meetings/" + meetingId);
@@ -80,6 +82,7 @@ export async function updateAgendaItemAction(
   const meetingAgendaItemUpdate: MeetingAgendaItemUpdate = {
     title: formdata.getString(fd, "title"),
     description: formdata.getString(fd, "description"),
+    fileId: formdata.getString(fd, "fileId"),
   };
 
   if (Object.keys(meetingAgendaItemUpdate).length === 0) {

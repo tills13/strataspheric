@@ -49,7 +49,7 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
         ))}
 
         <AddNewMeetingAgendaItemButton
-          createMeetingAgendaItem={createMeetingAgendaItemAction.bind(
+          upsertMeetingAgendaItem={createMeetingAgendaItemAction.bind(
             undefined,
             meetingId,
           )}

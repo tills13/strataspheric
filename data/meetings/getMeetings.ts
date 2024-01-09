@@ -8,5 +8,6 @@ export function getMeetings(strataId: string) {
     .selectAll("meetings")
     .select(["users.name as caller", "events.startDate", "events.endDate"])
     .where("meetings.strataId", "=", strataId)
+    .orderBy("events.startDate desc")
     .execute();
 }

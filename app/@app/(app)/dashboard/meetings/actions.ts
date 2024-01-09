@@ -18,8 +18,8 @@ export async function createMeetingAction(strataId: string, fd: FormData) {
 
   const purpose = formdata.getString(fd, "purpose");
 
-  const startDateTs = formdata.getTimestamp(fd, "startDate");
-  const endDateTs = formdata.getTimestamp(fd, "endDate") || startDateTs;
+  const startDateTs = formdata.getTimestamp(fd, "date_start");
+  const endDateTs = formdata.getTimestamp(fd, "date_end") || startDateTs;
 
   const event = await createEvent({
     strataId,

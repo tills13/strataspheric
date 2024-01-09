@@ -1,26 +1,14 @@
 "use client";
 
-import { vars } from "../../../../../../theme.css";
 import * as styles from "./style.css";
 
-import { calc } from "@vanilla-extract/css-utils";
-import differenceInDays from "date-fns/differenceInDays";
-import { addDays, endOfWeek, getWeek, subDays } from "date-fns/esm";
-import getDaysInMonth from "date-fns/getDaysInMonth";
-import isAfter from "date-fns/isAfter";
-import isBefore from "date-fns/isBefore";
-import isSameDay from "date-fns/isSameDay";
-import sub from "date-fns/sub";
-import { useEffect, useState } from "react";
+import { addDays } from "date-fns/esm";
+import { useState } from "react";
 
 import { CreateOrUpdateEventForm } from "../../../../../../../components/CreateOrUpdateEventForm";
 import { Modal } from "../../../../../../../components/Modal";
 import { Event } from "../../../../../../../data";
-import { classnames } from "../../../../../../../utils/classnames";
-import {
-  formatDateForDatetime,
-  parseTimestamp,
-} from "../../../../../../../utils/datetime";
+import { formatDateForDatetime } from "../../../../../../../utils/datetime";
 import { CalendarDay } from "./CalendarDay";
 import { CalendarDayEvents } from "./CalendarDayEvents";
 
@@ -52,12 +40,9 @@ export function Calendar({
 }: Props) {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedEvent, setSelectedEvent] = useState<Event>();
-  const [showToday, setShowToday] = useState(false);
 
   const currentDate = new Date(year, month - 1, 1);
   const firstDayOfMonth = currentDate.getDay();
-
-  useEffect(() => setShowToday(true), []);
 
   return (
     <>
@@ -90,7 +75,6 @@ export function Calendar({
                       dayIdx,
                       firstDayOfMonth,
                     )}
-                    currentDate={currentDate}
                     events={events}
                     onClickEvent={setSelectedEvent}
                   />
@@ -100,6 +84,7 @@ export function Calendar({
           );
         })}
       </div>
+
       {selectedDate && (
         <Modal closeModal={() => setSelectedDate(undefined)} title="New Event">
           <CreateOrUpdateEventForm

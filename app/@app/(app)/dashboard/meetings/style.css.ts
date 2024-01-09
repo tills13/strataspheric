@@ -151,3 +151,9 @@ export const actionsCell = style([
     },
   },
 ]);
+
+export const actions = style({
+  display: "flex",
+  gap: "vars.spacing.small",
+  justifyContent: "flex-end",
+});

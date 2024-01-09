@@ -9,7 +9,6 @@ import { InfoPanel } from "../../../../../components/InfoPanel";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { getMeetings } from "../../../../../data/meetings/getMeetings";
 import { can, p } from "../../../../../data/users/permissions";
-import { parseTimestamp } from "../../../../../utils/datetime";
 import { deleteMeetingAction } from "./actions";
 
 interface Props {
@@ -46,14 +45,16 @@ export async function MeetingListLayout({ strataId }: Props) {
               <Date timestamp={meeting.startDate} />
             </div>
             <div className={styles.actionsCell}>
-              {can(session?.user, p("stratas", "meetings", "delete")) && (
-                <DeleteButton
-                  onClick={deleteMeetingAction.bind(undefined, meeting.id)}
-                  color="error"
-                  size="small"
-                  style="tertiary"
-                />
-              )}
+              <div className={styles.actions}>
+                {can(session?.user, p("stratas", "meetings", "delete")) && (
+                  <DeleteButton
+                    onClick={deleteMeetingAction.bind(undefined, meeting.id)}
+                    color="error"
+                    size="small"
+                    style="tertiary"
+                  />
+                )}
+              </div>
             </div>
           </InternalLink>
         ))}

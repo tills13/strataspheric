@@ -7,6 +7,7 @@ import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
 import isSameDay from "date-fns/isSameDay";
 
+import { InternalLink } from "../../../../../../../components/Link/InternalLink";
 import { Event } from "../../../../../../../data";
 import { classnames } from "../../../../../../../utils/classnames";
 import { parseTimestamp } from "../../../../../../../utils/datetime";
@@ -49,7 +50,7 @@ export function CalendarDayEvents({ events, date, onClickEvent }: Props) {
           return null;
         }
 
-        return (
+        const child = (
           <div
             key={idx}
             className={classnames(styles.calendarEvent, {
@@ -69,15 +70,27 @@ export function CalendarDayEvents({ events, date, onClickEvent }: Props) {
                 .toString(),
               maxWidth: ((7 - date.getDay()) / 7) * 100 + "vw",
             }}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
+            onClick={
+              event.meetingId
+                ? undefined
+                : (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
 
-              onClickEvent(event);
-            }}
+                    onClickEvent(event);
+                  }
+            }
           >
             {event.name}
           </div>
+        );
+
+        return event.meetingId ? (
+          <InternalLink href={`/dashboard/meetings/${event.meetingId}`}>
+            {child}
+          </InternalLink>
+        ) : (
+          child
         );
       })}
     </div>

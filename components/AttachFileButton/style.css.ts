@@ -8,4 +8,5 @@ export const attachFileButton = style({
 export const fileName = style({
   textOverflow: "ellipsis",
   overflow: "hidden",
+  textTransform: "none",
 });

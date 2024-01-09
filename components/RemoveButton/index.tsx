@@ -3,7 +3,7 @@
 import React, { useTransition } from "react";
 
 import { Button } from "../Button";
-import { DeleteIcon } from "../Icon/DeleteIcon";
+import { RemoveIcon } from "../Icon/RemoveIcon";
 import { LoadingIcon } from "../LoadingIcon";
 
 type ButtonProps = Omit<
@@ -15,13 +15,13 @@ interface Props extends ButtonProps {
   onClick: () => void;
 }
 
-export function DeleteButton({ onClick, ...delegateProps }: Props) {
+export function RemoveButton({ onClick, ...delegateProps }: Props) {
   const [isPending, startTransition] = useTransition();
 
   return (
     <Button
       {...delegateProps}
-      icon={isPending ? <LoadingIcon /> : <DeleteIcon />}
+      icon={isPending ? <LoadingIcon /> : <RemoveIcon />}
       onClick={(e) => {
         e.preventDefault();
         startTransition(() => onClick());

@@ -1,14 +1,10 @@
-"use client";
-
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { useState } from "react";
-
 import { File, Invoice } from "../../data";
 import { classnames } from "../../utils/classnames";
-import { AttachFileButton } from "../AttachFileButton";
-import { AttachInvoiceButton } from "../AttachInvoiceButton";
+import { AttachFileField } from "../AttachFileField";
+import { AttachInvoiceField } from "../AttachInvoiceField";
 import { Header } from "../Header";
 import { SendIcon } from "../Icon/SendIcon";
 import { Input } from "../Input";
@@ -40,9 +36,6 @@ export function SendInboxMessageForm({
   upsertFile,
   upsertInvoice,
 }: Props) {
-  const [setInvoice, setSelectedInvoice] = useState<Invoice>();
-  const [selectedFile, setSelectedFile] = useState<File>();
-
   return (
     <form
       className={classnames(styles.form, className)}
@@ -108,29 +101,16 @@ export function SendInboxMessageForm({
           )}
         >
           {upsertFile && (
-            <AttachFileButton
-              onSelectFile={setSelectedFile}
-              selectedFile={selectedFile}
-              upsertFile={upsertFile}
-            />
+            <AttachFileField name="fileId" upsertFile={upsertFile} />
           )}
 
           {upsertInvoice && (
-            <AttachInvoiceButton
-              onSelectInvoice={setSelectedInvoice}
-              selectedInvoice={setInvoice}
+            <AttachInvoiceField
+              name="invoiceId"
               upsertInvoice={upsertInvoice}
             />
           )}
         </div>
-      )}
-
-      {selectedFile && (
-        <input type="hidden" name="fileId" value={selectedFile.id} />
-      )}
-
-      {setInvoice && (
-        <input type="hidden" name="invoiceId" defaultValue={setInvoice.id} />
       )}
 
       <StatusButton color="primary" iconRight={<SendIcon />} type="submit">

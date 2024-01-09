@@ -53,6 +53,7 @@ export function getMeetingAgendaItems(meetingId: string) {
       "files.name as fileName",
       "files.path as filePath",
       "files.description as fileDescription",
+      "files.createdAt as fileCreatedAt",
 
       "inbox_messages.id as messageId",
       "inbox_messages.threadId as messageThreadId",

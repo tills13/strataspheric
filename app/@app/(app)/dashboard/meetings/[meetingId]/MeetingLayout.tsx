@@ -6,7 +6,6 @@ import { EditMeetingButton } from "../../../../../../components/EditMeetingButto
 import { Header } from "../../../../../../components/Header";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
 import { getMeeting } from "../../../../../../data/meetings/getMeeting";
-import { parseTimestamp } from "../../../../../../utils/datetime";
 import { deleteMeetingAction } from "../actions";
 import { DeleteMeetingButton } from "./DeleteMeetingButton";
 import { MeetingAgenda } from "./MeetingAgenda";
