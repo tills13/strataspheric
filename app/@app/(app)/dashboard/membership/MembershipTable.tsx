@@ -3,30 +3,34 @@
 import * as styles from "./styles.css";
 
 import { useSession } from "next-auth/react";
-import { startTransition } from "react";
+import { useState } from "react";
 
 import { ApproveStrataMembershipButton } from "../../../../../components/ApproveStrataMembershipButton";
+import { Button } from "../../../../../components/Button";
+import { CreateOrUpdateStrataMembershipForm } from "../../../../../components/CreateOrUpdateStrataMembershipForm";
 import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
-import { Input } from "../../../../../components/Input";
+import { EditIcon } from "../../../../../components/Icon/EditIcon";
+import { Modal } from "../../../../../components/Modal";
 import { RemoveButton } from "../../../../../components/RemoveButton";
-import { StrataRoleSelect } from "../../../../../components/StrataRoleSelect";
 import { StrataMembership, User } from "../../../../../data";
 import { can } from "../../../../../data/users/permissions";
-import { classnames } from "../../../../../utils/classnames";
 
 interface Props {
   approveStrataMembership: (userId: string) => void;
   memberships: Array<StrataMembership & User>;
-  removeStrataMember: (userId: string) => void;
-  updateStrataMember: (userId: string, formData: FormData) => void;
+  removeStrataMembership: (userId: string) => void;
+  upsertStrataMembership: (userId: string, formData: FormData) => void;
 }
 
 export function MembershipTable({
   approveStrataMembership,
   memberships,
-  removeStrataMember,
-  updateStrataMember,
+  removeStrataMembership,
+  upsertStrataMembership,
 }: Props) {
+  const [selectedMembership, setSelectedMembership] = useState<
+    StrataMembership & User
+  >();
   const { data: session } = useSession();
 
   const canSeeMemberDetails = !!session;
@@ -52,97 +56,91 @@ export function MembershipTable({
   }
 
   return (
-    <table className={styles.membershipTable}>
-      {Object.entries(byUnit).map(([unit, strataMemberships]) => (
-        <tbody key={unit} className={styles.membershipTableSection}>
-          <tr className={styles.membershipTableSectionHeaderRow}>
-            <th colSpan={canDelete ? 6 : 5}>{unit}</th>
-          </tr>
+    <>
+      <table className={styles.membershipTable}>
+        {Object.entries(byUnit).map(([unit, strataMemberships]) => (
+          <tbody key={unit} className={styles.membershipTableSection}>
+            <tr className={styles.membershipTableSectionHeaderRow}>
+              <th colSpan={canDelete ? 6 : 5}>{unit}</th>
+            </tr>
 
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            {canUpsert && <th>Unit</th>}
-            <th>Phone #</th>
-            <th>Role</th>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              {canUpsert && <th>Unit</th>}
+              <th>Phone #</th>
+              <th>Role</th>
 
-            {canDelete && <th></th>}
-          </tr>
+              {canDelete && <th></th>}
+            </tr>
 
-          {strataMemberships.map((membership) => (
-            <tr key={membership.userId}>
-              <td>{membership.name}</td>
-              <td>{canSeeMemberDetails ? membership.email : "****@***.***"}</td>
-              {canUpsert && (
+            {strataMemberships.map((membership) => (
+              <tr key={membership.userId}>
+                <td>{membership.name}</td>
                 <td>
-                  <Input
-                    placeholder="Unit"
-                    onBlur={(e) =>
-                      startTransition(() => {
-                        const fd = new FormData();
-                        fd.set("unit", e.target.value);
-
-                        updateStrataMember(membership.userId, fd);
-                      })
-                    }
-                    defaultValue={membership.unit || ""}
-                  />
+                  {canSeeMemberDetails ? membership.email : "****@***.***"}
                 </td>
-              )}
-              <td>
-                {canSeeMemberDetails ? membership.phoneNumber : "***-***-****"}
-              </td>
-              <td>
-                {membership.role === "pending" ? (
-                  <>Pending</>
-                ) : canUpsert ? (
-                  <StrataRoleSelect
-                    name="role"
-                    defaultValue={membership.role || "owner"}
-                    onChange={(e) =>
-                      startTransition(() => {
-                        const fd = new FormData();
-                        fd.set("role", e.target.value);
 
-                        updateStrataMember(membership.userId, fd);
-                      })
-                    }
-                  />
-                ) : (
-                  membership.role
-                )}
-              </td>
-              {canDelete && (
-                <td className={styles.membershipTableActionColumnCell}>
-                  <div className={styles.actionsContainer}>
-                    {membership.role === "pending" && (
-                      <ApproveStrataMembershipButton
-                        approveStrataMembership={approveStrataMembership.bind(
+                <td>{membership.unit}</td>
+
+                <td>
+                  {canSeeMemberDetails
+                    ? membership.phoneNumber
+                    : "***-***-****"}
+                </td>
+                <td>{membership.role}</td>
+                {canDelete && (
+                  <td className={styles.membershipTableActionColumnCell}>
+                    <div className={styles.actionsContainer}>
+                      {membership.role === "pending" && (
+                        <ApproveStrataMembershipButton
+                          approveStrataMembership={approveStrataMembership.bind(
+                            undefined,
+                            membership.userId,
+                          )}
+                          color="success"
+                          iconRight={<CircleCheckIcon />}
+                          iconTextBehaviour="centerRemainder"
+                          size="small"
+                        />
+                      )}
+                      <Button
+                        icon={<EditIcon />}
+                        onClick={() => setSelectedMembership(membership)}
+                        style="tertiary"
+                        size="small"
+                      />
+                      <RemoveButton
+                        color="error"
+                        onClick={removeStrataMembership.bind(
                           undefined,
                           membership.userId,
                         )}
-                        color="success"
-                        iconRight={<CircleCheckIcon />}
-                        style="secondary"
+                        style="tertiary"
                         size="small"
                       />
-                    )}
-                    <RemoveButton
-                      color="error"
-                      onClick={removeStrataMember.bind(
-                        undefined,
-                        membership.userId,
-                      )}
-                      style="tertiary"
-                      size="small"
-                    />
-                  </div>
-                </td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      ))}
-    </table>
+                    </div>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        ))}
+      </table>
+      {selectedMembership && (
+        <Modal
+          closeModal={() => setSelectedMembership(undefined)}
+          title="Edit Membership"
+        >
+          <CreateOrUpdateStrataMembershipForm
+            upsertStrataMembership={upsertStrataMembership.bind(
+              undefined,
+              selectedMembership.userId,
+            )}
+            strataMembership={selectedMembership}
+          />
+        </Modal>
+      )}
+    </>
   );
 }

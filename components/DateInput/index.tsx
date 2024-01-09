@@ -3,6 +3,8 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
+import add from "date-fns/add";
+import sub from "date-fns/sub";
 import { useRef } from "react";
 
 import { classnames } from "../../utils/classnames";
@@ -26,10 +28,10 @@ interface SingleProps extends BaseProps {
 interface RangeProps extends BaseProps {
   type: "range";
   defaultStartValue?: string | number;
-  startDate: number | Date | undefined;
+  // startDate: number | Date | undefined;
   startPlaceholder?: string;
   defaultEndValue?: string | number;
-  endDate: number | Date | undefined;
+  // endDate: number | Date | undefined;
   endPlaceholder?: string;
 }
 
@@ -45,16 +47,40 @@ export function DateInput({
   const startInputRef = useRef<HTMLInputElement>(null!);
   const endInputRef = useRef<HTMLInputElement | null>(null);
 
+  function onClickSetDateToTodayButton() {
+    const d = new Date();
+    startInputRef.current.value = formatDateForDatetime(d);
+
+    if (endInputRef.current) {
+      endInputRef.current.value = formatDateForDatetime(add(d, { hours: 1 }));
+    }
+  }
+
+  function onChangeStart(e: React.ChangeEvent<HTMLInputElement>) {
+    const currentDate = new Date(e.currentTarget.value);
+
+    if (endInputRef.current) {
+      endInputRef.current.value = formatDateForDatetime(
+        add(currentDate, { hours: 1 }),
+      );
+    }
+  }
+
+  function onChangeEnd(e: React.ChangeEvent<HTMLInputElement>) {
+    const currentDate = new Date(e.currentTarget.value);
+
+    startInputRef.current.value = formatDateForDatetime(
+      sub(currentDate, { hours: 1 }),
+    );
+  }
+
   if (rest.type === "single") {
     return (
       <div
-        className={classnames(
-          className,
-          styles.dateInputWrapper,
-          s({ w: "full" }),
-        )}
+        className={classnames(className, styles.dateInput, s({ w: "full" }))}
       >
         <Input
+          ref={startInputRef}
           className={s({ w: "full" })}
           name={name}
           type="datetime-local"
@@ -65,14 +91,7 @@ export function DateInput({
         />
         <Button
           icon={<EventIcon />}
-          onClick={() => {
-            const d = new Date();
-            startInputRef.current.value = formatDateForDatetime(d);
-
-            if (endInputRef.current) {
-              endInputRef.current.value = formatDateForDatetime(d);
-            }
-          }}
+          onClick={onClickSetDateToTodayButton}
           style="tertiary"
           title="Today"
           type="button"
@@ -82,51 +101,42 @@ export function DateInput({
   }
 
   return (
-    <div
-      className={classnames(
-        className,
-        styles.dateInputWrapper,
-        s({ w: "full" }),
-      )}
-    >
-      <Input
-        ref={startInputRef}
-        className={s({ w: "full" })}
-        name={`${name}_start`}
-        type="datetime-local"
-        placeholder={rest.startPlaceholder || placeholder}
-        defaultValue={
-          rest.defaultStartValue
-            ? formatDateForDatetime(rest.defaultStartValue)
-            : defaultValue
-              ? formatDateForDatetime(defaultValue)
-              : undefined
-        }
-      />
-      <Input
-        ref={endInputRef}
-        className={s({ w: "full" })}
-        name={`${name}_end`}
-        type="datetime-local"
-        placeholder={rest.endPlaceholder || placeholder}
-        defaultValue={
-          rest.defaultEndValue
-            ? formatDateForDatetime(rest.defaultEndValue)
-            : defaultValue
-              ? formatDateForDatetime(defaultValue)
-              : undefined
-        }
-      />
+    <div className={classnames(className, styles.dateInput, s({ w: "full" }))}>
+      <div className={styles.inputFieldsWrapper}>
+        <Input
+          ref={startInputRef}
+          className={s({ w: "full" })}
+          name={`${name}_start`}
+          type="datetime-local"
+          onChange={onChangeStart}
+          placeholder={rest.startPlaceholder || placeholder}
+          defaultValue={
+            rest.defaultStartValue
+              ? formatDateForDatetime(rest.defaultStartValue)
+              : defaultValue
+                ? formatDateForDatetime(defaultValue)
+                : undefined
+          }
+        />
+        <Input
+          ref={endInputRef}
+          className={s({ w: "full" })}
+          name={`${name}_end`}
+          type="datetime-local"
+          onChange={onChangeEnd}
+          placeholder={rest.endPlaceholder || placeholder}
+          defaultValue={
+            rest.defaultEndValue
+              ? formatDateForDatetime(rest.defaultEndValue)
+              : defaultValue
+                ? formatDateForDatetime(defaultValue)
+                : undefined
+          }
+        />
+      </div>
       <Button
         icon={<EventIcon />}
-        onClick={() => {
-          const d = new Date();
-          startInputRef.current.value = formatDateForDatetime(d);
-
-          if (endInputRef.current) {
-            endInputRef.current.value = formatDateForDatetime(d);
-          }
-        }}
+        onClick={onClickSetDateToTodayButton}
         style="tertiary"
         title="Today"
         type="button"

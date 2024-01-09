@@ -2,6 +2,10 @@ import { getString } from "./formdata";
 
 export function formatDateForDatetime(d: Date | number | string) {
   if (typeof d === "string") {
+    if (d.length === 16) {
+      return d;
+    }
+
     d = parseInt(d, 10);
   }
 

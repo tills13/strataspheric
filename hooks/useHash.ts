@@ -17,6 +17,8 @@ export function useHash() {
       setHash(getHash());
     }
 
+    handleHashChange();
+
     window.addEventListener("hashchange", handleHashChange);
 
     return () => {

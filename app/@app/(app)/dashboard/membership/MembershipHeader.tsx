@@ -3,10 +3,10 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
+import { CreateOrUpdateStrataMembershipForm } from "../../../../../components/CreateOrUpdateStrataMembershipForm";
 import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { AddIcon } from "../../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../../components/Modal";
-import { UpsertStrataMemberForm } from "../../../../../components/UpsertStrataMemberForm";
 import { p } from "../../../../../data/users/permissions";
 import { useCan } from "../../../../../hooks/useCan";
 
@@ -31,7 +31,9 @@ export function MembershipHeader({ addStrataMember }: Props) {
       />
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="New Strata Member">
-          <UpsertStrataMemberForm addStrataMember={addStrataMember} />
+          <CreateOrUpdateStrataMembershipForm
+            upsertStrataMembership={addStrataMember}
+          />
         </Modal>
       )}
     </>

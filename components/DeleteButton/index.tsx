@@ -1,10 +1,8 @@
-"use client";
-
-import React, { useTransition } from "react";
+import React from "react";
 
 import { Button } from "../Button";
+import { ConfirmButton } from "../ConfirmButton";
 import { DeleteIcon } from "../Icon/DeleteIcon";
-import { LoadingIcon } from "../LoadingIcon";
 
 type ButtonProps = Omit<
   React.ComponentProps<typeof Button>,
@@ -12,20 +10,15 @@ type ButtonProps = Omit<
 >;
 
 interface Props extends ButtonProps {
-  onClick: () => void;
+  onConfirmDelete: () => void;
 }
 
-export function DeleteButton({ onClick, ...delegateProps }: Props) {
-  const [isPending, startTransition] = useTransition();
-
+export function DeleteButton({ onConfirmDelete, ...delegateProps }: Props) {
   return (
-    <Button
+    <ConfirmButton
       {...delegateProps}
-      icon={isPending ? <LoadingIcon /> : <DeleteIcon />}
-      onClick={(e) => {
-        e.preventDefault();
-        startTransition(() => onClick());
-      }}
+      icon={<DeleteIcon />}
+      onClickConfirm={onConfirmDelete}
     />
   );
 }

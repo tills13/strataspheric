@@ -3,12 +3,12 @@ import * as styles from "./style.css";
 import { Header } from "../../../../../../components/Header";
 import { MeetingAgendaItem } from "../../../../../../components/MeetingAgendaItem";
 import { getMeetingAgendaItems } from "../../../../../../data/meetings/getMeetingAgendaItems";
+import { upsertFileAction } from "../../actions";
 import { AddNewMeetingAgendaItemButton } from "./AddNewMeetingAgendaItemButton";
 import {
-  createMeetingAgendaItemAction,
   imperativeUpdateAgendaItemAction,
   removeItemFromAgendaAction,
-  updateAgendaItemAction,
+  upsertAgendaItemAction,
 } from "./actions";
 
 interface Props {
@@ -39,7 +39,7 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
                 meetingId,
                 agendaItem.id,
               )}
-              updateAgendaItem={updateAgendaItemAction.bind(
+              updateAgendaItem={upsertAgendaItemAction.bind(
                 undefined,
                 meetingId,
                 agendaItem.id,
@@ -49,9 +49,11 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
         ))}
 
         <AddNewMeetingAgendaItemButton
-          upsertMeetingAgendaItem={createMeetingAgendaItemAction.bind(
+          upsertFile={upsertFileAction.bind(undefined, undefined)}
+          upsertMeetingAgendaItem={upsertAgendaItemAction.bind(
             undefined,
             meetingId,
+            undefined,
           )}
         />
       </ul>

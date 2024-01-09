@@ -1,14 +1,16 @@
 import * as parentStyles from "../style.css";
 import * as styles from "./styles.css";
-import { style } from "@vanilla-extract/css";
 
 import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
 import { Checkbox } from "../../../../../components/Checkbox";
+import { ConfirmButton } from "../../../../../components/ConfirmButton";
 import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { ElementGroup } from "../../../../../components/ElementGroup";
 import { Header } from "../../../../../components/Header";
+import { DeleteIcon } from "../../../../../components/Icon/DeleteIcon";
+import { SaveIcon } from "../../../../../components/Icon/SaveIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Input } from "../../../../../components/Input";
 import { StatusButton } from "../../../../../components/StatusButton";
@@ -103,27 +105,35 @@ export default async function Page() {
                 />
               </ElementGroup>
 
-              <StatusButton color="primary" style="secondary" type="submit">
+              <StatusButton
+                color="primary"
+                iconRight={<SaveIcon />}
+                style="secondary"
+                type="submit"
+              >
                 Update Strata
               </StatusButton>
             </ElementGroup>
           </form>
 
           <InfoPanel level="error">
-            <form action={deleteStrataAction}>
-              <ElementGroup orientation="column">
-                <Header priority={3}>Danger Zone</Header>
+            <ElementGroup orientation="column">
+              <Header priority={3}>Danger Zone</Header>
 
-                <p>
-                  Deleting your Strata will delete all information and files
-                  associated with your strata unrecoverably.
-                </p>
+              <p>
+                Deleting your Strata will delete all information and files
+                associated with your strata unrecoverably.
+              </p>
 
-                <StatusButton color="error" style="secondary">
-                  Delete Strata
-                </StatusButton>
-              </ElementGroup>
-            </form>
+              <ConfirmButton
+                iconRight={<DeleteIcon />}
+                onClickConfirm={deleteStrataAction}
+                color="error"
+                style="secondary"
+              >
+                Delete Strata
+              </ConfirmButton>
+            </ElementGroup>
           </InfoPanel>
         </div>
       </div>

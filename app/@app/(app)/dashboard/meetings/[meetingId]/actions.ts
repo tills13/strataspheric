@@ -30,21 +30,34 @@ export async function updateMeetingAction(meetingId: string, fd: FormData) {
   revalidatePath("/dashboard/meetings/" + meetingId);
 }
 
-export async function createMeetingAgendaItemAction(
+export async function upsertAgendaItemAction(
   meetingId: string,
+  agendaItemId: string | undefined,
   fd: FormData,
 ) {
   const title = formdata.getString(fd, "title");
   const description = formdata.getString(fd, "description");
+  const fileId = formdata.getString(fd, "fileId");
 
   if (title === "") {
     throw new Error("invalid fields");
   }
 
-  await addItemToMeetingAgenda(meetingId, {
-    title,
-    description,
-  });
+  if (agendaItemId) {
+    const meetingAgendaItemUpdate: MeetingAgendaItemUpdate = {
+      title,
+      description,
+      fileId,
+    };
+
+    await updateMeetingAgendaItem(agendaItemId, meetingAgendaItemUpdate);
+  } else {
+    await addItemToMeetingAgenda(meetingId, {
+      title,
+      description,
+      fileId,
+    });
+  }
 
   revalidatePath("/dashboard/meetings/" + meetingId);
 }
@@ -54,42 +67,27 @@ export async function addItemToAgendaAction(
   item: AgendaTimelineEntry,
 ): Promise<void> {
   let newItem: Omit<NewMeetingAgendaItem, "id"> = {
-    description: item.description,
-    title: item.title,
+    title: "",
+    description: "",
     meetingId,
   };
 
   if (item.type === "chat") {
-    newItem.chatId = item.id;
+    newItem.chatId = item.chatId;
+    // newItem.description = item.chatMessage;
+    newItem.title = "Discuss message chat";
   } else if (item.type === "event") {
-    newItem.eventId = item.id;
+    newItem.eventId = item.eventId;
+    newItem.title = `Discuss upcoming event "${item.eventName}"`;
   } else if (item.type === "file") {
-    newItem.fileId = item.id;
+    newItem.fileId = item.fileId;
+    newItem.title = `Discuss file "${item.fileName}"`;
   } else if (item.type === "inbox_message") {
-    newItem.messageId = item.id;
+    newItem.messageId = item.messageId;
+    newItem.title = "Discuss recieved message";
   }
 
   await addItemToMeetingAgenda(meetingId, newItem);
-
-  revalidatePath("/dashboard/meetings/" + meetingId);
-}
-
-export async function updateAgendaItemAction(
-  meetingId: string,
-  itemId: string,
-  fd: FormData,
-): Promise<void> {
-  const meetingAgendaItemUpdate: MeetingAgendaItemUpdate = {
-    title: formdata.getString(fd, "title"),
-    description: formdata.getString(fd, "description"),
-    fileId: formdata.getString(fd, "fileId"),
-  };
-
-  if (Object.keys(meetingAgendaItemUpdate).length === 0) {
-    return;
-  }
-
-  await updateMeetingAgendaItem(itemId, meetingAgendaItemUpdate);
 
   revalidatePath("/dashboard/meetings/" + meetingId);
 }

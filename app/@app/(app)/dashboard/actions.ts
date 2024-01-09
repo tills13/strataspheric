@@ -56,7 +56,7 @@ export async function createEventAction(
 export async function upsertFileAction(
   fileId: string | undefined,
   formData: FormData,
-) {
+): Promise<File> {
   const strata = await mustGetCurrentStrata();
   const session = await auth();
 

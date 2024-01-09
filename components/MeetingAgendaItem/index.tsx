@@ -70,8 +70,22 @@ export function MeetingAgendaItem({
       {agendaItem.messageId && (
         <InboxMessageQuote
           message={agendaItem.messageMessage}
+          messageId={agendaItem.messageId}
+          messageThreadId={agendaItem.messageThreadId}
           senderName={agendaItem.messageSenderName}
           timestamp={agendaItem.messageSentAt}
+          linkType="direct"
+        />
+      )}
+
+      {agendaItem.chatId && (
+        <InboxMessageQuote
+          message={agendaItem.chatMessage}
+          messageId={agendaItem.chatId}
+          messageThreadId={agendaItem.chatThreadId}
+          senderName={agendaItem.chatSenderName}
+          timestamp={agendaItem.chatSentAt}
+          linkType="direct"
         />
       )}
 

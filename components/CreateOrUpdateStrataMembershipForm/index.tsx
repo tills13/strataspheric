@@ -2,26 +2,28 @@ import * as styles from "./style.css";
 
 import { StrataMembership } from "../../data";
 import { classnames } from "../../utils/classnames";
-import { Button } from "../Button";
 import { ElementGroup } from "../ElementGroup";
+import { AddIcon } from "../Icon/AddIcon";
+import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
+import { StatusButton } from "../StatusButton";
 import { StrataRoleSelect } from "../StrataRoleSelect";
 
 interface Props {
-  addStrataMember: (fd: FormData) => void;
+  upsertStrataMembership: (fd: FormData) => void;
   className?: string;
-  strataMembership?: StrataMembership;
+  strataMembership?: StrataMembership & { name: string; email: string };
 }
 
-export function UpsertStrataMemberForm({
-  addStrataMember,
+export function CreateOrUpdateStrataMembershipForm({
   className,
   strataMembership,
+  upsertStrataMembership,
 }: Props) {
   return (
     <form
+      action={upsertStrataMembership}
       className={classnames(styles.upsertStrataMemberForm, className)}
-      action={addStrataMember}
     >
       <ElementGroup gap="small" orientation="column">
         <Input
@@ -30,6 +32,7 @@ export function UpsertStrataMemberForm({
           placeholder="Name"
           defaultValue={strataMembership?.name}
         />
+
         <Input
           name="unit"
           type="text"
@@ -55,7 +58,13 @@ export function UpsertStrataMemberForm({
           defaultValue={strataMembership?.role || "owner"}
         />
 
-        <Button type="submit">Add Member</Button>
+        <StatusButton
+          color="primary"
+          iconRight={strataMembership ? <AddIcon /> : <SaveIcon />}
+          type="submit"
+        >
+          {strataMembership ? "Update Member" : "Add Member"}
+        </StatusButton>
       </ElementGroup>
     </form>
   );

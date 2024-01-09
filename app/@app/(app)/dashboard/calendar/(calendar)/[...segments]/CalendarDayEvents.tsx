@@ -7,13 +7,14 @@ import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
 import isSameDay from "date-fns/isSameDay";
 
+import { ConditionalWrapper } from "../../../../../../../components/ConditionalWrapper";
 import { InternalLink } from "../../../../../../../components/Link/InternalLink";
 import { Event } from "../../../../../../../data";
 import { classnames } from "../../../../../../../utils/classnames";
 import { parseTimestamp } from "../../../../../../../utils/datetime";
 
 interface Props {
-  events: Event[];
+  events: Array<Event & { meetingId?: string }>;
   date: Date;
   onClickEvent: (event: Event) => void;
 }
@@ -50,47 +51,51 @@ export function CalendarDayEvents({ events, date, onClickEvent }: Props) {
           return null;
         }
 
-        const child = (
-          <div
+        return (
+          <ConditionalWrapper
             key={idx}
-            className={classnames(styles.calendarEvent, {
-              [styles.withLeftMarginAndBorderRadius]: !eventWrapsFromPrevWeek,
-              [styles.withRightMarginAndBorderRadius]:
-                !eventWrapsToFollowingWeek,
-            })}
-            style={{
-              top: calc(vars.sizes.xs)
-                .add(vars.spacing.xxs)
-                .multiply(idx)
-                .toString(),
-              width: calc((totalRemainder / 7) * 100 + "vw")
-                .subtract(
-                  eventWrapsToFollowingWeek ? "0px" : vars.spacing.small,
-                )
-                .toString(),
-              maxWidth: ((7 - date.getDay()) / 7) * 100 + "vw",
-            }}
-            onClick={
-              event.meetingId
-                ? undefined
-                : (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    onClickEvent(event);
-                  }
-            }
+            predicate={!!event.meetingId}
+            wrapTrue={(children) => (
+              <InternalLink
+                key={idx}
+                href={`/dashboard/meetings/${event.meetingId!}`}
+              >
+                {children}
+              </InternalLink>
+            )}
           >
-            {event.name}
-          </div>
-        );
+            <div
+              className={classnames(styles.calendarEvent, {
+                [styles.withLeftMarginAndBorderRadius]: !eventWrapsFromPrevWeek,
+                [styles.withRightMarginAndBorderRadius]:
+                  !eventWrapsToFollowingWeek,
+              })}
+              style={{
+                top: calc(vars.sizes.xs)
+                  .add(vars.spacing.xxs)
+                  .multiply(idx)
+                  .toString(),
+                width: calc((totalRemainder / 7) * 100 + "vw")
+                  .subtract(
+                    eventWrapsToFollowingWeek ? "0px" : vars.spacing.small,
+                  )
+                  .toString(),
+                maxWidth: ((7 - date.getDay()) / 7) * 100 + "vw",
+              }}
+              onClick={
+                event.meetingId
+                  ? undefined
+                  : (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
 
-        return event.meetingId ? (
-          <InternalLink href={`/dashboard/meetings/${event.meetingId}`}>
-            {child}
-          </InternalLink>
-        ) : (
-          child
+                      onClickEvent(event);
+                    }
+              }
+            >
+              {event.name}
+            </div>
+          </ConditionalWrapper>
         );
       })}
     </div>

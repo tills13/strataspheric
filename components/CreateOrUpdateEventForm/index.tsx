@@ -1,16 +1,12 @@
-"use client";
-
 import * as styles from "./style.css";
 
-import { useTransition } from "react";
-
 import { Event } from "../../data";
-import {
-  formatDateForDatetime,
-  patchTimezoneOffset,
-} from "../../utils/datetime";
+import { patchTimezoneOffset } from "../../utils/datetime";
+import { ConfirmButton } from "../ConfirmButton";
+import { DateInput } from "../DateInput";
 import { ElementGroup } from "../ElementGroup";
 import { AddIcon } from "../Icon/AddIcon";
+import { DeleteIcon } from "../Icon/DeleteIcon";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
@@ -19,7 +15,7 @@ interface Props {
   defaultDate?: string;
   deleteEvent?: () => void;
   event?: Event;
-  upsertEvent: (fd: FormData) => void;
+  upsertEvent: (fd: FormData) => Promise<any>;
 }
 
 export function CreateOrUpdateEventForm({
@@ -28,42 +24,24 @@ export function CreateOrUpdateEventForm({
   deleteEvent,
   event,
 }: Props) {
-  const [deletePending, startTransition] = useTransition();
-
   return (
     <form
       className={styles.newEventForm}
       action={async (fd) => {
-        patchTimezoneOffset(fd, "startDate");
-        patchTimezoneOffset(fd, "endDate");
+        patchTimezoneOffset(fd, "date_start");
+        patchTimezoneOffset(fd, "date_end");
 
         const u = await upsertEvent(fd);
       }}
     >
       <Input name="name" placeholder="Name" defaultValue={event?.name} />
 
-      <div className={styles.dateWrapper}>
-        <Input
-          className={styles.fullWidth}
-          name="startDate"
-          type="datetime-local"
-          placeholder="Start Date"
-          defaultValue={
-            defaultDate ||
-            (event ? formatDateForDatetime(event.startDate) : undefined)
-          }
-        />
-        <Input
-          className={styles.fullWidth}
-          name="endDate"
-          type="datetime-local"
-          placeholder="End Date"
-          defaultValue={
-            defaultDate ||
-            (event ? formatDateForDatetime(event.endDate) : undefined)
-          }
-        />
-      </div>
+      <DateInput
+        name="date"
+        defaultStartValue={event?.startDate || defaultDate}
+        defaultEndValue={event?.endDate || defaultDate}
+        type="range"
+      />
 
       <TextArea
         name="description"
@@ -72,6 +50,17 @@ export function CreateOrUpdateEventForm({
       />
 
       <ElementGroup gap="small">
+        {event && deleteEvent && (
+          <ConfirmButton
+            onClickConfirm={deleteEvent}
+            iconRight={<DeleteIcon />}
+            color="error"
+            style="secondary"
+          >
+            Delete Event
+          </ConfirmButton>
+        )}
+
         <StatusButton
           color="primary"
           iconRight={<AddIcon />}
@@ -80,22 +69,6 @@ export function CreateOrUpdateEventForm({
         >
           {event ? "Update Event" : "Create Event"}
         </StatusButton>
-
-        {event && deleteEvent && (
-          <StatusButton
-            onClick={() => {
-              startTransition(() => {
-                deleteEvent();
-              });
-            }}
-            color="error"
-            style="secondary"
-            isPending={deletePending}
-            type="button"
-          >
-            Delete Event
-          </StatusButton>
-        )}
       </ElementGroup>
     </form>
   );

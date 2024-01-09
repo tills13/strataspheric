@@ -24,8 +24,8 @@ export async function upsertEventAction(
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description");
 
-  const startDateTs = formdata.getTimestamp(formData, "startDate");
-  const endDateTs = formdata.getTimestamp(formData, "endDate") || startDateTs;
+  const startDateTs = formdata.getTimestamp(formData, "date_start");
+  const endDateTs = formdata.getTimestamp(formData, "date_end") || startDateTs;
 
   const d = parseTimestamp(startDateTs);
 

@@ -31,7 +31,7 @@ export function AttachFileField({
         upsertFile={upsertFile}
       />
 
-      <input type="hidden" name={name} value={selectedFile?.id} />
+      <input type="hidden" name={name} value={selectedFile?.id || ""} />
     </>
   );
 }

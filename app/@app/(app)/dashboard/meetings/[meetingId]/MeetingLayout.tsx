@@ -1,13 +1,14 @@
 import { s } from "../../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
+import { ConfirmButton } from "../../../../../../components/ConfirmButton";
 import { Date } from "../../../../../../components/Date";
 import { EditMeetingButton } from "../../../../../../components/EditMeetingButton";
 import { Header } from "../../../../../../components/Header";
+import { DeleteIcon } from "../../../../../../components/Icon/DeleteIcon";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
 import { getMeeting } from "../../../../../../data/meetings/getMeeting";
 import { deleteMeetingAction } from "../actions";
-import { DeleteMeetingButton } from "./DeleteMeetingButton";
 import { MeetingAgenda } from "./MeetingAgenda";
 import { MeetingTimelineSearch } from "./MeetingTimelineSearch";
 import { updateMeetingAction } from "./actions";
@@ -54,9 +55,14 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
             leave any files created during planning.
           </p>
 
-          <DeleteMeetingButton
-            deleteMeeting={deleteMeetingAction.bind(undefined, meeting.id)}
-          />
+          <ConfirmButton
+            color="error"
+            iconRight={<DeleteIcon />}
+            onClickConfirm={deleteMeetingAction.bind(undefined, meeting.id)}
+            style="secondary"
+          >
+            Delete Meeting
+          </ConfirmButton>
         </InfoPanel>
       </div>
       <div className={styles.meetingTimelineSearchContainer}>

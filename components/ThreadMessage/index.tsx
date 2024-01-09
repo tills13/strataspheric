@@ -95,7 +95,7 @@ export function ThreadMessage({
 
         {invoiceId && (
           <div className={styles.messageInvoice}>
-            <Panel className={styles.invoice}>
+            <Panel>
               <div className={styles.invoiceHeader}>
                 <Header priority={3}>Invoice #{invoiceIdentifier}</Header>
                 <div className={styles.invoiceHeaderStatus}>

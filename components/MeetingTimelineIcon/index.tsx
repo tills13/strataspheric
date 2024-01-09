@@ -10,7 +10,7 @@ import { ForumIcon } from "../Icon/ForumIcon";
 import { TextDocumentIcon } from "../Icon/TextDocumentIcon";
 
 interface Props {
-  type: "event" | "file" | "inbox_message" | "chat";
+  type: "event" | "file" | "inbox_message" | "invoice" | "chat";
 }
 
 export function MeetingTimelineIcon({ type }: Props) {
@@ -20,6 +20,7 @@ export function MeetingTimelineIcon({ type }: Props) {
     case "chat": {
       return <ChatIcon className={iconClassName} />;
     }
+    case "invoice":
     case "file": {
       return <TextDocumentIcon className={iconClassName} />;
     }

@@ -42,10 +42,12 @@ export function InboxThreadChat({ ...chat }: Props & Chat) {
       {isThreadChatWithQuote(chat) && (
         <InboxMessageQuote
           className={styles.quotedMessage}
+          messageThreadId={chat.threadId}
           messageId={chat.quotedMessageId}
           message={chat.quotedMessageMessage}
           senderName={chat.quotedMessageSender}
           timestamp={chat.quotedMessageTimestamp}
+          linkType="hash"
         />
       )}
 

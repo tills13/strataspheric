@@ -45,11 +45,17 @@ export function getMeetingAgendaItems(meetingId: string) {
       (join) =>
         join.onRef("inbox_thread_chats.id", "=", "meeting_agenda_items.chatId"),
     )
-    .selectAll(["meeting_agenda_items"])
     .select([
+      "meeting_agenda_items.id",
+      "meeting_agenda_items.title",
+      "meeting_agenda_items.description",
+      "meeting_agenda_items.done",
+
+      "events.id as eventId",
       "events.name as eventName",
       "events.description as eventDescription",
 
+      "files.id as fileId",
       "files.name as fileName",
       "files.path as filePath",
       "files.description as fileDescription",
@@ -62,7 +68,9 @@ export function getMeetingAgendaItems(meetingId: string) {
       "inbox_messages.senderName as messageSenderName",
       "inbox_messages.sentAt as messageSentAt",
 
+      "inbox_thread_chats.id as chatId",
       "inbox_thread_chats.senderName as chatSenderName",
+      "inbox_thread_chats.threadId as chatThreadId",
       "inbox_thread_chats.message as chatMessage",
       "inbox_thread_chats.sentAt as chatSentAt",
     ])

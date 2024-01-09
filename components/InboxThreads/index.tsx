@@ -5,8 +5,6 @@ import * as styles from "./style.css";
 import { type Thread } from "../../data/inbox/getThreads";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
-import { classnames } from "../../utils/classnames";
-import { parseTimestamp } from "../../utils/datetime";
 import { Date } from "../Date";
 import { DeleteButton } from "../DeleteButton";
 import { Header } from "../Header";
@@ -55,7 +53,10 @@ export function InboxThreads({ deleteThread, threads }: Props) {
             <div className={styles.actionsCell}>
               {can(p("stratas", "inbox_messages", "delete")) && (
                 <DeleteButton
-                  onClick={deleteThread.bind(undefined, thread.threadId)}
+                  onConfirmDelete={deleteThread.bind(
+                    undefined,
+                    thread.threadId,
+                  )}
                   color="error"
                   size="small"
                   style="tertiary"

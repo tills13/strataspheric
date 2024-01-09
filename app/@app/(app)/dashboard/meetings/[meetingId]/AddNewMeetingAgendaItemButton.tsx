@@ -35,6 +35,7 @@ export function AddNewMeetingAgendaItemButton({
           title="Add New Agenda Item"
         >
           <CreateOrUpdateMeetingAgendaItemForm
+            onCreateOrUpdateAgendaItem={() => setShowModal(false)}
             upsertFile={upsertFile}
             upsertMeetingAgendaItem={upsertMeetingAgendaItem}
           />

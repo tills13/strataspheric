@@ -14,17 +14,19 @@ export const message = style({
 
 export const highlightAnimation = keyframes({
   "25%": {
-    backgroundColor: vars.colors.orange500,
+    backgroundColor: `color-mix(in srgb, ${vars.colors.orange100} 60%, transparent)`,
   },
   "100%": {
-    backgroundColor: vars.colors.orange100,
+    backgroundColor: `color-mix(in srgb, ${vars.colors.orange100} 30%, transparent)`,
   },
 });
 
 export const messageHighighted = style([
   message,
   {
-    animation: `${highlightAnimation} 1s ease forwards`,
+    transition: "background-color 1s ease",
+    backgroundColor: `color-mix(in srgb, ${vars.colors.orange100} 30%, transparent)`,
+    // animation: `${highlightAnimation} 1s ease forwards`,
   },
 ]);
 

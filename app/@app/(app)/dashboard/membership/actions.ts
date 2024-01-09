@@ -4,30 +4,48 @@ import { revalidatePath } from "next/cache";
 
 import { auth } from "../../../../../auth";
 import { protocol, tld } from "../../../../../constants";
-import { StrataMembershipUpdate } from "../../../../../data";
 import { createStrataMembership } from "../../../../../data/strataMemberships/createStrataMembership";
 import { deleteStrataMembership } from "../../../../../data/strataMemberships/deleteStrataMembership";
 import { updateStrataMembership } from "../../../../../data/strataMemberships/updateStrataMembership";
-import { getStrataById } from "../../../../../data/stratas/getStrataById";
+import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { createUserPasswordResetToken } from "../../../../../data/userPasswordResetTokens/createUserPasswordResetToken";
 import { createUser } from "../../../../../data/users/createUser";
 import { getUser } from "../../../../../data/users/getUser";
-import { Role } from "../../../../../data/users/permissions";
+import { Role, can, p } from "../../../../../data/users/permissions";
 import * as formdata from "../../../../../utils/formdata";
 import { sendEmail } from "../../../../../utils/sendEmail";
 
-export async function deleteStrataMemberAction(
-  strataId: string,
-  memberId: string,
-) {
-  await deleteStrataMembership(strataId, memberId);
+export async function deleteStrataMembershipAction(userId: string) {
+  const session = await auth();
+  const strata = await mustGetCurrentStrata();
+
+  if (
+    !session?.user ||
+    !can(session.user, p("stratas", "memberships", "delete"))
+  ) {
+    throw new Error("not allowed");
+  }
+
+  await deleteStrataMembership(strata.id, userId);
+
   revalidatePath("/dashboard/membership");
 }
 
-export async function addStrataMemberAction(strataId: string, fd: FormData) {
+export async function upsertStrataMembershipAction(
+  userId: string,
+  fd: FormData,
+) {
   const session = await auth();
+  const strata = await mustGetCurrentStrata();
 
-  if (!session || !session.user) {
+  if (
+    !session?.user ||
+    !can(
+      session.user,
+      p("stratas", "memberships", "edit"),
+      p("stratas", "memberships", "create"),
+    )
+  ) {
     throw new Error("not allowed");
   }
 
@@ -42,83 +60,71 @@ export async function addStrataMemberAction(strataId: string, fd: FormData) {
     throw new Error("invalid fields");
   }
 
-  let userId: string;
-  const existingUser = await getUser(email);
+  if (userId) {
+    const membershipUpdate = {
+      unit,
+      role: role as Role,
+    };
 
-  if (existingUser) {
-    userId = existingUser.id;
-  } else {
-    const newUser = await createUser({ email, name, password });
-    userId = newUser.id;
-
-    const strata = await getStrataById(strataId);
-
-    if (!strata) {
-      throw new Error("wow");
+    if (
+      Object.entries(membershipUpdate).filter(([, value]) => !!value).length ===
+      0
+    ) {
+      return;
     }
 
-    const token = await createUserPasswordResetToken({ userId });
+    await updateStrataMembership(strata.id, userId, membershipUpdate);
+  } else {
+    const existingUser = await getUser(email);
 
-    await sendEmail(
-      email,
-      "Welcome to Strataspheric",
-      `
-      <h1>Welcome to Strataspheric</h1>
+    if (existingUser) {
+      userId = existingUser.id;
+    } else {
+      const newUser = await createUser({ email, name, password });
+      userId = newUser.id;
+
+      const token = await createUserPasswordResetToken({ userId });
+
+      await sendEmail(
+        email,
+        "Welcome to Strataspheric",
+        `
+        <h1>Welcome to Strataspheric</h1>
+        
+        <p>${session.user.name} has invited you to join <b>${strata.name}</b> on Strataspheric.</p>
       
-      <p>${session.user.name} has invited you to join <b>${strata.name}</b> on Strataspheric.</p>
-    
-      <p>To finish setting up your account, <a href="${protocol}//${tld}/join?token=${token.token}">click here</a>.</p>
-    `,
-    );
-  }
+        <p>To finish setting up your account, <a href="${protocol}//${tld}/join?token=${token.token}">click here</a>.</p>
+      `,
+      );
+    }
 
-  await createStrataMembership({
-    strataId,
-    userId,
-    phoneNumber,
-    unit,
-    role: role as Role,
-  });
+    await createStrataMembership({
+      strataId: strata.id,
+      userId,
+      phoneNumber,
+      unit,
+      role: role as Role,
+    });
+  }
 
   revalidatePath("/dashboard/membership");
 }
 
-export async function updateStrataMemberAction(
-  strataId: string,
-  userId: string,
-  fd: FormData,
-) {
-  const phoneNumber = formdata.getString(fd, "phone_number");
-  const unit = formdata.getString(fd, "unit");
-  const role = formdata.getString(fd, "role");
+export async function approveStrataMembershipAction(userId: string) {
+  const session = await auth();
+  const strata = await mustGetCurrentStrata();
 
-  let update: StrataMembershipUpdate = {};
-
-  if (phoneNumber !== "") {
-    update.phoneNumber = phoneNumber;
+  if (
+    !session?.user ||
+    !can(
+      session.user,
+      p("stratas", "memberships", "edit"),
+      p("stratas", "memberships", "create"),
+    )
+  ) {
+    throw new Error("not allowed");
   }
 
-  if (unit !== "") {
-    update.unit = unit;
-  }
-
-  if (role !== "") {
-    update.role = role as Role;
-  }
-
-  if (Object.keys(update).length === 0) {
-    return;
-  }
-
-  await updateStrataMembership(strataId, userId, update);
-
-  revalidatePath("/dashboard/membership");
-}
-
-export async function approveStrataMembershipAction(
-  strataId: string,
-  userId: string,
-) {
-  await updateStrataMembership(strataId, userId, { role: "owner" });
+  await updateStrataMembership(strata.id, userId, { role: "owner" });
   revalidatePath("/dashboard/membership");
 }

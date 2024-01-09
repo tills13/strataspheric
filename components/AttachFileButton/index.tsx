@@ -11,6 +11,7 @@ import { Button } from "../Button";
 import { CreateOrUpdateFileForm } from "../CreateOrUpdateFileForm";
 import { FileSelect } from "../FileSelect";
 import { Header } from "../Header";
+import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { TextDocumentIcon } from "../Icon/TextDocumentIcon";
 import { Modal } from "../Modal";
 
@@ -48,7 +49,7 @@ export function AttachFileButton({
           className={classnames(className, styles.attachFileButton)}
           color="primary"
           style="secondary"
-          iconRight={<TextDocumentIcon />}
+          iconRight={<AttachmentIcon />}
           onClick={() => setShowAttachFileModal(true)}
           type="button"
         >

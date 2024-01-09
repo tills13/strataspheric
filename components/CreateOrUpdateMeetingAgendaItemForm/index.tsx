@@ -5,23 +5,32 @@ import React, { useState } from "react";
 
 import { MeetingAgendaItem } from "../../data/meetings/getMeetingAgendaItems";
 import { AttachFileField } from "../AttachFileField";
+import { AddIcon } from "../Icon/AddIcon";
+import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
 interface Props {
-  upsertFile: (fd: FormData) => any;
-  upsertMeetingAgendaItem: (fd: FormData) => void;
   agendaItem?: MeetingAgendaItem;
+  onCreateOrUpdateAgendaItem?: () => void;
+  upsertFile: (fd: FormData) => any;
+  upsertMeetingAgendaItem: (fd: FormData) => any;
 }
 
 export function CreateOrUpdateMeetingAgendaItemForm({
+  agendaItem,
+  onCreateOrUpdateAgendaItem,
   upsertFile,
   upsertMeetingAgendaItem,
-  agendaItem,
 }: Props) {
   return (
-    <form action={upsertMeetingAgendaItem}>
+    <form
+      action={async (fd) => {
+        await upsertMeetingAgendaItem(fd);
+        onCreateOrUpdateAgendaItem?.();
+      }}
+    >
       <Input
         className={styles.input}
         name="title"
@@ -47,7 +56,12 @@ export function CreateOrUpdateMeetingAgendaItemForm({
         upsertFile={upsertFile}
       />
 
-      <StatusButton type="submit">
+      <StatusButton
+        color={agendaItem ? "primary" : "success"}
+        iconRight={agendaItem ? <SaveIcon /> : <AddIcon />}
+        style="secondary"
+        type="submit"
+      >
         {agendaItem ? "Update Agenda Item" : "Create Agenda Item"}
       </StatusButton>
     </form>

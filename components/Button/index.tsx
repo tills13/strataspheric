@@ -32,7 +32,7 @@ export function Button({
   style,
   ...rest
 }: Props & ButtonRecipeProps) {
-  const iconOnly = !!icon && !children;
+  const iconOnly = !!icon;
   const withIcon = !!iconLeft || !!iconRight;
 
   const fullWidth =

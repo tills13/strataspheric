@@ -8,7 +8,6 @@ import { FileLink } from "../../../../../components/FileLink";
 import { DownloadIcon } from "../../../../../components/Icon/DownloadIcon";
 import { searchFiles } from "../../../../../data/files/searchFiles";
 import { can, p } from "../../../../../data/users/permissions";
-import { parseTimestamp } from "../../../../../utils/datetime";
 import { deleteFileAction } from "./actions";
 
 interface Props {
@@ -68,7 +67,7 @@ export async function FilesTable({ searchTerm, strataId, visibility }: Props) {
                 )}
                 {can(session?.user, p("stratas", "files", "delete")) && (
                   <DeleteButton
-                    onClick={deleteFileAction.bind(undefined, file.id)}
+                    onConfirmDelete={deleteFileAction.bind(undefined, file.id)}
                     color="error"
                     size="small"
                     style="tertiary"

@@ -24,13 +24,15 @@ export function StatusButton({
 }: Props) {
   const status = useFormStatus();
 
+  const iconProperty = buttonProps.icon ? "icon" : "iconRight";
+
   if (status.pending || isPending) {
     return (
       <Button
         className={className}
         iconTextBehaviour="centerGlobal"
         {...buttonProps}
-        iconRight={<LoadingIcon className={styles.statusIcon} />}
+        {...{ [iconProperty]: <LoadingIcon className={styles.statusIcon} /> }}
         disabled
       >
         {children}
@@ -43,23 +45,23 @@ export function StatusButton({
         {...buttonProps}
         color={success ? "success" : "error"}
         disabled={success}
-        iconRight={
-          success ? (
+        {...{
+          [iconProperty]: success ? (
             <CircleCheckIcon className={styles.statusIcon} />
           ) : (
             <CircleXIcon className={styles.statusIcon} />
-          )
-        }
+          ),
+        }}
         iconTextBehaviour="centerGlobal"
       >
-        <div className={styles.formStatusButtonContainer}>{children}</div>
+        {children}
       </Button>
     );
   }
 
   return (
     <Button className={className} {...buttonProps}>
-      <div className={styles.formStatusButtonContainer}>{children}</div>
+      {children}
     </Button>
   );
 }

@@ -11,10 +11,9 @@ import { can } from "../../../../../data/users/permissions";
 import { MembershipHeader } from "./MembershipHeader";
 import { MembershipTable } from "./MembershipTable";
 import {
-  addStrataMemberAction,
   approveStrataMembershipAction,
-  deleteStrataMemberAction,
-  updateStrataMemberAction,
+  deleteStrataMembershipAction,
+  upsertStrataMembershipAction,
 } from "./actions";
 
 export const runtime = "edge";
@@ -40,24 +39,18 @@ export default async function Page() {
   return (
     <>
       <MembershipHeader
-        addStrataMember={addStrataMemberAction.bind(undefined, strata.id)}
+        addStrataMember={upsertStrataMembershipAction.bind(
+          undefined,
+          strata.id,
+        )}
       />
 
       <div className={styles.membershipTableContainer}>
         <MembershipTable
-          approveStrataMembership={approveStrataMembershipAction.bind(
-            undefined,
-            strata.id,
-          )}
+          approveStrataMembership={approveStrataMembershipAction}
           memberships={memberships}
-          removeStrataMember={deleteStrataMemberAction.bind(
-            undefined,
-            strata.id,
-          )}
-          updateStrataMember={updateStrataMemberAction.bind(
-            undefined,
-            strata.id,
-          )}
+          removeStrataMembership={deleteStrataMembershipAction}
+          upsertStrataMembership={upsertStrataMembershipAction}
         />
       </div>
     </>

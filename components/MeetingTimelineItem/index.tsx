@@ -8,7 +8,6 @@ import React, { useTransition } from "react";
 import { type AgendaTimelineEntry } from "../../app/@app/(app)/dashboard/meetings/[meetingId]/MeetingTimelineSearch";
 import { classnames } from "../../utils/classnames";
 import { Date } from "../Date";
-import { ElementGroup } from "../ElementGroup";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
@@ -23,23 +22,22 @@ interface Props extends AgendaTimelineEntry {
 export function MeetingTimelineItem({
   addItemToAgenda,
   className,
-  sourceUserName,
-  date,
-  title: itemTitle,
-  description,
-  type,
-  filePath,
+  ...item
 }: Props) {
   const [isPending, startTransition] = useTransition();
-  let title = sourceUserName || "Someone";
+  let sourceUserName = item.sourceUserName || "Someone";
 
-  if (type === "event") {
+  let title = sourceUserName;
+
+  if (item.type === "event") {
     title += " scheduled an event";
-  } else if (type === "file") {
+  } else if (item.type === "file") {
     title += " added a file";
-  } else if (type === "inbox_message") {
+  } else if (item.type === "invoice") {
+    title += " added an invoice";
+  } else if (item.type === "inbox_message") {
     title += " sent a message";
-  } else if (type === "chat") {
+  } else if (item.type === "chat") {
     title += " chatted about a received message";
   }
 
@@ -51,42 +49,52 @@ export function MeetingTimelineItem({
           <Date
             className={styles.timelineEntryDate}
             output="date"
-            timestamp={date}
+            timestamp={item.date}
           />
         </div>
 
-        {type === "file" ? (
+        {item.type === "file" || item.type === "invoice" ? (
           <FileAttachmentChip
             className={styles.timelineAttachment}
-            fileName={itemTitle}
-            filePath={filePath}
+            fileName={item.fileName}
+            filePath={item.filePath}
           />
-        ) : type === "inbox_message" ? (
+        ) : item.type === "inbox_message" ? (
           <InboxMessageQuote
-            senderName={sourceUserName || "Someone"}
-            message={description}
-            timestamp={date}
+            senderName={sourceUserName}
+            message={item.message}
+            messageId={item.messageId}
+            messageThreadId={item.messageThreadId}
+            timestamp={item.date}
+            linkType="direct"
+          />
+        ) : item.type === "chat" ? (
+          <InboxMessageQuote
+            senderName={sourceUserName}
+            message={item.chatMessage}
+            messageId={item.chatId}
+            messageThreadId={item.chatThreadId}
+            timestamp={item.date}
+            linkType="direct"
           />
         ) : (
-          <p className={styles.timelineEntryMessage}>{description}</p>
+          <p className={styles.timelineEntryMessage}>{item.eventName}</p>
         )}
       </div>
 
-      <ElementGroup>
-        <StatusButton
-          color="primary"
-          style="secondary"
-          iconRight={<AddIcon />}
-          onClick={() =>
-            startTransition(() => {
-              addItemToAgenda();
-            })
-          }
-          isPending={isPending}
-        >
-          Add to Agenda
-        </StatusButton>
-      </ElementGroup>
+      <StatusButton
+        color="primary"
+        style="secondary"
+        iconRight={<AddIcon />}
+        onClick={() =>
+          startTransition(() => {
+            addItemToAgenda();
+          })
+        }
+        isPending={isPending}
+      >
+        Add to Agenda
+      </StatusButton>
     </>
   );
 }
