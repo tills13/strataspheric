@@ -1,9 +1,11 @@
-import { vars } from "../../app/theme.css";
+import { iconColorVar, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
-export const timeline = style({});
+export const timeline = style({
+  paddingBottom: vars.spacing.small,
+});
 
 export const timelineItem = style({
   position: "relative",
@@ -50,6 +52,10 @@ export const timelineIconContainer = style({
   width: vars.sizes.small,
   backgroundColor: vars.colors.primary,
   borderRadius: "50%",
+
+  vars: {
+    [iconColorVar]: vars.colors.white,
+  },
 
   selectors: {
     [`${timelineItem}:first-child &`]: {

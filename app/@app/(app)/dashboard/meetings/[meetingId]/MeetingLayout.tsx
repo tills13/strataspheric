@@ -8,8 +8,11 @@ import { Header } from "../../../../../../components/Header";
 import { DeleteIcon } from "../../../../../../components/Icon/DeleteIcon";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
 import { getMeeting } from "../../../../../../data/meetings/getMeeting";
+import { classnames } from "../../../../../../utils/classnames";
 import { deleteMeetingAction } from "../actions";
 import { MeetingAgenda } from "./MeetingAgenda";
+import { MeetingFiles } from "./MeetingFiles";
+import { MeetingMinutes } from "./MeetingMinutes";
 import { MeetingTimelineSearch } from "./MeetingTimelineSearch";
 import { updateMeetingAction } from "./actions";
 
@@ -24,7 +27,7 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
   return (
     <div className={styles.meetingLayoutContainer}>
       <div className={styles.meetingAgendaContainer}>
-        <div className={styles.header}>
+        <div className={classnames(styles.header, s({ mb: "large" }))}>
           <EditMeetingButton
             className={styles.editMeetingButton}
             meeting={meeting}
@@ -39,18 +42,24 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           </p>
         </div>
 
-        {meeting.notes && <p>{meeting.notes}</p>}
+        {meeting.notes && <p className={s({ mb: "large" })}>{meeting.notes}</p>}
 
-        <MeetingAgenda className={s({ mb: "normal" })} meetingId={meetingId} />
+        <MeetingAgenda className={s({ mb: "large" })} meetingId={meetingId} />
 
-        {/* <MeetingMinutes meetingId={meetingId} /> */}
+        <MeetingFiles className={s({ mb: "large" })} meetingId={meetingId} />
+        <MeetingMinutes
+          className={s({ mb: "large" })}
+          meetingId={meetingId}
+          minutesUrl={meeting.minutesUrl}
+          minutesUrlApprovedByName={meeting.minutesUrlApproverName}
+        />
 
         <InfoPanel level="error">
           <Header className={s({ mb: "small" })} priority={3}>
             Delete Meeting
           </Header>
 
-          <p className={s({ mb: "normal" })}>
+          <p className={s({ mb: "large" })}>
             Deleting this meeting will delete all associated agenda items, but
             leave any files created during planning.
           </p>

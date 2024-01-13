@@ -1,5 +1,4 @@
 import * as iconStyles from "../Icon/style.css";
-import * as styles from "./style.css";
 
 import React from "react";
 
@@ -14,7 +13,7 @@ interface Props {
 }
 
 export function MeetingTimelineIcon({ type }: Props) {
-  const iconClassName = classnames(iconStyles.icon, styles.timelineIconIcon);
+  const iconClassName = classnames(iconStyles.icon);
 
   switch (type) {
     case "chat": {

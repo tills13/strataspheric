@@ -38,8 +38,8 @@ export function SendInboxMessageForm({
 }: Props) {
   return (
     <form
-      className={classnames(styles.form, className)}
       action={sendInboxMessage}
+      className={classnames(styles.form, className)}
     >
       {showContactInformationFields && (
         <>

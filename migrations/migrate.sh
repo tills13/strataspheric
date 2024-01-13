@@ -3,7 +3,7 @@
 migrations_dir=$( dirname $0 )
 migrations=($( ls $migrations_dir ))
 target="--local "
-target=
+# target=
 
 # if [ "$1" == "production" ]; then
 #     target=

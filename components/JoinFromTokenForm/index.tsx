@@ -5,8 +5,6 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { Strata, StrataMembership, User } from "../../data";
-import { classnames } from "../../utils/classnames";
-import { Button } from "../Button";
 import { Header } from "../Header";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";

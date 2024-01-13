@@ -1,8 +1,10 @@
+import { s } from "../../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Header } from "../../../../../../components/Header";
 import { MeetingAgendaItem } from "../../../../../../components/MeetingAgendaItem";
 import { getMeetingAgendaItems } from "../../../../../../data/meetings/getMeetingAgendaItems";
+import { classnames } from "../../../../../../utils/classnames";
 import { upsertFileAction } from "../../actions";
 import { AddNewMeetingAgendaItemButton } from "./AddNewMeetingAgendaItemButton";
 import {
@@ -21,10 +23,14 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
 
   return (
     <div className={className}>
-      <Header className={styles.header} priority={2}>
+      <Header
+        className={classnames(styles.header, s({ mb: "normal" }))}
+        priority={2}
+      >
         Agenda
       </Header>
-      <ul className={styles.meetingAgendaList}>
+
+      <ul className={classnames(styles.meetingAgendaList, s({ mb: "large" }))}>
         {agendaItems.map((agendaItem) => (
           <li key={agendaItem.id}>
             <MeetingAgendaItem
@@ -44,19 +50,20 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
                 meetingId,
                 agendaItem.id,
               )}
+              upsertFile={upsertFileAction.bind(undefined, undefined)}
             />
           </li>
         ))}
-
-        <AddNewMeetingAgendaItemButton
-          upsertFile={upsertFileAction.bind(undefined, undefined)}
-          upsertMeetingAgendaItem={upsertAgendaItemAction.bind(
-            undefined,
-            meetingId,
-            undefined,
-          )}
-        />
       </ul>
+
+      <AddNewMeetingAgendaItemButton
+        upsertFile={upsertFileAction.bind(undefined, undefined)}
+        upsertMeetingAgendaItem={upsertAgendaItemAction.bind(
+          undefined,
+          meetingId,
+          undefined,
+        )}
+      />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import * as styles from "./style.css";
 
-import React from "react";
+import React, { useTransition } from "react";
 import { useFormStatus } from "react-dom";
 
 import { Button } from "../Button";
@@ -11,22 +11,29 @@ import { CircleXIcon } from "../Icon/CircleXIcon";
 import { LoadingIcon } from "../LoadingIcon";
 
 interface Props extends React.ComponentProps<typeof Button> {
+  action?: () => void;
   success?: boolean | undefined;
   isPending?: boolean;
 }
 
 export function StatusButton({
+  action,
   children,
   className,
   success,
   isPending,
   ...buttonProps
 }: Props) {
+  if (buttonProps.onClick && action) {
+    throw new Error("cannot provide both an action and an onClick");
+  }
+
   const status = useFormStatus();
+  const [actionIsPending, startActionTransition] = useTransition();
 
   const iconProperty = buttonProps.icon ? "icon" : "iconRight";
 
-  if (status.pending || isPending) {
+  if (status.pending || isPending || actionIsPending) {
     return (
       <Button
         className={className}
@@ -60,7 +67,19 @@ export function StatusButton({
   }
 
   return (
-    <Button className={className} {...buttonProps}>
+    <Button
+      className={className}
+      onClick={
+        action
+          ? () => {
+              startActionTransition(() => {
+                action();
+              });
+            }
+          : undefined
+      }
+      {...buttonProps}
+    >
       {children}
     </Button>
   );

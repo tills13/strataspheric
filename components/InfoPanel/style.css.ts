@@ -7,7 +7,7 @@ export const infoPanel = recipe({
     padding: vars.spacing.normal,
     borderRadius: vars.borderRadius,
     borderStyle: "solid",
-    borderWidth: 1,
+    borderWidth: 2,
   },
 
   variants: {
@@ -20,9 +20,11 @@ export const infoPanel = recipe({
       info: {
         borderColor: vars.colors.primary,
         backgroundColor: `color-mix(in srgb, black 8%, transparent)`,
+        // background: `linear-gradient(-45deg, color-mix(in srgb, black 16%, transparent), color-mix(in srgb, black 8%, transparent) 25%)`,
       },
       error: {
         borderColor: vars.colors.red500,
+        // background: `linear-gradient(-45deg, color-mix(in srgb, ${vars.colors.red500} 16%, transparent), color-mix(in srgb, ${vars.colors.red500} 8%, transparent))`,
         backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 8%, transparent)`,
         color: vars.colors.red900,
       },

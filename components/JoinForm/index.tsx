@@ -18,7 +18,7 @@ interface Props {
 }
 
 export function JoinForm({ className, onSubmit }: Props) {
-  const [state, wrappedOnSubmit] = useFormState(
+  const [state, onSubmitAction] = useFormState(
     async (state: JoinFormState, fd: FormData) => {
       const nextState = await onSubmit(state, fd);
 
@@ -38,7 +38,7 @@ export function JoinForm({ className, onSubmit }: Props) {
   );
 
   return (
-    <form action={wrappedOnSubmit} className={classnames(className)}>
+    <form action={onSubmitAction} className={classnames(className)}>
       <JoinFormFields />
 
       <label className={styles.signInFormCheckboxWrapper} htmlFor="isRealtor">

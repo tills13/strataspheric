@@ -103,6 +103,8 @@ export interface MeetingsTable {
   eventId: string;
   purpose: string;
   notes: string | null;
+  minutesUrl: string | null;
+  minutesUrlApproverId: string | null;
 }
 
 export type Meeting = Selectable<MeetingsTable>;
@@ -133,11 +135,14 @@ export interface MeetingFilesTable {
 export type NewMeetingFile = Insertable<MeetingFilesTable>;
 
 export interface MeetingMinutesTable {
-  fileId: string;
-  meetingId: string;
-  state: "draft" | "published";
+  fileId: ColumnType<string, string, never>;
+  meetingId: ColumnType<string, string, never>;
+  approverId: string | null;
+  state: "draft" | "approved";
 }
 
+export type MeetingMinutes = Selectable<MeetingMinutesTable>;
+export type MeetingMinutesUpdate = Updateable<MeetingMinutesTable>;
 export type NewMeetingMinutes = Insertable<MeetingMinutesTable>;
 
 export interface StratasTable {
@@ -248,6 +253,7 @@ export interface Database {
   meetings: MeetingsTable;
   meeting_agenda_items: MeetingAgendaItemsTable;
   meeting_files: MeetingFilesTable;
+  meeting_minutes: MeetingMinutesTable;
   thread_emails: ThreadEmailsTable;
   strata_memberships: StrataMembershipsTable;
   strata_plans: StrataPlansTable;

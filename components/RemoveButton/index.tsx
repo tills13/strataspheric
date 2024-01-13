@@ -1,31 +1,19 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React from "react";
 
-import { Button } from "../Button";
 import { RemoveIcon } from "../Icon/RemoveIcon";
-import { LoadingIcon } from "../LoadingIcon";
+import { StatusButton } from "../StatusButton";
 
 type ButtonProps = Omit<
-  React.ComponentProps<typeof Button>,
+  React.ComponentProps<typeof StatusButton>,
   "icon" | "iconLeft" | "iconRight"
 >;
 
 interface Props extends ButtonProps {
-  onClick: () => void;
+  action: () => void;
 }
 
-export function RemoveButton({ onClick, ...delegateProps }: Props) {
-  const [isPending, startTransition] = useTransition();
-
-  return (
-    <Button
-      {...delegateProps}
-      icon={isPending ? <LoadingIcon /> : <RemoveIcon />}
-      onClick={(e) => {
-        e.preventDefault();
-        startTransition(() => onClick());
-      }}
-    />
-  );
+export function RemoveButton(delegateProps: Props) {
+  return <StatusButton {...delegateProps} icon={<RemoveIcon />} />;
 }

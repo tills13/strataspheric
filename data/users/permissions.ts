@@ -110,7 +110,7 @@ export function can(
 export function assertCan(
   scoped: HasScope | null | undefined,
   ...targetScope: string[]
-) {
+): asserts scoped is HasScope {
   if (!can(scoped, ...targetScope)) {
     throw PermissionsError;
   }

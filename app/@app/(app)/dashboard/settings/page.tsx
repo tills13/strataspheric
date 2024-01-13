@@ -39,8 +39,8 @@ export default async function Page() {
       <div className={parentStyles.pageContainer}>
         <div className={styles.centerContainer}>
           <form
-            className={classnames(styles.form, styles.marginBottomLarge)}
             action={updateStrataAction}
+            className={classnames(styles.form, styles.marginBottomLarge)}
           >
             <ElementGroup orientation="column" gap="small">
               <input name="id" type="hidden" defaultValue={strata.id} />

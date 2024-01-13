@@ -25,7 +25,6 @@ export const meetingTimelineSearchContainer = style({
 
 export const header = style({
   position: "relative",
-  marginBottom: vars.spacing.large,
 });
 
 export const headerHeader = style({
@@ -39,4 +38,35 @@ export const editMeetingButton = style({
 
 export const meetingAgendaList = style({
   listStyle: "none",
+});
+
+export const minutesUrlInput = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      flexGrow: 1,
+      flexBasis: "66%",
+    },
+  },
+});
+
+export const minutesUrlApproveButton = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      flexShrink: 1,
+      flexBasis: "33%",
+    },
+  },
+});
+
+export const minutesUrlContainer = style({
+  display: "flex",
+  gap: vars.spacing.small,
+  flexDirection: "column",
+  alignItems: "center",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      flexDirection: "row",
+    },
+  },
 });

@@ -3,7 +3,7 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { File } from "../../data";
 import { classnames } from "../../utils/classnames";
@@ -15,18 +15,21 @@ import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { TextDocumentIcon } from "../Icon/TextDocumentIcon";
 import { Modal } from "../Modal";
 
-interface Props {
-  className?: string;
+type ButtonProps = React.ComponentProps<typeof Button>;
+
+interface Props extends ButtonProps {
+  attachFileText?: React.ReactNode;
   onSelectFile: (file: File | undefined) => void;
   selectedFile?: { id: string; name: string };
   upsertFile: (fd: FormData) => Promise<File>;
 }
 
 export function AttachFileButton({
-  className,
+  attachFileText = "Attach File",
   onSelectFile,
   selectedFile,
   upsertFile,
+  ...delegateProps
 }: Props) {
   const [showAttachFileModal, setShowAttachFileModal] = useState(false);
 
@@ -34,26 +37,34 @@ export function AttachFileButton({
     <>
       {selectedFile ? (
         <Button
-          className={classnames(className, styles.attachFileButton)}
+          className={classnames(
+            delegateProps.className,
+            styles.attachFileButton,
+          )}
           color="error"
           style="secondary"
           iconRight={<TextDocumentIcon />}
           onClick={() => onSelectFile(undefined)}
           type="button"
+          {...delegateProps}
         >
           Unattach File (
           <span className={styles.fileName}>{selectedFile.name}</span>)
         </Button>
       ) : (
         <Button
-          className={classnames(className, styles.attachFileButton)}
+          className={classnames(
+            delegateProps.className,
+            styles.attachFileButton,
+          )}
           color="primary"
           style="secondary"
           iconRight={<AttachmentIcon />}
           onClick={() => setShowAttachFileModal(true)}
           type="button"
+          {...delegateProps}
         >
-          Attach File
+          {attachFileText}
         </Button>
       )}
 

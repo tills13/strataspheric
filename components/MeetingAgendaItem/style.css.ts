@@ -8,8 +8,13 @@ export const agendaItem = style({
   padding: vars.spacing.normal,
   border: `2px solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius,
-  marginBottom: vars.spacing.normal,
   position: "relative",
+
+  selectors: {
+    ["&:not(:last-child)"]: {
+      marginBottom: vars.spacing.normal,
+    },
+  },
 });
 
 export const agendaItemDone = style([

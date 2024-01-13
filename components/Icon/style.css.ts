@@ -1,6 +1,7 @@
 import { iconColorVar, vars } from "../../app/theme.css";
 import * as buttonStyles from "../Button/style.css";
 import * as dropdownActionsStyles from "../DropdownActions/style.css";
+import { timelineIconContainer } from "../Timeline/style.css";
 import { fallbackVar, style } from "@vanilla-extract/css";
 
 export const icon = style({
@@ -18,6 +19,9 @@ export const icon = style({
     },
     [`${dropdownActionsStyles.actionRow} &`]: {
       height: "24px",
+    },
+    [`${timelineIconContainer} &`]: {
+      height: vars.sizes.xxs,
     },
   },
 });

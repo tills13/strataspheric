@@ -22,7 +22,7 @@ export function UpdateProfileForm({ user }: Props) {
   });
 
   return (
-    <form action={dispatch}>
+    <form onClick={dispatch}>
       <Header className={s({ mb: "large" })} priority={2}>
         Update Profile
       </Header>
