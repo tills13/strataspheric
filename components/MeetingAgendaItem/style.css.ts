@@ -9,12 +9,6 @@ export const agendaItem = style({
   border: `2px solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius,
   position: "relative",
-
-  selectors: {
-    ["&:not(:last-child)"]: {
-      marginBottom: vars.spacing.normal,
-    },
-  },
 });
 
 export const agendaItemDone = style([

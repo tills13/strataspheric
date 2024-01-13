@@ -19,7 +19,7 @@ type ButtonProps = React.ComponentProps<typeof Button>;
 
 interface Props extends ButtonProps {
   attachFileText?: React.ReactNode;
-  onSelectFile: (file: File | undefined) => void;
+  onSelectFile: (file: File | undefined) => Promise<any> | any;
   selectedFile?: { id: string; name: string };
   upsertFile: (fd: FormData) => Promise<File>;
 }
@@ -78,9 +78,9 @@ export function AttachFileButton({
           </Header>
           <FileSelect
             className={s({ mb: "normal", w: "full" })}
-            onSelectFile={(file) => {
+            onSelectFile={async (file) => {
+              await onSelectFile(file);
               setShowAttachFileModal(false);
-              onSelectFile(file);
             }}
           />
           <Header className={s({ mb: "normal" })} priority={3}>

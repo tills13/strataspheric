@@ -32,7 +32,7 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
 
       <ul className={classnames(styles.meetingAgendaList, s({ mb: "large" }))}>
         {agendaItems.map((agendaItem) => (
-          <li key={agendaItem.id}>
+          <li key={agendaItem.id} className={styles.meetingAgendaListItem}>
             <MeetingAgendaItem
               agendaItem={agendaItem}
               imperativeUpdateAgendaItem={imperativeUpdateAgendaItemAction.bind(

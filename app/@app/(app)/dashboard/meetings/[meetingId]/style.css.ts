@@ -40,22 +40,60 @@ export const meetingAgendaList = style({
   listStyle: "none",
 });
 
-export const minutesUrlInput = style({
-  "@media": {
-    [breakpoints.tablet]: {
-      flexGrow: 1,
-      flexBasis: "66%",
+export const meetingAgendaListItem = style({
+  selectors: {
+    ["&:not(:last-child)"]: {
+      marginBottom: vars.spacing.normal,
     },
   },
 });
 
-export const minutesUrlApproveButton = style({
-  "@media": {
-    [breakpoints.tablet]: {
-      flexShrink: 1,
-      flexBasis: "33%",
+export const meetingFileContainer = style({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  selectors: {
+    "&:not(:last-child)": {
+      marginBottom: vars.spacing.normal,
     },
   },
+});
+
+export const meetingFile = style({
+  display: "flex",
+  gap: vars.spacing.small,
+  alignItems: "center",
+});
+
+export const minutesUrlInput = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      flexGrow: 1,
+      flexBasis: "100%",
+    },
+  },
+});
+
+export const minutesUrlActionsContainer = style({
+  display: "flex",
+  gap: vars.spacing.small,
+  width: "100%",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      width: "auto",
+      flexShrink: 1,
+      flexBasis: "25%",
+    },
+  },
+});
+
+export const minutesUrlApprover = style({
+  whiteSpace: "nowrap",
+});
+
+export const minutesUrlApproveButton = style({
+  flex: 1,
 });
 
 export const minutesUrlContainer = style({

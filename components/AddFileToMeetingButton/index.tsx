@@ -21,7 +21,7 @@ export function AddFileToMeetingButton({
       {...delegateProps}
       onSelectFile={(file) => {
         if (file) {
-          addFileToMeeting(file.id);
+          return addFileToMeeting(file.id);
         }
       }}
       upsertFile={upsertFile}

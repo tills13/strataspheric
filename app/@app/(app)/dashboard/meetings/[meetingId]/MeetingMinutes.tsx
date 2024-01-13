@@ -6,6 +6,7 @@ import { FileTypeIcon } from "../../../../../../components/FileTypeIcon";
 import { Header } from "../../../../../../components/Header";
 import { AddIcon } from "../../../../../../components/Icon/AddIcon";
 import { CircleCheckIcon } from "../../../../../../components/Icon/CircleCheckIcon";
+import { SaveIcon } from "../../../../../../components/Icon/SaveIcon";
 import { TextDocumentIcon } from "../../../../../../components/Icon/TextDocumentIcon";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
 import { Input } from "../../../../../../components/Input";
@@ -66,7 +67,7 @@ export async function MeetingMinutes({
           action={updateMinutesUrlAction.bind(undefined, meetingId)}
         >
           <Input
-            className={classnames(styles.minutesUrlInput)}
+            className={classnames(styles.minutesUrlInput, s({ w: "full" }))}
             name="minutesUrl"
             placeholder="https://docs.google.com/document/d/..."
             defaultValue={minutesUrl}
@@ -76,7 +77,7 @@ export async function MeetingMinutes({
           {!minutesUrl && (
             <StatusButton
               className={styles.minutesUrlApproveButton}
-              iconRight={<AddIcon />}
+              iconRight={<SaveIcon />}
               iconTextBehaviour="centerRemainder"
               color="success"
             >
@@ -86,9 +87,12 @@ export async function MeetingMinutes({
 
           {minutesUrl &&
             (minutesUrlApprovedByName ? (
-              <MinutesApprover approverName={minutesUrlApprovedByName} />
+              <MinutesApprover
+                approverName={minutesUrlApprovedByName}
+                className={styles.minutesUrlApprover}
+              />
             ) : (
-              <>
+              <div className={styles.minutesUrlActionsContainer}>
                 <StatusButton
                   className={styles.minutesUrlApproveButton}
                   action={approveMeetingMinutesUrlAction.bind(
@@ -99,22 +103,21 @@ export async function MeetingMinutes({
                   iconTextBehaviour="centerRemainder"
                   color="success"
                 >
-                  Approve Minutes
+                  Approve
                 </StatusButton>
                 <RemoveButton
                   action={clearMinutesUrlAction.bind(undefined, meetingId)}
                   color="error"
-                  size="small"
                   style="tertiary"
                 />
-              </>
+              </div>
             ))}
         </form>
 
         {minutesUrl && minutesUrlApprovedByName && (
           <InfoPanel className={s({ mb: "normal" })} level="success">
-            The externally hosted minutes have been approved. Please export them
-            and upload them to Stratashperic to share them with other strata
+            The externally hosted minutes have been approved. Export them and
+            upload them to Stratashperic to share them with other strata
             members.
           </InfoPanel>
         )}
