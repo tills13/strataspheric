@@ -1,6 +1,8 @@
 import { s } from "../../../../../../sprinkles.css";
+import * as styles from "./style.css";
 
 import { AddFileToMeetingButton } from "../../../../../../components/AddFileToMeetingButton";
+import { FileTypeIcon } from "../../../../../../components/FileTypeIcon";
 import { Header } from "../../../../../../components/Header";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
 import { Panel } from "../../../../../../components/Panel";
@@ -31,11 +33,20 @@ export async function MeetingFiles({ className, meetingId }: Props) {
           </InfoPanel>
         )}
 
+        <div className={s({ mb: "normal" })}>
+          {files.map((file) => (
+            <div key={file.name}>
+              <FileTypeIcon className={styles.icon} filePath={file.path} />{" "}
+              {file.name}
+            </div>
+          ))}
+        </div>
+
         <AddFileToMeetingButton
           addFileToMeeting={addFileToMeetingAction.bind(
             undefined,
             meetingId,
-            "minutes",
+            "file",
           )}
           attachFileText="Add File"
           upsertFile={upsertFileAction.bind(undefined, undefined)}
