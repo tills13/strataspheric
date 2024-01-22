@@ -6,6 +6,7 @@ import { useTransition } from "react";
 import { protocol, tld } from "../../constants";
 import { Strata, StrataMembership } from "../../data";
 import { Button } from "../Button";
+import { ArrowForwardIcon } from "../Icon/ArrowForwardIcon";
 import { ExternalLink } from "../Link/ExternalLink";
 import { StatusButton } from "../StatusButton";
 
@@ -31,7 +32,12 @@ export function JoinStrataButton({
   if (!user) {
     return (
       <ExternalLink href={protocol + "//" + tld + "/join"}>
-        <Button color="primary" style="secondary">
+        <Button
+          color="primary"
+          iconRight={<ArrowForwardIcon />}
+          style="primary"
+          iconTextBehaviour="centerRemainder"
+        >
           Join {strata.name}
         </Button>
       </ExternalLink>

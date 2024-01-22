@@ -19,7 +19,7 @@ interface Props {
 
 export async function GlobalHeaderActions({ className, joinStrata }: Props) {
   const strata = await mustGetCurrentStrata();
-  const session = await auth()!;
+  const session = await auth();
 
   const strataMemebership = session?.user.id
     ? await getStrataMembership(strata.id, session?.user.id)
@@ -51,10 +51,7 @@ export async function GlobalHeaderActions({ className, joinStrata }: Props) {
         />
       ) : (
         <InternalLink className={linkStyles.noUnderline} href="/?action=signin">
-          <Button
-            className={styles.globalHeaderActionsButton}
-            style="secondary"
-          >
+          <Button className={styles.globalHeaderActionsButton} style="tertiary">
             Sign In
           </Button>
         </InternalLink>

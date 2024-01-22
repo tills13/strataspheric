@@ -7,14 +7,15 @@ import { createEvent } from "../../../../../../../data/events/createEvent";
 import { deleteEvent } from "../../../../../../../data/events/deleteEvent";
 import { getEvent } from "../../../../../../../data/events/getEvent";
 import { updateEvent } from "../../../../../../../data/events/updateEvent";
+import { mustGetCurrentStrata } from "../../../../../../../data/stratas/getStrataByDomain";
 import { parseTimestamp } from "../../../../../../../utils/datetime";
 import * as formdata from "../../../../../../../utils/formdata";
 
 export async function upsertEventAction(
-  strataId: string,
   eventId: string | undefined,
   formData: FormData,
 ) {
+  const strata = await mustGetCurrentStrata();
   const session = await auth();
 
   if (!session) {
@@ -46,7 +47,7 @@ export async function upsertEventAction(
       description,
       startDate: startDateTs,
       endDate: endDateTs,
-      strataId,
+      strataId: strata.id,
       creatorId: session.user.id,
     });
 

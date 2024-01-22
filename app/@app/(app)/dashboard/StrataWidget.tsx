@@ -1,7 +1,9 @@
 import * as styles from "./style.css";
 
+import { auth } from "../../../../auth";
 import { NewWidgetWidget } from "../../../../components/NewWidgetWidget";
 import { Widget } from "../../../../components/Widget";
+import { can, p } from "../../../../data/users/permissions";
 import { getWidgets } from "../../../../data/widgets/getWidgets";
 import {
   createEventAction,
@@ -17,7 +19,9 @@ interface Props {
 }
 
 export async function StrataWidgets({ strataId }: Props) {
+  const session = await auth();
   const widgets = await getWidgets(strataId);
+
   return (
     <div className={styles.dashboardWidgetGridContainer}>
       {widgets.map((widget) => (
@@ -31,9 +35,11 @@ export async function StrataWidgets({ strataId }: Props) {
           widget={widget}
         />
       ))}
-      <NewWidgetWidget
-        createWidget={createWidgetAction.bind(undefined, strataId)}
-      />
+      {can(session?.user, p("stratas", "widgets", "create")) && (
+        <NewWidgetWidget
+          createWidget={createWidgetAction.bind(undefined, strataId)}
+        />
+      )}
     </div>
   );
 }

@@ -1,10 +1,13 @@
-import { vars } from "../../app/theme.css";
-import * as linkStyles from "../Link/style.css";
+import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
+
+import { calc } from "@vanilla-extract/css-utils";
+
+import { important } from "../../theme";
 
 export const subheader = style({
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-start",
   justifyContent: "space-between",
   width: "100vw",
   gap: vars.spacing.normal,
@@ -15,40 +18,89 @@ export const subheader = style({
 export const linksRail = style({
   display: "flex",
   gap: vars.spacing.small,
-  flex: 1,
-  overflow: "auto",
+  flexDirection: "column",
+  height: calc(vars.sizes.small).toString(),
+  overflow: "hidden",
+  transition: "height 0.5s ease",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      flexDirection: "row",
+      flex: 1,
+      overflow: "auto",
+    },
+  },
 });
 
-export const baseSubheaderLink = style([
-  linkStyles.link,
+export const linksRailOpen = style([
+  linksRail,
   {
-    padding: `${vars.spacing.xs} ${vars.spacing.small}`,
-    whiteSpace: "nowrap",
+    height: calc(vars.spacing.small)
+      .multiply(2)
+      .add(calc(8).multiply(vars.sizes.small))
+      .toString(),
   },
 ]);
+
+export const baseSubheaderLink = style({
+  padding: `${vars.spacing.xs} 0`,
+  whiteSpace: "nowrap",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      padding: `${vars.spacing.xs} ${vars.spacing.small}`,
+    },
+  },
+});
 
 export const subheaderLink = style([
   baseSubheaderLink,
   {
     color: vars.fontColors.primary,
+    order: 2,
   },
 ]);
 
 export const activeSubheaderLink = style([
   baseSubheaderLink,
   {
-    background: vars.colors.primary,
-    color: vars.colors.white,
-    borderRadius: vars.borderRadius,
+    color: vars.fontColors.primary,
+    fontWeight: vars.fontWeights.xbold,
     textDecoration: "none",
+    order: 1,
 
-    selectors: {
-      "&:active": {
+    "@media": {
+      [breakpoints.tablet]: {
+        backgroundColor: vars.colors.primary,
         color: vars.colors.white,
-      },
-      "&:visited": {
-        color: vars.colors.white,
+        borderRadius: vars.borderRadius,
+        order: 2,
       },
     },
+  },
+]);
+
+export const actionsContainer = style({
+  display: "flex",
+  gap: vars.spacing.small,
+});
+
+export const mobileDropdownAction = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      display: important("none"),
+    },
+  },
+});
+
+export const toggleMobileDropdownIcon = style({
+  transform: "rotate(0deg)",
+  transition: "transform 0.2s ease",
+});
+
+export const toggleMobileDropdownIconActive = style([
+  toggleMobileDropdownIcon,
+  {
+    transform: "rotate(180deg)",
   },
 ]);

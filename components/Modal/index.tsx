@@ -5,18 +5,22 @@ import * as styles from "./style.css";
 import React, { useRef } from "react";
 import ReactDOM from "react-dom";
 
+import { classnames } from "../../utils/classnames";
+import { Button } from "../Button";
 import { Header } from "../Header";
 import { RemoveIcon } from "../Icon/RemoveIcon";
 
 interface Props {
-  modalBodyClassName?: string;
   children: React.ReactNode;
+  className?: string;
   closeModal: () => void;
+  modalBodyClassName?: string;
   title?: React.ReactNode;
 }
 
 export function Modal({
   children,
+  className,
   closeModal,
   modalBodyClassName,
   title,
@@ -25,7 +29,7 @@ export function Modal({
 
   return ReactDOM.createPortal(
     <div
-      className={styles.modalWrapper}
+      className={classnames(className, styles.modalWrapper)}
       onMouseDown={(e) => {
         if (e.target === wrapperRef.current) {
           closeModal();
@@ -35,11 +39,16 @@ export function Modal({
     >
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
-          {title ? <Header priority={2}>{title}</Header> : <div />}
-          <RemoveIcon
-            className={styles.modalHeaderCloseIcon}
-            onClick={closeModal}
-          />
+          {title ? (
+            typeof title === "string" ? (
+              <Header priority={2}>{title}</Header>
+            ) : (
+              title
+            )
+          ) : (
+            <div />
+          )}
+          <Button icon={<RemoveIcon />} onClick={closeModal} style="tertiary" />
         </div>
         <div className={modalBodyClassName}>{children}</div>
       </div>

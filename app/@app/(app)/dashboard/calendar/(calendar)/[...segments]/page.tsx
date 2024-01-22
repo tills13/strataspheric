@@ -1,20 +1,19 @@
 import * as styles from "./style.css";
 
 import endOfMonth from "date-fns/endOfMonth";
-import { getMonth } from "date-fns/esm";
 import format from "date-fns/format";
 import { notFound } from "next/navigation";
 
 import { Button } from "../../../../../../../components/Button";
+import { Calendar } from "../../../../../../../components/Calendar";
 import { DashboardHeader } from "../../../../../../../components/DashboardHeader";
 import { Header } from "../../../../../../../components/Header";
 import { LeftIcon } from "../../../../../../../components/Icon/LeftIcon";
 import { RightIcon } from "../../../../../../../components/Icon/RightIcon";
 import { InternalLink } from "../../../../../../../components/Link/InternalLink";
 import { db } from "../../../../../../../data";
+import { getStrataEventsForRange } from "../../../../../../../data/events/getEventsForRange";
 import { getCurrentStrata } from "../../../../../../../data/stratas/getStrataByDomain";
-import { formatDateForBetween } from "../../../../../../../utils/sql";
-import { Calendar } from "./Calendar";
 import { deleteEventAction, upsertEventAction } from "./actions";
 
 export const runtime = "edge";
@@ -53,31 +52,11 @@ export default async function Page({ searchParams, params }) {
   const startDateTimestamp = Math.round(startDate.getTime() / 1000);
   const endDateTimestamp = Math.round(endDate.getTime() / 1000);
 
-  const q = db
-    .selectFrom("events")
-    .selectAll("events")
-    .leftJoin("meetings", "meetings.eventId", "events.id")
-    .select("meetings.id as meetingId")
-    .where("events.strataId", "=", strata.id)
-    .where((eb) =>
-      eb.or([
-        // startDate is before month but endDate is during month or after month
-        eb.and([
-          eb("events.startDate", "<", startDateTimestamp),
-          eb.or([
-            eb("events.endDate", ">", endDateTimestamp),
-            eb.between("events.endDate", startDateTimestamp, endDateTimestamp),
-          ]),
-        ]),
-
-        // start date is during month
-        eb.between("events.startDate", startDateTimestamp, endDateTimestamp),
-      ]),
-    )
-    .orderBy("events.startDate", "asc")
-    .orderBy("events.endDate", "asc");
-
-  const events = await q.execute();
+  const events = await getStrataEventsForRange(
+    strata.id,
+    startDateTimestamp,
+    endDateTimestamp,
+  );
   const monthName = format(startDateWithOffset, "LLLL");
 
   const nextLink =
@@ -108,9 +87,9 @@ export default async function Page({ searchParams, params }) {
           </div>
         </div>
         <Calendar
-          upsertEvent={upsertEventAction.bind(undefined, strata.id)}
-          deleteEvent={deleteEventAction}
+          upsertEvent={upsertEventAction}
           events={events}
+          deleteEvent={deleteEventAction}
           month={month}
           year={year}
         />

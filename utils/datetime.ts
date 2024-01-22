@@ -1,3 +1,5 @@
+import addDays from "date-fns/addDays";
+
 import { getString } from "./formdata";
 
 export function formatDateForDatetime(d: Date | number | string) {
@@ -32,4 +34,14 @@ export function patchTimezoneOffset(fd: FormData, fieldName: string) {
     (isNegative ? "-" : "") + rawTzOffset.toString().padStart(2, "0") + ":00";
 
   fd.set(fieldName, date + tzOffset);
+}
+
+export function dateFromDayAndWeekIdx(
+  startOfMonth: Date,
+  weekIdx: number,
+  dayIdx: number,
+  firstDayInMonth: number,
+) {
+  const offset = weekIdx * 7 + dayIdx - firstDayInMonth;
+  return addDays(startOfMonth, offset);
 }

@@ -39,8 +39,3 @@ export const modalHeader = style({
   alignItems: "center",
   marginBottom: vars.spacing.normal,
 });
-
-export const modalHeaderCloseIcon = style({
-  height: vars.sizes.small,
-  cursor: "pointer",
-});

@@ -14,6 +14,7 @@ interface Props {
 
 export function NewWidgetWidget({ createWidget }: Props) {
   const [showNewWidgetModal, setShowNewWidgetModal] = useState(false);
+
   return (
     <>
       <div

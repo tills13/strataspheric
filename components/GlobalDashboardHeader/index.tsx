@@ -1,8 +1,8 @@
 import * as styles from "./style.css";
 
-import { auth } from "../../auth";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { GlobalHeader } from "../GlobalHeader";
+import { Header } from "../Header";
 import { InternalLink } from "../Link/InternalLink";
 import { GlobalHeaderActions } from "./Actions";
 import { GlobalHeaderMobileActions } from "./MobileActions";
@@ -21,17 +21,20 @@ export async function GlobalDashboardHeader({ joinStrata }: Props) {
   return (
     <GlobalHeader className={styles.globalHeader}>
       <div>
-        <h1>
+        <Header priority={1}>
           <InternalLink className={styles.titleLink} href="/">
             {strata.name}
           </InternalLink>
-        </h1>
+        </Header>
       </div>
       <GlobalHeaderActions
-        className={styles.globalHeaderDesktopActions}
+        className={styles.globalHeaderActionsDesktop}
         joinStrata={joinStrata}
       />
-      <GlobalHeaderMobileActions strata={strata} />
+      <GlobalHeaderMobileActions
+        actions={<GlobalHeaderActions joinStrata={joinStrata} />}
+        strata={strata}
+      />
     </GlobalHeader>
   );
 }

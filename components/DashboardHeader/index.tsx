@@ -4,11 +4,13 @@ import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 import { can } from "../../data/users/permissions";
 import { classnames } from "../../utils/classnames";
+import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
+import { DownIcon } from "../Icon/DownIcon";
 import { InternalLink } from "../Link/InternalLink";
 
 type Link = [href: string, label: string];
@@ -19,6 +21,7 @@ const links: Array<Link | LinkWithPermissions> = [
   ["/dashboard/files", "Files"],
   ["/dashboard/calendar", "Events"],
   ["/dashboard/membership", "Directory"],
+  ["/dashboard/amenities", "Amenities"],
   ["/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
   ["/dashboard/inbox", "Strata Inbox"],
   ["/dashboard/settings", "Settings", ["stratas.strata.edit"]],
@@ -31,10 +34,13 @@ interface Props {
 export function DashboardHeader({ actions }: Props) {
   const { data: session } = useSession();
   const pathname = usePathname();
+  const [mobileMenuExpanded, setMobileMenuExpanded] = useState(false);
 
   return (
     <div className={styles.subheader}>
-      <div className={styles.linksRail}>
+      <div
+        className={mobileMenuExpanded ? styles.linksRailOpen : styles.linksRail}
+      >
         {links.map(([href, label, permissions = []]) => {
           const isActive =
             href === "/dashboard"
@@ -59,13 +65,30 @@ export function DashboardHeader({ actions }: Props) {
         })}
       </div>
 
-      {actions && (
-        <DropdownActions
-          actions={actions}
-          buttonSize="small"
-          buttonStyle="tertiary"
+      <div className={styles.actionsContainer}>
+        {actions && (
+          <DropdownActions
+            actions={actions}
+            buttonSize="small"
+            buttonStyle="tertiary"
+          />
+        )}
+        <Button
+          className={styles.mobileDropdownAction}
+          onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
+          icon={
+            <DownIcon
+              className={
+                mobileMenuExpanded
+                  ? styles.toggleMobileDropdownIconActive
+                  : styles.toggleMobileDropdownIcon
+              }
+            />
+          }
+          size="small"
+          style="tertiary"
         />
-      )}
+      </div>
     </div>
   );
 }

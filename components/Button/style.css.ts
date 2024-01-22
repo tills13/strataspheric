@@ -31,10 +31,16 @@ export const button = recipe({
         borderColor: vars.colors.borderDefault,
         color: vars.fontColors.primary,
 
-        "&:hover": {
-          backgroundColor: vars.colors.borderDefaultHover,
-          borderColor: vars.colors.borderDefaultHover,
-          color: vars.fontColors.primaryHover,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: vars.colors.borderDefaultHover,
+                borderColor: vars.colors.borderDefaultHover,
+                color: vars.fontColors.primaryHover,
+              },
+            },
+          },
         },
       },
       error: {
@@ -55,10 +61,16 @@ export const button = recipe({
           [iconColorVar]: vars.colors.white,
         },
 
-        "&:hover": {
-          backgroundColor: vars.colors.primaryHover,
-          borderColor: vars.colors.primaryHover,
-          color: vars.colors.white,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: vars.colors.primaryHover,
+                borderColor: vars.colors.primaryHover,
+                color: vars.colors.white,
+              },
+            },
+          },
         },
       },
       success: {
@@ -70,19 +82,31 @@ export const button = recipe({
           [iconColorVar]: vars.colors.white,
         },
 
-        "&:hover": {
-          borderColor: vars.colors.green700,
-          backgroundColor: vars.colors.green700,
-          color: vars.colors.white,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                borderColor: vars.colors.green700,
+                backgroundColor: vars.colors.green700,
+                color: vars.colors.white,
+              },
+            },
+          },
         },
       },
       warning: {
         borderColor: vars.colors.orange500,
         backgroundColor: vars.colors.orange500,
 
-        "&:hover": {
-          borderColor: vars.colors.orange700,
-          backgroundColor: vars.colors.orange700,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                borderColor: vars.colors.orange700,
+                backgroundColor: vars.colors.orange700,
+              },
+            },
+          },
         },
       },
     },

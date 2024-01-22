@@ -35,11 +35,6 @@ export function MembershipTable({
 
   const canSeeMemberDetails = !!session;
   const canDelete = can(session?.user, "stratas.memberships.delete");
-  const canUpsert = can(
-    session?.user,
-    "stratas.memberships.create",
-    "stratas.memberships.edit",
-  );
 
   const byUnit: Record<string, Array<StrataMembership & User>> = {};
 
@@ -67,7 +62,7 @@ export function MembershipTable({
             <tr>
               <th>Name</th>
               <th>Email</th>
-              {canUpsert && <th>Unit</th>}
+              <th>Unit</th>
               <th>Phone #</th>
               <th>Role</th>
 
@@ -111,11 +106,11 @@ export function MembershipTable({
                         size="small"
                       />
                       <RemoveButton
-                        color="error"
-                        onClick={removeStrataMembership.bind(
+                        action={removeStrataMembership.bind(
                           undefined,
                           membership.userId,
                         )}
+                        color="error"
                         style="tertiary"
                         size="small"
                       />

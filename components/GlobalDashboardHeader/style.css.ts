@@ -20,22 +20,33 @@ export const titleLink = style([
   },
 ]);
 
-export const globalHeaderActions = style({});
+export const globalHeaderActions = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: vars.spacing.normal,
+  height: "100%",
 
-export const sessionUserName = style({
-  color: vars.colors.primary,
-  whiteSpace: "nowrap",
+  "@media": {
+    [breakpoints.tablet]: {
+      flexDirection: "row",
+      alignItems: "center",
+      height: "unset",
+    },
+  },
 });
 
-export const globalHeaderDesktopActions = style({
+export const globalHeaderActionsDesktop = style({
   display: "none",
-  alignItems: "center",
-  gap: vars.spacing.normal,
   "@media": {
     [breakpoints.tablet]: {
       display: "flex",
     },
   },
+});
+
+export const sessionUserName = style({
+  color: vars.colors.primary,
+  whiteSpace: "nowrap",
 });
 
 export const globalMobileHeaderActions = style({
@@ -45,6 +56,10 @@ export const globalMobileHeaderActions = style({
       display: "none",
     },
   },
+});
+
+export const globalMobileHeaderModal = style({
+  padding: vars.spacing.small,
 });
 
 export const hamburgerIcon = style({
