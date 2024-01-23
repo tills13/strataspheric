@@ -14,6 +14,7 @@ import { DropdownActions } from "../DropdownActions";
 import { ElementGroup } from "../ElementGroup";
 import { GoToStrataLinkButton } from "../GoToStrataLinkButton";
 import { Header } from "../Header";
+import { PersonIcon } from "../Icon/PersonIcon";
 import { SignOutIcon } from "../Icon/SignOutIcon";
 import { InternalLink } from "../Link/InternalLink";
 import { Panel } from "../Panel";
@@ -65,6 +66,11 @@ export function ContinueWhereYouLeftOffWidget({
                   },
                   label: "Sign Out",
                   icon: <SignOutIcon />,
+                },
+                {
+                  action: "/profile",
+                  label: "Profile",
+                  icon: <PersonIcon />,
                 },
               ]}
               className={styles.continueActionOverflow}

@@ -181,13 +181,17 @@ export const button = recipe({
           [iconColorVar]: vars.colors.red700,
         },
 
-        selectors: {
-          "&:hover": {
-            backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 12%, transparent)`,
-            color: vars.colors.red900,
-            borderColor: vars.colors.red900,
-            vars: {
-              [iconColorVar]: vars.colors.red900,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 12%, transparent)`,
+                color: vars.colors.red900,
+                borderColor: vars.colors.red900,
+                vars: {
+                  [iconColorVar]: vars.colors.red900,
+                },
+              },
             },
           },
         },
@@ -205,13 +209,17 @@ export const button = recipe({
           [iconColorVar]: vars.colors.primary,
         },
 
-        selectors: {
-          "&:hover": {
-            backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 12%, transparent)`,
-            color: vars.colors.primaryHover,
-            borderColor: vars.colors.primaryHover,
-            vars: {
-              [iconColorVar]: vars.colors.primaryHover,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 12%, transparent)`,
+                color: vars.colors.primaryHover,
+                borderColor: vars.colors.primaryHover,
+                vars: {
+                  [iconColorVar]: vars.colors.primaryHover,
+                },
+              },
             },
           },
         },
@@ -229,13 +237,17 @@ export const button = recipe({
           [iconColorVar]: vars.colors.green900,
         },
 
-        selectors: {
-          "&:hover": {
-            backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 12%, transparent)`,
-            color: vars.colors.green900,
-            borderColor: vars.colors.green900,
-            vars: {
-              [iconColorVar]: vars.colors.green900,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 12%, transparent)`,
+                color: vars.colors.green900,
+                borderColor: vars.colors.green900,
+                vars: {
+                  [iconColorVar]: vars.colors.green900,
+                },
+              },
             },
           },
         },
@@ -253,13 +265,17 @@ export const button = recipe({
           [iconColorVar]: vars.colors.orange900,
         },
 
-        selectors: {
-          "&:hover": {
-            backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 12%, transparent)`,
-            color: vars.colors.orange900,
-            borderColor: vars.colors.orange900,
-            vars: {
-              [iconColorVar]: vars.colors.orange900,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 12%, transparent)`,
+                color: vars.colors.orange900,
+                borderColor: vars.colors.orange900,
+                vars: {
+                  [iconColorVar]: vars.colors.orange900,
+                },
+              },
             },
           },
         },
@@ -278,13 +294,17 @@ export const button = recipe({
           [iconColorVar]: vars.colors.red700,
         },
 
-        selectors: {
-          "&:hover": {
-            backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 12%, transparent)`,
-            color: vars.colors.red900,
-            vars: {
-              borderColor: `color-mix(in srgb, ${vars.colors.red500} 12%, transparent)`,
-              [iconColorVar]: vars.colors.red900,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 12%, transparent)`,
+                color: vars.colors.red900,
+                vars: {
+                  borderColor: `color-mix(in srgb, ${vars.colors.red500} 12%, transparent)`,
+                  [iconColorVar]: vars.colors.red900,
+                },
+              },
             },
           },
         },
@@ -301,13 +321,17 @@ export const button = recipe({
           [iconColorVar]: vars.colors.primary,
         },
 
-        selectors: {
-          "&:hover": {
-            backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 12%, transparent)`,
-            color: vars.colors.primaryHover,
-            vars: {
-              borderColor: `color-mix(in srgb, ${vars.colors.primary} 12%, transparent)`,
-              [iconColorVar]: vars.colors.primaryHover,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 12%, transparent)`,
+                color: vars.colors.primaryHover,
+                vars: {
+                  borderColor: `color-mix(in srgb, ${vars.colors.primary} 12%, transparent)`,
+                  [iconColorVar]: vars.colors.primaryHover,
+                },
+              },
             },
           },
         },
@@ -324,13 +348,17 @@ export const button = recipe({
           [iconColorVar]: vars.colors.green900,
         },
 
-        selectors: {
-          "&:hover": {
-            backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 12%, transparent)`,
-            color: vars.colors.green900,
-            vars: {
-              borderColor: `color-mix(in srgb, ${vars.colors.green500} 12%, transparent)`,
-              [iconColorVar]: vars.colors.green900,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 12%, transparent)`,
+                color: vars.colors.green900,
+                vars: {
+                  borderColor: `color-mix(in srgb, ${vars.colors.green500} 12%, transparent)`,
+                  [iconColorVar]: vars.colors.green900,
+                },
+              },
             },
           },
         },
@@ -347,13 +375,17 @@ export const button = recipe({
           [iconColorVar]: vars.colors.orange900,
         },
 
-        selectors: {
-          "&:hover": {
-            backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 12%, transparent)`,
-            color: vars.colors.orange900,
-            vars: {
-              borderColor: `color-mix(in srgb, ${vars.colors.orange500} 12%, transparent)`,
-              [iconColorVar]: vars.colors.orange900,
+        "@media": {
+          "(hover: hover) and (pointer: fine)": {
+            selectors: {
+              "&:hover": {
+                backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 12%, transparent)`,
+                color: vars.colors.orange900,
+                vars: {
+                  borderColor: `color-mix(in srgb, ${vars.colors.orange500} 12%, transparent)`,
+                  [iconColorVar]: vars.colors.orange900,
+                },
+              },
             },
           },
         },

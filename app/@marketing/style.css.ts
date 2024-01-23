@@ -207,3 +207,16 @@ export const plansContainer = style({
     },
   },
 });
+
+export const staticPageContainer = style({
+  marginBottom: 100,
+  textAlign: "justify",
+  padding: vars.spacing.normal,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      width: 600,
+      margin: "100px auto",
+    },
+  },
+});

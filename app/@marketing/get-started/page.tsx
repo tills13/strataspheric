@@ -24,7 +24,7 @@ export default async function Page({
   }
 
   return (
-    <>
+    <div>
       <PricingPlanSelector
         className={styles.pricingPlanSelector}
         selectedPlan={plan}
@@ -35,6 +35,6 @@ export default async function Page({
         selectedPlan={plan}
         submitGetStarted={submitGetStarted}
       />
-    </>
+    </div>
   );
 }
