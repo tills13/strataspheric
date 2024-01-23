@@ -6,7 +6,7 @@ import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
-import { SubmitGetStartedState } from "../../app/@marketing/(marketing)/get-started/(get-started)/actions";
+import { SubmitGetStartedState } from "../../app/@marketing/(marketing)/get-started/actions";
 import { tld } from "../../constants";
 import { PricingPlan } from "../../data/strataPlans/constants";
 import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
@@ -61,6 +61,10 @@ export function GetStartedForm({
       const rJson = await r.json();
 
       setIsDomainAvailable(rJson.isAvailable);
+    }
+
+    if (!suggestedSubdomain) {
+      return;
     }
 
     fetchIsDomainAvailable();

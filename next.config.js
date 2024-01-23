@@ -7,6 +7,11 @@ module.exports = withVanillaExtract({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

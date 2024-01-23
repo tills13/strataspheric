@@ -1,9 +1,9 @@
 import * as styles from "./style.css";
 
-import { auth } from "../../../../../auth";
-import { GetStartedForm } from "../../../../../components/GetStarted/Form";
-import { PricingPlanSelector } from "../../../../../components/PricingPlanSelector";
-import { plans } from "../../../../../data/strataPlans/constants";
+import { auth } from "../../../../auth";
+import { GetStartedForm } from "../../../../components/GetStarted/Form";
+import { PricingPlanSelector } from "../../../../components/PricingPlanSelector";
+import { plans } from "../../../../data/strataPlans/constants";
 import { submitGetStarted } from "./actions";
 
 export const runtime = "edge";
