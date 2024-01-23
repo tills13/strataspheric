@@ -147,7 +147,7 @@ export type NewMeetingMinutes = Insertable<MeetingMinutesTable>;
 
 export interface StratasTable {
   id: ColumnType<string, string, never>;
-  status: string;
+  status: ColumnType<string, string | undefined, string | undefined>;
   name: string;
   domain: string;
   domainRecordId: string;
@@ -158,7 +158,11 @@ export interface StratasTable {
   city: string | null;
   provinceState: string | null;
   isPublic: 0 | 1;
-  strataActiveEmailSent: 0 | 1;
+  strataActiveEmailSent: ColumnType<
+    0 | 1,
+    0 | 1 | undefined,
+    0 | 1 | undefined
+  >;
   createdAt: ColumnType<number, never, never>;
 }
 
