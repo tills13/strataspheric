@@ -14,7 +14,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, Props>(
 
     return (
       <label
-        className={classnames(styles.base, className)}
+        className={classnames(styles.checkbox, className)}
         htmlFor={propsId || id}
       >
         <input

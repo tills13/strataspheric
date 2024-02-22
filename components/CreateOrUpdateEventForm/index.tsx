@@ -1,5 +1,7 @@
 import * as styles from "./style.css";
 
+import { mutate } from "swr";
+
 import { Event } from "../../data";
 import { patchTimezoneOffset } from "../../utils/datetime";
 import { ConfirmButton } from "../ConfirmButton";
@@ -13,25 +15,31 @@ import { TextArea } from "../TextArea";
 
 interface Props {
   defaultDate?: string;
-  deleteEvent?: () => void;
+  deleteEvent?: () => Promise<any>;
   event?: Event;
+  onDeleteEvent?: () => void;
   upsertEvent: (fd: FormData) => Promise<any>;
 }
 
 export function CreateOrUpdateEventForm({
-  upsertEvent,
   defaultDate,
   deleteEvent,
   event,
+  onDeleteEvent,
+  upsertEvent,
 }: Props) {
   return (
     <form
       className={styles.newEventForm}
       action={async (fd) => {
+        console.log(fd.get("date_end"));
         patchTimezoneOffset(fd, "date_start");
         patchTimezoneOffset(fd, "date_end");
 
-        const u = await upsertEvent(fd);
+        console.log(fd.get("date_end"));
+
+        await upsertEvent(fd);
+        mutate((k) => Array.isArray(k) && k[1] === "events");
       }}
     >
       <Input name="name" placeholder="Name" defaultValue={event?.name} />
@@ -52,7 +60,11 @@ export function CreateOrUpdateEventForm({
       <ElementGroup gap="small">
         {event && deleteEvent && (
           <ConfirmButton
-            onClickConfirm={deleteEvent}
+            onClickConfirm={async () => {
+              await deleteEvent();
+              mutate((k) => Array.isArray(k) && k[1] === "events");
+              onDeleteEvent?.();
+            }}
             iconRight={<DeleteIcon />}
             color="error"
             style="secondary"

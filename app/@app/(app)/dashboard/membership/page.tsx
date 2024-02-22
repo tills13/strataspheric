@@ -8,13 +8,9 @@ import { getStrataMemberships } from "../../../../../data/strataMemberships/getS
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../../data/users/permissions";
+import { MembershipGrid } from "./MembershipGrid";
 import { MembershipHeader } from "./MembershipHeader";
-import { MembershipTable } from "./MembershipTable";
-import {
-  approveStrataMembershipAction,
-  deleteStrataMembershipAction,
-  upsertStrataMembershipAction,
-} from "./actions";
+import { upsertStrataMembershipAction } from "./actions";
 
 export const runtime = "edge";
 
@@ -46,12 +42,7 @@ export default async function Page() {
       />
 
       <div className={styles.membershipTableContainer}>
-        <MembershipTable
-          approveStrataMembership={approveStrataMembershipAction}
-          memberships={memberships}
-          removeStrataMembership={deleteStrataMembershipAction}
-          upsertStrataMembership={upsertStrataMembershipAction}
-        />
+        <MembershipGrid memberships={memberships} />
       </div>
     </>
   );

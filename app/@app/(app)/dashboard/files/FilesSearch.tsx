@@ -9,8 +9,10 @@ import { ElementGroup } from "../../../../../components/ElementGroup";
 import { Header } from "../../../../../components/Header";
 import { RemoveIcon } from "../../../../../components/Icon/RemoveIcon";
 import { Input } from "../../../../../components/Input";
+import { InputField } from "../../../../../components/InputField";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { Select } from "../../../../../components/Select";
+import { SelectField } from "../../../../../components/SelectField";
 import * as formdata from "../../../../../utils/formdata";
 
 interface Props {
@@ -42,22 +44,24 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
             params.set("visibility", formdata.getString(fd, "visibility"));
           }
 
+          console.log("here", params.toString());
+
           const query = params.toString();
 
           router.push("/dashboard/files" + (query ? "?" + query : ""));
         }}
       >
-        <Input
-          className={styles.filesSearchInput}
+        <InputField
+          wrapperClassName={styles.filesSearchInput}
           name="search"
           placeholder="Name or Description"
           defaultValue={searchTerm}
+          required={false}
         />
-        <Select name="visibility">
-          <option value="">Visibility</option>
+        <SelectField name="visibility" placeholder="Visibility">
           <option value="private">Private</option>
           <option value="public">Public</option>
-        </Select>
+        </SelectField>
         <ElementGroup gap="small">
           <Button type="submit" defaultValue={visibility} fullWidth>
             Search

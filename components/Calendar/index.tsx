@@ -18,18 +18,17 @@ export function Calendar({
   month,
   year,
 }: Props) {
-  const firstDayOfMonth = new Date(year, month - 1, 1);
-
   return (
     <div className={styles.calendar}>
-      {Array.from(new Array(6)).map((_, weekIdx) => (
+      {Array.from(new Array(6)).map((_, currentWeek) => (
         <CalendarWeek
-          key={weekIdx}
-          startOfMonth={firstDayOfMonth}
+          key={currentWeek}
+          currentMonth={month}
+          currentYear={year}
+          currentWeek={currentWeek}
           deleteEvent={deleteEvent}
           events={events}
           upsertEvent={upsertEvent}
-          weekIdx={weekIdx}
         />
       ))}
     </div>

@@ -52,7 +52,7 @@ export function MembershipTable({
 
   return (
     <>
-      <table className={styles.membershipTable}>
+      <table className={styles.membershipGrid}>
         {Object.entries(byUnit).map(([unit, strataMemberships]) => (
           <tbody key={unit} className={styles.membershipTableSection}>
             <tr className={styles.membershipTableSectionHeaderRow}>

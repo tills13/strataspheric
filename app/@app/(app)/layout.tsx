@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "../../../auth";
 import { GlobalDashboardHeader } from "../../../components/GlobalDashboardHeader";
 import { getCurrentStrata } from "../../../data/stratas/getStrataByDomain";
+import { SWRProvider } from "./SWRProvider";
 import { joinStrataAction } from "./actions";
 
 export async function generateMetadata(
@@ -30,10 +31,12 @@ export default async function RootMarketingLayout({
   const session = await auth();
 
   return (
-    <SessionProvider session={session}>
-      <GlobalDashboardHeader joinStrata={joinStrataAction} />
+    <SWRProvider>
+      <SessionProvider session={session}>
+        <GlobalDashboardHeader joinStrata={joinStrataAction} />
 
-      {children}
-    </SessionProvider>
+        {children}
+      </SessionProvider>
+    </SWRProvider>
   );
 }

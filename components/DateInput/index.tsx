@@ -4,6 +4,7 @@ import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import add from "date-fns/add";
+import isBefore from "date-fns/isBefore";
 import sub from "date-fns/sub";
 import { useRef } from "react";
 
@@ -68,10 +69,13 @@ export function DateInput({
 
   function onChangeEnd(e: React.ChangeEvent<HTMLInputElement>) {
     const currentDate = new Date(e.currentTarget.value);
+    const currentStartDate = new Date(startInputRef.current.value);
 
-    startInputRef.current.value = formatDateForDatetime(
-      sub(currentDate, { hours: 1 }),
-    );
+    if (isBefore(currentDate, currentStartDate)) {
+      startInputRef.current.value = formatDateForDatetime(
+        sub(currentDate, { hours: 1 }),
+      );
+    }
   }
 
   if (rest.type === "single") {

@@ -18,6 +18,14 @@ export function formatDateForDatetime(d: Date | number | string) {
   return d.toLocaleString("sv").substring(0, 16);
 }
 
+export function formatTimestampForSql(timestamp: number) {
+  if (timestamp > 9_999_999_999) {
+    timestamp /= 1000;
+  }
+
+  return timestamp;
+}
+
 export function parseTimestamp(timestampSeconds: number) {
   if (timestampSeconds <= 9_999_999_999) {
     timestampSeconds *= 1000;

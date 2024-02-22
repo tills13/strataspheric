@@ -1,34 +1,34 @@
 import { auth } from "../../../../auth";
 import { getStrataEventsForRange } from "../../../../data/events/getEventsForRange";
-import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { formatTimestampForSql } from "../../../../utils/datetime";
 
 export const runtime = "edge";
 
-export const GET = auth(async (req: Request) => {
-  const s = await getCurrentStrata();
+function intParam(sp: URLSearchParams, paramName: string): number {
+  const value: unknown = sp.get(paramName);
 
-  if (!s) {
-    return new Response("Not Found", { status: 404 });
+  if (typeof value !== "string") {
+    throw new Error(`invalid integer param ${paramName}, got ${value}`);
   }
 
+  const intValue = parseInt(value, 10);
+
+  if (isNaN(intValue)) {
+    throw new Error(`invalid integer param ${paramName}, got ${value}`);
+  }
+
+  return intValue;
+}
+
+export const GET = auth(async (req: Request) => {
+  const strata = await mustGetCurrentStrata();
   const u = new URL(req.url);
 
-  const startDate = new Date(u.searchParams.get("startDate") as string);
-  const endDate = new Date(u.searchParams.get("endDate") as string);
-
-  // const startDate = new Date(Date.UTC(year, month - 1, 1));
-  // const startDateWithOffset = new Date(
-  //   startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000,
-  // );
-  // const endDate = endOfMonth(startDateWithOffset);
-
-  const startDateTimestamp = Math.round(startDate.getTime() / 1000);
-  const endDateTimestamp = Math.round(endDate.getTime() / 1000);
-
   const events = await getStrataEventsForRange(
-    s.id,
-    startDateTimestamp,
-    endDateTimestamp,
+    strata.id,
+    formatTimestampForSql(intParam(u.searchParams, "startDate")),
+    formatTimestampForSql(intParam(u.searchParams, "endDate")),
   );
 
   return new Response(JSON.stringify({ events }), {

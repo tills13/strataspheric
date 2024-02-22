@@ -1,10 +1,6 @@
 import { vars } from "../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const marginBottomLarge = style({
-  marginBottom: vars.spacing.large,
-});
-
 export const centerContainer = style({
   maxWidth: 600,
   margin: "auto",

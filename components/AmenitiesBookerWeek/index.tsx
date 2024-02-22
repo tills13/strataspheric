@@ -50,7 +50,7 @@ export function AmenitiesBookerWeek({ amenity }: Props) {
         className={styles.weekPicker}
         startOfMonth={startOfMonth(date)}
         events={bookings}
-        weekIdx={weekIdx}
+        currentWeek={weekIdx}
       />
     </div>
   );

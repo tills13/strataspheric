@@ -5,8 +5,6 @@ import * as styles from "./style.css";
 
 import { calc } from "@vanilla-extract/css-utils";
 import differenceInDays from "date-fns/differenceInDays";
-import isAfter from "date-fns/isAfter";
-import isBefore from "date-fns/isBefore";
 import isSameDay from "date-fns/isSameDay";
 import { useState } from "react";
 
@@ -33,25 +31,16 @@ export function CalendarDayEvents({
 }: Props) {
   const [selectedEvent, setSelectedEvent] = useState<Event | undefined>();
 
-  const eventsOnDay = events
-    .filter(
-      (e) =>
-        isSameDay(date, parseTimestamp(e.startDate)) ||
-        (isAfter(date, parseTimestamp(e.startDate)) &&
-          (isBefore(date, parseTimestamp(e.endDate)) ||
-            isSameDay(date, parseTimestamp(e.endDate)))),
-    )
-    .sort((a, b) => (a.startDate > b.startDate ? 0 : 1));
-
   return (
     <>
       <div className={styles.calendarEventTrackDay}>
-        {eventsOnDay.map((event, idx) => {
+        {events.map((event, idx) => {
           const startDate = parseTimestamp(event.startDate);
           const endDate = parseTimestamp(event.endDate);
 
-          const diffFromStartDate = differenceInDays(date, startDate) + 1;
+          const diffFromStartDate = differenceInDays(date, startDate);
           const totalRemainder = differenceInDays(endDate, date) + 1;
+          const totalLength = differenceInDays(endDate, startDate);
 
           const eventWrapsToFollowingWeek = date.getDay() + totalRemainder > 7;
           const eventWrapsFromPrevWeek = date.getDay() - diffFromStartDate < 0;
@@ -80,11 +69,14 @@ export function CalendarDayEvents({
             >
               <div
                 className={classnames(styles.calendarEvent, {
-                  [styles.withLeftMarginAndBorderRadius]:
-                    !eventWrapsFromPrevWeek,
-                  [styles.withRightMarginAndBorderRadius]:
-                    !eventWrapsToFollowingWeek,
+                  [styles.withLeftBorderRadius]: !eventWrapsFromPrevWeek,
+                  [styles.withRightBorderRadius]: !eventWrapsToFollowingWeek,
                 })}
+                draggable="true"
+                onDragStart={(e) => {
+                  e.dataTransfer.dropEffect = "move";
+                  e.dataTransfer.setData("text/plain", event.id);
+                }}
                 style={{
                   top: calc(vars.sizes.xs)
                     .add(vars.spacing.xxs)
@@ -95,6 +87,7 @@ export function CalendarDayEvents({
                       eventWrapsToFollowingWeek ? "0px" : vars.spacing.small,
                     )
                     .toString(),
+                  minWidth: calc("100vw").divide(7).toString(),
                   maxWidth: ((7 - date.getDay()) / 7) * 100 + "vw",
                 }}
                 onClick={
@@ -122,6 +115,7 @@ export function CalendarDayEvents({
           <CreateOrUpdateEventForm
             upsertEvent={upsertEvent.bind(undefined, selectedEvent.id)}
             deleteEvent={deleteEvent.bind(undefined, selectedEvent.id)}
+            onDeleteEvent={() => setSelectedEvent(undefined)}
             event={selectedEvent}
           />
         </Modal>

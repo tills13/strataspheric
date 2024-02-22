@@ -1,7 +1,7 @@
 import { breakpoints, vars } from "../../../../theme.css";
 import { globalStyle, style } from "@vanilla-extract/css";
 
-import { padding } from "../../../../../theme";
+import { border, padding } from "../../../../../theme";
 
 export const pageContainer = style({
   display: "flex",
@@ -38,67 +38,55 @@ export const membershipTableContainer = style({
   },
 });
 
-export const membershipTable = style({
-  minWidth: "100%",
-  // border: `2px solid ${vars.colors.borderDefault}`,
-  borderRadius: vars.borderRadius,
-  gap: 0,
-  borderSpacing: 0,
+export const membershipGrid = style({
+  display: "grid",
+  gridTemplateColumns: "repeat(1, 1fr)",
+  gap: vars.spacing.normal,
+  padding: vars.spacing.normal,
+
   "@media": {
     [breakpoints.tablet]: {
-      width: "100%",
+      gridTemplateColumns: "repeat(3, 1fr)",
     },
-  },
-});
-
-globalStyle(`${membershipTable} th, ${membershipTable} td`, {
-  padding: `${vars.spacing.small} ${vars.spacing.normal}`,
-  whiteSpace: "nowrap",
-});
-
-globalStyle(`${membershipTable} th`, { textAlign: "left" });
-
-export const membershipTableSection = style({
-  selectors: {
-    [`${membershipTable} &:not(:last-child)`]: {
-      marginBottom: vars.spacing.large,
-    },
-  },
-});
-
-export const membershipTableSectionHeaderRow = style({
-  backgroundColor: vars.colors.primary,
-  color: vars.colors.white,
-});
-
-export const membershipTableActionColumnCell = style({
-  textAlign: "right",
-});
-
-export const actionsContainer = style({
-  display: "flex",
-  gap: vars.spacing.small,
-  justifyContent: "flex-end",
-});
-
-export const seatCountContainer = style({
-  textAlign: "center",
-  fontSize: vars.fontSizes.xxl,
-  fontWeight: 400,
-  "@media": {
     [breakpoints.desktop]: {
-      textAlign: "left",
+      gridTemplateColumns: "repeat(4, 1fr)",
     },
   },
 });
-export const seatCountEmphasis = style({ fontWeight: 700 });
 
-export const addMemberForm = style({
-  padding: padding("0px", vars.spacing.normal),
-  "@media": {
-    [breakpoints.tablet]: {
-      padding: 0,
-      width: "400px",
-    },
-  },
+export const membershipTile = style({
+  padding: vars.spacing.normal,
+  border: border("2px", "solid", vars.colors.borderDefault),
+  borderRadius: vars.borderRadius,
+});
+
+export const membershipTileHeader = style({
+  display: "flex",
+  justifyContent: "space-between",
+  marginBottom: vars.spacing.normal,
+  gap: vars.spacing.normal,
+});
+
+export const membershipTileActions = style({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-end",
+  alignItems: "flex-start",
+  gap: vars.spacing.small,
+  flex: 1,
+});
+
+export const membershipTileDetails = style({
+  display: "grid",
+  gridTemplateColumns: "min-content auto",
+});
+
+export const membershipTileDt = style({
+  gridColumn: 1,
+  fontWeight: vars.fontWeights.xbold,
+});
+export const membershipTileDd = style({
+  gridColumn: 2,
+  textAlign: "right",
+  color: vars.fontColors.secondary,
 });

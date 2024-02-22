@@ -6,7 +6,6 @@ import { classnames } from "../../utils/classnames";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   placeholderEnabled?: boolean;
-  compact?: boolean;
 }
 
 export function Select({
@@ -18,12 +17,17 @@ export function Select({
 }: PropsWithChildren<Props>) {
   return (
     <select
-      className={classnames(styles.baseSelect, className)}
+      className={classnames(styles.select, className)}
       placeholder={placeholder}
+      defaultValue=""
       {...delegateProps}
     >
       {placeholder && (
-        <option value="" disabled={!placeholderEnabled}>
+        <option
+          className={styles.selectPlaceholder}
+          value=""
+          disabled={!placeholderEnabled}
+        >
           {placeholder}
         </option>
       )}

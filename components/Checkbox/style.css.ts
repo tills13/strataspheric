@@ -1,7 +1,7 @@
 import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const base = style({
+export const checkbox = style({
   display: "inline-block",
   position: "relative",
 

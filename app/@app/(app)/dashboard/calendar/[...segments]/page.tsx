@@ -1,24 +1,21 @@
 import * as styles from "./style.css";
 
-import endOfMonth from "date-fns/endOfMonth";
 import format from "date-fns/format";
 import { notFound } from "next/navigation";
 
-import { Button } from "../../../../../../../components/Button";
-import { Calendar } from "../../../../../../../components/Calendar";
-import { DashboardHeader } from "../../../../../../../components/DashboardHeader";
-import { Header } from "../../../../../../../components/Header";
-import { LeftIcon } from "../../../../../../../components/Icon/LeftIcon";
-import { RightIcon } from "../../../../../../../components/Icon/RightIcon";
-import { InternalLink } from "../../../../../../../components/Link/InternalLink";
-import { db } from "../../../../../../../data";
-import { getStrataEventsForRange } from "../../../../../../../data/events/getEventsForRange";
-import { getCurrentStrata } from "../../../../../../../data/stratas/getStrataByDomain";
+import { Button } from "../../../../../../components/Button";
+import { DashboardHeader } from "../../../../../../components/DashboardHeader";
+import { Header } from "../../../../../../components/Header";
+import { LeftIcon } from "../../../../../../components/Icon/LeftIcon";
+import { RightIcon } from "../../../../../../components/Icon/RightIcon";
+import { InternalLink } from "../../../../../../components/Link/InternalLink";
+import { getCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";
+import { StrataCalendar } from "./StrataCalendar";
 import { deleteEventAction, upsertEventAction } from "./actions";
 
 export const runtime = "edge";
 
-export default async function Page({ searchParams, params }) {
+export default async function Page({ params }) {
   const strata = await getCurrentStrata();
 
   if (!strata) {
@@ -43,21 +40,8 @@ export default async function Page({ searchParams, params }) {
     notFound();
   }
 
-  const startDate = new Date(Date.UTC(year, month - 1, 1));
-  const startDateWithOffset = new Date(
-    startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000,
-  );
-  const endDate = endOfMonth(startDateWithOffset);
-
-  const startDateTimestamp = Math.round(startDate.getTime() / 1000);
-  const endDateTimestamp = Math.round(endDate.getTime() / 1000);
-
-  const events = await getStrataEventsForRange(
-    strata.id,
-    startDateTimestamp,
-    endDateTimestamp,
-  );
-  const monthName = format(startDateWithOffset, "LLLL");
+  // 15 -- middle of the month so timezones never drag it to a different month
+  const monthName = format(new Date(Date.UTC(year, month - 1, 15)), "LLLL");
 
   const nextLink =
     "/dashboard/calendar/" +
@@ -86,11 +70,11 @@ export default async function Page({ searchParams, params }) {
             </InternalLink>
           </div>
         </div>
-        <Calendar
-          upsertEvent={upsertEventAction}
-          events={events}
-          deleteEvent={deleteEventAction}
+        <StrataCalendar
+          deleteEventAction={deleteEventAction}
           month={month}
+          strata={strata}
+          upsertEventAction={upsertEventAction}
           year={year}
         />
       </div>

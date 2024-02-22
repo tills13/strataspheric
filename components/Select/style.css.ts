@@ -1,7 +1,7 @@
 import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const baseSelect = style({
+export const select = style({
   padding: `${vars.spacing.small} ${vars.spacing.large} ${vars.spacing.small} ${vars.spacing.normal}`,
   color: vars.fontColors.primary,
   backgroundColor: vars.colors.white,
@@ -25,5 +25,12 @@ export const baseSelect = style({
       opacity: 0.7,
       cursor: "not-allowed",
     },
+    "&::placeholder": {
+      color: vars.fontColors.secondary,
+    },
   },
+});
+
+export const selectPlaceholder = style({
+  color: vars.fontColors.secondary,
 });

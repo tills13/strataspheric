@@ -1,7 +1,7 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { padding } from "../../theme";
+import { border, padding } from "../../theme";
 
 export const calendar = style({
   display: "grid",
@@ -46,6 +46,10 @@ export const calendarDay = style({
       backgroundColor: vars.colors.grey100,
     },
   },
+});
+
+export const isDropTarget = style({
+  backgroundColor: vars.colors.grey100,
 });
 
 export const today = style([calendarDay, {}]);
@@ -112,11 +116,11 @@ export const calendarEvent = style({
   },
 });
 
-export const withLeftMarginAndBorderRadius = style({
+export const withLeftBorderRadius = style({
   borderTopLeftRadius: vars.borderRadius,
   borderBottomLeftRadius: vars.borderRadius,
 });
-export const withRightMarginAndBorderRadius = style({
+export const withRightBorderRadius = style({
   borderTopRightRadius: vars.borderRadius,
   borderBottomRightRadius: vars.borderRadius,
 });

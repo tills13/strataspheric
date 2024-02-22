@@ -14,8 +14,8 @@ export function InputField({
   inputClassName,
   name,
   placeholder,
-  type,
   wrapperClassName,
+  ...inputProps
 }: Props) {
   return (
     <div className={classnames(styles.inputFieldWrapper, wrapperClassName)}>
@@ -24,7 +24,7 @@ export function InputField({
         name={name}
         id={propsId || name}
         placeholder=""
-        type={type}
+        {...inputProps}
       />
       {placeholder && (
         <label

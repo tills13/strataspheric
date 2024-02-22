@@ -57,9 +57,8 @@ export async function deleteStrataAction() {
   redirect(`${protocol}//${tld}`);
 }
 
-export async function updateStrataAction(fd: FormData) {
-  const id = getString(fd, "id");
-  const strataId = getString(fd, "strata_id");
+export async function updateStrataAction(strataId: string, fd: FormData) {
+  const strataPlanId = getString(fd, "strata_id");
   const streetAddress = getString(fd, "strata_address_street_address");
   const postalCode = getString(fd, "strata_address_postal_code");
   const provinceState = getString(fd, "strata_address_province_state");
@@ -67,13 +66,13 @@ export async function updateStrataAction(fd: FormData) {
   const strataName = getString(fd, "name");
   const isPublic = getBoolean(fd, "is_public");
 
-  if (id === "" || strataName === "") {
+  if (strataName === "") {
     throw new Error("invalid fields");
   }
 
-  await updateStrata(id, {
+  await updateStrata(strataId, {
     name: strataName,
-    strataId,
+    strataId: strataPlanId,
     streetAddress,
     postalCode,
     city,
