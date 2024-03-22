@@ -20,7 +20,7 @@ export const button = recipe({
     selectors: {
       "&:disabled": {
         cursor: "not-allowed",
-        opacity: 0.7,
+        opacity: 0.8,
       },
     },
   },
