@@ -6,12 +6,9 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "../../../../../components/Button";
 import { ElementGroup } from "../../../../../components/ElementGroup";
-import { Header } from "../../../../../components/Header";
 import { RemoveIcon } from "../../../../../components/Icon/RemoveIcon";
-import { Input } from "../../../../../components/Input";
 import { InputField } from "../../../../../components/InputField";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
-import { Select } from "../../../../../components/Select";
 import { SelectField } from "../../../../../components/SelectField";
 import * as formdata from "../../../../../utils/formdata";
 
@@ -24,56 +21,51 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
   const router = useRouter();
 
   return (
-    <div className={styles.fileSearchContainer}>
-      <Header className={styles.marginBottom.small} priority={3}>
-        Search
-      </Header>
-      <form
-        className={styles.filesSearchForm}
-        onSubmit={(e) => {
-          e.preventDefault();
+    <form
+      className={styles.filesSearchForm}
+      onSubmit={(e) => {
+        e.preventDefault();
 
-          const fd = new FormData(e.currentTarget);
-          const params = new URLSearchParams();
+        const fd = new FormData(e.currentTarget);
+        const params = new URLSearchParams();
 
-          if (formdata.getString(fd, "search")) {
-            params.set("search", formdata.getString(fd, "search"));
-          }
+        if (formdata.getString(fd, "search")) {
+          params.set("search", formdata.getString(fd, "search"));
+        }
 
-          if (formdata.getString(fd, "visibility")) {
-            params.set("visibility", formdata.getString(fd, "visibility"));
-          }
+        if (formdata.getString(fd, "visibility")) {
+          params.set("visibility", formdata.getString(fd, "visibility"));
+        }
 
-          console.log("here", params.toString());
+        console.log("here", params.toString());
 
-          const query = params.toString();
+        const query = params.toString();
 
-          router.push("/dashboard/files" + (query ? "?" + query : ""));
-        }}
-      >
-        <InputField
-          wrapperClassName={styles.filesSearchInput}
-          name="search"
-          placeholder="Name or Description"
-          defaultValue={searchTerm}
-          required={false}
-        />
-        <SelectField name="visibility" placeholder="Visibility">
-          <option value="private">Private</option>
-          <option value="public">Public</option>
-        </SelectField>
-        <ElementGroup gap="small">
-          <Button type="submit" defaultValue={visibility} fullWidth>
-            Search
-          </Button>
-          <InternalLink
-            className={styles.filesSearchClear}
-            href="/dashboard/files"
-          >
-            <Button color="error" icon={<RemoveIcon />} style="secondary" />
-          </InternalLink>
-        </ElementGroup>
-      </form>
-    </div>
+        router.push("/dashboard/files" + (query ? "?" + query : ""));
+      }}
+    >
+      <InputField
+        wrapperClassName={styles.filesSearchInput}
+        name="search"
+        placeholder="Name or Description"
+        defaultValue={searchTerm}
+        required={false}
+      />
+      <SelectField name="visibility" placeholder="Visibility">
+        <option value="private">Private</option>
+        <option value="public">Public</option>
+      </SelectField>
+      <ElementGroup gap="small">
+        <Button type="submit" defaultValue={visibility} fullWidth>
+          Search
+        </Button>
+        <InternalLink
+          className={styles.filesSearchClear}
+          href="/dashboard/files"
+        >
+          <Button color="error" icon={<RemoveIcon />} style="secondary" />
+        </InternalLink>
+      </ElementGroup>
+    </form>
   );
 }

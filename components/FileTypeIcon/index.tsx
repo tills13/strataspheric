@@ -14,7 +14,9 @@ export function FileTypeIcon({ className, defaultIcon, filePath }: Props) {
   const extension = extname(filePath);
 
   switch (extension) {
-    case "word":
+    case "txt":
+    case "docx":
+    case "csv":
     case "pdf": {
       return <TextDocumentIcon className={className} />;
     }

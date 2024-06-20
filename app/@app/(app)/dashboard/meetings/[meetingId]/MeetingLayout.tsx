@@ -34,7 +34,7 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           s({ padding: "normal" }),
         )}
       >
-        <div className={classnames(styles.header)}>
+        <div className={classnames(styles.header, s({ mb: "normal" }))}>
           <EditMeetingButton
             className={styles.editMeetingButton}
             meeting={meeting}

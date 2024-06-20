@@ -10,7 +10,7 @@ import { classnames } from "../../utils/classnames";
 import { Checkbox } from "../Checkbox";
 import { Header } from "../Header";
 import { UploadIcon } from "../Icon/UploadIcon";
-import { Input } from "../Input";
+import { InputField } from "../InputField";
 import { StatusButton } from "../StatusButton";
 
 interface Props {
@@ -33,23 +33,23 @@ export function CreateOrUpdateFileForm({
         onCreateOrUpdateFile?.(file);
       }}
     >
-      <Input
-        className={s({ w: "full", mb: "small" })}
+      <InputField
+        className={s({ mb: "normal" })}
         name="file"
         type="file"
         onChange={(e) => {
           nameRef.current.value = e.target.files?.[0].name || "";
         }}
       />
-      <Input
-        className={s({ w: "full", mb: "small" })}
+      <InputField
+        className={s({ mb: "normal" })}
         name="name"
         placeholder="Name"
         ref={nameRef}
         defaultValue={file?.name}
       />
-      <Input
-        className={s({ w: "full", mb: "small" })}
+      <InputField
+        className={s({ mb: "normal" })}
         name="description"
         placeholder="Description"
         defaultValue={file?.description}

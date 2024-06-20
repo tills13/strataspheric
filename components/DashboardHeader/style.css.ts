@@ -1,9 +1,11 @@
 import { breakpoints, vars } from "../../app/theme.css";
-import { style } from "@vanilla-extract/css";
+import { createVar, style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
 import { important } from "../../theme";
+
+export const numHeaderItemsVar = createVar();
 
 export const subheader = style({
   display: "flex",
@@ -35,9 +37,9 @@ export const linksRail = style({
 export const linksRailOpen = style([
   linksRail,
   {
-    height: calc(vars.spacing.small)
-      .multiply(2)
-      .add(calc(8).multiply(vars.sizes.small))
+    height: calc(numHeaderItemsVar)
+      .multiply(vars.sizes.small)
+      .add(calc(numHeaderItemsVar).subtract(1).multiply(vars.spacing.small))
       .toString(),
   },
 ]);

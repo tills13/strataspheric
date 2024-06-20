@@ -17,13 +17,13 @@ export const submitButton = style({
 });
 
 export const strataSearchPageContainer = style({
+  display: "grid",
+  gap: vars.spacing.large,
   margin: "auto",
 
   "@media": {
     [breakpoints.tablet]: {
-      display: "grid",
       gridTemplateColumns: "45% auto",
-      gap: vars.spacing.large,
     },
   },
 });

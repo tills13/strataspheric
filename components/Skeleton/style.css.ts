@@ -1,8 +1,6 @@
 import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { border } from "../../theme";
-
 export const widgetSkeleton = style({});
 
 export const tableSkeleton = style({
@@ -22,6 +20,14 @@ export const skeletonBone = style({
     },
   },
 });
+
+export const inlineSkeletonBone = style([
+  skeletonBone,
+  {
+    display: "inline-block",
+    verticalAlign: "baseline",
+  },
+]);
 
 export const skeletonHeader = style({
   marginBottom: vars.spacing.normal,

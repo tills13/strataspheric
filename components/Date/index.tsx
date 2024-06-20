@@ -2,6 +2,7 @@
 
 import * as styles from "./style.css";
 
+import { classnames } from "../../utils/classnames";
 import { parseTimestamp } from "../../utils/datetime";
 import { ClientOnly } from "../ClientOnly";
 import { Bone } from "../Skeleton/Bone";
@@ -25,10 +26,10 @@ interface Props {
 export function Date({ className, output, timestamp }: Props) {
   return (
     <time
-      className={className}
+      className={classnames(styles.date, className)}
       dateTime={parseTimestamp(timestamp).toISOString()}
     >
-      <ClientOnly fallback={() => <Bone className={styles.dateBone} />}>
+      <ClientOnly fallback={() => <Bone className={styles.dateBone} inline />}>
         {() => formatDate(parseTimestamp(timestamp), output)}
       </ClientOnly>
     </time>

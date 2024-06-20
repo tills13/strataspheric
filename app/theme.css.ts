@@ -80,7 +80,8 @@ export const vars = createGlobalTheme(":root", {
     orange700: "#EC961E",
     orange900: "#E68600",
 
-    grey100: "#f2f3f3",
+    grey50: "#F8F8F8",
+    grey100: "#F2F3F3",
     grey200: "#D6D7D8",
     grey300: "#BABCBC",
     grey400: "#9EA0A1",

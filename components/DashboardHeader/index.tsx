@@ -2,12 +2,12 @@
 
 import * as styles from "./style.css";
 
+import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 import { can } from "../../data/users/permissions";
-import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
 import { DownIcon } from "../Icon/DownIcon";
@@ -39,6 +39,9 @@ export function DashboardHeader({ actions }: Props) {
   return (
     <div className={styles.subheader}>
       <div
+        style={assignInlineVars({
+          [styles.numHeaderItemsVar]: links.length.toString(),
+        })}
         className={mobileMenuExpanded ? styles.linksRailOpen : styles.linksRail}
       >
         {links.map(([href, label, permissions = []]) => {

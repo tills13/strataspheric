@@ -8,7 +8,10 @@ import { padding } from "../../theme";
 
 export const inputFieldWrapper = style([
   inputStyles.input,
-  { position: "relative" },
+  {
+    position: "relative",
+    display: "flex",
+  },
 ]);
 
 export const inputFieldInput = style({
@@ -19,6 +22,24 @@ export const inputFieldInput = style({
   top: 0,
   width: "100%",
   transition: "top 0.1s ease",
+  // color: vars.fontColors.secondary,
+
+  selectors: {
+    "&[type=file]": {
+      cursor: "pointer",
+    },
+    "&[type=file]::file-selector-button": {
+      display: "none",
+    },
+    "&::placeholder": {
+      color: vars.fontColors.secondary,
+    },
+  },
+});
+
+export const inputFieldFileIcon = style({
+  height: vars.sizes.xs,
+  marginRight: vars.spacing.small,
 });
 
 export const inputFieldPlaceholder = style({

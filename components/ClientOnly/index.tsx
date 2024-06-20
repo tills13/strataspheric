@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 interface Props {
   children: () => React.ReactNode;
@@ -10,7 +10,7 @@ interface Props {
 export function ClientOnly({ children, fallback }: Props) {
   const [hydrated, setHydrated] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setHydrated(true);
   }, []);
 

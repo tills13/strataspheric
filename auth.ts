@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthConfig, User } from "next-auth";
+import NextAuth, { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 import { findStrataMemberships } from "./data/strataMemberships/findStrataMemberships";
@@ -58,6 +58,7 @@ export const authOptions: NextAuthConfig = {
       },
       authorize(credentials) {
         if (
+          !credentials ||
           typeof credentials.email !== "string" ||
           typeof credentials.password !== "string"
         ) {

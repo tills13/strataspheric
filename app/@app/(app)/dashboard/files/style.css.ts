@@ -3,43 +3,51 @@ import { style, styleVariants } from "@vanilla-extract/css";
 
 import { padding } from "../../../../../theme";
 
-export const marginBottom = styleVariants({
-  small: {
-    marginBottom: vars.spacing.small,
-  },
-  normal: {
-    marginBottom: vars.spacing.normal,
-  },
-});
+export const filesPageContainer = style({
+  display: "grid",
+  gap: vars.spacing.normal,
+  gridTemplateRows: "min-content auto",
 
-export const filesTableContainer = style({
-  width: "100vw",
-  overflow: "auto",
-  marginBottom: vars.spacing.large,
   "@media": {
     [breakpoints.tablet]: {
-      width: "100%",
+      gridTemplateColumns: "auto 450px",
     },
   },
 });
 
-export const filesTable = style({
+export const filesList = style({
   minWidth: "100%",
   borderSpacing: 0,
 });
 
-export const filesTableRow = style({
+export const filesListFile = style({
+  position: "relative",
+  backgroundColor: vars.colors.grey50,
+  borderRadius: vars.borderRadius,
+
   selectors: {
-    "&:hover": {
-      backgroundColor: vars.colors.grey100,
+    "&:not(:last-child)": {
+      marginBottom: vars.spacing.normal,
     },
   },
 });
 
-export const filesTableCell = style({
-  padding: padding(vars.spacing.small, vars.spacing.normal),
-  textAlign: "left",
-  whiteSpace: "nowrap",
+export const fileListFileIcon = style({
+  height: vars.sizes.xs,
+  marginRight: vars.spacing.small,
+  verticalAlign: "middle",
+});
+
+export const filesListFileFooter = style({
+  textAlign: "end",
+});
+
+export const filesListFileUploadDate = style({
+  position: "absolute",
+  bottom: vars.spacing.normal,
+  right: vars.spacing.normal,
+  color: vars.fontColors.secondary,
+  fontSize: vars.fontSizes.small,
 });
 
 export const fileActionsContainer = style({
@@ -48,35 +56,10 @@ export const fileActionsContainer = style({
   alignItems: "center",
 });
 
-export const descriptionCell = style([
-  filesTableCell,
-  {
-    width: "100%",
-  },
-]);
-
-export const fileSearchContainer = style({
-  width: "100%",
-  padding: vars.spacing.normal,
-  margin: "auto",
-  "@media": {
-    [breakpoints.tablet]: {
-      width: 700,
-    },
-  },
-});
-
 export const filesSearchForm = style({
   display: "flex",
   flexDirection: "column",
-  gap: vars.spacing.small,
-
-  "@media": {
-    [breakpoints.tablet]: {
-      justifyContent: "flex-start",
-      flexDirection: "row",
-    },
-  },
+  gap: vars.spacing.normal,
 });
 
 export const filesSearchInput = style({
