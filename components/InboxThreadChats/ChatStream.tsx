@@ -33,7 +33,7 @@ export function ChatStream({ chats, subject }: Props) {
       </InfoPanel>
 
       {chats.length === 0 && (
-        <p>
+        <p className={styles.chatStreamNoChats}>
           No chats, yet. Start a conversation about this thread using the form
           below.
         </p>

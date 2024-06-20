@@ -1,3 +1,4 @@
+import { s } from "../../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { sql } from "kysely";
@@ -7,6 +8,7 @@ import { MeetingTimelineIcon } from "../../../../../../components/MeetingTimelin
 import { MeetingTimelineItem } from "../../../../../../components/MeetingTimelineItem";
 import { Timeline } from "../../../../../../components/Timeline";
 import { db } from "../../../../../../data";
+import { classnames } from "../../../../../../utils/classnames";
 import { addItemToAgendaAction } from "./actions";
 
 export type AgendaTimelineEntry = {
@@ -192,7 +194,10 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
 
   return (
     <>
-      <Header className={styles.header} priority={2}>
+      <Header
+        className={classnames(styles.header, s({ mb: "normal" }))}
+        priority={2}
+      >
         Timeline
       </Header>
       <Timeline

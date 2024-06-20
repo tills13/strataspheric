@@ -8,7 +8,7 @@ export const header = style({
 });
 
 export const blurb = style({
-  marginBottom: vars.spacing.large,
+  color: vars.fontColors.secondary,
 });
 
 export const input = style({

@@ -4,6 +4,7 @@ import { auth } from "../../../auth";
 import { GetStartedForm } from "../../../components/GetStarted/Form";
 import { PricingPlanSelector } from "../../../components/PricingPlanSelector";
 import { plans } from "../../../data/strataPlans/constants";
+import { StaticPageContainer } from "../StaticPageContainer";
 import { submitGetStarted } from "./actions";
 
 export const runtime = "edge";
@@ -24,17 +25,19 @@ export default async function Page({
   }
 
   return (
-    <div>
-      <PricingPlanSelector
-        className={styles.pricingPlanSelector}
-        selectedPlan={plan}
-      />
-      <GetStartedForm
-        className={styles.getStartedForm}
-        session={session}
-        selectedPlan={plan}
-        submitGetStarted={submitGetStarted}
-      />
-    </div>
+    <StaticPageContainer>
+      <div className={styles.layoutContainer}>
+        <PricingPlanSelector
+          className={styles.pricingPlanSelector}
+          selectedPlan={plan}
+        />
+        <GetStartedForm
+          className={styles.getStartedForm}
+          session={session}
+          selectedPlan={plan}
+          submitGetStarted={submitGetStarted}
+        />
+      </div>
+    </StaticPageContainer>
   );
 }

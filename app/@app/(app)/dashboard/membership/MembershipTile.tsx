@@ -12,6 +12,8 @@ import { RemoveIcon } from "../../../../../components/Icon/RemoveIcon";
 import { Modal } from "../../../../../components/Modal";
 import { StatusButton } from "../../../../../components/StatusButton";
 import { StrataMembership, User } from "../../../../../data";
+import { can, p } from "../../../../../data/users/permissions";
+import { useCan } from "../../../../../hooks/useCan";
 import { classnames } from "../../../../../utils/classnames";
 
 interface Props {
@@ -28,6 +30,7 @@ export function MembershipTile({
   upsertMember,
 }: Props) {
   const [showEditModal, setShowEditModal] = useState(false);
+  const can = useCan();
 
   return (
     <>
@@ -39,19 +42,24 @@ export function MembershipTile({
           </div>
 
           <div className={styles.membershipTileActions}>
-            <Button
-              icon={<EditIcon />}
-              onClick={() => setShowEditModal(true)}
-              size="small"
-              style="tertiary"
-            />
-            <StatusButton
-              action={deleteMember.bind(undefined, membership.userId)}
-              icon={<RemoveIcon />}
-              style="tertiary"
-              color="error"
-              size="small"
-            />
+            {can(p("stratas", "memberships", "edit")) && (
+              <Button
+                icon={<EditIcon />}
+                onClick={() => setShowEditModal(true)}
+                size="small"
+                style="tertiary"
+              />
+            )}
+            {can(p("stratas", "memberships", "delete")) &&
+              membership.role !== "administrator" && (
+                <StatusButton
+                  action={deleteMember.bind(undefined, membership.userId)}
+                  icon={<RemoveIcon />}
+                  style="tertiary"
+                  color="error"
+                  size="small"
+                />
+              )}
           </div>
         </div>
 

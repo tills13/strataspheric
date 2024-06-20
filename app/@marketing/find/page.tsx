@@ -5,6 +5,7 @@ import { Header } from "../../../components/Header";
 import { RightIcon } from "../../../components/Icon/RightIcon";
 import { InfoPanel } from "../../../components/InfoPanel";
 import { ExternalLink } from "../../../components/Link/ExternalLink";
+import { Panel } from "../../../components/Panel";
 import { protocol } from "../../../constants";
 import { Strata } from "../../../data";
 import { findStratas } from "../../../data/stratas/findStratas";
@@ -15,7 +16,7 @@ import { StrataSearchForm } from "./StrataSearchForm";
 export const runtime = "edge";
 
 export default async function Page({ searchParams }) {
-  let stratas: Strata[] | undefined = undefined;
+  let stratas: Awaited<ReturnType<typeof findStratas>> = [];
 
   if (
     searchParams["name"] ||
@@ -31,22 +32,24 @@ export default async function Page({ searchParams }) {
 
   return (
     <StaticPageContainer>
-      <Header
-        className={classnames(styles.header, s({ mb: "large" }))}
-        priority={2}
-      >
-        Find a Strata
-      </Header>
-
-      <StrataSearchForm
-        className={s({ mb: "large" })}
-        name={searchParams["name"]}
-        strataPlan={searchParams["strataPlan"]}
-        address={searchParams["address"]}
-      />
-
-      {stratas && (
-        <>
+      <div className={styles.strataSearchPageContainer}>
+        <div className={styles.strataSearchContainer}>
+          <Header
+            className={classnames(styles.header, s({ mb: "large" }))}
+            priority={2}
+          >
+            Find a Strata
+          </Header>
+          <Panel>
+            <StrataSearchForm
+              className={classnames(styles.strataSearchForm)}
+              name={searchParams["name"]}
+              strataPlan={searchParams["strataPlan"]}
+              address={searchParams["address"]}
+            />
+          </Panel>
+        </div>
+        <div className={styles.stratasListContainer}>
           <Header
             className={classnames(styles.header, s({ mb: "large" }))}
             priority={2}
@@ -82,8 +85,8 @@ export default async function Page({ searchParams }) {
               </li>
             ))}
           </ul>
-        </>
-      )}
+        </div>
+      </div>
     </StaticPageContainer>
   );
 }

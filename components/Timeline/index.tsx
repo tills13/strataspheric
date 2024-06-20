@@ -15,6 +15,11 @@ interface Props {
 export function Timeline({ className, items }: Props) {
   return (
     <div className={classnames(styles.timeline, className)}>
+      {items.length === 0 && (
+        <span className={styles.timelineEmptyMessage}>
+          There&apos;s nothing here...
+        </span>
+      )}
       {items.map(({ contents, icon }, idx) => (
         <div key={idx} className={styles.timelineItem}>
           <span className={styles.timelineIconContainer}>{icon}</span>

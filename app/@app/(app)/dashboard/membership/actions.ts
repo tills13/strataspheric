@@ -64,6 +64,7 @@ export async function upsertStrataMembershipAction(
     const membershipUpdate = {
       unit,
       role: role as Role,
+      phoneNumber,
     };
 
     if (

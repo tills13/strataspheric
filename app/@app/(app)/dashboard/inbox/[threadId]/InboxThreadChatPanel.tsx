@@ -1,3 +1,4 @@
+import { s } from "../../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { auth } from "../../../../../../auth";
@@ -21,7 +22,12 @@ export default async function InboxThreadChatPanel({ threadId }) {
     );
   } else if (!can(session.user, p("stratas", "inbox_thread_chats", "view"))) {
     return (
-      <div className={styles.chatPanelWrapper}>
+      <div
+        className={classnames(
+          styles.chatPanelWrapper,
+          s({ padding: "normal" }),
+        )}
+      >
         You don&apos;t have permission to see chats
       </div>
     );

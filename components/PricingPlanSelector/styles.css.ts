@@ -6,15 +6,6 @@ export const pricingPlanSelectorContainer = style({
   gridTemplateColumns: "repeat(1, 1fr)",
   gridAutoRows: 150,
   gap: vars.spacing.large,
-
-  "@media": {
-    [breakpoints.tablet]: {
-      gridTemplateColumns: "repeat(2, 1fr)",
-    },
-    [breakpoints.desktop]: {
-      gridTemplateColumns: "repeat(3, 1fr)",
-    },
-  },
 });
 
 export const pricingPlanSelectorLink = style({

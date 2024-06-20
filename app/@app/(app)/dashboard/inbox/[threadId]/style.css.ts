@@ -64,7 +64,6 @@ export const outsideMessageWarning = style({
 });
 
 export const chatPanelWrapper = style({
-  // padding: vars.spacing.normal,
   borderLeft: "1px solid " + vars.colors.borderDefault,
   minHeight: "100%",
   overflow: "hidden",

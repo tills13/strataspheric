@@ -1,5 +1,6 @@
 "use client";
 
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Session } from "next-auth";
@@ -75,7 +76,11 @@ export function GetStartedForm({
       action={action}
       className={classnames(styles.getStartedForm, className)}
     >
-      {!session && <JoinFormFields />}
+      {!session && (
+        <div className={s({ mb: "xl" })}>
+          <JoinFormFields />
+        </div>
+      )}
 
       <Header className={styles.header2} priority={2}>
         Let&apos;s get to know your strata...

@@ -209,14 +209,14 @@ export const plansContainer = style({
 });
 
 export const staticPageContainer = style({
-  marginBottom: 100,
   textAlign: "justify",
   padding: vars.spacing.normal,
+  marginBottom: 100,
 
   "@media": {
     [breakpoints.tablet]: {
-      width: 600,
-      margin: "100px auto",
+      marginLeft: calc("250px").add(vars.spacing.xs).toString(),
+      marginRight: calc("250px").add(vars.spacing.xs).toString(),
     },
   },
 });

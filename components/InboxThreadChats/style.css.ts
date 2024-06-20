@@ -34,6 +34,9 @@ export const chatStream = style({
   gap: vars.spacing.normal,
   overflow: "auto",
 });
+export const chatStreamNoChats = style({
+  color: vars.fontColors.secondary,
+});
 
 export const chatBubble = style({
   display: "flex",

@@ -7,6 +7,10 @@ export const timeline = style({
   paddingBottom: vars.spacing.small,
 });
 
+export const timelineEmptyMessage = style({
+  color: vars.fontColors.secondary,
+});
+
 export const timelineItem = style({
   position: "relative",
   padding: vars.spacing.normal,

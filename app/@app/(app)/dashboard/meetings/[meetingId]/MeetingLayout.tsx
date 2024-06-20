@@ -1,4 +1,5 @@
 import { s } from "../../../../../../sprinkles.css";
+import { vars } from "../../../../../theme.css";
 import * as styles from "./style.css";
 
 import { ConfirmButton } from "../../../../../../components/ConfirmButton";
@@ -7,6 +8,7 @@ import { EditMeetingButton } from "../../../../../../components/EditMeetingButto
 import { Header } from "../../../../../../components/Header";
 import { DeleteIcon } from "../../../../../../components/Icon/DeleteIcon";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
+import { Panel } from "../../../../../../components/Panel";
 import { getMeeting } from "../../../../../../data/meetings/getMeeting";
 import { classnames } from "../../../../../../utils/classnames";
 import { deleteMeetingAction } from "../actions";
@@ -26,14 +28,19 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
 
   return (
     <div className={styles.meetingLayoutContainer}>
-      <div className={styles.meetingAgendaContainer}>
-        <div className={classnames(styles.header, s({ mb: "large" }))}>
+      <div
+        className={classnames(
+          styles.meetingInfoSidebar,
+          s({ padding: "normal" }),
+        )}
+      >
+        <div className={classnames(styles.header)}>
           <EditMeetingButton
             className={styles.editMeetingButton}
             meeting={meeting}
             updateMeeting={updateMeetingAction.bind(undefined, meetingId)}
           />
-          <Header className={styles.headerHeader} priority={2}>
+          <Header className={s({ mb: "normal" })} priority={2}>
             {meeting.purpose}
           </Header>
           <p>
@@ -41,19 +48,6 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
             <br /> <Date timestamp={meeting.startDate} />
           </p>
         </div>
-
-        {meeting.notes && <p className={s({ mb: "large" })}>{meeting.notes}</p>}
-
-        <MeetingAgenda className={s({ mb: "large" })} meetingId={meetingId} />
-
-        <MeetingFiles className={s({ mb: "large" })} meetingId={meetingId} />
-        <MeetingMinutes
-          className={s({ mb: "large" })}
-          meetingId={meetingId}
-          minutesUrl={meeting.minutesUrl}
-          minutesUrlApprovedByName={meeting.minutesUrlApproverName}
-        />
-
         <InfoPanel level="error">
           <Header className={s({ mb: "small" })} priority={3}>
             Delete Meeting
@@ -74,8 +68,25 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           </ConfirmButton>
         </InfoPanel>
       </div>
+
+      <div className={styles.meetingAgendaContainer}>
+        {meeting.notes && <p className={s({ mb: "large" })}>{meeting.notes}</p>}
+
+        <MeetingAgenda className={s({ mb: "large" })} meetingId={meetingId} />
+
+        <MeetingFiles className={s({ mb: "large" })} meetingId={meetingId} />
+
+        <MeetingMinutes
+          className={s({ mb: "large" })}
+          meetingId={meetingId}
+          minutesUrl={meeting.minutesUrl}
+          minutesUrlApprovedByName={meeting.minutesUrlApproverName}
+        />
+      </div>
       <div className={styles.meetingTimelineSearchContainer}>
-        <MeetingTimelineSearch meetingId={meetingId} strataId={strataId} />
+        <Panel>
+          <MeetingTimelineSearch meetingId={meetingId} strataId={strataId} />
+        </Panel>
       </div>
     </div>
   );

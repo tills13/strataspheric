@@ -11,7 +11,7 @@ export const globalHeader = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      marginBottom: 180,
+      // marginBottom: 180,
     },
   },
 });

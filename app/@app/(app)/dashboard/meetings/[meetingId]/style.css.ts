@@ -1,19 +1,19 @@
 import { breakpoints, vars } from "../../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { border } from "../../../../../../theme";
+
 export const meetingLayoutContainer = style({
   "@media": {
     [breakpoints.tablet]: {
       display: "grid",
-      gridTemplateColumns: "auto 400px",
+      gridTemplateColumns: "480px auto 400px",
       overflow: "hidden",
     },
   },
 });
 
 export const meetingAgendaContainer = style({
-  // position: "sticky",
-  // top: 0,
   padding: vars.spacing.normal,
 });
 
@@ -23,12 +23,15 @@ export const meetingTimelineSearchContainer = style({
   // height: `calc(100vh - 81px - 49px)`,
 });
 
-export const header = style({
-  position: "relative",
+export const meetingInfoSidebar = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  borderRight: `1px solid ${vars.colors.borderDefault}`,
 });
 
-export const headerHeader = style({
-  marginBottom: vars.spacing.small,
+export const header = style({
+  position: "relative",
 });
 
 export const editMeetingButton = style({

@@ -66,7 +66,7 @@ export function StrataSearchForm({
       />
 
       <Input
-        className={classnames(styles.input, s({ mb: "small" }))}
+        className={classnames(styles.input, s({ mb: "normal" }))}
         placeholder="Address"
         name="address"
         defaultValue={address}

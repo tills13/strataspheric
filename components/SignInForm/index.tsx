@@ -25,19 +25,23 @@ export function SignInForm({ className }: Props) {
 
     setHasError(false);
 
-    const result = await signIn("credentials", {
-      email: fd.get("email"),
-      password: fd.get("password"),
-      redirect: false,
-      // callbackUrl: "/dashboard",
-    });
+    try {
+      const result = await signIn("credentials", {
+        email: fd.get("email"),
+        password: fd.get("password"),
+        redirect: false,
+        // callbackUrl: "/dashboard",
+      });
 
-    if (!result || result.error) {
-      setHasError(true);
-      return;
+      if (!result || result.error) {
+        setHasError(true);
+        return;
+      }
+
+      location.href = "/";
+    } catch (e) {
+      console.log(e);
     }
-
-    location.href = "/";
   }
 
   return (

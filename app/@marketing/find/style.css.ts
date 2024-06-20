@@ -1,4 +1,4 @@
-import { vars } from "../../theme.css";
+import { breakpoints, vars } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const header = style({});
@@ -14,8 +14,25 @@ export const divider = style({
 
 export const submitButton = style({
   width: "100%",
-  marginBottom: vars.spacing.normal,
 });
+
+export const strataSearchPageContainer = style({
+  margin: "auto",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "grid",
+      gridTemplateColumns: "45% auto",
+      gap: vars.spacing.large,
+    },
+  },
+});
+
+export const strataSearchContainer = style({});
+
+export const strataSearchForm = style({});
+
+export const stratasListContainer = style({});
 
 export const stratasList = style({
   listStyle: "none",

@@ -48,7 +48,7 @@ export default async function Page({
 
         <SignInForm className={styles.signInForm} />
 
-        {strata.isPublic && (
+        {strata.isPublic === 1 && (
           <>
             <DividerText>or</DividerText>
             <InternalLink className={linkStyles.noUnderline} href="/dashboard">
