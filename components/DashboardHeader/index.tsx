@@ -36,23 +36,23 @@ export function DashboardHeader({ actions }: Props) {
   const pathname = usePathname();
   const [mobileMenuExpanded, setMobileMenuExpanded] = useState(false);
 
+  const filteredMenuItems = links.filter(
+    ([, , permissions]) => !permissions || can(session?.user, ...permissions),
+  );
+
   return (
     <div className={styles.subheader}>
       <div
         style={assignInlineVars({
-          [styles.numHeaderItemsVar]: links.length.toString(),
+          [styles.numHeaderItemsVar]: filteredMenuItems.length.toString(),
         })}
         className={mobileMenuExpanded ? styles.linksRailOpen : styles.linksRail}
       >
-        {links.map(([href, label, permissions = []]) => {
+        {filteredMenuItems.map(([href, label, permissions = []]) => {
           const isActive =
             href === "/dashboard"
               ? pathname === href
               : pathname?.startsWith(href);
-
-          if (permissions && !can(session?.user, ...permissions)) {
-            return null;
-          }
 
           return (
             <InternalLink
