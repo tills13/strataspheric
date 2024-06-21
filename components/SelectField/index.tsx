@@ -22,7 +22,13 @@ export function SelectField({
   ...delegateProps
 }: PropsWithChildren<Props>) {
   return (
-    <div className={classnames(styles.selectFieldWrapper, wrapperClassName)}>
+    <div
+      className={classnames(
+        styles.selectFieldWrapper,
+        wrapperClassName,
+        className,
+      )}
+    >
       <select
         className={classnames(styles.selectFieldSelect, selectClassName)}
         placeholder=""

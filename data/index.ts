@@ -210,6 +210,7 @@ export interface StrataWidgetsTable {
 
 export type StrataWidget = Selectable<StrataWidgetsTable>;
 export type NewStrataWidget = Insertable<StrataWidgetsTable>;
+export type StrataWidgetUpdate = Updateable<StrataWidgetsTable>;
 
 export interface UsersTable {
   id: ColumnType<string, string, never>;

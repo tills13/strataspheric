@@ -23,7 +23,7 @@ interface Props {
 }
 
 export function GoToStrataLinkButton({
-  buttonColor,
+  buttonColor = "default",
   buttonSize,
   buttonStyle,
   className,

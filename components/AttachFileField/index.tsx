@@ -9,8 +9,9 @@ type AttachFileButtonProps = React.ComponentProps<typeof AttachFileButton>;
 
 interface Props {
   buttonClassName?: string;
-  name?: string;
   defaultValue?: AttachFileButtonProps["selectedFile"];
+  name?: string;
+  onSelectFile?: AttachFileButtonProps["onSelectFile"];
   upsertFile: (fd: FormData) => Promise<File>;
 }
 
@@ -18,6 +19,7 @@ export function AttachFileField({
   buttonClassName,
   defaultValue,
   name,
+  onSelectFile,
   upsertFile,
 }: Props) {
   const [selectedFile, setSelectedFile] = useState(defaultValue);
@@ -26,7 +28,10 @@ export function AttachFileField({
     <>
       <AttachFileButton
         className={buttonClassName}
-        onSelectFile={setSelectedFile}
+        onSelectFile={(file) => {
+          setSelectedFile(file);
+          onSelectFile?.(file);
+        }}
         selectedFile={selectedFile}
         upsertFile={upsertFile}
       />

@@ -1,13 +1,9 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
-
-import { useState, useTransition } from "react";
+import { useState } from "react";
 
 import { Button } from "../Button";
-import { ElementGroup } from "../ElementGroup";
-import { InfoPanel } from "../InfoPanel";
-import { Modal } from "../Modal";
+import { ConfirmModal } from "../ConfirmModal";
 import { StatusButton } from "../StatusButton";
 
 type StatusButtonProps = React.ComponentProps<typeof StatusButton>;
@@ -23,64 +19,25 @@ export function ConfirmButton({
   ...delegateProps
 }: Props) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [isPending, startTransition] = useTransition();
 
   return (
     <>
-      <StatusButton
+      <Button
         {...delegateProps}
         onClick={(e) => {
           e.preventDefault();
           setShowConfirmModal(true);
         }}
         type="button"
-        isPending={isPending}
       >
         {children}
-      </StatusButton>
+      </Button>
 
       {showConfirmModal && (
-        <Modal
+        <ConfirmModal
           closeModal={() => setShowConfirmModal(false)}
-          title="Confirm Action"
-        >
-          <InfoPanel
-            className={s({ mb: "normal" })}
-            level="warning"
-            alignment="center"
-          >
-            Are you sure? This action cannot be reversed.
-          </InfoPanel>
-
-          <ElementGroup gap="small">
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                setShowConfirmModal(false);
-              }}
-              style="tertiary"
-              type="button"
-            >
-              Cancel
-            </Button>
-            <StatusButton
-              onClick={(e) => {
-                e.preventDefault();
-
-                startTransition(async () => {
-                  await onClickConfirm();
-                  setShowConfirmModal(false);
-                });
-              }}
-              color="error"
-              style="secondary"
-              type="button"
-              isPending={isPending}
-            >
-              Confirm
-            </StatusButton>
-          </ElementGroup>
-        </Modal>
+          onClickConfirm={onClickConfirm}
+        />
       )}
     </>
   );

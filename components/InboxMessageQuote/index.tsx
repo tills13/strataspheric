@@ -16,12 +16,12 @@ interface Props {
   message: string;
   senderName: string;
   timestamp: number;
-  linkType: "hash" | "direct";
+  linkType?: "hash" | "direct";
 }
 
 export function InboxMessageQuote({
   className,
-  linkType,
+  linkType = "hash",
   maxPreviewLength = 200,
   messageId,
   messageThreadId,

@@ -3,11 +3,12 @@ import { createVar, style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
-import { important } from "../../theme";
+import { important, padding } from "../../theme";
 
 export const numHeaderItemsVar = createVar();
 
 export const subheader = style({
+  position: "relative",
   display: "flex",
   alignItems: "flex-start",
   justifyContent: "space-between",
@@ -41,16 +42,31 @@ export const linksRailOpen = style([
       .multiply(vars.sizes.small)
       .add(calc(numHeaderItemsVar).subtract(1).multiply(vars.spacing.small))
       .toString(),
+    width: "100%",
   },
 ]);
 
-export const baseSubheaderLink = style({
-  padding: `${vars.spacing.xs} 0`,
-  whiteSpace: "nowrap",
+export const mobileMenuIcon = style({
+  height: calc(vars.sizes.xs).toString(),
+  marginRight: vars.spacing.normal,
+  verticalAlign: "middle",
 
   "@media": {
     [breakpoints.tablet]: {
-      padding: `${vars.spacing.xs} ${vars.spacing.small}`,
+      display: "none",
+    },
+  },
+});
+
+export const baseSubheaderLink = style({
+  height: vars.sizes.small,
+  lineHeight: vars.sizes.small,
+  whiteSpace: "nowrap",
+  width: "100%",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      padding: padding(0, vars.spacing.small),
     },
   },
 });
@@ -85,9 +101,20 @@ export const activeSubheaderLink = style([
 export const actionsContainer = style({
   display: "flex",
   gap: vars.spacing.small,
+  marginRight: calc(vars.spacing.small).add(vars.sizes.small).toString(),
+
+  "@media": {
+    [breakpoints.tablet]: {
+      marginRight: "unset",
+    },
+  },
 });
 
 export const mobileDropdownAction = style({
+  position: important("absolute"),
+  right: vars.spacing.normal,
+  top: vars.spacing.small,
+
   "@media": {
     [breakpoints.tablet]: {
       display: important("none"),

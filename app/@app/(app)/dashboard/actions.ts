@@ -14,6 +14,7 @@ import { createWidget } from "../../../../data/widgets/createWidget";
 import { deleteEventFromWidget } from "../../../../data/widgets/deleteEventFromWidget";
 import { deleteFileFromWidget } from "../../../../data/widgets/deleteFileFromWidget";
 import { deleteWidget } from "../../../../data/widgets/deleteWidget";
+import { updateWidget } from "../../../../data/widgets/updateWidget";
 import * as formdata from "../../../../utils/formdata";
 
 export async function createEventAction(
@@ -41,7 +42,7 @@ export async function createEventAction(
     startDate,
     endDate: startDate,
     strataId,
-    creatorId: session.user.id,
+    creatorId: session.user.id!,
   });
 
   if (!eventId) {
@@ -146,20 +147,23 @@ export async function createFileAction(
   revalidatePath("/dashboard");
 }
 
-export async function createWidgetAction(strataId: string, formData: FormData) {
-  const title = formData.get("title");
-  const type = formData.get("type");
+export async function upsertStrataWidget(
+  strataId: string,
+  widgetId: string | undefined,
+  fd: FormData,
+) {
+  const title = formdata.getString(fd, "title");
+  const type = formdata.getString(fd, "type");
 
-  if (
-    typeof title !== "string" ||
-    title === "" ||
-    typeof type !== "string" ||
-    !(type === "file" || type === "event")
-  ) {
+  if (title === "" || !(type === "file" || type === "event")) {
     throw new Error("invalid fields");
   }
 
-  await createWidget({ strataId, title, type });
+  if (widgetId) {
+    await updateWidget(widgetId, { title, type });
+  } else {
+    await createWidget({ strataId, title, type });
+  }
 
   revalidatePath("/dashboard");
 }
@@ -169,6 +173,8 @@ export async function deleteWidgetEventAction(
   eventId: string,
 ) {
   await deleteEventFromWidget(widgetId, eventId);
+
+  revalidatePath("/dashboard");
   // revalidateTag("widget_events");
 }
 

@@ -9,7 +9,7 @@ import { TextArea } from "../TextArea";
 interface Props {
   className?: string;
   sendInboxThreadChat: (fd: FormData) => void;
-  upsertFile: (fd: FormData) => Promise<File>;
+  upsertFile?: (fd: FormData) => Promise<File>;
 }
 
 export function SendInboxThreadChatForm({
@@ -27,11 +27,13 @@ export function SendInboxThreadChatForm({
         required
       />
 
-      <AttachFileField
-        buttonClassName={s({ mb: "small" })}
-        name="fileId"
-        upsertFile={upsertFile}
-      />
+      {upsertFile && (
+        <AttachFileField
+          buttonClassName={s({ mb: "small" })}
+          name="fileId"
+          upsertFile={upsertFile}
+        />
+      )}
 
       <StatusButton
         color="primary"

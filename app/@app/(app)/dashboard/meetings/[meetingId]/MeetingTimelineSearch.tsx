@@ -6,12 +6,15 @@ import { sql } from "kysely";
 import { Header } from "../../../../../../components/Header";
 import { MeetingTimelineIcon } from "../../../../../../components/MeetingTimelineIcon";
 import { MeetingTimelineItem } from "../../../../../../components/MeetingTimelineItem";
+import { SelectField } from "../../../../../../components/SelectField";
 import { Timeline } from "../../../../../../components/Timeline";
 import { db } from "../../../../../../data";
 import { classnames } from "../../../../../../utils/classnames";
 import { addItemToAgendaAction } from "./actions";
 
 export type AgendaTimelineEntry = {
+  id: string;
+
   date: number;
   sourceUserName: string | null;
   type: "invoice" | "event" | "file" | "inbox_message" | "chat";
@@ -200,6 +203,15 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
       >
         Timeline
       </Header>
+
+      <SelectField className={s({ mb: "normal" })}>
+        <option>Events</option>
+        <option>Chats</option>
+        <option>Messages</option>
+        <option>Files</option>
+        <option>Invoices</option>
+      </SelectField>
+
       <Timeline
         items={timeline.map((item) => ({
           icon: <MeetingTimelineIcon type={item.type} />,

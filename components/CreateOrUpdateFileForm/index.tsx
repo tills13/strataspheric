@@ -33,14 +33,16 @@ export function CreateOrUpdateFileForm({
         onCreateOrUpdateFile?.(file);
       }}
     >
-      <InputField
-        className={s({ mb: "normal" })}
-        name="file"
-        type="file"
-        onChange={(e) => {
-          nameRef.current.value = e.target.files?.[0].name || "";
-        }}
-      />
+      {!file && (
+        <InputField
+          className={s({ mb: "normal" })}
+          name="file"
+          type="file"
+          onChange={(e) => {
+            nameRef.current.value = e.target.files?.[0].name || "";
+          }}
+        />
+      )}
       <InputField
         className={s({ mb: "normal" })}
         name="name"

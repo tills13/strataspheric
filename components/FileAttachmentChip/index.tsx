@@ -2,6 +2,7 @@ import * as styles from "./style.css";
 
 import React from "react";
 
+import { classnames } from "../../utils/classnames";
 import { FileLink } from "../FileLink";
 import { FileTypeIcon } from "../FileTypeIcon";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
@@ -14,14 +15,17 @@ interface Props {
 
 export function FileAttachmentChip({ className, fileName, filePath }: Props) {
   return (
-    <FileLink className={className || styles.file} path={filePath}>
+    <FileLink
+      className={classnames(className, styles.fileAttachmentChip)}
+      path={filePath}
+    >
       <FileTypeIcon
         className={styles.icon}
         defaultIcon={<AttachmentIcon className={styles.icon} />}
         filePath={filePath}
       />
 
-      {fileName}
+      <span className={styles.name}>{fileName}</span>
     </FileLink>
   );
 }

@@ -19,11 +19,47 @@ interface Props extends AgendaTimelineEntry {
   className?: string;
 }
 
-export function MeetingTimelineItem({
-  addItemToAgenda,
-  className,
-  ...item
-}: Props) {
+function MeetingTimelineItemBody(item: Props) {
+  let sourceUserName = item.sourceUserName || "Someone";
+
+  if (item.type === "file" || item.type === "invoice") {
+    return (
+      <FileAttachmentChip
+        className={styles.timelineAttachment}
+        fileName={item.fileName}
+        filePath={item.filePath}
+      />
+    );
+  } else if (item.type === "inbox_message") {
+    return (
+      <InboxMessageQuote
+        senderName={sourceUserName}
+        message={item.message}
+        messageId={item.messageId}
+        messageThreadId={item.messageThreadId}
+        timestamp={item.date}
+        linkType="direct"
+      />
+    );
+  } else if (item.type === "chat") {
+    return (
+      <InboxMessageQuote
+        senderName={sourceUserName}
+        message={item.chatMessage}
+        messageId={item.chatId}
+        messageThreadId={item.chatThreadId}
+        timestamp={item.date}
+        linkType="direct"
+      />
+    );
+  }
+
+  return <p className={styles.timelineEntryMessage}>{item.eventName}</p>;
+}
+
+export function MeetingTimelineItem(props: Props) {
+  const { addItemToAgenda, className, ...item } = props;
+
   const [isPending, startTransition] = useTransition();
   let sourceUserName = item.sourceUserName || "Someone";
 
@@ -42,49 +78,21 @@ export function MeetingTimelineItem({
   }
 
   return (
-    <>
-      <div className={classnames(styles.timelineEntry, s({ mb: "small" }))}>
-        <div className={styles.timelineEntryHeader}>
-          <Header priority={3}>{title}</Header>
-          <Date
-            className={styles.timelineEntryDate}
-            output="date"
-            timestamp={item.date}
-          />
-        </div>
-
-        {item.type === "file" || item.type === "invoice" ? (
-          <FileAttachmentChip
-            className={styles.timelineAttachment}
-            fileName={item.fileName}
-            filePath={item.filePath}
-          />
-        ) : item.type === "inbox_message" ? (
-          <InboxMessageQuote
-            senderName={sourceUserName}
-            message={item.message}
-            messageId={item.messageId}
-            messageThreadId={item.messageThreadId}
-            timestamp={item.date}
-            linkType="direct"
-          />
-        ) : item.type === "chat" ? (
-          <InboxMessageQuote
-            senderName={sourceUserName}
-            message={item.chatMessage}
-            messageId={item.chatId}
-            messageThreadId={item.chatThreadId}
-            timestamp={item.date}
-            linkType="direct"
-          />
-        ) : (
-          <p className={styles.timelineEntryMessage}>{item.eventName}</p>
-        )}
+    <div className={classnames(styles.timelineEntry, s({ mb: "small" }))}>
+      <div className={styles.timelineEntryHeader}>
+        <Header priority={3}>{title}</Header>
+        <Date
+          className={styles.timelineEntryDate}
+          output="date"
+          timestamp={item.date}
+        />
       </div>
 
+      <MeetingTimelineItemBody {...props} />
+
       <StatusButton
-        color="primary"
-        style="secondary"
+        className={styles.timelineEntryAddToAgendaButton}
+        style="tertiary"
         iconRight={<AddIcon />}
         onClick={() =>
           startTransition(() => {
@@ -95,6 +103,6 @@ export function MeetingTimelineItem({
       >
         Add to Agenda
       </StatusButton>
-    </>
+    </div>
   );
 }

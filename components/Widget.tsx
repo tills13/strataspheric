@@ -12,6 +12,7 @@ interface Props {
   createFile: (fd: FormData) => void;
   deleteFile: (fileId: string) => void;
   deleteWidget: () => void;
+  upsertStrataWidget: (fd: FormData) => void;
   widget: StrataWidget;
 }
 
@@ -21,6 +22,7 @@ export function Widget({
   deleteEvent,
   deleteFile,
   deleteWidget,
+  upsertStrataWidget,
   widget,
 }: Props) {
   switch (widget.type) {
@@ -37,6 +39,7 @@ export function Widget({
             createEvent={createEvent}
             deleteEvent={deleteEvent}
             deleteWidget={deleteWidget}
+            upsertStrataWidget={upsertStrataWidget}
             widget={widget}
           />
         </Suspense>
@@ -56,6 +59,7 @@ export function Widget({
             createFile={createFile}
             deleteFile={deleteFile}
             deleteWidget={deleteWidget}
+            upsertStrataWidget={upsertStrataWidget}
             widget={widget}
           />
         </Suspense>

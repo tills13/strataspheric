@@ -1,6 +1,8 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { calc } from "@vanilla-extract/css-utils";
+
 import { border } from "../../theme";
 
 export const modalWrapper = style({
@@ -14,8 +16,6 @@ export const modalWrapper = style({
 });
 
 export const modal = style({
-  display: "grid",
-  gridTemplateRows: "min-content auto",
   padding: vars.spacing.normal,
   backgroundColor: vars.colors.white,
   width: "100vw",
@@ -33,9 +33,26 @@ export const modal = style({
   },
 });
 
+export const modalBodyContainer = style({
+  display: "grid",
+  gridTemplateRows: "min-content auto",
+  gridTemplateColumns: "100%",
+});
+
 export const modalHeader = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   marginBottom: vars.spacing.normal,
+  overflow: "hidden",
+});
+
+export const modalHeaderTitleContainer = style({
+  overflow: "hidden",
+});
+
+export const modalHeaderTitle = style({
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+  overflow: "hidden",
 });

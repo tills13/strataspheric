@@ -8,18 +8,15 @@ import React, { useState } from "react";
 
 import { File, StrataWidget } from "../../data";
 import { can, p } from "../../data/users/permissions";
-import { classnames } from "../../utils/classnames";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
 } from "../AbstractWidget";
 import { AddFileToWidgetForm } from "../AddFileToWidgetForm";
-import { Button } from "../Button";
 import { Date } from "../Date";
 import { FileLink } from "../FileLink";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
-import { DownloadIcon } from "../Icon/DownloadIcon";
 import { InfoPanel } from "../InfoPanel";
 import { Modal } from "../Modal";
 import { RemoveButton } from "../RemoveButton";
@@ -29,6 +26,7 @@ interface Props extends AbstractWidgetProps {
   deleteFile: (fileId: string) => void;
   files: File[];
   widget: StrataWidget;
+  upsertStrataWidget: (fd: FormData) => void;
 }
 
 export function FileWidget({
@@ -37,6 +35,7 @@ export function FileWidget({
   deleteWidget,
   files,
   widget,
+  upsertStrataWidget,
 }: Props) {
   const { data: session } = useSession();
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -56,6 +55,8 @@ export function FileWidget({
       ]}
       className={styles.fileWidget}
       deleteWidget={deleteWidget}
+      upsertStrataWidget={upsertStrataWidget}
+      widget={widget}
       widgetTitle={widget.title}
     >
       <div className={abstractWidgetStyles.abstractWidgetList}>
@@ -70,8 +71,14 @@ export function FileWidget({
             key={file.id}
             className={abstractWidgetStyles.abstractWidgetListItem}
           >
-            <div>
-              <Header priority={3}>{file.name}</Header>
+            <div className={abstractWidgetStyles.abstractWidgetListItemContent}>
+              <Header priority={3}>
+                {can(session?.user, p("stratas", "files", "view")) ? (
+                  <FileLink path={file.path}>{file.name}</FileLink>
+                ) : (
+                  file.name
+                )}
+              </Header>
               {file.description && <p>{file.description}</p>}
               <Date
                 className={styles.fileWidgetListItemDate}
@@ -81,18 +88,9 @@ export function FileWidget({
             </div>
 
             <div className={styles.fileActions}>
-              {can(session?.user, p("stratas", "files", "view")) && (
-                <FileLink path={file.path}>
-                  <Button
-                    icon={<DownloadIcon />}
-                    size="small"
-                    style="tertiary"
-                  />
-                </FileLink>
-              )}
               {can(session?.user, p("stratas", "widgets", "edit")) && (
                 <RemoveButton
-                  onClick={deleteFile.bind(undefined, file.id)}
+                  action={deleteFile.bind(undefined, file.id)}
                   color="error"
                   size="small"
                   style="tertiary"

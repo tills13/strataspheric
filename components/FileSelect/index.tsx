@@ -33,7 +33,9 @@ export function FileSelect({
     <Select
       className={className}
       onChange={(e) => {
-        onSelectFile(files.find((file) => file.id === e.currentTarget.value));
+        onSelectFile?.(
+          files.find((file) => file.id === e.currentTarget.value)!,
+        );
       }}
       {...delegateProps}
     >

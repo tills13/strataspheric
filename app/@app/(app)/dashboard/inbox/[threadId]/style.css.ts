@@ -4,7 +4,6 @@ import { style } from "@vanilla-extract/css";
 import { border } from "../../../../../../theme";
 
 export const threadPageContainer = style({
-  overflow: "hidden",
   "@media": {
     [breakpoints.tablet]: {
       display: "grid",
@@ -15,7 +14,7 @@ export const threadPageContainer = style({
 
 export const inboxMessageThreadContainer = style({
   paddingBottom: vars.spacing.normal,
-  overflow: "auto",
+  overflowY: "auto",
 });
 
 export const pageHeader = style({

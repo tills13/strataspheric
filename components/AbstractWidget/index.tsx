@@ -3,19 +3,25 @@
 import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
-import React, { startTransition } from "react";
+import React, { startTransition, useState } from "react";
 
+import { StrataWidget } from "../../data";
 import { can } from "../../data/users/permissions";
 import { classnames } from "../../utils/classnames";
+import { CreateOrUpdateStrataWidgetForm } from "../CreateOrUpdateStrataWidgetForm";
 import { DropdownActions, filterIsAction } from "../DropdownActions";
 import { Header } from "../Header";
 import { DeleteIcon } from "../Icon/DeleteIcon";
+import { EditIcon } from "../Icon/EditIcon";
+import { Modal } from "../Modal";
 
 export interface Props {
   additionalActions?: React.ComponentProps<typeof DropdownActions>["actions"];
   className?: string;
   deleteWidget?: () => void;
   widgetTitle?: React.ReactNode;
+  widget: StrataWidget;
+  upsertStrataWidget: (fd: FormData) => void;
 }
 
 export function AbstractWidget({
@@ -23,12 +29,21 @@ export function AbstractWidget({
   className,
   deleteWidget,
   children,
+  widget,
   widgetTitle,
+  upsertStrataWidget,
 }: React.PropsWithChildren<Props>) {
   const { data: session } = useSession();
+  const [showEditWidgetModal, setShowEditWidgetModal] = useState(false);
 
   const widgetActions = [
     ...additionalActions,
+    can(session?.user, "stratas.widgets.edit") &&
+      deleteWidget && {
+        label: "Edit Widget",
+        action: () => setShowEditWidgetModal(true),
+        icon: <EditIcon />,
+      },
     can(session?.user, "stratas.widgets.delete") &&
       deleteWidget && {
         label: "Delete Widget",
@@ -41,19 +56,32 @@ export function AbstractWidget({
   ].filter(filterIsAction);
 
   return (
-    <div className={classnames(styles.abstractWidget, className)}>
-      <div className={styles.abstractWidgetHeader}>
-        {widgetTitle && <Header priority={2}>{widgetTitle}</Header>}
+    <>
+      <div className={classnames(styles.abstractWidget, className)}>
+        <div className={styles.abstractWidgetHeader}>
+          {widgetTitle && <Header priority={2}>{widgetTitle}</Header>}
 
-        {widgetActions.length !== 0 && (
-          <DropdownActions
-            actions={widgetActions}
-            buttonSize="small"
-            buttonStyle="tertiary"
-          />
-        )}
+          {widgetActions.length !== 0 && (
+            <DropdownActions
+              actions={widgetActions}
+              buttonSize="small"
+              buttonStyle="tertiary"
+            />
+          )}
+        </div>
+        <div className={styles.abstractWidgetBody}>{children}</div>
       </div>
-      <div className={styles.abstractWidgetBody}>{children}</div>
-    </div>
+      {showEditWidgetModal && (
+        <Modal
+          closeModal={() => setShowEditWidgetModal(false)}
+          title={`Edit ${widgetTitle}`}
+        >
+          <CreateOrUpdateStrataWidgetForm
+            widget={widget}
+            upsertStrataWidget={upsertStrataWidget}
+          />
+        </Modal>
+      )}
+    </>
   );
 }

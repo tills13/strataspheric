@@ -1,7 +1,7 @@
 // import "@vanilla-extract/css";
 
-export function important(value: string): string {
-  return `${value} !important`;
+export function important<T>(value: T): T {
+  return `${value} !important` as T;
 }
 
 export function border(width: string, style: string, color: string): string {

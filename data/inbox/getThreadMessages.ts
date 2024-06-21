@@ -1,17 +1,9 @@
-import { InboxMessage, db } from "..";
+import { File, InboxMessage, Invoice, db } from "..";
 
-type ThreadMessage = InboxMessage & {
-  senderEmail: string;
-  senderName: string;
-  fileName: string | null;
-  fileDescription: string | null;
-  filePath: string | null;
-};
-
-export function getThreadMessages(
+export async function getThreadMessages(
   threadId: string,
   viewId?: string | undefined,
-): Promise<ThreadMessage[]> {
+) {
   let query = db
     .selectFrom("inbox_messages")
     .leftJoin("users", "inbox_messages.senderUserId", "users.id")
@@ -30,16 +22,26 @@ export function getThreadMessages(
       "inbox_messages.strataId",
       "inbox_messages.fileId",
 
-      "files.name as fileName",
+      "files.createdAt as fileCreatedAt",
       "files.description as fileDescription",
+      "files.id as fileId",
+      "files.isPublic as fileIsPublic",
+      "files.name as fileName",
       "files.path as filePath",
+      "files.sizeBytes as fileSizeBytes",
+      "files.strataId as fileStrataId",
+      "files.uploaderId as fileUploaderId",
 
+      "invoices.amount as invoiceAmount",
+      "invoices.createdAt as invoiceCreatedAt",
+      "invoices.description as invoiceDescription",
+      "invoices.dueBy as invoiceDueBy",
+      "invoices.fileId as invoiceFileId",
       "invoices.id as invoiceId",
       "invoices.identifier as invoiceIdentifier",
-      "invoices.description as invoiceDescription",
-      "invoices.amount as invoiceAmount",
-      "invoices.dueBy as invoiceDueBy",
       "invoices.isPaid as invoiceIsPaid",
+      "invoices.strataId as invoiceStrataId",
+      "invoices.type as invoiveType",
 
       eb.fn
         .coalesce("users.name", "inbox_messages.senderName")
@@ -54,7 +56,63 @@ export function getThreadMessages(
     query = query.where("inbox_messages.viewId", "=", viewId);
   }
 
-  return query
-    .orderBy("inbox_messages.sentAt asc")
-    .execute() as unknown as Promise<ThreadMessage[]>;
+  const result = await query.orderBy("inbox_messages.sentAt asc").execute();
+
+  return result.map(
+    ({
+      fileCreatedAt,
+      fileDescription,
+      fileId,
+      fileIsPublic,
+      fileName,
+      filePath,
+      fileSizeBytes,
+      fileStrataId,
+      fileUploaderId,
+
+      invoiceAmount,
+      invoiceCreatedAt,
+      invoiceDescription,
+      invoiceDueBy,
+      invoiceFileId,
+      invoiceId,
+      invoiceIdentifier,
+      invoiceIsPaid,
+      invoiceStrataId,
+      invoiveType,
+
+      ...rest
+    }) => {
+      return {
+        ...rest,
+        file: fileId
+          ? ({
+              createdAt: fileCreatedAt,
+              description: fileDescription,
+              id: fileId,
+              isPublic: fileIsPublic,
+              name: fileName,
+              path: filePath,
+              sizeBytes: fileSizeBytes,
+              strataId: fileStrataId,
+              uploaderId: fileUploaderId,
+            } as File)
+          : undefined,
+        invoice: invoiceId
+          ? ({
+              amount: invoiceAmount,
+              createdAt: invoiceCreatedAt,
+              description: invoiceDescription,
+              dueBy: invoiceDueBy,
+              fileId: invoiceFileId,
+              id: invoiceId,
+              identifier: invoiceIdentifier,
+              isPaid: invoiceIsPaid,
+              strataId: invoiceStrataId,
+              type: invoiveType,
+            } as Invoice)
+          : undefined,
+      };
+    },
+  );
 }

@@ -11,7 +11,8 @@ export const timelineEntry = style({
 export const timelineEntryHeader = style({
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "top",
+  alignItems: "flex-start",
+  gap: vars.spacing.normal,
   padding: vars.spacing.normal,
 });
 
@@ -22,17 +23,26 @@ export const timelineEntryMessage = style({
 
 export const timelineEntryDate = style({
   fontSize: vars.fontSizes.small,
+  lineHeight: "20px",
   color: vars.colors.grey400,
 });
 
 export const timelineAttachment = style([
-  fileAttachmentChipStyle.file,
+  fileAttachmentChipStyle.fileAttachmentChip,
   {
-    backgroundColor: "rgba(255,255,255,0.1)",
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
+    width: "100%",
+    backgroundColor: vars.colors.grey800,
+    borderColor: vars.colors.grey800,
+    borderRadius: 0,
     vars: {
       [iconColorVar]: vars.colors.white,
     },
   },
 ]);
+
+export const timelineEntryAddToAgendaButton = style({
+  color: vars.colors.white,
+  vars: {
+    [iconColorVar]: vars.colors.white,
+  },
+});

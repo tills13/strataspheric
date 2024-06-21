@@ -1,33 +1,63 @@
 import { breakpoints, vars } from "../../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { border } from "../../../../../../theme";
-
 export const meetingLayoutContainer = style({
   "@media": {
     [breakpoints.tablet]: {
       display: "grid",
-      gridTemplateColumns: "480px auto 400px",
+      gridTemplateColumns: "auto 400px",
       overflow: "hidden",
+    },
+    [breakpoints.desktop]: {
+      gridTemplateColumns: "minmax(auto, 300px) auto 400px",
+    },
+  },
+});
+
+export const meetingInfoSidebar = style({
+  display: "none",
+  flexDirection: "column",
+  justifyContent: "space-between",
+
+  "@media": {
+    [breakpoints.desktop]: {
+      display: "flex",
+      borderRight: `1px solid ${vars.colors.borderDefault}`,
     },
   },
 });
 
 export const meetingAgendaContainer = style({
   padding: vars.spacing.normal,
+  overflowX: "hidden",
+  overflowY: "auto",
+});
+
+export const meetingAgendaContainerMeetingInfo = style({
+  "@media": {
+    [breakpoints.desktop]: {
+      display: "none",
+    },
+  },
+});
+
+export const meetingAgendaContainerDeleteMeeting = style({
+  "@media": {
+    [breakpoints.desktop]: {
+      display: "none",
+    },
+  },
 });
 
 export const meetingTimelineSearchContainer = style({
   overflow: "auto",
   padding: vars.spacing.normal,
-  // height: `calc(100vh - 81px - 49px)`,
-});
 
-export const meetingInfoSidebar = style({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  borderRight: `1px solid ${vars.colors.borderDefault}`,
+  "@media": {
+    [breakpoints.tablet]: {
+      borderLeft: `1px solid ${vars.colors.borderDefault}`,
+    },
+  },
 });
 
 export const header = style({
@@ -96,7 +126,11 @@ export const minutesUrlApprover = style({
 });
 
 export const minutesUrlApproveButton = style({
-  flex: 1,
+  "@media": {
+    [breakpoints.tablet]: {
+      flex: 1,
+    },
+  },
 });
 
 export const minutesUrlContainer = style({

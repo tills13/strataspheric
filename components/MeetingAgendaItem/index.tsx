@@ -55,7 +55,7 @@ export function MeetingAgendaItem({
             updateMeetingAgendaItem={updateAgendaItem}
           />
           <RemoveButton
-            onClick={removeAgendaItem}
+            action={removeAgendaItem}
             color="error"
             size="small"
             style="tertiary"

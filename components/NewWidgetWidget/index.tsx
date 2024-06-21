@@ -4,15 +4,15 @@ import * as styles from "./style.css";
 
 import { useState } from "react";
 
+import { CreateOrUpdateStrataWidgetForm } from "../CreateOrUpdateStrataWidgetForm";
 import { AddIcon } from "../Icon/AddIcon";
 import { Modal } from "../Modal";
-import { NewWidgetForm } from "../NewWidgetForm";
 
 interface Props {
-  createWidget: (fd: FormData) => void;
+  upsertStrataWidget: (fd: FormData) => void;
 }
 
-export function NewWidgetWidget({ createWidget }: Props) {
+export function NewWidgetWidget({ upsertStrataWidget }: Props) {
   const [showNewWidgetModal, setShowNewWidgetModal] = useState(false);
 
   return (
@@ -31,9 +31,9 @@ export function NewWidgetWidget({ createWidget }: Props) {
           closeModal={() => setShowNewWidgetModal(false)}
           title="New Widget"
         >
-          <NewWidgetForm
-            createWidget={(fd) => {
-              createWidget(fd);
+          <CreateOrUpdateStrataWidgetForm
+            upsertStrataWidget={(fd) => {
+              upsertStrataWidget(fd);
               setShowNewWidgetModal(false);
             }}
           />

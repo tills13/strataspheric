@@ -38,19 +38,26 @@ export function Modal({
       ref={wrapperRef}
     >
       <div className={styles.modal}>
-        <div className={styles.modalHeader}>
-          {title ? (
-            typeof title === "string" ? (
-              <Header priority={2}>{title}</Header>
-            ) : (
-              title
-            )
-          ) : (
-            <div />
-          )}
-          <Button icon={<RemoveIcon />} onClick={closeModal} style="tertiary" />
+        <div className={styles.modalBodyContainer}>
+          <div className={styles.modalHeader}>
+            <div className={styles.modalHeaderTitleContainer}>
+              {typeof title === "string" ? (
+                <Header className={styles.modalHeaderTitle} priority={2}>
+                  {title}
+                </Header>
+              ) : (
+                title
+              )}
+            </div>
+
+            <Button
+              icon={<RemoveIcon />}
+              onClick={closeModal}
+              style="tertiary"
+            />
+          </div>
+          <div className={modalBodyClassName}>{children}</div>
         </div>
-        <div className={modalBodyClassName}>{children}</div>
       </div>
     </div>,
     document.querySelector("#modal-root")!,

@@ -83,50 +83,6 @@ export const messageInvoice = style({
   marginBottom: vars.spacing.normal,
 });
 
-export const invoiceHeader = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  marginBottom: vars.spacing.normal,
-});
-
-export const invoiceBody = style({
-  display: "flex",
-  gap: vars.spacing.normal,
-  flexDirection: "column",
-  width: "100%",
-  "@media": {
-    [breakpoints.tablet]: {
-      flexDirection: "row",
-    },
-  },
-});
-
-export const invoiceDescription = style({
-  flex: 1,
-});
-
-export const invoiceAmountContainer = style({
-  fontSize: vars.fontSizes.large,
-  padding: padding(vars.spacing.small, vars.spacing.normal),
-  borderRadius: vars.borderRadius,
-  backgroundColor: vars.colors.grey100,
-  textAlign: "center",
-});
-
-export const invoiceHeaderStatus = style({
-  display: "flex",
-  alignItems: "center",
-  gap: vars.spacing.small,
-});
-
-export const invoiceStatusIcon = style({
-  height: "24px",
-  vars: {
-    [iconColorVar]: vars.colors.green500,
-  },
-});
-
 export const messageFile = style({
   display: "flex",
   gap: vars.spacing.small,

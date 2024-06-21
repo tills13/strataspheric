@@ -13,6 +13,8 @@ import { DownloadIcon } from "../../../../../components/Icon/DownloadIcon";
 import { searchFiles } from "../../../../../data/files/searchFiles";
 import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
+import { upsertFileAction } from "../actions";
+import { FilesListFileFooterActions } from "./FilesListFileFooterActions";
 import { deleteFileAction } from "./actions";
 
 interface Props {
@@ -29,80 +31,46 @@ export async function FilesList({ searchTerm, strataId, visibility }: Props) {
   return (
     <div className={classnames(styles.filesList, s({ p: "normal" }))}>
       {files.map((file) => (
-        <div
-          key={file.id}
-          className={classnames(styles.filesListFile, s({ p: "normal" }))}
-        >
-          <Header className={classnames(s({ mb: "small" }))} priority={3}>
-            <FileTypeIcon
-              className={styles.fileListFileIcon}
-              filePath={file.path}
-            />
-            <FileLink path={file.path}>{file.name}</FileLink>
-          </Header>
-          <p>{file.description}</p>
-          <div className={styles.filesListFileFooter}>
-            <Date
-              className={styles.filesListFileUploadDate}
-              output="date"
-              timestamp={file.createdAt}
-            />
+        <div key={file.id} className={styles.filesListFileContainer}>
+          <div className={classnames(styles.filesListFile, s({ p: "normal" }))}>
+            <Header className={styles.filesListFileHeader} priority={3}>
+              <FileTypeIcon
+                className={styles.fileListFileIcon}
+                filePath={file.path}
+              />
+              {can(session?.user, p("stratas", "files", "view")) ? (
+                <FileLink
+                  className={styles.filesListFileHeaderName}
+                  path={file.path}
+                >
+                  {file.name}
+                </FileLink>
+              ) : (
+                <span className={styles.filesListFileHeaderName}>
+                  {file.name}
+                </span>
+              )}
+            </Header>
+            {file.description && (
+              <p className={classnames(s({ mt: "small" }))}>
+                {file.description}
+              </p>
+            )}
+            <div className={styles.filesListFileFooter}>
+              <Date
+                className={styles.filesListFileUploadDate}
+                output="date"
+                timestamp={file.createdAt}
+              />
+            </div>
           </div>
+          <FilesListFileFooterActions
+            deleteFile={deleteFileAction}
+            file={file}
+            upsertFile={upsertFileAction}
+          />
         </div>
       ))}
     </div>
   );
-
-  // return (
-  //   <table className={styles.filesList}>
-  //     <thead>
-  //       <tr>
-  //         <th className={styles.filesTableCell}>File Name</th>
-  //         <th className={styles.descriptionCell}>Description</th>
-  //         <th className={styles.filesTableCell}>Upload Date</th>
-  //         {canDelete && <th className={styles.filesTableCell}>Visibility</th>}
-  //         <th className={styles.filesTableCell}></th>
-  //       </tr>
-  //     </thead>
-  //     <tbody>
-  //       {files.length === 0 && (
-  //         <tr>
-  //           <td className={styles.filesTableCell} colSpan={canDelete ? 5 : 4}>
-  //             {searchTerm || visibility
-  //               ? "No files match your search criteria"
-  //               : "No files"}
-  //           </td>
-  //         </tr>
-  //       )}
-  //       {files.map((file) => (
-  //         <tr key={file.id} className={styles.filesListFile}>
-  //           <td className={styles.filesTableCell}>{file.name}</td>
-  //           <td className={styles.descriptionCell}>{file.description}</td>
-  //           <td className={styles.filesTableCell}></td>
-  //           {canDelete && (
-  //             <td className={styles.filesTableCell}>
-  //               {file.isPublic === 1 ? "Public" : "Private"}
-  //             </td>
-  //           )}
-  //           <td className={styles.filesTableCell}>
-  //             <div className={styles.fileActionsContainer}>
-  //               {can(session?.user, p("stratas", "files", "view")) && (
-
-  //                   <Button
-  //                     icon={<DownloadIcon />}
-  //                     size="small"
-  //                     style="tertiary"
-  //                   />
-  //                 </FileLink>
-  //               )}
-  //               {can(session?.user, p("stratas", "files", "delete")) && (
-  //
-  //               )}
-  //             </div>
-  //           </td>
-  //         </tr>
-  //       ))}
-  //     </tbody>
-  //   </table>
-  // );
 }

@@ -20,7 +20,7 @@ type ButtonProps = React.ComponentProps<typeof Button>;
 interface Props extends ButtonProps {
   attachFileText?: React.ReactNode;
   onSelectFile: (file: File | undefined) => Promise<any> | any;
-  selectedFile?: { id: string; name: string };
+  selectedFile?: { id: string; name: string; path: string };
   upsertFile: (fd: FormData) => Promise<File>;
 }
 
@@ -48,8 +48,7 @@ export function AttachFileButton({
           type="button"
           {...delegateProps}
         >
-          Unattach File (
-          <span className={styles.fileName}>{selectedFile.name}</span>)
+          Unattach File
         </Button>
       ) : (
         <Button

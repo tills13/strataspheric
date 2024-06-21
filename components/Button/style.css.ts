@@ -490,9 +490,7 @@ export const button = recipe({
   ],
 
   defaultVariants: {
-    color: "default",
     size: "normal",
-    style: "primary",
     fullWidth: true,
   },
 });

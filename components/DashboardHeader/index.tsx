@@ -10,21 +10,39 @@ import React, { useState } from "react";
 import { can } from "../../data/users/permissions";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
+import { BedIcon } from "../Icon/BedIcon";
+import { CalendarIcon } from "../Icon/CalendarIcon";
+import { DashboardIcon } from "../Icon/DashboardIcon";
 import { DownIcon } from "../Icon/DownIcon";
+import { FilesIcon } from "../Icon/FilesIcon";
+import { GroupIcon } from "../Icon/GroupIcon";
+import { InboxIcon } from "../Icon/InboxIcon";
+import { PersonIcon } from "../Icon/PersonIcon";
+import { SettingsIcon } from "../Icon/SettingsIcon";
+import { ZipFileIcon } from "../Icon/ZipFileIcon";
 import { InternalLink } from "../Link/InternalLink";
 
-type Link = [href: string, label: string];
-type LinkWithPermissions = [href: string, label: string, permissions: string[]];
+type Link = [
+  icon: React.ComponentType<{ className?: string }>,
+  href: string,
+  label: string,
+];
+type LinkWithPermissions = [
+  icon: React.ComponentType<{ className?: string }>,
+  href: string,
+  label: string,
+  permissions: string[],
+];
 
 const links: Array<Link | LinkWithPermissions> = [
-  ["/dashboard", "Dashboard"],
-  ["/dashboard/files", "Files"],
-  ["/dashboard/calendar", "Events"],
-  ["/dashboard/membership", "Directory"],
-  ["/dashboard/amenities", "Amenities"],
-  ["/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
-  ["/dashboard/inbox", "Strata Inbox"],
-  ["/dashboard/settings", "Settings", ["stratas.strata.edit"]],
+  [DashboardIcon, "/dashboard", "Dashboard"],
+  [FilesIcon, "/dashboard/files", "Files"],
+  [CalendarIcon, "/dashboard/calendar", "Events"],
+  [PersonIcon, "/dashboard/membership", "Directory"],
+  [BedIcon, "/dashboard/amenities", "Amenities"],
+  [GroupIcon, "/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
+  [InboxIcon, "/dashboard/inbox", "Strata Inbox"],
+  [SettingsIcon, "/dashboard/settings", "Settings", ["stratas.strata.edit"]],
 ];
 
 interface Props {
@@ -37,7 +55,7 @@ export function DashboardHeader({ actions }: Props) {
   const [mobileMenuExpanded, setMobileMenuExpanded] = useState(false);
 
   const filteredMenuItems = links.filter(
-    ([, , permissions]) => !permissions || can(session?.user, ...permissions),
+    ([, , , permissions]) => !permissions || can(session?.user, ...permissions),
   );
 
   return (
@@ -48,7 +66,7 @@ export function DashboardHeader({ actions }: Props) {
         })}
         className={mobileMenuExpanded ? styles.linksRailOpen : styles.linksRail}
       >
-        {filteredMenuItems.map(([href, label, permissions = []]) => {
+        {filteredMenuItems.map(([IconComponent, href, label]) => {
           const isActive =
             href === "/dashboard"
               ? pathname === href
@@ -62,6 +80,7 @@ export function DashboardHeader({ actions }: Props) {
               }
               href={href}
             >
+              <IconComponent className={styles.mobileMenuIcon} />
               {label}
             </InternalLink>
           );
@@ -76,22 +95,22 @@ export function DashboardHeader({ actions }: Props) {
             buttonStyle="tertiary"
           />
         )}
-        <Button
-          className={styles.mobileDropdownAction}
-          onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
-          icon={
-            <DownIcon
-              className={
-                mobileMenuExpanded
-                  ? styles.toggleMobileDropdownIconActive
-                  : styles.toggleMobileDropdownIcon
-              }
-            />
-          }
-          size="small"
-          style="tertiary"
-        />
       </div>
+      <Button
+        className={styles.mobileDropdownAction}
+        onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
+        icon={
+          <DownIcon
+            className={
+              mobileMenuExpanded
+                ? styles.toggleMobileDropdownIconActive
+                : styles.toggleMobileDropdownIcon
+            }
+          />
+        }
+        size="small"
+        style="tertiary"
+      />
     </div>
   );
 }

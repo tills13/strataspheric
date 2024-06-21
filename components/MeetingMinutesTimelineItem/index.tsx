@@ -1,10 +1,12 @@
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { File, NewMeetingMinutes } from "../../data";
 import { MeetingMinutes } from "../../data/meetings/getMeetingMinutes";
 import { classnames } from "../../utils/classnames";
+import { FileLink } from "../FileLink";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { MinutesApprover } from "../MinutesApprover";
+import { Panel } from "../Panel";
 import { RemoveButton } from "../RemoveButton";
 import { StatusButton } from "../StatusButton";
 
@@ -14,6 +16,7 @@ interface Props {
   deleteMeetingMinutes: () => void;
   file: MeetingMinutes;
   showApproveButton: boolean;
+  versionNum: number;
 }
 
 export function MeetingMinutesTimelineItem({
@@ -22,13 +25,17 @@ export function MeetingMinutesTimelineItem({
   deleteMeetingMinutes,
   file,
   showApproveButton,
+  versionNum,
 }: Props) {
   return (
-    <div className={classnames(className, styles.meetingMinutesTimelineItem)}>
+    <Panel className={classnames(className, styles.meetingMinutesTimelineItem)}>
+      <span className={s({ color: "secondary" })}>Version {versionNum}</span>
       <div className={styles.header}>
-        <span className={styles.fileName}>{file.name}</span>
+        <FileLink className={styles.fileName} path={file.path}>
+          {file.name}
+        </FileLink>
         <div className={styles.headerActions}>
-          {file.state === "approved" && (
+          {file.state === "approved" && file.approverName && (
             <MinutesApprover approverName={file.approverName} />
           )}
           {showApproveButton && (
@@ -52,6 +59,6 @@ export function MeetingMinutesTimelineItem({
           )}
         </div>
       </div>
-    </div>
+    </Panel>
   );
 }

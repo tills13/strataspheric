@@ -28,6 +28,8 @@ export const header = style({
 export const headerHeader = style({
   flex: 1,
   lineHeight: vars.sizes.xs,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
 });
 
 export const agendaItemDescription = style({

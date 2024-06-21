@@ -7,6 +7,7 @@ interface Props extends AbstractWidgetProps {
   createFile: (fd: FormData) => void;
   deleteFile: (fileId: string) => void;
   widget: StrataWidget;
+  upsertStrataWidget: (fd: FormData) => void;
 }
 
 export async function ServerFileWidget({
@@ -14,6 +15,7 @@ export async function ServerFileWidget({
   deleteFile,
   deleteWidget,
   widget,
+  upsertStrataWidget,
 }: Props) {
   const files = await getWidgetFiles(widget.id, 10, 0);
 
@@ -24,6 +26,7 @@ export async function ServerFileWidget({
       deleteWidget={deleteWidget}
       files={files}
       widget={widget}
+      upsertStrataWidget={upsertStrataWidget}
     />
   );
 }

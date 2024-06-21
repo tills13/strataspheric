@@ -1,19 +1,27 @@
 import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const file = style({
+import { border } from "../../theme";
+
+export const fileAttachmentChip = style({
   display: "flex",
   gap: vars.spacing.small,
   padding: vars.spacing.small,
-  backgroundColor: "rgba(0, 0, 0, 0.05)",
+  backgroundColor: vars.colors.grey50,
+  border: border("2px", "solid", vars.colors.grey50),
+  height: vars.sizes.normal,
   color: "inherit",
   borderRadius: vars.borderRadius,
-  textOverflow: "ellipsis",
-  overflow: "hidden",
 });
 
 export const icon = style({
   height: "24px",
   verticalAlign: "top",
   flexShrink: 0,
+});
+
+export const name = style({
+  display: "block",
+  textOverflow: "ellipsis",
+  overflow: "hidden",
 });

@@ -26,7 +26,6 @@ interface Props {
 }
 
 export function ContinueWhereYouLeftOffWidget({
-  className,
   session,
   sessionStratas,
 }: Props) {

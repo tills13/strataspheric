@@ -2,6 +2,16 @@ import { vars } from "./app/theme.css";
 
 import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles";
 
+const fontProperties = defineProperties({
+  properties: {
+    color: {
+      primary: vars.fontColors.primary,
+      secondary: vars.fontColors.secondary,
+      tertiary: vars.fontColors.tertiary,
+    },
+  },
+});
+
 const widthProperties = defineProperties({
   properties: {
     width: {
@@ -54,6 +64,7 @@ const marginProperties = defineProperties({
   shorthands: {
     mb: ["marginBottom"],
     mt: ["marginTop"],
+    mv: ["marginTop", "marginBottom"],
   },
 });
 
@@ -61,4 +72,5 @@ export const s = createSprinkles(
   marginProperties,
   paddingProperties,
   widthProperties,
+  fontProperties,
 );

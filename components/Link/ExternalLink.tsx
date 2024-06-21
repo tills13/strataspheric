@@ -2,6 +2,8 @@ import * as styles from "./style.css";
 
 import React, { PropsWithChildren } from "react";
 
+import { classnames } from "../../utils/classnames";
+
 interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {}
 
 export function ExternalLink({
@@ -10,7 +12,7 @@ export function ExternalLink({
   ...props
 }: PropsWithChildren<Props>) {
   return (
-    <a className={className || styles.link} {...props}>
+    <a className={classnames(className, styles.link)} {...props}>
       {children}
     </a>
   );

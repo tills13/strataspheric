@@ -6,6 +6,7 @@ import { padding } from "../../../../theme";
 export const dashboardLayoutContainer = style({
   display: "grid",
   gridTemplateRows: "min-content auto",
+  gridTemplateColumns: "100vw",
 
   "@media": {
     [breakpoints.tablet]: {
@@ -33,8 +34,7 @@ export const pageContainerFullWidthMobile = style([
 
 export const dashboardWidgetGridContainer = style({
   display: "grid",
-  gridTemplateColumns: "repeat(1, 1fr)",
-  gridAutoRows: "200px",
+  gridTemplateColumns: "100%",
   gap: vars.spacing.normal,
   overflow: "auto",
 

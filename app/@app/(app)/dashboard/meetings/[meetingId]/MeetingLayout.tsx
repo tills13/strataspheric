@@ -9,6 +9,7 @@ import { Header } from "../../../../../../components/Header";
 import { DeleteIcon } from "../../../../../../components/Icon/DeleteIcon";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
 import { Panel } from "../../../../../../components/Panel";
+import { Meeting } from "../../../../../../data";
 import { getMeeting } from "../../../../../../data/meetings/getMeeting";
 import { classnames } from "../../../../../../utils/classnames";
 import { deleteMeetingAction } from "../actions";
@@ -23,6 +24,31 @@ interface Props {
   strataId: string;
 }
 
+function MeetingInfo({
+  className,
+  meeting,
+}: {
+  className?: string;
+  meeting: Awaited<ReturnType<typeof getMeeting>>;
+}) {
+  return (
+    <div className={classnames(styles.header, s({ mb: "normal" }), className)}>
+      <EditMeetingButton
+        className={styles.editMeetingButton}
+        meeting={meeting}
+        updateMeeting={updateMeetingAction.bind(undefined, meeting.id)}
+      />
+      <Header className={s({ mb: "normal" })} priority={2}>
+        {meeting.purpose}
+      </Header>
+      <p>
+        Called by <b>{meeting.caller}</b> for
+        <br /> <Date timestamp={meeting.startDate} />
+      </p>
+    </div>
+  );
+}
+
 export async function MeetingLayout({ meetingId, strataId }: Props) {
   const meeting = await getMeeting(strataId, meetingId);
 
@@ -34,20 +60,7 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           s({ padding: "normal" }),
         )}
       >
-        <div className={classnames(styles.header, s({ mb: "normal" }))}>
-          <EditMeetingButton
-            className={styles.editMeetingButton}
-            meeting={meeting}
-            updateMeeting={updateMeetingAction.bind(undefined, meetingId)}
-          />
-          <Header className={s({ mb: "normal" })} priority={2}>
-            {meeting.purpose}
-          </Header>
-          <p>
-            Called by <b>{meeting.caller}</b> for
-            <br /> <Date timestamp={meeting.startDate} />
-          </p>
-        </div>
+        <MeetingInfo meeting={meeting} />
         <InfoPanel level="error">
           <Header className={s({ mb: "small" })} priority={3}>
             Delete Meeting
@@ -70,6 +83,11 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
       </div>
 
       <div className={styles.meetingAgendaContainer}>
+        <MeetingInfo
+          className={styles.meetingAgendaContainerMeetingInfo}
+          meeting={meeting}
+        />
+
         {meeting.notes && <p className={s({ mb: "large" })}>{meeting.notes}</p>}
 
         <MeetingAgenda className={s({ mb: "large" })} meetingId={meetingId} />
@@ -82,11 +100,32 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           minutesUrl={meeting.minutesUrl}
           minutesUrlApprovedByName={meeting.minutesUrlApproverName}
         />
+
+        <InfoPanel
+          className={styles.meetingAgendaContainerDeleteMeeting}
+          level="error"
+        >
+          <Header className={s({ mb: "small" })} priority={3}>
+            Delete Meeting
+          </Header>
+
+          <p className={s({ mb: "large" })}>
+            Deleting this meeting will delete all associated agenda items, but
+            leave any files created during planning.
+          </p>
+
+          <ConfirmButton
+            color="error"
+            iconRight={<DeleteIcon />}
+            onClickConfirm={deleteMeetingAction.bind(undefined, meeting.id)}
+            style="secondary"
+          >
+            Delete Meeting
+          </ConfirmButton>
+        </InfoPanel>
       </div>
       <div className={styles.meetingTimelineSearchContainer}>
-        <Panel>
-          <MeetingTimelineSearch meetingId={meetingId} strataId={strataId} />
-        </Panel>
+        <MeetingTimelineSearch meetingId={meetingId} strataId={strataId} />
       </div>
     </div>
   );

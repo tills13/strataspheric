@@ -29,15 +29,14 @@ export default async function Page({
     <>
       <FilesHeader upsertFile={upsertFileAction.bind(undefined, undefined)} />
       <div className={styles.filesPageContainer}>
-        <div>
-          <Suspense>
-            <FilesList
-              searchTerm={searchParams["search"]}
-              strataId={strata.id}
-              visibility={searchParams.visibility}
-            />
-          </Suspense>
-        </div>
+        <Suspense>
+          <FilesList
+            searchTerm={searchParams["search"]}
+            strataId={strata.id}
+            visibility={searchParams.visibility}
+          />
+        </Suspense>
+
         <div className={s({ p: "normal" })}>
           <Header className={s({ mb: "normal" })} priority={2}>
             Files Search

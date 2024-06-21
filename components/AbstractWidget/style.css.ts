@@ -9,7 +9,7 @@ export const abstractWidget = style({
   padding: vars.spacing.normal,
   borderRadius: vars.borderRadius,
   border: `2px solid ${vars.colors.borderDefault}`,
-  overflow: "hidden",
+  // overflow: "hidden",
 });
 
 export const abstractWidgetHeader = style({
@@ -53,4 +53,8 @@ export const abstractWidgetListItem = style({
       borderBottom: `1px solid ${vars.colors.borderDefault}`,
     },
   },
+});
+
+export const abstractWidgetListItemContent = style({
+  overflow: "hidden",
 });

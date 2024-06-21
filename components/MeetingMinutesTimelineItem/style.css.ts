@@ -1,21 +1,30 @@
-import { iconColorVar, vars } from "../../app/theme.css";
+import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const meetingMinutesTimelineItem = style({
   position: "relative",
-  top: vars.spacing.small,
 });
 
 export const header = style({
-  height: vars.sizes.small,
-  display: "flex",
-  justifyContent: "space-between",
-  alignContent: "center",
+  overflow: "hidden",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "flex",
+      justifyContent: "space-between",
+      gap: vars.spacing.normal,
+      alignContent: "center",
+    },
+  },
 });
 
 export const fileName = style({
+  display: "block",
   lineHeight: vars.sizes.small,
   fontWeight: vars.fontWeights.bold,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
 });
 
 export const headerActions = style({
