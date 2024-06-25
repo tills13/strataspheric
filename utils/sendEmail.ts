@@ -7,6 +7,8 @@ export async function sendEmail(
   subject: string,
   html: string,
 ) {
+  console.log("[debug] sending email to", to);
+
   const r = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {

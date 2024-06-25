@@ -18,6 +18,5 @@ export const signInFormCheckboxWrapper = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  marginBottom: vars.spacing.normal,
   fontFamily: vars.fontFamilies.secondaryHeader,
 });

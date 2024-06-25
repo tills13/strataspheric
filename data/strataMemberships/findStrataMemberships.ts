@@ -1,7 +1,6 @@
 import { StrataMembership, db } from "..";
 
 interface FindMembersFilters {
-  email?: string;
   domain?: string;
   strataId?: string;
   userId?: string;
@@ -9,12 +8,13 @@ interface FindMembersFilters {
 
 export async function findStrataMemberships(
   opts: FindMembersFilters,
-): Promise<StrataMembership[]> {
+): Promise<Array<StrataMembership & { name: string }>> {
   let query = db
     .selectFrom("strata_memberships")
     .innerJoin("stratas", "strata_memberships.strataId", "stratas.id")
     .innerJoin("users", "strata_memberships.userId", "users.id")
-    .selectAll(["strata_memberships"]);
+    .selectAll(["strata_memberships"])
+    .select("users.name");
 
   if (opts.userId) {
     query = query.where("strata_memberships.userId", "=", opts.userId);
@@ -26,10 +26,6 @@ export async function findStrataMemberships(
 
   if (opts.domain) {
     query = query.where("stratas.domain", "=", opts.domain);
-  }
-
-  if (opts.email) {
-    query = query.where("strata_memberships.email", "=", opts.email);
   }
 
   return query.execute();

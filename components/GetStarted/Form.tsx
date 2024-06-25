@@ -7,7 +7,7 @@ import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
-import { SubmitGetStartedState } from "../../app/@marketing/(marketing)/get-started/actions";
+import { SubmitGetStartedState } from "../../app/@marketing/get-started/actions";
 import { tld } from "../../constants";
 import { PricingPlan } from "../../data/strataPlans/constants";
 import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";

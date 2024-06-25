@@ -1,25 +1,33 @@
 "use client";
 
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { signIn } from "next-auth/react";
 import React from "react";
 import { useFormState } from "react-dom";
 
-import { type JoinFormState } from "../../app/@marketing/(marketing)/(static)/join/actions";
+import { type JoinFormState } from "../../app/@marketing/join/actions";
+import { Strata } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Checkbox } from "../Checkbox";
+import { InfoPanel } from "../InfoPanel";
 import { StatusButton } from "../StatusButton";
 import { JoinFormFields } from "./JoinFormFields";
 
 interface Props {
   className?: string;
   onSubmit: (state: JoinFormState, fd: FormData) => Promise<JoinFormState>;
+  strata?: Strata;
 }
 
-export function JoinForm({ className, onSubmit }: Props) {
+export function JoinForm({ className, onSubmit, strata }: Props) {
   const [state, onSubmitAction] = useFormState(
     async (state: JoinFormState, fd: FormData) => {
+      if (strata) {
+        fd.set("strataId", strata.id);
+      }
+
       const nextState = await onSubmit(state, fd);
 
       if (nextState?.success) {
@@ -39,20 +47,27 @@ export function JoinForm({ className, onSubmit }: Props) {
 
   return (
     <form action={onSubmitAction} className={classnames(className)}>
-      <JoinFormFields />
+      <div className={s({ mb: "large" })}>
+        <JoinFormFields />
 
-      <label className={styles.signInFormCheckboxWrapper} htmlFor="isRealtor">
-        I am a realtor
-        <Checkbox id="isRealtor" name="isRealtor" defaultChecked={false} />
-      </label>
+        <label
+          className={classnames(
+            styles.signInFormCheckboxWrapper,
+            s({ marginBottom: "normal" }),
+          )}
+          htmlFor="isRealtor"
+        >
+          I am a realtor
+          <Checkbox id="isRealtor" name="isRealtor" defaultChecked={false} />
+        </label>
 
-      <StatusButton
-        color="primary"
-        size="large"
-        success={state?.success}
-        type="submit"
-      >
-        Sign Up
+        {!state?.success && state?.error && (
+          <InfoPanel level="error">{state.error}</InfoPanel>
+        )}
+      </div>
+
+      <StatusButton color="primary" success={state?.success} type="submit">
+        {strata ? `Join ${strata.name}` : "Sign Up"}
       </StatusButton>
     </form>
   );

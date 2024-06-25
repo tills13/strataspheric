@@ -5,11 +5,9 @@ import { classnames } from "../../utils/classnames";
 export function StaticPageContainer({
   children,
   className,
-  fullWidth,
 }: {
   children: React.ReactNode;
   className?: string;
-  fullWidth?: boolean;
 }) {
   return (
     <div className={classnames(styles.staticPageContainer, className)}>

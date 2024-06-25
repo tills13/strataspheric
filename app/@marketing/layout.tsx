@@ -8,7 +8,7 @@ export default async function RootMarketingLayout({
   return (
     <>
       <GlobalMarketingHeader />
-      <div>{children}</div>
+      {children}
     </>
   );
 }

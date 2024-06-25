@@ -1,5 +1,6 @@
 "use client";
 
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import React from "react";
@@ -11,21 +12,21 @@ import { StatusButton } from "../StatusButton";
 
 interface Props {
   className?: string;
-  membership: StrataMembership & User;
+  membershipName: string;
   onSubmit: (fd: FormData) => void;
   strata: Strata;
 }
 
 export function JoinFromTokenForm({
   className,
-  membership,
+  membershipName,
   onSubmit,
   strata,
 }: Props) {
   return (
     <form action={onSubmit} className={className}>
       <Header className={styles.header0} priority={2}>
-        Welcome to Strataspheric, {membership.name}
+        Welcome to Strataspheric, {membershipName}
       </Header>
 
       <Header className={styles.header1} priority={3}>
@@ -33,20 +34,20 @@ export function JoinFromTokenForm({
       </Header>
 
       <Input
-        className={styles.input}
+        className={s({ mb: "normal", w: "full" })}
         placeholder="Password"
         name="password"
         type="password"
       />
 
       <Input
-        className={styles.input}
+        className={s({ mb: "large", w: "full" })}
         placeholder="Confirm Password"
         name="confirm_password"
         type="password"
       />
 
-      <StatusButton color="primary" size="large" type="submit">
+      <StatusButton color="primary" type="submit">
         Set Password
       </StatusButton>
     </form>

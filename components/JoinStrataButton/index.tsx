@@ -3,11 +3,10 @@
 import { Session } from "next-auth";
 import { useTransition } from "react";
 
-import { protocol, tld } from "../../constants";
 import { Strata, StrataMembership } from "../../data";
 import { Button } from "../Button";
 import { ArrowForwardIcon } from "../Icon/ArrowForwardIcon";
-import { ExternalLink } from "../Link/ExternalLink";
+import { InternalLink } from "../Link/InternalLink";
 import { StatusButton } from "../StatusButton";
 
 interface Props {
@@ -31,7 +30,7 @@ export function JoinStrataButton({
 
   if (!user) {
     return (
-      <ExternalLink href={protocol + "//" + tld + "/join"}>
+      <InternalLink href="/?action=join">
         <Button
           color="primary"
           iconRight={<ArrowForwardIcon />}
@@ -40,7 +39,7 @@ export function JoinStrataButton({
         >
           Join {strata.name}
         </Button>
-      </ExternalLink>
+      </InternalLink>
     );
   }
 

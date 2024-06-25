@@ -33,7 +33,7 @@ export async function JoinFromToken({ token: rawToken }: Props) {
 
   return (
     <JoinFromTokenForm
-      membership={membership}
+      membershipName={membership.name}
       onSubmit={joinFromTokenAction.bind(undefined, token.token)}
       strata={strata}
     />

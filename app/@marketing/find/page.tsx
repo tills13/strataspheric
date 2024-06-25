@@ -12,7 +12,11 @@ import { StrataSearchForm } from "./StrataSearchForm";
 
 export const runtime = "edge";
 
-export default async function Page({ searchParams }) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Record<string, string>;
+}) {
   return (
     <StaticPageContainer>
       <div className={styles.strataSearchPageContainer}>

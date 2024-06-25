@@ -1,8 +1,8 @@
-alter table stratas
-add column status text not null default 'pending';
+ALTER TABLE stratas
+ADD COLUMN status text NOT NULL DEFAULT 'pending';
 
-alter table stratas
-add column strataActiveEmailSent boolean default FALSE;
+ALTER TABLE stratas
+ADD COLUMN strataActiveEmailSent boolean DEFAULT FALSE;
 
-alter table stratas
-add column city text;
+ALTER TABLE stratas
+ADD COLUMN city text;

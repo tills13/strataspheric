@@ -15,11 +15,6 @@ export const blurb = style({
   marginBottom: vars.spacing.large,
 });
 
-export const input = style({
-  marginBottom: vars.spacing.normal,
-  width: "100%",
-});
-
 export const submitButtonIcon = style({
   verticalAlign: "top",
   fill: important(vars.colors.green500),

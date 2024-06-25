@@ -14,7 +14,11 @@ export default async function Page({
   searchParams: Record<string, string>;
 }) {
   if (searchParams["token"]) {
-    return <JoinFromToken token={searchParams["token"]} />;
+    return (
+      <StaticPageContainer>
+        <JoinFromToken token={searchParams["token"]} />
+      </StaticPageContainer>
+    );
   }
 
   return (

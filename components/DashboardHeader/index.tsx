@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
-import { can } from "../../data/users/permissions";
+import { can, p } from "../../data/users/permissions";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
 import { BedIcon } from "../Icon/BedIcon";
@@ -17,6 +17,7 @@ import { DownIcon } from "../Icon/DownIcon";
 import { FilesIcon } from "../Icon/FilesIcon";
 import { GroupIcon } from "../Icon/GroupIcon";
 import { InboxIcon } from "../Icon/InboxIcon";
+import { PaidDocumentIcon } from "../Icon/PaidDocumentIcon";
 import { PersonIcon } from "../Icon/PersonIcon";
 import { SettingsIcon } from "../Icon/SettingsIcon";
 import { ZipFileIcon } from "../Icon/ZipFileIcon";
@@ -37,6 +38,12 @@ type LinkWithPermissions = [
 const links: Array<Link | LinkWithPermissions> = [
   [DashboardIcon, "/dashboard", "Dashboard"],
   [FilesIcon, "/dashboard/files", "Files"],
+  [
+    PaidDocumentIcon,
+    "/dashboard/invoices",
+    "Invoices",
+    [p("stratas", "invoices", "view")],
+  ],
   [CalendarIcon, "/dashboard/calendar", "Events"],
   [PersonIcon, "/dashboard/membership", "Directory"],
   [BedIcon, "/dashboard/amenities", "Amenities"],

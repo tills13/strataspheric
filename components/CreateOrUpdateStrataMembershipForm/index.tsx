@@ -30,6 +30,7 @@ export function CreateOrUpdateStrataMembershipForm({
         type="text"
         placeholder="Name"
         defaultValue={strataMembership?.name}
+        required
       />
 
       <InputField
@@ -37,6 +38,7 @@ export function CreateOrUpdateStrataMembershipForm({
         type="text"
         placeholder="Unit"
         defaultValue={strataMembership?.unit || undefined}
+        required
       />
 
       <InputField
@@ -44,7 +46,9 @@ export function CreateOrUpdateStrataMembershipForm({
         type="email"
         placeholder="Email Address"
         defaultValue={strataMembership?.email}
+        required
       />
+
       <InputField
         name="phone_number"
         type="text"
@@ -56,6 +60,7 @@ export function CreateOrUpdateStrataMembershipForm({
         placeholder="Strata Role"
         name="role"
         defaultValue={strataMembership?.role || "owner"}
+        required
       />
 
       <StatusButton
@@ -63,7 +68,11 @@ export function CreateOrUpdateStrataMembershipForm({
         iconRight={strataMembership ? <SaveIcon /> : <AddIcon />}
         type="submit"
       >
-        {strataMembership ? "Update Member" : "Add Member"}
+        {strataMembership
+          ? strataMembership.role === "pending"
+            ? "Approve Member"
+            : "Update Member"
+          : "Add Member"}
       </StatusButton>
     </form>
   );

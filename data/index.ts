@@ -217,6 +217,7 @@ export interface UsersTable {
   email: ColumnType<string, string, never>;
   password: string;
   name: string;
+  status: "pending" | "active" | "suspended";
   accountType: ColumnType<AccountType, AccountType | null, AccountType>;
 }
 

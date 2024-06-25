@@ -81,30 +81,40 @@ export function wildcardScopeToRegex(scope: string) {
 
 export function can(
   scoped: HasScope | null | undefined,
-  ...targetScope: string[]
+  ...targetScopes: string[]
 ): boolean {
-  if (targetScope.length !== 1) {
-    return targetScope.every((scope) => can(scoped, scope));
+  if (targetScopes.length !== 1) {
+    return targetScopes.every((scope) => can(scoped, scope));
   }
 
-  const mTargetScope = targetScope[0];
   const userScopes = !scoped ? roleScopeToScopes(undefined) : scoped.scopes;
 
   let scope: RegExp | string;
+  let anyNegateModifier = false;
 
-  for (scope of userScopes) {
-    if (scope.includes("*")) {
-      scope = wildcardScopeToRegex(scope);
+  for (let targetScope of targetScopes) {
+    let modifier = true;
+
+    if (targetScope.startsWith("!")) {
+      modifier = false;
+      anyNegateModifier = true;
+      targetScope = targetScope.substring(1);
     }
 
-    if (typeof scope === "string" && scope === mTargetScope) {
-      return true;
-    } else if (scope instanceof RegExp && scope.test(mTargetScope)) {
-      return true;
+    for (scope of userScopes) {
+      if (scope.includes("*")) {
+        scope = wildcardScopeToRegex(scope);
+      }
+
+      if (typeof scope === "string" && scope === targetScope) {
+        return modifier && true;
+      } else if (scope instanceof RegExp && scope.test(targetScope)) {
+        return modifier && true;
+      }
     }
   }
 
-  return false;
+  return anyNegateModifier || false;
 }
 
 export function assertCan(

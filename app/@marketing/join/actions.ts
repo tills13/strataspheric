@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 
+import { createStrataMembership } from "../../../data/strataMemberships/createStrataMembership";
 import { findStrataMemberships } from "../../../data/strataMemberships/findStrataMemberships";
 import { getStrataById } from "../../../data/stratas/getStrataById";
 import { deleteUserPasswordResetToken } from "../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
@@ -25,6 +26,7 @@ export async function joinAction(
   _formState: JoinFormState,
   fd: FormData,
 ): Promise<JoinFormState> {
+  const strataId = formdata.getString(fd, "strataId");
   const email = formdata.getString(fd, "email");
   const name = formdata.getString(fd, "name");
   const password = formdata.getString(fd, "password");
@@ -38,23 +40,38 @@ export async function joinAction(
     };
   }
 
+  let userId: string;
+
   try {
     const existingUser = await getUser(email);
+
+    if (existingUser && existingUser.status !== "pending") {
+      throw new Error("User already exists.");
+    }
 
     if (existingUser) {
       await updateUser(existingUser.id, { name, password });
     } else {
-      await createUser({
-        email,
-        password,
+      const u = await createUser({
         accountType: isRealtor ? "realtor" : "user",
+        email,
         name,
+        password,
+        status: "active",
       });
+
+      if (strataId) {
+        await createStrataMembership({
+          strataId,
+          userId: u.id,
+          role: "pending",
+        });
+      }
     }
   } catch (e) {
     return {
       success: false,
-      error: e,
+      error: e instanceof Error ? e.message : `${e}`,
     };
   }
 
