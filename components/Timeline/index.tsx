@@ -6,19 +6,22 @@ import { classnames } from "../../utils/classnames";
 
 interface Props {
   className?: string;
+  emptyMessage?: React.ReactNode;
   items: Array<{
     icon: React.ReactNode;
     contents: React.ReactNode;
   }>;
 }
 
-export function Timeline({ className, items }: Props) {
+export function Timeline({
+  className,
+  emptyMessage = "There's nothing here...",
+  items,
+}: Props) {
   return (
     <div className={classnames(styles.timeline, className)}>
       {items.length === 0 && (
-        <span className={styles.timelineEmptyMessage}>
-          There&apos;s nothing here...
-        </span>
+        <div className={styles.timelineEmptyMessage}>{emptyMessage}</div>
       )}
       {items.map(({ contents, icon }, idx) => (
         <div key={idx} className={styles.timelineItem}>

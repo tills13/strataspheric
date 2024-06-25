@@ -1,44 +1,25 @@
-"use client";
-
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
-import { useSelectedLayoutSegment } from "next/navigation";
-
-import { protocol, tld } from "../../constants";
-import { Strata } from "../../data";
-import { classnames } from "../../utils/classnames";
+import { auth } from "../../auth";
+import { getUserStratas } from "../../data/users/getUserStratas";
 import { Button } from "../Button";
-import { DropdownActions } from "../DropdownActions";
 import { ElementGroup } from "../ElementGroup";
 import { GoToStrataLinkButton } from "../GoToStrataLinkButton";
 import { Header } from "../Header";
-import { PersonIcon } from "../Icon/PersonIcon";
-import { SignOutIcon } from "../Icon/SignOutIcon";
 import { InternalLink } from "../Link/InternalLink";
 import { Panel } from "../Panel";
+import { ContinueWhereYouLeftOffWidgetDropdownActions } from "./ContinueWhereYouLeftOffWidgetDropdownActions";
 
-interface Props {
-  className?: string;
-  session: Session | null;
-  sessionStratas: Strata[];
-}
-
-export function ContinueWhereYouLeftOffWidget({
-  session,
-  sessionStratas,
-}: Props) {
-  const isMarketingSegment =
-    useSelectedLayoutSegment("marketing") !== "__DEFAULT__";
-
-  if (!isMarketingSegment) {
-    return null;
-  }
+export async function ContinueWhereYouLeftOffWidget() {
+  const session = await auth();
+  const sessionStratas = session?.user?.id
+    ? await getUserStratas(session.user.id)
+    : [];
 
   return (
     <Panel className={styles.continuePanel}>
-      <Header className={styles.continuePanelHeader} priority={3}>
+      <Header className={s({ mb: "normal" })} priority={3}>
         Continue where you left off...
       </Header>
       <div className={styles.spacer} />
@@ -53,33 +34,14 @@ export function ContinueWhereYouLeftOffWidget({
               />
             ) : (
               <InternalLink className={styles.continueAction} href="/find">
-                <Button>Find a Strata</Button>
+                <Button color="default">Find a Strata</Button>
               </InternalLink>
             )}
-            <DropdownActions
-              actions={[
-                {
-                  async action() {
-                    await signOut({ redirect: false });
-                    location.href = protocol + "//" + tld;
-                  },
-                  label: "Sign Out",
-                  icon: <SignOutIcon />,
-                },
-                {
-                  action: "/profile",
-                  label: "Profile",
-                  icon: <PersonIcon />,
-                },
-              ]}
-              className={styles.continueActionOverflow}
-              direction="up"
-              buttonStyle="tertiary"
-            />
+            <ContinueWhereYouLeftOffWidgetDropdownActions />
           </>
         ) : (
           <InternalLink className={styles.continueAction} href="/sign-in">
-            <Button>Sign In</Button>
+            <Button color="default">Sign In</Button>
           </InternalLink>
         )}
       </ElementGroup>

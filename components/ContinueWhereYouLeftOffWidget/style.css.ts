@@ -16,10 +16,6 @@ export const spacer = style({
   flex: 1,
 });
 
-export const continuePanelHeader = style({
-  marginBottom: vars.spacing.normal,
-});
-
 export const continuePanelList = style({});
 export const continueAction = style({
   flex: 1,

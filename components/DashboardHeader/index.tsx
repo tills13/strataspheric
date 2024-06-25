@@ -23,12 +23,12 @@ import { ZipFileIcon } from "../Icon/ZipFileIcon";
 import { InternalLink } from "../Link/InternalLink";
 
 type Link = [
-  icon: React.ComponentType<{ className?: string }>,
+  icon: React.ComponentType<{ classNameOverride?: string }>,
   href: string,
   label: string,
 ];
 type LinkWithPermissions = [
-  icon: React.ComponentType<{ className?: string }>,
+  icon: React.ComponentType<{ classNameOverride?: string }>,
   href: string,
   label: string,
   permissions: string[],
@@ -80,7 +80,7 @@ export function DashboardHeader({ actions }: Props) {
               }
               href={href}
             >
-              <IconComponent className={styles.mobileMenuIcon} />
+              <IconComponent classNameOverride={styles.mobileMenuIcon} />
               {label}
             </InternalLink>
           );

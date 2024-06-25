@@ -20,7 +20,7 @@ import { updateMeetingEvent } from "../../../../../../data/meetings/updateMeetin
 import { updateMinutes } from "../../../../../../data/meetings/updateMinutes";
 import { assertCan, can, p } from "../../../../../../data/users/permissions";
 import * as formdata from "../../../../../../utils/formdata";
-import { AgendaTimelineEntry } from "./MeetingTimelineSearch";
+import { AgendaTimelineEntry } from "./StrataActivityTimelime";
 
 export async function updateMeetingAction(meetingId: string, fd: FormData) {
   const purpose = formdata.getString(fd, "purpose");
@@ -71,30 +71,9 @@ export async function upsertAgendaItemAction(
 
 export async function addItemToAgendaAction(
   meetingId: string,
-  item: AgendaTimelineEntry,
+  item: NewMeetingAgendaItem,
 ): Promise<void> {
-  let newItem: Omit<NewMeetingAgendaItem, "id"> = {
-    title: "",
-    description: "",
-    meetingId,
-  };
-
-  if (item.type === "chat") {
-    newItem.chatId = item.chatId;
-    // newItem.description = item.chatMessage;
-    newItem.title = "Discuss message chat";
-  } else if (item.type === "event") {
-    newItem.eventId = item.eventId;
-    newItem.title = `Discuss upcoming event "${item.eventName}"`;
-  } else if (item.type === "file") {
-    newItem.fileId = item.fileId;
-    newItem.title = `Discuss file "${item.fileName}"`;
-  } else if (item.type === "inbox_message") {
-    newItem.messageId = item.messageId;
-    newItem.title = "Discuss recieved message";
-  }
-
-  await addItemToMeetingAgenda(meetingId, newItem);
+  await addItemToMeetingAgenda(meetingId, item);
 
   revalidatePath("/dashboard/meetings/" + meetingId);
 }

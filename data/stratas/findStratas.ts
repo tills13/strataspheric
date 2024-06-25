@@ -14,6 +14,8 @@ type Filter = {
 };
 
 export async function findStratas(filter: Filter): Promise<Strata[]> {
+  // await new Promise((r) => setTimeout(r, 2000));
+
   let query = db
     .selectFrom("stratas")
     .selectAll()

@@ -1,4 +1,5 @@
 import { breakpoints, vars } from "../../app/theme.css";
+import { icon } from "../Icon/style.css";
 import { createVar, style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -46,17 +47,20 @@ export const linksRailOpen = style([
   },
 ]);
 
-export const mobileMenuIcon = style({
-  height: calc(vars.sizes.xs).toString(),
-  marginRight: vars.spacing.normal,
-  verticalAlign: "middle",
+export const mobileMenuIcon = style([
+  icon,
+  {
+    height: calc(vars.sizes.xs).toString(),
+    marginRight: vars.spacing.normal,
+    verticalAlign: "middle",
 
-  "@media": {
-    [breakpoints.tablet]: {
-      display: "none",
+    "@media": {
+      [breakpoints.tablet]: {
+        display: "none",
+      },
     },
   },
-});
+]);
 
 export const baseSubheaderLink = style({
   height: vars.sizes.small,
@@ -66,6 +70,7 @@ export const baseSubheaderLink = style({
 
   "@media": {
     [breakpoints.tablet]: {
+      width: "auto",
       padding: padding(0, vars.spacing.small),
     },
   },

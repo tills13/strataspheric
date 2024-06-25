@@ -5,7 +5,7 @@ import * as styles from "./style.css";
 
 import React, { useTransition } from "react";
 
-import { type AgendaTimelineEntry } from "../../app/@app/(app)/dashboard/meetings/[meetingId]/MeetingTimelineSearch";
+import type { StrataActivity } from "../../app/api/stratas/listActivity/route";
 import { classnames } from "../../utils/classnames";
 import { Date } from "../Date";
 import { FileAttachmentChip } from "../FileAttachmentChip";
@@ -14,7 +14,7 @@ import { AddIcon } from "../Icon/AddIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
 import { StatusButton } from "../StatusButton";
 
-interface Props extends AgendaTimelineEntry {
+interface Props extends StrataActivity {
   addItemToAgenda: () => void;
   className?: string;
 }

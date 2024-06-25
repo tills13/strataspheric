@@ -27,53 +27,51 @@ export async function MeetingFiles({ className, meetingId }: Props) {
         Files
       </Header>
 
-      <Panel>
-        {files.length === 0 && (
-          <InfoPanel className={s({ mb: "normal" })}>
-            <strong>No files added to this meeting.</strong> Use the button
-            below to add documents for discussion, images, or anything else you
-            might need for this meeting.
-          </InfoPanel>
-        )}
+      {files.length === 0 && (
+        <InfoPanel className={s({ mb: "normal" })}>
+          <strong>No files added to this meeting.</strong> Use the button below
+          to add documents for discussion, images, or anything else you might
+          need for this meeting.
+        </InfoPanel>
+      )}
 
-        <div className={s({ mb: "normal" })}>
-          {files.map((file) => (
-            <div key={file.id} className={styles.meetingFileContainer}>
-              <div className={styles.meetingFile}>
-                <FileTypeIcon
-                  className={styles.icon}
-                  defaultIcon={<TextDocumentIcon className={styles.icon} />}
-                  filePath={file.path}
-                />{" "}
-                <ExternalLink href={file.path} target="_blank">
-                  {file.name}
-                </ExternalLink>
-              </div>
-              <RemoveButton
-                action={removeFileFromMeetingAction.bind(
-                  undefined,
-                  meetingId,
-                  "file",
-                  file.id,
-                )}
-                color="error"
-                size="small"
-                style="tertiary"
-              />
+      <div className={s({ mb: "normal" })}>
+        {files.map((file) => (
+          <div key={file.id} className={styles.meetingFileContainer}>
+            <div className={styles.meetingFile}>
+              <FileTypeIcon
+                className={styles.icon}
+                defaultIcon={<TextDocumentIcon className={styles.icon} />}
+                filePath={file.path}
+              />{" "}
+              <ExternalLink href={file.path} target="_blank">
+                {file.name}
+              </ExternalLink>
             </div>
-          ))}
-        </div>
+            <RemoveButton
+              action={removeFileFromMeetingAction.bind(
+                undefined,
+                meetingId,
+                "file",
+                file.id,
+              )}
+              color="error"
+              size="small"
+              style="tertiary"
+            />
+          </div>
+        ))}
+      </div>
 
-        <AddFileToMeetingButton
-          addFileToMeeting={addFileToMeetingAction.bind(
-            undefined,
-            meetingId,
-            "file",
-          )}
-          attachFileText="Add File"
-          upsertFile={upsertFileAction.bind(undefined, undefined)}
-        />
-      </Panel>
+      <AddFileToMeetingButton
+        addFileToMeeting={addFileToMeetingAction.bind(
+          undefined,
+          meetingId,
+          "file",
+        )}
+        attachFileText="Add File"
+        upsertFile={upsertFileAction.bind(undefined, undefined)}
+      />
     </div>
   );
 }

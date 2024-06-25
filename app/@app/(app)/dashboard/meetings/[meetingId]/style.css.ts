@@ -9,7 +9,7 @@ export const meetingLayoutContainer = style({
       overflow: "hidden",
     },
     [breakpoints.desktop]: {
-      gridTemplateColumns: "minmax(auto, 300px) auto 400px",
+      gridTemplateColumns: "minmax(auto, 400px) minmax(auto, 1000px)",
     },
   },
 });

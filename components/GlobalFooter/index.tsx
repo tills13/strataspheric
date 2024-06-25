@@ -1,8 +1,8 @@
 import * as styles from "./style.css";
 
-import { auth } from "../../auth";
+import { Suspense } from "react";
+
 import { protocol, tld } from "../../constants";
-import { getUserStratas } from "../../data/users/getUserStratas";
 import { ContinueWhereYouLeftOffWidget } from "../ContinueWhereYouLeftOffWidget";
 import { HeartIcon } from "../Icon/HeartIcon";
 import { ExternalLink } from "../Link/ExternalLink";
@@ -10,12 +10,7 @@ import { Wordmark } from "../Wordmark";
 
 const baseUrl = protocol + "//" + tld;
 
-export async function GlobalFooter() {
-  const session = await auth();
-  const sessionStratas = session?.user?.id
-    ? await getUserStratas(session.user.id)
-    : [];
-
+export function GlobalFooter() {
   return (
     <footer className={styles.footer}>
       <div>
@@ -48,10 +43,9 @@ export async function GlobalFooter() {
         </p>
       </div>
 
-      <ContinueWhereYouLeftOffWidget
-        session={session}
-        sessionStratas={sessionStratas}
-      />
+      <Suspense>
+        <ContinueWhereYouLeftOffWidget />
+      </Suspense>
     </footer>
   );
 }

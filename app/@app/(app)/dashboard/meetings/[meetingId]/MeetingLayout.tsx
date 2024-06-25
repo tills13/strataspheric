@@ -8,15 +8,13 @@ import { EditMeetingButton } from "../../../../../../components/EditMeetingButto
 import { Header } from "../../../../../../components/Header";
 import { DeleteIcon } from "../../../../../../components/Icon/DeleteIcon";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
-import { Panel } from "../../../../../../components/Panel";
-import { Meeting } from "../../../../../../data";
 import { getMeeting } from "../../../../../../data/meetings/getMeeting";
 import { classnames } from "../../../../../../utils/classnames";
 import { deleteMeetingAction } from "../actions";
 import { MeetingAgenda } from "./MeetingAgenda";
 import { MeetingFiles } from "./MeetingFiles";
 import { MeetingMinutes } from "./MeetingMinutes";
-import { MeetingTimelineSearch } from "./MeetingTimelineSearch";
+import { StrataActivityTimelime } from "./StrataActivityTimelime";
 import { updateMeetingAction } from "./actions";
 
 interface Props {
@@ -123,9 +121,6 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
             Delete Meeting
           </ConfirmButton>
         </InfoPanel>
-      </div>
-      <div className={styles.meetingTimelineSearchContainer}>
-        <MeetingTimelineSearch meetingId={meetingId} strataId={strataId} />
       </div>
     </div>
   );

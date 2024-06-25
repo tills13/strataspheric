@@ -1,85 +1,97 @@
-import { s } from "../../../../../../sprinkles.css";
-import * as styles from "./style.css";
-
 import { sql } from "kysely";
 
-import { Header } from "../../../../../../components/Header";
-import { MeetingTimelineIcon } from "../../../../../../components/MeetingTimelineIcon";
-import { MeetingTimelineItem } from "../../../../../../components/MeetingTimelineItem";
-import { SelectField } from "../../../../../../components/SelectField";
-import { Timeline } from "../../../../../../components/Timeline";
-import { db } from "../../../../../../data";
-import { classnames } from "../../../../../../utils/classnames";
-import { addItemToAgendaAction } from "./actions";
+import { auth } from "../../../../auth";
+import { db } from "../../../../data";
+import { listInvoices } from "../../../../data/invoices/listInvoices";
+import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 
-export type AgendaTimelineEntry = {
+export const runtime = "edge";
+
+interface BaseActivity {
   id: string;
 
   date: number;
-  sourceUserName: string | null;
-  type: "invoice" | "event" | "file" | "inbox_message" | "chat";
+  type: "chat" | "event" | "file" | "inbox_message" | "invoice";
+}
 
+interface EventAcvitiy extends BaseActivity {
+  type: "event";
   eventId: string;
   eventName: string;
+}
 
+interface InvoiceActivity extends BaseActivity {
+  type: "invoice";
   invoiceId: string;
   invoiceIdentifier: string;
+}
 
-  // inbox messages
+interface MessageActivity extends BaseActivity {
+  type: "inbox_message";
   messageId: string;
   message: string;
   messageThreadId: string;
+}
 
-  // chats
+interface ChatActivity extends BaseActivity {
+  type: "chat";
   chatId: string;
   chatMessage: string;
   chatThreadId: string;
+}
 
-  // files
+interface FileActivity extends BaseActivity {
+  type: "file";
   fileId: string;
   filePath: string;
   fileName: string;
   fileDescription: string;
-};
-
-export interface Props {
-  meetingId: string;
-  strataId: string;
 }
 
-export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
-  const timeline: AgendaTimelineEntry[] = await db
+export type StrataActivity =
+  | EventAcvitiy
+  | InvoiceActivity
+  | MessageActivity
+  | ChatActivity
+  | FileActivity;
+
+export const GET = auth(async (req: Request) => {
+  const strata = await getCurrentStrata();
+
+  if (!strata) {
+    return new Response("Not Found", { status: 404 });
+  }
+
+  const searchParams = new URL(req.url).searchParams;
+  const activityType = searchParams.get("activityType");
+
+  let query = db
     .selectFrom(
-      // events in the future
       db
         .selectFrom("events")
         .select((eb) => [
-          eb
-            .selectFrom("users")
-            .select("users.name")
-            .where("users.id", "=", eb.ref("events.creatorId"))
-            .as("sourceUserName"),
+          "events.creatorId as sourceUserId",
           "events.startDate as date",
-          sql.lit<AgendaTimelineEntry["type"]>("event").as("type"),
+          sql.lit("event").as("type"),
 
           "events.id as eventId",
           "events.name as eventName",
 
-          sql.lit<string | null>(null).as("invoiceId"),
-          sql.lit<string | null>(null).as("invoiceIdentifier"),
+          sql.lit(null).as("invoiceId"),
+          sql.lit(null).as("invoiceIdentifier"),
 
-          sql.lit<string | null>(null).as("messageId"),
-          sql.lit<string | null>(null).as("message"),
-          sql.lit<string | null>(null).as("messageThreadId"),
+          sql.lit(null).as("messageId"),
+          sql.lit(null).as("message"),
+          sql.lit(null).as("messageThreadId"),
 
-          sql.lit<string | null>(null).as("fileId"),
-          sql.lit<string | null>(null).as("filePath"),
-          sql.lit<string | null>(null).as("fileName"),
-          sql.lit<string | null>(null).as("fileDescription"),
+          sql.lit(null).as("fileId"),
+          sql.lit(null).as("filePath"),
+          sql.lit(null).as("fileName"),
+          sql.lit(null).as("fileDescription"),
 
-          sql.lit<string | null>(null).as("chatId"),
-          sql.lit<string | null>(null).as("chatMessage"),
-          sql.lit<string | null>(null).as("chatThreadId"),
+          sql.lit(null).as("chatId"),
+          sql.lit(null).as("chatMessage"),
+          sql.lit(null).as("chatThreadId"),
         ])
         .where("events.startDate", ">", "now")
         .where("events.startDate", "<", (eb) =>
@@ -88,19 +100,16 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
             .select("startDate")
             .where("events.id", "=", "meetings.eventId"),
         )
-        .where("events.strataId", "=", strataId)
+        .where("events.strataId", "=", strata.id)
         .union(
           // files (all)
           db
             .selectFrom("files")
             .select((eb) => [
-              eb
-                .selectFrom("users")
-                .select("users.name")
-                .where("users.id", "=", eb.ref("files.uploaderId"))
-                .as("sourceUserName"),
+              "files.uploaderId as sourceUserId",
+
               "files.createdAt as date",
-              sql.lit<AgendaTimelineEntry["type"]>("file").as("type"),
+              sql.lit<StrataActivity["type"]>("file").as("type"),
 
               sql.lit<string | null>(null).as("eventId"),
               sql.lit<string | null>(null).as("eventName"),
@@ -121,7 +130,8 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
               sql.lit<string | null>(null).as("chatMessage"),
               sql.lit<string | null>(null).as("chatThreadId"),
             ])
-            .where("files.strataId", "=", strataId),
+            .where("files.strataId", "=", strata.id)
+            .$narrowType<FileActivity>(),
         )
         .union(
           // inbox messages (all)
@@ -134,7 +144,7 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
                 .where("users.id", "=", eb.ref("inbox_messages.senderUserId"))
                 .as("sourceUserName"),
               "inbox_messages.sentAt as date",
-              sql.lit<AgendaTimelineEntry["type"]>("inbox_message").as("type"),
+              sql.lit<StrataActivity["type"]>("inbox_message").as("type"),
 
               sql.lit<string | null>(null).as("eventId"),
               sql.lit<string | null>(null).as("eventName"),
@@ -167,7 +177,7 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
                 .where("users.id", "=", eb.ref("inbox_thread_chats.userId"))
                 .as("sourceUserName"),
               "inbox_thread_chats.sentAt as date",
-              sql.lit<AgendaTimelineEntry["type"]>("chat").as("type"),
+              sql.lit<StrataActivity["type"]>("chat").as("type"),
 
               sql.lit<string | null>(null).as("eventId"),
               sql.lit<string | null>(null).as("eventName"),
@@ -191,43 +201,21 @@ export async function MeetingTimelineSearch({ meetingId, strataId }: Props) {
         )
         .as("results"),
     )
+    .leftJoin("users", "results.sourceUserId", "users.id")
     .selectAll()
-    .orderBy("date asc")
-    .execute();
+    .select("users.name as sourceUserName");
 
-  return (
-    <>
-      <Header
-        className={classnames(styles.header, s({ mb: "normal" }))}
-        priority={2}
-      >
-        Timeline
-      </Header>
+  if (activityType) {
+    query = query.where("results.type", "=", activityType);
+  }
 
-      <SelectField className={s({ mb: "normal" })}>
-        <option>Events</option>
-        <option>Chats</option>
-        <option>Messages</option>
-        <option>Files</option>
-        <option>Invoices</option>
-      </SelectField>
+  query = query.orderBy("date asc");
 
-      <Timeline
-        items={timeline.map((item) => ({
-          icon: <MeetingTimelineIcon type={item.type} />,
-          contents: (
-            <MeetingTimelineItem
-              key={item.id}
-              addItemToAgenda={addItemToAgendaAction.bind(
-                undefined,
-                meetingId,
-                item,
-              )}
-              {...item}
-            />
-          ),
-        }))}
-      />
-    </>
-  );
-}
+  const activity = await query.execute();
+
+  return new Response(JSON.stringify({ activity }), {
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+});

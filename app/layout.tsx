@@ -3,10 +3,7 @@ import * as styles from "./style.css";
 import { fontHeaderVar, fontPrimaryVar } from "./theme.css";
 
 import { Metadata } from "next";
-import { SessionProvider } from "next-auth/react";
-import { Suspense } from "react";
 
-import { auth } from "../auth";
 import { GlobalFooter } from "../components/GlobalFooter";
 import { protocol, tld } from "../constants";
 import { getCurrentStrata } from "../data/stratas/getStrataByDomain";
@@ -75,9 +72,7 @@ export default async function RootLayout({
       <body>
         <div className={styles.body}>{strata ? app : marketing}</div>
 
-        <Suspense>
-          <GlobalFooter />
-        </Suspense>
+        <GlobalFooter />
 
         <div id="modal-root" />
       </body>
