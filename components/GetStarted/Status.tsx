@@ -65,6 +65,7 @@ export function GetStartedStatus({ strata }: Props) {
       <GoToStrataLinkButton
         disabled={domainStatus !== "active"}
         buttonSize="xl"
+        path="/onboarding"
         strata={strata}
         buttonColor="primary"
       />

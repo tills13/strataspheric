@@ -73,7 +73,7 @@ export function CreateOrUpdateMeetingAgendaItemForm({
         )}
 
         <AttachFileField
-          buttonClassName={styles.fileAttachmentButton}
+          className={styles.fileAttachmentButton}
           defaultValue={attachedFile}
           name="fileId"
           onSelectFile={(file) => setAttachedFile(file)}

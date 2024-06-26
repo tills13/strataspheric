@@ -6,10 +6,10 @@ import { Suspense } from "react";
 
 import { Header } from "../../../../components/Header";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
-import { upsertFileAction } from "../actions";
 import { FilesHeader } from "./FilesHeader";
 import { FilesList } from "./FilesList";
 import { FilesSearch } from "./FilesSearch";
+import { upsertFileAction } from "./actions";
 
 export const runtime = "edge";
 

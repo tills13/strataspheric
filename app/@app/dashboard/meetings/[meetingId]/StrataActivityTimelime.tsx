@@ -100,6 +100,7 @@ export function StrataActivityTimelime({
         className={s({ mb: "normal" })}
         onChange={(e) => setActivityType(e.target.value)}
       >
+        <option value="">All Activity</option>
         <option value="event">Events</option>
         <option value="chat">Chats</option>
         <option value="inbox_message">Messages</option>

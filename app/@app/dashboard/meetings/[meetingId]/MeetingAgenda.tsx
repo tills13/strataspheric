@@ -5,7 +5,7 @@ import { Header } from "../../../../../components/Header";
 import { MeetingAgendaItem } from "../../../../../components/MeetingAgendaItem";
 import { getMeetingAgendaItems } from "../../../../../data/meetings/getMeetingAgendaItems";
 import { classnames } from "../../../../../utils/classnames";
-import { upsertFileAction } from "../../actions";
+import { upsertFileAction } from "../../files/actions";
 import { AddNewMeetingAgendaItemButton } from "./AddNewMeetingAgendaItemButton";
 import {
   addItemToAgendaAction,

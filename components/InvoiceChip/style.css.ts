@@ -1,10 +1,18 @@
 import { breakpoints, iconColorVar, vars } from "../../app/theme.css";
+import { timelineAttachment } from "../MeetingTimelineItem/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const invoiceChip = style({
   padding: vars.spacing.normal,
   backgroundColor: vars.colors.grey50,
   borderRadius: vars.borderRadius,
+
+  selectors: {
+    [`${timelineAttachment}&`]: {
+      backgroundColor: vars.colors.grey800,
+      borderRadius: 0,
+    },
+  },
 });
 
 export const invoiceBody = style({

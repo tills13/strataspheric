@@ -1,4 +1,5 @@
-import { vars } from "../../app/theme.css";
+import { iconColorVar, vars } from "../../app/theme.css";
+import { timelineAttachment } from "../MeetingTimelineItem/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { border } from "../../theme";
@@ -12,6 +13,18 @@ export const fileAttachmentChip = style({
   height: vars.sizes.normal,
   color: "inherit",
   borderRadius: vars.borderRadius,
+
+  selectors: {
+    [`${timelineAttachment}&`]: {
+      width: "100%",
+      backgroundColor: vars.colors.grey800,
+      borderColor: vars.colors.grey800,
+      borderRadius: 0,
+      vars: {
+        [iconColorVar]: vars.colors.white,
+      },
+    },
+  },
 });
 
 export const icon = style({

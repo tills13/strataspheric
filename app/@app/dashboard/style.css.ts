@@ -1,8 +1,6 @@
 import { breakpoints, vars } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { padding } from "../../../theme";
-
 export const dashboardLayoutContainer = style({
   display: "grid",
   gridTemplateRows: "min-content auto",
@@ -19,18 +17,6 @@ export const pageContainer = style({
   padding: vars.spacing.normal,
   overflow: "auto",
 });
-
-export const pageContainerFullWidthMobile = style([
-  pageContainer,
-  {
-    padding: padding(vars.spacing.normal, "0"),
-    "@media": {
-      [breakpoints.tablet]: {
-        padding: vars.spacing.normal,
-      },
-    },
-  },
-]);
 
 export const dashboardWidgetGridContainer = style({
   display: "grid",

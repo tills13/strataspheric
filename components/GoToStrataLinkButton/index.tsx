@@ -18,6 +18,7 @@ interface Props {
   buttonStyle?: ButtonProps["style"];
   className?: string;
   disabled?: boolean;
+  path?: string;
   strata: Strata;
   target?: ExternalLinkProps["target"];
 }
@@ -28,6 +29,7 @@ export function GoToStrataLinkButton({
   buttonStyle,
   className,
   disabled,
+  path,
   strata,
   target = "_blank",
 }: Props) {
@@ -48,7 +50,7 @@ export function GoToStrataLinkButton({
   return (
     <ExternalLink
       className={classnames(className, styles.goToStrataLinkButton)}
-      href={protocol + "//" + strata.domain}
+      href={protocol + "//" + strata.domain + (path || "")}
       target={target}
     >
       <Button

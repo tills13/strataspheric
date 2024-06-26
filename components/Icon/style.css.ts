@@ -2,11 +2,14 @@ import { iconColorVar, vars } from "../../app/theme.css";
 import * as buttonStyles from "../Button/style.css";
 import * as dropdownActionsStyles from "../DropdownActions/style.css";
 import { timelineIconContainer } from "../Timeline/style.css";
-import { fallbackVar, style } from "@vanilla-extract/css";
+import { createVar, fallbackVar, style } from "@vanilla-extract/css";
+
+export const dynamicIconHeightVar = createVar();
 
 export const icon = style({
   display: "inline",
   fill: fallbackVar(iconColorVar, vars.colors.primary),
+
   maxWidth: "unset",
   selectors: {
     [`${buttonStyles.button.classNames.base} &`]: {
@@ -25,3 +28,8 @@ export const icon = style({
     },
   },
 });
+
+export const iconWithDynamicHeight = style([
+  icon,
+  { height: dynamicIconHeightVar },
+]);

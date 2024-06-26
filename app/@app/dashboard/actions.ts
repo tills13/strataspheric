@@ -3,11 +3,8 @@
 import { revalidatePath } from "next/cache";
 
 import { auth } from "../../../auth";
-import { File } from "../../../data";
 import { createEvent } from "../../../data/events/createEvent";
 import { createAndUploadFile } from "../../../data/files/createAndUploadFile";
-import { updateFile } from "../../../data/files/updateFile";
-import { mustGetCurrentStrata } from "../../../data/stratas/getStrataByDomain";
 import { addEventToWidget } from "../../../data/widgets/addEventToWidget";
 import { addFileToWidget } from "../../../data/widgets/addFileToWidget";
 import { createWidget } from "../../../data/widgets/createWidget";
@@ -54,52 +51,7 @@ export async function createEventAction(
   revalidatePath("/dashboard");
 }
 
-export async function upsertFileAction(
-  fileId: string | undefined,
-  formData: FormData,
-): Promise<File> {
-  const strata = await mustGetCurrentStrata();
-  const session = await auth();
-
-  if (!session) {
-    throw new Error("not allowed");
-  }
-
-  const name = formdata.getString(formData, "name");
-  const description = formdata.getString(formData, "description") || "";
-  const uploadedFile = formdata.getFile(formData, "file");
-  const isPublic = formdata.getBoolean(formData, "isPublic");
-
-  let file: File | undefined;
-
-  if (fileId) {
-    file = await updateFile(fileId, {
-      name,
-      description,
-      isPublic: isPublic ? 0 : 1,
-    });
-  } else {
-    if (name === "" || !uploadedFile) {
-      throw new Error("invalid fields");
-    }
-
-    file = await createAndUploadFile(
-      strata.id,
-      session.user.id,
-      name,
-      description,
-      uploadedFile.name,
-      uploadedFile,
-      isPublic,
-    );
-  }
-
-  revalidatePath("/dashboard/files");
-
-  return file;
-}
-
-export async function createFileAction(
+export async function upsertFileWidgetFileAction(
   strataId: string,
   widgetId: string,
   formData: FormData,

@@ -9,9 +9,8 @@ import { Header } from "../../../../components/Header";
 import { searchFiles } from "../../../../data/files/searchFiles";
 import { can, p } from "../../../../data/users/permissions";
 import { classnames } from "../../../../utils/classnames";
-import { upsertFileAction } from "../actions";
 import { FilesListFileFooterActions } from "./FilesListFileFooterActions";
-import { deleteFileAction } from "./actions";
+import { deleteFileAction, upsertFileAction } from "./actions";
 
 interface Props {
   strataId: string;

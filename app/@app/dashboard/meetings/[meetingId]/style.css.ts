@@ -1,6 +1,8 @@
 import { breakpoints, vars } from "../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { border } from "../../../../../theme";
+
 export const meetingLayoutContainer = style({
   "@media": {
     [breakpoints.tablet]: {
@@ -105,6 +107,16 @@ export const minutesUrlInput = style({
       flexBasis: "100%",
     },
   },
+});
+
+export const minutesUrl = style({
+  display: "flex",
+  height: vars.sizes.normal,
+  padding: vars.spacing.small,
+  justifyContent: "space-between",
+  backgroundColor: vars.colors.grey50,
+  border: border("2px", "solid", vars.colors.grey400),
+  borderRadius: vars.borderRadius,
 });
 
 export const minutesUrlActionsContainer = style({

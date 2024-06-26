@@ -8,7 +8,7 @@ import { SendInboxMessageForm } from "../../../../../components/SendInboxMessage
 import { getStrataMemberships } from "../../../../../data/strataMemberships/getStrataMemberships";
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
-import { upsertFileAction } from "../../actions";
+import { upsertFileAction } from "../../files/actions";
 import { upsertInvoiceAction } from "../../invoices/actions";
 import { createInboxMessageAction } from "../actions";
 

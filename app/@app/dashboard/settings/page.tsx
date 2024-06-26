@@ -16,6 +16,7 @@ import { InfoPanel } from "../../../../components/InfoPanel";
 import { Input } from "../../../../components/Input";
 import { InputField } from "../../../../components/InputField";
 import { StatusButton } from "../../../../components/StatusButton";
+import { StrataAddressFormFields } from "../../../../components/StrataAddressFormFields";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 import { classnames } from "../../../../utils/classnames";
@@ -62,42 +63,7 @@ export default async function Page() {
                 />
               </label>
 
-              <InputField
-                name="strata_id"
-                placeholder="Strata Plan ID (e.g. VIS...)"
-                defaultValue={strata.strataId || undefined}
-              />
-
-              <InputField
-                name="strata_address_street_address"
-                placeholder="Street Address"
-                defaultValue={strata.streetAddress || undefined}
-              />
-
-              <InputField
-                name="strata_address_postal_code"
-                placeholder="Postal Code"
-                defaultValue={strata.postalCode || undefined}
-              />
-
-              <ElementGroup
-                className={styles.formElement}
-                gap="small"
-                equalWidthChildren
-              >
-                <InputField
-                  wrapperClassName={styles.formElement}
-                  name="strata_address_city"
-                  placeholder="City"
-                  defaultValue={strata.city || undefined}
-                />
-                <InputField
-                  wrapperClassName={styles.formElement}
-                  name="strata_address_province_state"
-                  placeholder="Province / State"
-                  defaultValue={strata.provinceState || undefined}
-                />
-              </ElementGroup>
+              <StrataAddressFormFields strata={strata} />
 
               <StatusButton
                 color="primary"

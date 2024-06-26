@@ -26,7 +26,7 @@ function MeetingTimelineItemBody(item: Props & StrataActivity) {
   if (item.type === "file") {
     return (
       <FileAttachmentChip
-        overrideClassName={styles.timelineFileAttachmentChip}
+        className={styles.timelineAttachment}
         fileName={item.fileName}
         filePath={item.filePath}
       />
@@ -34,7 +34,7 @@ function MeetingTimelineItemBody(item: Props & StrataActivity) {
   } else if (item.type === "invoice") {
     return (
       <InvoiceChip
-        overrideClassName={styles.timelineInvoiceChip}
+        className={styles.timelineAttachment}
         invoice={{
           amount: item.invoiceAmount,
           createdAt: item.date,
@@ -50,6 +50,7 @@ function MeetingTimelineItemBody(item: Props & StrataActivity) {
   } else if (item.type === "inbox_message") {
     return (
       <InboxMessageQuote
+        className={styles.timelineAttachment}
         senderName={sourceUserName}
         message={item.message}
         messageId={item.messageId}
@@ -61,6 +62,7 @@ function MeetingTimelineItemBody(item: Props & StrataActivity) {
   } else if (item.type === "chat") {
     return (
       <InboxMessageQuote
+        className={styles.timelineAttachment}
         senderName={sourceUserName}
         message={item.chatMessage}
         messageId={item.chatId}

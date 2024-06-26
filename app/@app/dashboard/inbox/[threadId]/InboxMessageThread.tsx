@@ -10,7 +10,7 @@ import { SendInboxMessageForm } from "../../../../../components/SendInboxMessage
 import { ThreadMessage } from "../../../../../components/ThreadMessage";
 import { getThreadEmailParticipants } from "../../../../../data/emails/getThreadEmailParticipants";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
-import { upsertFileAction } from "../../actions";
+import { upsertFileAction } from "../../files/actions";
 import {
   markInvoiceAsPaidAction,
   upsertInvoiceAction,

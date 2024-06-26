@@ -7,10 +7,10 @@ import { can, p } from "../../../data/users/permissions";
 import { getWidgets } from "../../../data/widgets/getWidgets";
 import {
   createEventAction,
-  createFileAction,
   deleteWidgetAction,
   deleteWidgetEventAction,
   deleteWidgetFileAction,
+  upsertFileWidgetFileAction,
   upsertStrataWidget,
 } from "./actions";
 
@@ -28,7 +28,11 @@ export async function StrataWidgets({ strataId }: Props) {
         <Widget
           key={widget.id}
           createEvent={createEventAction.bind(undefined, strataId, widget.id)}
-          createFile={createFileAction.bind(undefined, strataId, widget.id)}
+          createFile={upsertFileWidgetFileAction.bind(
+            undefined,
+            strataId,
+            widget.id,
+          )}
           deleteEvent={deleteWidgetEventAction.bind(undefined, widget.id)}
           deleteFile={deleteWidgetFileAction.bind(undefined, widget.id)}
           deleteWidget={deleteWidgetAction.bind(undefined, widget.id)}

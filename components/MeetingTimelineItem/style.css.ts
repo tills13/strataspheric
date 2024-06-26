@@ -1,5 +1,4 @@
 import { iconColorVar, vars } from "../../app/theme.css";
-import * as fileAttachmentChipStyle from "../FileAttachmentChip/style.css";
 import { invoiceChip } from "../InvoiceChip/style.css";
 import { style } from "@vanilla-extract/css";
 
@@ -28,26 +27,7 @@ export const timelineEntryDate = style({
   color: vars.colors.grey400,
 });
 
-export const timelineFileAttachmentChip = style([
-  fileAttachmentChipStyle.fileAttachmentChip,
-  {
-    width: "100%",
-    backgroundColor: vars.colors.grey800,
-    borderColor: vars.colors.grey800,
-    borderRadius: 0,
-    vars: {
-      [iconColorVar]: vars.colors.white,
-    },
-  },
-]);
-
-export const timelineInvoiceChip = style([
-  invoiceChip,
-  {
-    backgroundColor: vars.colors.grey800,
-    borderRadius: 0,
-  },
-]);
+export const timelineAttachment = style({});
 
 export const timelineEntryAddToAgendaButton = style({
   color: vars.colors.white,

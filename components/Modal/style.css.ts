@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
-import { border } from "../../theme";
+import { border, padding } from "../../theme";
 
 export const modalWrapper = style({
   position: "fixed",
@@ -16,7 +16,7 @@ export const modalWrapper = style({
 });
 
 export const modal = style({
-  padding: vars.spacing.normal,
+  padding: padding(0, vars.spacing.normal),
   backgroundColor: vars.colors.white,
   width: "100vw",
   height: "100dvh",
@@ -25,7 +25,7 @@ export const modal = style({
   "@media": {
     [breakpoints.tablet]: {
       width: "600px",
-      height: "unset",
+      // height: "unset",
       maxHeight: "80vh",
       border: border("2px", "solid", vars.colors.borderDefault),
       borderRadius: vars.borderRadius,
@@ -34,9 +34,16 @@ export const modal = style({
 });
 
 export const modalBodyContainer = style({
-  // display: "grid",
-  // gridTemplateRows: "min-content minmax(auto)",
-  // gridTemplateColumns: "100%",
+  display: "grid",
+  gridTemplateRows: "min-content 1fr",
+  gridTemplateColumns: "100%",
+  height: "100%",
+  overflow: "hidden",
+});
+
+export const modalBodyContainerInner = style({
+  paddingBottom: vars.spacing.normal,
+  overflowY: "auto",
   height: "100%",
 });
 
@@ -46,6 +53,7 @@ export const modalHeader = style({
   alignItems: "center",
   marginBottom: vars.spacing.normal,
   overflow: "hidden",
+  paddingTop: vars.spacing.normal,
 });
 
 export const modalHeaderTitleContainer = style({

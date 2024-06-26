@@ -27,6 +27,8 @@ export function InvoiceChip({
 }: Props) {
   const [isPending, startTransition] = useTransition();
 
+  console.log(overrideClassName, 1, classnames(styles.invoiceChip, className));
+
   return (
     <div
       className={overrideClassName || classnames(styles.invoiceChip, className)}

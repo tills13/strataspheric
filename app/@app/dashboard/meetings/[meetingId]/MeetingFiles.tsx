@@ -7,10 +7,9 @@ import { Header } from "../../../../../components/Header";
 import { TextDocumentIcon } from "../../../../../components/Icon/TextDocumentIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
-import { Panel } from "../../../../../components/Panel";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { getMeetingFiles } from "../../../../../data/meetings/getMeetingFiles";
-import { upsertFileAction } from "../../actions";
+import { upsertFileAction } from "../../files/actions";
 import { addFileToMeetingAction, removeFileFromMeetingAction } from "./actions";
 
 interface Props {

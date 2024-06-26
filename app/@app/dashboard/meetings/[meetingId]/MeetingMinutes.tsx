@@ -1,24 +1,29 @@
 import { s } from "../../../../../sprinkles.css";
+import { vars } from "../../../../theme.css";
 import * as styles from "./style.css";
 
 import { AddFileToMeetingButton } from "../../../../../components/AddFileToMeetingButton";
+import { Button } from "../../../../../components/Button";
 import { DividerText } from "../../../../../components/DividerText";
+import { FileAttachmentChip } from "../../../../../components/FileAttachmentChip";
 import { FileTypeIcon } from "../../../../../components/FileTypeIcon";
 import { Header } from "../../../../../components/Header";
 import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
+import { RightIcon } from "../../../../../components/Icon/RightIcon";
 import { SaveIcon } from "../../../../../components/Icon/SaveIcon";
 import { TextDocumentIcon } from "../../../../../components/Icon/TextDocumentIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
-import { Input } from "../../../../../components/Input";
+import { InputField } from "../../../../../components/InputField";
+import { ExternalLink } from "../../../../../components/Link/ExternalLink";
+import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { MeetingMinutesTimelineItem } from "../../../../../components/MeetingMinutesTimelineItem";
 import { MinutesApprover } from "../../../../../components/MinutesApprover";
-import { Panel } from "../../../../../components/Panel";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { StatusButton } from "../../../../../components/StatusButton";
 import { Timeline } from "../../../../../components/Timeline";
 import { getMeetingMinutes } from "../../../../../data/meetings/getMeetingMinutes";
 import { classnames } from "../../../../../utils/classnames";
-import { upsertFileAction } from "../../actions";
+import { upsertFileAction } from "../../files/actions";
 import {
   addFileToMeetingAction,
   approveMeetingMinutesAction,
@@ -58,18 +63,25 @@ export async function MeetingMinutes({
         </InfoPanel>
       )}
 
-      {!anyApproved && (
+      {!anyApproved && files.length === 0 && (
         <form
           className={classnames(styles.minutesUrlContainer, s({ w: "full" }))}
           action={updateMinutesUrlAction.bind(undefined, meetingId)}
         >
-          <Input
-            className={classnames(styles.minutesUrlInput, s({ w: "full" }))}
-            name="minutesUrl"
-            placeholder="https://docs.google.com/document/d/..."
-            defaultValue={minutesUrl || ""}
-            readOnly={!!minutesUrl || !!minutesUrlApprovedByName}
-          />
+          {!minutesUrl ? (
+            <InputField
+              className={classnames(styles.minutesUrlInput, s({ w: "full" }))}
+              name="minutesUrl"
+              placeholder="Minutes URL"
+            />
+          ) : (
+            <ExternalLink
+              className={classnames(s({ w: "full" }), styles.minutesUrl)}
+              href={minutesUrl}
+            >
+              {minutesUrl} <RightIcon height={24} />
+            </ExternalLink>
+          )}
 
           {!minutesUrl && (
             <StatusButton
@@ -82,44 +94,45 @@ export async function MeetingMinutes({
             </StatusButton>
           )}
 
-          {minutesUrl &&
-            (minutesUrlApprovedByName ? (
-              <MinutesApprover
-                approverName={minutesUrlApprovedByName}
-                className={styles.minutesUrlApprover}
+          {minutesUrl && minutesUrlApprovedByName ? (
+            <MinutesApprover
+              approverName={minutesUrlApprovedByName}
+              className={styles.minutesUrlApprover}
+            />
+          ) : (
+            <div className={styles.minutesUrlActionsContainer}>
+              <StatusButton
+                className={styles.minutesUrlApproveButton}
+                action={approveMeetingMinutesUrlAction.bind(
+                  undefined,
+                  meetingId,
+                )}
+                iconRight={<CircleCheckIcon />}
+                iconTextBehaviour="centerRemainder"
+                color="success"
+              >
+                Approve
+              </StatusButton>
+              <RemoveButton
+                action={clearMinutesUrlAction.bind(undefined, meetingId)}
+                color="error"
+                style="tertiary"
               />
-            ) : (
-              <div className={styles.minutesUrlActionsContainer}>
-                <StatusButton
-                  className={styles.minutesUrlApproveButton}
-                  action={approveMeetingMinutesUrlAction.bind(
-                    undefined,
-                    meetingId,
-                  )}
-                  iconRight={<CircleCheckIcon />}
-                  iconTextBehaviour="centerRemainder"
-                  color="success"
-                >
-                  Approve
-                </StatusButton>
-                <RemoveButton
-                  action={clearMinutesUrlAction.bind(undefined, meetingId)}
-                  color="error"
-                  style="tertiary"
-                />
-              </div>
-            ))}
+            </div>
+          )}
         </form>
       )}
 
       {minutesUrl && minutesUrlApprovedByName && (
-        <InfoPanel className={s({ mb: "normal" })} level="success">
-          The externally hosted minutes have been approved. Export them and
-          upload them to Stratashperic to share them with other strata members.
+        <InfoPanel className={s({ mt: "normal" })} level="success">
+          The externally hosted minutes have been approved. Export and upload
+          them to your{" "}
+          <InternalLink href="/dashboard/files">strata's files</InternalLink> to
+          share with other strata members.
         </InfoPanel>
       )}
 
-      {!anyApproved && (
+      {!anyApproved && !minutesUrl && files.length === 0 && (
         <DividerText className={s({ w: "full", mv: "normal" })}>OR</DividerText>
       )}
 
@@ -158,7 +171,7 @@ export async function MeetingMinutes({
         />
       )}
 
-      {!anyApproved && (
+      {!anyApproved && !minutesUrl && (
         <>
           <AddFileToMeetingButton
             addFileToMeeting={addFileToMeetingAction.bind(

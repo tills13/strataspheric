@@ -2,11 +2,12 @@
 
 import * as styles from "./style.css";
 
-import React, { useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
+import { DisableScroll } from "../DisableScroll";
 import { Header } from "../Header";
 import { RemoveIcon } from "../Icon/RemoveIcon";
 
@@ -37,6 +38,8 @@ export function Modal({
       }}
       ref={wrapperRef}
     >
+      <DisableScroll />
+
       <div className={styles.modal}>
         <div className={styles.modalBodyContainer}>
           <div className={styles.modalHeader}>
@@ -56,7 +59,14 @@ export function Modal({
               style="tertiary"
             />
           </div>
-          <div className={modalBodyClassName}>{children}</div>
+          <div
+            className={classnames(
+              modalBodyClassName,
+              styles.modalBodyContainerInner,
+            )}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>,

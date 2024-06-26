@@ -29,7 +29,7 @@ export function SendInboxThreadChatForm({
 
       {upsertFile && (
         <AttachFileField
-          buttonClassName={s({ mb: "small" })}
+          className={s({ mb: "small" })}
           name="fileId"
           upsertFile={upsertFile}
         />

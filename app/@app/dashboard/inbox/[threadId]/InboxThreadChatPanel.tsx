@@ -3,15 +3,18 @@ import * as styles from "./style.css";
 
 import { auth } from "../../../../../auth";
 import { InboxThreadChats } from "../../../../../components/InboxThreadChats";
-import { InboxThreadChat } from "../../../../../components/InboxThreadChats/InboxThreadChat";
 import { getThreadChats } from "../../../../../data/inbox/getThreadChats";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
 import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
-import { upsertFileAction } from "../../actions";
+import { upsertFileAction } from "../../files/actions";
 import { sendInboxThreadChatAction } from "./actions";
 
-export default async function InboxThreadChatPanel({ threadId }) {
+export default async function InboxThreadChatPanel({
+  threadId,
+}: {
+  threadId: string;
+}) {
   const session = await auth();
 
   if (!session) {

@@ -17,7 +17,7 @@ interface Props {
 }
 
 export function FilesListFileFooterActions({
-  deleteFile: deleteFile,
+  deleteFile,
   file,
   upsertFile,
 }: Props) {

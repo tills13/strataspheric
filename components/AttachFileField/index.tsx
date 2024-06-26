@@ -5,35 +5,31 @@ import React, { useState } from "react";
 import { File } from "../../data";
 import { AttachFileButton } from "../AttachFileButton";
 
-type AttachFileButtonProps = React.ComponentProps<typeof AttachFileButton>;
+type AttachFileButtonProps = Omit<
+  React.ComponentProps<typeof AttachFileButton>,
+  "defaultValue"
+>;
 
-interface Props {
-  buttonClassName?: string;
-  defaultValue?: AttachFileButtonProps["selectedFile"];
-  name?: string;
-  onSelectFile?: AttachFileButtonProps["onSelectFile"];
-  upsertFile: (fd: FormData) => Promise<File>;
+interface Props extends AttachFileButtonProps {
+  defaultValue?: File;
+  name: string;
 }
 
 export function AttachFileField({
-  buttonClassName,
   defaultValue,
   name,
-  onSelectFile,
-  upsertFile,
+  ...delegateProps
 }: Props) {
   const [selectedFile, setSelectedFile] = useState(defaultValue);
 
   return (
     <>
       <AttachFileButton
-        className={buttonClassName}
         onSelectFile={(file) => {
           setSelectedFile(file);
-          onSelectFile?.(file);
+          delegateProps.onSelectFile?.(file);
         }}
-        selectedFile={selectedFile}
-        upsertFile={upsertFile}
+        {...delegateProps}
       />
 
       <input type="hidden" name={name} value={selectedFile?.id || ""} />
