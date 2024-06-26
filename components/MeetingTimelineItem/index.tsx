@@ -12,22 +12,39 @@ import { FileAttachmentChip } from "../FileAttachmentChip";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
+import { InvoiceChip } from "../InvoiceChip";
 import { StatusButton } from "../StatusButton";
 
-interface Props extends StrataActivity {
+interface Props {
   addItemToAgenda: () => void;
   className?: string;
 }
 
-function MeetingTimelineItemBody(item: Props) {
+function MeetingTimelineItemBody(item: Props & StrataActivity) {
   let sourceUserName = item.sourceUserName || "Someone";
 
-  if (item.type === "file" || item.type === "invoice") {
+  if (item.type === "file") {
     return (
       <FileAttachmentChip
-        className={styles.timelineAttachment}
+        overrideClassName={styles.timelineFileAttachmentChip}
         fileName={item.fileName}
         filePath={item.filePath}
+      />
+    );
+  } else if (item.type === "invoice") {
+    return (
+      <InvoiceChip
+        overrideClassName={styles.timelineInvoiceChip}
+        invoice={{
+          amount: item.invoiceAmount,
+          createdAt: item.date,
+          description: item.invoiceDescription,
+          dueBy: item.invoiceDueBy,
+          id: item.invoiceId,
+          identifier: item.invoiceIdentifier,
+          isPaid: item.invoiceIsPaid,
+          type: item.invoiceType,
+        }}
       />
     );
   } else if (item.type === "inbox_message") {

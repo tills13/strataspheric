@@ -10,12 +10,18 @@ const Dollars = Intl.NumberFormat("en-US", {
 interface Props {
   amount: number;
   className?: string;
+  overrideClassName?: string;
   unit?: string;
 }
 
-export function Money({ amount, className, unit = "$" }: Props) {
+export function Money({
+  amount,
+  className,
+  overrideClassName,
+  unit = "$",
+}: Props) {
   return (
-    <div className={classnames(styles.money, className)}>
+    <div className={overrideClassName || classnames(styles.money, className)}>
       <span className={styles.moneyUnit}>{unit}</span>
       <span className={styles.moneyAmount}>{Dollars.format(amount)}</span>
     </div>

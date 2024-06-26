@@ -29,6 +29,7 @@ export async function upsertInvoiceAction(
   fd: FormData,
 ): Promise<Invoice | undefined> {
   const strata = await mustGetCurrentStrata();
+  const session = await auth();
 
   const identifier = formdata.getString(fd, "identifier");
   const description = formdata.getString(fd, "description");
@@ -46,6 +47,7 @@ export async function upsertInvoiceAction(
 
   return createInvoice({
     strataId: strata.id,
+    payeeId: session?.user.id,
     type: "incoming",
     identifier,
     description,

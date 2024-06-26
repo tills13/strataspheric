@@ -48,6 +48,7 @@ export const timelineItem = style({
     [breakpoints.tablet]: {
       padding: vars.spacing.normal,
       paddingLeft: calc(vars.sizes.small).add(vars.spacing.normal).toString(),
+      paddingRight: 0,
       selectors: {
         "&:before": {
           left: calc(vars.sizes.small).divide(2).subtract("2px").toString(),

@@ -149,3 +149,7 @@ export const minutesUrlContainer = style({
 export const icon = style({
   height: vars.sizes.small,
 });
+
+export const strataActivityModalTimelineContainer = style({
+  overflowY: "auto",
+});

@@ -82,6 +82,7 @@ export type NewInboxThreadChat = Insertable<InboxThreadChatsTable>;
 export interface InvoicesTable {
   id: ColumnType<string, string, never>;
   strataId: string;
+  payeeId: string | null;
   type: "incoming" | "outgoing";
   identifier: string;
   description: string | null;

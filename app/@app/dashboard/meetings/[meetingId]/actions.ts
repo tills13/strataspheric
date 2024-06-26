@@ -70,7 +70,7 @@ export async function upsertAgendaItemAction(
 
 export async function addItemToAgendaAction(
   meetingId: string,
-  item: NewMeetingAgendaItem,
+  item: Omit<NewMeetingAgendaItem, "id" | "meetingId">,
 ): Promise<void> {
   await addItemToMeetingAgenda(meetingId, item);
 

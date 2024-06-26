@@ -40,7 +40,7 @@ export default async function Page({
             </div>
           }
         >
-          <InvoicesList strataId={strata.id} />
+          <InvoicesList strata={strata} />
         </Suspense>
 
         <div className={styles.invoicesSidePanel}>

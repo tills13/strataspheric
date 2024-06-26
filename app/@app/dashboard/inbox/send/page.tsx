@@ -9,6 +9,7 @@ import { getStrataMemberships } from "../../../../../data/strataMemberships/getS
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
 import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { upsertFileAction } from "../../actions";
+import { upsertInvoiceAction } from "../../invoices/actions";
 import { createInboxMessageAction } from "../actions";
 
 export const runtime = "edge";
@@ -51,6 +52,7 @@ export default async function Page() {
           <SendInboxMessageForm
             showContactInformationFields={!u?.user}
             upsertFile={upsertFileAction.bind(undefined, undefined)}
+            upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
             sendInboxMessage={createInboxMessageAction.bind(
               undefined,
               undefined,

@@ -1,6 +1,7 @@
 "use client";
 
 import { s } from "../../../../../sprinkles.css";
+import * as styles from "./style.css";
 
 import { useState } from "react";
 
@@ -16,10 +17,9 @@ import { StrataActivityTimelime } from "./StrataActivityTimelime";
 interface Props {
   addItemToAgendaAction: (
     meetingId: string,
-    item: NewMeetingAgendaItem,
+    item: Omit<NewMeetingAgendaItem, "id" | "meetingId">,
   ) => void;
   meetingId: string;
-  strataId: string;
   upsertFile: (fd: FormData) => any;
   upsertMeetingAgendaItem: (fd: FormData) => void;
 }
@@ -27,7 +27,6 @@ interface Props {
 export function AddNewMeetingAgendaItemButton({
   addItemToAgendaAction,
   meetingId,
-  strataId,
   upsertFile,
   upsertMeetingAgendaItem,
 }: Props) {
@@ -47,11 +46,14 @@ export function AddNewMeetingAgendaItemButton({
       </Button>
 
       {showStrataTimelineSearchModal && (
-        <Modal closeModal={() => setShowStrataTimelineSearchModal(false)}>
+        <Modal
+          closeModal={() => setShowStrataTimelineSearchModal(false)}
+          modalBodyClassName={styles.strataActivityModalTimelineContainer}
+          title="Strata Activity"
+        >
           <StrataActivityTimelime
             addItemToAgendaAction={addItemToAgendaAction}
             meetingId={meetingId}
-            strataId={strataId}
           />
         </Modal>
       )}

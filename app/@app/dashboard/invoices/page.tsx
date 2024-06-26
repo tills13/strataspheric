@@ -1,6 +1,5 @@
 import * as styles from "./style.css";
 
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import { DashboardHeader } from "../../../../components/DashboardHeader";
@@ -31,7 +30,7 @@ export default async function Page() {
             </div>
           }
         >
-          <InvoicesList strataId={strata.id} />
+          <InvoicesList strata={strata} />
         </Suspense>
 
         <div className={styles.invoicesSidePanel}>

@@ -8,6 +8,7 @@ import { classnames } from "../../../../../utils/classnames";
 import { upsertFileAction } from "../../actions";
 import { AddNewMeetingAgendaItemButton } from "./AddNewMeetingAgendaItemButton";
 import {
+  addItemToAgendaAction,
   imperativeUpdateAgendaItemAction,
   removeItemFromAgendaAction,
   upsertAgendaItemAction,
@@ -57,6 +58,8 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
       </ul>
 
       <AddNewMeetingAgendaItemButton
+        addItemToAgendaAction={addItemToAgendaAction}
+        meetingId={meetingId}
         upsertFile={upsertFileAction.bind(undefined, undefined)}
         upsertMeetingAgendaItem={upsertAgendaItemAction.bind(
           undefined,

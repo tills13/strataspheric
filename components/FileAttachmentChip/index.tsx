@@ -11,12 +11,20 @@ interface Props {
   className?: string;
   fileName: string;
   filePath: string;
+  overrideClassName?: string;
 }
 
-export function FileAttachmentChip({ className, fileName, filePath }: Props) {
+export function FileAttachmentChip({
+  className,
+  fileName,
+  filePath,
+  overrideClassName,
+}: Props) {
   return (
     <FileLink
-      className={classnames(className, styles.fileAttachmentChip)}
+      className={
+        overrideClassName || classnames(className, styles.fileAttachmentChip)
+      }
       path={filePath}
     >
       <FileTypeIcon

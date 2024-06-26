@@ -1,6 +1,7 @@
 "use client";
 
 import { s } from "../../../../../sprinkles.css";
+import * as styles from "./style.css";
 
 import { useState } from "react";
 import useSWR from "swr";
@@ -29,23 +30,67 @@ async function fetchStrataEvents(activityType: string | undefined) {
   return (await response.json()).activity as StrataActivity[];
 }
 
+function strataActivityToAgendaItem(
+  activity: StrataActivity,
+): Omit<NewMeetingAgendaItem, "id" | "meetingId"> {
+  let sourceUserName = activity.sourceUserName || "Someone";
+
+  switch (activity.type) {
+    case "event": {
+      return {
+        description: activity.eventName + " is scheduled for " + activity.date,
+        eventId: activity.eventId,
+        title: sourceUserName + " scheduled an event",
+      };
+    }
+    case "file": {
+      return {
+        description: "",
+        fileId: activity.fileId,
+        title: sourceUserName + " added a file",
+      };
+    }
+    case "invoice": {
+      return {
+        description: "",
+        // @ts-ignore
+        invoiceId: activity.invoiceId,
+        title: sourceUserName + " added an invoice",
+      };
+    }
+    case "inbox_message": {
+      return {
+        description: "",
+        messageId: activity.messageId,
+        title: sourceUserName + " sent a message",
+      };
+    }
+
+    case "chat": {
+      return {
+        description: "",
+        messageId: activity.chatThreadId,
+        title: sourceUserName + " chatted about a received message",
+      };
+    }
+  }
+}
+
 export interface Props {
   addItemToAgendaAction: (
     meetingId: string,
-    item: NewMeetingAgendaItem,
+    item: Omit<NewMeetingAgendaItem, "id" | "meetingId">,
   ) => void;
-  strataId: string;
   meetingId: string;
 }
 
 export function StrataActivityTimelime({
   addItemToAgendaAction,
-  strataId,
   meetingId,
 }: Props) {
   const [activityType, setActivityType] = useState<string>();
   const { data: timeline = [] } = useSWR(
-    [strataId, "activity", `type=${activityType}`],
+    ["activity", `type=${activityType}`],
     () => fetchStrataEvents(activityType),
   );
 
@@ -62,23 +107,25 @@ export function StrataActivityTimelime({
         <option value="invoice">Invoices</option>
       </SelectField>
 
-      <Timeline
-        emptyMessage={`No recent ${activityType} activity`}
-        items={timeline.map((item) => ({
-          icon: <MeetingTimelineIcon type={item.type} />,
-          contents: (
-            <MeetingTimelineItem
-              key={item.id}
-              addItemToAgenda={addItemToAgendaAction.bind(
-                undefined,
-                meetingId,
-                item,
-              )}
-              {...item}
-            />
-          ),
-        }))}
-      />
+      <div className={styles.strataActivityModalTimelineContainer}>
+        <Timeline
+          emptyMessage={`No recent ${activityType} activity`}
+          items={timeline.map((item) => ({
+            icon: <MeetingTimelineIcon type={item.type} />,
+            contents: (
+              <MeetingTimelineItem
+                key={item.id}
+                addItemToAgenda={addItemToAgendaAction.bind(
+                  undefined,
+                  meetingId,
+                  strataActivityToAgendaItem(item),
+                )}
+                {...item}
+              />
+            ),
+          }))}
+        />
+      </div>
     </>
   );
 }

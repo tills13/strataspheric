@@ -34,9 +34,10 @@ export const modal = style({
 });
 
 export const modalBodyContainer = style({
-  display: "grid",
-  gridTemplateRows: "min-content auto",
-  gridTemplateColumns: "100%",
+  // display: "grid",
+  // gridTemplateRows: "min-content minmax(auto)",
+  // gridTemplateColumns: "100%",
+  height: "100%",
 });
 
 export const modalHeader = style({

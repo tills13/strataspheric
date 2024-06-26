@@ -6,21 +6,31 @@ import * as styles from "./style.css";
 import { useTransition } from "react";
 
 import { Invoice } from "../../data";
+import { classnames } from "../../utils/classnames";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { Money } from "../Money";
 import { StatusButton } from "../StatusButton";
 
 interface Props {
+  className?: string;
   invoice: Invoice;
   markInvoiceAsPaid: (invoiceId: string) => Promise<void>;
+  overrideClassName?: string;
 }
 
-export function InvoiceChip({ invoice, markInvoiceAsPaid }: Props) {
+export function InvoiceChip({
+  className,
+  invoice,
+  markInvoiceAsPaid,
+  overrideClassName,
+}: Props) {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <div className={styles.invoiceChip}>
+    <div
+      className={overrideClassName || classnames(styles.invoiceChip, className)}
+    >
       <Header className={s({ mb: "normal" })} priority={3}>
         Invoice #{invoice.identifier}
       </Header>

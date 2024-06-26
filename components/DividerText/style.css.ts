@@ -3,6 +3,10 @@ import { createVar, style } from "@vanilla-extract/css";
 
 export const dividerTextGapVar = createVar();
 
+export const dividerTextText = style({
+  whiteSpace: "nowrap",
+});
+
 export const dividerText = style({
   display: "flex",
   alignItems: "center",

@@ -1,28 +1,40 @@
 import { vars } from "../../app/theme.css";
 import * as styles from "./style.css";
 
+import { assignInlineVars } from "@vanilla-extract/dynamic";
 import React from "react";
 
-import { variable } from "../../theme";
 import { classnames } from "../../utils/classnames";
 
 interface Props {
   children: React.ReactNode;
   className?: string;
+  overrideClassName?: string;
   gap?: keyof typeof vars.spacing;
+  gravity?: "left" | "center" | "right";
 }
 
-export function DividerText({ className, children, gap = "normal" }: Props) {
-  const gapVariable = variable(styles.dividerTextGapVar);
-
+export function DividerText({
+  className,
+  overrideClassName,
+  children,
+  gap = "normal",
+  gravity = "center",
+}: Props) {
   return (
     <div
-      className={classnames(styles.dividerText, className)}
-      style={{ [gapVariable]: vars.spacing[gap] }}
+      className={overrideClassName || classnames(styles.dividerText, className)}
+      style={assignInlineVars({
+        [styles.dividerTextGapVar]: vars.spacing[gap],
+      })}
     >
-      <span className={styles.dividerTextDivider} />
-      {children}
-      <span className={styles.dividerTextDivider} />
+      {(gravity === "right" || gravity === "center") && (
+        <span className={styles.dividerTextDivider} />
+      )}
+      <span className={styles.dividerTextText}>{children}</span>
+      {(gravity === "left" || gravity === "center") && (
+        <span className={styles.dividerTextDivider} />
+      )}
     </div>
   );
 }
