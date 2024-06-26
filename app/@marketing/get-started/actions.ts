@@ -19,7 +19,11 @@ export type SubmitGetStartedState =
       success: false;
       error: string;
     }
-  | never;
+  | {
+      success: true;
+      redirect: string;
+    }
+  | undefined;
 
 export async function submitGetStarted(
   _state: SubmitGetStartedState,
@@ -59,6 +63,7 @@ export async function submitGetStarted(
       name,
       email,
       password,
+      status: "active",
     });
 
     userId = newUser.id;
@@ -124,5 +129,5 @@ export async function submitGetStarted(
     }
   }
 
-  redirect("/get-started/" + strataDomain);
+  return { success: true, redirect: "/get-started/" + strataDomain };
 }

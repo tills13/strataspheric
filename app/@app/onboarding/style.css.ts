@@ -3,6 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const pageContainer = style({
   margin: "0 auto",
+  width: "100%",
   maxWidth: 600,
   padding: vars.spacing.normal,
   overflow: "auto",

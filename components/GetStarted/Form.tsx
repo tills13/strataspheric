@@ -4,6 +4,7 @@ import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Session } from "next-auth";
+import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
@@ -42,7 +43,24 @@ export function GetStartedForm({
   selectedPlan,
   submitGetStarted,
 }: Props) {
-  const [state, action] = useFormState(submitGetStarted, null);
+  const [state, action] = useFormState(
+    async (state: SubmitGetStartedState, fd: FormData) => {
+      const nextState = await submitGetStarted(state, fd);
+
+      if (nextState?.success === true) {
+        await signIn("credentials", {
+          email: fd.get("email"),
+          password: fd.get("password"),
+          redirect: false,
+        });
+
+        location.href = nextState.redirect;
+      }
+
+      return nextState;
+    },
+    undefined,
+  );
 
   const [strataName, setStrataName] = useState("");
   const [isDomainAvailable, setIsDomainAvailable] = useState(undefined);
@@ -155,7 +173,7 @@ export function GetStartedForm({
         </div>
       )}
 
-      {state?.error && <Panel>{state.error}</Panel>}
+      {state?.success === false && state?.error && <Panel>{state.error}</Panel>}
 
       <StatusButton color="primary" iconRight={<RightIcon />} type="submit">
         Let&apos;s Get Started
