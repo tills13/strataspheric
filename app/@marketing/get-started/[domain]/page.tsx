@@ -1,9 +1,8 @@
-import * as styles from "./style.css";
-
 import { redirect } from "next/navigation";
 
 import { GetStartedStatus } from "../../../../components/GetStarted/Status";
 import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
+import { StaticPageContainer } from "../../StaticPageContainer";
 
 export const runtime = "edge";
 
@@ -15,8 +14,8 @@ export default async function Page({ params }: { params: { domain: string } }) {
   }
 
   return (
-    <div className={styles.pageContainer}>
+    <StaticPageContainer>
       <GetStartedStatus strata={strata} />
-    </div>
+    </StaticPageContainer>
   );
 }
