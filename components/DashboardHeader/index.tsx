@@ -37,16 +37,26 @@ type LinkWithPermissions = [
 
 const links: Array<Link | LinkWithPermissions> = [
   [DashboardIcon, "/dashboard", "Dashboard"],
-  [FilesIcon, "/dashboard/files", "Files"],
+  [FilesIcon, "/dashboard/files", "Files", [p("stratas", "files", "view")]],
   [
     PaidDocumentIcon,
     "/dashboard/invoices",
     "Invoices",
     [p("stratas", "invoices", "view")],
   ],
-  [CalendarIcon, "/dashboard/calendar", "Events"],
+  [
+    CalendarIcon,
+    "/dashboard/calendar",
+    "Events",
+    [p("stratas", "events", "view")],
+  ],
   [PersonIcon, "/dashboard/membership", "Directory"],
-  [BedIcon, "/dashboard/amenities", "Amenities"],
+  [
+    BedIcon,
+    "/dashboard/amenities",
+    "Amenities",
+    [p("stratas", "amenities", "view")],
+  ],
   [GroupIcon, "/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
   [InboxIcon, "/dashboard/inbox", "Strata Inbox"],
   [SettingsIcon, "/dashboard/settings", "Settings", ["stratas.strata.edit"]],

@@ -4,6 +4,7 @@ import { StrataMembership } from "..";
 type Namespaces = "stratas";
 type Scope =
   | "*"
+  | "amenities"
   | "events"
   | "files"
   | "inbox_messages"
@@ -29,25 +30,31 @@ const roles = [
 export type Role = (typeof roles)[number];
 export type AccountType = "user" | "realtor";
 
-export function p(): string;
-export function p(namespace: "stratas"): string;
-export function p(namespace: "stratas", scope: Scope): string;
-export function p(namespace: "stratas", scope: Scope, action: Action): string;
+export function p(): Permission;
+export function p(namespace: "stratas"): Permission;
+export function p(namespace: "stratas", scope: Scope): Permission;
+export function p(
+  namespace: "stratas",
+  scope: Scope,
+  action: Action,
+): Permission;
 export function p(
   namespace: "stratas" = "stratas",
   scope: Scope = "*",
   action: Action = "*",
-): string {
-  return [namespace, scope, action].filter(Boolean).join(".");
+): Permission {
+  return [namespace, scope, action].filter(Boolean).join(".") as Permission;
 }
 
-export function memberToScopes(membership: StrataMembership): string[] {
+export function memberToScopes(membership: StrataMembership): Permission[] {
   return [...roleScopeToScopes(membership.role)].filter(
-    (i): i is string => !!i,
+    (i): i is Permission => !!i,
   );
 }
 
-export function roleScopeToScopes(roleScope: Role | string | undefined) {
+export function roleScopeToScopes(
+  roleScope: Role | string | undefined,
+): Permission[] {
   switch (roleScope) {
     case "administrator":
     case "president":
@@ -59,7 +66,7 @@ export function roleScopeToScopes(roleScope: Role | string | undefined) {
       return [p("stratas", "files"), p("stratas", "events")];
     }
     case "owner": {
-      return [];
+      return ["stratas.*.view"];
     }
     default: {
       return [];

@@ -44,6 +44,16 @@ export const globalHeaderActionsDesktop = style({
   },
 });
 
+export const spacer = style({
+  flex: 1,
+});
+
+export const sessionInfoRow = style({
+  display: "flex",
+  alignItems: "center",
+  gap: vars.spacing.normal,
+});
+
 export const sessionUserName = style({
   color: vars.colors.primary,
   whiteSpace: "nowrap",

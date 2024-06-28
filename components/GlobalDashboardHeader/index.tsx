@@ -1,22 +1,14 @@
 import * as styles from "./style.css";
 
-import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
+import { mustGetCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { GlobalHeader } from "../GlobalHeader";
 import { Header } from "../Header";
 import { InternalLink } from "../Link/InternalLink";
 import { GlobalHeaderActions } from "./Actions";
 import { GlobalHeaderMobileActions } from "./MobileActions";
 
-interface Props {
-  joinStrata: () => void;
-}
-
-export async function GlobalDashboardHeader({ joinStrata }: Props) {
-  const strata = await getCurrentStrata();
-
-  if (!strata) {
-    return null;
-  }
+export async function GlobalDashboardHeader() {
+  const strata = await mustGetCurrentStrata();
 
   return (
     <GlobalHeader className={styles.globalHeader}>
@@ -27,12 +19,9 @@ export async function GlobalDashboardHeader({ joinStrata }: Props) {
           </InternalLink>
         </Header>
       </div>
-      <GlobalHeaderActions
-        className={styles.globalHeaderActionsDesktop}
-        joinStrata={joinStrata}
-      />
+      <GlobalHeaderActions className={styles.globalHeaderActionsDesktop} />
       <GlobalHeaderMobileActions
-        actions={<GlobalHeaderActions joinStrata={joinStrata} />}
+        actions={<GlobalHeaderActions />}
         strata={strata}
       />
     </GlobalHeader>

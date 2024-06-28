@@ -9,7 +9,7 @@ export const dynamicIconHeightVar = createVar();
 export const icon = style({
   display: "inline",
   fill: fallbackVar(iconColorVar, vars.colors.primary),
-
+  flexShrink: 0,
   maxWidth: "unset",
   selectors: {
     [`${buttonStyles.button.classNames.base} &`]: {

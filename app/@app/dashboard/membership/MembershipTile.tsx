@@ -12,6 +12,7 @@ import { Header } from "../../../../components/Header";
 import { EditIcon } from "../../../../components/Icon/EditIcon";
 import { RemoveIcon } from "../../../../components/Icon/RemoveIcon";
 import { Modal } from "../../../../components/Modal";
+import { Bone } from "../../../../components/Skeleton/Bone";
 import { StatusButton } from "../../../../components/StatusButton";
 import { StrataMembership, User } from "../../../../data";
 import { can, p } from "../../../../data/users/permissions";
@@ -42,7 +43,7 @@ export function MembershipTile({
         <div className={styles.membershipTileHeader}>
           <div>
             <Header priority={2}>{membership.name}</Header>
-            <span>Unit {membership.unit}</span>
+            {membership.unit && <span>Unit {membership.unit}</span>}
           </div>
 
           <div className={styles.membershipTileActions}>
@@ -69,9 +70,19 @@ export function MembershipTile({
 
         <dl className={styles.membershipTileDetails}>
           <dt className={styles.membershipTileDt}>Email</dt>
-          <dd className={styles.membershipTileDd}>{membership.email}</dd>
-          <dt className={styles.membershipTileDt}>Phone</dt>
-          <dd className={styles.membershipTileDd}>{membership.phoneNumber}</dd>
+          <dd className={styles.membershipTileDd}>
+            {can(p("stratas", "memberships", "view"))
+              ? membership.email
+              : "*****@*****.***"}
+          </dd>
+          {membership.phoneNumber && (
+            <>
+              <dt className={styles.membershipTileDt}>Phone</dt>
+              <dd className={styles.membershipTileDd}>
+                {membership.phoneNumber}
+              </dd>
+            </>
+          )}
           <dt className={styles.membershipTileDt}>Role</dt>
           <dd className={styles.membershipTileDd}>{membership.role}</dd>
         </dl>

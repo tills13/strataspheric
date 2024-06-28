@@ -7,21 +7,22 @@ import { FileLink } from "../../../../components/FileLink";
 import { FileTypeIcon } from "../../../../components/FileTypeIcon";
 import { Header } from "../../../../components/Header";
 import { searchFiles } from "../../../../data/files/searchFiles";
+import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../data/users/permissions";
 import { classnames } from "../../../../utils/classnames";
 import { FilesListFileFooterActions } from "./FilesListFileFooterActions";
 import { deleteFileAction, upsertFileAction } from "./actions";
 
 interface Props {
-  strataId: string;
   searchTerm?: string;
   visibility?: "public" | "private";
 }
 
-export async function FilesList({ searchTerm, strataId, visibility }: Props) {
+export async function StrataFilesList({ searchTerm, visibility }: Props) {
+  const strata = await mustGetCurrentStrata();
   const session = await auth();
   const canDelete = can(session?.user, p("stratas", "files", "delete"));
-  const files = await searchFiles(strataId, canDelete, searchTerm, visibility);
+  const files = await searchFiles(strata.id, canDelete, searchTerm, visibility);
 
   return (
     <div className={classnames(styles.filesList, s({ p: "normal" }))}>

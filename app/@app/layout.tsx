@@ -5,7 +5,6 @@ import { auth } from "../../auth";
 import { GlobalDashboardHeader } from "../../components/GlobalDashboardHeader";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { SWRProvider } from "./SWRProvider";
-import { joinStrataAction } from "./actions";
 
 export async function generateMetadata(
   _: any,
@@ -33,7 +32,7 @@ export default async function RootAppLayout({
   return (
     <SWRProvider>
       <SessionProvider session={session}>
-        <GlobalDashboardHeader joinStrata={joinStrataAction} />
+        <GlobalDashboardHeader />
 
         {children}
       </SessionProvider>

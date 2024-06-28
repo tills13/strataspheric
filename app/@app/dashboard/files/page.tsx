@@ -1,14 +1,14 @@
 import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import { Header } from "../../../../components/Header";
-import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { Bone } from "../../../../components/Skeleton/Bone";
+import { classnames } from "../../../../utils/classnames";
 import { FilesHeader } from "./FilesHeader";
-import { FilesList } from "./FilesList";
 import { FilesSearch } from "./FilesSearch";
+import { StrataFilesList } from "./StrataFilesList";
 import { upsertFileAction } from "./actions";
 
 export const runtime = "edge";
@@ -18,21 +18,39 @@ export default async function Page({
 }: {
   searchParams: { search?: string; visibility?: "private" | "public" };
 }) {
-  const strata = await getCurrentStrata();
-
-  if (!strata) {
-    notFound();
-  }
-
   return (
     <>
       <FilesHeader upsertFile={upsertFileAction.bind(undefined, undefined)} />
 
       <div className={styles.filesPageContainer}>
-        <Suspense>
-          <FilesList
+        <Suspense
+          fallback={
+            <div className={classnames(styles.filesList, s({ p: "normal" }))}>
+              <div className={styles.filesListFileContainer}>
+                <div
+                  className={classnames(
+                    styles.filesListFile,
+                    s({ p: "normal" }),
+                  )}
+                >
+                  <Bone className={s({ mb: "small" })} />
+                  <Bone />
+                </div>
+                <div
+                  className={classnames(
+                    styles.filesListFile,
+                    s({ p: "normal" }),
+                  )}
+                >
+                  <Bone className={s({ mb: "small" })} />
+                  <Bone />
+                </div>
+              </div>
+            </div>
+          }
+        >
+          <StrataFilesList
             searchTerm={searchParams["search"]}
-            strataId={strata.id}
             visibility={searchParams.visibility}
           />
         </Suspense>

@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { Strata } from "..";
 import { getDomain } from "../../utils/getDomain";
 import { findStratas } from "./findStratas";
@@ -6,7 +8,8 @@ export async function mustGetCurrentStrata(): Promise<Strata> {
   const s = await getCurrentStrata();
 
   if (!s) {
-    throw new Error("invariant: strata should exist");
+    notFound();
+    // throw new Error("invariant: strata should exist");
   }
 
   return s;

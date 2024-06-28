@@ -1,7 +1,7 @@
 "use client";
 
 import { Session } from "next-auth";
-import { useTransition } from "react";
+import React, { useTransition } from "react";
 
 import { Strata, StrataMembership } from "../../data";
 import { Button } from "../Button";
@@ -10,6 +10,7 @@ import { InternalLink } from "../Link/InternalLink";
 import { StatusButton } from "../StatusButton";
 
 interface Props {
+  buttonStyle?: React.ComponentProps<typeof StatusButton>["style"];
   joinStrata: () => void;
   strata: Strata;
   strataMembership?: StrataMembership;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export function JoinStrataButton({
+  buttonStyle = "primary",
   joinStrata,
   strata,
   strataMembership,
@@ -52,7 +54,7 @@ export function JoinStrataButton({
       onClick={() => {
         startTransition(() => joinStrata());
       }}
-      style="secondary"
+      style={buttonStyle}
     >
       {strataMembership?.role === "pending"
         ? "Membership Pending"

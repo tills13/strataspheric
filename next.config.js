@@ -14,6 +14,9 @@ module.exports = withVanillaExtract({
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    logging: "verbose",
+  },
 });
 
 if (process.env.NODE_ENV === "development") {
