@@ -3,5 +3,6 @@
 .wrangler
 node_modules
 .env.*
+!.env.development.template
 tsconfig.tsbuildinfo
 migration.sql

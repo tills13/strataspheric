@@ -48,7 +48,7 @@ export function getFile(fd: FormData, name: string): File | undefined {
 export function getObject(fd: FormData, name: string): Record<string, unknown> {
   return [...fd.entries()]
     .filter(([key]) => key.startsWith(`${name}[`) && key.endsWith("]"))
-    .reduce((acc, [key, value]) => {
+    .reduce<Record<string, unknown>>((acc, [key, value]) => {
       acc[key.substring(name.length + 1, key.length - 1)] = value;
       return acc;
     }, {});
