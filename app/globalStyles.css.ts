@@ -13,7 +13,7 @@ globalStyle("html, body", {
 
 globalStyle("body", {
   padding: 0,
-  lineHeight: 1.5,
+  lineHeight: 1,
   fontSmooth: "always",
   MozOsxFontSmoothing: "always",
   WebkitFontSmoothing: "always",

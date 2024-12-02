@@ -25,7 +25,7 @@ export function Calendar({
           key={currentWeek}
           currentMonth={month}
           currentYear={year}
-          currentWeek={currentWeek}
+          weekOfMonth={currentWeek}
           deleteEvent={deleteEvent}
           events={events}
           upsertEvent={upsertEvent}

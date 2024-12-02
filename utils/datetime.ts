@@ -51,5 +51,6 @@ export function dateFromDayAndWeekIdx(
   firstDayInMonth: number,
 ) {
   const offset = weekIdx * 7 + dayIdx - firstDayInMonth;
+  console.log(offset);
   return addDays(startOfMonth, offset);
 }

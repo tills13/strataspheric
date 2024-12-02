@@ -5,24 +5,26 @@ import { border, padding } from "../../theme";
 
 export const calendar = style({
   display: "grid",
+  gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
   gridTemplateRows: "repeat(6, minmax(0, 1fr))",
   width: "100vw",
   height: "100%",
+  gap: vars.spacing.xs,
 });
 
 export const calendarRow = style({
   position: "relative",
+  display: "grid",
+  gridColumn: "1/-1",
+  gridTemplateColumns: "subgrid",
 });
 
 export const calendarWeek = style({
-  position: "absolute",
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0,
   display: "grid",
-  gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
+  gridTemplateColumns: "subgrid",
   height: "100%",
+  gridRow: "1/1",
+  gridColumn: "1/-1",
   zIndex: 1,
 });
 
@@ -30,8 +32,11 @@ export const calendarEventTrack = style({
   position: "relative",
   zIndex: 2,
   display: "grid",
-  gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
+  gridTemplateColumns: "subgrid",
+  gridRow: "1/1",
+  gridColumn: "1/-1",
   marginTop: "40px",
+  pointerEvents: "none",
 });
 
 export const calendarDay = style({
@@ -41,9 +46,12 @@ export const calendarDay = style({
   height: "100%",
   cursor: "pointer",
   zIndex: 1,
+  borderRadius: vars.borderRadius,
+  backgroundColor: vars.colors.blue50,
+  // border: `1px solid ${vars.colors.borderDefault}`,
   selectors: {
     "&:hover": {
-      backgroundColor: vars.colors.grey100,
+      backgroundColor: vars.colors.grey50,
     },
   },
 });
@@ -66,16 +74,15 @@ export const calendarDayOutOfScope = style([
 export const calendarDate = style({
   position: "relative",
   display: "inline-block",
-  marginTop: vars.spacing.xs,
-  marginLeft: vars.spacing.xs,
-  padding: vars.spacing.small,
+  aspectRatio: "1/1",
+  padding: vars.spacing.xs,
   textAlign: "center",
-  borderRadius: vars.borderRadius,
-  marginBottom: vars.spacing.small,
+  fontSize: vars.fontSizes.normal,
+  backgroundColor: vars.colors.grey100,
+  borderTopLeftRadius: vars.borderRadius,
+  borderBottomRightRadius: vars.borderRadius,
   selectors: {
     [`${today} &`]: {
-      marginTop: vars.spacing.small,
-      padding: `${vars.spacing.xs} ${vars.spacing.small}`,
       backgroundColor: vars.colors.primary,
       color: vars.colors.white,
     },

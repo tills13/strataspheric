@@ -91,6 +91,17 @@ export const vars = createGlobalTheme(":root", {
     grey800: "#2E3233",
     grey900: "#121618",
 
+    blue50: "#EBF6FF",
+    blue100: "#C4F3FD",
+    blue200: "#9CEAFC",
+    blue300: "#74E3FB",
+    blue400: "#4CDAFA",
+    blue500: "#24D2F9",
+    blue600: "#0CC8E9",
+    blue700: "#0AA6C2",
+    blue800: "#08859B",
+    blue900: "#066474",
+
     primary: "#1F2526",
     primaryHover: "#181C1D",
 

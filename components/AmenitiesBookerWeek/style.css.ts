@@ -11,6 +11,10 @@ export const headerActions = style({
   gap: vars.spacing.small,
 });
 
+export const headerActionsPrev = style({
+  transform: "rotate(180deg)",
+});
+
 export const weekPicker = style({
   height: 60,
 });

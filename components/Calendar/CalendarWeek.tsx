@@ -11,24 +11,36 @@ import { dateFromDayAndWeekIdx, parseTimestamp } from "../../utils/datetime";
 import { CalendarDay } from "./CalendarDay";
 import { CalendarDayEvents } from "./CalendarDayEvents";
 
+export const IS_OUT_OF_CONTEXT_MONTH = (
+  currentMonth: number,
+  currentYear: number,
+  date: Date,
+) => date.getFullYear() !== currentYear || date.getMonth() !== currentMonth - 1;
+
 interface Props {
   className?: string;
   currentMonth: number;
   currentYear: number;
+  dayIsOutOfContext: (
+    currentMonth: number,
+    currentYear: number,
+    date: Date,
+  ) => boolean;
   deleteEvent: (eventId: string) => any;
   events: Array<Event & { meetingId?: string }>;
   upsertEvent: (eventId: string | undefined, fd: FormData) => any;
-  currentWeek: number;
+  weekOfMonth: number;
 }
 
 export function CalendarWeek({
   className,
-  deleteEvent,
   events,
+  dayIsOutOfContext = IS_OUT_OF_CONTEXT_MONTH,
+  deleteEvent,
   currentMonth,
-  currentWeek,
   currentYear,
   upsertEvent,
+  weekOfMonth,
 }: Props) {
   const day0 = startOfMonth(
     new Date(Date.UTC(currentYear, currentMonth - 1, 15)),
@@ -38,23 +50,24 @@ export function CalendarWeek({
   return (
     <div className={classnames(className, styles.calendarRow)}>
       <div className={styles.calendarWeek}>
-        {Array.from(new Array(7)).map((_, currentDayOfWeek) => {
+        {Array.from(new Array(7)).map((_, dayOfWeek) => {
           const date = dateFromDayAndWeekIdx(
             day0,
-            currentWeek,
-            currentDayOfWeek,
+            weekOfMonth,
+            dayOfWeek,
             firstDayOfMonth,
           );
 
           return (
             <CalendarDay
-              key={currentDayOfWeek}
+              key={dayOfWeek}
               date={date}
               events={events}
-              isOutOfContext={
-                date.getFullYear() !== currentYear ||
-                date.getMonth() !== currentMonth - 1
-              }
+              isOutOfContext={dayIsOutOfContext(
+                currentMonth,
+                currentYear,
+                date,
+              )}
               upsertEvent={upsertEvent}
             />
           );
@@ -64,7 +77,7 @@ export function CalendarWeek({
         {Array.from(new Array(7)).map((_, currentDayOfWeek) => {
           const date = dateFromDayAndWeekIdx(
             day0,
-            currentWeek,
+            weekOfMonth,
             currentDayOfWeek,
             firstDayOfMonth,
           );
