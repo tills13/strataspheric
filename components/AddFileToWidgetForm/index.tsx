@@ -12,8 +12,8 @@ interface Props {
 export function AddFileToWidgetForm({ createFile }: Props) {
   return (
     <form className={styles.addFileToWidgetForm} action={createFile}>
-      <Input name="name" placeholder="Name" />
-      <Input name="description" placeholder="Description" />
+      <Input name="name" label="Name" />
+      <Input name="description" label="Description" />
       <Input name="file" type="file" />
       <DividerText>OR</DividerText>
       <FileSelect name="existing_file" />

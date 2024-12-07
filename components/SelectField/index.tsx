@@ -13,7 +13,7 @@ interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
 export function SelectField({
   children,
   className,
-  placeholder,
+  label: placeholder,
   placeholderEnabled,
   id: propsId,
   selectClassName,
@@ -31,7 +31,7 @@ export function SelectField({
     >
       <select
         className={classnames(styles.selectFieldSelect, selectClassName)}
-        placeholder=""
+        label=""
         id={propsId || name}
         name={name}
         {...delegateProps}

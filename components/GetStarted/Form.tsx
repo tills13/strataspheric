@@ -107,7 +107,7 @@ export function GetStartedForm({
       <Input
         className={styles.input}
         name="strata_name"
-        placeholder="Strata Name"
+        label="Strata Name"
         onChange={(e) => setStrataName(e.target.value)}
         required
       />
@@ -153,7 +153,7 @@ export function GetStartedForm({
         name="num_units"
         min={1}
         type="number"
-        placeholder="# of Units"
+        label="# of Units"
         onChange={(e) => {
           setNumUnits(parseInt(e.target.value, 10));
         }}

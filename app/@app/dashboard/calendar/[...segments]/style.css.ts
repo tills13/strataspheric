@@ -13,6 +13,10 @@ export const calendarPageHeader = style({
   padding: vars.spacing.normal,
 });
 
+export const strataCalendarContainer = style({
+  padding: `0 ${vars.spacing.normal} ${vars.spacing.normal}`,
+});
+
 export const headerActions = style({
   display: "flex",
   gap: vars.spacing.large,

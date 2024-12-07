@@ -88,7 +88,7 @@ export function DateInput({
           className={s({ w: "full" })}
           name={name}
           type="datetime-local"
-          placeholder={placeholder}
+          label={placeholder}
           defaultValue={
             defaultValue ? formatDateForDatetime(defaultValue) : undefined
           }
@@ -113,7 +113,7 @@ export function DateInput({
           name={`${name}_start`}
           type="datetime-local"
           onChange={onChangeStart}
-          placeholder={rest.startPlaceholder || placeholder}
+          label={rest.startPlaceholder || placeholder}
           defaultValue={
             rest.defaultStartValue
               ? formatDateForDatetime(rest.defaultStartValue)
@@ -128,7 +128,7 @@ export function DateInput({
           name={`${name}_end`}
           type="datetime-local"
           onChange={onChangeEnd}
-          placeholder={rest.endPlaceholder || placeholder}
+          label={rest.endPlaceholder || placeholder}
           defaultValue={
             rest.defaultEndValue
               ? formatDateForDatetime(rest.defaultEndValue)

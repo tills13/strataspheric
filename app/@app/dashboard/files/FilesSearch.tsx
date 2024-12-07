@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "../../../../components/Button";
 import { ElementGroup } from "../../../../components/ElementGroup";
 import { RemoveIcon } from "../../../../components/Icon/RemoveIcon";
-import { InputField } from "../../../../components/InputField";
+import { Input } from "../../../../components/Input";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { SelectField } from "../../../../components/SelectField";
 import * as formdata from "../../../../utils/formdata";
@@ -44,14 +44,14 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
         router.push("/dashboard/files" + (query ? "?" + query : ""));
       }}
     >
-      <InputField
-        wrapperClassName={styles.filesSearchInput}
+      <Input
         name="search"
-        placeholder="Name or Description"
+        label="Name or Description"
+        placeholder="e.g. 2024 AGM Minutes"
         defaultValue={searchTerm}
         required={false}
       />
-      <SelectField name="visibility" placeholder="Visibility">
+      <SelectField name="visibility" label="Visibility">
         <option value="private">Private</option>
         <option value="public">Public</option>
       </SelectField>

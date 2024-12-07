@@ -14,7 +14,6 @@ import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { SaveIcon } from "../../../../components/Icon/SaveIcon";
 import { InfoPanel } from "../../../../components/InfoPanel";
 import { Input } from "../../../../components/Input";
-import { InputField } from "../../../../components/InputField";
 import { StatusButton } from "../../../../components/StatusButton";
 import { StrataAddressFormFields } from "../../../../components/StrataAddressFormFields";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
@@ -45,14 +44,17 @@ export default async function Page() {
             action={updateStrataAction.bind(undefined, strata.id)}
             className={classnames(styles.form, s({ mb: "large", mt: "large" }))}
           >
-            <ElementGroup orientation="column" gap="normal">
-              <InputField
+            <ElementGroup orientation="column" gap="small">
+              <Input
                 name="name"
-                placeholder="Strata Name"
+                label="Strata Name"
                 defaultValue={strata.name}
               />
 
-              <label className={styles.isPublicField} htmlFor="is_public">
+              <label
+                className={classnames(styles.isPublicField, s({ mv: "small" }))}
+                htmlFor="is_public"
+              >
                 <Header priority={3}>
                   I want my strata&apos;s content to be public
                 </Header>
@@ -66,7 +68,8 @@ export default async function Page() {
               <StrataAddressFormFields strata={strata} />
 
               <StatusButton
-                color="primary"
+                className={s({ mt: "normal" })}
+                color="success"
                 iconRight={<SaveIcon />}
                 style="secondary"
                 type="submit"

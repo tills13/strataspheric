@@ -22,7 +22,7 @@ export function SendInboxThreadChatForm({
       <TextArea
         className={s({ mb: "small", w: "full" })}
         name="message"
-        placeholder="Message"
+        label="Message"
         rows={3}
         required
       />

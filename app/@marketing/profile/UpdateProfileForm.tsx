@@ -8,7 +8,6 @@ import { useFormState } from "react-dom";
 import { Header } from "../../../components/Header";
 import { SaveIcon } from "../../../components/Icon/SaveIcon";
 import { Input } from "../../../components/Input";
-import { InputField } from "../../../components/InputField";
 import { StatusButton } from "../../../components/StatusButton";
 import { classnames } from "../../../utils/classnames";
 import { updateUserActionReducer } from "./actions";
@@ -35,7 +34,7 @@ export function UpdateProfileForm({ user }: Props) {
 
         <Input
           className={s({ w: "full" })}
-          placeholder="Full name"
+          label="Full name"
           name="name"
           defaultValue={user.name || ""}
         />
@@ -45,22 +44,22 @@ export function UpdateProfileForm({ user }: Props) {
         <Header className={s({ mb: "normal" })} priority={3}>
           Password
         </Header>
-        <InputField
+        <Input
           wrapperClassName={classnames(s({ mb: "small", w: "full" }))}
-          placeholder="Current Password"
+          label="Current Password"
           name="currentPassword"
           type="password"
         />
 
-        <InputField
+        <Input
           wrapperClassName={classnames(s({ mb: "small", w: "full" }))}
-          placeholder="Password"
+          label="Password"
           name="password"
           type="password"
         />
-        <InputField
+        <Input
           wrapperClassName={classnames(s({ mb: "small", w: "full" }))}
-          placeholder="Confirm Password"
+          label="Confirm Password"
           name="confirmPassword"
           type="password"
         />

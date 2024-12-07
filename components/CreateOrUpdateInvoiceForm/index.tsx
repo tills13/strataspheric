@@ -44,14 +44,14 @@ export function CreateOrUpdateInvoiceForm({
       <ElementGroup gap="small">
         <Input
           name="identifier"
-          placeholder="Invoice ID"
+          label="Invoice ID"
           defaultValue={invoice?.identifier}
           required
         />
         <Input
           className={s({ w: "full" })}
           name="amount"
-          placeholder="Amount $"
+          label="Amount $"
           min="0"
           pattern="\d+(\.\d\d?)?"
           defaultValue={invoice?.amount}
@@ -61,7 +61,7 @@ export function CreateOrUpdateInvoiceForm({
 
       <TextArea
         name="description"
-        placeholder="Description"
+        label="Description"
         defaultValue={invoice?.description || ""}
       />
 

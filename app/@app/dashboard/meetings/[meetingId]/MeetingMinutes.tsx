@@ -13,7 +13,7 @@ import { RightIcon } from "../../../../../components/Icon/RightIcon";
 import { SaveIcon } from "../../../../../components/Icon/SaveIcon";
 import { TextDocumentIcon } from "../../../../../components/Icon/TextDocumentIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
-import { InputField } from "../../../../../components/InputField";
+import { Input } from "../../../../../components/Input";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { MeetingMinutesTimelineItem } from "../../../../../components/MeetingMinutesTimelineItem";
@@ -69,10 +69,10 @@ export async function MeetingMinutes({
           action={updateMinutesUrlAction.bind(undefined, meetingId)}
         >
           {!minutesUrl ? (
-            <InputField
+            <Input
               className={classnames(styles.minutesUrlInput, s({ w: "full" }))}
               name="minutesUrl"
-              placeholder="Minutes URL"
+              label="Minutes URL"
             />
           ) : (
             <ExternalLink

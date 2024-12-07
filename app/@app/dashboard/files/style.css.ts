@@ -9,7 +9,7 @@ export const filesPageContainer = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      gridTemplateColumns: "auto 450px",
+      gridTemplateColumns: "auto auto",
     },
   },
 });
@@ -79,14 +79,6 @@ export const filesSearchForm = style({
   display: "flex",
   flexDirection: "column",
   gap: vars.spacing.normal,
-});
-
-export const filesSearchInput = style({
-  "@media": {
-    [breakpoints.tablet]: {
-      flex: 1,
-    },
-  },
 });
 
 export const filesSearchClear = style({

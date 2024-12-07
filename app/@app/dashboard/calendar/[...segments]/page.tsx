@@ -1,3 +1,4 @@
+import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import format from "date-fns/format";
@@ -74,13 +75,15 @@ export default async function Page({
             </InternalLink>
           </div>
         </div>
-        <StrataCalendar
-          deleteEventAction={deleteEventAction}
-          month={month}
-          strata={strata}
-          upsertEventAction={upsertEventAction}
-          year={year}
-        />
+        <div className={styles.strataCalendarContainer}>
+          <StrataCalendar
+            deleteEventAction={deleteEventAction}
+            month={month}
+            strata={strata}
+            upsertEventAction={upsertEventAction}
+            year={year}
+          />
+        </div>
       </div>
     </>
   );

@@ -5,7 +5,6 @@ import { classnames } from "../../utils/classnames";
 import { AddIcon } from "../Icon/AddIcon";
 import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
-import { InputField } from "../InputField";
 import { StatusButton } from "../StatusButton";
 import { StrataRoleSelect } from "../StrataRoleSelect";
 
@@ -25,39 +24,39 @@ export function CreateOrUpdateStrataMembershipForm({
       action={upsertStrataMembership}
       className={classnames(styles.upsertStrataMemberForm, className)}
     >
-      <InputField
+      <Input
         name="name"
         type="text"
-        placeholder="Name"
+        label="Name"
         defaultValue={strataMembership?.name}
         required
       />
 
-      <InputField
+      <Input
         name="unit"
         type="text"
-        placeholder="Unit"
+        label="Unit"
         defaultValue={strataMembership?.unit || undefined}
         required
       />
 
-      <InputField
+      <Input
         name="email"
         type="email"
-        placeholder="Email Address"
+        label="Email Address"
         defaultValue={strataMembership?.email}
         required
       />
 
-      <InputField
+      <Input
         name="phone_number"
         type="text"
-        placeholder="Phone #"
+        label="Phone #"
         defaultValue={strataMembership?.phoneNumber || undefined}
       />
 
       <StrataRoleSelect
-        placeholder="Strata Role"
+        label="Strata Role"
         name="role"
         defaultValue={strataMembership?.role || "owner"}
         required

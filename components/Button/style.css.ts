@@ -113,19 +113,20 @@ export const button = recipe({
 
     size: {
       small: {
-        padding: `${vars.spacing.xs} ${vars.spacing.small}`,
+        padding: `0 ${vars.spacing.small}`,
       },
       normal: {
-        padding: `${vars.spacing.small} ${vars.spacing.normal}`,
+        height: "44px",
+        padding: `0 ${vars.spacing.normal}`,
       },
       large: {
-        padding: `${vars.spacing.normal} ${vars.spacing.large}`,
+        padding: `0 ${vars.spacing.large}`,
       },
       xl: {
-        padding: `${vars.spacing.large} ${vars.spacing.xl}`,
+        padding: `0 ${vars.spacing.xl}`,
       },
       xxl: {
-        padding: `${vars.spacing.xl} ${vars.spacing.xxl}`,
+        padding: `0 ${vars.spacing.xxl}`,
       },
     },
 
@@ -529,7 +530,6 @@ export const buttonContentContainer = style({
   alignItems: "center",
   justifyContent: "center",
   flex: 1,
-  overflow: "hidden",
 });
 
 export const remainderPaddingLeft = style({

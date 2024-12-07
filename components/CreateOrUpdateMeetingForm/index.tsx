@@ -33,7 +33,7 @@ export function CreateOrUpdateMeetingForm({
       <Input
         className={s({ mb: "small", w: "full" })}
         name="purpose"
-        placeholder="Purpose"
+        label="Purpose"
         defaultValue={meeting?.purpose}
       />
 

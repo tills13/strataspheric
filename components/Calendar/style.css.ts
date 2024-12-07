@@ -1,13 +1,12 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { border, padding } from "../../theme";
+import { padding } from "../../theme";
 
 export const calendar = style({
   display: "grid",
   gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
   gridTemplateRows: "repeat(6, minmax(0, 1fr))",
-  width: "100vw",
   height: "100%",
   gap: vars.spacing.xs,
 });
@@ -36,7 +35,7 @@ export const calendarEventTrack = style({
   gridRow: "1/1",
   gridColumn: "1/-1",
   marginTop: "40px",
-  pointerEvents: "none",
+  pointerEvents: "painted",
 });
 
 export const calendarDay = style({
@@ -47,8 +46,7 @@ export const calendarDay = style({
   cursor: "pointer",
   zIndex: 1,
   borderRadius: vars.borderRadius,
-  backgroundColor: vars.colors.blue50,
-  // border: `1px solid ${vars.colors.borderDefault}`,
+  border: `1px solid ${vars.colors.borderDefault}`,
   selectors: {
     "&:hover": {
       backgroundColor: vars.colors.grey50,
@@ -75,6 +73,7 @@ export const calendarDate = style({
   position: "relative",
   display: "inline-block",
   aspectRatio: "1/1",
+  height: "24px",
   padding: vars.spacing.xs,
   textAlign: "center",
   fontSize: vars.fontSizes.normal,

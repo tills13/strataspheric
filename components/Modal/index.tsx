@@ -2,7 +2,7 @@
 
 import * as styles from "./style.css";
 
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useRef } from "react";
 import ReactDOM from "react-dom";
 
 import { classnames } from "../../utils/classnames";

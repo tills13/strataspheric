@@ -11,14 +11,14 @@ interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
 export function Select({
   children,
   className,
-  placeholder,
+  label: placeholder,
   placeholderEnabled,
   ...delegateProps
 }: PropsWithChildren<Props>) {
   return (
     <select
       className={classnames(styles.select, className)}
-      placeholder={placeholder}
+      label={placeholder}
       defaultValue=""
       {...delegateProps}
     >

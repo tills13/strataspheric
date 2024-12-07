@@ -14,7 +14,6 @@ export const wrapper = style({
 
 export const form = style({
   width: "100%",
-  overflow: "hidden",
 });
 
 export const chatsContainer = style({

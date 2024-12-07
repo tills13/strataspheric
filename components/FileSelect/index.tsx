@@ -13,7 +13,7 @@ interface Props extends React.ComponentProps<typeof Select> {
 export function FileSelect({
   className,
   onSelectFile,
-  placeholder,
+  label: placeholder,
   ...delegateProps
 }: Props) {
   const [files, setFiles] = useState<File[]>([]);

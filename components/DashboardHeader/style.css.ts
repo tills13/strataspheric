@@ -50,9 +50,8 @@ export const linksRailOpen = style([
 export const mobileMenuIcon = style([
   icon,
   {
-    height: calc(vars.sizes.xs).toString(),
-    marginRight: vars.spacing.normal,
-    verticalAlign: "middle",
+    display: "inline",
+    height: vars.sizes.xs,
 
     "@media": {
       [breakpoints.tablet]: {
@@ -63,6 +62,10 @@ export const mobileMenuIcon = style([
 ]);
 
 export const baseSubheaderLink = style({
+  display: "flex",
+  alignItems: "center",
+  gap: vars.spacing.normal,
+
   height: vars.sizes.small,
   lineHeight: vars.sizes.small,
   whiteSpace: "nowrap",

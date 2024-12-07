@@ -40,14 +40,14 @@ export function SendStrataEmailBlastForm({
         <Input
           className={styles.formElement}
           name="subject"
-          placeholder="Subject"
+          label="Subject"
           required
         />
       )}
       <TextArea
         className={styles.formElement}
         name="message"
-        placeholder="Message"
+        label="Message"
         rows={3}
         required
       />

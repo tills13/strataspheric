@@ -54,7 +54,7 @@ export function SignInForm({ className }: Props) {
         id="email"
         name="email"
         type="email"
-        placeholder="Email"
+        label="Email"
       />
 
       <Input
@@ -62,7 +62,7 @@ export function SignInForm({ className }: Props) {
         id="password"
         name="password"
         type="password"
-        placeholder="Password"
+        label="Password"
       />
 
       {error && <div>Incorrect username or password</div>}

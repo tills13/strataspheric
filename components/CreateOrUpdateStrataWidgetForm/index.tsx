@@ -24,7 +24,7 @@ export function CreateOrUpdateStrataWidgetForm({
         <Input
           name="title"
           type="title"
-          placeholder="Title"
+          label="Title"
           defaultValue={widget?.title}
         />
 

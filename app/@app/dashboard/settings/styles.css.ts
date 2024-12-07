@@ -5,12 +5,8 @@ export const centerContainer = style({
   maxWidth: 600,
   margin: "auto",
 });
-export const form = style({});
 
-export const header = style({
-  marginTop: vars.spacing.small,
-  marginBottom: vars.spacing.small,
-});
+export const form = style({});
 
 export const formElement = style({
   width: "100%",
@@ -27,5 +23,4 @@ export const isPublicField = style({
   gap: vars.spacing.normal,
   alignItems: "center",
   justifyContent: "space-between",
-  marginTop: vars.spacing.small,
 });

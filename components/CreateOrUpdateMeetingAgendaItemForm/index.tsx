@@ -48,14 +48,14 @@ export function CreateOrUpdateMeetingAgendaItemForm({
       <Input
         className={s({ w: "full", mb: "small" })}
         name="title"
-        placeholder="Title"
+        label="Title"
         defaultValue={agendaItem?.title}
       />
 
       <TextArea
         className={s({ w: "full", mb: "small" })}
         name="description"
-        placeholder="Description"
+        label="Description"
         defaultValue={agendaItem?.description}
       />
 

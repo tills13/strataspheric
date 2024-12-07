@@ -6,7 +6,7 @@ import Script from "next/script";
 import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 
-import { InputField } from "../../../components/InputField";
+import { Input } from "../../../components/Input";
 import { StatusButton } from "../../../components/StatusButton";
 import { TextArea } from "../../../components/TextArea";
 import { SubmitContactFormActionState } from "./actions";
@@ -42,27 +42,27 @@ export function ContactForm({ submitActionReducer }: Props) {
       />
 
       <form action={action}>
-        <InputField
+        <Input
           wrapperClassName={s({ mb: "normal" })}
-          placeholder="Name"
+          label="Name"
           name="name"
           required
         />
-        <InputField
+        <Input
           wrapperClassName={s({ mb: "normal" })}
-          placeholder="Email"
+          label="Email"
           name="email"
           type="email"
           required
         />
-        <InputField
+        <Input
           wrapperClassName={s({ mb: "normal" })}
-          placeholder="Subject"
+          label="Subject"
           name="subject"
         />
         <TextArea
           className={s({ mb: "normal", w: "full" })}
-          placeholder="Message"
+          label="Message"
           name="message"
           rows={5}
           required

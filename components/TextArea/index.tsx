@@ -9,12 +9,22 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 }
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ className, compact, ...rest }, ref) => (
-    <textarea
-      className={classnames(styles.base, className)}
-      ref={ref}
-      {...rest}
-    />
+  ({ className, compact, label, ...rest }, ref) => (
+    <div className={classnames(styles.wrapper, className)}>
+      <textarea
+        className={classnames(styles.textareaTextarea)}
+        ref={ref}
+        {...rest}
+      />
+      {label && (
+        <label
+          className={styles.textareaPlaceholder}
+          htmlFor={rest.id || rest.name}
+        >
+          {label}
+        </label>
+      )}
+    </div>
   ),
 );
 

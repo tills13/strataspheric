@@ -7,9 +7,10 @@ import { border } from "../../theme";
 export const fileAttachmentChip = style({
   display: "flex",
   gap: vars.spacing.small,
-  padding: vars.spacing.small,
+  padding: `0 ${vars.spacing.small}`,
   backgroundColor: vars.colors.grey50,
   border: border("2px", "solid", vars.colors.grey50),
+  alignItems: "center",
   height: vars.sizes.normal,
   color: "inherit",
   borderRadius: vars.borderRadius,
@@ -37,4 +38,5 @@ export const name = style({
   display: "block",
   textOverflow: "ellipsis",
   overflow: "hidden",
+  whiteSpace: "nowrap",
 });

@@ -35,14 +35,14 @@ export function JoinFromTokenForm({
 
       <Input
         className={s({ mb: "normal", w: "full" })}
-        placeholder="Password"
+        label="Password"
         name="password"
         type="password"
       />
 
       <Input
         className={s({ mb: "large", w: "full" })}
-        placeholder="Confirm Password"
+        label="Confirm Password"
         name="confirm_password"
         type="password"
       />

@@ -117,6 +117,7 @@ export const vars = createGlobalTheme(":root", {
     primaryHover: "#181C1D",
     secondary: "#66696A",
     tertiary: "#6E8387",
+    placeholder: "#6E83875f",
     primaryInverse: "#D5DCDD",
   },
 

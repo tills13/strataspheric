@@ -42,7 +42,7 @@ export function CreateOrUpdateEventForm({
         mutate((k) => Array.isArray(k) && k[1] === "events");
       }}
     >
-      <Input name="name" placeholder="Name" defaultValue={event?.name} />
+      <Input name="name" label="Name" defaultValue={event?.name} />
 
       <DateInput
         name="date"
@@ -53,7 +53,7 @@ export function CreateOrUpdateEventForm({
 
       <TextArea
         name="description"
-        placeholder="Description"
+        label="Description"
         defaultValue={event?.description}
       />
 

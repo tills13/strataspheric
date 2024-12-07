@@ -22,7 +22,9 @@ export default async function Page({
     <>
       <FilesHeader upsertFile={upsertFileAction.bind(undefined, undefined)} />
 
-      <div className={styles.filesPageContainer}>
+      <div
+        className={classnames(styles.filesPageContainer, s({ p: "normal" }))}
+      >
         <Suspense
           fallback={
             <div className={classnames(styles.filesList, s({ p: "normal" }))}>
@@ -55,7 +57,7 @@ export default async function Page({
           />
         </Suspense>
 
-        <div className={s({ p: "normal" })}>
+        <div>
           <Header className={s({ mb: "normal" })} priority={2}>
             Files Search
           </Header>

@@ -46,14 +46,14 @@ export default function Page({
 
             <Input
               className={styles.input}
-              placeholder="Password"
+              label="Password"
               name="password"
               type="password"
             />
 
             <Input
               className={styles.input}
-              placeholder="Confirm Password"
+              label="Confirm Password"
               name="confirm_password"
               type="password"
             />
@@ -81,7 +81,7 @@ export default function Page({
 
           <Input
             className={styles.input}
-            placeholder="Email Address"
+            label="Email Address"
             name="email_address"
           />
 

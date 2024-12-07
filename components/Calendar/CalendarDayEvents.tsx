@@ -10,7 +10,7 @@ import { useState } from "react";
 
 import { Event } from "../../data";
 import { classnames } from "../../utils/classnames";
-import { parseTimestamp } from "../../utils/datetime";
+import { formatDateForDatetime, parseTimestamp } from "../../utils/datetime";
 import { ConditionalWrapper } from "../ConditionalWrapper";
 import { CreateOrUpdateEventForm } from "../CreateOrUpdateEventForm";
 import { InternalLink } from "../Link/InternalLink";
@@ -29,11 +29,15 @@ export function CalendarDayEvents({
   deleteEvent,
   upsertEvent,
 }: Props) {
+  const [showNewEventModal, setShowNewEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | undefined>();
 
   return (
     <>
-      <div className={styles.calendarEventTrackDay}>
+      <div
+        className={styles.calendarEventTrackDay}
+        onClick={() => setShowNewEventModal(true)}
+      >
         {events.map((event, idx) => {
           const startDate = parseTimestamp(event.startDate);
           const endDate = parseTimestamp(event.endDate);
@@ -107,6 +111,15 @@ export function CalendarDayEvents({
           );
         })}
       </div>
+      {showNewEventModal && (
+        <Modal closeModal={() => setShowNewEventModal(false)} title="New Event">
+          <CreateOrUpdateEventForm
+            defaultDate={formatDateForDatetime(date)}
+            upsertEvent={upsertEvent.bind(undefined, undefined)}
+            onDeleteEvent={() => setShowNewEventModal(false)}
+          />
+        </Modal>
+      )}
       {selectedEvent && (
         <Modal
           closeModal={() => setSelectedEvent(undefined)}

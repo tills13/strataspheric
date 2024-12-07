@@ -51,21 +51,21 @@ export function SendInboxMessageForm({
           <Input
             className={styles.formInput}
             name="name"
-            placeholder="Name"
+            label="Name"
             defaultValue={defaultName || ""}
             required
           />
           <Input
             className={styles.formInput}
             name="email_address"
-            placeholder="Email Address"
+            label="Email Address"
             defaultValue={defaultEmail || ""}
             required
           />
           <Input
             className={styles.formInput}
             name="phone_number"
-            placeholder="Phone Number"
+            label="Phone Number"
             defaultValue={defaultPhoneNumber || ""}
           />
         </>
@@ -80,7 +80,7 @@ export function SendInboxMessageForm({
         <Input
           className={styles.formInput}
           name="subject"
-          placeholder="Subject"
+          label="Subject"
           required
         />
       )}
@@ -88,7 +88,7 @@ export function SendInboxMessageForm({
       <TextArea
         className={styles.formInput}
         name="message"
-        placeholder="Message"
+        label="Message"
         rows={3}
         required
       />

@@ -18,7 +18,7 @@ export function FileSelectOrUpload({ className, baseName: name }: Props) {
       <Input
         className={styles.input}
         name={`new_${name}`}
-        placeholder="Upload a File"
+        label="Upload a File"
         type="file"
       />
     </div>

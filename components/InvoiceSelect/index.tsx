@@ -13,7 +13,7 @@ interface Props extends React.ComponentProps<typeof Select> {
 export function InvoiceSelect({
   className,
   onSelectInvoice: onSelectInvoice,
-  placeholder,
+  label: placeholder,
   ...delegateProps
 }: Props) {
   const [invoices, setInvoices] = useState<Invoice[]>([]);

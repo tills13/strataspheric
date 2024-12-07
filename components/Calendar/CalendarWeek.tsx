@@ -21,7 +21,7 @@ interface Props {
   className?: string;
   currentMonth: number;
   currentYear: number;
-  dayIsOutOfContext: (
+  dayIsOutOfContext?: (
     currentMonth: number,
     currentYear: number,
     date: Date,

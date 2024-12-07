@@ -53,21 +53,21 @@ export function StrataSearchForm({
     >
       <Input
         className={classnames(styles.input, s({ mb: "small" }))}
-        placeholder="Strata Name"
+        label="Strata Name"
         name="name"
         defaultValue={name}
       />
 
       <Input
         className={classnames(styles.input, s({ mb: "small" }))}
-        placeholder="Strata Plan ID"
+        label="Strata Plan ID"
         name="strataPlan"
         defaultValue={strataPlan}
       />
 
       <Input
         className={classnames(styles.input, s({ mb: "normal" }))}
-        placeholder="Address"
+        label="Address"
         name="address"
         defaultValue={address}
       />

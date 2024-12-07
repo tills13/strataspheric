@@ -2,29 +2,30 @@ import { s } from "../../sprinkles.css";
 
 import { Strata } from "../../data";
 import { ElementGroup } from "../ElementGroup";
-import { InputField } from "../InputField";
+import { Input } from "../Input";
 
 export function StrataAddressFormFields({ strata }: { strata: Strata }) {
   return (
     <>
-      <InputField
+      <Input
         className={s({ mb: "small" })}
         name="strata_id"
-        placeholder="Strata Plan ID (e.g. VIS...)"
+        label="Strata Plan ID"
+        placeholder="VIS..."
         defaultValue={strata.strataId || undefined}
       />
 
-      <InputField
+      <Input
         className={s({ mb: "small" })}
         name="strata_address_street_address"
-        placeholder="Street Address"
+        label="Street Address"
         defaultValue={strata.streetAddress || undefined}
       />
 
-      <InputField
+      <Input
         className={s({ mb: "small" })}
         name="strata_address_postal_code"
-        placeholder="Postal Code"
+        label="Postal Code"
         defaultValue={strata.postalCode || undefined}
       />
 
@@ -33,16 +34,16 @@ export function StrataAddressFormFields({ strata }: { strata: Strata }) {
         gap="small"
         equalWidthChildren
       >
-        <InputField
+        <Input
           wrapperClassName={s({ width: "full" })}
           name="strata_address_city"
-          placeholder="City"
+          label="City"
           defaultValue={strata.city || undefined}
         />
-        <InputField
+        <Input
           wrapperClassName={s({ width: "full" })}
           name="strata_address_province_state"
-          placeholder="Province / State"
+          label="Province / State"
           defaultValue={strata.provinceState || undefined}
         />
       </ElementGroup>

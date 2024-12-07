@@ -14,7 +14,7 @@ export function JoinFormFields() {
         className={styles.input}
         id="name"
         name="name"
-        placeholder="Name"
+        label="Name"
         required
       />
 
@@ -23,7 +23,7 @@ export function JoinFormFields() {
         id="email"
         name="email"
         type="email"
-        placeholder="Email"
+        label="Email"
         required
       />
 
@@ -36,7 +36,7 @@ export function JoinFormFields() {
         id="password"
         name="password"
         type="password"
-        placeholder="Password"
+        label="Password"
         required
       />
 
@@ -45,7 +45,7 @@ export function JoinFormFields() {
         id="confirmPassword"
         name="confirmPassword"
         type="password"
-        placeholder="Confirm Password"
+        label="Confirm Password"
         required
       />
     </>

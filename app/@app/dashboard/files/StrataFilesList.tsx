@@ -25,7 +25,7 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
   const files = await searchFiles(strata.id, canDelete, searchTerm, visibility);
 
   return (
-    <div className={classnames(styles.filesList, s({ p: "normal" }))}>
+    <div className={classnames(styles.filesList)}>
       {files.map((file) => (
         <div key={file.id} className={styles.filesListFileContainer}>
           <div className={classnames(styles.filesListFile, s({ p: "normal" }))}>
