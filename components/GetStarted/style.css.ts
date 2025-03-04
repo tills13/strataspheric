@@ -5,19 +5,12 @@ import { important } from "../../theme";
 
 export const getStartedForm = style({});
 
-export const header2 = style({
-  marginBottom: vars.spacing.normal,
-});
-
-export const header3 = style([header2]);
-
 export const input = style({
   marginBottom: vars.spacing.normal,
   width: "100%",
 });
 
 export const isPublicField = style([
-  input,
   {
     display: "flex",
     gap: vars.spacing.normal,
@@ -76,8 +69,8 @@ export const estimateContainer = style({
   justifyContent: "space-between",
   fontSize: vars.fontSizes.xxl,
   fontWeight: 400,
-  marginBottom: vars.spacing.normal,
 });
+
 export const estimateSummarySeats = style({ fontWeight: 700 });
 export const estimatePeriod = style({
   display: "block",

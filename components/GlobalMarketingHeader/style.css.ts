@@ -1,19 +1,17 @@
 import { breakpoints, vars } from "../../app/theme.css";
-import { keyframes, style } from "@vanilla-extract/css";
+import { createVar, keyframes, style } from "@vanilla-extract/css";
+
+import { calc } from "@vanilla-extract/css-utils";
 
 import { padding } from "../../theme";
 
 export const globalHeader = style({
-  position: "relative",
+  position: "sticky",
+  top: 0,
   borderBottom: 0,
-  padding: 0,
-  marginBottom: 80,
-
-  "@media": {
-    [breakpoints.tablet]: {
-      // marginBottom: 180,
-    },
-  },
+  marginBottom: vars.spacing.large,
+  padding: `${vars.spacing.xs} ${vars.spacing.normal} ${vars.spacing.xs} ${vars.spacing.xs}`,
+  backgroundColor: vars.colors.white,
 });
 
 const animation = keyframes({
@@ -26,30 +24,28 @@ const animation = keyframes({
 });
 
 export const logo = style({
-  position: "absolute",
-  width: "300px",
-  left: "-150px",
-  top: "-150px",
+  width: vars.sizes.xxl,
   fill: vars.colors.primary,
   animation: `${animation} 72s linear infinite`,
   pointerEvents: "none",
+});
+
+export const globalHeaderTitleWrapper = style({
+  display: "flex",
+  gap: vars.spacing.xs,
+  alignItems: "center",
+  justifyContent: "space-between",
 
   "@media": {
     [breakpoints.tablet]: {
-      width: "500px",
-      left: "-250px",
-      top: "-250px",
+      justifyContent: "flex-start",
     },
   },
 });
 
 export const globalHeaderTitle = style({
-  display: "block",
   zIndex: 1,
-  width: "100%",
-  textAlign: "right",
   whiteSpace: "nowrap",
-  padding: padding(vars.spacing.small, vars.spacing.normal),
 
   fontSize: vars.fontSizes.xl,
   fontWeight: 900,
@@ -57,9 +53,7 @@ export const globalHeaderTitle = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      textAlign: "center",
       fontSize: vars.fontSizes.xxl,
-      padding: 0,
     },
   },
 });

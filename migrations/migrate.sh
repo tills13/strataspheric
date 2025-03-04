@@ -2,8 +2,8 @@
 
 migrations_dir=$( dirname $0 )
 migrations=($( ls $migrations_dir ))
-target="--remote "
-# target="--local "
+# target="--remote "
+target="--local "
 
 npx wrangler d1 execute strataspheric ${target}\
     --command "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key)"
@@ -27,17 +27,17 @@ for file in "${migrations[@]}"; do
 
     if [ $already_run -eq 1 ]; then
         continue
-    fi 
+    fi
 
     echo "running $file"
 
     npx wrangler d1 execute strataspheric ${target}--file $migrations_dir/$file
 
-    if [ $? -eq 1 ]; then 
+    if [ $? -eq 1 ]; then
         echo "migration $file failed"
         exit 1
     fi
-    
+
     npx wrangler d1 execute strataspheric ${target}\
         --command "INSERT INTO migrations VALUES ('${file}')"
 done

@@ -113,19 +113,23 @@ export const button = recipe({
 
     size: {
       small: {
+        height: vars.sizes.small,
         padding: `0 ${vars.spacing.small}`,
       },
       normal: {
-        height: "44px",
+        height: vars.sizes.normal,
         padding: `0 ${vars.spacing.normal}`,
       },
       large: {
+        height: vars.sizes.large,
         padding: `0 ${vars.spacing.large}`,
       },
       xl: {
+        height: vars.sizes.xl,
         padding: `0 ${vars.spacing.xl}`,
       },
       xxl: {
+        height: vars.sizes.xxl,
         padding: `0 ${vars.spacing.xxl}`,
       },
     },

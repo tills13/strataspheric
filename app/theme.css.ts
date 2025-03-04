@@ -1,15 +1,15 @@
 import { createGlobalTheme, createVar } from "@vanilla-extract/css";
 
 export const breakpoints = {
+  mobile: "(min-width: 320px)",
   tablet: "(min-width: 640px)",
+  tabletPlus: "(min-width: 800px)",
   desktop: "(min-width: 1200px)",
 };
 
 export const iconColorVar = createVar();
 export const fontHeaderVar = createVar();
 export const fontPrimaryVar = createVar();
-// export const fontSecondaryVar = createVar();
-// export const fontTextVar = createVar();
 
 export const vars = createGlobalTheme(":root", {
   borderRadius: "4px",
@@ -23,14 +23,6 @@ export const vars = createGlobalTheme(":root", {
     xl: "64px",
     xxl: "128px",
   },
-
-  // padding: {
-  //   xs: "4px",
-  //   small: "8px",
-  //   normal: `${this.spacing.small} ${vars.spacing.normal}`,
-  //   large: "32px",
-  //   xl: "64px",
-  // },
 
   sizes: {
     xxs: "16px",
@@ -127,15 +119,6 @@ export const vars = createGlobalTheme(":root", {
     primaryHeader: fontHeaderVar,
     text: fontPrimaryVar,
   },
-
-  // states: {
-  //   default: "#073b4c",
-  //   hint: "#00000057",
-  //   info: "#1f4b5a",
-  //   error: "#ef476f",
-  //   success: "#06d6a0",
-  //   warning: "#ffd470",
-  // },
 
   zIndex: {
     front: "100",

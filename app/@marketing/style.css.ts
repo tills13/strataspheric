@@ -215,8 +215,13 @@ export const staticPageContainer = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      marginLeft: calc("250px").add(vars.spacing.xs).toString(),
-      marginRight: calc("250px").add(vars.spacing.xs).toString(),
+      padding: 0,
+      marginLeft: calc(vars.sizes.xxl)
+        .add(calc(vars.spacing.xs).multiply(2))
+        .toString(),
+      marginRight: calc(vars.sizes.xxl)
+        .add(calc(vars.spacing.xs).multiply(2))
+        .toString(),
     },
   },
 });

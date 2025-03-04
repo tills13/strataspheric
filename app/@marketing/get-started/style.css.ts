@@ -1,12 +1,14 @@
 import { breakpoints, vars } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { calc } from "@vanilla-extract/css-utils";
+
 export const layoutContainer = style({
   display: "grid",
   gap: vars.spacing.large,
 
   "@media": {
-    [breakpoints.tablet]: {
+    [breakpoints.tabletPlus]: {
       gridTemplateColumns: "300px auto",
     },
   },
@@ -26,4 +28,6 @@ export const pricingPlanSelector = style({
   },
 });
 
-export const getStartedForm = style({});
+export const getStartedForm = style({
+  maxWidth: calc("100%").subtract(calc("300px").multiply(2)).toString(),
+});

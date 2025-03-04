@@ -1,5 +1,6 @@
 "use client";
 
+import { vars } from "../../app/theme.css";
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
@@ -100,7 +101,7 @@ export function GetStartedForm({
         </div>
       )}
 
-      <Header className={styles.header2} priority={2}>
+      <Header className={classnames(s({ mb: "large" }))} priority={2}>
         Let&apos;s get to know your strata...
       </Header>
 
@@ -137,17 +138,6 @@ export function GetStartedForm({
         </div>
       )}
 
-      <label className={styles.isPublicField} htmlFor="is_public">
-        <Header priority={3}>
-          I want my strata&apos;s content to be public
-        </Header>
-        <Checkbox id="is_public" name="is_public" defaultChecked />
-      </label>
-
-      <Header className={styles.header3} priority={3}>
-        How many units are in your strata?
-      </Header>
-
       <Input
         className={styles.input}
         name="num_units"
@@ -159,8 +149,20 @@ export function GetStartedForm({
         }}
       />
 
+      <label
+        className={classnames(styles.isPublicField, s({ mb: "large" }))}
+        htmlFor="is_public"
+      >
+        <Header priority={3}>
+          I want my strata&apos;s content to be public
+        </Header>
+        <Checkbox id="is_public" name="is_public" defaultChecked />
+      </label>
+
       {selectedPlan.pricePerUnit !== undefined && (
-        <div className={styles.estimateContainer}>
+        <div
+          className={classnames(styles.estimateContainer, s({ mb: "large" }))}
+        >
           <div>
             <span className={styles.estimateSummarySeats}>{numUnits}</span>{" "}
             {pluralize("Unit", numUnits)}
