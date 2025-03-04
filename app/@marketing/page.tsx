@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Button } from "../../components/Button";
@@ -15,7 +16,7 @@ export const runtime = "edge";
 export default async function Page() {
   return (
     <div className={styles.landingWrapper}>
-      <section className={classnames(styles.ctaSection)}>
+      <section className={classnames(styles.ctaSection, s({ p: "normal" }))}>
         <Header className={styles.ctaHeader} priority={2}>
           Take your strata to
           <br />
@@ -30,10 +31,7 @@ export default async function Page() {
       </section>
 
       <section
-        className={classnames(
-          styles.featuresSection,
-          styles.marginBottom.large,
-        )}
+        className={classnames(styles.featuresSection, s({ mb: "large" }))}
       >
         <TabLayout
           defaultTab="Files"
@@ -42,10 +40,16 @@ export default async function Page() {
         >
           <Tab name="Files">
             <div className={styles.sideBySideFeature}>
-              <div className={styles.sideBySideText}>
-                <p>
-                  <b>Manage your files.</b>
-                  <br />
+              <div className={styles.sideBySideTextContainer}>
+                <p className={styles.sideBySideParagraph}>
+                  <h4
+                    className={classnames(
+                      styles.sideBySideTitle,
+                      s({ mb: "normal" }),
+                    )}
+                  >
+                    Manage your files.
+                  </h4>
                   Stored securely and safely in the cloud. There when you, or
                   anyone else in your strata, needs them.
                 </p>
@@ -59,10 +63,16 @@ export default async function Page() {
             </div>
 
             <div className={styles.sideBySideFeatureReversed}>
-              <div className={styles.sideBySideText}>
-                <p>
-                  <b>Find exactly what you need.</b>
-                  <br />
+              <div className={styles.sideBySideTextContainer}>
+                <p className={styles.sideBySideParagraph}>
+                  <h4
+                    className={classnames(
+                      styles.sideBySideTitle,
+                      s({ mb: "normal" }),
+                    )}
+                  >
+                    Find exactly what you need.
+                  </h4>
                   Powerful filtering tools to find the documents you are looking
                   for.
                 </p>
@@ -85,10 +95,16 @@ export default async function Page() {
 
           <Tab name="Events">
             <div className={styles.sideBySideFeature}>
-              <div className={styles.sideBySideText}>
-                <p>
-                  <b>See the future.</b>
-                  <br />
+              <div className={styles.sideBySideTextContainer}>
+                <p className={styles.sideBySideParagraph}>
+                  <h4
+                    className={classnames(
+                      styles.sideBySideTitle,
+                      s({ mb: "normal" }),
+                    )}
+                  >
+                    See the future.
+                  </h4>
                   Easily share information about upcoming Strata events.
                   Automatically send email reminders before an important date.
                 </p>
@@ -102,10 +118,16 @@ export default async function Page() {
             </div>
 
             <div className={styles.sideBySideFeatureReversed}>
-              <div className={styles.sideBySideText}>
-                <p>
-                  <b>Amentity booking.</b>
-                  <br />
+              <div className={styles.sideBySideTextContainer}>
+                <p className={styles.sideBySideParagraph}>
+                  <h4
+                    className={classnames(
+                      styles.sideBySideTitle,
+                      s({ mb: "normal" }),
+                    )}
+                  >
+                    Generate revenue from your shared amenities.
+                  </h4>
                   Specify bookable amenities and allow members to automatically
                   book them with or without strata approval.
                 </p>
@@ -128,10 +150,16 @@ export default async function Page() {
 
           <Tab name="Meetings">
             <div className={styles.sideBySideFeature}>
-              <div className={styles.sideBySideText}>
-                <p>
-                  <b>Plan ahead.</b>
-                  <br />
+              <div className={styles.sideBySideTextContainer}>
+                <p className={styles.sideBySideParagraph}>
+                  <h4
+                    className={classnames(
+                      styles.sideBySideTitle,
+                      s({ mb: "normal" }),
+                    )}
+                  >
+                    Plan ahead.
+                  </h4>
                   Plan meetings based on what&apos;s happening in your
                   strata&apos;s Strataspheric account.
                 </p>
@@ -154,10 +182,16 @@ export default async function Page() {
 
           <Tab name="Inbox">
             <div className={styles.sideBySideFeature}>
-              <div className={styles.sideBySideText}>
-                <p>
-                  <b>Stay connected.</b>
-                  <br />
+              <div className={styles.sideBySideTextContainer}>
+                <p className={styles.sideBySideParagraph}>
+                  <h4
+                    className={classnames(
+                      styles.sideBySideTitle,
+                      s({ mb: "normal" }),
+                    )}
+                  >
+                    Stay connected.
+                  </h4>
                   Receieve, discuss, and respond to strata members. Archive
                   messages to reference whenever you need to.
                 </p>
@@ -182,15 +216,14 @@ export default async function Page() {
 
       <section
         className={classnames(
-          styles.sectionPadded,
           styles.centerContent,
-          styles.marginBottom.large,
+          s({ mb: "large", p: "normal" }),
         )}
       >
-        <Header className={styles.marginBottom.normal} priority={2}>
+        <Header className={s({ mb: "normal" })} priority={2}>
           For Professionals
         </Header>
-        <p className={styles.marginBottom.large}>
+        <p className={s({ mb: "large" })}>
           Supports Strata management through 3rd party services via a powerful,
           permissions-based usage model. Realtors can easily search for Stratas
           and request important documents through the portal.
@@ -198,7 +231,7 @@ export default async function Page() {
 
         <InternalLink href="/find">
           <Button
-            className={classnames(styles.marginBottom.normal, styles.ctaButton)}
+            className={classnames(s({ mb: "normal" }), styles.ctaButton)}
             color="primary"
             size="large"
           >
@@ -213,19 +246,12 @@ export default async function Page() {
         </InternalLink>
       </section>
 
-      <section
-        className={classnames(styles.sectionPadded, styles.plansSection)}
-      >
-        <Header className={styles.marginBottom.normal} priority={2}>
+      <section className={classnames(s({ p: "normal" }), styles.plansSection)}>
+        <Header className={s({ mb: "normal" })} priority={2}>
           Simple, month-by-month pricing
         </Header>
 
-        <p
-          className={classnames(
-            styles.centerContent,
-            styles.marginBottom.large,
-          )}
-        >
+        <p className={classnames(styles.centerContent, s({ mb: "large" }))}>
           Multi-year contracts only benefit the platform. Our plans are and will
           always be monthly giving you the freedom to try us out with little to
           no risk.

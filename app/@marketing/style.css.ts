@@ -4,20 +4,10 @@ import { createVar, style, styleVariants } from "@vanilla-extract/css";
 import { calc } from "@vanilla-extract/css-utils";
 
 export const section = style({});
-export const sectionPadded = style([section, { padding: vars.spacing.normal }]);
-
-// util styles
-export const marginBottom = styleVariants({
-  normal: {
-    marginBottom: vars.spacing.normal,
-  },
-  large: {
-    marginBottom: vars.spacing.large,
-  },
-});
 
 export const centerContent = style({
   textAlign: "center",
+  lineHeight: 1.4,
   "@media": {
     [breakpoints.tablet]: {
       width: 600,
@@ -31,7 +21,7 @@ export const featuresSection = style([
   section,
   {
     "@media": {
-      [breakpoints.tablet]: {
+      [breakpoints.desktop]: {
         width: 1000,
         marginLeft: "auto",
         marginRight: "auto",
@@ -41,7 +31,7 @@ export const featuresSection = style([
 ]);
 
 export const tabLayoutTabs = style({
-  width: "100vw",
+  width: "100%",
   overflow: "auto",
   borderRadius: 0,
 
@@ -61,7 +51,7 @@ export const sideBySideFeature = style({
   padding: vars.spacing.normal,
 
   "@media": {
-    [breakpoints.tablet]: {
+    [breakpoints.desktop]: {
       gridTemplateColumns: "auto 60%",
     },
   },
@@ -77,21 +67,29 @@ export const sideBySideFeatureReversed = style([
   sideBySideFeature,
   {
     "@media": {
-      [breakpoints.tablet]: {
+      [breakpoints.desktop]: {
         gridTemplateColumns: "60% auto",
       },
     },
   },
 ]);
 
-export const sideBySideText = style({
+export const sideBySideTextContainer = style({
   paddingTop: vars.spacing.normal,
-  fontSize: vars.fontSizes.large,
   selectors: {
     [`${sideBySideFeatureReversed} &`]: {
       order: 2,
     },
   },
+});
+
+export const sideBySideTitle = style({
+  fontSize: vars.fontSizes.large,
+});
+
+export const sideBySideParagraph = style({
+  fontSize: vars.fontSizes.normal,
+  lineHeight: 1.4,
 });
 
 export const sideBySideImageStack = style({
@@ -166,7 +164,6 @@ export const plansSectionHeader = style([
 ]);
 
 export const ctaSection = style([
-  sectionPadded,
   {
     paddingTop: 100,
     textAlign: "center",
@@ -197,12 +194,14 @@ export const ctaButton = style({
 
 export const plansContainer = style({
   display: "grid",
-  gridTemplateColumns: "repeat(1, 300px)",
   justifyContent: "center",
   gap: vars.spacing.normal,
   marginBottom: vars.spacing.large,
   "@media": {
-    [breakpoints.tablet]: {
+    "(min-width: 650px)": {
+      gridTemplateColumns: "repeat(2, 300px)",
+    },
+    [breakpoints.desktop]: {
       gridTemplateColumns: "repeat(3, 300px)",
     },
   },

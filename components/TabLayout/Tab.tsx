@@ -6,7 +6,12 @@ import { useContext } from "react";
 
 import { TabContext } from ".";
 
-export function Tab({ children, name }) {
+interface Props {
+  children: React.ReactNode;
+  name: string;
+}
+
+export function Tab({ children, name }: Props) {
   const activeTab = useContext(TabContext);
 
   return (

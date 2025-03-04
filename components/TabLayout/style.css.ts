@@ -50,13 +50,17 @@ export const activeTabsTab = style([
 
 export const tabContainer = style({
   position: "relative",
+  display: "grid",
+  gridTemplateAreas: '"stack"',
 });
 
 export const tab = style({
-  position: "absolute",
-  top: 0,
+  position: "relative",
+  gridArea: "stack",
   left: calc(vars.spacing.normal).negate().toString(),
   opacity: 0,
+  height: 0,
+  overflow: "hidden",
   pointerEvents: "none",
 
   transition: "left 0.25s ease, opacity 0.25s ease",
@@ -68,6 +72,7 @@ export const activeTab = style([
     position: "relative",
     left: 0,
     opacity: 1,
+    height: "auto",
     pointerEvents: "all",
   },
 ]);

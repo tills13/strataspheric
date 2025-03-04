@@ -15,13 +15,10 @@ export const layoutContainer = style({
 });
 
 export const pricingPlanSelector = style({
-  marginBottom: vars.spacing.xl,
+  marginBottom: vars.spacing.large,
   "@media": {
     [breakpoints.tablet]: {
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-    [breakpoints.desktop]: {
+      marginBottom: vars.spacing.xl,
       marginLeft: "auto",
       marginRight: "auto",
     },
@@ -29,5 +26,10 @@ export const pricingPlanSelector = style({
 });
 
 export const getStartedForm = style({
-  maxWidth: calc("100%").subtract(calc("300px").multiply(2)).toString(),
+  width: "100%",
+  "@media": {
+    [breakpoints.tablet]: {
+      maxWidth: calc("100%").subtract(calc("300px").multiply(2)).toString(),
+    },
+  },
 });
