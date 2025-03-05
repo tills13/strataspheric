@@ -13,7 +13,6 @@ interface Props extends React.ComponentProps<typeof Select> {
 export function FileSelect({
   className,
   onSelectFile,
-  label: placeholder,
   ...delegateProps
 }: Props) {
   const [files, setFiles] = useState<File[]>([]);
@@ -38,8 +37,8 @@ export function FileSelect({
         );
       }}
       {...delegateProps}
+      defaultValue=""
     >
-      <option value="">{placeholder || "Attach a File"}</option>
       {files.map((file) => (
         <option key={file.id} value={file.id}>
           {file.name}

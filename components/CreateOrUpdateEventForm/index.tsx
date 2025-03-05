@@ -1,3 +1,4 @@
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { mutate } from "swr";
@@ -7,6 +8,7 @@ import { patchTimezoneOffset } from "../../utils/datetime";
 import { ConfirmButton } from "../ConfirmButton";
 import { DateInput } from "../DateInput";
 import { ElementGroup } from "../ElementGroup";
+import { FieldGroup } from "../FieldGroup";
 import { AddIcon } from "../Icon/AddIcon";
 import { DeleteIcon } from "../Icon/DeleteIcon";
 import { Input } from "../Input";
@@ -39,22 +41,24 @@ export function CreateOrUpdateEventForm({
         mutate((k) => Array.isArray(k) && k[1] === "events");
       }}
     >
-      <Input name="name" label="Name" defaultValue={event?.name} />
+      <FieldGroup className={s({ mb: "large" })}>
+        <Input name="name" label="Name" defaultValue={event?.name} />
 
-      <DateInput
-        name="date"
-        defaultStartValue={event?.startDate || defaultDate}
-        defaultEndValue={event?.endDate || defaultDate}
-        type="range"
-      />
+        <DateInput
+          name="date"
+          defaultStartValue={event?.startDate || defaultDate}
+          defaultEndValue={event?.endDate || defaultDate}
+          type="range"
+        />
 
-      <TextArea
-        name="description"
-        label="Description"
-        defaultValue={event?.description}
-      />
+        <TextArea
+          name="description"
+          label="Description"
+          defaultValue={event?.description}
+        />
+      </FieldGroup>
 
-      <ElementGroup gap="small">
+      <ElementGroup gap="normal">
         {event && deleteEvent && (
           <ConfirmButton
             onClickConfirm={async () => {
@@ -73,7 +77,7 @@ export function CreateOrUpdateEventForm({
         <StatusButton
           color="primary"
           iconRight={<AddIcon />}
-          style="secondary"
+          style="primary"
           type="submit"
         >
           {event ? "Update Event" : "Create Event"}

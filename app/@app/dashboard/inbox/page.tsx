@@ -1,3 +1,4 @@
+import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { notFound, redirect } from "next/navigation";
@@ -5,7 +6,6 @@ import { notFound, redirect } from "next/navigation";
 import { auth } from "../../../../auth";
 import { Button } from "../../../../components/Button";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
-import { ElementGroup } from "../../../../components/ElementGroup";
 import { Header } from "../../../../components/Header";
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { InboxThreads } from "../../../../components/InboxThreads";
@@ -42,24 +42,26 @@ export default async function Page() {
       <>
         <DashboardHeader />
         <div className={styles.upsellContainer}>
-          <ElementGroup className={styles.upsell} orientation="column">
-            <Header priority={2}>Oops...</Header>
+          <Header priority={2} className={s({ mb: "large" })}>
+            Oops...
+          </Header>
 
-            <p>The strata inbox is only available on select plans.</p>
+          <p className={s({ mb: "normal" })}>
+            The strata inbox is only available on select plans.
+          </p>
 
-            <p>
-              The inbox streamlines conversations with council, automatically
-              keeping a history of all correspondance. Stop worrying about
-              shared email accounts or private emails being used to store
-              official strata communication.
-            </p>
+          <p className={s({ mb: "large" })}>
+            The inbox streamlines conversations with council, automatically
+            keeping a history of all correspondance. Stop worrying about shared
+            email accounts or private emails being used to store official strata
+            communication.
+          </p>
 
-            <InternalLink href={"/dashboard/settings#plan"}>
-              <Button fullWidth color="primary">
-                Upgrade your plan today
-              </Button>
-            </InternalLink>
-          </ElementGroup>
+          <InternalLink href={"/dashboard/settings#plan"}>
+            <Button fullWidth color="primary">
+              Upgrade your plan today
+            </Button>
+          </InternalLink>
         </div>
       </>
     );

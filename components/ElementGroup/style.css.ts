@@ -8,14 +8,12 @@ import {
 
 export const gapVar = createVar();
 
-export const elementGroup = style({});
+export const elementGroup = style({
+  display: "flex",
+  gap: gapVar,
+});
 export const elementGroupElement = style({
   width: "100%",
-  selectors: {
-    "&:not(:last-child)": {
-      marginBottom: gapVar,
-    },
-  },
 });
 
 export const elementGroupOrientation = styleVariants({
@@ -51,9 +49,11 @@ export const verticalAlignment = styleVariants({
 });
 
 export const elementGroupGap = styleVariants({
-  tiny: { vars: { [gapVar]: vars.spacing.xs } },
+  xxs: { vars: { [gapVar]: vars.spacing.xxs } },
+  xs: { vars: { [gapVar]: vars.spacing.xs } },
   small: { vars: { [gapVar]: vars.spacing.small } },
   normal: { vars: { [gapVar]: vars.spacing.normal } },
   large: { vars: { [gapVar]: vars.spacing.large } },
-  huge: { vars: { [gapVar]: vars.spacing.xl } },
+  xl: { vars: { [gapVar]: vars.spacing.xl } },
+  xxl: { vars: { [gapVar]: vars.spacing.xxl } },
 });

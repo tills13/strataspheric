@@ -11,7 +11,7 @@ export const fullWidth = style({
 
 export const dateWrapper = style({
   display: "flex",
-  gap: vars.spacing.small,
+  gap: vars.spacing.normal,
   flexDirection: "column",
 
   "@media": {

@@ -31,7 +31,7 @@ export function ConfirmModal({
         {description}
       </InfoPanel>
 
-      <ElementGroup gap="small">
+      <ElementGroup gap="normal">
         <Button
           onClick={(e) => {
             e.preventDefault();

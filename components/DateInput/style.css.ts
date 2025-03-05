@@ -3,12 +3,12 @@ import { style } from "@vanilla-extract/css";
 
 export const dateInput = style({
   display: "flex",
-  gap: vars.spacing.small,
+  gap: vars.spacing.normal,
 });
 
 export const inputFieldsWrapper = style({
   display: "flex",
-  gap: vars.spacing.small,
+  gap: vars.spacing.normal,
   flexDirection: "column",
   flex: 1,
 

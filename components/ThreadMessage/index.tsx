@@ -12,7 +12,6 @@ import { useHash } from "../../hooks/useHash";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { Date } from "../Date";
-import { ElementGroup } from "../ElementGroup";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { ChatIcon } from "../Icon/ChatIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";

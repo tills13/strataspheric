@@ -9,6 +9,7 @@ import { File } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { CreateOrUpdateFileForm } from "../CreateOrUpdateFileForm";
+import { DividerText } from "../DividerText";
 import { FileSelect } from "../FileSelect";
 import { Header } from "../Header";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
@@ -72,18 +73,19 @@ export function AttachFileButton({
           title="Attach File"
           closeModal={() => setShowAttachFileModal(false)}
         >
-          <Header className={s({ mb: "normal" })} priority={3}>
-            Existing File
-          </Header>
           <FileSelect
             className={s({ mb: "normal", w: "full" })}
+            placeholder="Attach Existing File"
             onSelectFile={async (file) => {
               await onSelectFile?.(file);
               setShowAttachFileModal(false);
             }}
           />
+
+          <DividerText className={s({ mv: "large" })}>OR</DividerText>
+
           <Header className={s({ mb: "normal" })} priority={3}>
-            New File
+            Attach New File
           </Header>
           <CreateOrUpdateFileForm
             onCreateOrUpdateFile={(file) => {

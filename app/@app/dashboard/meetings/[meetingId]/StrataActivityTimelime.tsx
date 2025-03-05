@@ -8,7 +8,7 @@ import useSWR from "swr";
 
 import { MeetingTimelineIcon } from "../../../../../components/MeetingTimelineIcon";
 import { MeetingTimelineItem } from "../../../../../components/MeetingTimelineItem";
-import { SelectField } from "../../../../../components/SelectField";
+import { Select } from "../../../../../components/Select";
 import { Timeline } from "../../../../../components/Timeline";
 import { NewMeetingAgendaItem } from "../../../../../data";
 import { StrataActivity } from "../../../../api/stratas/listActivity/route";
@@ -96,8 +96,9 @@ export function StrataActivityTimelime({
 
   return (
     <>
-      <SelectField
-        className={s({ mb: "normal" })}
+      <Select
+        className={s({ mb: "large" })}
+        label="Activity Type"
         onChange={(e) => setActivityType(e.target.value)}
       >
         <option value="">All Activity</option>
@@ -106,7 +107,7 @@ export function StrataActivityTimelime({
         <option value="inbox_message">Messages</option>
         <option value="file">Files</option>
         <option value="invoice">Invoices</option>
-      </SelectField>
+      </Select>
 
       <div className={styles.strataActivityModalTimelineContainer}>
         <Timeline

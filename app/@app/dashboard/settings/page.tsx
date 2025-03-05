@@ -8,7 +8,7 @@ import { auth } from "../../../../auth";
 import { Checkbox } from "../../../../components/Checkbox";
 import { ConfirmButton } from "../../../../components/ConfirmButton";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
-import { ElementGroup } from "../../../../components/ElementGroup";
+import { FieldGroup } from "../../../../components/FieldGroup";
 import { Header } from "../../../../components/Header";
 import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { SaveIcon } from "../../../../components/Icon/SaveIcon";
@@ -44,7 +44,7 @@ export default async function Page() {
             action={updateStrataAction.bind(undefined, strata.id)}
             className={classnames(styles.form, s({ mb: "large", mt: "large" }))}
           >
-            <ElementGroup orientation="column" gap="small">
+            <FieldGroup gap="normal" className={s({ mb: "large" })}>
               <Input
                 name="name"
                 label="Strata Name"
@@ -52,7 +52,7 @@ export default async function Page() {
               />
 
               <label
-                className={classnames(styles.isPublicField, s({ mv: "small" }))}
+                className={classnames(styles.isPublicField)}
                 htmlFor="is_public"
               >
                 <Header priority={3}>
@@ -66,37 +66,35 @@ export default async function Page() {
               </label>
 
               <StrataAddressFormFields strata={strata} />
-
-              <StatusButton
-                className={s({ mt: "normal" })}
-                color="success"
-                iconRight={<SaveIcon />}
-                style="secondary"
-                type="submit"
-              >
-                Update Strata
-              </StatusButton>
-            </ElementGroup>
+            </FieldGroup>
+            <StatusButton
+              color="success"
+              iconRight={<SaveIcon />}
+              style="primary"
+              type="submit"
+            >
+              Update Strata
+            </StatusButton>
           </form>
 
           <InfoPanel level="error">
-            <ElementGroup orientation="column">
-              <Header priority={3}>Danger Zone</Header>
+            <Header priority={3} className={s({ mb: "normal" })}>
+              Danger Zone
+            </Header>
 
-              <p>
-                Deleting your Strata will delete all information and files
-                associated with your strata unrecoverably.
-              </p>
+            <p className={s({ mb: "normal" })}>
+              Deleting your Strata will delete all information and files
+              associated with your strata unrecoverably.
+            </p>
 
-              <ConfirmButton
-                iconRight={<DeleteIcon />}
-                onClickConfirm={deleteStrataAction}
-                color="error"
-                style="secondary"
-              >
-                Delete Strata
-              </ConfirmButton>
-            </ElementGroup>
+            <ConfirmButton
+              iconRight={<DeleteIcon />}
+              onClickConfirm={deleteStrataAction}
+              color="error"
+              style="secondary"
+            >
+              Delete Strata
+            </ConfirmButton>
           </InfoPanel>
         </div>
       </div>

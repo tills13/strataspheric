@@ -9,6 +9,7 @@ import { File } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Checkbox } from "../Checkbox";
 import { Header } from "../Header";
+import { SaveIcon } from "../Icon/SaveIcon";
 import { UploadIcon } from "../Icon/UploadIcon";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
@@ -58,7 +59,7 @@ export function CreateOrUpdateFileForm({
       />
 
       <label
-        className={classnames(s({ mb: "normal" }), styles.isPublicWrapper)}
+        className={classnames(s({ mb: "large" }), styles.isPublicWrapper)}
         htmlFor="isPublic"
       >
         <Header priority={3}>File is public</Header>
@@ -70,8 +71,8 @@ export function CreateOrUpdateFileForm({
       </label>
       <StatusButton
         color="primary"
-        iconRight={<UploadIcon />}
-        style="secondary"
+        iconRight={<SaveIcon />}
+        style="primary"
         type="submit"
       >
         {file ? "Update File" : "Upload File"}

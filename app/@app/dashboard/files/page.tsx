@@ -58,7 +58,7 @@ export default async function Page({
         </Suspense>
 
         <div>
-          <Header className={s({ mb: "normal" })} priority={2}>
+          <Header className={s({ mb: "large" })} priority={2}>
             Files Search
           </Header>
           <FilesSearch

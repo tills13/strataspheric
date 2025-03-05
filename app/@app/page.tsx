@@ -7,7 +7,6 @@ import React from "react";
 import { auth } from "../../auth";
 import { Button } from "../../components/Button";
 import { DividerText } from "../../components/DividerText";
-import { ElementGroup } from "../../components/ElementGroup";
 import { Header } from "../../components/Header";
 import { JoinForm } from "../../components/JoinForm";
 import { InternalLink } from "../../components/Link/InternalLink";
@@ -42,10 +41,7 @@ export default async function Page({
 
   return (
     <div className={styles.signInToStrataPageContainer}>
-      <ElementGroup
-        className={styles.signInToStrataPageFormContainer}
-        orientation="column"
-      >
+      <div className={styles.signInToStrataPageFormContainer}>
         {action === "join" ? (
           <JoinForm onSubmit={joinAction} strata={strata} />
         ) : (
@@ -65,7 +61,7 @@ export default async function Page({
             </InternalLink>
           </>
         )}
-      </ElementGroup>
+      </div>
     </div>
   );
 }

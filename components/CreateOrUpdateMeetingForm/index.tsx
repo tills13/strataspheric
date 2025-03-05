@@ -31,16 +31,17 @@ export function CreateOrUpdateMeetingForm({
       }}
     >
       <Input
-        className={s({ mb: "small", w: "full" })}
+        className={s({ mb: "normal", w: "full" })}
         name="purpose"
         label="Purpose"
+        placeholder="e.g. December AGM"
         defaultValue={meeting?.purpose}
       />
 
       <div
         className={classnames(
           styles.dateWrapper,
-          s({ mb: "small", w: "full" }),
+          s({ w: "full", mb: "large" }),
         )}
       >
         <DateInput
@@ -56,7 +57,7 @@ export function CreateOrUpdateMeetingForm({
       <StatusButton
         iconRight={<AddIcon />}
         color="primary"
-        style="secondary"
+        style="primary"
         type="submit"
       >
         {meeting ? "Update Meeting" : "Create Meeting"}

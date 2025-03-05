@@ -67,9 +67,9 @@ export function AddNewMeetingAgendaItemButton({
             Search Recent Strata Activity
           </Button>
 
-          <DividerText className={s({ mv: "normal" })}>OR</DividerText>
+          <DividerText className={s({ mv: "large" })}>OR</DividerText>
 
-          <Header className={s({ mb: "normal" })} priority={3}>
+          <Header className={s({ mb: "large" })} priority={3}>
             Create New Agenda Item
           </Header>
 

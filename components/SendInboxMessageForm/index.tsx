@@ -6,6 +6,7 @@ import { classnames } from "../../utils/classnames";
 import { AttachFileField } from "../AttachFileField";
 import { AttachInvoiceField } from "../AttachInvoiceField";
 import { ElementGroup } from "../ElementGroup";
+import { FieldGroup } from "../FieldGroup";
 import { Header } from "../Header";
 import { SendIcon } from "../Icon/SendIcon";
 import { Input } from "../Input";
@@ -52,11 +53,7 @@ export function SendInboxMessageForm({
               Contact Information
             </Header>
           )}
-          <ElementGroup
-            className={s({ mb: "large" })}
-            gap="normal"
-            orientation="column"
-          >
+          <FieldGroup className={s({ mb: "large" })} gap="normal">
             <Input
               className={styles.formInput}
               name="name"
@@ -80,7 +77,7 @@ export function SendInboxMessageForm({
               defaultValue={defaultPhoneNumber || ""}
               disabled={!!defaultPhoneNumber}
             />
-          </ElementGroup>
+          </FieldGroup>
         </>
       )}
 
@@ -93,11 +90,7 @@ export function SendInboxMessageForm({
         </Header>
       )}
 
-      <ElementGroup
-        className={s({ mb: "normal" })}
-        gap="normal"
-        orientation="column"
-      >
+      <FieldGroup className={s({ mb: "normal" })} gap="normal">
         {showSubjectInput && (
           <Input
             className={styles.formInput}
@@ -114,7 +107,7 @@ export function SendInboxMessageForm({
           rows={3}
           required
         />
-      </ElementGroup>
+      </FieldGroup>
 
       {(upsertFile || upsertInvoice) && (
         <div

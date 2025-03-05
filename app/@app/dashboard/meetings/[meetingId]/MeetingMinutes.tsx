@@ -85,38 +85,40 @@ export async function MeetingMinutes({
               className={styles.minutesUrlApproveButton}
               iconRight={<SaveIcon />}
               iconTextBehaviour="centerRemainder"
-              color="success"
+              style="secondary"
             >
               Add Minutes URL
             </StatusButton>
           )}
 
-          {minutesUrl && minutesUrlApprovedByName ? (
-            <MinutesApprover
-              approverName={minutesUrlApprovedByName}
-              className={styles.minutesUrlApprover}
-            />
-          ) : (
-            <div className={styles.minutesUrlActionsContainer}>
-              <StatusButton
-                className={styles.minutesUrlApproveButton}
-                action={approveMeetingMinutesUrlAction.bind(
-                  undefined,
-                  meetingId,
-                )}
-                iconRight={<CircleCheckIcon />}
-                iconTextBehaviour="centerRemainder"
-                color="success"
-              >
-                Approve
-              </StatusButton>
-              <RemoveButton
-                action={clearMinutesUrlAction.bind(undefined, meetingId)}
-                color="error"
-                style="tertiary"
+          {minutesUrl ? (
+            minutesUrlApprovedByName ? (
+              <MinutesApprover
+                approverName={minutesUrlApprovedByName}
+                className={styles.minutesUrlApprover}
               />
-            </div>
-          )}
+            ) : (
+              <div className={styles.minutesUrlActionsContainer}>
+                <StatusButton
+                  className={styles.minutesUrlApproveButton}
+                  action={approveMeetingMinutesUrlAction.bind(
+                    undefined,
+                    meetingId,
+                  )}
+                  iconRight={<CircleCheckIcon />}
+                  iconTextBehaviour="centerRemainder"
+                  color="success"
+                >
+                  Approve
+                </StatusButton>
+                <RemoveButton
+                  action={clearMinutesUrlAction.bind(undefined, meetingId)}
+                  color="error"
+                  style="tertiary"
+                />
+              </div>
+            )
+          ) : null}
         </form>
       )}
 

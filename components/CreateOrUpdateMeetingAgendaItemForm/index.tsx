@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { MeetingAgendaItem } from "../../data/meetings/getMeetingAgendaItems";
 import { classnames } from "../../utils/classnames";
 import { AttachFileField } from "../AttachFileField";
+import { FieldGroup } from "../FieldGroup";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { AddIcon } from "../Icon/AddIcon";
 import { SaveIcon } from "../Icon/SaveIcon";
@@ -45,46 +46,43 @@ export function CreateOrUpdateMeetingAgendaItemForm({
         onCreateOrUpdateAgendaItem?.();
       }}
     >
-      <Input
-        className={s({ w: "full", mb: "small" })}
-        name="title"
-        label="Title"
-        defaultValue={agendaItem?.title}
-      />
-
-      <TextArea
-        className={s({ w: "full", mb: "small" })}
-        name="description"
-        label="Description"
-        defaultValue={agendaItem?.description}
-      />
-
-      <div
-        className={classnames(
-          styles.fileAttachmentContainer,
-          s({ mb: "large" }),
-        )}
-      >
-        {attachedFile && (
-          <FileAttachmentChip
-            fileName={attachedFile.name}
-            filePath={attachedFile.path}
-          />
-        )}
-
-        <AttachFileField
-          className={styles.fileAttachmentButton}
-          defaultValue={attachedFile}
-          name="fileId"
-          onSelectFile={(file) => setAttachedFile(file)}
-          upsertFile={upsertFile}
+      <FieldGroup className={s({ mb: "large" })}>
+        <Input
+          className={s({ w: "full" })}
+          name="title"
+          label="Title"
+          defaultValue={agendaItem?.title}
         />
-      </div>
+
+        <TextArea
+          className={s({ w: "full" })}
+          name="description"
+          label="Description"
+          defaultValue={agendaItem?.description}
+        />
+
+        <div className={classnames(styles.fileAttachmentContainer)}>
+          {attachedFile && (
+            <FileAttachmentChip
+              fileName={attachedFile.name}
+              filePath={attachedFile.path}
+            />
+          )}
+
+          <AttachFileField
+            className={styles.fileAttachmentButton}
+            defaultValue={attachedFile}
+            name="fileId"
+            onSelectFile={(file) => setAttachedFile(file)}
+            upsertFile={upsertFile}
+          />
+        </div>
+      </FieldGroup>
 
       <StatusButton
         color={agendaItem ? "primary" : "success"}
         iconRight={agendaItem ? <SaveIcon /> : <AddIcon />}
-        style="secondary"
+        style="primary"
         type="submit"
       >
         {agendaItem ? "Update Agenda Item" : "Create Agenda Item"}

@@ -41,7 +41,7 @@ export function CreateOrUpdateInvoiceForm({
         onCreateOrUpdateInvoice(invoice);
       }}
     >
-      <ElementGroup gap="small">
+      <ElementGroup gap="normal">
         <Input
           name="identifier"
           label="Invoice ID"
@@ -68,7 +68,7 @@ export function CreateOrUpdateInvoiceForm({
       <Header priority={3}>Due By</Header>
       <DateInput className={s({ w: "full" })} name="dueBy" type="single" />
 
-      <ElementGroup gap="small">
+      <ElementGroup gap="normal">
         <StatusButton
           color="primary"
           iconRight={<AddIcon />}

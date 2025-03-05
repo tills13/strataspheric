@@ -75,12 +75,8 @@ export const fileActionsContainer = style({
   alignItems: "center",
 });
 
-export const filesSearchForm = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: vars.spacing.normal,
-});
-
 export const filesSearchClear = style({
+  width: "auto",
   flexShrink: 0,
+  flexGrow: 0,
 });

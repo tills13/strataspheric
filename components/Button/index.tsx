@@ -10,7 +10,7 @@ type ButtonRecipeProps = Omit<
   "icon"
 >;
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "style"> {
   icon?: React.ReactNode;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;

@@ -9,29 +9,20 @@ interface Props {
   className?: string;
   children: React.ReactNode;
   divider?: React.ReactNode;
-  equalWidthChildren?: boolean;
+
   gap?: keyof typeof vars.spacing;
   tabIndex?: number;
-  orientation?: "row";
-  wrap?: boolean;
 }
 
-export function ElementGroup(props: Props) {
-  const {
-    className,
-    children,
-    divider,
-    gap = "normal",
-    tabIndex,
-    orientation = "row",
-  } = props;
+export function FieldGroup(props: Props) {
+  const { className, children, divider, gap = "normal", tabIndex } = props;
   const numChildren = React.Children.count(children);
 
   return (
     <div
       className={classnames(
-        styles.elementGroup,
-        styles.elementGroupGap[gap],
+        styles.fieldGroup,
+        styles.fieldGroupGap[gap],
         className,
       )}
       tabIndex={tabIndex}
@@ -41,7 +32,7 @@ export function ElementGroup(props: Props) {
           {React.isValidElement(c)
             ? React.cloneElement(c, {
                 className: classnames(
-                  styles.elementGroupElement,
+                  styles.fieldGroupElement,
                   c.props.className,
                 ),
               })

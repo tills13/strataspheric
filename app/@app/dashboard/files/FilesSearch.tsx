@@ -1,15 +1,17 @@
 "use client";
 
+import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { useRouter } from "next/navigation";
 
 import { Button } from "../../../../components/Button";
 import { ElementGroup } from "../../../../components/ElementGroup";
+import { FieldGroup } from "../../../../components/FieldGroup";
 import { RemoveIcon } from "../../../../components/Icon/RemoveIcon";
 import { Input } from "../../../../components/Input";
 import { InternalLink } from "../../../../components/Link/InternalLink";
-import { SelectField } from "../../../../components/SelectField";
+import { Select } from "../../../../components/Select";
 import * as formdata from "../../../../utils/formdata";
 
 interface Props {
@@ -22,7 +24,6 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
 
   return (
     <form
-      className={styles.filesSearchForm}
       onSubmit={(e) => {
         e.preventDefault();
 
@@ -42,18 +43,20 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
         router.push("/dashboard/files" + (query ? "?" + query : ""));
       }}
     >
-      <Input
-        name="search"
-        label="Name or Description"
-        placeholder="e.g. 2024 AGM Minutes"
-        defaultValue={searchTerm}
-        required={false}
-      />
-      <SelectField name="visibility" label="Visibility">
-        <option value="private">Private</option>
-        <option value="public">Public</option>
-      </SelectField>
-      <ElementGroup gap="small">
+      <FieldGroup className={s({ mb: "large" })}>
+        <Input
+          name="search"
+          label="Name or Description"
+          placeholder="e.g. 2024 AGM Minutes"
+          defaultValue={searchTerm}
+          required={false}
+        />
+        <Select name="visibility" label="Visibility">
+          <option value="private">Private</option>
+          <option value="public">Public</option>
+        </Select>
+      </FieldGroup>
+      <ElementGroup gap="normal">
         <Button type="submit" defaultValue={visibility} fullWidth>
           Search
         </Button>
