@@ -1,18 +1,17 @@
 import { EventWidget } from ".";
-import { StrataWidget } from "../../data";
 import { getWidgetEvents } from "../../data/widgets/getWidgetEvents";
 import { type Props as AbstractWidgetProps } from "../AbstractWidget";
 
 interface Props extends AbstractWidgetProps {
-  createEvent: (fd: FormData) => void;
-  deleteEvent: (eventId: string) => void;
-  widget: StrataWidget;
+  createEvent: (fd: FormData) => Promise<void>;
+  deleteEvent: (eventId: string) => Promise<void>;
 }
 
 export async function ServerEventWidget({
   createEvent,
   deleteEvent,
   deleteWidget,
+  upsertStrataWidget,
   widget,
 }: Props) {
   const events = await getWidgetEvents(widget.id, 10, 0);
@@ -24,6 +23,7 @@ export async function ServerEventWidget({
       deleteWidget={deleteWidget}
       initialEvents={events}
       widget={widget}
+      upsertStrataWidget={upsertStrataWidget}
     />
   );
 }

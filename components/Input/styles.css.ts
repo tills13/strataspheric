@@ -1,4 +1,5 @@
 import { vars } from "../../app/theme.css";
+import { elementGroupElement } from "../ElementGroup/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -10,6 +11,7 @@ export const inputFieldWrapper = style({
   display: "flex",
   alignItems: "center",
   padding: `0 ${vars.spacing.normal}`,
+  marginTop: "6px",
   height: "44px",
   color: vars.fontColors.primary,
   background: "none",
@@ -18,6 +20,22 @@ export const inputFieldWrapper = style({
   borderRadius: vars.borderRadius,
   boxShadow: "none",
   outline: "none",
+
+  selectors: {
+    [`&${elementGroupElement}`]: {
+      width: "100%",
+    },
+    "&:hover": {
+      borderColor: vars.colors.borderDefaultHover,
+    },
+    "&:disabled": {
+      opacity: 0.7,
+      cursor: "not-allowed",
+    },
+    "&::placeholder": {
+      color: vars.fontColors.secondary,
+    },
+  },
 });
 
 export const inputFieldInput = style({
@@ -64,7 +82,7 @@ export const inputFieldFileIcon = style({
   marginRight: vars.spacing.small,
 });
 
-export const inputFieldPlaceholder = style({
+export const inputFieldLabel = style({
   position: "absolute",
   pointerEvents: "none",
   top: "-9px",

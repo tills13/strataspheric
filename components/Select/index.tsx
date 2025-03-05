@@ -5,34 +5,46 @@ import React, { PropsWithChildren } from "react";
 import { classnames } from "../../utils/classnames";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  label?: string;
   placeholderEnabled?: boolean;
 }
 
 export function Select({
   children,
   className,
-  label: placeholder,
+  id: propsId,
+  label,
+  name,
+  placeholder,
   placeholderEnabled,
   ...delegateProps
 }: PropsWithChildren<Props>) {
   return (
-    <select
-      className={classnames(styles.select, className)}
-      label={placeholder}
-      defaultValue=""
-      {...delegateProps}
-    >
-      {placeholder && (
-        <option
-          className={styles.selectPlaceholder}
-          value=""
-          disabled={!placeholderEnabled}
-        >
-          {placeholder}
-        </option>
-      )}
+    <div className={classnames(styles.selectWrapper, className)}>
+      <select
+        className={classnames(styles.select)}
+        placeholder={placeholder}
+        id={propsId || name}
+        name={name}
+        {...delegateProps}
+      >
+        {placeholder && (
+          <option
+            className={styles.selectPlaceholder}
+            value=""
+            disabled={!placeholderEnabled}
+          >
+            {placeholder}
+          </option>
+        )}
 
-      {children}
-    </select>
+        {children}
+      </select>
+      {label && (
+        <label className={styles.selectFieldLabel} htmlFor={propsId || name}>
+          {label}
+        </label>
+      )}
+    </div>
   );
 }

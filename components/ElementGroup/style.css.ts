@@ -1,11 +1,21 @@
 import { vars } from "../../app/theme.css";
-import { createVar, style, styleVariants } from "@vanilla-extract/css";
+import {
+  createVar,
+  globalStyle,
+  style,
+  styleVariants,
+} from "@vanilla-extract/css";
 
 export const gapVar = createVar();
 
-export const elementGroup = style({
-  display: "flex",
-  gap: [gapVar, vars.spacing.normal],
+export const elementGroup = style({});
+export const elementGroupElement = style({
+  width: "100%",
+  selectors: {
+    "&:not(:last-child)": {
+      marginBottom: gapVar,
+    },
+  },
 });
 
 export const elementGroupOrientation = styleVariants({
@@ -41,9 +51,9 @@ export const verticalAlignment = styleVariants({
 });
 
 export const elementGroupGap = styleVariants({
-  tiny: { gap: vars.spacing.xs },
-  small: { gap: vars.spacing.small },
-  normal: { gap: vars.spacing.normal },
-  large: { gap: vars.spacing.large },
-  huge: { gap: vars.spacing.xl },
+  tiny: { vars: { [gapVar]: vars.spacing.xs } },
+  small: { vars: { [gapVar]: vars.spacing.small } },
+  normal: { vars: { [gapVar]: vars.spacing.normal } },
+  large: { vars: { [gapVar]: vars.spacing.large } },
+  huge: { vars: { [gapVar]: vars.spacing.xl } },
 });

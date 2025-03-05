@@ -4,7 +4,7 @@ import { Invoice, NewInvoice, db } from "..";
 
 export async function createInvoice(
   newInvoice: Omit<NewInvoice, "id">,
-): Promise<Invoice | undefined> {
+): Promise<Invoice> {
   return db
     .insertInto("invoices")
     .values({
@@ -12,5 +12,5 @@ export async function createInvoice(
       ...newInvoice,
     })
     .returningAll()
-    .executeTakeFirst();
+    .executeTakeFirstOrThrow();
 }

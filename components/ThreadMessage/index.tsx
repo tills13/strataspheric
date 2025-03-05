@@ -1,5 +1,6 @@
 "use client";
 
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { useState, useTransition } from "react";
@@ -11,6 +12,7 @@ import { useHash } from "../../hooks/useHash";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { Date } from "../Date";
+import { ElementGroup } from "../ElementGroup";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { ChatIcon } from "../Icon/ChatIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
@@ -59,8 +61,8 @@ export function ThreadMessage({
       >
         <div className={styles.messageHeader}>
           <div>
-            <h3>{senderName}</h3>
-            <div>{senderEmail}</div>
+            <h3 className={s({ mb: "small" })}>{senderName}</h3>
+            <span className={styles.messageSenderEmail}>{senderEmail}</span>
           </div>
           <div className={styles.messageHeaderActions}>
             <span className={styles.messageHeaderSentAt}>

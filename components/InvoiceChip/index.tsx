@@ -6,6 +6,8 @@ import * as styles from "./style.css";
 import { useTransition } from "react";
 
 import { Invoice } from "../../data";
+import { p } from "../../data/users/permissions";
+import { useCan } from "../../hooks/useCan";
 import { classnames } from "../../utils/classnames";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
@@ -26,8 +28,7 @@ export function InvoiceChip({
   overrideClassName,
 }: Props) {
   const [isPending, startTransition] = useTransition();
-
-  console.log(overrideClassName, 1, classnames(styles.invoiceChip, className));
+  const can = useCan();
 
   return (
     <div
@@ -44,22 +45,24 @@ export function InvoiceChip({
       <div className={styles.invoiceAmountContainer}>
         <Money className={styles.invoiceAmount} amount={invoice.amount} />
 
-        <StatusButton
-          className={styles.markPaidButton}
-          color="success"
-          iconRight={<CircleCheckIcon />}
-          iconTextBehaviour="centerRemainder"
-          onClick={() =>
-            startTransition(async () => {
-              await markInvoiceAsPaid(invoice.id);
-            })
-          }
-          isPending={isPending}
-          disabled={invoice.isPaid === 1}
-          fullWidth={false}
-        >
-          {invoice.isPaid === 1 ? "Paid" : "Mark Paid"}
-        </StatusButton>
+        {can(p("stratas", "invoices", "edit")) && (
+          <StatusButton
+            className={styles.markPaidButton}
+            color="success"
+            iconRight={<CircleCheckIcon />}
+            iconTextBehaviour="centerRemainder"
+            onClick={() =>
+              startTransition(async () => {
+                await markInvoiceAsPaid(invoice.id);
+              })
+            }
+            isPending={isPending}
+            disabled={invoice.isPaid === 1}
+            fullWidth={false}
+          >
+            {invoice.isPaid === 1 ? "Paid" : "Mark Paid"}
+          </StatusButton>
+        )}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import React, { TextareaHTMLAttributes } from "react";
 import { classnames } from "../../utils/classnames";
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
   compact?: boolean;
 }
 

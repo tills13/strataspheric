@@ -32,11 +32,8 @@ export function CreateOrUpdateEventForm({
     <form
       className={styles.newEventForm}
       action={async (fd) => {
-        console.log(fd.get("date_end"));
         patchTimezoneOffset(fd, "date_start");
         patchTimezoneOffset(fd, "date_end");
-
-        console.log(fd.get("date_end"));
 
         await upsertEvent(fd);
         mutate((k) => Array.isArray(k) && k[1] === "events");

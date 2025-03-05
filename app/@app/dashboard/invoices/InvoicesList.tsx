@@ -1,3 +1,4 @@
+import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { DividerText } from "../../../../components/DividerText";
@@ -17,7 +18,11 @@ export async function InvoicesList({ strata }: Props) {
 
   return (
     <div className={styles.invoicesList}>
-      {invoices.length === 0 && <p>{strata.name} has no invoices on record.</p>}
+      {invoices.length === 0 && (
+        <p className={s({ mb: "large" })}>
+          {strata.name} has no invoices on record.
+        </p>
+      )}
       {invoices.map((invoice) => (
         <InternalLink
           key={invoice.id}
@@ -43,10 +48,9 @@ export async function InvoicesList({ strata }: Props) {
 
       <div className={styles.totalRevenueMoneyContainer}>
         <Money
-          amount={invoices.reduce(
-            (acc, i) => acc + (i.isPaid === 1 ? i.amount : 0),
-            0,
-          )}
+          amount={invoices
+            .filter((inv) => inv.isPaid)
+            .reduce((acc, i) => acc + i.amount, 0)}
           overrideClassName={styles.totalRevenueMoney}
         />
       </div>

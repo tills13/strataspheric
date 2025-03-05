@@ -15,7 +15,7 @@ import { DeleteIcon } from "../Icon/DeleteIcon";
 import { InfoPanel } from "../InfoPanel";
 
 interface Props {
-  deleteEvent: (eventId: string) => void;
+  deleteEvent: (eventId: string) => Promise<void>;
   events: Event[];
 }
 

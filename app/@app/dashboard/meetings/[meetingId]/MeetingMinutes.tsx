@@ -1,11 +1,8 @@
 import { s } from "../../../../../sprinkles.css";
-import { vars } from "../../../../theme.css";
 import * as styles from "./style.css";
 
 import { AddFileToMeetingButton } from "../../../../../components/AddFileToMeetingButton";
-import { Button } from "../../../../../components/Button";
 import { DividerText } from "../../../../../components/DividerText";
-import { FileAttachmentChip } from "../../../../../components/FileAttachmentChip";
 import { FileTypeIcon } from "../../../../../components/FileTypeIcon";
 import { Header } from "../../../../../components/Header";
 import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
@@ -127,8 +124,10 @@ export async function MeetingMinutes({
         <InfoPanel className={s({ mt: "normal" })} level="success">
           The externally hosted minutes have been approved. Export and upload
           them to your{" "}
-          <InternalLink href="/dashboard/files">strata's files</InternalLink> to
-          share with other strata members.
+          <InternalLink href="/dashboard/files">
+            strata&apos;s files
+          </InternalLink>{" "}
+          to share with other strata members.
         </InfoPanel>
       )}
 

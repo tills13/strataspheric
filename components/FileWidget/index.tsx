@@ -22,11 +22,11 @@ import { Modal } from "../Modal";
 import { RemoveButton } from "../RemoveButton";
 
 interface Props extends AbstractWidgetProps {
-  createFile: (fd: FormData) => void;
-  deleteFile: (fileId: string) => void;
+  createFile: (fd: FormData) => Promise<void>;
+  deleteFile: (fileId: string) => Promise<void>;
   files: File[];
   widget: StrataWidget;
-  upsertStrataWidget: (fd: FormData) => void;
+  upsertStrataWidget: (fd: FormData) => Promise<void>;
 }
 
 export function FileWidget({

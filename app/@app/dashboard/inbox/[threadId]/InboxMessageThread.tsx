@@ -41,8 +41,8 @@ export async function InboxMessageThread({
     <div className={styles.inboxMessageThreadContainer}>
       {session && !senderUserId && (
         <div className={styles.outsideMessageWarning}>
-          This message is from outside your strata. Be careful sharing
-          information that might be private.
+          This message is from outside your strata. Be careful when sharing
+          information that might be considered private.
         </div>
       )}
 

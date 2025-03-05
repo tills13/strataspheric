@@ -5,7 +5,7 @@ export const form = style({});
 
 export const formActionsContainer = style({
   display: "flex",
-  gap: vars.spacing.small,
+  gap: vars.spacing.normal,
   flexDirection: "column",
 
   "@media": {
@@ -15,16 +15,12 @@ export const formActionsContainer = style({
   },
 });
 
-export const formHeader = style({
-  marginBottom: vars.spacing.normal,
-});
+export const formHeader = style({});
 
 export const formInput = style({
-  marginBottom: vars.spacing.small,
-  width: "100%",
+  // width: "100%",
 });
 
 export const formTextArea = style({
-  marginBottom: vars.spacing.small,
-  width: "100%",
+  // width: "100%",
 });

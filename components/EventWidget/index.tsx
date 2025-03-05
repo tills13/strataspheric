@@ -18,8 +18,8 @@ import { EventWidgetList } from "./EventWidgetList";
 
 interface Props extends AbstractWidgetProps {
   initialEvents: React.ComponentProps<typeof EventWidgetList>["events"];
-  createEvent: (fd: FormData) => void;
-  deleteEvent: (eventId: string) => void;
+  createEvent: (fd: FormData) => Promise<void>;
+  deleteEvent: (eventId: string) => Promise<void>;
   widget: StrataWidget;
 }
 
@@ -28,6 +28,7 @@ export function EventWidget({
   createEvent,
   deleteEvent,
   deleteWidget,
+  upsertStrataWidget,
   widget,
 }: Props) {
   const { data: session } = useSession();
@@ -48,7 +49,9 @@ export function EventWidget({
       ]}
       className={styles.eventWidget}
       deleteWidget={deleteWidget}
+      upsertStrataWidget={upsertStrataWidget}
       widgetTitle={widget.title}
+      widget={widget}
     >
       <EventWidgetList deleteEvent={deleteEvent} events={initialEvents} />
 

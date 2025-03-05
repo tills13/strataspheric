@@ -1,4 +1,5 @@
 import { createEmail } from "../data/emails/createEmail";
+import { ServerActionError } from "./actions";
 
 const FROM_ADDR = process.env.EMAIL_FROM_ADDR || "no-reply@strataspheric.app";
 
@@ -24,6 +25,13 @@ export async function sendEmail(
   });
 
   const rJson = await r.json();
+  if (r.status !== 200) {
+    throw new ServerActionError(
+      "[resend] failed to send email: " +
+        (rJson.message || "an unknown error occured"),
+      "Something went wrong, please try again later.x",
+    );
+  }
 
   await createEmail(rJson.id);
 

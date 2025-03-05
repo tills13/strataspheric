@@ -1,5 +1,6 @@
 "use client";
 
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { StrataWidget } from "../../data";
@@ -20,28 +21,35 @@ export function CreateOrUpdateStrataWidgetForm({
 }: Props) {
   return (
     <form action={upsertStrataWidget} className={styles.newWidgetForm}>
-      <ElementGroup orientation="column" gap="small">
+      <ElementGroup
+        className={s({ mb: "large" })}
+        orientation="column"
+        gap="normal"
+      >
         <Input
           name="title"
           type="title"
-          label="Title"
+          label="Widget Title"
           defaultValue={widget?.title}
         />
 
-        <Select name="type" defaultValue={widget?.type || "file"}>
+        <Select
+          label="Widget Type"
+          name="type"
+          defaultValue={widget?.type || "file"}
+        >
           <option value="file">Files</option>
           <option value="event">Events</option>
         </Select>
-
-        <Button
-          color="success"
-          iconRight={<AddIcon />}
-          style="secondary"
-          type="submit"
-        >
-          Create Widget
-        </Button>
       </ElementGroup>
+      <Button
+        color="success"
+        iconRight={<AddIcon />}
+        style="secondary"
+        type="submit"
+      >
+        {widget ? "Update" : "Create"} Widget
+      </Button>
     </form>
   );
 }

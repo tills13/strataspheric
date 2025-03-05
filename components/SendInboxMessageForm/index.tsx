@@ -5,6 +5,7 @@ import { File, Invoice } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { AttachFileField } from "../AttachFileField";
 import { AttachInvoiceField } from "../AttachInvoiceField";
+import { ElementGroup } from "../ElementGroup";
 import { Header } from "../Header";
 import { SendIcon } from "../Icon/SendIcon";
 import { Input } from "../Input";
@@ -44,59 +45,81 @@ export function SendInboxMessageForm({
       {showContactInformationFields && (
         <>
           {showHeaders && (
-            <Header className={styles.formHeader} priority={2}>
+            <Header
+              className={classnames(s({ mb: "large" }), styles.formHeader)}
+              priority={2}
+            >
               Contact Information
             </Header>
           )}
-          <Input
-            className={styles.formInput}
-            name="name"
-            label="Name"
-            defaultValue={defaultName || ""}
-            required
-          />
-          <Input
-            className={styles.formInput}
-            name="email_address"
-            label="Email Address"
-            defaultValue={defaultEmail || ""}
-            required
-          />
-          <Input
-            className={styles.formInput}
-            name="phone_number"
-            label="Phone Number"
-            defaultValue={defaultPhoneNumber || ""}
-          />
+          <ElementGroup
+            className={s({ mb: "large" })}
+            gap="normal"
+            orientation="column"
+          >
+            <Input
+              className={styles.formInput}
+              name="name"
+              label="Name"
+              defaultValue={defaultName || ""}
+              disabled={!!defaultName}
+              required
+            />
+            <Input
+              className={styles.formInput}
+              name="email_address"
+              label="Email Address"
+              defaultValue={defaultEmail || ""}
+              disabled={!!defaultEmail}
+              required
+            />
+            <Input
+              className={styles.formInput}
+              name="phone_number"
+              label="Phone Number"
+              defaultValue={defaultPhoneNumber || ""}
+              disabled={!!defaultPhoneNumber}
+            />
+          </ElementGroup>
         </>
       )}
 
       {showHeaders && (
-        <Header className={styles.formHeader} priority={2}>
-          Message
+        <Header
+          className={classnames(s({ mb: "large" }), styles.formHeader)}
+          priority={2}
+        >
+          New Message to Strata
         </Header>
       )}
-      {showSubjectInput && (
-        <Input
+
+      <ElementGroup
+        className={s({ mb: "normal" })}
+        gap="normal"
+        orientation="column"
+      >
+        {showSubjectInput && (
+          <Input
+            className={styles.formInput}
+            name="subject"
+            label="Subject"
+            required
+          />
+        )}
+
+        <TextArea
           className={styles.formInput}
-          name="subject"
-          label="Subject"
+          name="message"
+          label="Message"
+          rows={3}
           required
         />
-      )}
-
-      <TextArea
-        className={styles.formInput}
-        name="message"
-        label="Message"
-        rows={3}
-        required
-      />
+      </ElementGroup>
 
       {(upsertFile || upsertInvoice) && (
         <div
           className={classnames(
-            s({ mb: "small" }),
+            s({ mb: "large" }),
             styles.formActionsContainer,
           )}
         >

@@ -6,7 +6,10 @@ import Script from "next/script";
 import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 
+import { Header } from "../../../components/Header";
+import { InfoPanel } from "../../../components/InfoPanel";
 import { Input } from "../../../components/Input";
+import { Panel } from "../../../components/Panel";
 import { StatusButton } from "../../../components/StatusButton";
 import { TextArea } from "../../../components/TextArea";
 import { SubmitContactFormActionState } from "./actions";
@@ -19,10 +22,10 @@ interface Props {
 }
 
 export function ContactForm({ submitActionReducer }: Props) {
-  const [turnstileChallengePassed, setTurnstileChallengePassed] =
-    useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string>();
   const turnstileRef = useRef<HTMLDivElement>(null!);
-  const [state, action] = useFormState(submitActionReducer, {
+  const [state, submitAction] = useFormState(submitActionReducer, {
+    errorMessage: undefined,
     success: undefined,
   });
 
@@ -33,15 +36,30 @@ export function ContactForm({ submitActionReducer }: Props) {
         strategy="afterInteractive"
         onLoad={() => {
           window.turnstile.render(turnstileRef.current, {
-            sitekey: "0x4AAAAAAAgFC_7r3cnBgJUF",
-            callback() {
-              setTurnstileChallengePassed(true);
+            sitekey: process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY!,
+            callback(token) {
+              setTurnstileToken(token);
             },
           });
         }}
       />
 
-      <form action={action}>
+      {state.errorMessage && (
+        <InfoPanel className={s({ mb: "large" })} level="error">
+          <Header priority={3}>Oops...</Header>
+          {state.errorMessage}
+        </InfoPanel>
+      )}
+
+      <form
+        action={(fd) => {
+          if (!turnstileToken) {
+            throw new Error("nope");
+          }
+
+          return submitAction(fd);
+        }}
+      >
         <Input
           wrapperClassName={s({ mb: "normal" })}
           label="Name"
@@ -68,10 +86,16 @@ export function ContactForm({ submitActionReducer }: Props) {
           required
         />
 
+        <input
+          type="hidden"
+          name="turnstileToken"
+          value={turnstileToken || ""}
+        />
+
         <div className={s({ mb: "normal", w: "full" })} ref={turnstileRef} />
 
         <StatusButton
-          disabled={!turnstileChallengePassed}
+          disabled={!turnstileToken}
           color="primary"
           style="primary"
           success={state.success}

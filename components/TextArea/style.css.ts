@@ -34,4 +34,4 @@ export const textareaTextarea = style([
   },
 ]);
 
-export const textareaPlaceholder = style([inputStyles.inputFieldPlaceholder]);
+export const textareaPlaceholder = style([inputStyles.inputFieldLabel]);

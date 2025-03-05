@@ -60,7 +60,14 @@ export function ElementGroup(props: Props) {
     <div className={classnames(...classNames, className)} tabIndex={tabIndex}>
       {React.Children.map(children, (c, i) => (
         <>
-          {c}
+          {React.isValidElement(c)
+            ? React.cloneElement(c, {
+                className: classnames(
+                  styles.elementGroupElement,
+                  c.props.className,
+                ),
+              })
+            : c}
           {i !== numChildren - 1 && divider}
         </>
       ))}

@@ -71,6 +71,10 @@ export const messageSender = style({
   color: vars.colors.grey500,
 });
 
+export const messageSenderEmail = style({
+  color: vars.colors.grey300,
+});
+
 export const messageText = style({
   padding: padding(0, vars.spacing.normal),
   marginBottom: vars.spacing.normal,

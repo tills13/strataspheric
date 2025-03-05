@@ -25,7 +25,7 @@ export default async function Onboarding() {
       </Header>
 
       <Header className={s({ mb: "large" })} priority={3}>
-        Let's get a few things setup for you...
+        Let&apos;s get a few things setup for you...
       </Header>
 
       <Header className={s({ mb: "small" })} priority={3}>
@@ -52,7 +52,7 @@ export default async function Onboarding() {
         upsertFileAction={upsertFileAction.bind(undefined, undefined)}
       />
 
-      <StatusButton color="primary">Ok, I'm Done</StatusButton>
+      <StatusButton color="primary">Ok, I&apos;m Done</StatusButton>
     </form>
   );
 }

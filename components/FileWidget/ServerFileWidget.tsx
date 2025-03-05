@@ -1,13 +1,10 @@
 import { FileWidget } from ".";
-import { StrataWidget } from "../../data";
 import { getWidgetFiles } from "../../data/widgets/getWidgetFiles";
 import { type Props as AbstractWidgetProps } from "../AbstractWidget";
 
 interface Props extends AbstractWidgetProps {
-  createFile: (fd: FormData) => void;
-  deleteFile: (fileId: string) => void;
-  widget: StrataWidget;
-  upsertStrataWidget: (fd: FormData) => void;
+  createFile: (fd: FormData) => Promise<void>;
+  deleteFile: (fileId: string) => Promise<void>;
 }
 
 export async function ServerFileWidget({

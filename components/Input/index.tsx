@@ -56,10 +56,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
           }}
         />
         {label && (
-          <label
-            className={styles.inputFieldPlaceholder}
-            htmlFor={propsId || name}
-          >
+          <label className={styles.inputFieldLabel} htmlFor={propsId || name}>
             {label}
           </label>
         )}

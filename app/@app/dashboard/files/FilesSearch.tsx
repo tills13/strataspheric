@@ -37,8 +37,6 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
           params.set("visibility", formdata.getString(fd, "visibility"));
         }
 
-        console.log("here", params.toString());
-
         const query = params.toString();
 
         router.push("/dashboard/files" + (query ? "?" + query : ""));

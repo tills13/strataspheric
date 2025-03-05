@@ -6,7 +6,8 @@ import { FileSelect } from "../FileSelect";
 import { Input } from "../Input";
 
 interface Props {
-  createFile: (fd: FormData) => void;
+  createFile: (fd: FormData) => Promise<void>;
+  something: boolean;
 }
 
 export function AddFileToWidgetForm({ createFile }: Props) {

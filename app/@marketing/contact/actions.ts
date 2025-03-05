@@ -1,29 +1,39 @@
 "use server";
 
+import { headers } from "next/headers";
+
 import { auth } from "../../../auth";
+import { withErrorReporting } from "../../../utils/actions";
 import { getString } from "../../../utils/formdata";
+import { validateTurnstileToken } from "../../../utils/forms";
 import { sendEmail } from "../../../utils/sendEmail";
 
 export type SubmitContactFormActionState = {
+  errorMessage?: string;
   success?: boolean;
 };
 
-export async function submitContactFormActionReducer(
-  state: SubmitContactFormActionState,
-  fd: FormData,
-): Promise<SubmitContactFormActionState> {
-  const name = getString(fd, "name");
-  const email = getString(fd, "email");
-  const subject = getString(fd, "subject");
-  const message = getString(fd, "message");
+export const submitContactFormActionReducer = withErrorReporting(
+  async (
+    state: SubmitContactFormActionState,
+    fd: FormData,
+  ): Promise<SubmitContactFormActionState> => {
+    const connectingIp = headers().get("CF-Connecting-IP");
+    const token = getString(fd, "turnstileToken");
 
-  const u = await auth();
+    await validateTurnstileToken(token, connectingIp || "");
 
-  // @todo santize
-  await sendEmail(
-    ["tills13@gmail.com"],
-    `Contact Form: ${subject}`,
-    `
+    const name = getString(fd, "name");
+    const email = getString(fd, "email");
+    const subject = getString(fd, "subject");
+    const message = getString(fd, "message");
+
+    const u = await auth();
+
+    await sendEmail(
+      ["tills13@gmail.com"],
+      `Contact Form: ${subject}`,
+      `
         From: &lt;${name}&gt; ${email} <br/>
         User Information: </br>
         <pre>
@@ -34,7 +44,8 @@ export async function submitContactFormActionReducer(
         <hr/>
         ${message}
     `.trim(),
-  );
+    );
 
-  return { success: true };
-}
+    return { success: true };
+  },
+);

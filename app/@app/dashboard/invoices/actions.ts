@@ -27,7 +27,7 @@ export async function markInvoiceAsPaidAction(invoiceId: string) {
 export async function upsertInvoiceAction(
   invoiceId: string | undefined,
   fd: FormData,
-): Promise<Invoice | undefined> {
+): Promise<Invoice> {
   const strata = await mustGetCurrentStrata();
   const session = await auth();
 
