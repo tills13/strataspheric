@@ -1,12 +1,13 @@
 "use client";
 
-import * as confirmTextClickableTextStyles from "../../../../components/ConfirmClickableText/style.css";
-import * as styles from "./style.css";
-
 import { useState } from "react";
 
-import { ConfirmClickableText } from "../../../../components/ConfirmClickableText";
+import { Button } from "../../../../components/Button";
+import { ConfirmButton } from "../../../../components/ConfirmButton";
 import { CreateOrUpdateFileForm } from "../../../../components/CreateOrUpdateFileForm";
+import { Group } from "../../../../components/Group";
+import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
+import { EditIcon } from "../../../../components/Icon/EditIcon";
 import { Modal } from "../../../../components/Modal";
 import { File } from "../../../../data";
 
@@ -25,26 +26,20 @@ export function FilesListFileFooterActions({
 
   return (
     <>
-      <div className={styles.filesListFileContainerFooter}>
-        <span
-          className={confirmTextClickableTextStyles.confirmClickableText}
+      <Group gap="small">
+        <Button
+          icon={<EditIcon />}
           onClick={() => setEditingFile(file)}
-        >
-          edit
-        </span>
-        <ConfirmClickableText
-          confirmModalTitle="Confirm Delete"
-          confirmModalDescription={
-            <>
-              &quot;{file.name}&quot; will be deleted and will not be
-              recoverable.
-            </>
-          }
+          size="small"
+        />
+
+        <ConfirmButton
+          icon={<DeleteIcon />}
           onClickConfirm={deleteFile.bind(undefined, file.id)}
-        >
-          delete
-        </ConfirmClickableText>
-      </div>
+          size="small"
+          color="error"
+        />
+      </Group>
       {editingFile && (
         <Modal
           closeModal={() => setEditingFile(undefined)}

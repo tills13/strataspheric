@@ -4,10 +4,10 @@ import * as styles from "./style.css";
 
 import React from "react";
 
-import { ConditionalWrapper } from "../ConditionalWrapper";
 import { DropdownButton } from "../DropdownButton";
 import { ExternalLink } from "../Link/ExternalLink";
 import { InternalLink } from "../Link/InternalLink";
+import { Wrap } from "../Wrap";
 
 export function filterIsAction(i: Action | undefined | false): i is Action {
   return i !== undefined && i !== false;
@@ -42,10 +42,10 @@ export function DropdownActions({
       panel={
         <>
           {filteredActions.map((action, idx) => (
-            <ConditionalWrapper
+            <Wrap
               key={idx}
-              predicate={typeof action.action === "string"}
-              wrapTrue={(children) => {
+              if={typeof action.action === "string"}
+              with={(children) => {
                 if (/^https?:\/\//.test(action.action as string)) {
                   return (
                     <ExternalLink
@@ -73,7 +73,7 @@ export function DropdownActions({
                 {action.icon}
                 {action.label}
               </div>
-            </ConditionalWrapper>
+            </Wrap>
           ))}
         </>
       }

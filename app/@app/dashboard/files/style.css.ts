@@ -5,11 +5,11 @@ export const filesPageContainer = style({
   display: "grid",
   gap: vars.spacing.normal,
   gridTemplateRows: "min-content auto",
-  gridTemplateColumns: "100vw",
+  gridTemplateColumns: "100%",
 
   "@media": {
     [breakpoints.tablet]: {
-      gridTemplateColumns: "auto auto",
+      gridTemplateColumns: "auto minmax(auto, 500px)",
     },
   },
 });
@@ -17,21 +17,6 @@ export const filesPageContainer = style({
 export const filesList = style({
   maxWidth: "100%",
   borderSpacing: 0,
-});
-
-export const filesListFileContainer = style({
-  selectors: {
-    "&:not(:last-child)": {
-      marginBottom: vars.spacing.normal,
-    },
-  },
-});
-
-export const filesListFileContainerFooter = style({
-  display: "flex",
-  justifyContent: "flex-end",
-  gap: vars.spacing.small,
-  color: vars.fontColors.secondary,
 });
 
 export const filesListFile = style({

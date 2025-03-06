@@ -5,10 +5,10 @@ import * as styles from "./style.css";
 
 import { StrataWidget } from "../../data";
 import { Button } from "../Button";
-import { FieldGroup } from "../FieldGroup";
 import { AddIcon } from "../Icon/AddIcon";
 import { Input } from "../Input";
 import { Select } from "../Select";
+import { Stack } from "../Stack";
 
 interface Props {
   upsertStrataWidget: (formData: FormData) => void;
@@ -21,7 +21,7 @@ export function CreateOrUpdateStrataWidgetForm({
 }: Props) {
   return (
     <form action={upsertStrataWidget} className={styles.newWidgetForm}>
-      <FieldGroup className={s({ mb: "large" })} gap="normal">
+      <Stack className={s({ mb: "large" })} gap="normal">
         <Input
           name="title"
           type="title"
@@ -37,7 +37,7 @@ export function CreateOrUpdateStrataWidgetForm({
           <option value="file">Files</option>
           <option value="event">Events</option>
         </Select>
-      </FieldGroup>
+      </Stack>
       <Button
         color="success"
         iconRight={<AddIcon />}

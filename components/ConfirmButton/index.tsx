@@ -7,14 +7,19 @@ import { ConfirmModal } from "../ConfirmModal";
 import { StatusButton } from "../StatusButton";
 
 type StatusButtonProps = React.ComponentProps<typeof StatusButton>;
+type ConfirmModalProps = React.ComponentProps<typeof ConfirmModal>;
 
 interface Props
   extends Omit<StatusButtonProps, "isPending" | "onClick" | "type"> {
+  confirmModalDescription?: ConfirmModalProps["description"];
+  confirmModalTitle?: ConfirmModalProps["title"];
   onClickConfirm: () => void | Promise<void>;
 }
 
 export function ConfirmButton({
   children,
+  confirmModalDescription,
+  confirmModalTitle,
   onClickConfirm,
   ...delegateProps
 }: Props) {
@@ -37,6 +42,8 @@ export function ConfirmButton({
         <ConfirmModal
           closeModal={() => setShowConfirmModal(false)}
           onClickConfirm={onClickConfirm}
+          description={confirmModalDescription}
+          title={confirmModalTitle}
         />
       )}
     </>

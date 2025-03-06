@@ -8,11 +8,11 @@ import React, { useState } from "react";
 import { MeetingAgendaItem } from "../../data/meetings/getMeetingAgendaItems";
 import { classnames } from "../../utils/classnames";
 import { AttachFileField } from "../AttachFileField";
-import { FieldGroup } from "../FieldGroup";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { AddIcon } from "../Icon/AddIcon";
 import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
@@ -46,7 +46,7 @@ export function CreateOrUpdateMeetingAgendaItemForm({
         onCreateOrUpdateAgendaItem?.();
       }}
     >
-      <FieldGroup className={s({ mb: "large" })}>
+      <Stack className={s({ mb: "large" })}>
         <Input
           className={s({ w: "full" })}
           name="title"
@@ -77,7 +77,7 @@ export function CreateOrUpdateMeetingAgendaItemForm({
             upsertFile={upsertFile}
           />
         </div>
-      </FieldGroup>
+      </Stack>
 
       <StatusButton
         color={agendaItem ? "primary" : "success"}

@@ -2,11 +2,11 @@ import * as styles from "./style.css";
 
 import { classnames } from "../../utils/classnames";
 import { truncate } from "../../utils/truncate";
-import { ConditionalWrapper } from "../ConditionalWrapper";
 import { Date } from "../Date";
 import { Header } from "../Header";
 import { QuoteIcon } from "../Icon/QuoteIcon";
 import { InternalLink } from "../Link/InternalLink";
+import { Wrap } from "../Wrap";
 
 interface Props {
   className?: string;
@@ -30,9 +30,9 @@ export function InboxMessageQuote({
   timestamp,
 }: Props) {
   return (
-    <ConditionalWrapper
-      predicate={linkType === "direct"}
-      wrapTrue={(children) => (
+    <Wrap
+      if={linkType === "direct"}
+      with={(children) => (
         <InternalLink
           className={classnames(styles.quotedMessage, className)}
           href={`/dashboard/inbox/${messageThreadId}#${messageId}`}
@@ -40,7 +40,7 @@ export function InboxMessageQuote({
           {children}
         </InternalLink>
       )}
-      wrapFalse={(children) => (
+      elseWith={(children) => (
         <a
           className={classnames(styles.quotedMessage, className)}
           href={"#" + messageId}
@@ -66,6 +66,6 @@ export function InboxMessageQuote({
           ? message
           : truncate(message, maxPreviewLength)}
       </p>
-    </ConditionalWrapper>
+    </Wrap>
   );
 }

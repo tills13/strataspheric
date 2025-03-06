@@ -5,10 +5,13 @@ import { auth } from "../../../../auth";
 import { Date } from "../../../../components/Date";
 import { FileLink } from "../../../../components/FileLink";
 import { FileTypeIcon } from "../../../../components/FileTypeIcon";
+import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
+import { Stack } from "../../../../components/Stack";
 import { searchFiles } from "../../../../data/files/searchFiles";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../data/users/permissions";
+import { sleep } from "../../../../utils";
 import { classnames } from "../../../../utils/classnames";
 import { FilesListFileFooterActions } from "./FilesListFileFooterActions";
 import { deleteFileAction, upsertFileAction } from "./actions";
@@ -22,13 +25,19 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
   const strata = await mustGetCurrentStrata();
   const session = await auth();
   const canDelete = can(session?.user, p("stratas", "files", "delete"));
+  // await sleep(2_000);
   const files = await searchFiles(strata.id, canDelete, searchTerm, visibility);
 
   return (
-    <div className={classnames(styles.filesList)}>
+    <Stack className={classnames(styles.filesList)}>
       {files.map((file) => (
-        <div key={file.id} className={styles.filesListFileContainer}>
-          <div className={classnames(styles.filesListFile, s({ p: "normal" }))}>
+        <Group
+          key={file.id}
+          className={classnames(styles.filesListFile, s({ p: "normal" }))}
+          align="center"
+          justify="space-between"
+        >
+          <Group align="center">
             <Header className={styles.filesListFileHeader} priority={3}>
               <FileTypeIcon
                 className={styles.fileListFileIcon}
@@ -46,18 +55,13 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
                   {file.name}
                 </span>
               )}
-              <Date
-                className={styles.filesListFileUploadDate}
-                output="date"
-                timestamp={file.createdAt}
-              />
             </Header>
-            {file.description && (
-              <p className={classnames(s({ mt: "small" }))}>
-                {file.description}
-              </p>
-            )}
-          </div>
+            <Date
+              className={styles.filesListFileUploadDate}
+              output="date"
+              timestamp={file.createdAt}
+            />
+          </Group>
           {session?.user &&
             can(
               session.user,
@@ -70,8 +74,8 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
                 upsertFile={upsertFileAction}
               />
             )}
-        </div>
+        </Group>
       ))}
-    </div>
+    </Stack>
   );
 }

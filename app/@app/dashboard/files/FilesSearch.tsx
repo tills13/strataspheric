@@ -6,12 +6,13 @@ import * as styles from "./style.css";
 import { useRouter } from "next/navigation";
 
 import { Button } from "../../../../components/Button";
-import { ElementGroup } from "../../../../components/ElementGroup";
-import { FieldGroup } from "../../../../components/FieldGroup";
+import { Group } from "../../../../components/Group";
 import { RemoveIcon } from "../../../../components/Icon/RemoveIcon";
+import { SearchIcon } from "../../../../components/Icon/SearchIcon";
 import { Input } from "../../../../components/Input";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Select } from "../../../../components/Select";
+import { Stack } from "../../../../components/Stack";
 import * as formdata from "../../../../utils/formdata";
 
 interface Props {
@@ -43,7 +44,7 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
         router.push("/dashboard/files" + (query ? "?" + query : ""));
       }}
     >
-      <FieldGroup className={s({ mb: "large" })}>
+      <Stack className={s({ mb: "large" })}>
         <Input
           name="search"
           label="Name or Description"
@@ -55,18 +56,26 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
           <option value="private">Private</option>
           <option value="public">Public</option>
         </Select>
-      </FieldGroup>
-      <ElementGroup gap="normal">
-        <Button type="submit" defaultValue={visibility} fullWidth>
+      </Stack>
+      <Group>
+        <Button
+          type="submit"
+          defaultValue={visibility}
+          iconRight={<SearchIcon />}
+          style="primary"
+          color="primary"
+        >
           Search
         </Button>
-        <InternalLink
-          className={styles.filesSearchClear}
-          href="/dashboard/files"
-        >
-          <Button color="error" icon={<RemoveIcon />} style="secondary" />
-        </InternalLink>
-      </ElementGroup>
+        {searchTerm && (
+          <InternalLink
+            className={styles.filesSearchClear}
+            href="/dashboard/files"
+          >
+            <Button color="error" icon={<RemoveIcon />} style="tertiary" />
+          </InternalLink>
+        )}
+      </Group>
     </form>
   );
 }

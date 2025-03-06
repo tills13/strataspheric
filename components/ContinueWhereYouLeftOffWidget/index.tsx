@@ -4,8 +4,8 @@ import * as styles from "./style.css";
 import { auth } from "../../auth";
 import { getUserStratas } from "../../data/users/getUserStratas";
 import { Button } from "../Button";
-import { ElementGroup } from "../ElementGroup";
 import { GoToStrataLinkButton } from "../GoToStrataLinkButton";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { InternalLink } from "../Link/InternalLink";
 import { Panel } from "../Panel";
@@ -23,7 +23,7 @@ export async function ContinueWhereYouLeftOffWidget() {
         Continue where you left off...
       </Header>
       <div className={styles.spacer} />
-      <ElementGroup className={styles.continuePanelList} gap="small">
+      <Group className={styles.continuePanelList} gap="small">
         {session ? (
           <>
             {sessionStratas.length ? (
@@ -44,7 +44,7 @@ export async function ContinueWhereYouLeftOffWidget() {
             <Button color="default">Sign In</Button>
           </InternalLink>
         )}
-      </ElementGroup>
+      </Group>
     </Panel>
   );
 }

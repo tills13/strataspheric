@@ -7,11 +7,11 @@ import { Event } from "../../data";
 import { patchTimezoneOffset } from "../../utils/datetime";
 import { ConfirmButton } from "../ConfirmButton";
 import { DateInput } from "../DateInput";
-import { ElementGroup } from "../ElementGroup";
-import { FieldGroup } from "../FieldGroup";
+import { Group } from "../Group";
 import { AddIcon } from "../Icon/AddIcon";
 import { DeleteIcon } from "../Icon/DeleteIcon";
 import { Input } from "../Input";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
@@ -41,7 +41,7 @@ export function CreateOrUpdateEventForm({
         mutate((k) => Array.isArray(k) && k[1] === "events");
       }}
     >
-      <FieldGroup className={s({ mb: "large" })}>
+      <Stack className={s({ mb: "large" })}>
         <Input name="name" label="Name" defaultValue={event?.name} />
 
         <DateInput
@@ -56,9 +56,9 @@ export function CreateOrUpdateEventForm({
           label="Description"
           defaultValue={event?.description}
         />
-      </FieldGroup>
+      </Stack>
 
-      <ElementGroup gap="normal">
+      <Group gap="normal">
         {event && deleteEvent && (
           <ConfirmButton
             onClickConfirm={async () => {
@@ -82,7 +82,7 @@ export function CreateOrUpdateEventForm({
         >
           {event ? "Update Event" : "Create Event"}
         </StatusButton>
-      </ElementGroup>
+      </Group>
     </form>
   );
 }

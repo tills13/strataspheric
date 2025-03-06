@@ -2,10 +2,10 @@ import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { DividerText } from "../DividerText";
-import { FieldGroup } from "../FieldGroup";
 import { FileSelect } from "../FileSelect";
 import { AddIcon } from "../Icon/AddIcon";
 import { Input } from "../Input";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 
 interface Props {
@@ -16,11 +16,11 @@ interface Props {
 export function AddFileToWidgetForm({ createFile }: Props) {
   return (
     <form className={styles.addFileToWidgetForm} action={createFile}>
-      <FieldGroup>
+      <Stack>
         <Input name="name" label="Name" />
         <Input name="description" label="Description" />
         <Input name="file" type="file" />
-      </FieldGroup>
+      </Stack>
       <DividerText className={s({ mv: "large" })}>OR</DividerText>
       <FileSelect
         className={s({ mb: "large" })}

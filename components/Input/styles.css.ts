@@ -1,6 +1,6 @@
 import { vars } from "../../app/theme.css";
-import { elementGroupElement } from "../ElementGroup/style.css";
-import { fieldGroupElement } from "../FieldGroup/style.css";
+import { groupElement } from "../Group/style.css";
+import { stackElement } from "../Stack/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -23,10 +23,10 @@ export const inputFieldWrapper = style({
   outline: "none",
 
   selectors: {
-    [`&${elementGroupElement}`]: {
+    [`&${groupElement}`]: {
       width: "100%",
     },
-    [`&${fieldGroupElement}`]: {
+    [`&${stackElement}`]: {
       width: "100%",
     },
     "&:hover": {

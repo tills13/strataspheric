@@ -5,6 +5,7 @@ import { auth } from "../../../../auth";
 import { Button } from "../../../../components/Button";
 import { Date } from "../../../../components/Date";
 import { DeleteButton } from "../../../../components/DeleteButton";
+import { Group } from "../../../../components/Group";
 import { InfoPanel } from "../../../../components/InfoPanel";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { getMeetings } from "../../../../data/meetings/getMeetings";
@@ -40,22 +41,30 @@ export async function MeetingListLayout({ strataId }: Props) {
               pathname: "/dashboard/meetings/" + meeting.id,
             }}
           >
-            <div className={styles.purposeCell}>{meeting.purpose}</div>
-            <div className={styles.dateCell}>
-              <Date timestamp={meeting.startDate} />
-            </div>
-            <div className={styles.actionsCell}>
-              <div className={styles.actions}>
+            <Group align="center" justify="space-between">
+              <Group align="center">
+                <h3>{meeting.purpose}</h3>
+                <Date
+                  className={styles.meetingDate}
+                  timestamp={meeting.startDate}
+                  output="date"
+                />
+              </Group>
+
+              <Group gap="small">
                 {can(session?.user, p("stratas", "meetings", "delete")) && (
                   <DeleteButton
-                    onClick={deleteMeetingAction.bind(undefined, meeting.id)}
+                    onConfirmDelete={deleteMeetingAction.bind(
+                      undefined,
+                      meeting.id,
+                    )}
                     color="error"
                     size="small"
                     style="tertiary"
                   />
                 )}
-              </div>
-            </div>
+              </Group>
+            </Group>
           </InternalLink>
         ))}
       </div>

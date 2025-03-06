@@ -8,8 +8,8 @@ import {
 
 export const gapVar = createVar();
 
-export const fieldGroup = style({});
-export const fieldGroupElement = style({
+export const stack = style({});
+export const stackElement = style({
   width: "100%",
   selectors: {
     "&:not(:last-child)": {
@@ -18,7 +18,7 @@ export const fieldGroupElement = style({
   },
 });
 
-export const fieldGroupGap = styleVariants({
+export const stackGap = styleVariants({
   xxs: { vars: { [gapVar]: vars.spacing.xxs } },
   xs: { vars: { [gapVar]: vars.spacing.xs } },
   small: { vars: { [gapVar]: vars.spacing.small } },

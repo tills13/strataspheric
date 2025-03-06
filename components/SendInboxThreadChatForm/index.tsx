@@ -2,8 +2,8 @@ import { s } from "../../sprinkles.css";
 
 import { File } from "../../data";
 import { AttachFileField } from "../AttachFileField";
-import { FieldGroup } from "../FieldGroup";
 import { SendIcon } from "../Icon/SendIcon";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
@@ -20,7 +20,7 @@ export function SendInboxThreadChatForm({
 }: Props) {
   return (
     <form className={className} action={sendInboxThreadChat}>
-      <FieldGroup className={s({ mb: "large" })}>
+      <Stack className={s({ mb: "large" })}>
         <TextArea
           className={s({ w: "full" })}
           name="message"
@@ -32,7 +32,7 @@ export function SendInboxThreadChatForm({
         {upsertFile && (
           <AttachFileField name="fileId" upsertFile={upsertFile} />
         )}
-      </FieldGroup>
+      </Stack>
 
       <StatusButton
         color="primary"

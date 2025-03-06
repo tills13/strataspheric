@@ -20,7 +20,8 @@ export function FileTypeIcon({ className, defaultIcon, filePath }: Props) {
     case "pdf": {
       return <TextDocumentIcon className={className} />;
     }
-    case "jpg": {
+    case "jpg":
+    case "png": {
       return <ImageIcon className={className} />;
     }
     default: {

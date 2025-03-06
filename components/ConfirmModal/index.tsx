@@ -5,7 +5,7 @@ import { s } from "../../sprinkles.css";
 import React, { useTransition } from "react";
 
 import { Button } from "../Button";
-import { ElementGroup } from "../ElementGroup";
+import { Group } from "../Group";
 import { InfoPanel } from "../InfoPanel";
 import { Modal } from "../Modal";
 import { StatusButton } from "../StatusButton";
@@ -31,7 +31,7 @@ export function ConfirmModal({
         {description}
       </InfoPanel>
 
-      <ElementGroup gap="normal">
+      <Group gap="normal">
         <Button
           onClick={(e) => {
             e.preventDefault();
@@ -58,7 +58,7 @@ export function ConfirmModal({
         >
           Confirm
         </StatusButton>
-      </ElementGroup>
+      </Group>
     </Modal>
   );
 }

@@ -10,11 +10,8 @@ export const numHeaderItemsVar = createVar();
 
 export const subheader = style({
   position: "relative",
-  display: "flex",
   alignItems: "flex-start",
-  justifyContent: "space-between",
   width: "100vw",
-  gap: vars.spacing.normal,
   padding: `${vars.spacing.small} ${vars.spacing.normal}`,
   borderBottom: `1px solid ${vars.colors.borderDefault}`,
 });
@@ -25,6 +22,7 @@ export const linksRail = style({
   flexDirection: "column",
   height: calc(vars.sizes.small).toString(),
   overflow: "hidden",
+  width: "100%",
   transition: "height 0.5s ease",
 
   "@media": {
@@ -60,6 +58,10 @@ export const mobileMenuIcon = style([
     },
   },
 ]);
+
+export const mobileMenuText = style({
+  flex: 1,
+});
 
 export const baseSubheaderLink = style({
   display: "flex",
@@ -109,7 +111,7 @@ export const activeSubheaderLink = style([
 export const actionsContainer = style({
   display: "flex",
   gap: vars.spacing.small,
-  marginRight: calc(vars.spacing.small).add(vars.sizes.small).toString(),
+  // marginRight: calc(vars.spacing.small).add(vars.sizes.small).toString(),
 
   "@media": {
     [breakpoints.tablet]: {
@@ -119,9 +121,9 @@ export const actionsContainer = style({
 });
 
 export const mobileDropdownAction = style({
-  position: important("absolute"),
-  right: vars.spacing.normal,
-  top: vars.spacing.small,
+  // position: important("absolute"),
+  // right: vars.spacing.normal,
+  // top: vars.spacing.small,
 
   "@media": {
     [breakpoints.tablet]: {

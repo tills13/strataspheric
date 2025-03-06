@@ -9,41 +9,26 @@ interface Props {
   className?: string;
   children: React.ReactNode;
   divider?: React.ReactNode;
-  equalWidthChildren?: boolean;
+
   gap?: keyof typeof vars.spacing;
   tabIndex?: number;
-  orientation?: "row";
-  wrap?: boolean;
 }
 
-export function ElementGroup(props: Props) {
-  const {
-    className,
-    children,
-    divider,
-    gap = "normal",
-    tabIndex,
-    orientation = "row",
-  } = props;
+/** stack is a vertical stacking of elements */
+export function Stack(props: Props) {
+  const { className, children, divider, gap = "normal", tabIndex } = props;
   const numChildren = React.Children.count(children);
 
   return (
     <div
-      className={classnames(
-        styles.elementGroup,
-        styles.elementGroupGap[gap],
-        className,
-      )}
+      className={classnames(styles.stack, styles.stackGap[gap], className)}
       tabIndex={tabIndex}
     >
       {React.Children.map(children, (c, i) => (
         <>
           {React.isValidElement(c)
             ? React.cloneElement(c, {
-                className: classnames(
-                  styles.elementGroupElement,
-                  c.props.className,
-                ),
+                className: classnames(styles.stackElement, c.props.className),
               })
             : c}
           {i !== numChildren - 1 && divider}

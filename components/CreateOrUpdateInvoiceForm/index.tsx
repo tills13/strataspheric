@@ -8,7 +8,7 @@ import { useTransition } from "react";
 import { Invoice } from "../../data";
 import { patchTimezoneOffset } from "../../utils/datetime";
 import { DateInput } from "../DateInput";
-import { ElementGroup } from "../ElementGroup";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
 import { Input } from "../Input";
@@ -41,7 +41,7 @@ export function CreateOrUpdateInvoiceForm({
         onCreateOrUpdateInvoice(invoice);
       }}
     >
-      <ElementGroup gap="normal">
+      <Group gap="normal">
         <Input
           name="identifier"
           label="Invoice ID"
@@ -57,7 +57,7 @@ export function CreateOrUpdateInvoiceForm({
           defaultValue={invoice?.amount}
           required
         />
-      </ElementGroup>
+      </Group>
 
       <TextArea
         name="description"
@@ -68,7 +68,7 @@ export function CreateOrUpdateInvoiceForm({
       <Header priority={3}>Due By</Header>
       <DateInput className={s({ w: "full" })} name="dueBy" type="single" />
 
-      <ElementGroup gap="normal">
+      <Group gap="normal">
         <StatusButton
           color="primary"
           iconRight={<AddIcon />}
@@ -93,7 +93,7 @@ export function CreateOrUpdateInvoiceForm({
             Delete Invoice
           </StatusButton>
         )}
-      </ElementGroup>
+      </Group>
     </form>
   );
 }

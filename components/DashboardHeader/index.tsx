@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { can, p } from "../../data/users/permissions";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
+import { Group } from "../Group";
 import { BedIcon } from "../Icon/BedIcon";
 import { CalendarIcon } from "../Icon/CalendarIcon";
 import { DashboardIcon } from "../Icon/DashboardIcon";
@@ -20,8 +21,8 @@ import { InboxIcon } from "../Icon/InboxIcon";
 import { PaidDocumentIcon } from "../Icon/PaidDocumentIcon";
 import { PersonIcon } from "../Icon/PersonIcon";
 import { SettingsIcon } from "../Icon/SettingsIcon";
-import { ZipFileIcon } from "../Icon/ZipFileIcon";
 import { InternalLink } from "../Link/InternalLink";
+import { Wrap } from "../Wrap";
 
 type Link = [
   icon: React.ComponentType<{ classNameOverride?: string }>,
@@ -76,7 +77,7 @@ export function DashboardHeader({ actions }: Props) {
   );
 
   return (
-    <div className={styles.subheader}>
+    <Group className={styles.subheader} justify="space-between">
       <div
         style={assignInlineVars({
           [styles.numHeaderItemsVar]: filteredMenuItems.length.toString(),
@@ -90,44 +91,60 @@ export function DashboardHeader({ actions }: Props) {
               : pathname?.startsWith(href);
 
           return (
-            <InternalLink
+            <Wrap
               key={href}
-              className={
-                isActive ? styles.activeSubheaderLink : styles.subheaderLink
-              }
-              href={href}
+              if={isActive}
+              with={(children) => (
+                <div
+                  className={styles.activeSubheaderLink}
+                  onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
+                >
+                  {children}
+                </div>
+              )}
+              elseWith={(children) => (
+                <InternalLink
+                  key={href}
+                  className={styles.subheaderLink}
+                  href={href}
+                >
+                  {children}
+                </InternalLink>
+              )}
             >
               <IconComponent classNameOverride={styles.mobileMenuIcon} />
-              {label}
-            </InternalLink>
+              <div className={styles.mobileMenuText}>{label}</div>
+            </Wrap>
           );
         })}
       </div>
 
-      <div className={styles.actionsContainer}>
+      <Group gap="small">
+        <Button
+          className={styles.mobileDropdownAction}
+          onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
+          icon={
+            <DownIcon
+              className={
+                mobileMenuExpanded
+                  ? styles.toggleMobileDropdownIconActive
+                  : styles.toggleMobileDropdownIcon
+              }
+            />
+          }
+          size="small"
+          style="tertiary"
+        />
         {actions && (
-          <DropdownActions
-            actions={actions}
-            buttonSize="small"
-            buttonStyle="tertiary"
-          />
+          <div className={styles.actionsContainer}>
+            <DropdownActions
+              actions={actions}
+              buttonSize="small"
+              buttonStyle="tertiary"
+            />
+          </div>
         )}
-      </div>
-      <Button
-        className={styles.mobileDropdownAction}
-        onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
-        icon={
-          <DownIcon
-            className={
-              mobileMenuExpanded
-                ? styles.toggleMobileDropdownIconActive
-                : styles.toggleMobileDropdownIcon
-            }
-          />
-        }
-        size="small"
-        style="tertiary"
-      />
-    </div>
+      </Group>
+    </Group>
   );
 }

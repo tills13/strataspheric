@@ -5,11 +5,11 @@ import { File, Invoice } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { AttachFileField } from "../AttachFileField";
 import { AttachInvoiceField } from "../AttachInvoiceField";
-import { ElementGroup } from "../ElementGroup";
-import { FieldGroup } from "../FieldGroup";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { SendIcon } from "../Icon/SendIcon";
 import { Input } from "../Input";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
@@ -53,7 +53,7 @@ export function SendInboxMessageForm({
               Contact Information
             </Header>
           )}
-          <FieldGroup className={s({ mb: "large" })} gap="normal">
+          <Stack className={s({ mb: "large" })} gap="normal">
             <Input
               className={styles.formInput}
               name="name"
@@ -77,7 +77,7 @@ export function SendInboxMessageForm({
               defaultValue={defaultPhoneNumber || ""}
               disabled={!!defaultPhoneNumber}
             />
-          </FieldGroup>
+          </Stack>
         </>
       )}
 
@@ -90,7 +90,7 @@ export function SendInboxMessageForm({
         </Header>
       )}
 
-      <FieldGroup className={s({ mb: "normal" })} gap="normal">
+      <Stack className={s({ mb: "normal" })} gap="normal">
         {showSubjectInput && (
           <Input
             className={styles.formInput}
@@ -107,7 +107,7 @@ export function SendInboxMessageForm({
           rows={3}
           required
         />
-      </FieldGroup>
+      </Stack>
 
       {(upsertFile || upsertInvoice) && (
         <div

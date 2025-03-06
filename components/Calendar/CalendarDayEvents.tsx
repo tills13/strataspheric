@@ -11,10 +11,10 @@ import { useState } from "react";
 import { Event } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { formatDateForDatetime, parseTimestamp } from "../../utils/datetime";
-import { ConditionalWrapper } from "../ConditionalWrapper";
 import { CreateOrUpdateEventForm } from "../CreateOrUpdateEventForm";
 import { InternalLink } from "../Link/InternalLink";
 import { Modal } from "../Modal";
+import { Wrap } from "../Wrap";
 
 interface Props {
   events: Array<Event & { meetingId?: string }>;
@@ -59,10 +59,10 @@ export function CalendarDayEvents({
           }
 
           return (
-            <ConditionalWrapper
+            <Wrap
               key={idx}
-              predicate={!!event.meetingId}
-              wrapTrue={(children) => (
+              if={!!event.meetingId}
+              with={(children) => (
                 <InternalLink
                   key={idx}
                   href={`/dashboard/meetings/${event.meetingId!}`}
@@ -107,7 +107,7 @@ export function CalendarDayEvents({
               >
                 {event.name}
               </div>
-            </ConditionalWrapper>
+            </Wrap>
           );
         })}
       </div>

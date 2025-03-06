@@ -3,20 +3,20 @@ import React from "react";
 type WrapFn = (children?: React.ReactNode) => React.ReactNode;
 
 interface Props {
-  predicate: boolean | undefined;
-  wrapTrue: WrapFn;
-  wrapFalse?: WrapFn;
+  if: boolean | undefined;
+  with: WrapFn;
+  elseWith?: WrapFn;
 }
 
 function identityWrapper(children?: React.ReactNode) {
   return <>{children}</>;
 }
 
-export function ConditionalWrapper({
+export function Wrap({
   children,
-  predicate,
-  wrapTrue,
-  wrapFalse = identityWrapper,
+  if: predicate,
+  with: withFn,
+  elseWith: elseFn = identityWrapper,
 }: React.PropsWithChildren<Props>) {
-  return predicate ? wrapTrue(children) : wrapFalse(children);
+  return predicate ? withFn(children) : elseFn(children);
 }

@@ -1,13 +1,13 @@
 import { s } from "../../sprinkles.css";
 
 import { Strata } from "../../data";
-import { ElementGroup } from "../ElementGroup";
-import { FieldGroup } from "../FieldGroup";
+import { Group } from "../Group";
 import { Input } from "../Input";
+import { Stack } from "../Stack";
 
 export function StrataAddressFormFields({ strata }: { strata: Strata }) {
   return (
-    <FieldGroup>
+    <Stack>
       <Input
         name="strata_id"
         label="Strata Plan ID"
@@ -27,11 +27,7 @@ export function StrataAddressFormFields({ strata }: { strata: Strata }) {
         defaultValue={strata.postalCode || undefined}
       />
 
-      <ElementGroup
-        className={s({ width: "full" })}
-        gap="normal"
-        equalWidthChildren
-      >
+      <Group className={s({ width: "full" })} gap="normal" equalWidthChildren>
         <Input
           name="strata_address_city"
           label="City"
@@ -42,7 +38,7 @@ export function StrataAddressFormFields({ strata }: { strata: Strata }) {
           label="Province / State"
           defaultValue={strata.provinceState || undefined}
         />
-      </ElementGroup>
-    </FieldGroup>
+      </Group>
+    </Stack>
   );
 }

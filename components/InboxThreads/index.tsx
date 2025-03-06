@@ -7,6 +7,7 @@ import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { Date } from "../Date";
 import { DeleteButton } from "../DeleteButton";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { InternalLink } from "../Link/InternalLink";
 
@@ -27,30 +28,21 @@ export function InboxThreads({ deleteThread, threads }: Props) {
         </div>
       )}
 
-      <div className={styles.inboxMessagesContainer}>
-        {threads.map((thread) => (
-          <InternalLink
-            key={thread.id}
-            className={styles.inboxMessagesTableRow}
-            href={{
-              pathname: "/dashboard/inbox/" + thread.threadId,
-            }}
-          >
-            <div className={styles.statusCell}>
-              {thread.isUnread === 1 && <span className={styles.unreadDot} />}
-            </div>
-            <div className={styles.senderNameCell}>{thread.senderName}</div>
-            <div className={styles.subjectCell}>{thread.subject}</div>
-            <div className={styles.messageCell}>
-              {thread.message.split("\n")[0].substring(0, 100)}
-            </div>
-            <div className={styles.chatsCell}>
-              {(thread.numChats || 0).toString()} chats
-            </div>
-            <div className={styles.sentAtCell}>
-              <Date timestamp={thread.sentAt} />
-            </div>
-            <div className={styles.actionsCell}>
+      {threads.map((thread) => (
+        <InternalLink
+          key={thread.id}
+          className={styles.inboxMessage}
+          href={{
+            pathname: "/dashboard/inbox/" + thread.threadId,
+          }}
+        >
+          <Group align="center" justify="space-between">
+            <Group>
+              <b>{thread.subject}</b>
+              <Date timestamp={thread.sentAt} output="date" />
+              <p>{thread.message.split("\n")[0].substring(0, 100)}</p>
+            </Group>
+            <Group>
               {can(p("stratas", "inbox_messages", "delete")) && (
                 <DeleteButton
                   onConfirmDelete={deleteThread.bind(
@@ -62,10 +54,10 @@ export function InboxThreads({ deleteThread, threads }: Props) {
                   style="tertiary"
                 />
               )}
-            </div>
-          </InternalLink>
-        ))}
-      </div>
+            </Group>
+          </Group>
+        </InternalLink>
+      ))}
     </div>
   );
 }

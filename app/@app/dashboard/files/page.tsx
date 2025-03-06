@@ -7,6 +7,7 @@ import { Header } from "../../../../components/Header";
 import { Bone } from "../../../../components/Skeleton/Bone";
 import { classnames } from "../../../../utils/classnames";
 import { FilesHeader } from "./FilesHeader";
+import { FilesLoader } from "./FilesLoader";
 import { FilesSearch } from "./FilesSearch";
 import { StrataFilesList } from "./StrataFilesList";
 import { upsertFileAction } from "./actions";
@@ -25,32 +26,7 @@ export default async function Page({
       <div
         className={classnames(styles.filesPageContainer, s({ p: "normal" }))}
       >
-        <Suspense
-          fallback={
-            <div className={classnames(styles.filesList, s({ p: "normal" }))}>
-              <div className={styles.filesListFileContainer}>
-                <div
-                  className={classnames(
-                    styles.filesListFile,
-                    s({ p: "normal" }),
-                  )}
-                >
-                  <Bone className={s({ mb: "small" })} />
-                  <Bone />
-                </div>
-                <div
-                  className={classnames(
-                    styles.filesListFile,
-                    s({ p: "normal" }),
-                  )}
-                >
-                  <Bone className={s({ mb: "small" })} />
-                  <Bone />
-                </div>
-              </div>
-            </div>
-          }
-        >
+        <Suspense fallback={<FilesLoader />}>
           <StrataFilesList
             searchTerm={searchParams["search"]}
             visibility={searchParams.visibility}

@@ -8,12 +8,12 @@ import { auth } from "../../../../auth";
 import { Checkbox } from "../../../../components/Checkbox";
 import { ConfirmButton } from "../../../../components/ConfirmButton";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
-import { FieldGroup } from "../../../../components/FieldGroup";
 import { Header } from "../../../../components/Header";
 import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { SaveIcon } from "../../../../components/Icon/SaveIcon";
 import { InfoPanel } from "../../../../components/InfoPanel";
 import { Input } from "../../../../components/Input";
+import { Stack } from "../../../../components/Stack";
 import { StatusButton } from "../../../../components/StatusButton";
 import { StrataAddressFormFields } from "../../../../components/StrataAddressFormFields";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
@@ -44,7 +44,7 @@ export default async function Page() {
             action={updateStrataAction.bind(undefined, strata.id)}
             className={classnames(styles.form, s({ mb: "large", mt: "large" }))}
           >
-            <FieldGroup gap="normal" className={s({ mb: "large" })}>
+            <Stack gap="normal" className={s({ mb: "large" })}>
               <Input
                 name="name"
                 label="Strata Name"
@@ -66,7 +66,7 @@ export default async function Page() {
               </label>
 
               <StrataAddressFormFields strata={strata} />
-            </FieldGroup>
+            </Stack>
             <StatusButton
               color="success"
               iconRight={<SaveIcon />}
