@@ -205,7 +205,7 @@ export type NewStrataPlan = Insertable<StrataPlansTable>;
 export interface StrataWidgetsTable {
   id: string;
   strataId: string;
-  type: "file" | "event";
+  type: "file" | "files_minutes" | "files_recent" | "event" | "events_upcoming";
   title: string;
 }
 

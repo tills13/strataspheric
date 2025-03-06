@@ -3,7 +3,9 @@ import * as styles from "./style.css";
 
 import { MeetingMinutes } from "../../data/meetings/getMeetingMinutes";
 import { classnames } from "../../utils/classnames";
+import { Badge } from "../Badge";
 import { FileLink } from "../FileLink";
+import { Group } from "../Group";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { MinutesApprover } from "../MinutesApprover";
 import { Panel } from "../Panel";
@@ -29,11 +31,13 @@ export function MeetingMinutesTimelineItem({
 }: Props) {
   return (
     <Panel className={classnames(className, styles.meetingMinutesTimelineItem)}>
-      <span className={s({ color: "secondary" })}>Version {versionNum}</span>
       <div className={styles.header}>
-        <FileLink className={styles.fileName} path={file.path}>
-          {file.name}
-        </FileLink>
+        <Group align="center">
+          <Badge level="info">VERSION #{versionNum}</Badge>
+          <FileLink className={styles.fileName} path={file.path}>
+            {file.name}
+          </FileLink>
+        </Group>
         <div className={styles.headerActions}>
           {file.state === "approved" && file.approverName && (
             <MinutesApprover approverName={file.approverName} />

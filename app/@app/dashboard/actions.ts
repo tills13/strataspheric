@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { auth } from "../../../auth";
+import { StrataWidget } from "../../../data";
 import { createEvent } from "../../../data/events/createEvent";
 import { createAndUploadFile } from "../../../data/files/createAndUploadFile";
 import { addEventToWidget } from "../../../data/widgets/addEventToWidget";
@@ -105,9 +106,15 @@ export async function upsertStrataWidget(
   fd: FormData,
 ) {
   const title = formdata.getString(fd, "title");
-  const type = formdata.getString(fd, "type");
+  const type = formdata.getEnum(fd, "type", [
+    "file",
+    "files_minutes",
+    "files_recent",
+    "event",
+    "events_upcoming",
+  ] satisfies Array<StrataWidget["type"]>);
 
-  if (title === "" || !(type === "file" || type === "event")) {
+  if (title === "" || !type) {
     throw new Error("invalid fields");
   }
 

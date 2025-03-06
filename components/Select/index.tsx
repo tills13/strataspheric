@@ -6,6 +6,7 @@ import { classnames } from "../../utils/classnames";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
+  onChangeValue?: (value: string) => void;
   placeholderEnabled?: boolean;
 }
 
@@ -15,10 +16,16 @@ export function Select({
   id: propsId,
   label,
   name,
+  onChangeValue,
   placeholder,
   placeholderEnabled,
   ...delegateProps
 }: PropsWithChildren<Props>) {
+  function onChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    onChangeValue?.(e.target.value);
+    delegateProps.onChange?.(e);
+  }
+
   return (
     <div className={classnames(styles.selectWrapper, className)}>
       <select
@@ -26,6 +33,7 @@ export function Select({
         placeholder={placeholder}
         id={propsId || name}
         name={name}
+        onChange={onChange}
         {...delegateProps}
       >
         {placeholder && (

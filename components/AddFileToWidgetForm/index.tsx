@@ -10,7 +10,6 @@ import { StatusButton } from "../StatusButton";
 
 interface Props {
   createFile: (fd: FormData) => Promise<void>;
-  something: boolean;
 }
 
 export function AddFileToWidgetForm({ createFile }: Props) {

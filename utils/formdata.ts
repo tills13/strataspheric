@@ -24,6 +24,20 @@ export function getString(fd: FormData, name: string): string {
   return "";
 }
 
+export function getEnum<T>(
+  fd: FormData,
+  name: string,
+  allowedValues: T[],
+): T | undefined {
+  const rawValue = getString(fd, name);
+
+  if (!allowedValues.includes(rawValue as T)) {
+    return undefined;
+  }
+
+  return rawValue as T;
+}
+
 export function getBoolean(fd: FormData, name: string): boolean {
   return getString(fd, name) === "on";
 }

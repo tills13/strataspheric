@@ -6,11 +6,14 @@ export const meetingMinutesTimelineItem = style({
 });
 
 export const header = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: vars.spacing.normal,
   overflow: "hidden",
 
   "@media": {
     [breakpoints.tablet]: {
-      display: "flex",
+      flexDirection: "row",
       justifyContent: "space-between",
       gap: vars.spacing.normal,
       alignContent: "center",

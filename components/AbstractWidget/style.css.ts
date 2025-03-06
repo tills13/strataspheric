@@ -42,18 +42,7 @@ export const abstractWidgetList = style({
   marginBottom: vars.spacing.normal,
 });
 
-export const abstractWidgetListItem = style({
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "flex-start",
-  selectors: {
-    [`${abstractWidgetList} &:not(:last-child)`]: {
-      paddingBottom: vars.spacing.normal,
-      borderBottom: `1px solid ${vars.colors.borderDefault}`,
-    },
-  },
-});
+export const abstractWidgetListItem = style({});
 
 export const abstractWidgetListItemContent = style({
   overflow: "hidden",

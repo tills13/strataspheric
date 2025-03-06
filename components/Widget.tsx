@@ -7,12 +7,12 @@ import { Header } from "./Header";
 import { WidgetSkeleton } from "./Skeleton/WidgetSkeleton";
 
 interface Props {
-  createEvent: (fd: FormData) => void;
-  deleteEvent: (eventId: string) => void;
-  createFile: (fd: FormData) => void;
-  deleteFile: (fileId: string) => void;
-  deleteWidget: () => void;
-  upsertStrataWidget: (fd: FormData) => void;
+  createEvent: (fd: FormData) => Promise<void>;
+  deleteEvent: (eventId: string) => Promise<void>;
+  createFile: (fd: FormData) => Promise<void>;
+  deleteFile: (fileId: string) => Promise<void>;
+  deleteWidget: () => Promise<void>;
+  upsertStrataWidget: (fd: FormData) => Promise<void>;
   widget: StrataWidget;
 }
 
@@ -26,6 +26,7 @@ export function Widget({
   widget,
 }: Props) {
   switch (widget.type) {
+    case "events_upcoming":
     case "event": {
       return (
         <Suspense
@@ -46,6 +47,8 @@ export function Widget({
       );
     }
 
+    case "files_minutes":
+    case "files_recent":
     case "file": {
       return (
         <Suspense

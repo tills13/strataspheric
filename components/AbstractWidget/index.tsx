@@ -18,10 +18,10 @@ import { Modal } from "../Modal";
 export interface Props {
   additionalActions?: React.ComponentProps<typeof DropdownActions>["actions"];
   className?: string;
-  deleteWidget?: () => void;
+  deleteWidget?: () => Promise<void>;
   widgetTitle?: React.ReactNode;
   widget: StrataWidget;
-  upsertStrataWidget: (fd: FormData) => void;
+  upsertStrataWidget: (fd: FormData) => Promise<void>;
 }
 
 export function AbstractWidget({

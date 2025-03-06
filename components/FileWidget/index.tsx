@@ -8,6 +8,7 @@ import React, { useState } from "react";
 
 import { File, StrataWidget } from "../../data";
 import { can, p } from "../../data/users/permissions";
+import { classnames } from "../../utils/classnames";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
@@ -15,11 +16,14 @@ import {
 import { AddFileToWidgetForm } from "../AddFileToWidgetForm";
 import { Date } from "../Date";
 import { FileLink } from "../FileLink";
+import { FileTypeIcon } from "../FileTypeIcon";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
 import { InfoPanel } from "../InfoPanel";
 import { Modal } from "../Modal";
 import { RemoveButton } from "../RemoveButton";
+import { Wrap } from "../Wrap";
 
 interface Props extends AbstractWidgetProps {
   createFile: (fd: FormData) => Promise<void>;
@@ -67,37 +71,53 @@ export function FileWidget({
         )}
 
         {files.map((file) => (
-          <div
+          <Wrap
             key={file.id}
-            className={abstractWidgetStyles.abstractWidgetListItem}
+            if={can(session?.user, p("stratas", "files", "view"))}
+            with={(children) => (
+              <FileLink path={file.path}>{children}</FileLink>
+            )}
           >
-            <div className={abstractWidgetStyles.abstractWidgetListItemContent}>
-              <Header priority={3}>
-                {can(session?.user, p("stratas", "files", "view")) ? (
-                  <FileLink path={file.path}>{file.name}</FileLink>
-                ) : (
-                  file.name
-                )}
-              </Header>
-              {file.description && <p>{file.description}</p>}
-              <Date
-                className={styles.fileWidgetListItemDate}
-                output="date"
-                timestamp={file.createdAt}
-              />
-            </div>
-
-            <div className={styles.fileActions}>
-              {can(session?.user, p("stratas", "widgets", "edit")) && (
-                <RemoveButton
-                  action={deleteFile.bind(undefined, file.id)}
-                  color="error"
-                  size="small"
-                  style="tertiary"
-                />
+            <Group
+              className={classnames(
+                abstractWidgetStyles.abstractWidgetListItem,
+                styles.fileWidgetListItem,
               )}
-            </div>
-          </div>
+              align="center"
+              justify="space-between"
+            >
+              <Group
+                className={abstractWidgetStyles.abstractWidgetListItemContent}
+                align="center"
+              >
+                <FileTypeIcon
+                  className={styles.fileWidgetListItemIcon}
+                  filePath={file.path}
+                />
+                <Header priority={3}>{file.name}</Header>
+              </Group>
+
+              <Group>
+                <Date
+                  className={styles.fileWidgetListItemDate}
+                  output="date"
+                  timestamp={file.createdAt}
+                />
+                {widget.type === "file" && (
+                  <>
+                    {can(session?.user, p("stratas", "widgets", "edit")) && (
+                      <RemoveButton
+                        action={deleteFile.bind(undefined, file.id)}
+                        color="error"
+                        size="small"
+                        style="tertiary"
+                      />
+                    )}
+                  </>
+                )}
+              </Group>
+            </Group>
+          </Wrap>
         ))}
       </div>
 
