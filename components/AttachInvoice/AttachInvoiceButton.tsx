@@ -11,6 +11,7 @@ import { Header } from "../Header";
 import { PaidDocumentIcon } from "../Icon/PaidDocumentIcon";
 import { InvoiceSelect } from "../InvoiceSelect";
 import { Modal } from "../Modal";
+import { AttachInvoiceModal } from "./AttachInvoiceModal";
 
 interface Props {
   className?: string;
@@ -54,29 +55,12 @@ export function AttachInvoiceButton({
       )}
 
       {showAttachInvoiceModal && (
-        <Modal
-          closeModal={() => setShowAttachInvoiceModal(false)}
-          title="Attach Invoice"
-        >
-          <Header className={s({ mb: "normal" })} priority={3}>
-            Existing Invoice
-          </Header>
-          <InvoiceSelect
-            className={s({ mb: "normal", w: "full" })}
-            onSelectInvoice={onSelectInvoice}
-          />
-
-          <Header className={s({ mb: "normal" })} priority={3}>
-            New Invoice
-          </Header>
-          <CreateOrUpdateInvoiceForm
-            onCreateOrUpdateInvoice={(invoice) => {
-              setShowAttachInvoiceModal(false);
-              onSelectInvoice(invoice);
-            }}
-            upsertInvoice={upsertInvoice}
-          />
-        </Modal>
+        <AttachInvoiceModal
+          close={() => setShowAttachInvoiceModal(false)}
+          selectedInvoice={selectedInvoice}
+          onSelectInvoice={onSelectInvoice}
+          upsertInvoice={upsertInvoice}
+        />
       )}
     </>
   );

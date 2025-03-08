@@ -19,9 +19,9 @@ import { FilesListFileActions } from "./FilesListFileActions";
 
 interface Props {
   className?: string;
-  deleteFileAction: (fileId: string) => Promise<void>;
+  deleteFileAction?: (fileId: string) => Promise<void>;
   file: File;
-  upsertFileAction: (fileId: string, fd: FormData) => Promise<any>;
+  upsertFileAction?: (fileId: string, fd: FormData) => Promise<any>;
 }
 
 export function FilesListFile({
@@ -73,13 +73,15 @@ export function FilesListFile({
           {can(
             p("stratas", "files", "edit"),
             p("stratas", "files", "delete"),
-          ) && (
-            <FilesListFileActions
-              deleteFile={deleteFileAction}
-              file={file}
-              upsertFile={upsertFileAction}
-            />
-          )}
+          ) &&
+            deleteFileAction &&
+            upsertFileAction && (
+              <FilesListFileActions
+                deleteFile={deleteFileAction}
+                file={file}
+                upsertFile={upsertFileAction}
+              />
+            )}
         </Group>
       </Group>
 

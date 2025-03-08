@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 
 import { Invoice } from "../../data";
-import { AttachInvoiceButton } from "../AttachInvoiceButton";
+import { AttachInvoiceButton } from "../AttachInvoice";
+import { AttachInvoiceText } from "../AttachInvoice/AttachInvoiceText";
 
 type AttachInvoiceButtonProps = React.ComponentProps<
   typeof AttachInvoiceButton
@@ -26,7 +27,7 @@ export function AttachInvoiceField({
 
   return (
     <>
-      <AttachInvoiceButton
+      <AttachInvoiceText
         className={buttonClassName}
         onSelectInvoice={setSelectedInvoice}
         selectedInvoice={selectedInvoice}

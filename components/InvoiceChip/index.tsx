@@ -19,7 +19,7 @@ import { Text } from "../Text";
 interface Props {
   className?: string;
   invoice: Invoice;
-  markInvoiceAsPaid: (invoiceId: string) => Promise<void>;
+  markInvoiceAsPaid?: (invoiceId: string) => Promise<void>;
   overrideClassName?: string;
 }
 
@@ -47,7 +47,7 @@ export function InvoiceChip({
       <Group justify="space-between">
         <Money className={styles.invoiceAmount} amount={invoice.amount} />
 
-        {can(p("stratas", "invoices", "edit")) && (
+        {can(p("stratas", "invoices", "edit")) && markInvoiceAsPaid && (
           <StatusButton
             className={styles.markPaidButton}
             color="success"

@@ -37,6 +37,7 @@ export function CreateOrUpdateFileForm({
       {!file && (
         <Input
           className={s({ mb: "normal" })}
+          label="Upload File"
           name="file"
           type="file"
           onChange={(e) => {
