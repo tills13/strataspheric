@@ -13,7 +13,7 @@ export function InvoiceChipSkeleton() {
       <Bone className={s({ mb: "normal" })} />
       <Bone className={s({ mb: "normal" })} />
 
-      <div className={styles.invoiceAmountContainer}>
+      <div>
         <Bone />
 
         <StatusButton

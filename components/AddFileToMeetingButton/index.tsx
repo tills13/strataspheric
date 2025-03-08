@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { AttachFileButton } from "../AttachFileButton";
+import { AttachFileButton } from "../AttachFile/AttachFileButton";
 
 type AttachFileButtonProps = React.ComponentProps<typeof AttachFileButton>;
 
