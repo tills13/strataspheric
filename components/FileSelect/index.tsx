@@ -12,6 +12,7 @@ interface Props extends React.ComponentProps<typeof Select> {
 
 export function FileSelect({
   className,
+  defaultValue = "",
   onSelectFile,
   ...delegateProps
 }: Props) {
@@ -37,7 +38,7 @@ export function FileSelect({
         );
       }}
       {...delegateProps}
-      defaultValue=""
+      defaultValue={defaultValue}
     >
       {files.map((file) => (
         <option key={file.id} value={file.id}>

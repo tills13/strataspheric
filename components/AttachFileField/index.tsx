@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 
 import { File } from "../../data";
-import { AttachFileButton } from "../AttachFileButton";
+import { AttachFileButton } from "../AttachFile/AttachFileButton";
+import { AttachFileText } from "../AttachFile/AttachFileText";
 
 type AttachFileButtonProps = Omit<
   React.ComponentProps<typeof AttachFileButton>,
@@ -24,11 +25,12 @@ export function AttachFileField({
 
   return (
     <>
-      <AttachFileButton
+      <AttachFileText
         onSelectFile={(file) => {
           setSelectedFile(file);
           delegateProps.onSelectFile?.(file);
         }}
+        selectedFile={selectedFile}
         {...delegateProps}
       />
 

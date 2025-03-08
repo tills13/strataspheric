@@ -6,6 +6,7 @@ import { useOptimistic } from "react";
 
 import { File, InboxMessage } from "../../data";
 import { Chat } from "../../data/inbox/getThreadChats";
+import * as formdata from "../../utils/formdata";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
 import { ChatStream } from "./ChatStream";
 
@@ -34,7 +35,7 @@ export function InboxThreadChats({
       chatId: "tmp",
       email: "s",
       id: "tmp",
-      message: fd.get("message") as string,
+      message: formdata.getString(fd, "message"),
       name: "You",
       sentAt: Date.now(),
     });

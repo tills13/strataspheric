@@ -89,11 +89,32 @@ const marginProperties = defineProperties({
       xl: vars.spacing.xl,
       xxl: vars.spacing.xxl,
     },
+    marginLeft: {
+      xxs: vars.spacing.xxs,
+      xs: vars.spacing.xs,
+      small: vars.spacing.small,
+      normal: vars.spacing.normal,
+      large: vars.spacing.large,
+      xl: vars.spacing.xl,
+      xxl: vars.spacing.xxl,
+    },
+    marginRight: {
+      xxs: vars.spacing.xxs,
+      xs: vars.spacing.xs,
+      small: vars.spacing.small,
+      normal: vars.spacing.normal,
+      large: vars.spacing.large,
+      xl: vars.spacing.xl,
+      xxl: vars.spacing.xxl,
+    },
   },
   shorthands: {
     mb: ["marginBottom"],
     mt: ["marginTop"],
+    ml: ["marginLeft"],
+    mr: ["marginRight"],
     mv: ["marginTop", "marginBottom"],
+    mh: ["marginLeft", "marginRight"],
   },
 });
 

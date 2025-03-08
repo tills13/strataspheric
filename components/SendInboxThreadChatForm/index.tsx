@@ -29,9 +29,11 @@ export function SendInboxThreadChatForm({
           required
         />
 
-        {upsertFile && (
-          <AttachFileField name="fileId" upsertFile={upsertFile} />
-        )}
+        <div className={s({ mh: "small" })}>
+          {upsertFile && (
+            <AttachFileField name="fileId" upsertFile={upsertFile} />
+          )}
+        </div>
       </Stack>
 
       <StatusButton

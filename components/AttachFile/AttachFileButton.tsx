@@ -15,6 +15,7 @@ import { Header } from "../Header";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { TextDocumentIcon } from "../Icon/TextDocumentIcon";
 import { Modal } from "../Modal";
+import { AttachFileModal } from "./AttachFileModal";
 
 type ButtonProps = React.ComponentProps<typeof Button>;
 
@@ -69,32 +70,12 @@ export function AttachFileButton({
       )}
 
       {showAttachFileModal && (
-        <Modal
-          title="Attach File"
-          closeModal={() => setShowAttachFileModal(false)}
-        >
-          <FileSelect
-            className={s({ mb: "normal", w: "full" })}
-            placeholder="Attach Existing File"
-            onSelectFile={async (file) => {
-              await onSelectFile?.(file);
-              setShowAttachFileModal(false);
-            }}
-          />
-
-          <DividerText className={s({ mv: "large" })}>OR</DividerText>
-
-          <Header className={s({ mb: "normal" })} priority={3}>
-            Attach New File
-          </Header>
-          <CreateOrUpdateFileForm
-            onCreateOrUpdateFile={(file) => {
-              setShowAttachFileModal(false);
-              onSelectFile?.(file);
-            }}
-            upsertFile={upsertFile}
-          />
-        </Modal>
+        <AttachFileModal
+          close={() => setShowAttachFileModal(false)}
+          upsertFile={upsertFile}
+          selectedFile={selectedFile}
+          onSelectFile={onSelectFile}
+        />
       )}
     </>
   );
