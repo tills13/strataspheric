@@ -6,7 +6,7 @@ import { classnames } from "../../utils/classnames";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
-  onChangeValue?: (value: string) => void;
+  onChangeValue?: <T extends string>(value: T) => void;
   placeholderEnabled?: boolean;
 }
 

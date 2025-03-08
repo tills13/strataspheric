@@ -58,24 +58,22 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
         )}
       >
         <MeetingInfo meeting={meeting} />
-        <InfoPanel level="error">
-          <Header className={s({ mb: "normal" })} priority={3}>
-            Delete Meeting
-          </Header>
-
-          <Text className={s({ mb: "normal" })}>
-            Deleting this meeting will delete all associated agenda items, but
-            leave any files created during planning.
-          </Text>
-
-          <ConfirmButton
-            color="error"
-            iconRight={<DeleteIcon />}
-            onClickConfirm={deleteMeetingAction.bind(undefined, meeting.id)}
-            style="secondary"
-          >
-            Delete Meeting
-          </ConfirmButton>
+        <InfoPanel
+          action={
+            <ConfirmButton
+              color="error"
+              iconRight={<DeleteIcon />}
+              onClickConfirm={deleteMeetingAction.bind(undefined, meeting.id)}
+              style="secondary"
+            >
+              Delete Meeting
+            </ConfirmButton>
+          }
+          header={<Header priority={3}>Delete Meeting</Header>}
+          level="error"
+        >
+          Deleting this meeting will delete all associated agenda items, but
+          leave any files created during planning.
         </InfoPanel>
       </div>
 
@@ -99,26 +97,22 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
         />
 
         <InfoPanel
+          action={
+            <ConfirmButton
+              color="error"
+              iconRight={<DeleteIcon />}
+              onClickConfirm={deleteMeetingAction.bind(undefined, meeting.id)}
+              style="secondary"
+            >
+              Delete Meeting
+            </ConfirmButton>
+          }
           className={styles.meetingAgendaContainerDeleteMeeting}
+          header={<Header priority={3}>Delete Meeting</Header>}
           level="error"
         >
-          <Header className={s({ mb: "small" })} priority={3}>
-            Delete Meeting
-          </Header>
-
-          <p className={s({ mb: "large" })}>
-            Deleting this meeting will delete all associated agenda items, but
-            leave any files created during planning.
-          </p>
-
-          <ConfirmButton
-            color="error"
-            iconRight={<DeleteIcon />}
-            onClickConfirm={deleteMeetingAction.bind(undefined, meeting.id)}
-            style="secondary"
-          >
-            Delete Meeting
-          </ConfirmButton>
+          Deleting this meeting will delete all associated agenda items, but
+          leave any files created during planning.
         </InfoPanel>
       </div>
     </div>

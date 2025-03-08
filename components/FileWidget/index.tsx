@@ -44,11 +44,12 @@ export function FileWidget({
           session?.user,
           p("stratas", "files", "create"),
           p("stratas", "widgets", "edit"),
-        ) && {
-          label: "Add File",
-          action: () => setShowCreateModal(true),
-          icon: <AddIcon />,
-        },
+        ) &&
+          widget.type === "file" && {
+            label: "Add File",
+            action: () => setShowCreateModal(true),
+            icon: <AddIcon />,
+          },
       ]}
       className={styles.fileWidget}
       deleteWidget={deleteWidget}

@@ -4,6 +4,7 @@ import { StrataWidget } from "../data";
 import { ServerEventWidget } from "./EventWidget/ServerEventWidget";
 import { ServerFileWidget } from "./FileWidget/ServerFileWidget";
 import { Header } from "./Header";
+import { ServerInfoWidget } from "./InfoWidget/ServerInfoWidget";
 import { WidgetSkeleton } from "./Skeleton/WidgetSkeleton";
 
 interface Props {
@@ -61,6 +62,25 @@ export function Widget({
           <ServerFileWidget
             createFile={createFile}
             deleteFile={deleteFile}
+            deleteWidget={deleteWidget}
+            upsertStrataWidget={upsertStrataWidget}
+            widget={widget}
+          />
+        </Suspense>
+      );
+    }
+
+    case "info":
+    case "info_contact": {
+      return (
+        <Suspense
+          fallback={
+            <WidgetSkeleton
+              title={<Header priority={2}>{widget.title}</Header>}
+            />
+          }
+        >
+          <ServerInfoWidget
             deleteWidget={deleteWidget}
             upsertStrataWidget={upsertStrataWidget}
             widget={widget}

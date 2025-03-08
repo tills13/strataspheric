@@ -11,14 +11,25 @@ import { AddIcon } from "../Icon/AddIcon";
 import { Input } from "../Input";
 import { Select } from "../Select";
 import { Stack } from "../Stack";
+import { StatusButton } from "../StatusButton";
+import { TextArea } from "../TextArea";
+import { CreateOrUpdateStrataInfoWidgetForm } from "./CreateOrUpdateStrataInfoWidgetForm";
 
 interface Props {
   upsertStrataWidget: (formData: FormData) => void;
   widget?: StrataWidget;
 }
 
-function mapSubtypeToType(subType: StrataWidget["type"]): "file" | "event" {
-  return subType.startsWith("file") ? "file" : "event";
+function mapSubtypeToType(subType: StrataWidget["type"]) {
+  if (subType.startsWith("file")) {
+    return "file";
+  } else if (subType.startsWith("event")) {
+    return "event";
+  } else if (subType.startsWith("info")) {
+    return "info";
+  }
+
+  return subType;
 }
 
 export function CreateOrUpdateStrataWidgetForm({
@@ -43,9 +54,21 @@ export function CreateOrUpdateStrataWidgetForm({
           onChangeValue={setSelectedType}
           value={selectedType}
         >
+          <option value="info">Info</option>
           <option value="file">Files</option>
           <option value="event">Events</option>
         </Select>
+
+        {selectedType === "event" && (
+          <Select
+            label="Event Widget Type"
+            name="type"
+            defaultValue={widget?.type || "event"}
+          >
+            <option value="event">Manual</option>
+            <option value="events_upcoming">Events (Upcoming)</option>
+          </Select>
+        )}
 
         {selectedType === "file" && (
           <Select
@@ -59,25 +82,18 @@ export function CreateOrUpdateStrataWidgetForm({
           </Select>
         )}
 
-        {selectedType === "event" && (
-          <Select
-            label="Event Widget Type"
-            name="type"
-            defaultValue={widget?.type || "event"}
-          >
-            <option value="event">Manual</option>
-            <option value="events_upcoming">Events (Upcoming)</option>
-          </Select>
+        {selectedType === "info" && (
+          <CreateOrUpdateStrataInfoWidgetForm widget={widget} />
         )}
       </Stack>
-      <Button
+      <StatusButton
         color="success"
         iconRight={<AddIcon />}
         style="primary"
         type="submit"
       >
         {widget ? "Update" : "Create"} Widget
-      </Button>
+      </StatusButton>
     </form>
   );
 }

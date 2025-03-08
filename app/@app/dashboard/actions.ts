@@ -9,10 +9,12 @@ import { createAndUploadFile } from "../../../data/files/createAndUploadFile";
 import { addEventToWidget } from "../../../data/widgets/addEventToWidget";
 import { addFileToWidget } from "../../../data/widgets/addFileToWidget";
 import { createWidget } from "../../../data/widgets/createWidget";
+import { createWidgetInfo } from "../../../data/widgets/createWidgetInfo";
 import { deleteEventFromWidget } from "../../../data/widgets/deleteEventFromWidget";
 import { deleteFileFromWidget } from "../../../data/widgets/deleteFileFromWidget";
 import { deleteWidget } from "../../../data/widgets/deleteWidget";
 import { updateWidget } from "../../../data/widgets/updateWidget";
+import { updateWidgetInfo } from "../../../data/widgets/updateWidgetInfo";
 import * as formdata from "../../../utils/formdata";
 
 export async function createEventAction(
@@ -106,12 +108,16 @@ export async function upsertStrataWidget(
   fd: FormData,
 ) {
   const title = formdata.getString(fd, "title");
+  // for (manual) info widget
+  const body = formdata.getString(fd, "body");
   const type = formdata.getEnum(fd, "type", [
     "file",
     "files_minutes",
     "files_recent",
     "event",
     "events_upcoming",
+    "info",
+    "info_contact",
   ] satisfies Array<StrataWidget["type"]>);
 
   if (title === "" || !type) {
@@ -120,8 +126,16 @@ export async function upsertStrataWidget(
 
   if (widgetId) {
     await updateWidget(widgetId, { title, type });
+    if (type === "info") {
+      // todo support creating a widget info during an update
+      await updateWidgetInfo(widgetId, { body });
+    }
   } else {
-    await createWidget({ strataId, title, type });
+    const { id: widgetId } = await createWidget({ strataId, title, type });
+
+    if (type === "info") {
+      await createWidgetInfo({ body, widgetId });
+    }
   }
 
   revalidatePath("/dashboard");

@@ -206,7 +206,14 @@ export type NewStrataPlan = Insertable<StrataPlansTable>;
 export interface StrataWidgetsTable {
   id: string;
   strataId: string;
-  type: "file" | "files_minutes" | "files_recent" | "event" | "events_upcoming";
+  type:
+    | "file"
+    | "files_minutes"
+    | "files_recent"
+    | "event"
+    | "events_upcoming"
+    | "info"
+    | "info_contact";
   title: string;
 }
 
@@ -251,6 +258,14 @@ export interface WidgetFilesTable {
 
 export type NewWidgetFile = Insertable<WidgetFilesTable>;
 
+export interface WidgetInfoTable {
+  body: string;
+  widgetId: ColumnType<string, string, never>;
+}
+
+export type NewWidgetInfo = Insertable<WidgetInfoTable>;
+export type WidgetInfoUpdate = Updateable<WidgetInfoTable>;
+
 export interface Database {
   emails: EmailsTable;
   events: EventsTable;
@@ -271,6 +286,7 @@ export interface Database {
   user_password_reset_tokens: UserPasswordResetTokensTable;
   widget_events: WidgetEventsTable;
   widget_files: WidgetFilesTable;
+  widget_info: WidgetInfoTable;
 }
 
 export const db = new Kysely<Database>({
