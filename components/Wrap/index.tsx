@@ -1,22 +1,34 @@
 import React from "react";
 
-type WrapFn = (children?: React.ReactNode) => React.ReactNode;
+import { classnames } from "../../utils/classnames";
 
-interface Props {
-  if: boolean | undefined;
-  with: WrapFn;
-  elseWith?: WrapFn;
-}
+type WrapFn = (children?: React.ReactNode) => React.ReactNode;
 
 function identityWrapper(children?: React.ReactNode) {
   return <>{children}</>;
 }
 
+interface Props {
+  /** in the event Wrap is passed a className, it will pass it through to the child automatically */
+  className?: string;
+  if: boolean | undefined;
+  with: WrapFn;
+  elseWith?: WrapFn;
+}
+
 export function Wrap({
   children,
+  className,
   if: predicate,
   with: withFn,
   elseWith: elseFn = identityWrapper,
 }: React.PropsWithChildren<Props>) {
-  return predicate ? withFn(children) : elseFn(children);
+  const mChild = predicate ? withFn(children) : elseFn(children);
+
+  return React.isValidElement(mChild)
+    ? React.cloneElement(mChild, {
+        ...mChild.props,
+        className: classnames(mChild.props.className, className),
+      })
+    : mChild;
 }

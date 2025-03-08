@@ -25,37 +25,41 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
   return (
     <div className={className}>
       <Header
-        className={classnames(styles.header, s({ mb: "normal" }))}
+        className={classnames(styles.header, s({ mb: "large" }))}
         priority={2}
       >
         Agenda
       </Header>
 
-      <ul className={classnames(styles.meetingAgendaList, s({ mb: "large" }))}>
-        {agendaItems.map((agendaItem) => (
-          <li key={agendaItem.id} className={styles.meetingAgendaListItem}>
-            <MeetingAgendaItem
-              agendaItem={agendaItem}
-              imperativeUpdateAgendaItem={imperativeUpdateAgendaItemAction.bind(
-                undefined,
-                meetingId,
-                agendaItem.id,
-              )}
-              removeAgendaItem={removeItemFromAgendaAction.bind(
-                undefined,
-                meetingId,
-                agendaItem.id,
-              )}
-              updateAgendaItem={upsertAgendaItemAction.bind(
-                undefined,
-                meetingId,
-                agendaItem.id,
-              )}
-              upsertFile={upsertFileAction.bind(undefined, undefined)}
-            />
-          </li>
-        ))}
-      </ul>
+      {agendaItems.length !== 0 && (
+        <ul
+          className={classnames(styles.meetingAgendaList, s({ mb: "large" }))}
+        >
+          {agendaItems.map((agendaItem) => (
+            <li key={agendaItem.id} className={styles.meetingAgendaListItem}>
+              <MeetingAgendaItem
+                agendaItem={agendaItem}
+                imperativeUpdateAgendaItem={imperativeUpdateAgendaItemAction.bind(
+                  undefined,
+                  meetingId,
+                  agendaItem.id,
+                )}
+                removeAgendaItem={removeItemFromAgendaAction.bind(
+                  undefined,
+                  meetingId,
+                  agendaItem.id,
+                )}
+                updateAgendaItem={upsertAgendaItemAction.bind(
+                  undefined,
+                  meetingId,
+                  agendaItem.id,
+                )}
+                upsertFile={upsertFileAction.bind(undefined, undefined)}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
 
       <AddNewMeetingAgendaItemButton
         addItemToAgendaAction={addItemToAgendaAction}

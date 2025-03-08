@@ -1,17 +1,18 @@
 "use client";
 
 import { s } from "../../sprinkles.css";
-import * as styles from "./style.css";
 
 import { useTransition } from "react";
 
 import { Invoice } from "../../data";
 import { patchTimezoneOffset } from "../../utils/datetime";
 import { DateInput } from "../DateInput";
+import { FileSelect } from "../FileSelect";
 import { Group } from "../Group";
-import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
+import { InfoPanel } from "../InfoPanel";
 import { Input } from "../Input";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
@@ -20,7 +21,7 @@ interface Props {
   deleteInvoice?: () => void;
   invoice?: Invoice;
   upsertInvoice: (fd: FormData) => Promise<Invoice>;
-  onCreateOrUpdateInvoice: (invoice: Invoice) => void;
+  onCreateOrUpdateInvoice?: (invoice: Invoice) => void;
 }
 
 export function CreateOrUpdateInvoiceForm({
@@ -33,52 +34,76 @@ export function CreateOrUpdateInvoiceForm({
 
   return (
     <form
-      className={styles.newEventForm}
       action={async (fd) => {
         patchTimezoneOffset(fd, "dueBy");
 
         const invoice = await upsertInvoice(fd);
-        onCreateOrUpdateInvoice(invoice);
+        onCreateOrUpdateInvoice?.(invoice);
       }}
     >
-      <Group gap="normal">
-        <Input
-          name="identifier"
-          label="Invoice ID"
-          defaultValue={invoice?.identifier}
-          required
+      <Stack className={s({ mb: "large" })}>
+        <Group gap="normal">
+          <Input
+            name="identifier"
+            label="Invoice ID"
+            placeholder="#"
+            disabled={!!invoice}
+            defaultValue={invoice?.identifier}
+            required
+          />
+          <Input
+            className={s({ w: "full" })}
+            min="0"
+            name="amount"
+            label="Amount"
+            pattern="\d+(\.\d\d?)?"
+            placeholder="$"
+            disabled={!!invoice?.isPaid}
+            defaultValue={invoice?.amount}
+            required
+          />
+        </Group>
+
+        <TextArea
+          name="description"
+          label="Description"
+          placeholder="What is this invoice in reference to..."
+          disabled={!!invoice?.isPaid}
+          defaultValue={invoice?.description || ""}
         />
-        <Input
-          className={s({ w: "full" })}
-          name="amount"
-          label="Amount $"
-          min="0"
-          pattern="\d+(\.\d\d?)?"
-          defaultValue={invoice?.amount}
-          required
+
+        <FileSelect
+          label="Invoice File"
+          name="fileId"
+          disabled={!!invoice?.isPaid}
+          placeholder="No invoice file selected..."
         />
-      </Group>
 
-      <TextArea
-        name="description"
-        label="Description"
-        defaultValue={invoice?.description || ""}
-      />
+        <InfoPanel level="info">
+          Select an <b>Invoice File</b> if the invoice references a physical
+          file that has been scanned and uploaded to Strataspheric.
+        </InfoPanel>
 
-      <Header priority={3}>Due By</Header>
-      <DateInput className={s({ w: "full" })} name="dueBy" type="single" />
-
+        <DateInput
+          label="Due Date"
+          name="dueBy"
+          type="single"
+          disabled={!!invoice?.isPaid}
+          defaultValue={invoice?.dueBy || ""}
+        />
+      </Stack>
       <Group gap="normal">
         <StatusButton
           color="primary"
+          disabled={!!invoice?.isPaid}
           iconRight={<AddIcon />}
-          style="secondary"
+          style="primary"
           type="submit"
         >
           {invoice ? "Update Invoice" : "Create Invoice"}
         </StatusButton>
 
-        {invoice && deleteInvoice && (
+        {invoice && deleteInvoice && !invoice.isPaid && (
           <StatusButton
             onClick={() => {
               startTransition(() => {

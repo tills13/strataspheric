@@ -38,7 +38,8 @@ export const vars = createGlobalTheme(":root", {
   fontSizes: {
     small: "12px",
     normal: "16px",
-    large: "24px",
+    large: "20px",
+    larger: "24px",
     xl: "32px",
     xxl: "48px",
   },
@@ -46,7 +47,7 @@ export const vars = createGlobalTheme(":root", {
   fontWeights: {
     light: "200",
     normal: "400",
-    bold: "700",
+    bold: "600",
     xbold: "900",
   },
 

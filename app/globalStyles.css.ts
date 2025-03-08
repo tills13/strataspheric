@@ -13,14 +13,14 @@ globalStyle("html, body", {
 
 globalStyle("body", {
   padding: 0,
-  lineHeight: 1,
+  lineHeight: 1.2,
   fontSmooth: "always",
   MozOsxFontSmoothing: "always",
   WebkitFontSmoothing: "always",
   color: vars.fontColors.primary,
   fontFamily: vars.fontFamilies.text,
   fontSize: vars.fontSizes.normal,
-  fontWeight: 600,
+  fontWeight: 500,
 });
 
 globalStyle("img, picture, video, canvas, svg", {

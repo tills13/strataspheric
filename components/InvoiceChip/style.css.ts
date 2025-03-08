@@ -31,13 +31,6 @@ export const invoiceAmount = style({
   fontSize: vars.fontSizes.large,
 });
 
-export const invoiceAmountContainer = style({
-  display: "flex",
-  gap: vars.spacing.normal,
-  alignItems: "center",
-  justifyContent: "space-between",
-});
-
 export const markPaidButton = style({
   // flex: 1,
 });

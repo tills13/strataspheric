@@ -41,7 +41,12 @@ export const linksRailOpen = style([
       .multiply(vars.sizes.small)
       .add(calc(numHeaderItemsVar).subtract(1).multiply(vars.spacing.small))
       .toString(),
-    width: "100%",
+
+    "@media": {
+      [breakpoints.tablet]: {
+        height: calc(vars.sizes.small).toString(),
+      },
+    },
   },
 ]);
 

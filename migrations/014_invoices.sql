@@ -9,7 +9,8 @@ CREATE TABLE
         fileId text,
         isPaid boolean default false,
         dueBy integer,
-        createdAt integer INTEGER NOT NULL DEFAULT (strftime ('%s', 'now'))
+        createdAt integer INTEGER NOT NULL DEFAULT (strftime ('%s', 'now')),
+        updatedAt integer INTEGER NOT NULL DEFAULT (strftime ('%s', 'now'))
     );
 
 ALTER TABLE inbox_messages

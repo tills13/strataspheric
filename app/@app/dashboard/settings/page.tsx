@@ -8,6 +8,7 @@ import { auth } from "../../../../auth";
 import { Checkbox } from "../../../../components/Checkbox";
 import { ConfirmButton } from "../../../../components/ConfirmButton";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
+import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { SaveIcon } from "../../../../components/Icon/SaveIcon";
@@ -51,21 +52,23 @@ export default async function Page() {
                 defaultValue={strata.name}
               />
 
-              <label
-                className={classnames(styles.isPublicField)}
-                htmlFor="is_public"
-              >
-                <Header priority={3}>
-                  I want my strata&apos;s content to be public
-                </Header>
-                <Checkbox
-                  id="is_public"
-                  name="is_public"
-                  defaultChecked={strata.isPublic === 1}
-                />
-              </label>
+              <StrataAddressFormFields
+                className={s({ mb: "normal" })}
+                strata={strata}
+              />
 
-              <StrataAddressFormFields strata={strata} />
+              <label htmlFor="is_public">
+                <Group justify="space-between">
+                  <Header priority={3}>
+                    I want my strata&apos;s content to be public
+                  </Header>
+                  <Checkbox
+                    id="is_public"
+                    name="is_public"
+                    defaultChecked={strata.isPublic === 1}
+                  />
+                </Group>
+              </label>
             </Stack>
             <StatusButton
               color="success"

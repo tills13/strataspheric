@@ -9,10 +9,12 @@ import { Invoice } from "../../data";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { classnames } from "../../utils/classnames";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { Money } from "../Money";
 import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
 
 interface Props {
   className?: string;
@@ -39,10 +41,10 @@ export function InvoiceChip({
       </Header>
 
       {invoice.description && (
-        <p className={s({ mb: "normal" })}>{invoice.description}</p>
+        <Text className={s({ mb: "normal" })}>{invoice.description}</Text>
       )}
 
-      <div className={styles.invoiceAmountContainer}>
+      <Group justify="space-between">
         <Money className={styles.invoiceAmount} amount={invoice.amount} />
 
         {can(p("stratas", "invoices", "edit")) && (
@@ -63,7 +65,7 @@ export function InvoiceChip({
             {invoice.isPaid === 1 ? "Paid" : "Mark Paid"}
           </StatusButton>
         )}
-      </div>
+      </Group>
     </div>
   );
 }

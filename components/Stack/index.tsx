@@ -28,6 +28,7 @@ export function Stack(props: Props) {
         <>
           {React.isValidElement(c)
             ? React.cloneElement(c, {
+                ...c.props,
                 className: classnames(styles.stackElement, c.props.className),
               })
             : c}

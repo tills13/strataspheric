@@ -1,6 +1,8 @@
 import { breakpoints, vars } from "../../../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { calc } from "@vanilla-extract/css-utils";
+
 export const filesPageContainer = style({
   display: "grid",
   gap: vars.spacing.normal,
@@ -21,10 +23,8 @@ export const filesList = style({
 
 export const filesListFile = style({
   overflow: "hidden",
-  position: "relative",
   backgroundColor: vars.colors.grey50,
   borderRadius: vars.borderRadius,
-  marginBottom: vars.spacing.small,
 });
 
 export const filesListFileHeader = style({
@@ -32,17 +32,37 @@ export const filesListFileHeader = style({
   whiteSpace: "nowrap",
 });
 
+export const filesListDetails = style({
+  // marginTop: "3px",
+});
+
+export const filesListFileDescription = style({
+  overflow: "hidden",
+  display: "-webkit-box",
+
+  lineClamp: 2,
+
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: 2,
+  marginLeft: calc(vars.sizes.xs).add(vars.spacing.normal).toString(),
+});
+
+export const fileListLink = style({ display: "block" });
+
 export const filesListFileHeaderName = style({
   display: "block",
   textOverflow: "ellipsis",
+  fontWeight: vars.fontWeights.bold,
+  fontSize: vars.fontSizes.large,
   overflow: "hidden",
 });
 
 export const fileListFileIcon = style({
   height: vars.sizes.xs,
-  marginRight: vars.spacing.small,
-  verticalAlign: "middle",
-  float: "left",
+});
+
+export const filesListFileVisibilityIcon = style({
+  height: vars.sizes.xxs,
 });
 
 export const filesListFileFooter = style({

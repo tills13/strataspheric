@@ -11,19 +11,22 @@ import { useRef } from "react";
 import { classnames } from "../../utils/classnames";
 import { formatDateForDatetime } from "../../utils/datetime";
 import { Button } from "../Button";
+import { Group } from "../Group";
 import { EventIcon } from "../Icon/EventIcon";
 import { Input } from "../Input";
 
 interface BaseProps {
   className?: string;
+  disabled?: boolean;
+  defaultValue?: string | number | undefined;
   name: string;
   placeholder?: string;
   type: "single" | "range";
-  defaultValue?: string | number | undefined;
 }
 
 interface SingleProps extends BaseProps {
   type: "single";
+  label?: string;
 }
 
 interface RangeProps extends BaseProps {
@@ -31,7 +34,9 @@ interface RangeProps extends BaseProps {
   defaultStartValue?: string | number;
   // startDate: number | Date | undefined;
   startPlaceholder?: string;
+  startLabel?: string;
   defaultEndValue?: string | number;
+  endLabel?: string;
   // endDate: number | Date | undefined;
   endPlaceholder?: string;
 }
@@ -41,6 +46,7 @@ type Props = SingleProps | RangeProps;
 export function DateInput({
   className,
   defaultValue,
+  disabled,
   name,
   placeholder,
   ...rest
@@ -80,40 +86,48 @@ export function DateInput({
 
   if (rest.type === "single") {
     return (
-      <div
+      <Group
         className={classnames(className, styles.dateInput, s({ w: "full" }))}
       >
         <Input
           ref={startInputRef}
           className={s({ w: "full" })}
+          disabled={disabled}
           name={name}
           type="datetime-local"
-          label={placeholder}
+          label={rest.label || placeholder || "Start Date"}
           defaultValue={
             defaultValue ? formatDateForDatetime(defaultValue) : undefined
           }
         />
         <Button
+          disabled={disabled}
           icon={<EventIcon />}
           onClick={onClickSetDateToTodayButton}
           style="tertiary"
           title="Today"
           type="button"
         />
-      </div>
+      </Group>
     );
   }
 
   return (
-    <div className={classnames(className, styles.dateInput, s({ w: "full" }))}>
+    <Group className={classnames(className, styles.dateInput)}>
       <div className={styles.inputFieldsWrapper}>
         <Input
           ref={startInputRef}
-          className={s({ w: "full" })}
+          className={classnames(s({ w: "full" }), styles.dateInputInput)}
+          disabled={disabled}
           name={`${name}_start`}
           type="datetime-local"
           onChange={onChangeStart}
-          label={rest.startPlaceholder || placeholder}
+          label={
+            rest.startLabel ||
+            rest.startPlaceholder ||
+            placeholder ||
+            "Start Date"
+          }
           defaultValue={
             rest.defaultStartValue
               ? formatDateForDatetime(rest.defaultStartValue)
@@ -124,11 +138,14 @@ export function DateInput({
         />
         <Input
           ref={endInputRef}
-          className={s({ w: "full" })}
+          className={classnames(s({ w: "full" }), styles.dateInputInput)}
+          disabled={disabled}
           name={`${name}_end`}
           type="datetime-local"
           onChange={onChangeEnd}
-          label={rest.endPlaceholder || placeholder}
+          label={
+            rest.endLabel || rest.endPlaceholder || placeholder || "End Date"
+          }
           defaultValue={
             rest.defaultEndValue
               ? formatDateForDatetime(rest.defaultEndValue)
@@ -139,12 +156,13 @@ export function DateInput({
         />
       </div>
       <Button
+        disabled={disabled}
         icon={<EventIcon />}
         onClick={onClickSetDateToTodayButton}
         style="tertiary"
         title="Today"
         type="button"
       />
-    </div>
+    </Group>
   );
 }

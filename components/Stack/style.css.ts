@@ -10,7 +10,6 @@ export const gapVar = createVar();
 
 export const stack = style({});
 export const stackElement = style({
-  width: "100%",
   selectors: {
     "&:not(:last-child)": {
       marginBottom: gapVar,

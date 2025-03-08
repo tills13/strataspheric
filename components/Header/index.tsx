@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function Header({ children, className, onTouchEnd, priority }: Props) {
-  const Tag = `h${priority}` as keyof JSX.IntrinsicElements;
+  const Tag = `h${priority}` as `h${Props["priority"]}`;
 
   const mClassName =
     styles.headerVariants[Tag] ?? styles.headerVariants.default;

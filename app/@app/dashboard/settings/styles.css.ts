@@ -17,10 +17,3 @@ export const visibilityLabel = style({
   justifyContent: "space-between",
   alignItems: "center",
 });
-
-export const isPublicField = style({
-  display: "flex",
-  gap: vars.spacing.normal,
-  alignItems: "center",
-  justifyContent: "space-between",
-});

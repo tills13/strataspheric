@@ -1,0 +1,5 @@
+ALTER TABLE invoices
+ADD COLUMN payee TEXT;
+
+ALTER TABLE invoices
+DROP COLUMN payeeId;

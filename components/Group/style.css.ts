@@ -1,10 +1,6 @@
 import { vars } from "../../app/theme.css";
-import {
-  createVar,
-  globalStyle,
-  style,
-  styleVariants,
-} from "@vanilla-extract/css";
+import { field } from "../Form/style.css";
+import { createVar, style, styleVariants } from "@vanilla-extract/css";
 
 export const gapVar = createVar();
 
@@ -12,14 +8,21 @@ export const group = style({
   display: "flex",
   gap: gapVar,
   flexDirection: "row",
+  selectors: {
+    [`&:has(> ${field})`]: {
+      marginTop: "6px",
+    },
+    "&:has(&)": {
+      marginTop: 0,
+    },
+  },
 });
-export const groupElement = style({
-  // width: "100%",
-});
+
+export const groupElement = style({});
 
 export const groupAlignment = styleVariants({
   default: {
-    alignItems: "flex-start",
+    alignItems: "center",
   },
   start: {
     alignItems: "flex-start",

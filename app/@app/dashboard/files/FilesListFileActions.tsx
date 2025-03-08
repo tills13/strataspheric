@@ -17,19 +17,15 @@ interface Props {
   upsertFile: (fileId: string, fd: FormData) => any;
 }
 
-export function FilesListFileFooterActions({
-  deleteFile,
-  file,
-  upsertFile,
-}: Props) {
-  const [editingFile, setEditingFile] = useState<File>();
+export function FilesListFileActions({ deleteFile, file, upsertFile }: Props) {
+  const [showEditModal, setShowEditModal] = useState(false);
 
   return (
     <>
       <Group gap="small">
         <Button
           icon={<EditIcon />}
-          onClick={() => setEditingFile(file)}
+          onClick={() => setShowEditModal(true)}
           size="small"
         />
 
@@ -40,9 +36,9 @@ export function FilesListFileFooterActions({
           color="error"
         />
       </Group>
-      {editingFile && (
+      {showEditModal && (
         <Modal
-          closeModal={() => setEditingFile(undefined)}
+          closeModal={() => setShowEditModal(false)}
           title={`Edit ${file.name}`}
         >
           <CreateOrUpdateFileForm

@@ -5,9 +5,14 @@ import { Group } from "../Group";
 import { Input } from "../Input";
 import { Stack } from "../Stack";
 
-export function StrataAddressFormFields({ strata }: { strata: Strata }) {
+interface Props {
+  className?: string;
+  strata: Strata;
+}
+
+export function StrataAddressFormFields({ className, strata }: Props) {
   return (
-    <Stack>
+    <Stack className={className}>
       <Input
         name="strata_id"
         label="Strata Plan ID"

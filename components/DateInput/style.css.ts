@@ -2,14 +2,14 @@ import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const dateInput = style({
-  display: "flex",
-  gap: vars.spacing.normal,
+  marginTop: "6px",
 });
 
 export const inputFieldsWrapper = style({
   display: "flex",
   gap: vars.spacing.normal,
   flexDirection: "column",
+
   flex: 1,
 
   "@media": {
@@ -17,4 +17,8 @@ export const inputFieldsWrapper = style({
       flexDirection: "row",
     },
   },
+});
+
+export const dateInputInput = style({
+  marginTop: 0,
 });

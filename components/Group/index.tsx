@@ -38,6 +38,7 @@ export function Group({
       {React.Children.map(children, (c, i) =>
         React.isValidElement(c)
           ? React.cloneElement(c, {
+              ...c.props,
               className: classnames(styles.groupElement, c.props.className),
             })
           : c,

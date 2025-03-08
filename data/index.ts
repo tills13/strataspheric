@@ -82,7 +82,7 @@ export type NewInboxThreadChat = Insertable<InboxThreadChatsTable>;
 export interface InvoicesTable {
   id: ColumnType<string, string, never>;
   strataId: string;
-  payeeId: string | null;
+  payee: string | null;
   type: "incoming" | "outgoing";
   identifier: string;
   description: string | null;
@@ -90,6 +90,7 @@ export interface InvoicesTable {
   fileId: string | null;
   isPaid: ColumnType<0 | 1, 0 | 1 | undefined>;
   createdAt: ColumnType<number, never, never>;
+  updatedAt: ColumnType<number, never, number>;
   dueBy: number | null;
 }
 

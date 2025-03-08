@@ -3,7 +3,6 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import setSeconds from "date-fns/esm/fp/setSeconds/index.js";
 import { useState } from "react";
 
 import { StrataWidget } from "../../data";

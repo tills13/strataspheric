@@ -12,7 +12,7 @@ export const badge = recipe({
     height: vars.sizes.small,
     lineHeight: calc(vars.sizes.small).subtract("4px").toString(),
     padding: padding(0, vars.spacing.small),
-    borderRadius: calc(vars.sizes.small).divide(2).toString(),
+    borderRadius: vars.borderRadius,
     borderStyle: "solid",
     borderWidth: 2,
   },

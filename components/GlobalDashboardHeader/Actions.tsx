@@ -23,25 +23,6 @@ export async function GlobalHeaderActions({ className }: Props) {
 
   return (
     <div className={classnames(styles.globalHeaderActions, className)}>
-      {/* {session?.user && (
-        <>
-          <div className={styles.sessionInfoRow}>
-            <PersonIcon height={vars.sizes.small} />
-            <div className={classnames(styles.sessionUserName)}>
-              {session.user.name}
-              <br />
-              {session.user.email}
-            </div>
-          </div>
-          <ExternalLink
-            href={protocol + "//" + tld + "/profile"}
-            target="_blank"
-          >
-            <Button>Edit Profile</Button>
-          </ExternalLink>
-        </>
-      )} */}
-
       <div className={styles.spacer} />
 
       <Suspense>
@@ -52,6 +33,7 @@ export async function GlobalHeaderActions({ className }: Props) {
         <SignOutButton
           className={styles.globalHeaderActionsButton}
           style="tertiary"
+          color="primary"
         />
       ) : (
         <InternalLink className={linkStyles.noUnderline} href="/?action=signin">

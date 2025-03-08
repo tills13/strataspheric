@@ -17,6 +17,11 @@ export const fileWidgetListItem = style({
   },
 });
 
+export const fileWidgetListItemTitle = style({
+  fontSize: vars.fontSizes.normal,
+  fontWeight: vars.fontWeights.bold,
+});
+
 export const fileWidgetListItemDate = style({
   fontSize: vars.fontSizes.small,
   color: vars.fontColors.secondary,

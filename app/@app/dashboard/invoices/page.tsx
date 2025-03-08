@@ -2,11 +2,12 @@ import * as styles from "./style.css";
 
 import { Suspense } from "react";
 
-import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { InfoPanel } from "../../../../components/InfoPanel";
 import { InvoiceChipSkeleton } from "../../../../components/InvoiceChip/Skeleton";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { InvoicesHeader } from "./InvoicesHeader";
 import { InvoicesList } from "./InvoicesList";
+import { upsertInvoiceAction } from "./actions";
 
 export const runtime = "edge";
 
@@ -15,7 +16,9 @@ export default async function Page() {
 
   return (
     <>
-      <DashboardHeader />
+      <InvoicesHeader
+        upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
+      />
 
       <div className={styles.invoicesContainer}>
         <Suspense

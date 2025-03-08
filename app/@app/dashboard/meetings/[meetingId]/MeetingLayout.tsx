@@ -7,6 +7,7 @@ import { EditMeetingButton } from "../../../../../components/EditMeetingButton";
 import { Header } from "../../../../../components/Header";
 import { DeleteIcon } from "../../../../../components/Icon/DeleteIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
+import { Text } from "../../../../../components/Text";
 import { getMeeting } from "../../../../../data/meetings/getMeeting";
 import { classnames } from "../../../../../utils/classnames";
 import { deleteMeetingAction } from "../actions";
@@ -58,14 +59,14 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
       >
         <MeetingInfo meeting={meeting} />
         <InfoPanel level="error">
-          <Header className={s({ mb: "small" })} priority={3}>
+          <Header className={s({ mb: "normal" })} priority={3}>
             Delete Meeting
           </Header>
 
-          <p className={s({ mb: "large" })}>
+          <Text className={s({ mb: "normal" })}>
             Deleting this meeting will delete all associated agenda items, but
             leave any files created during planning.
-          </p>
+          </Text>
 
           <ConfirmButton
             color="error"

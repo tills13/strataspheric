@@ -17,7 +17,10 @@ export async function markInvoiceAsPaidAction(invoiceId: string) {
     return;
   }
 
-  await updateInvoice(invoiceId, { isPaid: 1 });
+  await updateInvoice(invoiceId, {
+    isPaid: 1,
+    updatedAt: new Date().getTime(),
+  });
 
   revalidatePath("/dashboard/invoices");
   revalidatePath("/dashboard/invoices/*");
@@ -34,24 +37,31 @@ export async function upsertInvoiceAction(
   const identifier = formdata.getString(fd, "identifier");
   const description = formdata.getString(fd, "description");
   const amount = formdata.getFloat(fd, "amount");
+  const fileId = formdata.getString(fd, "fileId");
   const dueBy = formdata.getTimestamp(fd, "dueBy");
 
-  if (invoiceId) {
-    return updateInvoice(invoiceId, {
-      identifier,
-      description,
-      amount,
-      dueBy,
-    });
-  }
+  const invoice = invoiceId
+    ? updateInvoice(invoiceId, {
+        amount,
+        description,
+        dueBy,
+        fileId,
+        identifier,
+        updatedAt: new Date().getTime(),
+      })
+    : createInvoice({
+        amount,
+        description,
+        dueBy,
+        fileId,
+        identifier,
+        strataId: strata.id,
+        // payeeId: session?.user.id,
+        type: "incoming",
+        // @ts-ignore
+        updatedAt: new Date().getTime(),
+      });
 
-  return createInvoice({
-    strataId: strata.id,
-    payeeId: session?.user.id,
-    type: "incoming",
-    identifier,
-    description,
-    amount,
-    dueBy,
-  });
+  revalidatePath("/dashboard/invoices");
+  return invoice;
 }

@@ -11,25 +11,18 @@ export const headerVariants = styleVariants({
     headerBase,
     {
       fontFamily: vars.fontFamilies.primaryHeader,
-      fontSize: 36,
+      fontSize: vars.fontSizes.xl,
     },
   ],
-  h2: [
-    headerBase,
-    {
-      fontSize: 24,
-    },
-  ],
-  h3: [
-    headerBase,
-    {
-      fontSize: 16,
-    },
-  ],
+  h2: [headerBase, { fontSize: vars.fontSizes.large }],
+  h3: [headerBase, { fontSize: "20px" }],
+  h4: [headerBase, { fontSize: vars.fontSizes.normal }],
+  h5: [headerBase, { fontSize: vars.fontSizes.small }],
+  h6: [headerBase, { fontSize: vars.fontSizes.small }],
   default: [
     headerBase,
     {
-      fontSize: 14,
+      fontSize: vars.fontSizes.normal,
     },
   ],
 });

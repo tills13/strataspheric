@@ -10,9 +10,9 @@ import { classnames } from "../../utils/classnames";
 import { Checkbox } from "../Checkbox";
 import { Header } from "../Header";
 import { SaveIcon } from "../Icon/SaveIcon";
-import { UploadIcon } from "../Icon/UploadIcon";
 import { Input } from "../Input";
 import { StatusButton } from "../StatusButton";
+import { TextArea } from "../TextArea";
 
 interface Props {
   onCreateOrUpdateFile?: (file: File) => void;
@@ -51,10 +51,11 @@ export function CreateOrUpdateFileForm({
         ref={nameRef}
         defaultValue={file?.name}
       />
-      <Input
+      <TextArea
         className={s({ mb: "normal" })}
         name="description"
         label="Description"
+        rows={4}
         defaultValue={file?.description}
       />
 
