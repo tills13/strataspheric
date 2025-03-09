@@ -32,7 +32,7 @@ export function CreateOrUpdateStrataInfoWidgetForm({
           label="Message"
           name="body"
           rows={4}
-          defaultValue={widget.body}
+          defaultValue={widget?.body}
         />
       )}
     </Stack>

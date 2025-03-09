@@ -9,45 +9,52 @@ import { updateUser } from "../../../data/users/updateUser";
 import { sendEmail } from "../../../utils/sendEmail";
 
 export interface RequestResetPasswordFormState {
-  emailSent?: boolean;
+  error?: string;
+  success?: boolean;
 }
 
 export async function requestPasswordResetActionReducer(
   state: RequestResetPasswordFormState,
   fd: FormData,
-) {
+): Promise<RequestResetPasswordFormState> {
   const emailAddress = fd.get("email_address");
 
   if (typeof emailAddress !== "string" || emailAddress === "") {
-    return state;
+    return {
+      success: false,
+      error: 'required field "email" is missing',
+    };
   }
 
   const u = await getUser(emailAddress);
 
   if (!u) {
-    return state;
+    return { success: true };
   }
 
-  let token = await getUserPasswordResetToken({ userId: u.id });
+  try {
+    let token = await getUserPasswordResetToken({ userId: u.id });
 
-  if (!token) {
-    token = await createUserPasswordResetToken({ userId: u.id });
-  }
+    if (!token) {
+      token = await createUserPasswordResetToken({ userId: u.id });
+    }
 
-  const r = await sendEmail(
-    u.email,
-    "Strataspheric: Password Reset",
-    `
+    const r = await sendEmail(
+      u.email,
+      "Strataspheric: Password Reset",
+      `
     A password reset has been requested for your account on Strataspheric.
     If this was not you, you can ignore this email.
-  
+
     To reset your password, <a href="${protocol}//${tld}/forgot?token=${token.token}">click here</a>.
   `,
-  );
-
-  const rJson = await r.json();
-
-  return { emailSent: !!rJson.id };
+    );
+  } catch (e) {
+    // do nothing but log the error
+    console.log(e);
+  } finally {
+    return { success: true };
+  }
 }
 
 export async function resetPasswordAction(fd: FormData) {

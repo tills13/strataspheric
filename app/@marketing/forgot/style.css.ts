@@ -11,18 +11,13 @@ export const blurb = style({
   color: vars.fontColors.secondary,
 });
 
-export const input = style({
-  marginBottom: vars.spacing.normal,
-  width: "100%",
-});
-
 export const submitButton = style({
   width: "100%",
 });
 
 export const submitButtonIcon = style({
-  verticalAlign: "top",
   fill: important(vars.colors.green500),
+  height: vars.sizes.small,
 });
 
 export const submitPendingContainer = style({

@@ -9,7 +9,6 @@ import { Date } from "../Date";
 import { FileLink } from "../FileLink";
 import { FileTypeIcon } from "../FileTypeIcon";
 import { Group } from "../Group";
-import { Header } from "../Header";
 import { RemoveButton } from "../RemoveButton";
 import { Wrap } from "../Wrap";
 

@@ -5,11 +5,15 @@ import * as styles from "./style.css";
 
 import { useFormState } from "react-dom";
 
+import { Group } from "../../../components/Group";
 import { Header } from "../../../components/Header";
 import { CircleCheckIcon } from "../../../components/Icon/CircleCheckIcon";
+import { InfoPanel } from "../../../components/InfoPanel";
 import { Input } from "../../../components/Input";
 import { Panel } from "../../../components/Panel";
+import { Stack } from "../../../components/Stack";
 import { StatusButton } from "../../../components/StatusButton";
+import { Text } from "../../../components/Text";
 import { classnames } from "../../../utils/classnames";
 import { StaticPageContainer } from "../StaticPageContainer";
 import {
@@ -26,7 +30,7 @@ export default function Page({
 }) {
   const [state, requestPasswordResetAction] = useFormState(
     requestPasswordResetActionReducer,
-    { emailSent: undefined },
+    {},
   );
 
   if (searchParams["token"]) {
@@ -34,33 +38,28 @@ export default function Page({
       <StaticPageContainer>
         <Panel>
           <form action={resetPasswordAction}>
-            <Header className={styles.header} priority={2}>
-              Reset Password
-            </Header>
-
             <input
               name="token"
               type="hidden"
               defaultValue={searchParams["token"]}
             />
+            <Stack>
+              <Input label="Password" name="password" type="password" />
 
-            <Input
-              className={styles.input}
-              label="Password"
-              name="password"
-              type="password"
-            />
+              <Input
+                label="Confirm Password"
+                name="confirm_password"
+                type="password"
+              />
 
-            <Input
-              className={styles.input}
-              label="Confirm Password"
-              name="confirm_password"
-              type="password"
-            />
+              {state.error && (
+                <InfoPanel level="error">{state.error}</InfoPanel>
+              )}
 
-            <StatusButton color="primary" success={state.emailSent}>
-              Reset Password
-            </StatusButton>
+              <StatusButton color="primary" success={state.success}>
+                Reset Password
+              </StatusButton>
+            </Stack>
           </form>
         </Panel>
       </StaticPageContainer>
@@ -69,32 +68,28 @@ export default function Page({
 
   return (
     <StaticPageContainer>
-      <Header className={styles.header} priority={2}>
-        Reset Password
-      </Header>
       <Panel>
         <form action={requestPasswordResetAction}>
-          <p className={classnames(s({ mb: "normal" }), styles.blurb)}>
+          <Text className={classnames(s({ mb: "large" }), styles.blurb)}>
             Enter the email address associated with your account and we&apos;ll
             send you a link to reset your password.
-          </p>
+          </Text>
+          <Stack>
+            <Input label="Email Address" name="email_address" />
 
-          <Input
-            className={styles.input}
-            label="Email Address"
-            name="email_address"
-          />
+            {state.error && <InfoPanel level="error">{state.error}</InfoPanel>}
 
-          {state.emailSent ? (
-            <>
-              <CircleCheckIcon className={styles.submitButtonIcon} /> an email
-              has been sent to the entered address if it exists in our system.
-            </>
-          ) : (
-            <StatusButton color="primary" success={state.emailSent}>
-              Continue
-            </StatusButton>
-          )}
+            {state.success ? (
+              <Group gap="small">
+                <CircleCheckIcon className={styles.submitButtonIcon} /> an email
+                has been sent to the entered address if it exists in our system.
+              </Group>
+            ) : (
+              <StatusButton color="primary" success={state.success}>
+                Send Reset Email
+              </StatusButton>
+            )}
+          </Stack>
         </form>
       </Panel>
     </StaticPageContainer>
