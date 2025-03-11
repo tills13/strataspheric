@@ -11,6 +11,7 @@ import { Header } from "../../components/Header";
 import { JoinForm } from "../../components/JoinForm";
 import { InternalLink } from "../../components/Link/InternalLink";
 import { SignInForm } from "../../components/SignInForm";
+import { Stack } from "../../components/Stack";
 import { protocol, tld } from "../../constants";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { joinAction } from "../@marketing/join/actions";
@@ -41,19 +42,16 @@ export default async function Page({
 
   return (
     <div className={styles.signInToStrataPageContainer}>
-      <div className={styles.signInToStrataPageFormContainer}>
+      <Stack className={styles.signInToStrataPageFormContainer}>
         {action === "join" ? (
           <JoinForm onSubmit={joinAction} strata={strata} />
         ) : (
-          <>
-            <Header priority={2}>Sign In</Header>
-            <SignInForm className={styles.signInForm} />
-          </>
+          <SignInForm className={styles.signInForm} />
         )}
 
         {strata.isPublic === 1 && (
           <>
-            <DividerText>or</DividerText>
+            <DividerText>OR</DividerText>
             <InternalLink className={linkStyles.noUnderline} href="/dashboard">
               <Button fullWidth size="large">
                 view public content
@@ -61,7 +59,7 @@ export default async function Page({
             </InternalLink>
           </>
         )}
-      </div>
+      </Stack>
     </div>
   );
 }

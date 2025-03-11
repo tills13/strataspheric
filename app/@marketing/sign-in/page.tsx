@@ -9,8 +9,7 @@ export const runtime = "edge";
 export default function Page() {
   return (
     <StaticPageContainer>
-      <SignInJoinNavigation className={styles.navigation} />
-      <SignInForm />
+      <SignInForm className={styles.signInForm} />
     </StaticPageContainer>
   );
 }

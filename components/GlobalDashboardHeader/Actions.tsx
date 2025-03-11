@@ -37,7 +37,11 @@ export async function GlobalHeaderActions({ className }: Props) {
         />
       ) : (
         <InternalLink className={linkStyles.noUnderline} href="/?action=signin">
-          <Button className={styles.globalHeaderActionsButton} style="tertiary">
+          <Button
+            className={classnames(styles.globalHeaderActionsButton)}
+            color="primary"
+            style="tertiary"
+          >
             Sign In
           </Button>
         </InternalLink>

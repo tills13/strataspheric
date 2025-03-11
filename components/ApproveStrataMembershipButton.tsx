@@ -2,6 +2,7 @@
 
 import React, { useTransition } from "react";
 
+import { CircleCheckIcon } from "./Icon/CircleCheckIcon";
 import { StatusButton } from "./StatusButton";
 
 type StatusButtonProps = React.ComponentProps<typeof StatusButton>;
@@ -23,7 +24,9 @@ export function ApproveStrataMembershipButton({
           approveStrataMembership();
         })
       }
+      iconRight={<CircleCheckIcon />}
       isPending={isPending}
+      color="success"
       {...delegateProps}
     >
       Approve

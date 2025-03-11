@@ -27,7 +27,7 @@ export async function StrataMemberships({ className }: Props) {
   const session = await auth();
   const strata = await mustGetCurrentStrata();
 
-  const plan = await getStrataPlan(strata.id);
+  // const plan = await getStrataPlan(strata.id);
 
   const canUpsert = can(
     session?.user,
@@ -41,8 +41,8 @@ export async function StrataMemberships({ className }: Props) {
     <div className={classnames(className, styles.membershipGrid)}>
       {memberships.map((membership) => (
         <MembershipTile
-          approveStrataMembership={approveStrataMembershipAction}
           key={membership.id}
+          approveStrataMembership={approveStrataMembershipAction}
           deleteMember={deleteStrataMembershipAction}
           membership={membership}
           upsertMember={upsertStrataMembershipAction}

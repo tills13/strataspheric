@@ -208,6 +208,9 @@ export const plansContainer = style({
 });
 
 export const staticPageContainer = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   textAlign: "justify",
   padding: vars.spacing.normal,
   marginBottom: 100,

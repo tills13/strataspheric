@@ -1,6 +1,6 @@
 import { vars } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const navigation = style({
-  marginBottom: vars.spacing.large,
+export const signInForm = style({
+  width: "400px",
 });

@@ -24,7 +24,7 @@ export async function sendEmail(
     }),
   });
 
-  const rJson = await r.json();
+  const rJson = (await r.json()) as { id: string } | { message: string };
   if (r.status !== 200) {
     throw new ServerActionError(
       "[resend] failed to send email: " +

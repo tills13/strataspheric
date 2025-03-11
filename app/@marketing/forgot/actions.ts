@@ -39,7 +39,7 @@ export async function requestPasswordResetActionReducer(
       token = await createUserPasswordResetToken({ userId: u.id });
     }
 
-    const r = await sendEmail(
+    await sendEmail(
       u.email,
       "Strataspheric: Password Reset",
       `

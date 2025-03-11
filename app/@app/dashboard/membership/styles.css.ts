@@ -27,6 +27,19 @@ export const pageSecondaryTitle = style({
 
 export const leftColumn = style({ flex: 1 });
 
+export const filesPageContainer = style({
+  display: "grid",
+  gap: vars.spacing.normal,
+  gridTemplateRows: "min-content auto",
+  gridTemplateColumns: "100%",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      gridTemplateColumns: "auto minmax(auto, 500px)",
+    },
+  },
+});
+
 export const membershipTableContainer = style({
   width: "100vw",
   overflow: "auto",
@@ -58,22 +71,7 @@ export const membershipTile = style({
   padding: vars.spacing.normal,
   border: border("2px", "solid", vars.colors.borderDefault),
   borderRadius: vars.borderRadius,
-});
-
-export const membershipTileHeader = style({
-  display: "flex",
-  justifyContent: "space-between",
-  marginBottom: vars.spacing.normal,
-  gap: vars.spacing.normal,
-});
-
-export const membershipTileActions = style({
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "flex-end",
-  alignItems: "flex-start",
-  gap: vars.spacing.small,
-  flex: 1,
+  backgroundColor: vars.colors.grey50,
 });
 
 export const membershipTileDetails = style({
@@ -84,6 +82,11 @@ export const membershipTileDetails = style({
 export const membershipTileDt = style({
   gridColumn: 1,
   fontWeight: vars.fontWeights.xbold,
+  selectors: {
+    "&:not(:last-child)": {
+      marginBottom: vars.spacing.xs,
+    },
+  },
 });
 export const membershipTileDd = style({
   gridColumn: 2,

@@ -8,11 +8,15 @@ import {
 
 export const gapVar = createVar();
 
-export const stack = style({});
+export const stack = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: gapVar,
+});
 export const stackElement = style({
   selectors: {
     "&:not(:last-child)": {
-      marginBottom: gapVar,
+      // marginBottom: gapVar,
     },
   },
 });

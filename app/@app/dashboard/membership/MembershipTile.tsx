@@ -8,12 +8,15 @@ import { useState } from "react";
 import { ApproveStrataMembershipButton } from "../../../../components/ApproveStrataMembershipButton";
 import { Button } from "../../../../components/Button";
 import { CreateOrUpdateStrataMembershipForm } from "../../../../components/CreateOrUpdateStrataMembershipForm";
+import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { EditIcon } from "../../../../components/Icon/EditIcon";
 import { RemoveIcon } from "../../../../components/Icon/RemoveIcon";
 import { Modal } from "../../../../components/Modal";
 import { Bone } from "../../../../components/Skeleton/Bone";
+import { Stack } from "../../../../components/Stack";
 import { StatusButton } from "../../../../components/StatusButton";
+import { Text } from "../../../../components/Text";
 import { StrataMembership, User } from "../../../../data";
 import { can, p } from "../../../../data/users/permissions";
 import { useCan } from "../../../../hooks/useCan";
@@ -39,19 +42,26 @@ export function MembershipTile({
 
   return (
     <>
-      <div className={classnames(className, styles.membershipTile)}>
-        <div className={styles.membershipTileHeader}>
-          <div>
-            <Header priority={2}>{membership.name}</Header>
-            {membership.unit && <span>Unit {membership.unit}</span>}
-          </div>
+      <Stack className={classnames(className, styles.membershipTile)}>
+        <Group
+          className={s({ mb: "normal" })}
+          align="start"
+          justify="space-between"
+        >
+          <Stack gap="xxs">
+            <Header priority={3}>{membership.name}</Header>
+            {membership.unit && (
+              <Text color="secondary">Unit {membership.unit}</Text>
+            )}
+          </Stack>
 
-          <div className={styles.membershipTileActions}>
+          <Group gap="small">
             {can(p("stratas", "memberships", "edit")) && (
               <Button
                 icon={<EditIcon />}
                 onClick={() => setShowEditModal(true)}
                 size="small"
+                color="primary"
                 style="tertiary"
               />
             )}
@@ -65,8 +75,8 @@ export function MembershipTile({
                   size="small"
                 />
               )}
-          </div>
-        </div>
+          </Group>
+        </Group>
 
         <dl className={styles.membershipTileDetails}>
           <dt className={styles.membershipTileDt}>Email</dt>
@@ -97,7 +107,7 @@ export function MembershipTile({
               className={s({ mt: "normal" })}
             />
           )}
-      </div>
+      </Stack>
       {showEditModal && (
         <Modal
           closeModal={() => setShowEditModal(false)}
