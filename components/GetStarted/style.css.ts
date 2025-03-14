@@ -1,4 +1,4 @@
-import { vars } from "../../app/theme.css";
+import { breakpoints, vars } from "../../app/theme.css";
 import { keyframes, style } from "@vanilla-extract/css";
 
 import { important } from "../../theme";
@@ -36,6 +36,16 @@ export const subdomainFieldSubdomain = style({
 
 export const subdomainStatusIcon = style({
   height: vars.sizes.small,
+});
+
+export const statusContainer = style({
+  width: "100%",
+
+  "@media": {
+    [breakpoints.mobilePlus]: {
+      maxWidth: "500px",
+    },
+  },
 });
 
 const spinAnimation = keyframes({
@@ -78,17 +88,8 @@ export const estimatePeriod = style({
   textAlign: "end",
 });
 
-export const statusPageTitle = style({
-  marginBottom: vars.spacing.large,
-});
-
-export const statusPageText = style({
-  marginBottom: vars.spacing.large,
-});
-
 export const statusPageStatusIcon = style({
-  verticalAlign: "top",
-  height: "24px",
+  height: vars.sizes.small,
 });
 
 export const statusPageLoadingIcon = style([statusPageStatusIcon, {}]);

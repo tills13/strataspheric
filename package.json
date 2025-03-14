@@ -16,6 +16,7 @@
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.11.3",
     "@cloudflare/workers-types": "^4.20231025.0",
+    "@types/leaflet": "^1.9.16",
     "@types/node": "^18.18.9",
     "@vanilla-extract/css": "^1.14.0",
     "@vanilla-extract/css-utils": "^0.1.3",

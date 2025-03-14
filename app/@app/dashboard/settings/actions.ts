@@ -22,6 +22,7 @@ import { updateStrata } from "../../../../data/stratas/updateStrata";
 import { can } from "../../../../data/users/permissions";
 import { deleteAllWidgets } from "../../../../data/widgets/deleteAllWidgets";
 import { getBoolean, getString } from "../../../../utils/formdata";
+import { geolocate } from "../../../../utils/geolocate";
 
 const NotAuthorized = new Error("not authorized");
 
@@ -70,6 +71,17 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
     throw new Error("invalid fields");
   }
 
+  let latitude: number | undefined = undefined;
+  let longitude: number | undefined = undefined;
+
+  if (streetAddress && postalCode && city && provinceState) {
+    const compiledAddress = `${streetAddress} ${city}, ${provinceState}, ${postalCode}`;
+    const geolocation = await geolocate(compiledAddress);
+
+    latitude = geolocation.lat;
+    longitude = geolocation.long;
+  }
+
   await updateStrata(strataId, {
     name: strataName,
     strataId: strataPlanId,
@@ -77,6 +89,8 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
     postalCode,
     city,
     provinceState,
+    latitude,
+    longitude,
     isPublic: isPublic ? 1 : 0,
   });
 

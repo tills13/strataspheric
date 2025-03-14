@@ -1,11 +1,7 @@
 import { EventWidget } from ".";
 import { getWidgetEvents } from "../../data/widgets/getWidgetEvents";
-import { type Props as AbstractWidgetProps } from "../AbstractWidget";
 
-interface Props extends AbstractWidgetProps {
-  createEvent: (fd: FormData) => Promise<void>;
-  deleteEvent: (eventId: string) => Promise<void>;
-}
+type EventWidgetProps = React.ComponentProps<typeof EventWidget>;
 
 export async function ServerEventWidget({
   createEvent,
@@ -13,7 +9,7 @@ export async function ServerEventWidget({
   deleteWidget,
   upsertStrataWidget,
   widget,
-}: Props) {
+}: EventWidgetProps) {
   const events = await getWidgetEvents(widget.id, 10, 0);
 
   return (

@@ -9,9 +9,18 @@ export const text = style({
 
 export const textColors = styleVariants(
   Object.fromEntries(
-    Object.entries(vars.fontColors).map(([colorName, m]) => [
+    Object.entries(vars.fontColors).map(([colorName, color]) => [
       colorName,
-      { color: m },
+      { color },
     ]),
   ) as Record<keyof typeof vars.fontColors, ComplexStyleRule>,
+);
+
+export const textSizes = styleVariants(
+  Object.fromEntries(
+    Object.entries(vars.fontSizes).map(([fontSizeName, fontSize]) => [
+      fontSizeName,
+      { fontSize },
+    ]),
+  ) as Record<keyof typeof vars.fontSizes, ComplexStyleRule>,
 );

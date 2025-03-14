@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { StrataWidget } from "../data";
+import { Strata, StrataWidget } from "../data";
 import { ServerEventWidget } from "./EventWidget/ServerEventWidget";
 import { ServerFileWidget } from "./FileWidget/ServerFileWidget";
 import { Header } from "./Header";
@@ -14,6 +14,7 @@ interface Props {
   deleteFile: (fileId: string) => Promise<void>;
   deleteWidget: () => Promise<void>;
   upsertStrataWidget: (fd: FormData) => Promise<void>;
+  strata: Strata;
   widget: StrataWidget;
 }
 
@@ -24,6 +25,7 @@ export function Widget({
   deleteFile,
   deleteWidget,
   upsertStrataWidget,
+  strata,
   widget,
 }: Props) {
   switch (widget.type) {
@@ -82,6 +84,7 @@ export function Widget({
         >
           <ServerInfoWidget
             deleteWidget={deleteWidget}
+            strata={strata}
             upsertStrataWidget={upsertStrataWidget}
             widget={widget}
           />

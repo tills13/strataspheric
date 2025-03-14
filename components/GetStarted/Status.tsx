@@ -7,9 +7,12 @@ import { useEffect, useState } from "react";
 import { GetDomainStatusResponseData } from "../../app/api/stratas/domainStatus/route";
 import { Strata } from "../../data";
 import { GoToStrataLinkButton } from "../GoToStrataLinkButton";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { LoadingIcon } from "../LoadingIcon";
+import { Stack } from "../Stack";
+import { Text } from "../Text";
 
 interface Props {
   strata: Strata;
@@ -43,23 +46,25 @@ export function GetStartedStatus({ strata }: Props) {
   });
 
   return (
-    <div>
-      <Header className={styles.statusPageTitle} priority={2}>
-        Creating your strata...
-      </Header>
+    <Stack className={styles.statusContainer}>
+      <Header priority={2}>Creating your strata...</Header>
 
       {domainStatus === "active" ? (
-        <p className={styles.statusPageText}>
-          <CircleCheckIcon className={styles.statusPageCheckIcon} /> your strata
-          is ready to go! Click the button below to continue.
-        </p>
+        <Group gap="small">
+          <CircleCheckIcon className={styles.statusPageCheckIcon} />
+          <Text>
+            your strata is ready to go! Click the button below to continue.
+          </Text>
+        </Group>
       ) : (
-        <p className={styles.statusPageText}>
-          <LoadingIcon className={styles.statusPageLoadingIcon} /> We are
-          initializing and setting up <b>{strata.name}</b> for you. This may
-          take a few minutes. You can stay and wait or come back to this page
-          later to check on the status of this process.
-        </p>
+        <Group gap="small" align="start">
+          <LoadingIcon className={styles.statusPageLoadingIcon} />
+          <Text>
+            We are initializing and setting up <b>{strata.name}</b> for you.
+            This may take a few minutes. You can stay and wait or come back to
+            this page later to check on the status of this process.
+          </Text>
+        </Group>
       )}
 
       <GoToStrataLinkButton
@@ -69,6 +74,6 @@ export function GetStartedStatus({ strata }: Props) {
         strata={strata}
         buttonColor="primary"
       />
-    </div>
+    </Stack>
   );
 }

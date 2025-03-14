@@ -165,6 +165,8 @@ export interface StratasTable {
     0 | 1 | undefined,
     0 | 1 | undefined
   >;
+  latitude: number | null;
+  longitude: number | null;
   createdAt: ColumnType<number, never, never>;
 }
 
@@ -293,5 +295,5 @@ export const db = new Kysely<Database>({
   dialect: new D1Dialect({
     database: process.env.DB as unknown as D1Database,
   }),
-  log: ["query"],
+  // log: ["query"],
 });

@@ -117,8 +117,6 @@ class D1Connection implements DatabaseConnection {
         console.log("[D1]", "query:", compiledQuery.sql);
       }
 
-      console.log(results, error);
-
       throw new Error(results?.error || "an unknown error occurred");
     }
 

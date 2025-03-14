@@ -148,9 +148,7 @@ export const landingWrapper = style({
   marginBottom: 100,
 });
 
-export const sectionHeader = style({
-  marginBottom: vars.spacing.normal,
-});
+export const sectionHeader = style({});
 
 export const plansSection = style({
   textAlign: "center",
@@ -170,7 +168,12 @@ export const ctaSection = style([
     marginBottom: 100,
   },
 ]);
-export const ctaHeader = style([sectionHeader, {}]);
+export const ctaHeader = style([
+  sectionHeader,
+  {
+    fontSize: vars.fontSizes.xxl,
+  },
+]);
 export const ctaText = style({
   marginBottom: vars.spacing.normal,
 });

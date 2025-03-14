@@ -23,6 +23,7 @@ export function Group({
   align = "default",
   justify = "default",
   tabIndex,
+  equalWidthChildren,
 }: Props) {
   return (
     <div
@@ -39,7 +40,12 @@ export function Group({
         React.isValidElement(c)
           ? React.cloneElement(c, {
               ...c.props,
-              className: classnames(styles.groupElement, c.props.className),
+              className: classnames(
+                equalWidthChildren
+                  ? styles.groupElement.fullWidth
+                  : styles.groupElement.default,
+                c.props.className,
+              ),
             })
           : c,
       )}

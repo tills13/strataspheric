@@ -1,4 +1,5 @@
 import { vars } from "../../app/theme.css";
+import { panel } from "../Panel/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -31,6 +32,10 @@ export const field = style({
     "&::placeholder": {
       color: vars.fontColors.secondary,
     },
+
+    [`${panel} &`]: {
+      backgroundColor: vars.colors.grey0,
+    },
   },
 });
 
@@ -44,4 +49,10 @@ export const fieldLabel = style({
   color: vars.fontColors.secondary,
   backgroundColor: vars.colors.white,
   zIndex: 100,
+
+  selectors: {
+    [`${panel} &`]: {
+      backgroundColor: vars.colors.grey0,
+    },
+  },
 });

@@ -9,6 +9,7 @@ import { useState } from "react";
 
 import { AttachFileField } from "../../../components/AttachFileField";
 import { FileAttachmentChip } from "../../../components/FileAttachmentChip";
+import { Group } from "../../../components/Group";
 import { CircleCheckIcon } from "../../../components/Icon/CircleCheckIcon";
 import { File } from "../../../data";
 import { classnames } from "../../../utils/classnames";
@@ -23,12 +24,7 @@ export function AttachBylawsField({ upsertFileAction }: Props) {
   return (
     <>
       {selectedFile ? (
-        <div
-          className={classnames(
-            styles.attachBylawsFieldBylawsAttachedContainer,
-            s({ mb: "large" }),
-          )}
-        >
+        <Group>
           <FileAttachmentChip
             className={s({ w: "full" })}
             fileName={selectedFile.name}
@@ -39,11 +35,10 @@ export function AttachBylawsField({ upsertFileAction }: Props) {
             style={assignInlineVars({ [iconColorVar]: vars.colors.green500 })}
             height={24}
           />
-        </div>
+        </Group>
       ) : (
         <AttachFileField
           attachFileText="Upload Strata Bylaws"
-          className={s({ mb: "large" })}
           name="bylawsFileIdId"
           onSelectFile={setSelectedFile}
           upsertFile={upsertFileAction}

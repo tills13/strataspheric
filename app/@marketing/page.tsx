@@ -6,8 +6,10 @@ import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
 import { InternalLink } from "../../components/Link/InternalLink";
 import { PricingCard } from "../../components/PricingCard";
+import { Stack } from "../../components/Stack";
 import { TabLayout } from "../../components/TabLayout";
 import { Tab } from "../../components/TabLayout/Tab";
+import { Text } from "../../components/Text";
 import { plans } from "../../data/strataPlans/constants";
 import { classnames } from "../../utils/classnames";
 
@@ -17,12 +19,15 @@ export default async function Page() {
   return (
     <div className={styles.landingWrapper}>
       <section className={classnames(styles.ctaSection, s({ p: "normal" }))}>
-        <Header className={styles.ctaHeader} priority={2}>
+        <Header
+          className={classnames(styles.ctaHeader, s({ mb: "xl" }))}
+          priority={2}
+        >
           Take your strata to
           <br />
-          all new heights.
+          all new heights 🚀.
         </Header>
-        <p className={styles.ctaText}></p>
+
         <InternalLink className={styles.ctaLink} href="/get-started?plan=basic">
           <Button className={styles.ctaButton} color="primary" size="large">
             Begin Onboarding
@@ -41,18 +46,13 @@ export default async function Page() {
           <Tab name="Files">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
-                <p className={styles.sideBySideParagraph}>
-                  <h4
-                    className={classnames(
-                      styles.sideBySideTitle,
-                      s({ mb: "normal" }),
-                    )}
-                  >
-                    Manage your files.
-                  </h4>
-                  Stored securely and safely in the cloud. There when you, or
-                  anyone else in your strata, needs them.
-                </p>
+                <Stack>
+                  <Header priority={3}>Manage your files.</Header>
+                  <Text>
+                    Stored securely and safely in the cloud. There when you, or
+                    anyone else in your strata, needs them.
+                  </Text>
+                </Stack>
               </div>
 
               <img
@@ -64,18 +64,13 @@ export default async function Page() {
 
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
-                <p className={styles.sideBySideParagraph}>
-                  <h4
-                    className={classnames(
-                      styles.sideBySideTitle,
-                      s({ mb: "normal" }),
-                    )}
-                  >
-                    Find exactly what you need.
-                  </h4>
-                  Powerful filtering tools to find the documents you are looking
-                  for.
-                </p>
+                <Stack>
+                  <Header priority={3}>Find exactly what you need.</Header>
+                  <Text>
+                    Powerful filtering tools to find the documents you are
+                    looking for.
+                  </Text>
+                </Stack>
               </div>
 
               <div className={styles.sideBySideImageStack}>
@@ -96,18 +91,13 @@ export default async function Page() {
           <Tab name="Events">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
-                <p className={styles.sideBySideParagraph}>
-                  <h4
-                    className={classnames(
-                      styles.sideBySideTitle,
-                      s({ mb: "normal" }),
-                    )}
-                  >
-                    See the future.
-                  </h4>
-                  Easily share information about upcoming Strata events.
-                  Automatically send email reminders before an important date.
-                </p>
+                <Stack>
+                  <Header priority={3}>See the future.</Header>
+                  <Text>
+                    Easily share information about upcoming Strata events.
+                    Automatically send email reminders before an important date.
+                  </Text>
+                </Stack>
               </div>
 
               <img
@@ -119,18 +109,15 @@ export default async function Page() {
 
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
-                <p className={styles.sideBySideParagraph}>
-                  <h4
-                    className={classnames(
-                      styles.sideBySideTitle,
-                      s({ mb: "normal" }),
-                    )}
-                  >
+                <Stack>
+                  <Header priority={3}>
                     Generate revenue from your shared amenities.
-                  </h4>
-                  Specify bookable amenities and allow members to automatically
-                  book them with or without strata approval.
-                </p>
+                  </Header>
+                  <Text>
+                    Specify bookable amenities and allow members to
+                    automatically book them with or without strata approval.
+                  </Text>
+                </Stack>
               </div>
 
               <div className={styles.sideBySideImageStack}>
@@ -151,18 +138,13 @@ export default async function Page() {
           <Tab name="Meetings">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
-                <p className={styles.sideBySideParagraph}>
-                  <h4
-                    className={classnames(
-                      styles.sideBySideTitle,
-                      s({ mb: "normal" }),
-                    )}
-                  >
-                    Plan ahead.
-                  </h4>
-                  Plan meetings based on what&apos;s happening in your
-                  strata&apos;s Strataspheric account.
-                </p>
+                <Stack>
+                  <Header priority={3}>Plan ahead.</Header>
+                  <Text>
+                    Plan meetings based on what&apos;s happening in your
+                    strata&apos;s Strataspheric account.
+                  </Text>
+                </Stack>
               </div>
 
               <div className={styles.sideBySideImageStack}>
@@ -183,18 +165,13 @@ export default async function Page() {
           <Tab name="Inbox">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
-                <p className={styles.sideBySideParagraph}>
-                  <h4
-                    className={classnames(
-                      styles.sideBySideTitle,
-                      s({ mb: "normal" }),
-                    )}
-                  >
-                    Stay connected.
-                  </h4>
-                  Receieve, discuss, and respond to strata members. Archive
-                  messages to reference whenever you need to.
-                </p>
+                <Stack>
+                  <Header priority={3}>Stay connected.</Header>
+                  <Text>
+                    Receieve, discuss, and respond to strata members. Archive
+                    messages to reference whenever you need to.
+                  </Text>
+                </Stack>
               </div>
 
               <div className={styles.sideBySideImageStack}>

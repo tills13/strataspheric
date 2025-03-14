@@ -18,7 +18,10 @@ export const group = style({
   },
 });
 
-export const groupElement = style({});
+export const groupElement = styleVariants({
+  default: {},
+  fullWidth: { width: "100%" },
+});
 
 export const groupAlignment = styleVariants({
   default: {
@@ -41,6 +44,9 @@ export const groupJustification = styleVariants({
   },
   start: {
     justifyContent: "flex-start",
+  },
+  center: {
+    justifyContent: "center",
   },
   end: {
     justifyContent: "flex-end",

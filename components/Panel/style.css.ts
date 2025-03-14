@@ -5,7 +5,7 @@ import { border } from "../../theme";
 
 export const panel = style({
   padding: vars.spacing.normal,
-  backgroundColor: vars.colors.white,
-  border: border("2px", "solid", "#EFEFEF"),
+  backgroundColor: vars.colors.grey0,
+  border: border("2px", "solid", vars.colors.borderDefault),
   borderRadius: vars.borderRadius,
 });

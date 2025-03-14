@@ -80,24 +80,22 @@ export default async function Page() {
             </StatusButton>
           </form>
 
-          <InfoPanel level="error">
-            <Header priority={3} className={s({ mb: "normal" })}>
-              Danger Zone
-            </Header>
-
-            <p className={s({ mb: "normal" })}>
-              Deleting your Strata will delete all information and files
-              associated with your strata unrecoverably.
-            </p>
-
-            <ConfirmButton
-              iconRight={<DeleteIcon />}
-              onClickConfirm={deleteStrataAction}
-              color="error"
-              style="secondary"
-            >
-              Delete Strata
-            </ConfirmButton>
+          <InfoPanel
+            action={
+              <ConfirmButton
+                iconRight={<DeleteIcon />}
+                onClickConfirm={deleteStrataAction}
+                color="error"
+                style="secondary"
+              >
+                Delete Strata
+              </ConfirmButton>
+            }
+            header={<Header priority={3}>Danger Zone</Header>}
+            level="error"
+          >
+            Deleting your Strata will delete all information and files
+            associated with your strata unrecoverably.
           </InfoPanel>
         </div>
       </div>

@@ -1,8 +1,11 @@
 import * as styles from "./style.css";
 
+import { notFound } from "next/navigation";
+
 import { auth } from "../../../auth";
 import { NewWidgetWidget } from "../../../components/NewWidgetWidget";
 import { Widget } from "../../../components/Widget";
+import { getStrataById } from "../../../data/stratas/getStrataById";
 import { can, p } from "../../../data/users/permissions";
 import { getWidgets } from "../../../data/widgets/getWidgets";
 import {
@@ -19,8 +22,15 @@ interface Props {
 }
 
 export async function StrataWidgets({ strataId }: Props) {
-  const session = await auth();
-  const widgets = await getWidgets(strataId);
+  const [session, strata, widgets] = await Promise.all([
+    auth(),
+    getStrataById(strataId),
+    getWidgets(strataId),
+  ]);
+
+  if (!strata) {
+    notFound();
+  }
 
   return (
     <div className={styles.dashboardWidgetGridContainer}>
@@ -41,6 +51,7 @@ export async function StrataWidgets({ strataId }: Props) {
             strataId,
             widget.id,
           )}
+          strata={strata}
           widget={widget}
         />
       ))}

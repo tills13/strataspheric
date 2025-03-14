@@ -46,7 +46,6 @@ export const timelineItem = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      padding: vars.spacing.normal,
       paddingLeft: calc(vars.sizes.small).add(vars.spacing.normal).toString(),
       paddingRight: 0,
       selectors: {
@@ -69,7 +68,7 @@ export const timelineIconContainer = style({
   height: vars.sizes.xs,
   width: vars.sizes.xs,
   backgroundColor: vars.colors.primary,
-  borderRadius: "50%",
+  borderRadius: vars.borderRadius,
 
   vars: {
     [iconColorVar]: vars.colors.white,

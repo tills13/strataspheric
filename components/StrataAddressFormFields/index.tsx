@@ -16,19 +16,21 @@ export function StrataAddressFormFields({ className, strata }: Props) {
       <Input
         name="strata_id"
         label="Strata Plan ID"
-        placeholder="VIS..."
+        placeholder="VIS 1234"
         defaultValue={strata.strataId || undefined}
       />
 
       <Input
         name="strata_address_street_address"
         label="Street Address"
+        placeholder="123 Fake St."
         defaultValue={strata.streetAddress || undefined}
       />
 
       <Input
         name="strata_address_postal_code"
         label="Postal Code"
+        placeholder="A1B 2C3"
         defaultValue={strata.postalCode || undefined}
       />
 
@@ -36,11 +38,13 @@ export function StrataAddressFormFields({ className, strata }: Props) {
         <Input
           name="strata_address_city"
           label="City"
+          placeholder="Fakeville"
           defaultValue={strata.city || undefined}
         />
         <Input
           name="strata_address_province_state"
           label="Province / State"
+          placeholder="BC"
           defaultValue={strata.provinceState || undefined}
         />
       </Group>

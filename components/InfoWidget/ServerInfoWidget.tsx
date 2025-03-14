@@ -1,15 +1,20 @@
-import { auth } from "../../auth";
-import { StrataWidget } from "../../data";
-import { can, p } from "../../data/users/permissions";
-import { AbstractWidget } from "../AbstractWidget";
+import { Strata, StrataWidget } from "../../data";
+import {
+  AbstractWidget,
+  Props as AbstractWidgetProps,
+} from "../AbstractWidget";
 import { Text } from "../Text";
+import { InfoWidgetContact } from "./InfoWidgetContact";
+import { InfoWidgetMapEmbed } from "./InfoWidgetMapEmbed";
 
-interface Props {
+interface Props extends AbstractWidgetProps {
+  strata: Strata;
   widget: StrataWidget;
 }
 
 export async function ServerInfoWidget({
   deleteWidget,
+  strata,
   upsertStrataWidget,
   widget,
 }: Props) {
@@ -20,7 +25,11 @@ export async function ServerInfoWidget({
       widget={widget}
       widgetTitle={widget.title}
     >
-      <Text>{widget.body}</Text>
+      {widget.type === "info" ? (
+        <Text>{widget.body}</Text>
+      ) : (
+        <InfoWidgetContact strata={strata} />
+      )}
     </AbstractWidget>
   );
 }
