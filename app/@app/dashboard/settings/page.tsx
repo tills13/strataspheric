@@ -20,7 +20,8 @@ import { StrataAddressFormFields } from "../../../../components/StrataAddressFor
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 import { classnames } from "../../../../utils/classnames";
-import { deleteStrataAction, updateStrataAction } from "./actions";
+import { updateStrataAction } from "../../actions";
+import { deleteStrataAction } from "./actions";
 
 export const runtime = "edge";
 

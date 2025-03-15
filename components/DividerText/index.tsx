@@ -1,10 +1,10 @@
 import { vars } from "../../app/theme.css";
 import * as styles from "./style.css";
 
-import { assignInlineVars } from "@vanilla-extract/dynamic";
 import React from "react";
 
 import { classnames } from "../../utils/classnames";
+import { Group } from "../Group";
 
 interface Props {
   children: React.ReactNode;
@@ -22,11 +22,9 @@ export function DividerText({
   gravity = "center",
 }: Props) {
   return (
-    <div
+    <Group
+      gap={gap}
       className={overrideClassName || classnames(styles.dividerText, className)}
-      style={assignInlineVars({
-        [styles.dividerTextGapVar]: vars.spacing[gap],
-      })}
     >
       {(gravity === "right" || gravity === "center") && (
         <span className={styles.dividerTextDivider} />
@@ -35,6 +33,6 @@ export function DividerText({
       {(gravity === "left" || gravity === "center") && (
         <span className={styles.dividerTextDivider} />
       )}
-    </div>
+    </Group>
   );
 }

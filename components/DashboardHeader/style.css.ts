@@ -8,9 +8,16 @@ import { important, padding } from "../../theme";
 
 export const numHeaderItemsVar = createVar();
 
+export const subHeaderContainer = style({
+  "@media": {
+    [breakpoints.tabletPlus]: {
+      display: "none",
+    },
+  },
+});
+
 export const subheader = style({
   position: "relative",
-  alignItems: "flex-start",
   width: "100vw",
   padding: `${vars.spacing.small} ${vars.spacing.normal}`,
   borderBottom: `1px solid ${vars.colors.borderDefault}`,

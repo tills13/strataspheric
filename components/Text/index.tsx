@@ -3,21 +3,24 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { classnames } from "../../utils/classnames";
-import { Wrap } from "../Wrap";
 
 interface Props {
   as?: "p" | "address";
   className?: string;
   color?: keyof typeof styles.textColors;
+  noWrap?: boolean;
   size?: keyof typeof styles.textSizes;
+  weight?: keyof typeof styles.textWeights;
 }
 
 export function Text({
   as = "p",
   children,
-  color = "primary",
+  color,
   className,
+  noWrap,
   size = "normal",
+  weight,
 }: React.PropsWithChildren<Props>) {
   const TextComponent = as;
 
@@ -25,8 +28,10 @@ export function Text({
     <TextComponent
       className={classnames(
         styles.text,
-        styles.textColors[color],
+        color ? styles.textColors[color] : styles.textColorInherit,
         styles.textSizes[size],
+        weight && styles.textWeights[weight],
+        noWrap && styles.textNoWrap,
         className,
       )}
     >

@@ -1,4 +1,5 @@
 import { vars } from "../../app/theme.css";
+import { s } from "../../sprinkles.css";
 import * as linkStyles from "../Link/style.css";
 import * as styles from "./style.css";
 
@@ -22,7 +23,13 @@ export async function GlobalHeaderActions({ className }: Props) {
   const session = await auth();
 
   return (
-    <div className={classnames(styles.globalHeaderActions, className)}>
+    <div
+      className={classnames(
+        className,
+        styles.globalHeaderActions,
+        s({ ph: "normal" }),
+      )}
+    >
       <div className={styles.spacer} />
 
       <Suspense>

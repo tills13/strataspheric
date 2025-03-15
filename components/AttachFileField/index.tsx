@@ -8,17 +8,20 @@ import { AttachFileText } from "../AttachFile/AttachFileText";
 
 type AttachFileButtonProps = Omit<
   React.ComponentProps<typeof AttachFileButton>,
-  "defaultValue"
+  "defaultValue" | "value"
 >;
 
 interface Props extends AttachFileButtonProps {
   defaultValue?: File;
   name: string;
+  value?: File;
 }
 
 export function AttachFileField({
   defaultValue,
   name,
+  onSelectFile,
+  value,
   ...delegateProps
 }: Props) {
   const [selectedFile, setSelectedFile] = useState(defaultValue);
@@ -28,13 +31,17 @@ export function AttachFileField({
       <AttachFileText
         onSelectFile={(file) => {
           setSelectedFile(file);
-          delegateProps.onSelectFile?.(file);
+          onSelectFile?.(file);
         }}
-        selectedFile={selectedFile}
+        selectedFile={value || selectedFile}
         {...delegateProps}
       />
 
-      <input type="hidden" name={name} value={selectedFile?.id || ""} />
+      <input
+        type="hidden"
+        name={name}
+        value={(value || selectedFile)?.id || ""}
+      />
     </>
   );
 }

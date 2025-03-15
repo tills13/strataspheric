@@ -43,6 +43,15 @@ const paddingProperties = defineProperties({
       xl: vars.spacing.xl,
       xxl: vars.spacing.xxl,
     },
+    paddingTop: {
+      xxs: vars.spacing.xxs,
+      xs: vars.spacing.xs,
+      small: vars.spacing.small,
+      normal: vars.spacing.normal,
+      large: vars.spacing.large,
+      xl: vars.spacing.xl,
+      xxl: vars.spacing.xxl,
+    },
     paddingLeft: {
       xxs: vars.spacing.xxs,
       xs: vars.spacing.xs,
@@ -66,6 +75,7 @@ const paddingProperties = defineProperties({
     p: ["padding"],
     pb: ["paddingBottom"],
     ph: ["paddingLeft", "paddingRight"],
+    pv: ["paddingTop", "paddingBottom"],
   },
 });
 

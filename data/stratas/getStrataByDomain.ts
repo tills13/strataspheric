@@ -9,7 +9,6 @@ export async function mustGetCurrentStrata(): Promise<Strata> {
 
   if (!s) {
     notFound();
-    // throw new Error("invariant: strata should exist");
   }
 
   return s;

@@ -2,7 +2,13 @@ import { iconColorVar, vars } from "../../app/theme.css";
 import * as buttonStyles from "../Button/style.css";
 import * as dropdownActionsStyles from "../DropdownActions/style.css";
 import { timelineIconContainer } from "../Timeline/style.css";
-import { createVar, fallbackVar, style } from "@vanilla-extract/css";
+import {
+  ComplexStyleRule,
+  createVar,
+  fallbackVar,
+  style,
+  styleVariants,
+} from "@vanilla-extract/css";
 
 export const dynamicIconHeightVar = createVar();
 
@@ -27,6 +33,15 @@ export const icon = style({
     },
   },
 });
+
+export const iconSize = styleVariants(
+  Object.fromEntries(
+    Object.entries(vars.sizes).map(([sizeName, height]) => [
+      sizeName,
+      { height },
+    ]),
+  ) as Record<keyof typeof vars.sizes, ComplexStyleRule>,
+);
 
 export const iconWithDynamicHeight = style([
   icon,

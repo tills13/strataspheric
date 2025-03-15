@@ -180,7 +180,7 @@ export async function MeetingMinutes({
               meetingId,
               "minutes",
             )}
-            attachFileText="Add Minutes Document"
+            placeholder="Add Minutes Document"
             disabled={!!(minutesUrl && minutesUrlApprovedByName)}
             upsertFile={upsertFileAction.bind(undefined, undefined)}
           />

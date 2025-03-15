@@ -167,6 +167,7 @@ export interface StratasTable {
   >;
   latitude: number | null;
   longitude: number | null;
+  bylawsFileId: string | null;
   createdAt: ColumnType<number, never, never>;
 }
 

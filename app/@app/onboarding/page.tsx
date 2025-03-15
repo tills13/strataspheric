@@ -1,7 +1,6 @@
 import { s } from "../../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { AttachFileField } from "../../../components/AttachFileField";
 import { Group } from "../../../components/Group";
 import { Header } from "../../../components/Header";
 import { CircleCheckIcon } from "../../../components/Icon/CircleCheckIcon";
@@ -12,9 +11,9 @@ import { StrataAddressFormFields } from "../../../components/StrataAddressFormFi
 import { Text } from "../../../components/Text";
 import { Wordmark } from "../../../components/Wordmark";
 import { mustGetCurrentStrata } from "../../../data/stratas/getStrataByDomain";
+import { updateStrataAction } from "../actions";
 import { upsertFileAction } from "../dashboard/files/actions";
-import { AttachBylawsField } from "./AttachBylawsField";
-import { completeOnboardingAction } from "./actions";
+import { OnboardingAttachFileField } from "./OnboardingAttachFileField";
 
 export const runtime = "edge";
 
@@ -22,17 +21,20 @@ export default async function Onboarding() {
   const strata = await mustGetCurrentStrata();
 
   return (
-    <form action={completeOnboardingAction} className={styles.pageContainer}>
+    <form
+      action={updateStrataAction.bind(undefined, strata.id)}
+      className={styles.pageContainer}
+    >
       <Group className={s({ mb: "large" })} justify="center">
         <Text size="large">Welcome to </Text>
         <Wordmark />
       </Group>
 
-      <Stack>
-        <Header priority={2}>
-          Welcome to your Strata. Let&apos;s get a few things setup for you...
-        </Header>
+      <Header className={s({ mb: "large" })} priority={2}>
+        Welcome to your Strata. Let&apos;s get a few things setup for you...
+      </Header>
 
+      <Stack>
         <Panel>
           <Header className={s({ mb: "small" })} priority={3}>
             Address
@@ -54,8 +56,10 @@ export default async function Onboarding() {
           <Stack>
             <Text color="secondary">Add your bylaws for easy reference</Text>
 
-            <AttachBylawsField
-              upsertFileAction={upsertFileAction.bind(undefined, undefined)}
+            <OnboardingAttachFileField
+              placeholder="Attach Strata Bylaws"
+              name="bylawsFileId"
+              upsertFile={upsertFileAction.bind(undefined, undefined)}
             />
           </Stack>
         </Panel>

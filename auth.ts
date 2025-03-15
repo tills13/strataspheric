@@ -72,3 +72,13 @@ export const authOptions: NextAuthConfig = {
 };
 
 export const { auth, handlers } = NextAuth(authOptions);
+
+export async function mustAuth() {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("unauthenticated");
+  }
+
+  return session;
+}

@@ -9,14 +9,14 @@ import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { AttachFileModal } from "./AttachFileModal";
 
 interface Props {
-  attachFileText?: React.ReactNode;
   onSelectFile?: (file: File | undefined) => Promise<any> | any;
+  placeholder?: React.ReactNode;
   selectedFile?: { id: string; name: string; path: string };
   upsertFile: (fd: FormData) => Promise<File>;
 }
 
 export function AttachFileText({
-  attachFileText = "Attach File",
+  placeholder = "Attach File",
   selectedFile,
   onSelectFile,
   upsertFile,
@@ -49,7 +49,7 @@ export function AttachFileText({
               onClick={() => setShowAttachFileModal(true)}
               type="button"
             >
-              {attachFileText}
+              {placeholder}
             </button>
           </>
         )}

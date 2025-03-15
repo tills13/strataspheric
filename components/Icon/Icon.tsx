@@ -9,6 +9,7 @@ interface Props extends React.SVGAttributes<SVGElement> {
   className?: string;
   classNameOverride?: string;
   height?: number | string;
+  size?: keyof typeof styles.iconSize;
 }
 
 export function Icon({
@@ -16,6 +17,7 @@ export function Icon({
   className,
   classNameOverride,
   height,
+  size,
   style,
   ...rest
 }: React.PropsWithChildren<Props>) {
@@ -30,6 +32,7 @@ export function Icon({
           typeof height !== "undefined"
             ? styles.iconWithDynamicHeight
             : styles.icon,
+          size && styles.iconSize[size],
         )
       }
       style={{

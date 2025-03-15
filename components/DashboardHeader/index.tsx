@@ -77,74 +77,78 @@ export function DashboardHeader({ actions }: Props) {
   );
 
   return (
-    <Group className={styles.subheader} justify="space-between">
-      <div
-        style={assignInlineVars({
-          [styles.numHeaderItemsVar]: filteredMenuItems.length.toString(),
-        })}
-        className={mobileMenuExpanded ? styles.linksRailOpen : styles.linksRail}
-      >
-        {filteredMenuItems.map(([IconComponent, href, label]) => {
-          const isActive =
-            href === "/dashboard"
-              ? pathname === href
-              : pathname?.startsWith(href);
-
-          return (
-            <Wrap
-              key={href}
-              if={isActive}
-              with={(children) => (
-                <div
-                  className={styles.activeSubheaderLink}
-                  onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
-                >
-                  {children}
-                </div>
-              )}
-              elseWith={(children) => (
-                <InternalLink
-                  key={href}
-                  className={styles.subheaderLink}
-                  href={href}
-                >
-                  {children}
-                </InternalLink>
-              )}
-            >
-              <IconComponent classNameOverride={styles.mobileMenuIcon} />
-              <div className={styles.mobileMenuText}>{label}</div>
-            </Wrap>
-          );
-        })}
-      </div>
-
-      <Group gap="small">
-        <Button
-          className={styles.mobileDropdownAction}
-          onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
-          icon={
-            <DownIcon
-              className={
-                mobileMenuExpanded
-                  ? styles.toggleMobileDropdownIconActive
-                  : styles.toggleMobileDropdownIcon
-              }
-            />
+    <div className={styles.subHeaderContainer}>
+      <Group className={styles.subheader} align="start" justify="space-between">
+        <div
+          style={assignInlineVars({
+            [styles.numHeaderItemsVar]: filteredMenuItems.length.toString(),
+          })}
+          className={
+            mobileMenuExpanded ? styles.linksRailOpen : styles.linksRail
           }
-          size="small"
-          style="tertiary"
-        />
-        {actions && (
-          <div className={styles.actionsContainer}>
-            <DropdownActions
-              actions={actions}
-              buttonSize="small"
-              buttonStyle="tertiary"
-            />
-          </div>
-        )}
+        >
+          {filteredMenuItems.map(([IconComponent, href, label]) => {
+            const isActive =
+              href === "/dashboard"
+                ? pathname === href
+                : pathname?.startsWith(href);
+
+            return (
+              <Wrap
+                key={href}
+                if={isActive}
+                with={(children) => (
+                  <div
+                    className={styles.activeSubheaderLink}
+                    onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
+                  >
+                    {children}
+                  </div>
+                )}
+                elseWith={(children) => (
+                  <InternalLink
+                    key={href}
+                    className={styles.subheaderLink}
+                    href={href}
+                  >
+                    {children}
+                  </InternalLink>
+                )}
+              >
+                <IconComponent classNameOverride={styles.mobileMenuIcon} />
+                <div className={styles.mobileMenuText}>{label}</div>
+              </Wrap>
+            );
+          })}
+        </div>
+
+        <Group gap="small">
+          <Button
+            className={styles.mobileDropdownAction}
+            onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
+            icon={
+              <DownIcon
+                className={
+                  mobileMenuExpanded
+                    ? styles.toggleMobileDropdownIconActive
+                    : styles.toggleMobileDropdownIcon
+                }
+              />
+            }
+            size="small"
+            style="tertiary"
+          />
+          {actions && (
+            <div className={styles.actionsContainer}>
+              <DropdownActions
+                actions={actions}
+                buttonSize="small"
+                buttonStyle="tertiary"
+              />
+            </div>
+          )}
+        </Group>
       </Group>
-    </Group>
+    </div>
   );
 }

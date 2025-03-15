@@ -1,7 +1,5 @@
 import { vars } from "../../app/theme.css";
-import { createVar, style } from "@vanilla-extract/css";
-
-export const dividerTextGapVar = createVar();
+import { style } from "@vanilla-extract/css";
 
 export const dividerTextText = style({
   whiteSpace: "nowrap",
@@ -10,7 +8,6 @@ export const dividerTextText = style({
 export const dividerText = style({
   display: "flex",
   alignItems: "center",
-  gap: dividerTextGapVar,
 });
 
 export const dividerTextDivider = style({

@@ -18,11 +18,8 @@ import { deleteAllStrataMemberships } from "../../../../data/strataMemberships/d
 import { updateStrataMembership } from "../../../../data/strataMemberships/updateStrataMembership";
 import { deleteStrata } from "../../../../data/stratas/deleteStrata";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
-import { updateStrata } from "../../../../data/stratas/updateStrata";
 import { can } from "../../../../data/users/permissions";
 import { deleteAllWidgets } from "../../../../data/widgets/deleteAllWidgets";
-import { getBoolean, getString } from "../../../../utils/formdata";
-import { geolocate } from "../../../../utils/geolocate";
 
 const NotAuthorized = new Error("not authorized");
 
@@ -56,46 +53,6 @@ export async function deleteStrataAction() {
   }
 
   redirect(`${protocol}//${tld}`);
-}
-
-export async function updateStrataAction(strataId: string, fd: FormData) {
-  const strataPlanId = getString(fd, "strata_id");
-  const streetAddress = getString(fd, "strata_address_street_address");
-  const postalCode = getString(fd, "strata_address_postal_code");
-  const provinceState = getString(fd, "strata_address_province_state");
-  const city = getString(fd, "strata_address_city");
-  const strataName = getString(fd, "name");
-  const isPublic = getBoolean(fd, "is_public");
-
-  if (strataName === "") {
-    throw new Error("invalid fields");
-  }
-
-  let latitude: number | undefined = undefined;
-  let longitude: number | undefined = undefined;
-
-  if (streetAddress && postalCode && city && provinceState) {
-    const compiledAddress = `${streetAddress} ${city}, ${provinceState}, ${postalCode}`;
-    const geolocation = await geolocate(compiledAddress);
-
-    latitude = geolocation.lat;
-    longitude = geolocation.long;
-  }
-
-  await updateStrata(strataId, {
-    name: strataName,
-    strataId: strataPlanId,
-    streetAddress,
-    postalCode,
-    city,
-    provinceState,
-    latitude,
-    longitude,
-    isPublic: isPublic ? 1 : 0,
-  });
-
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/settings");
 }
 
 export async function approveStrataMembershipAction(

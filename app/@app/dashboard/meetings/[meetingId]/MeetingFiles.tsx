@@ -68,7 +68,7 @@ export async function MeetingFiles({ className, meetingId }: Props) {
           meetingId,
           "file",
         )}
-        attachFileText="Add File"
+        placeholder="Add File"
         upsertFile={upsertFileAction.bind(undefined, undefined)}
       />
     </div>

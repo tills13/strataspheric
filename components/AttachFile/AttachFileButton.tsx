@@ -1,6 +1,5 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import React, { useState } from "react";
@@ -8,26 +7,21 @@ import React, { useState } from "react";
 import { File } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
-import { CreateOrUpdateFileForm } from "../CreateOrUpdateFileForm";
-import { DividerText } from "../DividerText";
-import { FileSelect } from "../FileSelect";
-import { Header } from "../Header";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { TextDocumentIcon } from "../Icon/TextDocumentIcon";
-import { Modal } from "../Modal";
 import { AttachFileModal } from "./AttachFileModal";
 
-type ButtonProps = React.ComponentProps<typeof Button>;
+type ButtonProps = Omit<React.ComponentProps<typeof Button>, "placeholder">;
 
 interface Props extends ButtonProps {
-  attachFileText?: React.ReactNode;
   onSelectFile?: (file: File | undefined) => Promise<any> | any;
+  placeholder?: React.ReactNode;
   selectedFile?: { id: string; name: string; path: string };
   upsertFile: (fd: FormData) => Promise<File>;
 }
 
 export function AttachFileButton({
-  attachFileText = "Attach File",
+  placeholder: attachFileText = "Attach File",
   onSelectFile,
   selectedFile,
   upsertFile,

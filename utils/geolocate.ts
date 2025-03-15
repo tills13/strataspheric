@@ -21,6 +21,7 @@ export async function geolocate(addr: string) {
     };
   } catch (e) {
     console.log(e);
-    return {};
   }
+
+  return undefined;
 }

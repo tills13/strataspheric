@@ -1,23 +1,97 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import * as linkStyles from "../Link/style.css";
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 
 export const globalHeader = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: vars.spacing.normal,
   borderBottom: `1px solid ${vars.colors.borderDefault}`,
+});
+
+export const userStrataSelectorContainer = style({
+  borderRight: `1px solid ${vars.colors.borderDefault}`,
+  cursor: "pointer",
+
+  "@media": {
+    [breakpoints.tabletPlus]: {
+      width: "250px",
+    },
+  },
+
+  selectors: {
+    "&:hover": {
+      backgroundColor: vars.colors.grey100,
+    },
+  },
+});
+
+export const selectedStrataContainer = style({
+  overflow: "hidden",
+});
+
+export const userStrataSelectorText = style({
+  fontFamily: vars.fontFamilies.primary,
+  fontSize: vars.fontSizes.large,
+  fontWeight: vars.fontWeights.xbold,
+  whiteSpace: "nowrap",
+  flex: 1,
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      fontSize: vars.fontSizes.normal,
+    },
+  },
+});
+
+export const userStrataSelectorIconBase = style({
+  position: "relative",
+  transition: "left 1s ease, opacity 1s ease",
+
+  selectors: {
+    [`${userStrataSelectorContainer}:hover &`]: {
+      left: "5px",
+    },
+  },
+});
+
+export const userStrataSelectorIcon = styleVariants({
+  false: [
+    userStrataSelectorIconBase,
+    {
+      left: "-20px",
+      opacity: 0,
+    },
+  ],
+  true: [
+    userStrataSelectorIconBase,
+    {
+      left: "0",
+      opacity: 1,
+    },
+  ],
+});
+
+export const userStrataSelectorStrata = style({
+  padding: vars.spacing.normal,
+  backgroundColor: vars.colors.grey50,
+  borderRadius: vars.borderRadius,
+  border: `2px solid ${vars.colors.grey50}`,
+  textDecoration: "none",
+
+  selectors: {
+    "&:hover": {
+      backgroundColor: vars.colors.grey100,
+      borderColor: vars.colors.borderDefaultHover,
+    },
+  },
 });
 
 export const titleLink = style([
   linkStyles.noUnderline,
-  {
-    whiteSpace: "nowrap",
-    fontFamily: vars.fontFamilies.primary,
-    fontSize: vars.fontSizes.xl,
-    fontWeight: vars.fontWeights.xbold,
-  },
+  { whiteSpace: "nowrap" },
 ]);
 
 export const globalHeaderActions = style({
