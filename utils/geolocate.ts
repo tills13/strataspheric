@@ -9,11 +9,9 @@ export async function geolocate(addr: string) {
   try {
     const response = await fetch(u.href);
 
-    console.log(response.status, response.statusText, await response.text());
-
-    const rJson = await response.json();
-
-    console.log({ rJson });
+    const rawResponse = await response.text();
+    console.log(response.status, response.statusText, rawResponse);
+    const rJson = JSON.parse(rawResponse);
 
     return {
       lat: parseFloat(rJson[0].lat),
