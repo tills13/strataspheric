@@ -1,5 +1,6 @@
 import NextAuth, { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { cache } from "react";
 
 import { findStrataMemberships } from "./data/strataMemberships/findStrataMemberships";
 import { roleScopeToScopes } from "./data/users/permissions";
@@ -19,7 +20,7 @@ export const authOptions: NextAuthConfig = {
 
       return token;
     },
-    async session({ session, token, ...rest }, ...other) {
+    async session({ session, token }) {
       if (!session.user) {
         return session;
       }
@@ -71,7 +72,9 @@ export const authOptions: NextAuthConfig = {
   ],
 };
 
-export const { auth, handlers } = NextAuth(authOptions);
+export const { auth: rawAuth, handlers } = NextAuth(authOptions);
+
+export const auth = cache(rawAuth);
 
 export async function mustAuth() {
   const session = await auth();

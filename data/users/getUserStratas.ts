@@ -1,6 +1,8 @@
+import { cache } from "react";
+
 import { Strata, db } from "..";
 
-export async function getUserStratas(userId: string): Promise<Strata[]> {
+export const getUserStratas = cache((userId: string): Promise<Strata[]> => {
   return db
     .selectFrom("stratas")
     .selectAll()
@@ -11,4 +13,4 @@ export async function getUserStratas(userId: string): Promise<Strata[]> {
         .where("strata_memberships.userId", "=", userId),
     )
     .execute();
-}
+});

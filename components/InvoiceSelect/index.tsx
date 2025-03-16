@@ -29,8 +29,6 @@ export function InvoiceSelect({
     loadInvoices();
   }, []);
 
-  console.log(delegateProps);
-
   return (
     <Select
       className={className}

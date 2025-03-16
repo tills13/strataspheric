@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { Strata } from "..";
 import { getDomain } from "../../utils/getDomain";
@@ -18,9 +19,9 @@ export function getCurrentStrata() {
   return getStrataByDomain(getDomain());
 }
 
-export async function getStrataByDomain(
-  domain: string,
-): Promise<Strata | undefined> {
-  const stratas = await findStratas({ domain });
-  return stratas?.[0];
-}
+export const getStrataByDomain = cache(
+  async (domain: string): Promise<Strata | undefined> => {
+    const stratas = await findStratas({ domain });
+    return stratas?.[0];
+  },
+);

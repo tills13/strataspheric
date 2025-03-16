@@ -29,8 +29,6 @@ export function Select({
     propsOnChange?.(e);
   }
 
-  console.log(delegateProps);
-
   return (
     <div className={classnames(styles.selectWrapper, className)}>
       <select

@@ -25,7 +25,6 @@ export function AttachInvoiceModal({
   selectedInvoice,
   upsertInvoice,
 }: Props) {
-  console.log(selectedInvoice?.id);
   return (
     <Modal closeModal={close} title="Attach Invoice">
       <Stack>

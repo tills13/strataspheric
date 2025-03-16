@@ -30,7 +30,7 @@ export default async function Page() {
             </div>
           }
         >
-          <StrataWidgets strataId={strata.id} />
+          <StrataWidgets strata={strata} />
         </Suspense>
       </div>
     </>

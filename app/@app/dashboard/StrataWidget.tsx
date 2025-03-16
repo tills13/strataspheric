@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { auth } from "../../../auth";
 import { NewWidgetWidget } from "../../../components/NewWidgetWidget";
 import { Widget } from "../../../components/Widget";
-import { getStrataById } from "../../../data/stratas/getStrataById";
+import { Strata } from "../../../data";
 import { can, p } from "../../../data/users/permissions";
 import { getWidgets } from "../../../data/widgets/getWidgets";
 import {
@@ -18,15 +18,11 @@ import {
 } from "./actions";
 
 interface Props {
-  strataId: string;
+  strata: Strata;
 }
 
-export async function StrataWidgets({ strataId }: Props) {
-  const [session, strata, widgets] = await Promise.all([
-    auth(),
-    getStrataById(strataId),
-    getWidgets(strataId),
-  ]);
+export async function StrataWidgets({ strata }: Props) {
+  const [session, widgets] = await Promise.all([auth(), getWidgets(strata.id)]);
 
   if (!strata) {
     notFound();
@@ -37,10 +33,10 @@ export async function StrataWidgets({ strataId }: Props) {
       {widgets.map((widget) => (
         <Widget
           key={widget.id}
-          createEvent={createEventAction.bind(undefined, strataId, widget.id)}
+          createEvent={createEventAction.bind(undefined, strata.id, widget.id)}
           createFile={upsertFileWidgetFileAction.bind(
             undefined,
-            strataId,
+            strata.id,
             widget.id,
           )}
           deleteEvent={deleteWidgetEventAction.bind(undefined, widget.id)}
@@ -48,7 +44,7 @@ export async function StrataWidgets({ strataId }: Props) {
           deleteWidget={deleteWidgetAction.bind(undefined, widget.id)}
           upsertStrataWidget={upsertStrataWidget.bind(
             undefined,
-            strataId,
+            strata.id,
             widget.id,
           )}
           strata={strata}
@@ -59,7 +55,7 @@ export async function StrataWidgets({ strataId }: Props) {
         <NewWidgetWidget
           upsertStrataWidget={upsertStrataWidget.bind(
             undefined,
-            strataId,
+            strata.id,
             undefined,
           )}
         />
