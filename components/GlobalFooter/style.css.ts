@@ -27,7 +27,6 @@ export const footer = style({
 
 export const footerWordMark = style({
   display: "block",
-  marginBottom: vars.spacing.normal,
   textDecoration: "none",
   vars: {
     [colorVar]: vars.colors.white,
@@ -41,26 +40,6 @@ export const footerWordMark = style({
   },
 });
 
-export const footerLinks = style({
-  display: "flex",
-  flexDirection: "row",
-  gap: vars.spacing.normal,
-  marginBottom: vars.spacing.small,
-
-  "@media": {
-    [breakpoints.tablet]: {},
-  },
-});
-
-export const madeWith = style({
-  whiteSpace: "nowrap",
-});
-
 export const heartIcon = style({
-  position: "relative",
-  height: vars.sizes.small,
-  verticalAlign: "middle",
-  vars: {
-    [iconColorVar]: vars.colors.red500,
-  },
+  vars: { [iconColorVar]: vars.colors.red500 },
 });

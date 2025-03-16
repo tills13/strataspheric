@@ -223,7 +223,7 @@ export default async function Page() {
         </InternalLink>
       </section>
 
-      <section className={classnames(s({ p: "normal" }), styles.plansSection)}>
+      {/* <section className={classnames(s({ p: "normal" }), styles.plansSection)}>
         <Header className={s({ mb: "normal" })} priority={2}>
           Simple, month-by-month pricing
         </Header>
@@ -239,7 +239,7 @@ export default async function Page() {
             <PricingCard key={plan.name} {...plan} />
           ))}
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

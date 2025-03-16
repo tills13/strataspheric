@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { domain: string } }) {
   }
 
   return (
-    <StaticPageContainer>
+    <StaticPageContainer centered>
       <GetStartedStatus strata={strata} />
     </StaticPageContainer>
   );

@@ -5,11 +5,6 @@ import { important } from "../../theme";
 
 export const getStartedForm = style({});
 
-export const input = style({
-  marginBottom: vars.spacing.normal,
-  width: "100%",
-});
-
 export const isPublicField = style([
   {
     display: "flex",

@@ -1,38 +1,24 @@
 import { breakpoints, vars } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const header = style({});
-
-export const input = style({
-  width: "100%",
-});
-
 export const divider = style({
   marginBottom: vars.spacing.normal,
   width: "100%",
 });
 
-export const submitButton = style({
+export const strataSearchContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: vars.spacing.normal,
   width: "100%",
-});
-
-export const strataSearchPageContainer = style({
-  display: "grid",
-  gap: vars.spacing.large,
-  margin: "auto",
 
   "@media": {
     [breakpoints.tablet]: {
-      gridTemplateColumns: "45% auto",
+      display: "grid",
+      gridTemplateColumns: "400px auto",
     },
   },
 });
-
-export const strataSearchContainer = style({});
-
-export const strataSearchForm = style({});
-
-export const stratasListContainer = style({});
 
 export const stratasList = style({
   listStyle: "none",

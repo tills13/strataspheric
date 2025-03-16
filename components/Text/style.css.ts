@@ -2,7 +2,6 @@ import { vars } from "../../app/theme.css";
 import { ComplexStyleRule, style, styleVariants } from "@vanilla-extract/css";
 
 export const text = style({
-  fontFamily: vars.fontFamilies.text,
   fontSize: vars.fontSizes.normal,
   lineHeight: 1.3,
 });
@@ -40,4 +39,13 @@ export const textWeights = styleVariants(
       { fontWeight },
     ]),
   ) as Record<keyof typeof vars.fontWeights, ComplexStyleRule>,
+);
+
+export const textFamilies = styleVariants(
+  Object.fromEntries(
+    Object.entries(vars.fontFamilies).map(([fontFamilyName, fontFamily]) => [
+      fontFamilyName,
+      { fontFamily },
+    ]),
+  ) as Record<keyof typeof vars.fontFamilies, ComplexStyleRule>,
 );

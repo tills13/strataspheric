@@ -4,8 +4,10 @@ import { Suspense } from "react";
 
 import { protocol, tld } from "../../constants";
 import { ContinueWhereYouLeftOffWidget } from "../ContinueWhereYouLeftOffWidget";
+import { Group } from "../Group";
 import { HeartIcon } from "../Icon/HeartIcon";
 import { ExternalLink } from "../Link/ExternalLink";
+import { Stack } from "../Stack";
 import { Wordmark } from "../Wordmark";
 
 const baseUrl = protocol + "//" + tld;
@@ -13,7 +15,7 @@ const baseUrl = protocol + "//" + tld;
 export function GlobalFooter() {
   return (
     <footer className={styles.footer}>
-      <div>
+      <Stack gap="small">
         <ExternalLink
           className={styles.footerWordMark}
           href={baseUrl + "/"}
@@ -21,13 +23,13 @@ export function GlobalFooter() {
         >
           <Wordmark />
         </ExternalLink>
-        <div className={styles.footerLinks}>
+        <Group gap="small">
           <ExternalLink href={baseUrl + "/about"} target="_blank">
             About
           </ExternalLink>
-          <ExternalLink href={baseUrl + "/pricing"} target="_blank">
+          {/* <ExternalLink href={baseUrl + "/pricing"} target="_blank">
             Pricing
-          </ExternalLink>
+          </ExternalLink> */}
           <ExternalLink href={baseUrl + "/terms"} target="_blank">
             Terms
           </ExternalLink>
@@ -37,11 +39,11 @@ export function GlobalFooter() {
           <ExternalLink href={baseUrl + "/contact"} target="_blank">
             Contact
           </ExternalLink>
-        </div>
-        <p className={styles.madeWith}>
-          Made in Canada <HeartIcon className={styles.heartIcon} />
-        </p>
-      </div>
+        </Group>
+        <Group gap="small">
+          Made in Canada <HeartIcon className={styles.heartIcon} size="small" />
+        </Group>
+      </Stack>
 
       <Suspense>
         <ContinueWhereYouLeftOffWidget />

@@ -27,10 +27,10 @@ export default async function Page({
   return (
     <StaticPageContainer>
       <div className={styles.layoutContainer}>
-        <PricingPlanSelector
+        {/* <PricingPlanSelector
           className={styles.pricingPlanSelector}
           selectedPlan={plan}
-        />
+        /> */}
         <GetStartedForm
           className={styles.getStartedForm}
           session={session}

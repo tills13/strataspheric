@@ -8,6 +8,7 @@ interface Props {
   as?: "address" | "label" | "p" | "span";
   className?: string;
   color?: keyof typeof styles.textColors;
+  family?: keyof typeof styles.textFamilies;
   noWrap?: boolean;
   size?: keyof typeof styles.textSizes;
   weight?: keyof typeof styles.textWeights;
@@ -18,6 +19,7 @@ export function Text({
   children,
   color,
   className,
+  family = "text",
   noWrap,
   size = "normal",
   weight,
@@ -28,8 +30,9 @@ export function Text({
     <TextComponent
       className={classnames(
         styles.text,
-        color ? styles.textColors[color] : styles.textColorInherit,
         styles.textSizes[size],
+        color ? styles.textColors[color] : styles.textColorInherit,
+        family && styles.textFamilies[family],
         weight && styles.textWeights[weight],
         noWrap && styles.textNoWrap,
         className,

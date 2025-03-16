@@ -22,11 +22,15 @@ import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
 import { CycleIcon } from "../Icon/CycleIcon";
 import { RightIcon } from "../Icon/RightIcon";
+import { InfoPanel } from "../InfoPanel";
 import { Input } from "../Input";
 import { JoinFormFields } from "../JoinForm/JoinFormFields";
 import { Money } from "../Money";
 import { Panel } from "../Panel";
+import { RadioButton } from "../RadioButton";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
 
 interface Props {
   className?: string;
@@ -95,91 +99,97 @@ export function GetStartedForm({
       action={action}
       className={classnames(styles.getStartedForm, className)}
     >
-      {!session && (
-        <div className={s({ mb: "xl" })}>
-          <JoinFormFields />
-        </div>
-      )}
-
-      <Header className={classnames(s({ mb: "large" }))} priority={2}>
-        Let&apos;s get to know your strata...
-      </Header>
-
-      <Input
-        className={styles.input}
-        name="strata_name"
-        label="Strata Name"
-        onChange={(e) => setStrataName(e.target.value)}
-        required
-      />
-
-      {suggestedSubdomain !== "" && (
-        <div className={styles.subdomainField}>
-          {isDomainAvailable === undefined && suggestedSubdomain ? (
-            <CycleIcon className={styles.subdomainStatusLoading} />
-          ) : isDomainAvailable ? (
-            <CircleCheckIcon className={styles.subdomainStatusOk} />
-          ) : (
-            <CircleErrorIcon className={styles.subdomainStatusError} />
-          )}
-
+      <Stack>
+        {!session && (
           <div>
-            <span className={styles.subdomainFieldSubdomain}>
-              {suggestedSubdomain}
-            </span>
-            <span className={styles.subdomainFieldRootDomain}>.{tld}</span>
+            <JoinFormFields />
           </div>
+        )}
 
-          <input
-            name="strata_domain"
-            type="hidden"
-            value={`${suggestedSubdomain}.${tld}`}
-          />
-        </div>
-      )}
+        <Header priority={2}>Let&apos;s get to know your strata...</Header>
 
-      <Input
-        className={styles.input}
-        name="num_units"
-        min={1}
-        type="number"
-        label="# of Units"
-        onChange={(e) => {
-          setNumUnits(parseInt(e.target.value, 10));
-        }}
-      />
+        <Input
+          name="strata_name"
+          label="Strata Name"
+          onChange={(e) => setStrataName(e.target.value)}
+          required
+        />
 
-      <label
-        className={classnames(styles.isPublicField, s({ mb: "large" }))}
-        htmlFor="is_public"
-      >
-        <Header priority={3}>
-          I want my strata&apos;s content to be public
-        </Header>
-        <Checkbox id="is_public" name="is_public" defaultChecked />
-      </label>
+        {suggestedSubdomain !== "" && (
+          <div className={styles.subdomainField}>
+            {isDomainAvailable === undefined && suggestedSubdomain ? (
+              <CycleIcon className={styles.subdomainStatusLoading} />
+            ) : isDomainAvailable ? (
+              <CircleCheckIcon className={styles.subdomainStatusOk} />
+            ) : (
+              <CircleErrorIcon className={styles.subdomainStatusError} />
+            )}
 
-      {selectedPlan.pricePerUnit !== undefined && (
-        <div
-          className={classnames(styles.estimateContainer, s({ mb: "large" }))}
+            <div>
+              <span className={styles.subdomainFieldSubdomain}>
+                {suggestedSubdomain}
+              </span>
+              <span className={styles.subdomainFieldRootDomain}>.{tld}</span>
+            </div>
+
+            <input
+              name="strata_domain"
+              type="hidden"
+              value={`${suggestedSubdomain}.${tld}`}
+            />
+          </div>
+        )}
+
+        <Input
+          name="num_units"
+          min={1}
+          type="number"
+          label="# of Units"
+          onChange={(e) => {
+            setNumUnits(parseInt(e.target.value, 10));
+          }}
+        />
+
+        <InfoPanel
+          header={<Header priority={3}>Content Visibility</Header>}
+          level="info"
         >
-          <div>
-            <span className={styles.estimateSummarySeats}>{numUnits}</span>{" "}
-            {pluralize("Unit", numUnits)}
+          <Text>
+            Controls access to strata content by outsiders. If your strata is
+            public, visitors to your Strataspheric page that are not members
+            will be able to see content on your dashboard, certain files that
+            are public, and upcoming events.
+          </Text>
+          <RadioButton
+            className={s({ flex: 1 })}
+            name="visibility"
+            options={["private", "public"]}
+            defaultValue="private"
+          />
+        </InfoPanel>
+
+        {false && selectedPlan.pricePerUnit !== undefined && (
+          <div className={classnames(styles.estimateContainer)}>
+            <div>
+              <span className={styles.estimateSummarySeats}>{numUnits}</span>{" "}
+              {pluralize("Unit", numUnits)}
+            </div>
+
+            <div>
+              <Money amount={numUnits * selectedPlan.pricePerUnit} />
+              <span className={styles.estimatePeriod}>per month</span>
+            </div>
           </div>
+        )}
 
-          <div>
-            <Money amount={numUnits * selectedPlan.pricePerUnit} />
-            <span className={styles.estimatePeriod}>per month</span>
-          </div>
-        </div>
-      )}
+        {state?.success === false && state?.error && (
+          <Panel>{state.error}</Panel>
+        )}
 
-      {state?.success === false && state?.error && <Panel>{state.error}</Panel>}
-
-      <StatusButton color="primary" iconRight={<RightIcon />} type="submit">
-        Let&apos;s Get Started
-      </StatusButton>
+        <StatusButton color="primary" iconRight={<RightIcon />} type="submit">
+          Let&apos;s Get Started
+        </StatusButton>
+      </Stack>
     </form>
   );
 }

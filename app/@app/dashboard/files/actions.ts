@@ -26,6 +26,7 @@ export async function deleteFileAction(fileId: string) {
   revalidatePath("/dashboard/files");
 }
 
+/** @todo combine with other upsertFileActions */
 export async function upsertFileAction(
   fileId: string | undefined,
   formData: FormData,
@@ -40,7 +41,8 @@ export async function upsertFileAction(
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description") || "";
   const uploadedFile = formdata.getFile(formData, "file");
-  const isPublic = formdata.getBoolean(formData, "isPublic");
+  const isPublic =
+    formdata.getEnum(formData, "is_public", ["public", "private"]) === "public";
 
   let file: File | undefined;
 

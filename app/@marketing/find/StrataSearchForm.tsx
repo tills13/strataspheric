@@ -6,6 +6,7 @@ import * as styles from "./style.css";
 import { useRouter } from "next/navigation";
 
 import { Input } from "../../../components/Input";
+import { Stack } from "../../../components/Stack";
 import { StatusButton } from "../../../components/StatusButton";
 import { classnames } from "../../../utils/classnames";
 import * as formdata from "../../../utils/formdata";
@@ -51,34 +52,21 @@ export function StrataSearchForm({
         router.push("/find" + (query ? "?" + query : ""));
       }}
     >
-      <Input
-        className={classnames(styles.input, s({ mb: "small" }))}
-        label="Strata Name"
-        name="name"
-        defaultValue={name}
-      />
+      <Stack>
+        <Input label="Strata Name" name="name" defaultValue={name} />
 
-      <Input
-        className={classnames(styles.input, s({ mb: "small" }))}
-        label="Strata Plan ID"
-        name="strataPlan"
-        defaultValue={strataPlan}
-      />
+        <Input
+          label="Strata Plan ID"
+          name="strataPlan"
+          defaultValue={strataPlan}
+        />
 
-      <Input
-        className={classnames(styles.input, s({ mb: "normal" }))}
-        label="Address"
-        name="address"
-        defaultValue={address}
-      />
+        <Input label="Address" name="address" defaultValue={address} />
 
-      <StatusButton
-        className={styles.submitButton}
-        color="primary"
-        type="submit"
-      >
-        Find
-      </StatusButton>
+        <StatusButton color="primary" type="submit">
+          Find
+        </StatusButton>
+      </Stack>
     </form>
   );
 }

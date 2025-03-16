@@ -125,7 +125,8 @@ export const vars = createGlobalTheme(":root", {
   },
 
   zIndex: {
-    front: "100",
-    header: "101",
+    front: "1000",
+    header: "1001",
+    modal: "1011",
   },
 });

@@ -15,7 +15,7 @@ export const panelWrapper = style({
   backgroundColor: vars.colors.white,
   borderRadius: vars.borderRadius,
   minWidth: 200,
-  zIndex: 1,
+  zIndex: vars.zIndex.modal,
 });
 
 export const panelWrapperUp = style([

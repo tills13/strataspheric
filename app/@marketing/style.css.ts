@@ -3,6 +3,8 @@ import { createVar, style, styleVariants } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
+import { padding } from "../../theme";
+
 export const section = style({});
 
 export const centerContent = style({
@@ -212,11 +214,12 @@ export const plansContainer = style({
 
 export const staticPageContainer = style({
   display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  textAlign: "justify",
-  padding: vars.spacing.normal,
-  marginBottom: 100,
+  padding: padding(
+    0,
+    vars.spacing.normal,
+    vars.spacing.normal,
+    vars.spacing.normal,
+  ),
 
   "@media": {
     [breakpoints.tablet]: {
@@ -227,6 +230,16 @@ export const staticPageContainer = style({
       marginRight: calc(vars.sizes.xxl)
         .add(calc(vars.spacing.xs).multiply(2))
         .toString(),
+    },
+  },
+});
+
+export const centeredStaticPageContainer = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      marginTop: "-72px",
+      alignItems: "center",
+      justifyContent: "center",
     },
   },
 });

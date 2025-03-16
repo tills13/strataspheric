@@ -1,38 +1,23 @@
 import * as styles from "./style.css";
 
 import { Header } from "../Header";
+import { InfoPanel } from "../InfoPanel";
 import { Input } from "../Input";
+import { Stack } from "../Stack";
 
-export function JoinFormFields() {
+interface Props {
+  className?: string;
+}
+
+export function JoinFormFields({ className }: Props) {
   return (
-    <>
-      <Header className={styles.header2} priority={2}>
-        Let&apos;s get to know you...
-      </Header>
+    <Stack className={className}>
+      <Header priority={2}>Let&apos;s get to know you...</Header>
+
+      <Input id="name" name="name" label="Name" required />
+      <Input id="email" name="email" type="email" label="Email" required />
 
       <Input
-        className={styles.input}
-        id="name"
-        name="name"
-        label="Name"
-        required
-      />
-
-      <Input
-        className={styles.input}
-        id="email"
-        name="email"
-        type="email"
-        label="Email"
-        required
-      />
-
-      <Header className={styles.header3} priority={3}>
-        A password to protect your account
-      </Header>
-
-      <Input
-        className={styles.input}
         id="password"
         name="password"
         type="password"
@@ -41,13 +26,17 @@ export function JoinFormFields() {
       />
 
       <Input
-        className={styles.input}
         id="confirmPassword"
         name="confirmPassword"
         type="password"
         label="Confirm Password"
         required
       />
-    </>
+
+      <InfoPanel level="info">
+        Create a strong password to protect your account and your strata&apos;s
+        data.
+      </InfoPanel>
+    </Stack>
   );
 }

@@ -48,7 +48,8 @@ export async function submitGetStarted(
 
   const strataName = formdata.getString(fd, "strata_name");
   const strataDomain = formdata.getString(fd, "strata_domain");
-  const isPublic = formdata.getBoolean(fd, "is_public");
+  const isPublic =
+    formdata.getEnum(fd, "is_public", ["public", "private"]) === "public";
   const numUnits = formdata.getInteger(fd, "num_units");
 
   if (strataName === "" || strataDomain === "" || isNaN(numUnits)) {

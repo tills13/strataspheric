@@ -69,7 +69,8 @@ export async function upsertFileWidgetFileAction(
   const description = formdata.getString(formData, "description") || "";
   const file = formdata.getFile(formData, "file");
   const existingFileId = formdata.getString(formData, "existing_file");
-  const isPublic = formdata.getBoolean(formData, "isPublic");
+  const isPublic =
+    formdata.getEnum(formData, "is_public", ["private", "public"]) === "public";
 
   let fileId: string | undefined;
 

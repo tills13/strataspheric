@@ -3,8 +3,10 @@ import * as styles from "./style.css";
 
 import { Suspense } from "react";
 
+import { Group } from "../../../components/Group";
 import { Header } from "../../../components/Header";
 import { Panel } from "../../../components/Panel";
+import { Stack } from "../../../components/Stack";
 import { classnames } from "../../../utils/classnames";
 import { StaticPageContainer } from "../StaticPageContainer";
 import { FindAStrata } from "./FindAStrata";
@@ -19,35 +21,23 @@ export default async function Page({
 }) {
   return (
     <StaticPageContainer>
-      <div className={styles.strataSearchPageContainer}>
-        <div className={styles.strataSearchContainer}>
-          <Header
-            className={classnames(styles.header, s({ mb: "large" }))}
-            priority={2}
-          >
-            Find a Strata
-          </Header>
-          <Panel>
-            <StrataSearchForm
-              className={classnames(styles.strataSearchForm)}
-              name={searchParams["name"]}
-              strataPlan={searchParams["strataPlan"]}
-              address={searchParams["address"]}
-            />
-          </Panel>
-        </div>
-        <div className={styles.stratasListContainer}>
-          <Header
-            className={classnames(styles.header, s({ mb: "large" }))}
-            priority={2}
-          >
-            Stratas
-          </Header>
+      <div className={styles.strataSearchContainer}>
+        <Stack>
+          <Header priority={2}>Find a Strata</Header>
+
+          <StrataSearchForm
+            name={searchParams["name"]}
+            strataPlan={searchParams["strataPlan"]}
+            address={searchParams["address"]}
+          />
+        </Stack>
+        <Stack>
+          <Header priority={2}>Stratas</Header>
 
           <Suspense fallback={<div>Searching...</div>}>
             <FindAStrata searchParams={searchParams} />
           </Suspense>
-        </div>
+        </Stack>
       </div>
     </StaticPageContainer>
   );

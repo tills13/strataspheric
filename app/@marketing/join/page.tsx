@@ -14,14 +14,14 @@ export default async function Page({
 }) {
   if (searchParams["token"]) {
     return (
-      <StaticPageContainer>
+      <StaticPageContainer centered>
         <JoinFromToken token={searchParams["token"]} />
       </StaticPageContainer>
     );
   }
 
   return (
-    <StaticPageContainer>
+    <StaticPageContainer centered>
       <JoinForm onSubmit={joinAction} />
     </StaticPageContainer>
   );

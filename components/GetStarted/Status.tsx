@@ -47,24 +47,25 @@ export function GetStartedStatus({ strata }: Props) {
 
   return (
     <Stack className={styles.statusContainer}>
-      <Header priority={2}>Creating your strata...</Header>
+      <Group gap="small">
+        {domainStatus === "active" ? (
+          <CircleCheckIcon className={styles.statusPageCheckIcon} />
+        ) : (
+          <LoadingIcon className={styles.statusPageLoadingIcon} />
+        )}
+        <Header priority={2}>Creating your strata...</Header>
+      </Group>
 
       {domainStatus === "active" ? (
-        <Group gap="small">
-          <CircleCheckIcon className={styles.statusPageCheckIcon} />
-          <Text>
-            your strata is ready to go! Click the button below to continue.
-          </Text>
-        </Group>
+        <Text>
+          Your strata is ready to go! Click the button below to continue.
+        </Text>
       ) : (
-        <Group gap="small" align="start">
-          <LoadingIcon className={styles.statusPageLoadingIcon} />
-          <Text>
-            We are initializing and setting up <b>{strata.name}</b> for you.
-            This may take a few minutes. You can stay and wait or come back to
-            this page later to check on the status of this process.
-          </Text>
-        </Group>
+        <Text>
+          We are initializing and setting up <b>{strata.name}</b> for you. This
+          may take a few minutes. You can stay and wait or come back to this
+          page later to check on the status of this process.
+        </Text>
       )}
 
       <GoToStrataLinkButton

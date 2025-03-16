@@ -11,6 +11,8 @@ import { Checkbox } from "../Checkbox";
 import { Header } from "../Header";
 import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
+import { RadioButton } from "../RadioButton";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
@@ -34,51 +36,48 @@ export function CreateOrUpdateFileForm({
         onCreateOrUpdateFile?.(file);
       }}
     >
-      {!file && (
+      <Stack>
+        {!file && (
+          <Input
+            label="Upload File"
+            name="file"
+            type="file"
+            onChange={(e) => {
+              nameRef.current.value = e.target.files?.[0].name || "";
+            }}
+          />
+        )}
         <Input
-          className={s({ mb: "normal" })}
-          label="Upload File"
-          name="file"
-          type="file"
-          onChange={(e) => {
-            nameRef.current.value = e.target.files?.[0].name || "";
-          }}
+          name="name"
+          label="Name"
+          ref={nameRef}
+          defaultValue={file?.name}
         />
-      )}
-      <Input
-        className={s({ mb: "normal" })}
-        name="name"
-        label="Name"
-        ref={nameRef}
-        defaultValue={file?.name}
-      />
-      <TextArea
-        className={s({ mb: "normal" })}
-        name="description"
-        label="Description"
-        rows={4}
-        defaultValue={file?.description}
-      />
+        <TextArea
+          name="description"
+          label="Description"
+          rows={4}
+          defaultValue={file?.description}
+        />
 
-      <label
-        className={classnames(s({ mb: "large" }), styles.isPublicWrapper)}
-        htmlFor="isPublic"
-      >
-        <Header priority={3}>File is public</Header>
-        <Checkbox
-          id="isPublic"
-          name="isPublic"
-          defaultChecked={!!file?.isPublic}
-        />
-      </label>
-      <StatusButton
-        color="primary"
-        iconRight={<SaveIcon />}
-        style="primary"
-        type="submit"
-      >
-        {file ? "Update File" : "Upload File"}
-      </StatusButton>
+        <Stack gap="small">
+          <Header priority={3}>Visibility</Header>
+          <RadioButton
+            name="is_public"
+            options={["public", "private"]}
+            defaultValue={file?.isPublic ? "public" : "private"}
+          />
+        </Stack>
+
+        <StatusButton
+          color="primary"
+          iconRight={<SaveIcon />}
+          style="primary"
+          type="submit"
+        >
+          {file ? "Update File" : "Upload File"}
+        </StatusButton>
+      </Stack>
     </form>
   );
 }

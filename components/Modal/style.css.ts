@@ -13,7 +13,7 @@ export const modalWrapper = style({
   display: "flex",
   justifyContent: "center",
   backdropFilter: "blur(5px)",
-  zIndex: vars.zIndex.front,
+  zIndex: vars.zIndex.modal,
 
   "@media": {
     [breakpoints.tablet]: {
