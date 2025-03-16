@@ -5,7 +5,7 @@ import React from "react";
 import { classnames } from "../../utils/classnames";
 
 interface Props {
-  as?: "p" | "address";
+  as?: "address" | "label" | "p" | "span";
   className?: string;
   color?: keyof typeof styles.textColors;
   noWrap?: boolean;

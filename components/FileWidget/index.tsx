@@ -16,6 +16,7 @@ import { AddFileToWidgetForm } from "../AddFileToWidgetForm";
 import { AddIcon } from "../Icon/AddIcon";
 import { InfoPanel } from "../InfoPanel";
 import { Modal } from "../Modal";
+import { Text } from "../Text";
 import { FileWidgetFile } from "./FileWidgetFile";
 
 interface Props extends AbstractWidgetProps {
@@ -60,7 +61,7 @@ export function FileWidget({
       <div className={abstractWidgetStyles.abstractWidgetList}>
         {files.length === 0 && (
           <InfoPanel alignment="center" level="info">
-            There are no selected files.
+            <Text>There are no selected files.</Text>
           </InfoPanel>
         )}
 

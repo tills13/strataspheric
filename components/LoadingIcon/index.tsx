@@ -3,10 +3,17 @@ import * as styles from "./style.css";
 import { classnames } from "../../utils/classnames";
 import { CycleIcon } from "../Icon/CycleIcon";
 
-interface Props {
+type CycleIconProps = React.ComponentProps<typeof CycleIcon>;
+
+interface Props extends CycleIconProps {
   className?: string;
 }
 
-export function LoadingIcon({ className }: Props) {
-  return <CycleIcon className={classnames(styles.loadingIcon, className)} />;
+export function LoadingIcon({ className, ...delegateProps }: Props) {
+  return (
+    <CycleIcon
+      className={classnames(styles.loadingIcon, className)}
+      {...delegateProps}
+    />
+  );
 }

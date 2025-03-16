@@ -3,19 +3,6 @@ import { style } from "@vanilla-extract/css";
 
 import { border } from "../../../../../theme";
 
-export const meetingLayoutContainer = style({
-  "@media": {
-    [breakpoints.tablet]: {
-      display: "grid",
-      gridTemplateColumns: "auto 400px",
-      overflow: "hidden",
-    },
-    [breakpoints.desktop]: {
-      gridTemplateColumns: "minmax(auto, 400px) minmax(auto, 1000px)",
-    },
-  },
-});
-
 export const meetingInfoSidebar = style({
   display: "none",
   flexDirection: "column",
@@ -31,8 +18,6 @@ export const meetingInfoSidebar = style({
 
 export const meetingAgendaContainer = style({
   padding: vars.spacing.normal,
-  overflowX: "hidden",
-  overflowY: "auto",
 });
 
 export const meetingAgendaContainerMeetingInfo = style({
@@ -62,15 +47,6 @@ export const meetingTimelineSearchContainer = style({
   },
 });
 
-export const header = style({
-  position: "relative",
-});
-
-export const editMeetingButton = style({
-  float: "right",
-  clear: "both",
-});
-
 export const meetingAgendaList = style({
   listStyle: "none",
 });
@@ -81,23 +57,6 @@ export const meetingAgendaListItem = style({
       marginBottom: vars.spacing.normal,
     },
   },
-});
-
-export const meetingFileContainer = style({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  selectors: {
-    "&:not(:last-child)": {
-      marginBottom: vars.spacing.normal,
-    },
-  },
-});
-
-export const meetingFile = style({
-  display: "flex",
-  gap: vars.spacing.small,
-  alignItems: "center",
 });
 
 export const minutesUrlInput = style({

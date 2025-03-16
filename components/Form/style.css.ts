@@ -11,7 +11,6 @@ export const field = style({
   display: "flex",
   alignItems: "center",
   padding: `0 ${vars.spacing.normal}`,
-  marginTop: "6px",
   height: "44px",
   color: vars.fontColors.primary,
   background: "none",

@@ -1,9 +1,7 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const dateInput = style({
-  marginTop: "6px",
-});
+export const dateInput = style({});
 
 export const inputFieldsWrapper = style({
   display: "flex",

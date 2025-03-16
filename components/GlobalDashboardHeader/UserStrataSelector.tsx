@@ -53,7 +53,7 @@ export function UserStrataSelector({ currentStrata, sessionStratas }: Props) {
             className={
               styles.userStrataSelectorIcon[showHasStratas ? "true" : "false"]
             }
-            size="small"
+            size="xs"
           />
         </Group>
       </div>

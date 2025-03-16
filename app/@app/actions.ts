@@ -34,17 +34,24 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
   const provinceState = formdata.getString(fd, "strata_address_province_state");
   const city = formdata.getString(fd, "strata_address_city");
   const strataName = formdata.getString(fd, "name");
-  const isPublic = formdata.getBoolean(fd, "is_public");
+  const isPublic =
+    formdata.getEnum(fd, "visibility", ["private", "public"]) === "public";
   const bylawsFileId = formdata.getString(fd, "bylawsFileId");
 
   if (strataName === "") {
     throw new Error("invalid fields");
   }
 
-  let latitude: number | undefined = undefined;
-  let longitude: number | undefined = undefined;
+  let latitude = formdata.getFloat(fd, "latitude");
+  let longitude = formdata.getFloat(fd, "longitude");
 
-  if (streetAddress && postalCode && city && provinceState) {
+  if (
+    (!latitude || !longitude) &&
+    streetAddress &&
+    postalCode &&
+    city &&
+    provinceState
+  ) {
     const compiledAddress = `${streetAddress} ${city}, ${provinceState}, ${postalCode}`;
     const geolocation = await geolocate(compiledAddress);
 

@@ -41,8 +41,14 @@ export function getEnum<T>(
 export function getBoolean(fd: FormData, name: string): boolean {
   return getString(fd, name) === "on";
 }
-export function getFloat(fd: FormData, name: string): number {
-  return parseFloat(getString(fd, name));
+export function getFloat(fd: FormData, name: string): number | undefined {
+  const f = parseFloat(getString(fd, name));
+
+  if (isNaN(f)) {
+    return undefined;
+  }
+
+  return f;
 }
 
 export function getInteger(fd: FormData, name: string): number {

@@ -11,7 +11,7 @@ import { Modal } from "../Modal";
 interface Props {
   className?: string;
   meeting: Meeting & Pick<Event, "startDate" | "endDate">;
-  updateMeeting: (fd: FormData) => void;
+  updateMeeting: (fd: FormData) => Promise<void>;
 }
 
 export function EditMeetingButton({
@@ -27,6 +27,7 @@ export function EditMeetingButton({
         className={className}
         icon={<EditIcon />}
         onClick={() => setShowModal(true)}
+        color="primary"
         style="tertiary"
         size="small"
       />

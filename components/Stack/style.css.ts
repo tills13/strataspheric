@@ -22,6 +22,7 @@ export const stackElement = style({
 });
 
 export const stackGap = styleVariants({
+  0: { vars: { [gapVar]: vars.spacing["0"] } },
   xxs: { vars: { [gapVar]: vars.spacing.xxs } },
   xs: { vars: { [gapVar]: vars.spacing.xs } },
   small: { vars: { [gapVar]: vars.spacing.small } },

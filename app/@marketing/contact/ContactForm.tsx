@@ -11,6 +11,7 @@ import { InfoPanel } from "../../../components/InfoPanel";
 import { Input } from "../../../components/Input";
 import { Panel } from "../../../components/Panel";
 import { StatusButton } from "../../../components/StatusButton";
+import { Text } from "../../../components/Text";
 import { TextArea } from "../../../components/TextArea";
 import { SubmitContactFormActionState } from "./actions";
 
@@ -45,9 +46,12 @@ export function ContactForm({ submitActionReducer }: Props) {
       />
 
       {state.errorMessage && (
-        <InfoPanel className={s({ mb: "large" })} level="error">
-          <Header priority={3}>Oops...</Header>
-          {state.errorMessage}
+        <InfoPanel
+          className={s({ mb: "large" })}
+          header={<Header priority={3}>Oops...</Header>}
+          level="error"
+        >
+          <Text>{state.errorMessage}</Text>
         </InfoPanel>
       )}
 

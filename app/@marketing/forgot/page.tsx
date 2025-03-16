@@ -53,7 +53,9 @@ export default function Page({
               />
 
               {state.error && (
-                <InfoPanel level="error">{state.error}</InfoPanel>
+                <InfoPanel level="error">
+                  <Text>{state.error}</Text>
+                </InfoPanel>
               )}
 
               <StatusButton color="primary" success={state.success}>
@@ -77,7 +79,11 @@ export default function Page({
           <Stack>
             <Input label="Email Address" name="email_address" />
 
-            {state.error && <InfoPanel level="error">{state.error}</InfoPanel>}
+            {state.error && (
+              <InfoPanel level="error">
+                <Text>{state.error}</Text>
+              </InfoPanel>
+            )}
 
             {state.success ? (
               <Group gap="small">

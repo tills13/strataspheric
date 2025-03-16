@@ -8,6 +8,7 @@ import { DeleteButton } from "../../../../components/DeleteButton";
 import { Group } from "../../../../components/Group";
 import { InfoPanel } from "../../../../components/InfoPanel";
 import { InternalLink } from "../../../../components/Link/InternalLink";
+import { Text } from "../../../../components/Text";
 import { getMeetings } from "../../../../data/meetings/getMeetings";
 import { can, p } from "../../../../data/users/permissions";
 import { deleteMeetingAction } from "./actions";
@@ -23,13 +24,18 @@ export async function MeetingListLayout({ strataId }: Props) {
   return (
     <div>
       {meetings.length === 0 && (
-        <InfoPanel className={styles.noMeetingsMessage} level="info">
-          <p className={s({ mb: "small" })}>No Meetings Scheduled</p>
-          {can(session?.user, p("stratas", "meetings", "create")) && (
-            <Button color="primary" style="secondary">
-              Plan a Meeting
-            </Button>
-          )}
+        <InfoPanel
+          action={
+            can(session?.user, p("stratas", "meetings", "create")) && (
+              <Button color="primary" style="secondary">
+                Plan a Meeting
+              </Button>
+            )
+          }
+          className={styles.noMeetingsMessage}
+          level="info"
+        >
+          <Text>No Meetings Scheduled</Text>
         </InfoPanel>
       )}
       <div className={styles.meetingListContainer}>

@@ -17,6 +17,7 @@ import { MeetingMinutesTimelineItem } from "../../../../../components/MeetingMin
 import { MinutesApprover } from "../../../../../components/MinutesApprover";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { StatusButton } from "../../../../../components/StatusButton";
+import { Text } from "../../../../../components/Text";
 import { Timeline } from "../../../../../components/Timeline";
 import { getMeetingMinutes } from "../../../../../data/meetings/getMeetingMinutes";
 import { classnames } from "../../../../../utils/classnames";
@@ -54,9 +55,11 @@ export async function MeetingMinutes({
 
       {!minutesUrl && files.length === 0 && (
         <InfoPanel className={s({ mb: "normal" })}>
-          <strong>No minutes added to this meeting.</strong> Use the button
-          below to add draft minutes or add a URL where council members can view
-          and collaboratively edit the minutes for this meeting.
+          <Text>
+            <strong>No minutes added to this meeting.</strong> Use the button
+            below to add draft minutes or add a URL where council members can
+            view and collaboratively edit the minutes for this meeting.
+          </Text>
         </InfoPanel>
       )}
 
@@ -124,12 +127,14 @@ export async function MeetingMinutes({
 
       {minutesUrl && minutesUrlApprovedByName && (
         <InfoPanel className={s({ mt: "normal" })} level="success">
-          The externally hosted minutes have been approved. Export and upload
-          them to your{" "}
-          <InternalLink href="/dashboard/files">
-            strata&apos;s files
-          </InternalLink>{" "}
-          to share with other strata members.
+          <Text>
+            The externally hosted minutes have been approved. Export and upload
+            them to your{" "}
+            <InternalLink href="/dashboard/files">
+              strata&apos;s files
+            </InternalLink>{" "}
+            to share with other strata members.
+          </Text>
         </InfoPanel>
       )}
 

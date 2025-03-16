@@ -9,6 +9,7 @@ import { Group } from "../Group";
 import { InfoPanel } from "../InfoPanel";
 import { Modal } from "../Modal";
 import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
 
 interface Props {
   closeModal: () => void;
@@ -28,7 +29,7 @@ export function ConfirmModal({
   return (
     <Modal closeModal={closeModal} title={title}>
       <InfoPanel className={s({ mb: "normal" })} level="warning">
-        {description}
+        <Text>{description}</Text>
       </InfoPanel>
 
       <Group gap="normal">

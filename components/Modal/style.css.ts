@@ -5,14 +5,21 @@ import { calc } from "@vanilla-extract/css-utils";
 
 import { border, padding } from "../../theme";
 
+export const MODAL_GUTTER = "100px";
+
 export const modalWrapper = style({
   position: "fixed",
   inset: 0,
   display: "flex",
   justifyContent: "center",
-  alignItems: "center",
-  backdropFilter: "blur(3px)",
+  backdropFilter: "blur(5px)",
   zIndex: vars.zIndex.front,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      paddingTop: MODAL_GUTTER,
+    },
+  },
 });
 
 export const modal = style({
@@ -25,8 +32,10 @@ export const modal = style({
   "@media": {
     [breakpoints.tablet]: {
       width: "600px",
-      // height: "unset",
-      maxHeight: "80vh",
+      height: "fit-content",
+      maxHeight: calc("100dvh")
+        .subtract(calc(MODAL_GUTTER).multiply(2))
+        .toString(),
       border: border("2px", "solid", vars.colors.borderDefault),
       borderRadius: vars.borderRadius,
     },
@@ -42,6 +51,7 @@ export const modalBodyContainer = style({
 });
 
 export const modalBodyContainerInner = style({
+  paddingTop: "6px",
   paddingBottom: vars.spacing.normal,
   overflowY: "auto",
   height: "100%",

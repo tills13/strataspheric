@@ -4,6 +4,7 @@ import { Header } from "../../../components/Header";
 import { RightIcon } from "../../../components/Icon/RightIcon";
 import { InfoPanel } from "../../../components/InfoPanel";
 import { ExternalLink } from "../../../components/Link/ExternalLink";
+import { Text } from "../../../components/Text";
 import { protocol } from "../../../constants";
 import { findStratas } from "../../../data/stratas/findStratas";
 
@@ -30,7 +31,7 @@ export async function FindAStrata({ searchParams }: Props) {
     <>
       {stratas.length === 0 && (
         <InfoPanel alignment="center">
-          No stratas match search criteria.
+          <Text>No stratas match search criteria.</Text>
         </InfoPanel>
       )}
 

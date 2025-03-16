@@ -7,6 +7,7 @@ import { classnames } from "../../utils/classnames";
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   onChangeValue?: <T extends string>(value: T) => void;
+  selectRef?: React.MutableRefObject<HTMLSelectElement>;
   placeholderEnabled?: boolean;
 }
 
@@ -16,24 +17,29 @@ export function Select({
   id: propsId,
   label,
   name,
+  onChange: propsOnChange,
   onChangeValue,
   placeholder,
   placeholderEnabled,
+  selectRef,
   ...delegateProps
 }: PropsWithChildren<Props>) {
   function onChange(e: React.ChangeEvent<HTMLSelectElement>) {
     onChangeValue?.(e.target.value);
-    delegateProps.onChange?.(e);
+    propsOnChange?.(e);
   }
+
+  console.log(delegateProps);
 
   return (
     <div className={classnames(styles.selectWrapper, className)}>
       <select
         className={classnames(styles.select)}
-        placeholder={placeholder}
         id={propsId || name}
         name={name}
-        onChange={onChange}
+        onChange={onChangeValue || propsOnChange ? onChange : undefined}
+        placeholder={placeholder}
+        ref={selectRef}
         {...delegateProps}
       >
         {placeholder && (

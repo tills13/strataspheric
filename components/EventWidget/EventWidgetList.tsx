@@ -13,6 +13,7 @@ import { DropdownActions } from "../DropdownActions";
 import { Header } from "../Header";
 import { DeleteIcon } from "../Icon/DeleteIcon";
 import { InfoPanel } from "../InfoPanel";
+import { Text } from "../Text";
 
 interface Props {
   deleteEvent: (eventId: string) => Promise<void>;
@@ -25,7 +26,7 @@ export function EventWidgetList({ deleteEvent, events }: Props) {
     <div className={abstractWidgetStyles.abstractWidgetList}>
       {events.length === 0 && (
         <InfoPanel alignment="center" level="info">
-          There are no selected or upcoming events.
+          <Text>There are no selected or upcoming events.</Text>
         </InfoPanel>
       )}
 

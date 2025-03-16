@@ -2,6 +2,7 @@ import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Header } from "../../../../../components/Header";
+import { InfoPanel } from "../../../../../components/InfoPanel";
 import { MeetingAgendaItem } from "../../../../../components/MeetingAgendaItem";
 import { getMeetingAgendaItems } from "../../../../../data/meetings/getMeetingAgendaItems";
 import { classnames } from "../../../../../utils/classnames";
@@ -24,12 +25,16 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
 
   return (
     <div className={className}>
-      <Header
-        className={classnames(styles.header, s({ mb: "large" }))}
-        priority={2}
-      >
+      <Header className={classnames(s({ mb: "normal" }))} priority={2}>
         Agenda
       </Header>
+
+      {agendaItems.length === 0 && (
+        <InfoPanel className={s({ mb: "normal" })} level="warning">
+          You have no agenda items for this meeting. Use the button below to
+          create an agenda.
+        </InfoPanel>
+      )}
 
       {agendaItems.length !== 0 && (
         <ul

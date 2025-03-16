@@ -1,37 +1,56 @@
 "use client";
 
+import { s } from "../../sprinkles.css";
+import * as styles from "./style.css";
+
 import { useEffect, useState } from "react";
 
 import { File } from "../../data";
+import { Group } from "../Group";
+import { LoadingIcon } from "../LoadingIcon";
+import { Panel } from "../Panel";
 import { Select } from "../Select";
+import { Text } from "../Text";
 
 interface Props extends React.ComponentProps<typeof Select> {
   onSelectFile?: (file: File) => void;
-  className?: string;
 }
 
-export function FileSelect({
-  className,
-
-  onSelectFile,
-  ...delegateProps
-}: Props) {
+export function FileSelect({ onSelectFile, ...delegateProps }: Props) {
+  const [isLoading, setIsLoading] = useState(true);
   const [files, setFiles] = useState<File[]>([]);
 
   useEffect(() => {
     async function loadFiles() {
+      setIsLoading(true);
       const r = await fetch("/api/files/listFiles");
       const rJson = await r.json();
 
       setFiles(rJson.files || []);
+      setIsLoading(false);
+    }
+
+    if (delegateProps.disabled) {
+      setIsLoading(false);
+      return;
     }
 
     loadFiles();
-  }, []);
+  }, [delegateProps.disabled]);
+
+  if (isLoading) {
+    return (
+      <Panel className={styles.loadingState} noPadding>
+        <Group className={s({ w: "full" })} justify="space-between">
+          <Text color="secondary">Loading files...</Text>
+          <LoadingIcon size="xs" />
+        </Group>
+      </Panel>
+    );
+  }
 
   return (
     <Select
-      className={className}
       onChange={(e) => {
         onSelectFile?.(
           files.find((file) => file.id === e.currentTarget.value)!,

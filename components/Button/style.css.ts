@@ -1,29 +1,61 @@
 import { iconColorVar, vars } from "../../app/theme.css";
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const button = recipe({
-  base: {
-    position: "relative",
-    fontWeight: 700,
-    borderWidth: 2,
-    borderStyle: "solid",
+export const buttonBase = style({
+  position: "relative",
+  fontWeight: 700,
+  borderWidth: 2,
+  borderStyle: "solid",
 
-    outline: "none",
-    cursor: "pointer",
-    borderRadius: vars.borderRadius,
-    textTransform: "capitalize",
-    whiteSpace: "nowrap",
+  outline: "none",
+  cursor: "pointer",
 
-    selectors: {
-      "&:disabled": {
-        cursor: "not-allowed",
-        opacity: 0.8,
-      },
+  textTransform: "capitalize",
+  whiteSpace: "nowrap",
+
+  selectors: {
+    "&:disabled": {
+      cursor: "not-allowed",
+      opacity: 0.8,
     },
   },
+});
+
+export const buttonSizes = styleVariants({
+  small: {
+    height: vars.sizes.small,
+    padding: `0 ${vars.spacing.small}`,
+  },
+  normal: {
+    height: vars.sizes.normal,
+    padding: `0 ${vars.spacing.normal}`,
+  },
+  large: {
+    height: vars.sizes.large,
+    padding: `0 ${vars.spacing.large}`,
+  },
+  xl: {
+    height: vars.sizes.xl,
+    padding: `0 ${vars.spacing.xl}`,
+  },
+  xxl: {
+    height: vars.sizes.xxl,
+    padding: `0 ${vars.spacing.xxl}`,
+  },
+});
+
+// export const buttonColors =
+
+export const button = recipe({
+  base: [
+    buttonBase,
+    {
+      borderRadius: vars.borderRadius,
+    },
+  ],
 
   variants: {
     color: {
@@ -112,26 +144,11 @@ export const button = recipe({
     },
 
     size: {
-      small: {
-        height: vars.sizes.small,
-        padding: `0 ${vars.spacing.small}`,
-      },
-      normal: {
-        height: vars.sizes.normal,
-        padding: `0 ${vars.spacing.normal}`,
-      },
-      large: {
-        height: vars.sizes.large,
-        padding: `0 ${vars.spacing.large}`,
-      },
-      xl: {
-        height: vars.sizes.xl,
-        padding: `0 ${vars.spacing.xl}`,
-      },
-      xxl: {
-        height: vars.sizes.xxl,
-        padding: `0 ${vars.spacing.xxl}`,
-      },
+      small: [buttonSizes.small],
+      normal: [buttonSizes.normal],
+      large: [buttonSizes.large],
+      xl: [buttonSizes.xl],
+      xxl: [buttonSizes.xxl],
     },
 
     style: {
@@ -394,102 +411,6 @@ export const button = recipe({
             },
           },
         },
-      },
-    },
-
-    // icon=true x size
-    {
-      variants: {
-        size: "small",
-        iconOnly: true,
-      },
-      style: {
-        height: vars.sizes.small,
-      },
-    },
-    {
-      variants: {
-        size: "normal",
-        iconOnly: true,
-      },
-      style: {
-        height: vars.sizes.normal,
-      },
-    },
-    {
-      variants: {
-        size: "large",
-        iconOnly: true,
-      },
-      style: {
-        height: vars.sizes.large,
-      },
-    },
-    {
-      variants: {
-        size: "xl",
-        iconOnly: true,
-      },
-      style: {
-        height: vars.sizes.xl,
-      },
-    },
-    {
-      variants: {
-        size: "xxl",
-        iconOnly: true,
-      },
-      style: {
-        height: vars.sizes.xxl,
-      },
-    },
-
-    // withIcon=true x size
-    {
-      variants: {
-        size: "small",
-        withIcon: true,
-      },
-      style: {
-        height: vars.sizes.small,
-        padding: vars.spacing.xxs,
-        paddingLeft: vars.spacing.xs,
-      },
-    },
-    {
-      variants: {
-        size: "normal",
-        withIcon: true,
-      },
-      style: {
-        height: vars.sizes.normal,
-      },
-    },
-    {
-      variants: {
-        size: "large",
-        withIcon: true,
-      },
-      style: {
-        height: vars.sizes.large,
-      },
-    },
-    {
-      variants: {
-        size: "xl",
-        withIcon: true,
-      },
-      style: {
-        height: vars.sizes.xl,
-      },
-    },
-    {
-      variants: {
-        size: "xxl",
-        withIcon: true,
-      },
-      style: {
-        height: vars.sizes.xxl,
       },
     },
   ],

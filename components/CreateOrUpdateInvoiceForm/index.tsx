@@ -14,6 +14,7 @@ import { InfoPanel } from "../InfoPanel";
 import { Input } from "../Input";
 import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
 import { TextArea } from "../TextArea";
 
 interface Props {
@@ -63,7 +64,6 @@ export function CreateOrUpdateInvoiceForm({
             required
           />
         </Group>
-
         <TextArea
           name="description"
           label="Description"
@@ -71,19 +71,21 @@ export function CreateOrUpdateInvoiceForm({
           disabled={!!invoice?.isPaid}
           defaultValue={invoice?.description || ""}
         />
-
         <FileSelect
           label="Invoice File"
           name="fileId"
           disabled={!!invoice?.isPaid}
           placeholder="No invoice file selected..."
+          defaultValue={invoice ? invoice.fileId ?? "" : ""}
         />
-
-        <InfoPanel level="info">
-          Select an <b>Invoice File</b> if the invoice references a physical
-          file that has been scanned and uploaded to Strataspheric.
-        </InfoPanel>
-
+        {!invoice?.isPaid && (
+          <InfoPanel level="info">
+            <Text>
+              Select an <b>Invoice File</b> if the invoice references a physical
+              file that has been scanned and uploaded to Strataspheric.
+            </Text>
+          </InfoPanel>
+        )}
         <DateInput
           label="Due Date"
           name="dueBy"

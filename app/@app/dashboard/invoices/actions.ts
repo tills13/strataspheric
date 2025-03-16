@@ -40,27 +40,35 @@ export async function upsertInvoiceAction(
   const fileId = formdata.getString(fd, "fileId");
   const dueBy = formdata.getTimestamp(fd, "dueBy");
 
-  const invoice = invoiceId
-    ? updateInvoice(invoiceId, {
-        amount,
-        description,
-        dueBy,
-        fileId,
-        identifier,
-        updatedAt: new Date().getTime(),
-      })
-    : createInvoice({
-        amount,
-        description,
-        dueBy,
-        fileId,
-        identifier,
-        strataId: strata.id,
-        // payeeId: session?.user.id,
-        type: "incoming",
-        // @ts-ignore
-        updatedAt: new Date().getTime(),
-      });
+  if (!amount) {
+    throw new Error("invalid");
+  }
+
+  let invoice: Invoice;
+
+  if (invoiceId) {
+    invoice = await updateInvoice(invoiceId, {
+      amount,
+      description,
+      dueBy,
+      fileId,
+      identifier,
+      updatedAt: new Date().getTime(),
+    });
+  } else {
+    invoice = await createInvoice({
+      amount,
+      description,
+      dueBy,
+      fileId,
+      identifier,
+      strataId: strata.id,
+      // payeeId: session?.user.id,
+      type: "incoming",
+      // @ts-ignore
+      updatedAt: new Date().getTime(),
+    });
+  }
 
   revalidatePath("/dashboard/invoices");
   return invoice;

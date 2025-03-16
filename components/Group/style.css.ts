@@ -8,14 +8,6 @@ export const group = style({
   display: "flex",
   gap: gapVar,
   flexDirection: "row",
-  selectors: {
-    [`&:has(> ${field})`]: {
-      marginTop: "6px",
-    },
-    "&:has(&)": {
-      marginTop: 0,
-    },
-  },
 });
 
 export const groupElement = styleVariants({
@@ -57,6 +49,7 @@ export const groupJustification = styleVariants({
 });
 
 export const groupGap = styleVariants({
+  0: { vars: { [gapVar]: vars.spacing["0"] } },
   xxs: { vars: { [gapVar]: vars.spacing.xxs } },
   xs: { vars: { [gapVar]: vars.spacing.xs } },
   small: { vars: { [gapVar]: vars.spacing.small } },

@@ -5,22 +5,26 @@ import * as styles from "./styles.css";
 import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
-import { Checkbox } from "../../../../components/Checkbox";
 import { ConfirmButton } from "../../../../components/ConfirmButton";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
+import { FileSelect } from "../../../../components/FileSelect";
 import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { SaveIcon } from "../../../../components/Icon/SaveIcon";
 import { InfoPanel } from "../../../../components/InfoPanel";
 import { Input } from "../../../../components/Input";
+import { Panel } from "../../../../components/Panel";
+import { RadioButton } from "../../../../components/RadioButton";
 import { Stack } from "../../../../components/Stack";
 import { StatusButton } from "../../../../components/StatusButton";
 import { StrataAddressFormFields } from "../../../../components/StrataAddressFormFields";
+import { Text } from "../../../../components/Text";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 import { classnames } from "../../../../utils/classnames";
 import { updateStrataAction } from "../../actions";
+import { LocationSelector } from "./LocationSelector";
 import { deleteStrataAction } from "./actions";
 
 export const runtime = "edge";
@@ -53,23 +57,44 @@ export default async function Page() {
                 defaultValue={strata.name}
               />
 
-              <StrataAddressFormFields
-                className={s({ mb: "normal" })}
-                strata={strata}
+              <StrataAddressFormFields strata={strata} />
+
+              <FileSelect
+                label="Strata Bylaws"
+                name="bylawsFileId"
+                placeholder="Select a File"
+                defaultValue={strata.bylawsFileId ?? undefined}
               />
 
-              <label htmlFor="is_public">
-                <Group justify="space-between">
-                  <Header priority={3}>
-                    I want my strata&apos;s content to be public
-                  </Header>
-                  <Checkbox
-                    id="is_public"
-                    name="is_public"
-                    defaultChecked={strata.isPublic === 1}
-                  />
-                </Group>
-              </label>
+              <InfoPanel
+                header={<Header priority={3}>Content Visibility</Header>}
+                level="info"
+              >
+                <Text>
+                  Controls access to strata content by outsiders. If your strata
+                  is public, visitors to your Strataspheric page that are not
+                  members will be able to see content on your dashboard, certain
+                  files that are public, and upcoming events.
+                </Text>
+                <RadioButton
+                  className={s({ flex: 1 })}
+                  name="visibility"
+                  options={["private", "public"]}
+                  defaultValue={strata.isPublic ? "public" : "private"}
+                />
+              </InfoPanel>
+
+              <Header priority={2}>Location</Header>
+              <Text color="secondary">
+                Let people know where to find your strata.
+              </Text>
+              <LocationSelector
+                defaultCenter={
+                  strata.latitude && strata.longitude
+                    ? [strata.latitude, strata.longitude]
+                    : undefined
+                }
+              />
             </Stack>
             <StatusButton
               color="success"
@@ -95,8 +120,10 @@ export default async function Page() {
             header={<Header priority={3}>Danger Zone</Header>}
             level="error"
           >
-            Deleting your Strata will delete all information and files
-            associated with your strata unrecoverably.
+            <Text>
+              Deleting your Strata will delete all information and files
+              associated with your strata unrecoverably.
+            </Text>
           </InfoPanel>
         </div>
       </div>

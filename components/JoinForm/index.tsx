@@ -13,6 +13,7 @@ import { classnames } from "../../utils/classnames";
 import { Checkbox } from "../Checkbox";
 import { InfoPanel } from "../InfoPanel";
 import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
 import { JoinFormFields } from "./JoinFormFields";
 
 interface Props {
@@ -62,7 +63,9 @@ export function JoinForm({ className, onSubmit, strata }: Props) {
         </label>
 
         {!state?.success && state?.error && (
-          <InfoPanel level="error">{state.error}</InfoPanel>
+          <InfoPanel level="error">
+            <Text>{state.error}</Text>
+          </InfoPanel>
         )}
       </div>
 

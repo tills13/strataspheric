@@ -43,3 +43,7 @@ globalStyle("#__next", {
 globalStyle("#root, #__next", {
   isolation: "isolate",
 });
+
+globalStyle("#modal-root > :not(:last-child):not(:only-child)", {
+  display: "none",
+});

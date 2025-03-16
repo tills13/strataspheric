@@ -23,6 +23,14 @@ const widthProperties = defineProperties({
   },
 });
 
+export const flexProperties = defineProperties({
+  properties: {
+    flex: {
+      1: "1",
+    },
+  },
+});
+
 const paddingProperties = defineProperties({
   properties: {
     padding: {
@@ -133,4 +141,5 @@ export const s = createSprinkles(
   paddingProperties,
   widthProperties,
   fontProperties,
+  flexProperties,
 );

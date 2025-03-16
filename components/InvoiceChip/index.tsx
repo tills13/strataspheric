@@ -36,12 +36,14 @@ export function InvoiceChip({
     <div
       className={overrideClassName || classnames(styles.invoiceChip, className)}
     >
-      <Header className={s({ mb: "normal" })} priority={3}>
+      <Header className={s({ mb: "small" })} priority={3}>
         Invoice #{invoice.identifier}
       </Header>
 
       {invoice.description && (
-        <Text className={s({ mb: "normal" })}>{invoice.description}</Text>
+        <Text className={s({ mb: "normal" })} color="secondary">
+          {invoice.description}
+        </Text>
       )}
 
       <Group justify="space-between">

@@ -1,34 +1,29 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 
-import { CreateOrUpdateFileForm } from "../../../../components/CreateOrUpdateFileForm";
+import { Button } from "../../../../components/Button";
 import { CreateOrUpdateInvoiceForm } from "../../../../components/CreateOrUpdateInvoiceForm";
-import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../components/Modal";
-import { can, p } from "../../../../data/users/permissions";
+import { Invoice } from "../../../../data";
 
 interface Props {
-  upsertInvoice: (fd: FormData) => any;
+  upsertInvoice: (fd: FormData) => Promise<Invoice>;
 }
 
-export function InvoicesHeader({ upsertInvoice }: Props) {
-  const { data: session } = useSession();
+export function CreateNewInvoiceButton({ upsertInvoice }: Props) {
   const [showNewInvoiceModal, setShowNewInvoiceModal] = useState(false);
-
   return (
     <>
-      <DashboardHeader
-        actions={[
-          can(session?.user, p("stratas", "invoices", "create")) && {
-            action: () => setShowNewInvoiceModal(true),
-            label: "New Invoice",
-            icon: <AddIcon />,
-          },
-        ]}
-      />
+      <Button
+        iconRight={<AddIcon />}
+        color="success"
+        iconTextBehaviour="centerRemainder"
+        onClick={() => setShowNewInvoiceModal(true)}
+      >
+        Create New Invoice
+      </Button>
       {showNewInvoiceModal && (
         <Modal
           closeModal={() => setShowNewInvoiceModal(false)}

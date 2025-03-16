@@ -3,12 +3,15 @@ import { money } from "../../../../components/Money/style.css";
 import { breakpoints, vars } from "../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
+export const pageContainer = style({
+  padding: vars.spacing.normal,
+});
+
 export const invoicesContainer = style({
   display: "grid",
   gap: vars.spacing.normal,
   gridTemplateRows: "min-content auto",
   gridTemplateColumns: "100%",
-  padding: vars.spacing.normal,
 
   "@media": {
     [breakpoints.tablet]: {

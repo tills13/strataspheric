@@ -7,6 +7,7 @@ import React, { useLayoutEffect, useRef } from "react";
 import { Chat } from "../../data/inbox/getThreadChats";
 import { Header } from "../Header";
 import { InfoPanel } from "../InfoPanel";
+import { Text } from "../Text";
 import { InboxThreadChat } from "./InboxThreadChat";
 
 interface Props {
@@ -28,8 +29,11 @@ export function ChatStream({ chats, subject }: Props) {
       </Header>
 
       <InfoPanel level="info">
-        Chats are private with authorized members of the council or individuals
-        who are explicitly given the ability to see and engage with chats.
+        <Text>
+          Chats are private with authorized members of the council or
+          individuals who are explicitly given the ability to see and engage
+          with chats.
+        </Text>
       </InfoPanel>
 
       {chats.length === 0 && (

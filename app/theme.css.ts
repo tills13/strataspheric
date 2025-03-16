@@ -16,6 +16,7 @@ export const vars = createGlobalTheme(":root", {
   borderRadius: "4px",
 
   spacing: {
+    "0": "0px",
     xxs: "2px",
     xs: "4px",
     small: "8px",

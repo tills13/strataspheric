@@ -3,11 +3,14 @@ import * as styles from "./style.css";
 
 import { AddFileToMeetingButton } from "../../../../../components/AddFileToMeetingButton";
 import { FileTypeIcon } from "../../../../../components/FileTypeIcon";
+import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { TextDocumentIcon } from "../../../../../components/Icon/TextDocumentIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
 import { RemoveButton } from "../../../../../components/RemoveButton";
+import { Stack } from "../../../../../components/Stack";
+import { Text } from "../../../../../components/Text";
 import { getMeetingFiles } from "../../../../../data/meetings/getMeetingFiles";
 import { upsertFileAction } from "../../files/actions";
 import { addFileToMeetingAction, removeFileFromMeetingAction } from "./actions";
@@ -28,16 +31,18 @@ export async function MeetingFiles({ className, meetingId }: Props) {
 
       {files.length === 0 && (
         <InfoPanel className={s({ mb: "normal" })}>
-          <strong>No files added to this meeting.</strong> Use the button below
-          to add documents for discussion, images, or anything else you might
-          need for this meeting.
+          <Text>
+            <strong>No files have been added to this meeting.</strong> Use the
+            button below to add documents for discussion, images, or anything
+            else you might need for this meeting.
+          </Text>
         </InfoPanel>
       )}
 
-      <div className={s({ mb: "normal" })}>
+      <Stack className={s({ mb: "normal" })}>
         {files.map((file) => (
-          <div key={file.id} className={styles.meetingFileContainer}>
-            <div className={styles.meetingFile}>
+          <Group key={file.id} justify="space-between">
+            <Group>
               <FileTypeIcon
                 className={styles.icon}
                 defaultIcon={<TextDocumentIcon className={styles.icon} />}
@@ -46,7 +51,7 @@ export async function MeetingFiles({ className, meetingId }: Props) {
               <ExternalLink href={file.path} target="_blank">
                 {file.name}
               </ExternalLink>
-            </div>
+            </Group>
             <RemoveButton
               action={removeFileFromMeetingAction.bind(
                 undefined,
@@ -58,9 +63,9 @@ export async function MeetingFiles({ className, meetingId }: Props) {
               size="small"
               style="tertiary"
             />
-          </div>
+          </Group>
         ))}
-      </div>
+      </Stack>
 
       <AddFileToMeetingButton
         addFileToMeeting={addFileToMeetingAction.bind(

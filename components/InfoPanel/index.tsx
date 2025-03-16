@@ -4,7 +4,6 @@ import { RecipeVariants } from "@vanilla-extract/recipes";
 
 import { classnames } from "../../utils/classnames";
 import { Stack } from "../Stack";
-import { Text } from "../Text";
 
 interface Props extends NonNullable<RecipeVariants<typeof styles.infoPanel>> {
   action?: React.ReactNode;
@@ -22,7 +21,7 @@ export function InfoPanel({
   return (
     <Stack className={classnames(className, styles.infoPanel(recipeProps))}>
       {header}
-      <Text>{children}</Text>
+      {children}
       {action}
     </Stack>
   );
