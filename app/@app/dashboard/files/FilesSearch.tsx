@@ -44,7 +44,7 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
         router.push("/dashboard/files" + (query ? "?" + query : ""));
       }}
     >
-      <Stack className={s({ mb: "large" })}>
+      <Stack>
         <Input
           name="search"
           label="Name or Description"
@@ -53,29 +53,30 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
           required={false}
         />
         <Select name="visibility" label="Visibility">
+          <option value="">All Visibilities</option>
           <option value="private">Private</option>
           <option value="public">Public</option>
         </Select>
-      </Stack>
-      <Group>
-        <Button
-          type="submit"
-          defaultValue={visibility}
-          iconRight={<SearchIcon />}
-          style="primary"
-          color="primary"
-        >
-          Search
-        </Button>
-        {searchTerm && (
-          <InternalLink
-            className={styles.filesSearchClear}
-            href="/dashboard/files"
+        <Group>
+          <Button
+            type="submit"
+            defaultValue={visibility}
+            iconRight={<SearchIcon />}
+            style="primary"
+            color="primary"
           >
-            <Button color="error" icon={<RemoveIcon />} style="tertiary" />
-          </InternalLink>
-        )}
-      </Group>
+            Search
+          </Button>
+          {searchTerm && (
+            <InternalLink
+              className={styles.filesSearchClear}
+              href="/dashboard/files"
+            >
+              <Button color="error" icon={<RemoveIcon />} style="tertiary" />
+            </InternalLink>
+          )}
+        </Group>
+      </Stack>
     </form>
   );
 }

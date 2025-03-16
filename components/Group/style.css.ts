@@ -15,6 +15,12 @@ export const groupElement = styleVariants({
   fullWidth: { width: "100%" },
 });
 
+export const groupOverflow = styleVariants({
+  hidden: {
+    overflow: "hidden",
+  },
+});
+
 export const groupAlignment = styleVariants({
   default: {
     alignItems: "center",

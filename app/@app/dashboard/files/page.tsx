@@ -4,7 +4,6 @@ import * as styles from "./style.css";
 import { Suspense } from "react";
 
 import { Header } from "../../../../components/Header";
-import { Bone } from "../../../../components/Skeleton/Bone";
 import { classnames } from "../../../../utils/classnames";
 import { FilesHeader } from "./FilesHeader";
 import { FilesLoader } from "./FilesLoader";

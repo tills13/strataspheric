@@ -17,6 +17,7 @@ export function FileTypeIcon({ className, defaultIcon, filePath }: Props) {
     case "txt":
     case "docx":
     case "csv":
+    case "xlsx":
     case "pdf": {
       return <TextDocumentIcon className={className} />;
     }

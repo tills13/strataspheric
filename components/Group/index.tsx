@@ -12,6 +12,7 @@ interface Props {
   gap?: keyof typeof vars.spacing;
   align?: keyof typeof styles.groupAlignment;
   justify?: keyof typeof styles.groupJustification;
+  overflow?: keyof typeof styles.groupOverflow;
   tabIndex?: number;
   wrap?: boolean;
 }
@@ -22,6 +23,7 @@ export function Group({
   gap = "normal",
   align = "default",
   justify = "default",
+  overflow,
   tabIndex,
   equalWidthChildren,
 }: Props) {
@@ -32,6 +34,7 @@ export function Group({
         styles.groupGap[gap],
         styles.groupJustification[justify],
         styles.groupAlignment[align],
+        overflow && styles.groupOverflow[overflow],
         className,
       )}
       tabIndex={tabIndex}

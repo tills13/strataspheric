@@ -27,6 +27,8 @@ export function FilesListFileActions({ deleteFile, file, upsertFile }: Props) {
           icon={<EditIcon />}
           onClick={() => setShowEditModal(true)}
           size="small"
+          style="tertiary"
+          color="primary"
         />
 
         <ConfirmButton
@@ -34,6 +36,7 @@ export function FilesListFileActions({ deleteFile, file, upsertFile }: Props) {
           onClickConfirm={deleteFile.bind(undefined, file.id)}
           size="small"
           color="error"
+          style="tertiary"
         />
       </Group>
       {showEditModal && (

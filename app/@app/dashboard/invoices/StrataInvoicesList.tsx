@@ -5,15 +5,12 @@ import { DividerText } from "../../../../components/DividerText";
 import { InvoiceChip } from "../../../../components/InvoiceChip";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Money } from "../../../../components/Money";
-import { Strata } from "../../../../data";
 import { listInvoices } from "../../../../data/invoices/listInvoices";
+import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { markInvoiceAsPaidAction } from "./actions";
 
-interface Props {
-  strata: Strata;
-}
-
-export async function InvoicesList({ strata }: Props) {
+export async function StrataInvoicesList() {
+  const strata = await mustGetCurrentStrata();
   const invoices = await listInvoices(strata.id);
 
   return (

@@ -41,7 +41,7 @@ export function FilesListFile({
       )}
     >
       <Group className={styles.filesListDetails} justify="space-between">
-        <Group>
+        <Group overflow="hidden">
           <FileTypeIcon
             className={styles.fileListFileIcon}
             filePath={file.path}
@@ -55,34 +55,35 @@ export function FilesListFile({
               </FileLink>
             )}
           >
-            <span className={styles.filesListFileHeaderName}>{file.name}</span>
+            <Stack gap="xxs">
+              <Group>
+                <span className={styles.filesListFileHeaderName}>
+                  {file.name}
+                </span>
+                {file.isPublic === 1 && (
+                  <VisibilityIcon
+                    className={styles.filesListFileVisibilityIcon}
+                  />
+                )}
+              </Group>
+              <Date
+                className={styles.filesListFileUploadDate}
+                output="date"
+                timestamp={file.createdAt}
+              />
+            </Stack>
           </Wrap>
         </Group>
 
-        <Group gap="small">
-          <Date
-            className={styles.filesListFileUploadDate}
-            output="date"
-            timestamp={file.createdAt}
-          />
-
-          {!file.isPublic && (
-            <VisibilityIcon className={styles.filesListFileVisibilityIcon} />
+        {can(p("stratas", "files", "edit"), p("stratas", "files", "delete")) &&
+          deleteFileAction &&
+          upsertFileAction && (
+            <FilesListFileActions
+              deleteFile={deleteFileAction}
+              file={file}
+              upsertFile={upsertFileAction}
+            />
           )}
-
-          {can(
-            p("stratas", "files", "edit"),
-            p("stratas", "files", "delete"),
-          ) &&
-            deleteFileAction &&
-            upsertFileAction && (
-              <FilesListFileActions
-                deleteFile={deleteFileAction}
-                file={file}
-                upsertFile={upsertFileAction}
-              />
-            )}
-        </Group>
       </Group>
 
       {file.description && (

@@ -47,7 +47,7 @@ export const filesListFileDescription = style({
   marginLeft: calc(vars.sizes.xs).add(vars.spacing.normal).toString(),
 });
 
-export const fileListLink = style({ display: "block" });
+export const fileListLink = style({ display: "block", overflow: "hidden" });
 
 export const filesListFileHeaderName = style({
   display: "block",
@@ -55,6 +55,7 @@ export const filesListFileHeaderName = style({
   fontWeight: vars.fontWeights.bold,
   fontSize: vars.fontSizes.large,
   overflow: "hidden",
+  whiteSpace: "nowrap",
 });
 
 export const fileListFileIcon = style({
