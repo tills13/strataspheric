@@ -86,9 +86,7 @@ export function DateInput({
 
   if (rest.type === "single") {
     return (
-      <Group
-        className={classnames(className, styles.dateInput, s({ w: "full" }))}
-      >
+      <Group className={classnames(className, s({ w: "full" }))}>
         <Input
           ref={startInputRef}
           className={s({ w: "full" })}

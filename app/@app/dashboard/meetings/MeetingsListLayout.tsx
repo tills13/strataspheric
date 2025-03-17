@@ -49,11 +49,7 @@ export async function MeetingListLayout({ strataId }: Props) {
             <Group align="center" justify="space-between">
               <Group align="center">
                 <h3>{meeting.purpose}</h3>
-                <Date
-                  className={styles.meetingDate}
-                  timestamp={meeting.startDate}
-                  output="date"
-                />
+                <Date timestamp={meeting.startDate} output="date" />
               </Group>
 
               <Group gap="small">
