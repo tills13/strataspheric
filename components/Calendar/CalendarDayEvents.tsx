@@ -1,6 +1,6 @@
 "use client";
 
-import { vars } from "../../app/theme.css";
+import { sidebarWidthVar, vars } from "../../app/theme.css";
 import * as styles from "./style.css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -86,13 +86,28 @@ export function CalendarDayEvents({
                     .add(vars.spacing.xxs)
                     .multiply(idx)
                     .toString(),
-                  width: calc((totalRemainder / 7) * 100 + "vw")
-                    .subtract(
-                      eventWrapsToFollowingWeek ? "0px" : vars.spacing.small,
-                    )
+                  width: calc(
+                    calc("100vw")
+                      .subtract(sidebarWidthVar)
+                      .subtract(calc(vars.spacing.normal).multiply(2))
+                      .subtract(
+                        calc(vars.spacing.xs).multiply(
+                          totalLength === 0 ? 6 : totalRemainder - 1,
+                        ),
+                      ),
+                  )
+                    .multiply(totalRemainder / 7)
                     .toString(),
-                  minWidth: calc("100vw").divide(7).toString(),
-                  maxWidth: ((7 - date.getDay()) / 7) * 100 + "vw",
+                  maxWidth: calc(
+                    calc("100vw")
+                      .subtract(sidebarWidthVar)
+                      .subtract(calc(vars.spacing.normal).multiply(2))
+                      .subtract(
+                        calc(vars.spacing.xs).multiply(7 - date.getDay() - 1),
+                      ),
+                  )
+                    .multiply((7 - date.getDay()) / 7)
+                    .toString(),
                 }}
                 onClick={
                   event.meetingId

@@ -7,17 +7,6 @@ export const calendarPageContainer = style({
   gridTemplateRows: "min-content auto",
 });
 
-export const calendarPageHeader = style({
-  display: "flex",
-  justifyContent: "space-between",
-  padding: vars.spacing.normal,
-});
-
 export const strataCalendarContainer = style({
   padding: `0 ${vars.spacing.normal} ${vars.spacing.normal}`,
-});
-
-export const headerActions = style({
-  display: "flex",
-  gap: vars.spacing.large,
 });

@@ -1,4 +1,4 @@
-import { breakpoints, vars } from "../../app/theme.css";
+import { breakpoints, sidebarWidthVar, vars } from "../../app/theme.css";
 import * as linkStyles from "../Link/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
@@ -15,7 +15,7 @@ export const userStrataSelectorContainer = style({
 
   "@media": {
     [breakpoints.tabletPlus]: {
-      width: "250px",
+      width: sidebarWidthVar,
     },
   },
 

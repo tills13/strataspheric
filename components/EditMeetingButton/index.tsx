@@ -34,7 +34,7 @@ export function EditMeetingButton({
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="Edit Meeting">
           <CreateOrUpdateMeetingForm
-            createOrUpdateMeeting={updateMeeting}
+            upsertMeeting={updateMeeting}
             meeting={meeting}
           />
         </Modal>

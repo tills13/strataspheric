@@ -11,6 +11,7 @@ export const breakpoints = {
 export const iconColorVar = createVar();
 export const fontHeaderVar = createVar();
 export const fontPrimaryVar = createVar();
+export const sidebarWidthVar = createVar();
 
 export const vars = createGlobalTheme(":root", {
   borderRadius: "4px",
@@ -39,10 +40,10 @@ export const vars = createGlobalTheme(":root", {
   fontSizes: {
     small: "12px",
     normal: "16px",
-    large: "20px",
-    larger: "24px",
-    xl: "32px",
-    xxl: "48px",
+    large: "18px",
+    larger: "20px",
+    xl: "24px",
+    xxl: "28px",
   },
 
   fontWeights: {

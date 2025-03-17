@@ -7,9 +7,15 @@ import { auth } from "../../../../auth";
 import { createEvent } from "../../../../data/events/createEvent";
 import { createMeeting } from "../../../../data/meetings/createMeeting";
 import { deleteMeeting } from "../../../../data/meetings/deleteMeeting";
+import { updateMeeting } from "../../../../data/meetings/updateMeeting";
+import { updateMeetingEvent } from "../../../../data/meetings/updateMeetingEvent";
 import * as formdata from "../../../../utils/formdata";
 
-export async function createMeetingAction(strataId: string, fd: FormData) {
+export async function upsertMeetingAction(
+  strataId: string,
+  meetingId: string | undefined,
+  fd: FormData,
+) {
   const session = await auth();
 
   if (!session) {
@@ -21,23 +27,35 @@ export async function createMeetingAction(strataId: string, fd: FormData) {
   const startDateTs = formdata.getTimestamp(fd, "date_start");
   const endDateTs = formdata.getTimestamp(fd, "date_end") || startDateTs;
 
-  const event = await createEvent({
-    strataId,
-    creatorId: session.user.id,
-    name: purpose,
-    description: "",
-    startDate: startDateTs,
-    endDate: endDateTs,
-  });
+  if (meetingId) {
+    await updateMeeting(meetingId, { purpose });
+    await updateMeetingEvent(meetingId, {
+      name: purpose,
+      startDate: startDateTs,
+      endDate: endDateTs,
+    });
 
-  const { id: meetingId } = await createMeeting({
-    strataId,
-    callerId: session.user.id,
-    eventId: event.id,
-    purpose,
-  });
+    revalidatePath("/dashboard/meetings");
+    revalidatePath("/dashboard/meetings/" + meetingId);
+  } else {
+    const event = await createEvent({
+      strataId,
+      creatorId: session.user.id,
+      name: purpose,
+      description: "",
+      startDate: startDateTs,
+      endDate: endDateTs,
+    });
 
-  redirect("/dashboard/meetings/" + meetingId);
+    const { id: meetingId } = await createMeeting({
+      strataId,
+      callerId: session.user.id,
+      eventId: event.id,
+      purpose,
+    });
+
+    redirect("/dashboard/meetings/" + meetingId);
+  }
 }
 
 export async function deleteMeetingAction(meetingId: string) {

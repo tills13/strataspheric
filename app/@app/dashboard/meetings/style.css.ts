@@ -1,13 +1,13 @@
-import { breakpoints, vars } from "../../../theme.css";
+import { vars } from "../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { border, padding } from "../../../../theme";
+import { border } from "../../../../theme";
+
+export const pageContainer = style({
+  padding: vars.spacing.normal,
+});
 
 export const meetingsList = style({});
-
-export const noMeetingsMessage = style({
-  margin: vars.spacing.normal,
-});
 
 export const meetingListContainer = style({});
 
@@ -23,8 +23,4 @@ export const meetingListRow = style({
       backgroundColor: vars.colors.grey100,
     },
   },
-});
-
-export const meetingDate = style({
-  color: vars.fontColors.secondary,
 });

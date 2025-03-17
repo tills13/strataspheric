@@ -1,4 +1,4 @@
-import { breakpoints } from "./theme.css";
+import { breakpoints, sidebarWidthVar } from "./theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const body = style({
@@ -10,8 +10,13 @@ export const body = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      // move to container that includes both the content and the footer
-      // height: "100vh",
+      vars: {
+        [sidebarWidthVar]: "250px",
+      },
     },
+  },
+
+  vars: {
+    [sidebarWidthVar]: "0px",
   },
 });

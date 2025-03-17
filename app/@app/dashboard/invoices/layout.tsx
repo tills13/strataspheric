@@ -1,6 +1,7 @@
 import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
+import type { LayoutProps } from "../../../../.next/types/app/@app/dashboard/invoices/layout";
 import { auth } from "../../../../auth";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { Group } from "../../../../components/Group";
@@ -11,7 +12,10 @@ import { upsertInvoiceAction } from "./actions";
 
 export const runtime = "edge";
 
-export default async function InvoicesLayout({ children, invoiceDetails }) {
+export default async function InvoicesLayout({
+  children,
+  invoiceDetails,
+}: LayoutProps) {
   const session = await auth();
 
   return (

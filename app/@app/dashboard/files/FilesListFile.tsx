@@ -41,7 +41,7 @@ export function FilesListFile({
       )}
     >
       <Group className={styles.filesListDetails} justify="space-between">
-        <Group overflow="hidden">
+        <Group overflow="hidden" align="start">
           <FileTypeIcon
             className={styles.fileListFileIcon}
             filePath={file.path}

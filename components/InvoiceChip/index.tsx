@@ -13,6 +13,7 @@ import { Group } from "../Group";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { Money } from "../Money";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { Text } from "../Text";
 
@@ -36,15 +37,15 @@ export function InvoiceChip({
     <div
       className={overrideClassName || classnames(styles.invoiceChip, className)}
     >
-      <Header className={s({ mb: "small" })} priority={3}>
-        Invoice #{invoice.identifier}
-      </Header>
+      <Stack gap="xs">
+        <Header priority={3}>Invoice #{invoice.identifier}</Header>
 
-      {invoice.description && (
-        <Text className={s({ mb: "normal" })} color="secondary">
-          {invoice.description}
-        </Text>
-      )}
+        {invoice.description && (
+          <Text className={s({ mb: "normal" })} color="secondary">
+            {invoice.description}
+          </Text>
+        )}
+      </Stack>
 
       <Group justify="space-between">
         <Money className={styles.invoiceAmount} amount={invoice.amount} />

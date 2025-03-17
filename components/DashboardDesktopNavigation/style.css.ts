@@ -1,9 +1,14 @@
-import { breakpoints, iconColorVar, vars } from "../../app/theme.css";
+import {
+  breakpoints,
+  iconColorVar,
+  sidebarWidthVar,
+  vars,
+} from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const navigation = style({
   display: "none",
-  width: "250px",
+  width: sidebarWidthVar,
   borderRight: `1px solid ${vars.colors.borderDefault}`,
 
   "@media": {

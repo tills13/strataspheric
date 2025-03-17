@@ -12,11 +12,10 @@ import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
 import { getMeeting } from "../../../../../data/meetings/getMeeting";
 import { classnames } from "../../../../../utils/classnames";
-import { deleteMeetingAction } from "../actions";
+import { deleteMeetingAction, upsertMeetingAction } from "../actions";
 import { MeetingAgenda } from "./MeetingAgenda";
 import { MeetingFiles } from "./MeetingFiles";
 import { MeetingMinutes } from "./MeetingMinutes";
-import { updateMeetingAction } from "./actions";
 
 interface Props {
   meetingId: string;
@@ -39,7 +38,11 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
 
         <EditMeetingButton
           meeting={meeting}
-          updateMeeting={updateMeetingAction.bind(undefined, meeting.id)}
+          updateMeeting={upsertMeetingAction.bind(
+            undefined,
+            strataId,
+            meeting.id,
+          )}
         />
       </Group>
 

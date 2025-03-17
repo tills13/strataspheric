@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 import { Button } from "../../../../../components/Button";
 import { DashboardHeader } from "../../../../../components/DashboardHeader";
+import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { LeftIcon } from "../../../../../components/Icon/LeftIcon";
 import { RightIcon } from "../../../../../components/Icon/RightIcon";
@@ -61,20 +62,30 @@ export default async function Page({
       <DashboardHeader />
 
       <div className={styles.calendarPageContainer}>
-        <div className={styles.calendarPageHeader}>
+        <Group className={s({ p: "normal" })} justify="space-between">
           <Header priority={2}>
             {monthName}, {year}
           </Header>
 
-          <div className={styles.headerActions}>
+          <Group>
             <InternalLink href={prevLink}>
-              <Button icon={<LeftIcon />} size="small" style="tertiary" />
+              <Button
+                icon={<LeftIcon />}
+                color="primary"
+                size="small"
+                style="tertiary"
+              />
             </InternalLink>
             <InternalLink href={nextLink}>
-              <Button icon={<RightIcon />} size="small" style="tertiary" />
+              <Button
+                icon={<RightIcon />}
+                color="primary"
+                size="small"
+                style="tertiary"
+              />
             </InternalLink>
-          </div>
-        </div>
+          </Group>
+        </Group>
         <div className={styles.strataCalendarContainer}>
           <StrataCalendar
             deleteEventAction={deleteEventAction}

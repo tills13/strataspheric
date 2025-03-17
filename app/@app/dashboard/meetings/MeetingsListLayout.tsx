@@ -22,7 +22,7 @@ export async function MeetingListLayout({ strataId }: Props) {
   const meetings = await getMeetings(strataId);
 
   return (
-    <div>
+    <>
       {meetings.length === 0 && (
         <InfoPanel
           action={
@@ -32,7 +32,6 @@ export async function MeetingListLayout({ strataId }: Props) {
               </Button>
             )
           }
-          className={styles.noMeetingsMessage}
           level="info"
         >
           <Text>No Meetings Scheduled</Text>
@@ -74,6 +73,6 @@ export async function MeetingListLayout({ strataId }: Props) {
           </InternalLink>
         ))}
       </div>
-    </div>
+    </>
   );
 }

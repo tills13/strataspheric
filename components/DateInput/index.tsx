@@ -113,11 +113,11 @@ export function DateInput({
   }
 
   return (
-    <Group className={classnames(className, styles.dateInput)}>
+    <Group className={classnames(className)} align="start">
       <div className={styles.inputFieldsWrapper}>
         <Input
+          className={s({ w: "full" })}
           ref={startInputRef}
-          className={classnames(s({ w: "full" }), styles.dateInputInput)}
           disabled={disabled}
           name={`${name}_start`}
           type="datetime-local"
@@ -137,8 +137,8 @@ export function DateInput({
           }
         />
         <Input
+          className={s({ w: "full" })}
           ref={endInputRef}
-          className={classnames(s({ w: "full" }), styles.dateInputInput)}
           disabled={disabled}
           name={`${name}_end`}
           type="datetime-local"
@@ -159,6 +159,7 @@ export function DateInput({
         disabled={disabled}
         icon={<EventIcon />}
         onClick={onClickSetDateToTodayButton}
+        color="primary"
         style="tertiary"
         title="Today"
         type="button"

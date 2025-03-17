@@ -21,21 +21,6 @@ import { updateMinutes } from "../../../../../data/meetings/updateMinutes";
 import { assertCan, can, p } from "../../../../../data/users/permissions";
 import * as formdata from "../../../../../utils/formdata";
 
-export async function updateMeetingAction(meetingId: string, fd: FormData) {
-  const purpose = formdata.getString(fd, "purpose");
-  const startDate = formdata.getTimestamp(fd, "startDate");
-  const endDate = formdata.getTimestamp(fd, "endDate") || startDate;
-
-  await updateMeeting(meetingId, { purpose });
-  await updateMeetingEvent(meetingId, {
-    name: purpose,
-    startDate,
-    endDate,
-  });
-
-  revalidatePath("/dashboard/meetings/" + meetingId);
-}
-
 export async function upsertAgendaItemAction(
   meetingId: string,
   agendaItemId: string | undefined,
