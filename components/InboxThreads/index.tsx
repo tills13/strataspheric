@@ -1,6 +1,5 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { type Thread } from "../../data/inbox/getThreads";
@@ -41,19 +40,24 @@ export function InboxThreads({ deleteThread, threads }: Props) {
             }}
           >
             <Stack gap="xs">
-              <Header className={styles.inboxMessageSender} priority={3}>
-                {thread.senderName}
-              </Header>
+              <Group gap="small">
+                <Header className={styles.inboxMessageSender} priority={3}>
+                  {thread.senderName}
+                </Header>
+                &mdash;
+                <Text
+                  className={styles.inboxMessageSubject}
+                  color="secondary"
+                  weight="bold"
+                >
+                  {thread.subject}
+                </Text>
+              </Group>
               <Text color="secondary" size="small">
                 <Date timestamp={thread.sentAt} output="date" />
               </Text>
             </Stack>
-            <Stack gap="xs">
-              <b>{thread.subject}</b>
-              <Text color="secondary" size="small">
-                {thread.message}
-              </Text>
-            </Stack>
+
             <Group justify="end">
               {can(p("stratas", "inbox_messages", "delete")) && (
                 <DeleteButton

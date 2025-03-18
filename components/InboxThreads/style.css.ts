@@ -1,17 +1,18 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { border, padding } from "../../theme";
+import { padding } from "../../theme";
 
 export const inboxMessagesContainer = style({
   display: "grid",
-  gridTemplateColumns: "minmax(0px, min-content) auto min-content",
-  columnGap: vars.spacing.large,
+  gridTemplateColumns: "minmax(0px, auto) min-content",
+  columnGap: vars.spacing.normal,
   gridTemplateRows: "repeat(10, min-content)",
 
   "@media": {
     [breakpoints.tablet]: {
-      gridTemplateColumns: "minmax(0px, min-content) auto min-content",
+      columnGap: vars.spacing.large,
+      gridTemplateColumns: "minmax(0px, min-content) min-content",
     },
   },
 });
@@ -48,5 +49,11 @@ export const inboxMessage = style({
 });
 
 export const inboxMessageSender = style({
+  whiteSpace: "nowrap",
+});
+
+export const inboxMessageSubject = style({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
   whiteSpace: "nowrap",
 });
