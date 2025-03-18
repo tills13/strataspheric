@@ -3,10 +3,10 @@ import { File, db } from "..";
 type SortableColumn<M extends Record<string, unknown>> = keyof M extends string
   ? keyof M | `${keyof M} asc` | `${keyof M} desc`
   : never;
-type X = SortableColumn<File>;
 
 export function listFiles(
   strataId: string,
+  userId: string | undefined,
   includePrivateFiles: boolean | undefined = true,
   orderBy?: SortableColumn<File>,
 ): Promise<File[]> {
@@ -16,7 +16,12 @@ export function listFiles(
     .where("files.strataId", "=", strataId);
 
   if (!includePrivateFiles) {
-    query = query.where("files.isPublic", "=", 1);
+    query = query.where((eb) =>
+      eb.or([
+        eb("files.isPublic", "=", 1),
+        ...(userId !== undefined ? [eb("files.uploaderId", "=", userId)] : []),
+      ]),
+    );
   }
 
   if (orderBy) {

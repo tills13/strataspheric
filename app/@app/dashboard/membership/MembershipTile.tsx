@@ -24,18 +24,18 @@ import { classnames } from "../../../../utils/classnames";
 
 interface Props {
   approveStrataMembership: (membershipId: string) => void;
-  deleteMember: (userId: string) => any;
+  deleteStrataMembership: (userId: string) => any;
   className?: string;
   membership: StrataMembership & User;
-  upsertMember: (userId: string, fd: FormData) => any;
+  upsertStrataMembership: (userId: string, fd: FormData) => any;
 }
 
 export function MembershipTile({
   approveStrataMembership,
   className,
-  deleteMember,
+  deleteStrataMembership,
   membership,
-  upsertMember,
+  upsertStrataMembership,
 }: Props) {
   const [showEditModal, setShowEditModal] = useState(false);
   const can = useCan();
@@ -68,7 +68,10 @@ export function MembershipTile({
             {can(p("stratas", "memberships", "delete")) &&
               membership.role !== "administrator" && (
                 <StatusButton
-                  action={deleteMember.bind(undefined, membership.userId)}
+                  action={deleteStrataMembership.bind(
+                    undefined,
+                    membership.userId,
+                  )}
                   icon={<RemoveIcon />}
                   style="tertiary"
                   color="error"
@@ -115,7 +118,7 @@ export function MembershipTile({
         >
           <CreateOrUpdateStrataMembershipForm
             strataMembership={membership}
-            upsertStrataMembership={upsertMember.bind(
+            upsertStrataMembership={upsertStrataMembership.bind(
               undefined,
               membership.userId,
             )}

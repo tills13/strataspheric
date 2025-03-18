@@ -1,5 +1,6 @@
 "use client";
 
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { type Thread } from "../../data/inbox/getThreads";
@@ -10,6 +11,8 @@ import { DeleteButton } from "../DeleteButton";
 import { Group } from "../Group";
 import { Header } from "../Header";
 import { InternalLink } from "../Link/InternalLink";
+import { Stack } from "../Stack";
+import { Text } from "../Text";
 
 interface Props {
   deleteThread: (threadId: string) => void;
@@ -20,7 +23,7 @@ export function InboxThreads({ deleteThread, threads }: Props) {
   const can = useCan();
 
   return (
-    <div className={styles.inboxMessages}>
+    <div>
       {threads.length === 0 && (
         <div className={styles.inboxMessagesNoMessages}>
           <Header priority={2}>Inbox Zero 🎉</Header>
@@ -28,21 +31,30 @@ export function InboxThreads({ deleteThread, threads }: Props) {
         </div>
       )}
 
-      {threads.map((thread) => (
-        <InternalLink
-          key={thread.id}
-          className={styles.inboxMessage}
-          href={{
-            pathname: "/dashboard/inbox/" + thread.threadId,
-          }}
-        >
-          <Group align="center" justify="space-between">
-            <Group>
+      <div className={styles.inboxMessagesContainer}>
+        {threads.map((thread) => (
+          <InternalLink
+            key={thread.id}
+            className={styles.inboxMessage}
+            href={{
+              pathname: "/dashboard/inbox/" + thread.threadId,
+            }}
+          >
+            <Stack gap="xs">
+              <Header className={styles.inboxMessageSender} priority={3}>
+                {thread.senderName}
+              </Header>
+              <Text color="secondary" size="small">
+                <Date timestamp={thread.sentAt} output="date" />
+              </Text>
+            </Stack>
+            <Stack gap="xs">
               <b>{thread.subject}</b>
-              <Date timestamp={thread.sentAt} output="date" />
-              <p>{thread.message.split("\n")[0].substring(0, 100)}</p>
-            </Group>
-            <Group>
+              <Text color="secondary" size="small">
+                {thread.message}
+              </Text>
+            </Stack>
+            <Group justify="end">
               {can(p("stratas", "inbox_messages", "delete")) && (
                 <DeleteButton
                   onConfirmDelete={deleteThread.bind(
@@ -55,9 +67,9 @@ export function InboxThreads({ deleteThread, threads }: Props) {
                 />
               )}
             </Group>
-          </Group>
-        </InternalLink>
-      ))}
+          </InternalLink>
+        ))}
+      </div>
     </div>
   );
 }

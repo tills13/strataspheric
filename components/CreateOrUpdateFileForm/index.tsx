@@ -1,12 +1,10 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
-import * as styles from "./style.css";
-
 import { useRef } from "react";
 
 import { File } from "../../data";
-import { classnames } from "../../utils/classnames";
+import { p } from "../../data/users/permissions";
+import { useCan } from "../../hooks/useCan";
 import { Checkbox } from "../Checkbox";
 import { Header } from "../Header";
 import { SaveIcon } from "../Icon/SaveIcon";
@@ -28,6 +26,7 @@ export function CreateOrUpdateFileForm({
   upsertFile,
 }: Props) {
   const nameRef = useRef<HTMLInputElement>(null!);
+  const can = useCan();
 
   return (
     <form
@@ -60,14 +59,16 @@ export function CreateOrUpdateFileForm({
           defaultValue={file?.description}
         />
 
-        <Stack gap="small">
-          <Header priority={3}>Visibility</Header>
-          <RadioButton
-            name="is_public"
-            options={["public", "private"]}
-            defaultValue={file?.isPublic ? "public" : "private"}
-          />
-        </Stack>
+        {can(p("stratas", "files", "create")) && (
+          <Stack gap="small">
+            <Header priority={3}>Visibility</Header>
+            <RadioButton
+              name="is_public"
+              options={["public", "private"]}
+              defaultValue={file?.isPublic ? "public" : "private"}
+            />
+          </Stack>
+        )}
 
         <StatusButton
           color="primary"

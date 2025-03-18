@@ -11,7 +11,7 @@ export const filesPageContainer = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      gridTemplateColumns: "auto minmax(auto, 500px)",
+      gridTemplateColumns: "auto 400px",
     },
   },
 });

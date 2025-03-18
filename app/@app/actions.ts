@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
 
 import { auth } from "../../auth";
 import { createStrataMembership } from "../../data/strataMemberships/createStrataMembership";
@@ -76,6 +75,4 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/settings");
-
-  console.log(headers().get("referer"));
 }

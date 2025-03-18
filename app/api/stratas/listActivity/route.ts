@@ -2,7 +2,6 @@ import { sql } from "kysely";
 
 import { auth } from "../../../../auth";
 import { Invoice, db } from "../../../../data";
-import { listInvoices } from "../../../../data/invoices/listInvoices";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 
 export const runtime = "edge";
@@ -117,7 +116,7 @@ export const GET = auth(async (req: Request) => {
           db
             .selectFrom("invoices")
             .select((eb) => [
-              "invoices.payeeId as sourceUserId",
+              "invoices.payee as sourceUserId",
               "invoices.createdAt as date",
               sql.lit("invoice" as const).as("type"),
 

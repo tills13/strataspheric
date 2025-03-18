@@ -26,7 +26,6 @@ export async function deleteFileAction(fileId: string) {
   revalidatePath("/dashboard/files");
 }
 
-/** @todo combine with other upsertFileActions */
 export async function upsertFileAction(
   fileId: string | undefined,
   formData: FormData,

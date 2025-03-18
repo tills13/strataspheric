@@ -1,6 +1,5 @@
 "use client";
 
-import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { useRouter } from "next/navigation";
@@ -13,6 +12,8 @@ import { Input } from "../../../../components/Input";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Select } from "../../../../components/Select";
 import { Stack } from "../../../../components/Stack";
+import { p } from "../../../../data/users/permissions";
+import { useCan } from "../../../../hooks/useCan";
 import * as formdata from "../../../../utils/formdata";
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
 
 export function FilesSearch({ searchTerm, visibility }: Props) {
   const router = useRouter();
+  const can = useCan();
 
   return (
     <form
@@ -52,11 +54,13 @@ export function FilesSearch({ searchTerm, visibility }: Props) {
           defaultValue={searchTerm}
           required={false}
         />
-        <Select name="visibility" label="Visibility">
-          <option value="">All Visibilities</option>
-          <option value="private">Private</option>
-          <option value="public">Public</option>
-        </Select>
+        {can(p("stratas", "files", "create")) && (
+          <Select name="visibility" label="Visibility">
+            <option value="">All Visibilities</option>
+            <option value="private">Private</option>
+            <option value="public">Public</option>
+          </Select>
+        )}
         <Group>
           <Button
             type="submit"

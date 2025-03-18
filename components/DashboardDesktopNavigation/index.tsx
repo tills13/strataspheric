@@ -5,12 +5,11 @@ import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 
 import { NAVIGATION_LINKS } from "../../constants/navigation";
 import { can } from "../../data/users/permissions";
 import { classnames } from "../../utils/classnames";
-import { DropdownActions } from "../DropdownActions";
 import { Group } from "../Group";
 import { InternalLink } from "../Link/InternalLink";
 import { Stack } from "../Stack";

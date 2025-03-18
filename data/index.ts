@@ -296,5 +296,5 @@ export const db = new Kysely<Database>({
   dialect: new D1Dialect({
     database: process.env.DB as unknown as D1Database,
   }),
-  log: ["query"],
+  // log: ["query"],
 });

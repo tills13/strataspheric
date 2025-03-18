@@ -15,7 +15,9 @@ type Scope =
   | "widgets";
 type Action = "*" | "create" | "edit" | "delete" | "view";
 
-type Permission = `${Namespaces}.${Scope}.${Action}`;
+type Permission =
+  | `${Namespaces}.${Scope}.${Action}`
+  | `!${Namespaces}.${Scope}.${Action}`;
 
 const roles = [
   "administrator",
@@ -66,7 +68,14 @@ export function roleScopeToScopes(
       return [p("stratas", "files"), p("stratas", "events")];
     }
     case "owner": {
-      return ["stratas.*.view"];
+      // @todo fix, make work -- explicit deny > implicit allow
+      return [
+        "!stratas.invoices.view",
+        "stratas.amenities.view",
+        "stratas.events.view",
+        "stratas.files.view",
+        "stratas.memberships.view",
+      ];
     }
     default: {
       return [];

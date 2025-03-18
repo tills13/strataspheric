@@ -31,13 +31,13 @@ export function AttachFileModal({
         <Group>
           <FileSelect
             className={s({ w: "full" })}
-            label="Attach existing file"
+            label="Attach Existing File"
             onSelectFile={async (file) => {
               await onSelectFile?.(file);
               close();
             }}
             placeholder="Attach Existing File"
-            value={selectedFile?.id}
+            value={selectedFile?.id || ""}
           />
           {selectedFile && (
             <Button

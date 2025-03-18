@@ -13,11 +13,13 @@ interface Props {
   upsertStrataMembership: (fd: FormData) => void;
   className?: string;
   strataMembership?: StrataMembership & { name: string; email: string };
+  strataRoleSelectDisabled?: boolean;
 }
 
 export function CreateOrUpdateStrataMembershipForm({
   className,
   strataMembership,
+  strataRoleSelectDisabled,
   upsertStrataMembership,
 }: Props) {
   return (
@@ -28,6 +30,7 @@ export function CreateOrUpdateStrataMembershipForm({
           type="text"
           label="Name"
           defaultValue={strataMembership?.name}
+          disabled={!!strataMembership}
           required
         />
 
@@ -44,6 +47,7 @@ export function CreateOrUpdateStrataMembershipForm({
           type="email"
           label="Email Address"
           defaultValue={strataMembership?.email}
+          disabled={!!strataMembership}
           required
         />
 
@@ -58,6 +62,7 @@ export function CreateOrUpdateStrataMembershipForm({
           label="Strata Role"
           name="role"
           defaultValue={strataMembership?.role || "owner"}
+          disabled={strataRoleSelectDisabled}
           required
         />
 

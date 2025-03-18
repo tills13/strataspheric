@@ -29,7 +29,7 @@ export const NAVIGATION_LINKS: Array<Link | LinkWithPermissions> = [
     PaidDocumentIcon,
     "/dashboard/invoices",
     "Invoices",
-    [p("stratas", "invoices", "view")],
+    [p("stratas", "invoices", "edit")],
   ],
   [
     CalendarIcon,

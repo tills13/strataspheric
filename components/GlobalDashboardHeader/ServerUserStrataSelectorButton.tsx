@@ -1,4 +1,4 @@
-import { mustAuth } from "../../auth";
+import { auth } from "../../auth";
 import { Strata } from "../../data";
 import { getUserStratas } from "../../data/users/getUserStratas";
 import { UserStrataSelectorButton } from "./UserStrataSelectorButton";
@@ -8,9 +8,8 @@ interface Props {
 }
 
 export async function ServerUserStrataSelectorButton({ currentStrata }: Props) {
-  const sessionStratas = await mustAuth().then((session) =>
-    getUserStratas(session.user.id),
-  );
+  const session = await auth();
+  const sessionStratas = session ? await getUserStratas(session.user.id) : [];
 
   return (
     <UserStrataSelectorButton

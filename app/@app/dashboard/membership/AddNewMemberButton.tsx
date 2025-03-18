@@ -1,34 +1,31 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 
+import { Button } from "../../../../components/Button";
 import { CreateOrUpdateStrataMembershipForm } from "../../../../components/CreateOrUpdateStrataMembershipForm";
-import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../components/Modal";
-import { p } from "../../../../data/users/permissions";
-import { useCan } from "../../../../hooks/useCan";
 
 interface Props {
-  upsertStrataMembership: (fd: FormData) => void;
+  upsertStrataMembership: (fd: FormData) => Promise<void>;
 }
 
-export function MembershipHeader({ upsertStrataMembership }: Props) {
-  const can = useCan();
+export function AddNewMemmberButton({ upsertStrataMembership }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <DashboardHeader
-        actions={[
-          can(p("stratas", "memberships", "create")) && {
-            action: () => setShowModal(true),
-            label: "Add Member",
-            icon: <AddIcon />,
-          },
-        ]}
-      />
+      <Button
+        color="success"
+        iconRight={<AddIcon />}
+        iconTextBehaviour="centerRemainder"
+        onClick={() => setShowModal(true)}
+        style="secondary"
+      >
+        Add New Member
+      </Button>
+
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="New Strata Member">
           <CreateOrUpdateStrataMembershipForm

@@ -31,7 +31,7 @@ export async function deleteStrataAction() {
     throw NotAuthorized;
   }
 
-  const files = await listFiles(currentStrata.id, true);
+  const files = await listFiles(currentStrata.id, undefined, true);
 
   if (files.length !== 0) {
     await r2.delete(files.map((file) => file.path));

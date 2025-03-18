@@ -40,22 +40,11 @@ export const filesPageContainer = style({
   },
 });
 
-export const membershipTableContainer = style({
-  width: "100vw",
-  overflow: "auto",
-  marginBottom: vars.spacing.large,
-  "@media": {
-    [breakpoints.tablet]: {
-      width: "100%",
-    },
-  },
-});
-
 export const membershipGrid = style({
   display: "grid",
   gridTemplateColumns: "repeat(1, 1fr)",
   gap: vars.spacing.normal,
-  padding: vars.spacing.normal,
+  padding: padding(0, vars.spacing.normal),
 
   "@media": {
     [breakpoints.tablet]: {

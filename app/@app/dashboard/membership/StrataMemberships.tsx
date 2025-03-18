@@ -43,9 +43,9 @@ export async function StrataMemberships({ className }: Props) {
         <MembershipTile
           key={membership.id}
           approveStrataMembership={approveStrataMembershipAction}
-          deleteMember={deleteStrataMembershipAction}
+          deleteStrataMembership={deleteStrataMembershipAction}
           membership={membership}
-          upsertMember={upsertStrataMembershipAction}
+          upsertStrataMembership={upsertStrataMembershipAction}
         />
       ))}
     </div>

@@ -6,6 +6,7 @@ import * as styles from "./style.css";
 import { useEffect, useState } from "react";
 
 import { File } from "../../data";
+import { classnames } from "../../utils/classnames";
 import { Group } from "../Group";
 import { LoadingIcon } from "../LoadingIcon";
 import { Panel } from "../Panel";
@@ -40,7 +41,10 @@ export function FileSelect({ onSelectFile, ...delegateProps }: Props) {
 
   if (isLoading) {
     return (
-      <Panel className={styles.loadingState} noPadding>
+      <Panel
+        className={classnames(styles.loadingState, s({ w: "full" }))}
+        noPadding
+      >
         <Group className={s({ w: "full" })} justify="space-between">
           <Text color="secondary">Loading files...</Text>
           <LoadingIcon size="xs" />
