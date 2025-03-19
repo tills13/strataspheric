@@ -7,44 +7,32 @@ import React, { useLayoutEffect, useRef } from "react";
 import { Chat } from "../../data/inbox/getThreadChats";
 import { Header } from "../Header";
 import { InfoPanel } from "../InfoPanel";
+import { Stack } from "../Stack";
 import { Text } from "../Text";
 import { InboxThreadChat } from "./InboxThreadChat";
 
 interface Props {
   chats: Chat[];
-  subject: React.ReactNode;
 }
 
-export function ChatStream({ chats, subject }: Props) {
+export function ChatStream({ chats }: Props) {
   const ref = useRef<HTMLDivElement>(null!);
 
   useLayoutEffect(() => {
-    ref.current.scrollTo({ top: ref.current.scrollHeight });
+    ref.current?.scrollTo({ top: ref.current.scrollHeight });
   });
 
   return (
-    <div className={styles.chatStream} ref={ref}>
-      <Header className={styles.chatsHeader} priority={2}>
-        Chat about &quot;{subject}&quot;
-      </Header>
-
-      <InfoPanel level="info">
-        <Text>
-          Chats are private with authorized members of the council or
-          individuals who are explicitly given the ability to see and engage
-          with chats.
-        </Text>
-      </InfoPanel>
-
+    <Stack ref={ref}>
       {chats.length === 0 && (
-        <p className={styles.chatStreamNoChats}>
+        <Text color="secondary">
           No chats, yet. Start a conversation about this thread using the form
           below.
-        </p>
+        </Text>
       )}
       {chats.map((chat) => (
         <InboxThreadChat key={chat.id} {...chat} />
       ))}
-    </div>
+    </Stack>
   );
 }

@@ -15,7 +15,7 @@ export function StrataChip({ strata }: Props) {
     <div className={styles.strataChip}>
       <Group justify="space-between">
         <Stack gap="xxs">
-          <Text size="large" weight="bold">
+          <Text color="primary" size="large" weight="bold">
             {strata.name}
           </Text>
 

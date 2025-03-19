@@ -50,16 +50,26 @@ export function FilesListFile({
           <Wrap
             if={can(p("stratas", "files", "view"))}
             with={(children) => (
-              <FileLink className={styles.fileListLink} path={file.path}>
+              <FileLink
+                className={styles.fileListLink}
+                path={file.path}
+                noUnderline
+              >
                 {children}
               </FileLink>
             )}
           >
             <Stack gap="xxs">
               <Group>
-                <span className={styles.filesListFileHeaderName}>
+                <Text
+                  as="span"
+                  color="primary"
+                  className={styles.filesListFileHeaderName}
+                  size="large"
+                  weight="bold"
+                >
                   {file.name}
-                </span>
+                </Text>
                 {file.isPublic === 1 && (
                   <VisibilityIcon
                     className={styles.filesListFileVisibilityIcon}

@@ -1,5 +1,6 @@
 import { iconColorVar, vars } from "../../app/theme.css";
-import { timelineAttachment } from "../MeetingTimelineItem/style.css";
+import { selfChatBubble } from "../InboxThreadChats/style.css";
+import { timelineEntry } from "../MeetingTimelineItem/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { border } from "../../theme";
@@ -16,15 +17,22 @@ export const fileAttachmentChip = style({
   borderRadius: vars.borderRadius,
 
   selectors: {
-    [`${timelineAttachment}&`]: {
+    [`${selfChatBubble} &, ${timelineEntry} &`]: {
       width: "100%",
       backgroundColor: vars.colors.grey800,
       borderColor: vars.colors.grey800,
-      borderRadius: 0,
       vars: {
         [iconColorVar]: vars.colors.white,
       },
     },
+    // [``]: {
+    //   width: "100%",
+    //   backgroundColor: vars.colors.grey800,
+    //   borderColor: vars.colors.grey800,
+    //   vars: {
+    //     [iconColorVar]: vars.colors.white,
+    //   },
+    // },
   },
 });
 

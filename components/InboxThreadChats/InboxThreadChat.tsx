@@ -1,5 +1,6 @@
 "use client";
 
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { useSession } from "next-auth/react";
@@ -11,10 +12,14 @@ import {
 } from "../../data/inbox/getThreadChats";
 import { classnames } from "../../utils/classnames";
 import { Date } from "../Date";
+import { FileAttachmentChip } from "../FileAttachmentChip";
 import { FileLink } from "../FileLink";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
+import { Stack } from "../Stack";
+import { Text } from "../Text";
 
 interface Props {}
 
@@ -23,25 +28,23 @@ export function InboxThreadChat({ ...chat }: Props & Chat) {
   const currentUser = session?.user!;
 
   return (
-    <div
+    <Stack
       className={classnames(
         chat.userId === currentUser.id
           ? styles.selfChatBubble
           : styles.chatBubble,
+        s({ p: "normal" }),
       )}
     >
-      <div className={styles.chatBubbleHeader}>
+      <Group justify="space-between">
         <Header priority={3}>{chat.name} said...</Header>
-        <Date
-          className={styles.chatBubbleTimestamp}
-          output="date"
-          timestamp={chat.sentAt}
-        />
-      </div>
+        <Text as="span">
+          <Date output="compact" timestamp={chat.sentAt} />
+        </Text>
+      </Group>
 
       {isThreadChatWithQuote(chat) && (
         <InboxMessageQuote
-          className={styles.quotedMessage}
           messageThreadId={chat.threadId}
           messageId={chat.quotedMessageId}
           message={chat.quotedMessageMessage}
@@ -50,17 +53,10 @@ export function InboxThreadChat({ ...chat }: Props & Chat) {
           linkType="hash"
         />
       )}
-
-      <p className={styles.chatMessage}>{chat.message}</p>
-
+      <Text>{chat.message}</Text>
       {isThreadChatWithFile(chat) && (
-        <FileLink path={chat.filePath}>
-          <div className={styles.chatFile}>
-            <AttachmentIcon className={styles.chatFileAttachmentIcon} />
-            {chat.fileName}
-          </div>
-        </FileLink>
+        <FileAttachmentChip fileName={chat.fileName} filePath={chat.filePath} />
       )}
-    </div>
+    </Stack>
   );
 }

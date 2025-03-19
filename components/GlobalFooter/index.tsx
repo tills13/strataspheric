@@ -8,9 +8,18 @@ import { Group } from "../Group";
 import { HeartIcon } from "../Icon/HeartIcon";
 import { ExternalLink } from "../Link/ExternalLink";
 import { Stack } from "../Stack";
+import { Text } from "../Text";
 import { Wordmark } from "../Wordmark";
 
 const baseUrl = protocol + "//" + tld;
+
+const FOOTER_LINKS = [
+  ["About", "/about"],
+  ["Terms", "/terms"],
+  ["Privacy", "/privacy"],
+  ["Contact", "/contact"],
+  // ["Pricing", "/pricing"],
+];
 
 export function GlobalFooter() {
   return (
@@ -24,21 +33,16 @@ export function GlobalFooter() {
           <Wordmark />
         </ExternalLink>
         <Group gap="small">
-          <ExternalLink href={baseUrl + "/about"} target="_blank">
-            About
-          </ExternalLink>
-          {/* <ExternalLink href={baseUrl + "/pricing"} target="_blank">
-            Pricing
-          </ExternalLink> */}
-          <ExternalLink href={baseUrl + "/terms"} target="_blank">
-            Terms
-          </ExternalLink>
-          <ExternalLink href={baseUrl + "/privacy"} target="_blank">
-            Privacy
-          </ExternalLink>
-          <ExternalLink href={baseUrl + "/contact"} target="_blank">
-            Contact
-          </ExternalLink>
+          {FOOTER_LINKS.map(([linkText, link]) => (
+            <ExternalLink
+              key={linkText}
+              href={baseUrl + link}
+              target="_blank"
+              noUnderline
+            >
+              <Text color="primary">{linkText}</Text>
+            </ExternalLink>
+          ))}
         </Group>
         <Group gap="small">
           Made in Canada <HeartIcon className={styles.heartIcon} size="small" />

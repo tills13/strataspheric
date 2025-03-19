@@ -44,11 +44,7 @@ export const globalHeaderTitleWrapper = style({
 });
 
 export const globalHeaderTitle = style({
-  zIndex: 1,
-  whiteSpace: "nowrap",
-
   fontSize: vars.fontSizes.xl,
-  fontWeight: 900,
   textTransform: "uppercase",
 
   "@media": {

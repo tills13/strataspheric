@@ -1,9 +1,11 @@
 import { breakpoints, vars } from "../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { calc } from "@vanilla-extract/css-utils";
+
 import { border } from "../../../../../theme";
 
-export const threadPageContainer = style({
+export const threadPageContainerWithChats = style({
   "@media": {
     [breakpoints.tablet]: {
       display: "grid",
@@ -18,42 +20,13 @@ export const inboxMessageThreadContainer = style({
 });
 
 export const pageHeader = style({
-  display: "flex",
-  flexDirection: "column",
-  padding: vars.spacing.normal,
   borderBottom: border("1px", "solid", vars.colors.borderDefault),
-
-  "@media": {
-    [breakpoints.tablet]: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-    },
-  },
-});
-
-export const pageHeaderActions = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: vars.spacing.normal,
-  // lineHeight: vars.sizes.small,
-
-  "@media": {
-    [breakpoints.tablet]: {
-      justifyContent: "unset",
-    },
-  },
 });
 
 export const pageHeaderSubject = style({
-  marginBottom: vars.spacing.small,
   lineHeight: vars.fontSizes.large,
   fontSize: vars.fontSizes.large,
   fontWeight: vars.fontWeights.bold,
-});
-
-export const pageHeaderSender = style({
-  color: vars.colors.grey500,
 });
 
 export const outsideMessageWarning = style({
@@ -64,6 +37,25 @@ export const outsideMessageWarning = style({
 
 export const chatPanelWrapper = style({
   borderLeft: "1px solid " + vars.colors.borderDefault,
-  minHeight: "100%",
   overflow: "hidden",
+});
+
+export const chatPanelContents = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: vars.spacing.normal,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "grid",
+      gridTemplateRows: "min-content min-content auto min-content",
+      position: "sticky",
+      top: 0,
+      overflow: "scroll",
+      height: calc("100vh")
+        .subtract("57px")
+        .subtract(calc(vars.spacing.normal).multiply(2))
+        .toString(),
+    },
+  },
 });

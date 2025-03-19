@@ -5,6 +5,7 @@ import { classnames } from "../../utils/classnames";
 import { GlobalHeader } from "../GlobalHeader";
 import { InternalLink } from "../Link/InternalLink";
 import { Logo } from "../Logo";
+import { Text } from "../Text";
 
 export function GlobalMarketingHeader() {
   return (
@@ -17,7 +18,15 @@ export function GlobalMarketingHeader() {
         href="/"
       >
         <Logo className={styles.logo} />
-        <h1 className={styles.globalHeaderTitle}>Strataspheric</h1>
+        <Text
+          as="h1"
+          className={styles.globalHeaderTitle}
+          color="primary"
+          size="xl"
+          weight="xbold"
+        >
+          Strataspheric
+        </Text>
       </InternalLink>
     </GlobalHeader>
   );

@@ -1,21 +1,6 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { border } from "../../theme";
-
-export const wrapper = style({
-  display: "grid",
-  gridTemplateRows: "auto min-content",
-  gap: vars.spacing.normal,
-  padding: vars.spacing.normal,
-
-  overflow: "hidden",
-});
-
-export const form = style({
-  width: "100%",
-});
-
 export const chatsContainer = style({
   "@media": {
     [breakpoints.tablet]: {
@@ -23,18 +8,6 @@ export const chatsContainer = style({
       overflow: "hidden",
     },
   },
-});
-
-export const chatsHeader = style({});
-
-export const chatStream = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: vars.spacing.normal,
-  overflow: "auto",
-});
-export const chatStreamNoChats = style({
-  color: vars.fontColors.secondary,
 });
 
 export const chatBubble = style({
@@ -53,44 +26,6 @@ export const selfChatBubble = style([
   },
 ]);
 
-export const chatBubbleTimestamp = style({
-  fontSize: vars.fontSizes.small,
-  color: vars.colors.grey500,
-});
-
-export const chatBubbleHeader = style({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: vars.spacing.normal,
-});
-
 export const chatMessage = style({
-  padding: `0 ${vars.spacing.normal} ${vars.spacing.normal}`,
   whiteSpace: "pre-line",
-});
-
-export const chatFile = style({
-  borderBottomLeftRadius: vars.borderRadius,
-  borderBottomRightRadius: vars.borderRadius,
-  padding: vars.spacing.small,
-
-  selectors: {
-    [`${chatBubble} &`]: {
-      backgroundColor: "rgba(0, 0, 0, 0.05)",
-    },
-
-    [`${selfChatBubble} &`]: {
-      backgroundColor: "rgba(255, 255, 255, 0.1)",
-    },
-  },
-});
-
-export const chatFileAttachmentIcon = style({
-  height: "24px",
-  verticalAlign: "top",
-});
-
-export const quotedMessage = style({
-  marginBottom: vars.spacing.normal,
 });

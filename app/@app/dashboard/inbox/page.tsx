@@ -26,8 +26,6 @@ export default async function Page() {
     getCurrentStrataPlan(),
   ]);
 
-  console.log(strataPlan);
-
   if (strataPlan.enableInbox !== 1) {
     if (!can(session?.user, p("stratas", "inbox_messages", "view"))) {
       redirect("/dashboard");

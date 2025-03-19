@@ -2,7 +2,11 @@ import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { auth } from "../../../../../auth";
+import { Header } from "../../../../../components/Header";
 import { InboxThreadChats } from "../../../../../components/InboxThreadChats";
+import { InfoPanel } from "../../../../../components/InfoPanel";
+import { Stack } from "../../../../../components/Stack";
+import { Text } from "../../../../../components/Text";
 import { getThreadChats } from "../../../../../data/inbox/getThreadChats";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
 import { can, p } from "../../../../../data/users/permissions";
@@ -15,42 +19,30 @@ export default async function InboxThreadChatPanel({
 }: {
   threadId: string;
 }) {
-  const session = await auth();
-
-  if (!session) {
-    return (
-      <div className={styles.chatPanelWrapper}>
-        Sign in to view message chats
-      </div>
-    );
-  } else if (!can(session.user, p("stratas", "inbox_thread_chats", "view"))) {
-    return (
-      <div
-        className={classnames(
-          styles.chatPanelWrapper,
-          s({ padding: "normal" }),
-        )}
-      >
-        You don&apos;t have permission to see chats
-      </div>
-    );
-  }
-
-  const thread = await getThreadMessages(threadId);
-  const chats = await getThreadChats(threadId);
+  const [chats] = await Promise.all([getThreadChats(threadId)]);
 
   return (
-    <div className={styles.chatPanelWrapper}>
-      <InboxThreadChats
-        chats={chats}
-        upsertFile={upsertFileAction.bind(undefined, undefined)}
-        sendInboxThreadChat={sendInboxThreadChatAction.bind(
-          undefined,
-          threadId,
-          undefined,
-        )}
-        thread={thread}
-      />
+    <div className={classnames(styles.chatPanelWrapper, s({ p: "normal" }))}>
+      <div className={styles.chatPanelContents}>
+        <Header priority={2}>Chats</Header>
+
+        <InfoPanel level="info">
+          <Text>
+            Chats are private with authorized members of the council or
+            individuals who are explicitly given the ability to see and engage
+            with chats.
+          </Text>
+        </InfoPanel>
+        <InboxThreadChats
+          chats={chats}
+          upsertFile={upsertFileAction.bind(undefined, undefined)}
+          sendInboxThreadChat={sendInboxThreadChatAction.bind(
+            undefined,
+            threadId,
+            undefined,
+          )}
+        />
+      </div>
     </div>
   );
 }

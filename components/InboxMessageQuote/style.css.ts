@@ -11,15 +11,12 @@ export const quotedMessageIcon = style({
   top: 0,
 });
 
-export const quotedMessageTimestamp = style([
-  chatBubbleStyles.chatBubbleTimestamp,
-]);
-
 export const quotedMessage = style({
   position: "relative",
   padding: vars.spacing.normal,
   backgroundColor: "rgba(255, 255, 255, 0.1)",
   overflow: "hidden",
+  borderRadius: vars.borderRadius,
 
   display: "grid",
   gridTemplateRows: "min-content auto",
@@ -36,15 +33,4 @@ export const quotedMessage = style({
       backgroundColor: "rgba(255, 255, 255, 0.1)",
     },
   },
-});
-
-export const quotedMessageHeader = style({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-});
-
-export const quotedMessageMessage = style({
-  whiteSpace: "pre-wrap",
-  overflow: "auto",
 });

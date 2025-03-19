@@ -3,7 +3,7 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 
 import { File, Invoice } from "../../data";
 import { p } from "../../data/users/permissions";
@@ -13,11 +13,15 @@ import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { Date } from "../Date";
 import { FileAttachmentChip } from "../FileAttachmentChip";
+import { Group } from "../Group";
+import { Header } from "../Header";
 import { ChatIcon } from "../Icon/ChatIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
 import { InvoiceChip } from "../InvoiceChip";
 import { Modal } from "../Modal";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
+import { Stack } from "../Stack";
+import { Text } from "../Text";
 
 interface Props {
   id: string;
@@ -48,56 +52,53 @@ export function ThreadMessage({
   const [showChatReplyModal, setShowChatReplyModal] = useState(false);
   const hash = useHash();
 
-  const [markIsPaidIsPending, startTransition] = useTransition();
-
   return (
     <>
-      <div
+      <Stack
         id={id}
         className={classnames(
           hash === id ? styles.messageHighighted : styles.message,
+          s({ p: "normal" }),
         )}
       >
-        <div className={styles.messageHeader}>
-          <div>
-            <h3 className={s({ mb: "small" })}>{senderName}</h3>
-            <span className={styles.messageSenderEmail}>{senderEmail}</span>
-          </div>
-          <div className={styles.messageHeaderActions}>
-            <span className={styles.messageHeaderSentAt}>
-              Sent <Date timestamp={sentAt} />
-            </span>
-            {can(p("stratas", "inbox_thread_chats", "view")) && (
-              <Button
-                className={styles.chatActionButton}
-                icon={<ChatIcon />}
-                onClick={() => setShowChatReplyModal(true)}
-                size="small"
-                style="tertiary"
-              />
-            )}
-          </div>
-        </div>
+        <Stack gap="0">
+          <Group justify="space-between">
+            <Group gap="small">
+              <Header priority={3}>{senderName}</Header>
+              <Text color="secondary">
+                <Date timestamp={sentAt} />
+              </Text>
+            </Group>
+            <div>
+              {can(p("stratas", "inbox_thread_chats", "view")) && (
+                <Button
+                  icon={<ChatIcon />}
+                  onClick={() => setShowChatReplyModal(true)}
+                  size="small"
+                  style="tertiary"
+                />
+              )}
+            </div>
+          </Group>
+          <Text color="secondary">{senderEmail}</Text>
+        </Stack>
 
-        <p className={styles.messageText}>{message}</p>
+        <Text className={classnames(styles.messageText)}>{message}</Text>
 
         {invoice && (
-          <div className={styles.messageInvoice}>
-            <InvoiceChip
-              invoice={invoice}
-              markInvoiceAsPaid={markInvoiceAsPaid}
-            />
-          </div>
+          <InvoiceChip
+            invoice={invoice}
+            markInvoiceAsPaid={markInvoiceAsPaid}
+          />
         )}
 
         {file && (
           <FileAttachmentChip fileName={file.name} filePath={file.path} />
         )}
-      </div>
+      </Stack>
 
       {showChatReplyModal && (
         <Modal
-          modalBodyClassName={styles.modalBodyClassName}
           closeModal={() => setShowChatReplyModal(false)}
           title="Chat about reply..."
         >

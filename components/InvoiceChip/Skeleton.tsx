@@ -17,7 +17,6 @@ export function InvoiceChipSkeleton() {
         <Bone />
 
         <StatusButton
-          className={styles.markPaidButton}
           color="success"
           iconRight={<CircleCheckIcon />}
           iconTextBehaviour="centerRemainder"

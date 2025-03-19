@@ -44,7 +44,9 @@ export function DashboardDesktopNavigation({}: Props) {
             >
               <Group className={s({ pv: "small", ph: "normal" })}>
                 <IconComponent size="xs" />
-                <Text noWrap>{label}</Text>
+                <Text as="span" noWrap>
+                  {label}
+                </Text>
               </Group>
             </InternalLink>
           );

@@ -4,12 +4,17 @@ import * as styles from "./style.css";
 import { auth } from "../../../../../auth";
 import { Button } from "../../../../../components/Button";
 import { Date } from "../../../../../components/Date";
+import { Group } from "../../../../../components/Group";
+import { Header } from "../../../../../components/Header";
 import { ShareIcon } from "../../../../../components/Icon/ShareIcon";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
 import { SendInboxMessageForm } from "../../../../../components/SendInboxMessageForm";
+import { Stack } from "../../../../../components/Stack";
+import { Text } from "../../../../../components/Text";
 import { ThreadMessage } from "../../../../../components/ThreadMessage";
 import { getThreadEmailParticipants } from "../../../../../data/emails/getThreadEmailParticipants";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
+import { classnames } from "../../../../../utils/classnames";
 import { upsertFileAction } from "../../files/actions";
 import {
   markInvoiceAsPaidAction,
@@ -46,27 +51,28 @@ export async function InboxMessageThread({
         </div>
       )}
 
-      <div className={styles.pageHeader}>
-        <div>
-          <h2 className={styles.pageHeaderSubject}>{subject}</h2>
-          <div className={styles.pageHeaderSender}>
-            {senderName} ({senderEmail})
-          </div>
-        </div>
-
-        <div className={styles.pageHeaderActions}>
-          <div>
-            Started <Date timestamp={sentAt} />
-          </div>
-
+      <Stack
+        className={classnames(styles.pageHeader, s({ p: "normal" }))}
+        gap="xs"
+      >
+        <Group justify="space-between">
+          <Group gap="small">
+            <Header priority={2}>{subject}</Header>
+            <Text as="span" color="secondary">
+              <Date timestamp={sentAt} />
+            </Text>
+          </Group>
           <ExternalLink
             href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
             target="_blank"
           >
             <Button icon={<ShareIcon />} size="small" style="tertiary" />
           </ExternalLink>
-        </div>
-      </div>
+        </Group>
+        <Text color="secondary">
+          {senderName} ({senderEmail})
+        </Text>
+      </Stack>
 
       {messages.map((message) => (
         <ThreadMessage

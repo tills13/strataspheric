@@ -1,4 +1,5 @@
 import { iconColorVar, vars } from "../../app/theme.css";
+import { buttonBase } from "../Button/style.css";
 import { invoiceChip } from "../InvoiceChip/style.css";
 import { style } from "@vanilla-extract/css";
 
@@ -8,30 +9,22 @@ export const timelineEntry = style({
   color: vars.colors.white,
 });
 
-export const timelineEntryHeader = style({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-start",
-  gap: vars.spacing.normal,
-  padding: vars.spacing.normal,
-});
+export const timelineEntryAddToAgendaButton = style([
+  buttonBase,
+  {
+    color: vars.colors.white,
+    backgroundColor: vars.colors.grey800,
+    border: vars.colors.grey800,
 
-export const timelineEntryMessage = style({
-  padding: vars.spacing.normal,
-  whiteSpace: "pre-line",
-});
+    selectors: {
+      "&:hover": {
+        backgroundColor: vars.colors.grey900,
+        border: vars.colors.grey900,
+      },
+    },
 
-export const timelineEntryDate = style({
-  fontSize: vars.fontSizes.small,
-  lineHeight: "20px",
-  color: vars.colors.grey400,
-});
-
-export const timelineAttachment = style({});
-
-export const timelineEntryAddToAgendaButton = style({
-  color: vars.colors.white,
-  vars: {
-    [iconColorVar]: vars.colors.white,
+    vars: {
+      [iconColorVar]: vars.colors.white,
+    },
   },
-});
+]);

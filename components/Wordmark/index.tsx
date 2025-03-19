@@ -1,7 +1,9 @@
 import * as styles from "./style.css";
 
 import { classnames } from "../../utils/classnames";
+import { Group } from "../Group";
 import { Logo } from "../Logo";
+import { Text } from "../Text";
 
 interface Props {
   className?: string;
@@ -9,9 +11,11 @@ interface Props {
 
 export function Wordmark({ className }: Props) {
   return (
-    <div className={classnames(styles.wordmark, className)}>
+    <Group gap="small" className={classnames(styles.wordmark, className)}>
       <Logo className={styles.wordmarkLogo} />
-      Strataspheric
-    </div>
+      <Text as="span" className={styles.wordmarkText} color="unset">
+        Strataspheric
+      </Text>
+    </Group>
   );
 }

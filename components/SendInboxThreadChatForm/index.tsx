@@ -20,7 +20,7 @@ export function SendInboxThreadChatForm({
 }: Props) {
   return (
     <form className={className} action={sendInboxThreadChat}>
-      <Stack className={s({ mb: "large" })}>
+      <Stack>
         <TextArea
           className={s({ w: "full" })}
           name="message"
@@ -29,21 +29,19 @@ export function SendInboxThreadChatForm({
           required
         />
 
-        <div className={s({ mh: "small" })}>
-          {upsertFile && (
-            <AttachFileField name="fileId" upsertFile={upsertFile} />
-          )}
-        </div>
-      </Stack>
+        {upsertFile && (
+          <AttachFileField name="fileId" upsertFile={upsertFile} />
+        )}
 
-      <StatusButton
-        color="primary"
-        style="primary"
-        iconRight={<SendIcon />}
-        type="submit"
-      >
-        Send Chat
-      </StatusButton>
+        <StatusButton
+          color="primary"
+          style="primary"
+          iconRight={<SendIcon />}
+          type="submit"
+        >
+          Send Chat
+        </StatusButton>
+      </Stack>
     </form>
   );
 }

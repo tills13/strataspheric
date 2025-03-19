@@ -5,9 +5,9 @@ import React from "react";
 import { classnames } from "../../utils/classnames";
 
 interface Props {
-  as?: "address" | "label" | "p" | "span";
+  as?: "address" | "label" | "p" | "span" | "h1";
   className?: string;
-  color?: keyof typeof styles.textColors;
+  color?: keyof typeof styles.textColors | "unset";
   family?: keyof typeof styles.textFamilies;
   noWrap?: boolean;
   size?: keyof typeof styles.textSizes;
@@ -31,7 +31,8 @@ export function Text({
       className={classnames(
         styles.text,
         styles.textSizes[size],
-        color ? styles.textColors[color] : styles.textColorInherit,
+        color !== "unset" &&
+          (color ? styles.textColors[color] : styles.textColorInherit),
         family && styles.textFamilies[family],
         weight && styles.textWeights[weight],
         noWrap && styles.textNoWrap,

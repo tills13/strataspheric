@@ -5,24 +5,27 @@ import React from "react";
 
 import { classnames } from "../../utils/classnames";
 
-interface Props {
-  className?: string;
-  children: React.ReactNode;
+interface Props extends React.AllHTMLAttributes<HTMLDivElement> {
   divider?: React.ReactNode;
-
   gap?: keyof typeof vars.spacing;
   tabIndex?: number;
 }
 
 /** stack is a vertical stacking of elements */
 export function Stack(props: Props) {
-  const { className, children, divider, gap = "normal", tabIndex } = props;
+  const {
+    className,
+    children,
+    divider,
+    gap = "normal",
+    ...delegateProps
+  } = props;
   const numChildren = React.Children.count(children);
 
   return (
     <div
       className={classnames(styles.stack, styles.stackGap[gap], className)}
-      tabIndex={tabIndex}
+      {...delegateProps}
     >
       {React.Children.map(children, (c, i) => (
         <>

@@ -90,7 +90,7 @@ export function SendInboxMessageForm({
         </Header>
       )}
 
-      <Stack className={s({ mb: "normal" })} gap="normal">
+      <Stack gap="normal">
         {showSubjectInput && (
           <Input
             className={styles.formInput}
@@ -107,31 +107,26 @@ export function SendInboxMessageForm({
           rows={3}
           required
         />
+
+        {(upsertFile || upsertInvoice) && (
+          <div className={classnames(styles.formActionsContainer)}>
+            {upsertFile && (
+              <AttachFileField name="fileId" upsertFile={upsertFile} />
+            )}
+
+            {upsertInvoice && (
+              <AttachInvoiceField
+                name="invoiceId"
+                upsertInvoice={upsertInvoice}
+              />
+            )}
+          </div>
+        )}
+
+        <StatusButton color="primary" iconRight={<SendIcon />} type="submit">
+          Send Message
+        </StatusButton>
       </Stack>
-
-      {(upsertFile || upsertInvoice) && (
-        <div
-          className={classnames(
-            s({ mb: "large" }),
-            styles.formActionsContainer,
-          )}
-        >
-          {upsertFile && (
-            <AttachFileField name="fileId" upsertFile={upsertFile} />
-          )}
-
-          {upsertInvoice && (
-            <AttachInvoiceField
-              name="invoiceId"
-              upsertInvoice={upsertInvoice}
-            />
-          )}
-        </div>
-      )}
-
-      <StatusButton color="primary" iconRight={<SendIcon />} type="submit">
-        Send Message
-      </StatusButton>
     </form>
   );
 }

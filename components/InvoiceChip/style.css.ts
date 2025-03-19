@@ -1,5 +1,5 @@
 import { breakpoints, iconColorVar, vars } from "../../app/theme.css";
-import { timelineAttachment } from "../MeetingTimelineItem/style.css";
+import { timelineEntry } from "../MeetingTimelineItem/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const invoiceChip = style({
@@ -8,7 +8,7 @@ export const invoiceChip = style({
   borderRadius: vars.borderRadius,
 
   selectors: {
-    [`${timelineAttachment}&`]: {
+    [`${timelineEntry} &`]: {
       backgroundColor: vars.colors.grey800,
       borderRadius: 0,
     },
@@ -29,10 +29,6 @@ export const invoiceBody = style({
 
 export const invoiceAmount = style({
   fontSize: vars.fontSizes.large,
-});
-
-export const markPaidButton = style({
-  // flex: 1,
 });
 
 export const invoiceHeaderStatus = style({

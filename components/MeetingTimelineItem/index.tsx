@@ -9,11 +9,14 @@ import type { StrataActivity } from "../../app/api/stratas/listActivity/route";
 import { classnames } from "../../utils/classnames";
 import { Date } from "../Date";
 import { FileAttachmentChip } from "../FileAttachmentChip";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { AddIcon } from "../Icon/AddIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
 import { InvoiceChip } from "../InvoiceChip";
+import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
 
 interface Props {
   addItemToAgenda: () => void;
@@ -25,16 +28,11 @@ function MeetingTimelineItemBody(item: Props & StrataActivity) {
 
   if (item.type === "file") {
     return (
-      <FileAttachmentChip
-        className={styles.timelineAttachment}
-        fileName={item.fileName}
-        filePath={item.filePath}
-      />
+      <FileAttachmentChip fileName={item.fileName} filePath={item.filePath} />
     );
   } else if (item.type === "invoice") {
     return (
       <InvoiceChip
-        className={styles.timelineAttachment}
         invoice={{
           amount: item.invoiceAmount,
           createdAt: item.date,
@@ -50,7 +48,6 @@ function MeetingTimelineItemBody(item: Props & StrataActivity) {
   } else if (item.type === "inbox_message") {
     return (
       <InboxMessageQuote
-        className={styles.timelineAttachment}
         senderName={sourceUserName}
         message={item.message}
         messageId={item.messageId}
@@ -62,7 +59,6 @@ function MeetingTimelineItemBody(item: Props & StrataActivity) {
   } else if (item.type === "chat") {
     return (
       <InboxMessageQuote
-        className={styles.timelineAttachment}
         senderName={sourceUserName}
         message={item.chatMessage}
         messageId={item.chatId}
@@ -73,7 +69,7 @@ function MeetingTimelineItemBody(item: Props & StrataActivity) {
     );
   }
 
-  return <p className={styles.timelineEntryMessage}>{item.eventName}</p>;
+  return <p>{item.eventName}</p>;
 }
 
 export function MeetingTimelineItem(props: Props) {
@@ -97,21 +93,23 @@ export function MeetingTimelineItem(props: Props) {
   }
 
   return (
-    <div className={classnames(styles.timelineEntry, s({ mb: "small" }))}>
-      <div className={styles.timelineEntryHeader}>
+    <Stack
+      className={classnames(
+        styles.timelineEntry,
+        s({ mb: "small", p: "normal" }),
+      )}
+    >
+      <Group justify="space-between">
         <Header priority={3}>{title}</Header>
-        <Date
-          className={styles.timelineEntryDate}
-          output="date"
-          timestamp={item.date}
-        />
-      </div>
+        <Text color="secondary">
+          <Date output="compact" timestamp={item.date} />
+        </Text>
+      </Group>
 
       <MeetingTimelineItemBody {...props} />
 
       <StatusButton
         className={styles.timelineEntryAddToAgendaButton}
-        style="tertiary"
         iconRight={<AddIcon />}
         onClick={() =>
           startTransition(() => {
@@ -122,6 +120,6 @@ export function MeetingTimelineItem(props: Props) {
       >
         Add to Agenda
       </StatusButton>
-    </div>
+    </Stack>
   );
 }

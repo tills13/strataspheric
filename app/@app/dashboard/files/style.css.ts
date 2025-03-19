@@ -52,8 +52,6 @@ export const fileListLink = style({ display: "block", overflow: "hidden" });
 export const filesListFileHeaderName = style({
   display: "block",
   textOverflow: "ellipsis",
-  fontWeight: vars.fontWeights.bold,
-  fontSize: vars.fontSizes.large,
   overflow: "hidden",
   whiteSpace: "nowrap",
 });

@@ -3,9 +3,11 @@ import * as styles from "./style.css";
 import { classnames } from "../../utils/classnames";
 import { truncate } from "../../utils/truncate";
 import { Date } from "../Date";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { QuoteIcon } from "../Icon/QuoteIcon";
 import { InternalLink } from "../Link/InternalLink";
+import { Text } from "../Text";
 import { Wrap } from "../Wrap";
 
 interface Props {
@@ -49,23 +51,21 @@ export function InboxMessageQuote({
         </a>
       )}
     >
-      <div className={styles.quotedMessageHeader}>
+      <Group justify="space-between">
         <Header priority={3}>
           <QuoteIcon className={styles.quotedMessageIcon} /> {senderName}{" "}
           sent...
         </Header>
-        <Date
-          className={styles.quotedMessageTimestamp}
-          output="date"
-          timestamp={timestamp}
-        />
-      </div>
+        <Text as="span">
+          <Date output="compact" timestamp={timestamp} />
+        </Text>
+      </Group>
 
-      <p className={styles.quotedMessageMessage}>
+      <Text>
         {maxPreviewLength === -1
           ? message
           : truncate(message, maxPreviewLength)}
-      </p>
+      </Text>
     </Wrap>
   );
 }

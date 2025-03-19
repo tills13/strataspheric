@@ -8,8 +8,12 @@ import { InboxThreadChats } from "../../../../../components/InboxThreadChats";
 import { getThreadEmailParticipants } from "../../../../../data/emails/getThreadEmailParticipants";
 import { getThread } from "../../../../../data/inbox/getThread";
 import { Thread } from "../../../../../data/inbox/getThreads";
-import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import {
+  getCurrentStrata,
+  mustGetCurrentStrata,
+} from "../../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../../data/users/permissions";
+import { classnames } from "../../../../../utils/classnames";
 import { createInboxMessageAction } from "../actions";
 import { InboxMessageThread } from "./InboxMessageThread";
 import InboxThreadChatPanel from "./InboxThreadChatPanel";
@@ -22,11 +26,7 @@ export default async function Page({
   searchParams: { viewId },
 }) {
   const session = await auth();
-  const strata = await getCurrentStrata();
-
-  if (!strata) {
-    notFound();
-  }
+  const strata = await mustGetCurrentStrata();
 
   let thread: Thread;
 
@@ -50,10 +50,19 @@ export default async function Page({
     redirect("/dashboard");
   }
 
+  const canSeeChats = can(
+    session?.user,
+    p("stratas", "inbox_thread_chats", "view"),
+  );
+
   return (
     <>
       <DashboardHeader />
-      <div className={styles.threadPageContainer}>
+      <div
+        className={classnames(
+          canSeeChats && styles.threadPageContainerWithChats,
+        )}
+      >
         <InboxMessageThread
           sendInboxThreadChatAction={sendInboxThreadChatAction.bind(
             undefined,
@@ -65,7 +74,7 @@ export default async function Page({
           )}
           threadId={threadId}
         />
-        <InboxThreadChatPanel threadId={threadId} />
+        {canSeeChats && <InboxThreadChatPanel threadId={threadId} />}
       </div>
     </>
   );

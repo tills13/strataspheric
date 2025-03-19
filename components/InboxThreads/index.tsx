@@ -22,7 +22,7 @@ export function InboxThreads({ deleteThread, threads }: Props) {
   const can = useCan();
 
   return (
-    <div>
+    <>
       {threads.length === 0 && (
         <div className={styles.inboxMessagesNoMessages}>
           <Header priority={2}>Inbox Zero 🎉</Header>
@@ -74,6 +74,6 @@ export function InboxThreads({ deleteThread, threads }: Props) {
           </InternalLink>
         ))}
       </div>
-    </div>
+    </>
   );
 }

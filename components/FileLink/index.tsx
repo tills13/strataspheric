@@ -3,26 +3,23 @@ import React from "react";
 import { assetsOrigin } from "../../constants";
 import { ExternalLink } from "../Link/ExternalLink";
 
-interface Props {
-  className?: string;
+type ExternalLinkProps = React.ComponentProps<typeof ExternalLink>;
+
+interface Props extends ExternalLinkProps {
   path: string;
 }
 
 export function FileLink({
   children,
-  className,
   path,
+  ...delegateProps
 }: React.PropsWithChildren<Props>) {
   if (path[0] !== "/") {
     path = "/" + path;
   }
 
   return (
-    <ExternalLink
-      className={className}
-      target="_blank"
-      href={assetsOrigin + path}
-    >
+    <ExternalLink target="_blank" href={assetsOrigin + path} {...delegateProps}>
       {children}
     </ExternalLink>
   );

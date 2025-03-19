@@ -52,7 +52,6 @@ export function InvoiceChip({
 
         {can(p("stratas", "invoices", "edit")) && markInvoiceAsPaid && (
           <StatusButton
-            className={styles.markPaidButton}
             color="success"
             iconRight={<CircleCheckIcon />}
             iconTextBehaviour="centerRemainder"

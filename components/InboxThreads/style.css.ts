@@ -5,14 +5,13 @@ import { padding } from "../../theme";
 
 export const inboxMessagesContainer = style({
   display: "grid",
-  gridTemplateColumns: "minmax(0px, auto) min-content",
+  gridTemplateColumns: "auto min-content",
   columnGap: vars.spacing.normal,
   gridTemplateRows: "repeat(10, min-content)",
 
   "@media": {
     [breakpoints.tablet]: {
       columnGap: vars.spacing.large,
-      gridTemplateColumns: "minmax(0px, min-content) min-content",
     },
   },
 });
