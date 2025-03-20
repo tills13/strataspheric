@@ -5,7 +5,7 @@ import { can, p } from "../../../../data/users/permissions";
 
 export const runtime = "edge";
 
-export const GET = auth(async (req: Request) => {
+export const GET = auth(async () => {
   const [session, strata] = await Promise.all([auth(), getCurrentStrata()]);
 
   if (!strata) {

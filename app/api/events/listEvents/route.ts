@@ -21,7 +21,7 @@ function intParam(sp: URLSearchParams, paramName: string): number {
   return intValue;
 }
 
-export const GET = auth(async (req: Request) => {
+export const GET = auth(async (_, req) => {
   const strata = await mustGetCurrentStrata();
   const u = new URL(req.url);
 

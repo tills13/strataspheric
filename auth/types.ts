@@ -19,6 +19,12 @@ export interface CookieConfig {
 }
 
 export interface Config {
+  decorateSessionUser: (baseUser: User) => User | Promise<User>;
   key: Record<string, unknown>;
   cookies?: CookieConfig;
 }
+
+export type AuthenticatedApiHandler = (
+  session: Session,
+  req: Request,
+) => Promise<Response>;

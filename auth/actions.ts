@@ -3,13 +3,18 @@ export async function signIn(email: string, password: string) {
   body.set("email", email);
   body.set("password", password);
 
-  const response = await fetch("/api/session/create", {
-    method: "POST",
-    body,
-  });
+  try {
+    const response = await fetch("/api/session/create", {
+      method: "POST",
+      body,
+    });
 
-  // todo error handling
-  return response.json();
+    return response.json();
+  } catch (e) {
+    return {
+      error: e instanceof Error ? e.message : `${e}`,
+    };
+  }
 }
 
 export async function signOut() {

@@ -60,7 +60,7 @@ export type StrataActivity =
   | ChatActivity
   | FileActivity;
 
-export const GET = auth(async (req: Request) => {
+export const GET = auth(async (_, req) => {
   const strata = await getCurrentStrata();
 
   if (!strata) {
