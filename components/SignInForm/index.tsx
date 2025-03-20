@@ -2,13 +2,13 @@
 
 import * as styles from "./style.css";
 
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { signIn as signInLegacy } from "next-auth/react";
 import React, { useState } from "react";
 
+import { signIn } from "../../auth2/actions";
 import { protocol, tld } from "../../constants";
-import { sleep } from "../../utils";
 import { classnames } from "../../utils/classnames";
+import * as formdata from "../../utils/formdata";
 import { Button } from "../Button";
 import { Input } from "../Input";
 import { ExternalLink } from "../Link/ExternalLink";
@@ -31,10 +31,14 @@ export function SignInForm({ className }: Props) {
     setHasError(false);
 
     try {
-      await sleep(10000);
-      const result = await signIn("credentials", {
-        email: fd.get("email"),
-        password: fd.get("password"),
+      await signIn(
+        formdata.getString(fd, "email"),
+        formdata.getString(fd, "password"),
+      );
+
+      const result = await signInLegacy("credentials", {
+        email: formdata.getString(fd, "email"),
+        password: formdata.getString(fd, "password"),
         redirect: false,
       });
 

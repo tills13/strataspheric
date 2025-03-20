@@ -2,7 +2,6 @@
 
 import * as styles from "./styles.css";
 
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 import { ApproveStrataMembershipButton } from "../../../../components/ApproveStrataMembershipButton";
@@ -14,6 +13,7 @@ import { Modal } from "../../../../components/Modal";
 import { RemoveButton } from "../../../../components/RemoveButton";
 import { StrataMembership, User } from "../../../../data";
 import { can } from "../../../../data/users/permissions";
+import { useSession } from "../../../../hooks/useSession";
 
 interface Props {
   approveStrataMembership: (userId: string) => void;
@@ -31,7 +31,7 @@ export function MembershipTable({
   const [selectedMembership, setSelectedMembership] = useState<
     StrataMembership & User
   >();
-  const { data: session } = useSession();
+  const session = useSession();
 
   const canSeeMemberDetails = !!session;
   const canDelete = can(session?.user, "stratas.memberships.delete");

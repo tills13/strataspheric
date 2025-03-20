@@ -9,7 +9,8 @@
     "lint": "next lint",
     "lint:typescript": "npx tsc --noEmit",
     "prettier": "prettier -l **/*",
-    "prettier:fix": "prettier --write -l **/*"
+    "prettier:fix": "prettier --write -l **/*",
+    "dev:generate-key": "tsx auth2/generateKey.ts"
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +34,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "swr": "^2.2.5",
+    "tsx": "^4.19.3",
     "typescript": "^5.5.2",
     "uuidv7": "^0.6.3"
   },

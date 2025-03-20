@@ -2,7 +2,9 @@ import { Metadata, ResolvingMetadata } from "next";
 import { SessionProvider } from "next-auth/react";
 
 import { auth } from "../../auth";
+import { auth as auth2 } from "../../auth2";
 import { GlobalDashboardHeader } from "../../components/GlobalDashboardHeader";
+import { SessionProvider as SessionProvider2 } from "../../components/SessionProvider";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { SWRProvider } from "./SWRProvider";
 
@@ -28,13 +30,16 @@ export default async function RootAppLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
+  const session2 = await auth2();
 
   return (
     <SWRProvider>
       <SessionProvider session={session}>
-        <GlobalDashboardHeader />
+        <SessionProvider2 session={session2}>
+          <GlobalDashboardHeader />
 
-        {children}
+          {children}
+        </SessionProvider2>
       </SessionProvider>
     </SWRProvider>
   );

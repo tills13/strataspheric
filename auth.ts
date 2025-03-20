@@ -11,12 +11,10 @@ const isNotDev = process.env.NODE_ENV !== "development";
 
 export const authOptions: NextAuthConfig = {
   callbacks: {
-    jwt({ user, token, ...rest }, ...other) {
+    jwt({ user, token }) {
       if (user) {
         token.id = user.id;
       }
-
-      token.something;
 
       return token;
     },
