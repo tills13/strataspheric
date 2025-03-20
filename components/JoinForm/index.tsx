@@ -1,9 +1,5 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
-import * as styles from "./style.css";
-
-import { signIn } from "next-auth/react";
 import React from "react";
 import { useFormState } from "react-dom";
 
@@ -34,12 +30,7 @@ export function JoinForm({ className, onSubmit, strata }: Props) {
       const nextState = await onSubmit(state, fd);
 
       if (nextState?.success) {
-        await signIn("credentials", {
-          email: fd.get("email"),
-          password: fd.get("password"),
-          redirect: false,
-        });
-
+        await signIn(fd.get("email"), fd.get("password"));
         location.href = "/";
       }
 

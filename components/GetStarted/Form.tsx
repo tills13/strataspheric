@@ -1,22 +1,20 @@
 "use client";
 
-import { vars } from "../../app/theme.css";
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { Session } from "next-auth";
-import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
 import { SubmitGetStartedState } from "../../app/@marketing/get-started/actions";
+import { signIn } from "../../auth/actions";
+import { Session } from "../../auth/types";
 import { tld } from "../../constants";
 import { PricingPlan } from "../../data/strataPlans/constants";
 import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 import { classnames } from "../../utils/classnames";
 import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
 import { pluralize } from "../../utils/pluralize";
-import { Checkbox } from "../Checkbox";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
@@ -53,11 +51,7 @@ export function GetStartedForm({
       const nextState = await submitGetStarted(state, fd);
 
       if (nextState?.success === true) {
-        await signIn("credentials", {
-          email: fd.get("email"),
-          password: fd.get("password"),
-          redirect: false,
-        });
+        await signIn(fd.get("email"), fd.get("password"));
 
         location.href = nextState.redirect;
       }

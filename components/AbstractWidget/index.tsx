@@ -2,11 +2,11 @@
 
 import * as styles from "./style.css";
 
-import { useSession } from "next-auth/react";
 import React, { startTransition, useState } from "react";
 
 import { StrataWidget } from "../../data";
 import { can } from "../../data/users/permissions";
+import { useSession } from "../../hooks/useSession";
 import { classnames } from "../../utils/classnames";
 import { CreateOrUpdateStrataWidgetForm } from "../CreateOrUpdateStrataWidgetForm";
 import { DropdownActions, filterIsAction } from "../DropdownActions";
@@ -33,7 +33,7 @@ export function AbstractWidget({
   widgetTitle,
   upsertStrataWidget,
 }: React.PropsWithChildren<Props>) {
-  const { data: session } = useSession();
+  const session = useSession();
   const [showEditWidgetModal, setShowEditWidgetModal] = useState(false);
 
   const widgetActions = [

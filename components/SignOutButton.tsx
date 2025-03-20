@@ -1,8 +1,8 @@
 "use client";
 
-import { signOut } from "next-auth/react";
 import React from "react";
 
+import { signOut } from "../auth/actions";
 import { Button } from "./Button";
 import { SignOutIcon } from "./Icon/SignOutIcon";
 
@@ -12,7 +12,7 @@ export function SignOutButton(props: Props) {
   return (
     <Button
       onClick={async () => {
-        await signOut({ redirect: false });
+        await signOut();
         location.href = "/";
       }}
       iconRight={<SignOutIcon />}

@@ -1,7 +1,5 @@
 "use server";
 
-import "next-auth/react";
-
 import { auth } from "../../../auth";
 import { updateUser } from "../../../data/users/updateUser";
 import * as formdata from "../../../utils/formdata";

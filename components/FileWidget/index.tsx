@@ -3,11 +3,11 @@
 import * as abstractWidgetStyles from "../AbstractWidget/style.css";
 import * as styles from "./style.css";
 
-import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 
 import { File, StrataWidget } from "../../data";
 import { can, p } from "../../data/users/permissions";
+import { useSession } from "../../hooks/useSession";
 import {
   AbstractWidget,
   type Props as AbstractWidgetProps,
@@ -35,7 +35,7 @@ export function FileWidget({
   widget,
   upsertStrataWidget,
 }: Props) {
-  const { data: session } = useSession();
+  const session = useSession();
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   return (

@@ -1,3 +1,4 @@
+import { getJwtFromCookies } from "./cookies";
 import { Config } from "./types";
 
 // 24 hour validity
@@ -44,6 +45,23 @@ export function parseJwt(rawJwt: string) {
     payload: JSON.parse(Buffer.from(payload, "base64url").toString("ascii")),
     sig: Buffer.from(sig, "base64url"),
   };
+}
+
+export async function readJwtFromRequest(config: Config, req: Request) {
+  const rawJwt = getJwtFromCookies(req.headers.get("cookie"));
+
+  if (!rawJwt) {
+    throw new Error("jwt missing");
+  }
+
+  const key = await getKey(config);
+  const jwtIsValid = await verifyJwt(key, rawJwt);
+
+  if (!jwtIsValid) {
+    throw new Error("jwt is invalid");
+  }
+
+  return parseJwt(rawJwt);
 }
 
 export function verifyJwt(key: CryptoKey, rawJwt: string) {

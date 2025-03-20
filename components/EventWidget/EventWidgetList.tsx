@@ -3,11 +3,11 @@
 import * as abstractWidgetStyles from "../AbstractWidget/style.css";
 import * as styles from "./style.css";
 
-import { useSession } from "next-auth/react";
 import { startTransition } from "react";
 
 import { Event } from "../../data";
 import { can, p } from "../../data/users/permissions";
+import { useSession } from "../../hooks/useSession";
 import { Date } from "../Date";
 import { DropdownActions } from "../DropdownActions";
 import { Header } from "../Header";
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function EventWidgetList({ deleteEvent, events }: Props) {
-  const { data: session } = useSession();
+  const session = useSession();
   return (
     <div className={abstractWidgetStyles.abstractWidgetList}>
       {events.length === 0 && (

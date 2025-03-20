@@ -3,20 +3,17 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { useSession } from "next-auth/react";
-
 import {
   type Chat,
   isThreadChatWithFile,
   isThreadChatWithQuote,
 } from "../../data/inbox/getThreadChats";
+import { useSession } from "../../hooks/useSession";
 import { classnames } from "../../utils/classnames";
 import { Date } from "../Date";
 import { FileAttachmentChip } from "../FileAttachmentChip";
-import { FileLink } from "../FileLink";
 import { Group } from "../Group";
 import { Header } from "../Header";
-import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
@@ -24,13 +21,12 @@ import { Text } from "../Text";
 interface Props {}
 
 export function InboxThreadChat({ ...chat }: Props & Chat) {
-  const { data: session } = useSession();
-  const currentUser = session?.user!;
+  const session = useSession();
 
   return (
     <Stack
       className={classnames(
-        chat.userId === currentUser.id
+        chat.userId === session?.user.id
           ? styles.selfChatBubble
           : styles.chatBubble,
         s({ p: "normal" }),

@@ -1,8 +1,8 @@
 "use client";
 
-import { Session } from "next-auth";
 import React, { useTransition } from "react";
 
+import { User } from "../../auth/types";
 import { Strata, StrataMembership } from "../../data";
 import { Button } from "../Button";
 import { ArrowForwardIcon } from "../Icon/ArrowForwardIcon";
@@ -14,7 +14,7 @@ interface Props {
   joinStrata: () => void;
   strata: Strata;
   strataMembership?: StrataMembership;
-  user?: Session["user"];
+  user?: User;
 }
 
 export function JoinStrataButton({

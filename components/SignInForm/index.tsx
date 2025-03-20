@@ -2,10 +2,9 @@
 
 import * as styles from "./style.css";
 
-import { signIn as signInLegacy } from "next-auth/react";
 import React, { useState } from "react";
 
-import { signIn } from "../../auth2/actions";
+import { signIn } from "../../auth/actions";
 import { protocol, tld } from "../../constants";
 import { classnames } from "../../utils/classnames";
 import * as formdata from "../../utils/formdata";
@@ -31,16 +30,10 @@ export function SignInForm({ className }: Props) {
     setHasError(false);
 
     try {
-      await signIn(
+      const result = await signIn(
         formdata.getString(fd, "email"),
         formdata.getString(fd, "password"),
       );
-
-      const result = await signInLegacy("credentials", {
-        email: formdata.getString(fd, "email"),
-        password: formdata.getString(fd, "password"),
-        redirect: false,
-      });
 
       if (!result || result.error) {
         setHasError(true);

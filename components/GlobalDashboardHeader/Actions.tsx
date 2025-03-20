@@ -4,7 +4,7 @@ import * as styles from "./style.css";
 
 import { Suspense } from "react";
 
-import { auth } from "../../auth2";
+import { auth } from "../../auth";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { InternalLink } from "../Link/InternalLink";

@@ -2,9 +2,9 @@
 
 import { s } from "../../../sprinkles.css";
 
-import { Session } from "next-auth";
 import { useFormState } from "react-dom";
 
+import { User } from "../../../auth/types";
 import { Header } from "../../../components/Header";
 import { SaveIcon } from "../../../components/Icon/SaveIcon";
 import { Input } from "../../../components/Input";
@@ -13,7 +13,7 @@ import { classnames } from "../../../utils/classnames";
 import { updateUserActionReducer } from "./actions";
 
 interface Props {
-  user: Session["user"];
+  user: User;
 }
 
 export function UpdateProfileForm({ user }: Props) {

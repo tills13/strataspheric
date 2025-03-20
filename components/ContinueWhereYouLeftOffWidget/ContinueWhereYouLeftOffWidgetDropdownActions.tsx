@@ -2,8 +2,7 @@
 
 import * as styles from "./style.css";
 
-import { signOut } from "next-auth/react";
-
+import { signOut } from "../../auth/actions";
 import { protocol, tld } from "../../constants";
 import { DropdownActions } from "../DropdownActions";
 import { PersonIcon } from "../Icon/PersonIcon";
@@ -15,7 +14,7 @@ export function ContinueWhereYouLeftOffWidgetDropdownActions() {
       actions={[
         {
           async action() {
-            await signOut({ redirect: false });
+            await signOut();
             location.href = protocol + "//" + tld;
           },
           label: "Sign Out",

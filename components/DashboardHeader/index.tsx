@@ -3,11 +3,11 @@
 import * as styles from "./style.css";
 
 import { assignInlineVars } from "@vanilla-extract/dynamic";
-import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 import { can, p } from "../../data/users/permissions";
+import { useSession } from "../../hooks/useSession";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
 import { Group } from "../Group";
@@ -68,7 +68,7 @@ interface Props {
 }
 
 export function DashboardHeader({ actions }: Props) {
-  const { data: session } = useSession();
+  const session = useSession();
   const pathname = usePathname();
   const [mobileMenuExpanded, setMobileMenuExpanded] = useState(false);
 

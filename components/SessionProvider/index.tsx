@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-import { Session } from "../../auth2/types";
+import { Session } from "../../auth/types";
 
 export const SessionCtx = React.createContext<Session | undefined>(undefined);
 
@@ -24,8 +24,10 @@ export function SessionProvider({
       setClientSession(await response.json());
     }
 
-    refreshSession();
-  }, []);
+    if (serverSession && serverSession.exp > Date.now()) {
+      refreshSession();
+    }
+  }, [serverSession]);
 
   return (
     <SessionCtx.Provider value={clientSession}>{children}</SessionCtx.Provider>
