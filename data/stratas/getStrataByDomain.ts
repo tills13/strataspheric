@@ -15,8 +15,8 @@ export async function mustGetCurrentStrata(): Promise<Strata> {
   return s;
 }
 
-export function getCurrentStrata() {
-  return getStrataByDomain(getDomain());
+export async function getCurrentStrata() {
+  return getStrataByDomain(await getDomain());
 }
 
 export const getStrataByDomain = cache(

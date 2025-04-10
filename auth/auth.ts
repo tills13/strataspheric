@@ -9,16 +9,17 @@ export function auth(
   ...args: [] | [AuthenticatedApiHandler]
 ): any {
   if (args.length === 0) {
-    const head = headers();
-    const token = getJwtFromCookies(head.get("cookie"));
+    return headers().then((head) => {
+      const token = getJwtFromCookies(head.get("cookie"));
 
-    if (!token) {
-      return undefined;
-    }
+      if (!token) {
+        return undefined;
+      }
 
-    const { payload } = parseJwt(token);
+      const { payload } = parseJwt(token);
 
-    return payload;
+      return payload;
+    });
   } else {
     const [apiHandler] = args;
     return async (req: Request) => {

@@ -17,15 +17,21 @@ import { Modal } from "../Modal";
 import { Wrap } from "../Wrap";
 
 interface Props {
+  createOrUpdateEventModalTitle?: React.ReactNode;
+  createOrUpdateEventFormSubmitLabel?: React.ReactNode;
   events: Array<Event & { meetingId?: string }>;
   date: Date;
-  deleteEvent: (eventId: string) => any;
-  upsertEvent: (eventId: string | undefined, fd: FormData) => any;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  deleteEvent?: (eventId: string) => any;
+  upsertEvent?: (eventId: string | undefined, fd: FormData) => any;
 }
 
 export function CalendarDayEvents({
+  createOrUpdateEventModalTitle = "New Event",
+  createOrUpdateEventFormSubmitLabel,
   date,
   events,
+  onClick,
   deleteEvent,
   upsertEvent,
 }: Props) {
@@ -36,7 +42,7 @@ export function CalendarDayEvents({
     <>
       <div
         className={styles.calendarEventTrackDay}
-        onClick={() => setShowNewEventModal(true)}
+        onClick={onClick || (() => setShowNewEventModal(true))}
       >
         {events.map((event, idx) => {
           const startDate = parseTimestamp(event.startDate);
@@ -85,27 +91,14 @@ export function CalendarDayEvents({
                   top: calc(vars.sizes.xs)
                     .add(vars.spacing.xxs)
                     .multiply(idx)
+                    .add("32px")
                     .toString(),
                   width: calc(
-                    calc("100vw")
-                      .subtract(sidebarWidthVar)
-                      .subtract(calc(vars.spacing.normal).multiply(2))
-                      .subtract(
-                        calc(vars.spacing.xs).multiply(
-                          totalLength === 0 ? 6 : totalRemainder - 1,
-                        ),
-                      ),
-                  )
-                    .multiply(totalRemainder / 7)
-                    .toString(),
-                  maxWidth: calc(
-                    calc("100vw")
-                      .subtract(sidebarWidthVar)
-                      .subtract(calc(vars.spacing.normal).multiply(2))
-                      .subtract(
-                        calc(vars.spacing.xs).multiply(7 - date.getDay() - 1),
-                      ),
-                  )
+                    calc(styles.calendarEventTrackWidth)
+                      .multiply(totalRemainder / 7)
+                      .subtract(vars.spacing.xs),
+                  ).toString(),
+                  maxWidth: calc(styles.calendarEventTrackWidth)
                     .multiply((7 - date.getDay()) / 7)
                     .toString(),
                 }}
@@ -126,23 +119,27 @@ export function CalendarDayEvents({
           );
         })}
       </div>
-      {showNewEventModal && (
-        <Modal closeModal={() => setShowNewEventModal(false)} title="New Event">
+      {showNewEventModal && upsertEvent && (
+        <Modal
+          closeModal={() => setShowNewEventModal(false)}
+          title={createOrUpdateEventModalTitle}
+        >
           <CreateOrUpdateEventForm
             defaultDate={formatDateForDatetime(date)}
+            submitLabel={createOrUpdateEventFormSubmitLabel}
             upsertEvent={upsertEvent.bind(undefined, undefined)}
             onDeleteEvent={() => setShowNewEventModal(false)}
           />
         </Modal>
       )}
-      {selectedEvent && (
+      {selectedEvent && upsertEvent && (
         <Modal
           closeModal={() => setSelectedEvent(undefined)}
           title="Edit Event"
         >
           <CreateOrUpdateEventForm
             upsertEvent={upsertEvent.bind(undefined, selectedEvent.id)}
-            deleteEvent={deleteEvent.bind(undefined, selectedEvent.id)}
+            deleteEvent={deleteEvent?.bind(undefined, selectedEvent.id)}
             onDeleteEvent={() => setSelectedEvent(undefined)}
             event={selectedEvent}
           />

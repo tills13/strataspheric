@@ -1,5 +1,6 @@
 import * as styles from "./style.css";
 
+import { PageProps } from "../../../.next/types/app/@marketing/find/page";
 import { Header } from "../../../components/Header";
 import { RightIcon } from "../../../components/Icon/RightIcon";
 import { InfoPanel } from "../../../components/InfoPanel";
@@ -8,22 +9,19 @@ import { Text } from "../../../components/Text";
 import { protocol } from "../../../constants";
 import { findStratas } from "../../../data/stratas/findStratas";
 
-interface Props {
-  searchParams: Record<string, string>;
-}
-
-export async function FindAStrata({ searchParams }: Props) {
+export async function FindAStrata({
+  searchParams,
+}: {
+  searchParams: Awaited<PageProps["searchParams"]>;
+}) {
   let stratas: Awaited<ReturnType<typeof findStratas>> = [];
+  const { address, name, strataPlan } = searchParams;
 
-  if (
-    searchParams["address"] ||
-    searchParams["name"] ||
-    searchParams["strataPlan"]
-  ) {
+  if (address || name || strataPlan) {
     stratas = await findStratas({
-      nameish: searchParams["name"],
-      planish: searchParams["strataPlan"],
-      address: searchParams["address"],
+      nameish: name,
+      planish: strataPlan,
+      address: address,
     });
   }
 

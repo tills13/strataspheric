@@ -4,10 +4,10 @@ import * as styles from "./style.css";
 import { redirect } from "next/navigation";
 import React from "react";
 
+import { PageProps } from "../../.next/types/app/@app/page";
 import { auth } from "../../auth";
 import { Button } from "../../components/Button";
 import { DividerText } from "../../components/DividerText";
-import { Header } from "../../components/Header";
 import { JoinForm } from "../../components/JoinForm";
 import { InternalLink } from "../../components/Link/InternalLink";
 import { SignInForm } from "../../components/SignInForm";
@@ -18,13 +18,9 @@ import { joinAction } from "../@marketing/join/actions";
 
 export const runtime = "edge";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Record<string, any>;
-}) {
+export default async function Page({ searchParams }: PageProps) {
   const session = await auth();
-  const action = searchParams["action"];
+  const { action } = await searchParams;
 
   if (session) {
     redirect("/dashboard");

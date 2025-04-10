@@ -7,7 +7,7 @@ export const wrapper = style([
   field,
   {
     height: "unset",
-    padding: `${vars.spacing.normal} 0 0 ${vars.spacing.normal}`,
+    padding: 0,
   },
 ]);
 
@@ -19,6 +19,7 @@ export const textareaTextarea = style([
     background: "none",
     boxShadow: "none",
     outline: "none",
+    padding: `12px ${vars.spacing.normal}`,
   },
 ]);
 

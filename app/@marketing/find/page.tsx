@@ -1,24 +1,19 @@
-import { s } from "../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Suspense } from "react";
 
-import { Group } from "../../../components/Group";
+import { PageProps } from "../../../.next/types/app/@marketing/find/page";
 import { Header } from "../../../components/Header";
-import { Panel } from "../../../components/Panel";
 import { Stack } from "../../../components/Stack";
-import { classnames } from "../../../utils/classnames";
 import { StaticPageContainer } from "../StaticPageContainer";
 import { FindAStrata } from "./FindAStrata";
 import { StrataSearchForm } from "./StrataSearchForm";
 
 export const runtime = "edge";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Record<string, string>;
-}) {
+export default async function Page({ searchParams }: PageProps) {
+  const { name, strataPlan, address } = await searchParams;
+
   return (
     <StaticPageContainer>
       <div className={styles.strataSearchContainer}>
@@ -26,16 +21,16 @@ export default async function Page({
           <Header priority={2}>Find a Strata</Header>
 
           <StrataSearchForm
-            name={searchParams["name"]}
-            strataPlan={searchParams["strataPlan"]}
-            address={searchParams["address"]}
+            name={name}
+            strataPlan={strataPlan}
+            address={address}
           />
         </Stack>
         <Stack>
           <Header priority={2}>Stratas</Header>
 
           <Suspense fallback={<div>Searching...</div>}>
-            <FindAStrata searchParams={searchParams} />
+            <FindAStrata searchParams={await searchParams} />
           </Suspense>
         </Stack>
       </div>

@@ -17,7 +17,7 @@ interface Props {
   date: Date;
   events: Event[];
   isOutOfContext: boolean;
-  upsertEvent: (eventId: string | undefined, fd: FormData) => any;
+  upsertEvent?: (eventId: string | undefined, fd: FormData) => any;
 }
 
 export function CalendarDay({
@@ -49,6 +49,10 @@ export function CalendarDay({
       }}
       onDragLeave={() => setIsDropTarget(false)}
       onDrop={(e) => {
+        if (!upsertEvent) {
+          return;
+        }
+
         e.preventDefault();
         const eventId = e.dataTransfer.getData("text/plain");
         const event = events.find((ev) => ev.id === eventId);

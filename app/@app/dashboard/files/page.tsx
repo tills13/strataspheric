@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 
 import { Suspense } from "react";
 
+import { PageProps } from "../../../../.next/types/app/@app/dashboard/files/page";
 import { auth } from "../../../../auth";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { Group } from "../../../../components/Group";
@@ -17,12 +18,9 @@ import { upsertFileAction } from "./actions";
 
 export const runtime = "edge";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { search?: string; visibility?: "private" | "public" };
-}) {
+export default async function Page({ searchParams }: PageProps) {
   const session = await auth();
+  const { search, visibility } = await searchParams;
 
   return (
     <>
@@ -47,20 +45,14 @@ export default async function Page({
           )}
         >
           <Suspense fallback={<FilesLoader />}>
-            <StrataFilesList
-              searchTerm={searchParams["search"]}
-              visibility={searchParams.visibility}
-            />
+            <StrataFilesList searchTerm={search} visibility={visibility} />
           </Suspense>
 
           <div>
             <Header className={s({ mb: "large" })} priority={2}>
               Files Search
             </Header>
-            <FilesSearch
-              searchTerm={searchParams["search"]}
-              visibility={searchParams["visibility"]}
-            />
+            <FilesSearch searchTerm={search} visibility={visibility} />
           </div>
         </div>
       </div>

@@ -1,7 +1,9 @@
 import { breakpoints, vars } from "../../app/theme.css";
-import { style } from "@vanilla-extract/css";
+import { createVar, style } from "@vanilla-extract/css";
 
 import { padding } from "../../theme";
+
+export const calendarEventTrackWidth = createVar();
 
 export const calendar = style({
   display: "grid",
@@ -34,8 +36,6 @@ export const calendarEventTrack = style({
   gridTemplateColumns: "subgrid",
   gridRow: "1/1",
   gridColumn: "1/-1",
-  marginTop: "40px",
-  pointerEvents: "painted",
 });
 
 export const calendarDay = style({
@@ -43,15 +43,9 @@ export const calendarDay = style({
   padding: 0,
   width: "100%",
   height: "100%",
-  cursor: "pointer",
   zIndex: 1,
   borderRadius: vars.borderRadius,
-  border: `1px solid ${vars.colors.borderDefault}`,
-  selectors: {
-    "&:hover": {
-      backgroundColor: vars.colors.grey50,
-    },
-  },
+  border: `2px solid ${vars.colors.borderDefault}`,
 });
 
 export const isDropTarget = style({

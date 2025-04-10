@@ -1,48 +1,23 @@
-"use client";
-
-import { s } from "../../../sprinkles.css";
-import * as styles from "./style.css";
-
-import { useFormState } from "react-dom";
-
-import { Group } from "../../../components/Group";
-import { Header } from "../../../components/Header";
-import { CircleCheckIcon } from "../../../components/Icon/CircleCheckIcon";
-import { InfoPanel } from "../../../components/InfoPanel";
+import { PageProps } from "../../../.next/types/app/@marketing/forgot/page";
 import { Input } from "../../../components/Input";
 import { Panel } from "../../../components/Panel";
 import { Stack } from "../../../components/Stack";
 import { StatusButton } from "../../../components/StatusButton";
-import { Text } from "../../../components/Text";
-import { classnames } from "../../../utils/classnames";
 import { StaticPageContainer } from "../StaticPageContainer";
-import {
-  requestPasswordResetActionReducer,
-  resetPasswordAction,
-} from "./actions";
+import { ForgotPasswordForm } from "./ForgotPasswordForm";
+import { resetPasswordAction } from "./actions";
 
 export const runtime = "edge";
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams: Record<string, string>;
-}) {
-  const [state, requestPasswordResetAction] = useFormState(
-    requestPasswordResetActionReducer,
-    {},
-  );
+export default async function Page({ searchParams }: PageProps) {
+  const { token } = await searchParams;
 
-  if (searchParams["token"]) {
+  if (token) {
     return (
-      <StaticPageContainer>
+      <StaticPageContainer centered>
         <Panel>
           <form action={resetPasswordAction}>
-            <input
-              name="token"
-              type="hidden"
-              defaultValue={searchParams["token"]}
-            />
+            <input name="token" type="hidden" defaultValue={token} />
             <Stack>
               <Input label="Password" name="password" type="password" />
 
@@ -52,15 +27,7 @@ export default function Page({
                 type="password"
               />
 
-              {state.error && (
-                <InfoPanel level="error">
-                  <Text>{state.error}</Text>
-                </InfoPanel>
-              )}
-
-              <StatusButton color="primary" success={state.success}>
-                Reset Password
-              </StatusButton>
+              <StatusButton color="primary">Reset Password</StatusButton>
             </Stack>
           </form>
         </Panel>
@@ -69,34 +36,9 @@ export default function Page({
   }
 
   return (
-    <StaticPageContainer>
+    <StaticPageContainer centered>
       <Panel>
-        <form action={requestPasswordResetAction}>
-          <Text className={classnames(s({ mb: "large" }), styles.blurb)}>
-            Enter the email address associated with your account and we&apos;ll
-            send you a link to reset your password.
-          </Text>
-          <Stack>
-            <Input label="Email Address" name="email_address" />
-
-            {state.error && (
-              <InfoPanel level="error">
-                <Text>{state.error}</Text>
-              </InfoPanel>
-            )}
-
-            {state.success ? (
-              <Group gap="small">
-                <CircleCheckIcon className={styles.submitButtonIcon} /> an email
-                has been sent to the entered address if it exists in our system.
-              </Group>
-            ) : (
-              <StatusButton color="primary" success={state.success}>
-                Send Reset Email
-              </StatusButton>
-            )}
-          </Stack>
-        </form>
+        <ForgotPasswordForm />
       </Panel>
     </StaticPageContainer>
   );

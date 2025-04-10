@@ -1,8 +1,8 @@
 import { StrataPlan, db } from "..";
 import { getDomain } from "../../utils/getDomain";
 
-export function getCurrentStrataPlan(): Promise<StrataPlan> {
-  return getCurrentStrataPlanByDomain(getDomain());
+export async function getCurrentStrataPlan(): Promise<StrataPlan> {
+  return getCurrentStrataPlanByDomain(await getDomain());
 }
 
 export function getCurrentStrataPlanByDomain(domain: string) {

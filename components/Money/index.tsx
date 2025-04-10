@@ -21,9 +21,9 @@ export function Money({
   unit = "$",
 }: Props) {
   return (
-    <div className={overrideClassName || classnames(styles.money, className)}>
+    <span className={overrideClassName || classnames(styles.money, className)}>
       <span className={styles.moneyUnit}>{unit}</span>
       <span className={styles.moneyAmount}>{Dollars.format(amount)}</span>
-    </div>
+    </span>
   );
 }

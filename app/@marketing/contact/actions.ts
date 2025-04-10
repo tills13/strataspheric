@@ -18,7 +18,7 @@ export const submitContactFormActionReducer = withErrorReporting(
     state: SubmitContactFormActionState,
     fd: FormData,
   ): Promise<SubmitContactFormActionState> => {
-    const connectingIp = headers().get("CF-Connecting-IP");
+    const connectingIp = (await headers()).get("CF-Connecting-IP");
     const token = getString(fd, "turnstileToken");
 
     await validateTurnstileToken(token, connectingIp || "");

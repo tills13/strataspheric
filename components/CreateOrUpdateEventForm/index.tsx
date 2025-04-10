@@ -20,6 +20,7 @@ interface Props {
   deleteEvent?: () => Promise<any>;
   event?: Event;
   onDeleteEvent?: () => void;
+  submitLabel?: React.ReactNode;
   upsertEvent: (fd: FormData) => Promise<any>;
 }
 
@@ -28,6 +29,7 @@ export function CreateOrUpdateEventForm({
   deleteEvent,
   event,
   onDeleteEvent,
+  submitLabel,
   upsertEvent,
 }: Props) {
   return (
@@ -80,7 +82,7 @@ export function CreateOrUpdateEventForm({
           style="primary"
           type="submit"
         >
-          {event ? "Update Event" : "Create Event"}
+          {submitLabel || (event ? "Update Event" : "Create Event")}
         </StatusButton>
       </Group>
     </form>

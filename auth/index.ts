@@ -26,7 +26,7 @@ function createAuth(config: Config) {
 
 async function decorateSessionUser(baseUser: User): Promise<User> {
   const [membership] = await findStrataMemberships({
-    domain: getDomain(),
+    domain: await getDomain(),
     userId: baseUser.id,
   });
 
@@ -40,7 +40,7 @@ const isNotDev = process.env.NODE_ENV !== "development";
 
 export const { auth, handlers } = createAuth({
   decorateSessionUser,
-  key: JSON.parse(process.env.AUTH_KEY!),
+  key: JSON.parse(process.env.AUTH_KEY || "{}"),
   cookies: {
     httpOnly: true,
     sameSite: "lax",

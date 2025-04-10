@@ -5,14 +5,6 @@ export const amentitiesContainer = style({
   padding: vars.spacing.normal,
 });
 
-export const amentity = style({
-  display: "flex",
-  flexDirection: "row",
-  gap: vars.spacing.normal,
-  padding: vars.spacing.normal,
-  overflow: "hidden",
-});
-
 export const amentityImage = style({
   flexShrink: 0,
   objectFit: "cover",
@@ -20,16 +12,6 @@ export const amentityImage = style({
   height: "auto",
   aspectRatio: "1/1",
   borderRadius: vars.borderRadius,
-});
-
-export const amenityDescriptionContainer = style({
-  display: "flex",
-  flexDirection: "column",
-  flex: 1,
-});
-
-export const amenityDescription = style({
-  flex: 1,
 });
 
 export const amentityActionsContainer = style({

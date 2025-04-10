@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import { classnames } from "../../utils/classnames";
 
@@ -25,7 +25,7 @@ export function Wrap({
 }: React.PropsWithChildren<Props>) {
   const mChild = predicate ? withFn(children) : elseFn(children);
 
-  return React.isValidElement(mChild)
+  return React.isValidElement(mChild) && mChild.type !== Fragment
     ? React.cloneElement(mChild, {
         ...mChild.props,
         className: classnames(mChild.props.className, className),

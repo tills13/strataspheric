@@ -1,17 +1,13 @@
 import * as styles from "./style.css";
 
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
+import { PageProps } from "../../../../../.next/types/app/@app/dashboard/inbox/page";
 import { auth } from "../../../../../auth";
 import { DashboardHeader } from "../../../../../components/DashboardHeader";
-import { InboxThreadChats } from "../../../../../components/InboxThreadChats";
-import { getThreadEmailParticipants } from "../../../../../data/emails/getThreadEmailParticipants";
 import { getThread } from "../../../../../data/inbox/getThread";
 import { Thread } from "../../../../../data/inbox/getThreads";
-import {
-  getCurrentStrata,
-  mustGetCurrentStrata,
-} from "../../../../../data/stratas/getStrataByDomain";
+import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
 import { createInboxMessageAction } from "../actions";
@@ -21,12 +17,11 @@ import { sendInboxThreadChatAction } from "./actions";
 
 export const runtime = "edge";
 
-export default async function Page({
-  params: { threadId },
-  searchParams: { viewId },
-}) {
+export default async function Page({ params, searchParams }: PageProps) {
   const session = await auth();
   const strata = await mustGetCurrentStrata();
+  const { threadId } = await params;
+  const { viewId } = await searchParams;
 
   let thread: Thread;
 

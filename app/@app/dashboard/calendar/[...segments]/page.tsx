@@ -4,6 +4,7 @@ import * as styles from "./style.css";
 import format from "date-fns/format";
 import { notFound } from "next/navigation";
 
+import { PageProps } from "../../../../../.next/types/app/@app/dashboard/calendar/[...segments]/page";
 import { Button } from "../../../../../components/Button";
 import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { Group } from "../../../../../components/Group";
@@ -17,11 +18,8 @@ import { deleteEventAction, upsertEventAction } from "./actions";
 
 export const runtime = "edge";
 
-export default async function Page({
-  params,
-}: {
-  params: { segments: string[] };
-}) {
+export default async function Page({ params }: PageProps) {
+  const { segments } = await params;
   const strata = await getCurrentStrata();
 
   if (!strata) {
@@ -31,10 +29,10 @@ export default async function Page({
   let rawYear: string;
   let rawMonth: string;
 
-  if (params.segments.length === 2) {
-    [rawYear, rawMonth] = params.segments;
-  } else if (params.segments.length === 1) {
-    [rawYear, rawMonth] = params.segments[0].split("%2F");
+  if (segments.length === 2) {
+    [rawYear, rawMonth] = segments;
+  } else if (segments.length === 1) {
+    [rawYear, rawMonth] = segments[0].split("%2F");
   } else {
     notFound();
   }

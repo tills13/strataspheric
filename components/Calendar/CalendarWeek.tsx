@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
 import isSameDay from "date-fns/isSameDay";
+import isSameMonth from "date-fns/isSameMonth";
 import startOfMonth from "date-fns/startOfMonth";
 
 import { Event } from "../../data";
@@ -10,36 +11,42 @@ import { classnames } from "../../utils/classnames";
 import { dateFromDayAndWeekIdx, parseTimestamp } from "../../utils/datetime";
 import { CalendarDay } from "./CalendarDay";
 import { CalendarDayEvents } from "./CalendarDayEvents";
+import { CalendarEventTrack } from "./CalendarEventTrack";
 
-export const IS_OUT_OF_CONTEXT_MONTH = (
-  currentMonth: number,
-  currentYear: number,
-  date: Date,
-) => date.getFullYear() !== currentYear || date.getMonth() !== currentMonth - 1;
+type OutOfContextFn = (date: Date, context: Date) => boolean;
+
+export const IS_OUT_OF_CONTEXT_MONTH: OutOfContextFn = (date, context) =>
+  !isSameMonth(date, context);
 
 interface Props {
   className?: string;
+  createOrUpdateEventModalTitle?: React.ComponentProps<
+    typeof CalendarDayEvents
+  >["createOrUpdateEventModalTitle"];
+  createOrUpdateEventFormSubmitLabel?: React.ComponentProps<
+    typeof CalendarDayEvents
+  >["createOrUpdateEventFormSubmitLabel"];
   currentMonth: number;
   currentYear: number;
-  dayIsOutOfContext?: (
-    currentMonth: number,
-    currentYear: number,
-    date: Date,
-  ) => boolean;
-  deleteEvent: (eventId: string) => any;
+  dayIsOutOfContext?: OutOfContextFn;
+  deleteEvent?: (eventId: string) => any;
   events: Array<Event & { meetingId?: string }>;
-  upsertEvent: (eventId: string | undefined, fd: FormData) => any;
+  onSelectDate?: (date: Date) => void;
+  upsertEvent?: (eventId: string | undefined, fd: FormData) => any;
   weekOfMonth: number;
 }
 
 export function CalendarWeek({
   className,
-  events,
-  dayIsOutOfContext = IS_OUT_OF_CONTEXT_MONTH,
-  deleteEvent,
+  createOrUpdateEventModalTitle,
+  createOrUpdateEventFormSubmitLabel,
   currentMonth,
   currentYear,
+  dayIsOutOfContext = IS_OUT_OF_CONTEXT_MONTH,
+  deleteEvent,
+  events,
   upsertEvent,
+  onSelectDate,
   weekOfMonth,
 }: Props) {
   const day0 = startOfMonth(
@@ -63,17 +70,13 @@ export function CalendarWeek({
               key={dayOfWeek}
               date={date}
               events={events}
-              isOutOfContext={dayIsOutOfContext(
-                currentMonth,
-                currentYear,
-                date,
-              )}
+              isOutOfContext={dayIsOutOfContext(date, day0)}
               upsertEvent={upsertEvent}
             />
           );
         })}
       </div>
-      <div className={styles.calendarEventTrack}>
+      <CalendarEventTrack>
         {Array.from(new Array(7)).map((_, currentDayOfWeek) => {
           const date = dateFromDayAndWeekIdx(
             day0,
@@ -85,6 +88,10 @@ export function CalendarWeek({
           return (
             <CalendarDayEvents
               key={currentDayOfWeek}
+              createOrUpdateEventModalTitle={createOrUpdateEventModalTitle}
+              createOrUpdateEventFormSubmitLabel={
+                createOrUpdateEventFormSubmitLabel
+              }
               date={date}
               deleteEvent={deleteEvent}
               events={events
@@ -96,11 +103,12 @@ export function CalendarWeek({
                         isSameDay(date, parseTimestamp(e.endDate)))),
                 )
                 .sort((a, b) => (a.startDate > b.startDate ? 0 : 1))}
+              onClick={onSelectDate ? () => onSelectDate(date) : undefined}
               upsertEvent={upsertEvent}
             />
           );
         })}
-      </div>
+      </CalendarEventTrack>
     </div>
   );
 }
