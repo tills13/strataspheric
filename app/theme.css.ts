@@ -35,6 +35,7 @@ export const vars = createGlobalTheme(":root", {
     large: "48px",
     xl: "56px",
     xxl: "64px",
+    two_xxl: "128px",
   },
 
   fontSizes: {

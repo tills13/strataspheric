@@ -1,6 +1,6 @@
 import React from "react";
 
-import { assetsOrigin } from "../../constants";
+import { getImageUri } from "../../utils/files";
 import { ExternalLink } from "../Link/ExternalLink";
 
 type ExternalLinkProps = React.ComponentProps<typeof ExternalLink>;
@@ -14,12 +14,8 @@ export function FileLink({
   path,
   ...delegateProps
 }: React.PropsWithChildren<Props>) {
-  if (path[0] !== "/") {
-    path = "/" + path;
-  }
-
   return (
-    <ExternalLink target="_blank" href={assetsOrigin + path} {...delegateProps}>
+    <ExternalLink target="_blank" href={getImageUri(path)} {...delegateProps}>
       {children}
     </ExternalLink>
   );

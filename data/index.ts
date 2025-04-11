@@ -37,7 +37,8 @@ export interface FilesTable {
   description: string;
   isPublic: 0 | 1;
   sizeBytes: number;
-  path: string;
+  path: ColumnType<string, string, never>;
+  mimeType: ColumnType<string, string, never>;
   createdAt: ColumnType<number, never, never>;
 }
 
@@ -51,6 +52,7 @@ export interface InboxMessagesTable {
   threadId: string;
   fileId: string | null;
   invoiceId: string | null;
+  amenityBookingId: string | null;
   viewId: string | null;
   subject: string;
   message: string;
@@ -84,6 +86,7 @@ export interface InvoicesTable {
   strataId: string;
   payee: string | null;
   type: "incoming" | "outgoing";
+  status: "draft" | "final";
   identifier: string;
   description: string | null;
   amount: number;
@@ -269,7 +272,35 @@ export interface WidgetInfoTable {
 export type NewWidgetInfo = Insertable<WidgetInfoTable>;
 export type WidgetInfoUpdate = Updateable<WidgetInfoTable>;
 
+export interface AmenitiesTable {
+  id: ColumnType<string, string, never>;
+  strataId: string;
+  name: string;
+  description: string;
+  status: "active" | "inactive";
+  costPerHour: number | null;
+  imageFileId: string;
+}
+
+export type Amenity = Selectable<AmenitiesTable>;
+export type NewAmenity = Insertable<AmenitiesTable>;
+export type AmenityUpdate = Updateable<AmenitiesTable>;
+
+export interface AmenityBookingsTable {
+  id: ColumnType<string, string, never>;
+  amenityId: string;
+  eventId: string;
+  approverId: string | null;
+  invoiceId: string | null;
+}
+
+export type AmenityBooking = Selectable<AmenityBookingsTable>;
+export type NewAmenityBooking = Insertable<AmenityBookingsTable>;
+export type AmenityBookingUpdate = Updateable<AmenityBookingsTable>;
+
 export interface Database {
+  amenities: AmenitiesTable;
+  amenity_bookings: AmenityBookingsTable;
   emails: EmailsTable;
   events: EventsTable;
   files: FilesTable;

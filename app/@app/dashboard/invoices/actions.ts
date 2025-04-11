@@ -1,10 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
 import { Invoice } from "../../../../data";
 import { createInvoice } from "../../../../data/invoices/createInvoice";
+import { deleteInvoice } from "../../../../data/invoices/deleteInvoice";
 import { updateInvoice } from "../../../../data/invoices/updateInvoice";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../data/users/permissions";
@@ -64,6 +66,7 @@ export async function upsertInvoiceAction(
       identifier,
       strataId: strata.id,
       // payeeId: session?.user.id,
+      status: "final",
       type: "incoming",
       // @ts-ignore
       updatedAt: new Date().getTime(),
@@ -72,4 +75,9 @@ export async function upsertInvoiceAction(
 
   revalidatePath("/dashboard/invoices");
   return invoice;
+}
+
+export async function deleteInvoiceAction(invoiceId: string) {
+  await deleteInvoice(invoiceId);
+  redirect("/dashboard/invoices");
 }

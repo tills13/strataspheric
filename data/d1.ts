@@ -101,7 +101,7 @@ class D1Connection implements DatabaseConnection {
     // if (this.#transactionClient) return this.#transactionClient.executeQuery(compiledQuery)
 
     let results: D1Result<Record<string, unknown>> | undefined;
-    let error: Error | undefined;
+    let error: unknown;
 
     try {
       results = await this.#config.database
@@ -113,11 +113,15 @@ class D1Connection implements DatabaseConnection {
     }
 
     if (!results || results.error) {
-      if (error && error.message.includes("D1_")) {
+      // if (error && error instanceof Error && error.message.includes("D1_")) {
+      // @ts-ignore
+      if (error && error.message?.includes("D1_")) {
         console.log("[D1]", "query:", compiledQuery.sql);
       }
 
-      throw new Error(results?.error || "an unknown error occurred");
+      throw new Error(
+        results?.error || error.message || "an unknown error occurred",
+      );
     }
 
     const numAffectedRows =

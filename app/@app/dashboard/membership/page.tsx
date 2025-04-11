@@ -7,7 +7,7 @@ import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { can, p } from "../../../../data/users/permissions";
-import { AddNewMemmberButton } from "./AddNewMemberButton";
+import { AddNewMemberButton } from "./AddNewMemberButton";
 import { MembershipsLoader } from "./MembershipsLoader";
 import { StrataMemberships } from "./StrataMemberships";
 import { upsertStrataMembershipAction } from "./actions";
@@ -28,7 +28,7 @@ export default async function Page() {
 
             <div>
               {can(session?.user, p("stratas", "memberships", "create")) && (
-                <AddNewMemmberButton
+                <AddNewMemberButton
                   upsertStrataMembership={upsertStrataMembershipAction.bind(
                     undefined,
                     undefined,

@@ -3,25 +3,24 @@ import { s } from "../../../../../../sprinkles.css";
 import isAfter from "date-fns/isAfter";
 import { notFound } from "next/navigation";
 
+import { PageProps } from "../../../../../../.next/types/app/@app/dashboard/invoices/@invoiceDetails/[invoiceId]/page";
+import { ConfirmButton } from "../../../../../../components/ConfirmButton";
 import { CreateOrUpdateInvoiceForm } from "../../../../../../components/CreateOrUpdateInvoiceForm";
 import { Date as DateOutput } from "../../../../../../components/Date";
+import { Header } from "../../../../../../components/Header";
+import { DeleteIcon } from "../../../../../../components/Icon/DeleteIcon";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
 import { Text } from "../../../../../../components/Text";
 import { getInvoice } from "../../../../../../data/invoices/getInvoice";
 import { mustGetCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";
 import { parseTimestamp } from "../../../../../../utils/datetime";
-import { upsertInvoiceAction } from "../../actions";
+import { deleteInvoiceAction, upsertInvoiceAction } from "../../actions";
 
 export const runtime = "edge";
 
-export default async function Page({
-  params,
-}: {
-  params: { invoiceId: string };
-}) {
-  console.log(params);
+export default async function Page({ params }: PageProps) {
   const strata = await mustGetCurrentStrata();
-  const invoice = await getInvoice(strata.id, params.invoiceId);
+  const invoice = await getInvoice(strata.id, (await params).invoiceId);
 
   if (!invoice) {
     notFound();
@@ -45,10 +44,29 @@ export default async function Page({
             <Text>This invoice is overdue.</Text>
           </InfoPanel>
         )}
+
       <CreateOrUpdateInvoiceForm
+        className={s({ mb: "large" })}
         invoice={invoice}
         upsertInvoice={upsertInvoiceAction.bind(undefined, invoice.id)}
       />
+
+      <InfoPanel
+        action={
+          <ConfirmButton
+            iconRight={<DeleteIcon />}
+            onClickConfirm={deleteInvoiceAction.bind(undefined, invoice.id)}
+            color="error"
+            style="secondary"
+          >
+            Delete Invoice
+          </ConfirmButton>
+        }
+        header={<Header priority={3}>Danger Zone</Header>}
+        level="error"
+      >
+        <Text>Deleting an invoice cannot be undone.</Text>
+      </InfoPanel>
     </>
   );
 }

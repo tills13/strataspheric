@@ -10,9 +10,14 @@ import { Amenity } from "./page";
 interface Props {
   amenity: Amenity;
   className?: string;
+  createAmenityBooking: (fd: FormData) => void;
 }
 
-export function BookAmenityButton({ amenity, className }: Props) {
+export function BookAmenityButton({
+  amenity,
+  className,
+  createAmenityBooking,
+}: Props) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -30,7 +35,10 @@ export function BookAmenityButton({ amenity, className }: Props) {
           closeModal={() => setShowModal(false)}
           title={`Book ${amenity.name}`}
         >
-          <BookAmenityForm amenity={amenity} />
+          <BookAmenityForm
+            amenity={amenity}
+            createAmenityBooking={createAmenityBooking}
+          />
         </Modal>
       )}
     </>

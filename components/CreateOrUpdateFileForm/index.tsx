@@ -15,12 +15,14 @@ import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
 interface Props {
+  acceptFileTypes?: string[];
   onCreateOrUpdateFile?: (file: File) => void;
   upsertFile: (fd: FormData) => Promise<File>;
   file?: File;
 }
 
 export function CreateOrUpdateFileForm({
+  acceptFileTypes,
   file,
   onCreateOrUpdateFile,
   upsertFile,
@@ -38,6 +40,7 @@ export function CreateOrUpdateFileForm({
       <Stack>
         {!file && (
           <Input
+            accept={acceptFileTypes?.join(",")}
             label="Upload File"
             name="file"
             type="file"

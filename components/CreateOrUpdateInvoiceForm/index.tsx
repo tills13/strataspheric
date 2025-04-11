@@ -18,6 +18,7 @@ import { Text } from "../Text";
 import { TextArea } from "../TextArea";
 
 interface Props {
+  className?: string;
   defaultDate?: string;
   deleteInvoice?: () => void;
   invoice?: Invoice;
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export function CreateOrUpdateInvoiceForm({
+  className,
   upsertInvoice,
   deleteInvoice,
   invoice,
@@ -41,6 +43,7 @@ export function CreateOrUpdateInvoiceForm({
         const invoice = await upsertInvoice(fd);
         onCreateOrUpdateInvoice?.(invoice);
       }}
+      className={className}
     >
       <Stack className={s({ mb: "large" })}>
         <Group gap="normal">

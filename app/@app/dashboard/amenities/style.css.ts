@@ -1,10 +1,6 @@
 import { breakpoints, vars } from "../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const amentitiesContainer = style({
-  padding: vars.spacing.normal,
-});
-
 export const amentityImage = style({
   flexShrink: 0,
   objectFit: "cover",

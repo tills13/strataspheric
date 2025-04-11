@@ -36,12 +36,20 @@ export function parseTimestamp(timestampSeconds: number) {
 
 export function patchTimezoneOffset(fd: FormData, fieldName: string) {
   const date = getString(fd, fieldName);
+  patchDateTimezoneOffset(fd, fieldName, date);
+}
+
+export function patchDateTimezoneOffset(
+  fd: FormData,
+  fieldName: string,
+  rawDate: string,
+) {
   const rawTzOffset = new Date().getTimezoneOffset() / 60;
   const isNegative = rawTzOffset >= 0;
   const tzOffset =
     (isNegative ? "-" : "") + rawTzOffset.toString().padStart(2, "0") + ":00";
 
-  fd.set(fieldName, date + tzOffset);
+  fd.set(fieldName, rawDate + tzOffset);
 }
 
 export function dateFromDayAndWeekIdx(

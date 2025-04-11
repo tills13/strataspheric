@@ -7,6 +7,7 @@ import { classnames } from "../../utils/classnames";
 
 interface Props extends React.AllHTMLAttributes<HTMLDivElement> {
   divider?: React.ReactNode;
+  justify?: keyof typeof styles.stackJustification;
   gap?: keyof typeof vars.spacing;
   tabIndex?: number;
 }
@@ -17,6 +18,7 @@ export function Stack(props: Props) {
     className,
     children,
     divider,
+    justify = "start",
     gap = "normal",
     ...delegateProps
   } = props;
@@ -24,7 +26,12 @@ export function Stack(props: Props) {
 
   return (
     <div
-      className={classnames(styles.stack, styles.stackGap[gap], className)}
+      className={classnames(
+        styles.stack,
+        styles.stackGap[gap],
+        styles.stackJustification[justify],
+        className,
+      )}
       {...delegateProps}
     >
       {React.Children.map(children, (c, i) => (

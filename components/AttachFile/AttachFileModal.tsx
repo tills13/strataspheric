@@ -12,6 +12,7 @@ import { Modal } from "../Modal";
 import { Stack } from "../Stack";
 
 interface Props {
+  fileTypes?: string[];
   close: () => void;
   onSelectFile?: (file: File | undefined) => Promise<void>;
   selectedFile?: { id: string; name: string; path: string };
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export function AttachFileModal({
+  fileTypes,
   close,
   onSelectFile,
   selectedFile,
@@ -32,6 +34,7 @@ export function AttachFileModal({
           <FileSelect
             className={s({ w: "full" })}
             label="Attach Existing File"
+            fileTypes={fileTypes}
             onSelectFile={async (file) => {
               await onSelectFile?.(file);
               close();
@@ -55,6 +58,7 @@ export function AttachFileModal({
         <DividerText>OR</DividerText>
 
         <CreateOrUpdateFileForm
+          acceptFileTypes={fileTypes}
           onCreateOrUpdateFile={(file) => {
             close();
             onSelectFile?.(file);

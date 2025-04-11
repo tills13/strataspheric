@@ -5,29 +5,26 @@ import isBefore from "date-fns/isBefore";
 import { useState } from "react";
 
 import { AmenitiesBookingCalendar } from "../../../../components/AmenitiesBookingCalendar";
-import { Checkbox } from "../../../../components/Checkbox";
 import { Group } from "../../../../components/Group";
 import { InfoPanel } from "../../../../components/InfoPanel";
-import { Input } from "../../../../components/Input";
 import { Money } from "../../../../components/Money";
 import { Stack } from "../../../../components/Stack";
 import { StatusButton } from "../../../../components/StatusButton";
 import { Text } from "../../../../components/Text";
 import { TextArea } from "../../../../components/TextArea";
+import {
+  formatDateForDatetime,
+  patchDateTimezoneOffset,
+} from "../../../../utils/datetime";
 import { pluralize } from "../../../../utils/pluralize";
 import { Amenity } from "./page";
 
 interface Props {
   amenity: Amenity;
+  createAmenityBooking: (fd: FormData) => void;
 }
 
-// Create the Event
-// create the amenitybookingevent
-// create an inbox message that references the amenitybookingevent
-// create a draft invoice?
-// redirect to the
-
-export function BookAmenityForm({ amenity }: Props) {
+export function BookAmenityForm({ amenity, createAmenityBooking }: Props) {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
@@ -35,7 +32,22 @@ export function BookAmenityForm({ amenity }: Props) {
     startDate && endDate ? differenceInDays(endDate, startDate) : undefined;
 
   return (
-    <form>
+    <form
+      action={async (fd) => {
+        if (!startDate || !endDate) {
+          return;
+        }
+
+        patchDateTimezoneOffset(
+          fd,
+          "startDate",
+          formatDateForDatetime(startDate),
+        );
+        patchDateTimezoneOffset(fd, "endDate", formatDateForDatetime(endDate));
+
+        await createAmenityBooking(fd);
+      }}
+    >
       <Stack>
         <AmenitiesBookingCalendar
           amenity={amenity}
@@ -63,7 +75,10 @@ export function BookAmenityForm({ amenity }: Props) {
           }
         />
 
-        <TextArea placeholder="Special requests or questions for council for this booking" />
+        <TextArea
+          name="specialRequests"
+          placeholder="Special requests or questions for council for this booking"
+        />
 
         {amenity.costPerHour && typeof bookingLength !== "undefined" && (
           <Stack gap="small">

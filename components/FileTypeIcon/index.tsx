@@ -1,6 +1,6 @@
 import React from "react";
 
-import { extname } from "../../utils/extname";
+import { extname } from "../../utils/files";
 import { ImageIcon } from "../Icon/ImageIcon";
 import { TextDocumentIcon } from "../Icon/TextDocumentIcon";
 

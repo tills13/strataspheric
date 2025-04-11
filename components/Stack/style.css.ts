@@ -13,6 +13,7 @@ export const stack = style({
   flexDirection: "column",
   gap: gapVar,
 });
+
 export const stackElement = style({
   selectors: {
     "&:not(:last-child)": {
@@ -30,4 +31,22 @@ export const stackGap = styleVariants({
   large: { vars: { [gapVar]: vars.spacing.large } },
   xl: { vars: { [gapVar]: vars.spacing.xl } },
   xxl: { vars: { [gapVar]: vars.spacing.xxl } },
+});
+
+export const stackJustification = styleVariants({
+  default: {
+    justifyContent: "flex-start",
+  },
+  start: {
+    justifyContent: "flex-start",
+  },
+  center: {
+    justifyContent: "center",
+  },
+  end: {
+    justifyContent: "flex-end",
+  },
+  "space-between": {
+    justifyContent: "space-between",
+  },
 });

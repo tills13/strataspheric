@@ -1,31 +1,41 @@
 import { File, db } from "..";
+import { Pagination, SortableColumn } from "../types";
 
-type SortableColumn<M extends Record<string, unknown>> = keyof M extends string
-  ? keyof M | `${keyof M} asc` | `${keyof M} desc`
-  : never;
+type ListFilesFilter = {
+  userId?: string;
+  fileTypes?: string[];
+  isPublic?: boolean;
+};
+
+type ListFilesPagination = Pagination<"files", File>;
 
 export function listFiles(
   strataId: string,
-  userId: string | undefined,
-  includePrivateFiles: boolean | undefined = true,
-  orderBy?: SortableColumn<File>,
+  filters: ListFilesFilter,
+  pagination?: ListFilesPagination,
 ): Promise<File[]> {
   let query = db
     .selectFrom("files")
     .selectAll()
     .where("files.strataId", "=", strataId);
 
-  if (!includePrivateFiles) {
+  if (filters.isPublic) {
     query = query.where((eb) =>
       eb.or([
         eb("files.isPublic", "=", 1),
-        ...(userId !== undefined ? [eb("files.uploaderId", "=", userId)] : []),
+        ...(filters.userId !== undefined
+          ? [eb("files.uploaderId", "=", filters.userId)]
+          : []),
       ]),
     );
   }
 
-  if (orderBy) {
-    query = query.orderBy(orderBy);
+  if (filters.fileTypes) {
+    query = query.where("files.mimeType", "in", filters.fileTypes);
+  }
+
+  if (pagination?.orderBy) {
+    query = query.orderBy(pagination.orderBy);
   }
 
   return query.execute();

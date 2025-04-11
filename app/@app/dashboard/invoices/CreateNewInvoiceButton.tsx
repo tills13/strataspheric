@@ -21,8 +21,9 @@ export function CreateNewInvoiceButton({ upsertInvoice }: Props) {
         color="success"
         iconTextBehaviour="centerRemainder"
         onClick={() => setShowNewInvoiceModal(true)}
+        style="secondary"
       >
-        Create New Invoice
+        Add Invoice
       </Button>
       {showNewInvoiceModal && (
         <Modal

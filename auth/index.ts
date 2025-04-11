@@ -1,7 +1,7 @@
 import { findStrataMemberships } from "../data/strataMemberships/findStrataMemberships";
 import { roleScopeToScopes } from "../data/users/permissions";
 import { getDomain } from "../utils/getDomain";
-import { auth as _auth } from "./auth";
+import { internalAuthDoNotUseDirectly as _auth } from "./auth";
 import { GET, POST } from "./endpoints";
 import { AuthenticatedApiHandler, Config, Session, User } from "./types";
 

@@ -14,17 +14,31 @@ import { Select } from "../Select";
 import { Text } from "../Text";
 
 interface Props extends React.ComponentProps<typeof Select> {
+  fileTypes?: string[];
   onSelectFile?: (file: File) => void;
 }
 
-export function FileSelect({ onSelectFile, ...delegateProps }: Props) {
+export function FileSelect({
+  onSelectFile,
+  fileTypes,
+  ...delegateProps
+}: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [files, setFiles] = useState<File[]>([]);
 
   useEffect(() => {
     async function loadFiles() {
       setIsLoading(true);
-      const r = await fetch("/api/files/listFiles");
+
+      const query = new URLSearchParams();
+
+      if (fileTypes) {
+        for (const fileType of fileTypes) {
+          query.append("fileType", fileType);
+        }
+      }
+
+      const r = await fetch("/api/files/listFiles?" + query.toString());
       const rJson = await r.json();
 
       setFiles(rJson.files || []);
@@ -37,7 +51,7 @@ export function FileSelect({ onSelectFile, ...delegateProps }: Props) {
     }
 
     loadFiles();
-  }, [delegateProps.disabled]);
+  }, [delegateProps.disabled, fileTypes]);
 
   if (isLoading) {
     return (

@@ -1,7 +1,7 @@
 import { vars } from "../../app/theme.css";
 import * as styles from "./style.css";
 
-import React from "react";
+import React, { Fragment } from "react";
 
 import { classnames } from "../../utils/classnames";
 
@@ -40,7 +40,7 @@ export function Group({
       tabIndex={tabIndex}
     >
       {React.Children.map(children, (c, i) =>
-        React.isValidElement(c)
+        React.isValidElement(c) && c.type !== Fragment
           ? React.cloneElement(c, {
               ...c.props,
               className: classnames(

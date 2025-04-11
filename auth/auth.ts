@@ -4,7 +4,7 @@ import { getJwtFromCookies } from "./cookies";
 import { parseJwt, readJwtFromRequest } from "./jwt";
 import { AuthenticatedApiHandler, Config, Session } from "./types";
 
-export function auth(
+export function internalAuthDoNotUseDirectly(
   config: Config,
   ...args: [] | [AuthenticatedApiHandler]
 ): any {

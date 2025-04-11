@@ -3,33 +3,34 @@
 import { useState } from "react";
 
 import { Button } from "../../../../components/Button";
-import { CreateOrUpdateStrataMembershipForm } from "../../../../components/CreateOrUpdateStrataMembershipForm";
+import { CreateOrUpdateAmenityForm } from "../../../../components/CreateOrUpdateAmenityForm";
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../components/Modal";
+import { upsertFileAction } from "../files/actions";
 
 interface Props {
-  upsertStrataMembership: (fd: FormData) => Promise<void>;
+  upsertAmenity: (fd: FormData) => void;
 }
 
-export function AddNewMemberButton({ upsertStrataMembership }: Props) {
+export function AddNewAmenityButton({ upsertAmenity }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
       <Button
-        color="success"
         iconRight={<AddIcon />}
+        color="success"
         iconTextBehaviour="centerRemainder"
         onClick={() => setShowModal(true)}
         style="secondary"
       >
-        Add New Member
+        Add Amenity
       </Button>
-
       {showModal && (
-        <Modal closeModal={() => setShowModal(false)} title="New Strata Member">
-          <CreateOrUpdateStrataMembershipForm
-            upsertStrataMembership={upsertStrataMembership}
+        <Modal closeModal={() => setShowModal(false)} title="New Amenity">
+          <CreateOrUpdateAmenityForm
+            upsertAmenity={upsertAmenity}
+            upsertFile={upsertFileAction.bind(undefined, undefined)}
           />
         </Modal>
       )}

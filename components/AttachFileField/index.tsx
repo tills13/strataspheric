@@ -3,15 +3,14 @@
 import React, { useState } from "react";
 
 import { File } from "../../data";
-import { AttachFileButton } from "../AttachFile/AttachFileButton";
 import { AttachFileText } from "../AttachFile/AttachFileText";
 
-type AttachFileButtonProps = Omit<
-  React.ComponentProps<typeof AttachFileButton>,
+type AttachFileTextProps = Omit<
+  React.ComponentProps<typeof AttachFileText>,
   "defaultValue" | "value"
 >;
 
-interface Props extends AttachFileButtonProps {
+interface Props extends AttachFileTextProps {
   defaultValue?: File;
   name: string;
   value?: File;
