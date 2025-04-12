@@ -1,3 +1,5 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { findStrataMemberships } from "../data/strataMemberships/findStrataMemberships";
 import { roleScopeToScopes } from "../data/users/permissions";
 import { getDomain } from "../utils/getDomain";
@@ -9,7 +11,7 @@ function createAuth(config: Config) {
   function iauth(...args: []): Promise<Session>;
   function iauth(
     ...args: [AuthenticatedApiHandler]
-  ): (req: Request) => Promise<Response>;
+  ): (req: NextRequest) => Promise<NextResponse>;
 
   function iauth(...args: any) {
     return _auth(config, ...args);

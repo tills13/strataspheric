@@ -42,8 +42,6 @@ export function InvoiceChip({
   const [isPending, startTransition] = useTransition();
   const can = useCan();
 
-  console.log(invoice);
-
   return (
     <Panel
       className={overrideClassName || classnames(styles.invoiceChip, className)}

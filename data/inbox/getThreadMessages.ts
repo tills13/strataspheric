@@ -139,6 +139,7 @@ export async function getThreadMessages(
         ...rest,
         amenityBooking: amenityBookingId
           ? ({
+              id: amenityBookingId,
               invoice: {
                 id: amenityBookingInvoiceId,
                 identifier: amenityBookingInvoiceIdentifier,

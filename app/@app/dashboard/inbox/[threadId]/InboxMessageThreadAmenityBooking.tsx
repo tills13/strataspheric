@@ -37,6 +37,7 @@ export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
           <AmenitiesBookingCalendar
             amenity={amenityBooking.amenity}
             virtualEvent={{
+              id: amenityBooking.id,
               endDate: amenityBooking.endDate,
               name: "Current Booking",
               startDate: amenityBooking.startDate,

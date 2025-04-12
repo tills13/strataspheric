@@ -1,3 +1,5 @@
+import { NextRequest } from "next/server";
+
 import { signInUser } from "../data/users/signInUser";
 import * as formdata from "../utils/formdata";
 import { formatJwtCookie } from "./cookies";
@@ -9,7 +11,7 @@ export const SIGN_IN_ENDPOINT = `${BASE_ENDPOINT}/create`;
 export const SIGN_OUT_ENDPOINT = `${BASE_ENDPOINT}/destroy`;
 export const REFRESH_ENDPOINT = `${BASE_ENDPOINT}/refresh`;
 
-export async function GET(config: Config, req: Request) {
+export async function GET(config: Config, req: NextRequest) {
   const reqUrl = new URL(req.url);
 
   if (reqUrl.pathname !== REFRESH_ENDPOINT) {
@@ -42,7 +44,7 @@ export async function GET(config: Config, req: Request) {
   }
 }
 
-export async function POST(config: Config, req: Request) {
+export async function POST(config: Config, req: NextRequest) {
   const requestUrl = new URL(req.url);
 
   if (requestUrl.pathname === SIGN_OUT_ENDPOINT) {

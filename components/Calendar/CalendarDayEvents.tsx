@@ -113,7 +113,7 @@ export function CalendarDayEvents({
                       }
                 }
               >
-                {event.name}
+                {event.name || <>&nbsp;</>}
               </div>
             </Wrap>
           );

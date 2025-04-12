@@ -2,24 +2,9 @@ import { auth } from "../../../../auth";
 import { getStrataEventsForRange } from "../../../../data/events/getEventsForRange";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { formatTimestampForSql } from "../../../../utils/datetime";
+import { intParam } from "../../../../utils/url";
 
 export const runtime = "edge";
-
-function intParam(sp: URLSearchParams, paramName: string): number {
-  const value: unknown = sp.get(paramName);
-
-  if (typeof value !== "string") {
-    throw new Error(`invalid integer param ${paramName}, got ${value}`);
-  }
-
-  const intValue = parseInt(value, 10);
-
-  if (isNaN(intValue)) {
-    throw new Error(`invalid integer param ${paramName}, got ${value}`);
-  }
-
-  return intValue;
-}
 
 export const GET = auth(async (_, req) => {
   const strata = await mustGetCurrentStrata();

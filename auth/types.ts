@@ -1,3 +1,5 @@
+import { NextRequest, NextResponse } from "next/server";
+
 export interface User {
   id: string;
   email: string;
@@ -26,5 +28,5 @@ export interface Config {
 
 export type AuthenticatedApiHandler = (
   session: Session,
-  req: Request,
-) => Promise<Response>;
+  req: NextRequest,
+) => Promise<NextResponse | Response>;

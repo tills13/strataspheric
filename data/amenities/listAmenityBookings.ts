@@ -1,10 +1,16 @@
 import { db } from "..";
 import { Amenity } from "./getAmenity";
 
-export type AmenityBooking = Awaited<ReturnType<typeof getAmenityBooking>>;
+type ListAmenityBookingsFilter = {
+  startTs: number;
+  endTs: number;
+};
 
-export async function getAmenityBooking(amenityBookingId: string) {
-  const row = await db
+export async function listAmenityBookings(
+  amenityId: string,
+  filter: ListAmenityBookingsFilter,
+) {
+  let query = db
     .selectFrom("amenity_bookings")
     .innerJoin("events", "amenity_bookings.eventId", "events.id")
     .innerJoin("amenities", "amenity_bookings.amenityId", "amenities.id")
@@ -30,10 +36,28 @@ export async function getAmenityBooking(amenityBookingId: string) {
       "amenities.costPerHour as amenityCostPerHour",
       "files.path as amenityImageSrc",
     ])
-    .where("amenity_bookings.id", "=", amenityBookingId)
-    .executeTakeFirstOrThrow();
+    .where("amenity_bookings.amenityId", "=", amenityId)
+    .where((eb) =>
+      eb.or([
+        // startDate is before startDateTimestamp but endDate is during startDateTimestamp or after filter.endTs
+        eb.and([
+          eb("events.startDate", "<", filter.startTs),
+          eb.or([
+            eb("events.endDate", ">", filter.endTs),
+            eb.between("events.endDate", filter.startTs, filter.endTs),
+          ]),
+        ]),
 
-  return {
+        // start date is during filter.startTs -> filter.endTs
+        eb.between("events.startDate", filter.startTs, filter.endTs),
+      ]),
+    )
+    .orderBy("events.startDate", "asc")
+    .orderBy("events.endDate", "asc");
+
+  const rows = await query.execute();
+
+  return rows.map((row) => ({
     id: row.amenityBookingId,
     invoice: {
       id: row.amenityBookingInvoiceId,
@@ -53,5 +77,5 @@ export async function getAmenityBooking(amenityBookingId: string) {
       imageFileId: row.imageFileId,
       strataId: row.strataId,
     } satisfies Amenity,
-  };
+  }));
 }

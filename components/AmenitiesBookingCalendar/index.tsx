@@ -11,10 +11,11 @@ import getYear from "date-fns/getYear";
 import isBefore from "date-fns/isBefore";
 import parse from "date-fns/parse";
 import startOfDay from "date-fns/startOfDay";
+import startOfWeek from "date-fns/startOfWeek";
 import sub from "date-fns/sub";
 import { useEffect, useMemo, useState } from "react";
 
-import { Amenity } from "../../app/@app/dashboard/amenities/page";
+import { Amenity } from "../../data/amenities/getAmenity";
 import { range } from "../../utils/arrays";
 import { Button } from "../Button";
 import { CalendarWeek } from "../Calendar/CalendarWeek";
@@ -46,7 +47,23 @@ export function AmenitiesBookingCalendar({
   const monthName = format(date, "LLLL");
 
   useEffect(() => {
-    async function fetchAmenityBookings() {}
+    async function fetchAmenityBookings() {
+      const queryParams = new URLSearchParams({
+        amenityId: amenity.id,
+        startTs: startOfWeek(date).getTime().toString(),
+        endTs: add(startOfWeek(date), { weeks: 3 }).getTime().toString(),
+      });
+
+      const r = await fetch(
+        "/api/amenityBookings/listAmenityBookings?" + queryParams.toString(),
+      );
+
+      setBookings(
+        (await r.json()).amenityBookings.filter(
+          (booking) => !virtualEvent || booking.id !== virtualEvent.id,
+        ),
+      );
+    }
 
     fetchAmenityBookings();
   }, [amenity, date]);
@@ -78,23 +95,19 @@ export function AmenitiesBookingCalendar({
       </Group>
 
       <div className={styles.container}>
-        {[
-          ...range(3).map((weekIdx) => (
-            <CalendarWeek
-              key={weekIdx}
-              createOrUpdateEventModalTitle={`Book ${amenity.name}`}
-              createOrUpdateEventFormSubmitLabel="Submit Booking"
-              dayIsOutOfContext={(date) =>
-                isBefore(date, startOfDay(new Date()))
-              }
-              events={[...bookings, virtualEvent].filter(Boolean)}
-              currentMonth={getMonth(date) + 1}
-              currentYear={getYear(date)}
-              onSelectDate={onSelectDate}
-              weekOfMonth={getWeekOfMonth(date) + (weekIdx - 2)}
-            />
-          )),
-        ]}
+        {[...range(3)].map((weekIdx) => (
+          <CalendarWeek
+            key={weekIdx}
+            createOrUpdateEventModalTitle={`Book ${amenity.name}`}
+            createOrUpdateEventFormSubmitLabel="Submit Booking"
+            dayIsOutOfContext={(date) => isBefore(date, startOfDay(new Date()))}
+            events={[...bookings, virtualEvent].filter(Boolean)}
+            currentMonth={getMonth(date) + 1}
+            currentYear={getYear(date)}
+            onSelectDate={onSelectDate}
+            weekOfMonth={getWeekOfMonth(date) + (weekIdx - 2)}
+          />
+        ))}
       </div>
     </Stack>
   );
