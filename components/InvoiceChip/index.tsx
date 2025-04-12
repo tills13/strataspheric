@@ -16,13 +16,17 @@ import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { EditIcon } from "../Icon/EditIcon";
 import { InternalLink } from "../Link/InternalLink";
 import { Money } from "../Money";
+import { Panel } from "../Panel";
 import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { Text } from "../Text";
 
 interface Props {
   className?: string;
-  invoice: Invoice;
+  invoice: Pick<
+    Invoice,
+    "id" | "status" | "identifier" | "description" | "amount" | "isPaid"
+  >;
   markInvoiceAsPaid?: (invoiceId: string) => Promise<void>;
   showEdit?: boolean;
   overrideClassName?: string;
@@ -38,12 +42,25 @@ export function InvoiceChip({
   const [isPending, startTransition] = useTransition();
   const can = useCan();
 
+  console.log(invoice);
+
   return (
-    <div
+    <Panel
       className={overrideClassName || classnames(styles.invoiceChip, className)}
     >
+      {invoice.status === "draft" && (
+        <Text className={styles.draftLabel}>DRAFT</Text>
+      )}
+
       <Stack gap="xs">
-        <Header priority={3}>Invoice #{invoice.identifier}</Header>
+        <Header priority={3}>
+          <Group gap="xs">
+            <Text color="secondary" as="span" size="xl" weight="light">
+              #
+            </Text>
+            {invoice.identifier}
+          </Group>
+        </Header>
 
         {invoice.description && (
           <Text className={s({ mb: "normal" })} color="secondary">
@@ -62,7 +79,7 @@ export function InvoiceChip({
                 <Button icon={<EditIcon />} style="tertiary" color="primary" />
               </InternalLink>
             )}
-            {markInvoiceAsPaid && (
+            {invoice.status !== "draft" && markInvoiceAsPaid && (
               <StatusButton
                 color="success"
                 iconRight={<CircleCheckIcon />}
@@ -82,6 +99,6 @@ export function InvoiceChip({
           </Group>
         )}
       </Group>
-    </div>
+    </Panel>
   );
 }

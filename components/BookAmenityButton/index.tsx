@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-import { Button } from "../../../../components/Button";
-import { Modal } from "../../../../components/Modal";
-import { BookAmenityForm } from "./BookAmenityForm";
-import { Amenity } from "./page";
+import { Amenity } from "../../data/amenities/getAmenity";
+import { BookAmenityForm } from "../BookAmenityForm";
+import { Button } from "../Button";
+import { Modal } from "../Modal";
 
 interface Props {
   amenity: Amenity;

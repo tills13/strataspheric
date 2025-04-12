@@ -34,6 +34,9 @@ export const groupAlignment = styleVariants({
   center: {
     alignItems: "center",
   },
+  stretch: {
+    alignItems: "stretch",
+  },
 });
 
 export const groupJustification = styleVariants({

@@ -12,7 +12,7 @@ import isBefore from "date-fns/isBefore";
 import parse from "date-fns/parse";
 import startOfDay from "date-fns/startOfDay";
 import sub from "date-fns/sub";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Amenity } from "../../app/@app/dashboard/amenities/page";
 import { range } from "../../utils/arrays";
@@ -39,10 +39,17 @@ export function AmenitiesBookingCalendar({
   const [weekIdx, setWeekIdx] = useState(getWeek(new Date()));
   const [bookings, setBookings] = useState([]);
 
-  useEffect(() => {}, [weekIdx]);
-
-  const date = parse(weekIdx.toString(), "I", new Date());
+  const date = useMemo(
+    () => parse(weekIdx.toString(), "I", new Date()),
+    [weekIdx],
+  );
   const monthName = format(date, "LLLL");
+
+  useEffect(() => {
+    async function fetchAmenityBookings() {}
+
+    fetchAmenityBookings();
+  }, [amenity, date]);
 
   return (
     <Stack gap="xs">

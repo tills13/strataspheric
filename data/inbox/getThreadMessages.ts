@@ -1,4 +1,5 @@
-import { File, InboxMessage, Invoice, db } from "..";
+import { File, Invoice, db } from "..";
+import { AmenityBooking } from "../amenities/getAmenityBooking";
 
 export async function getThreadMessages(
   threadId: string,
@@ -9,6 +10,23 @@ export async function getThreadMessages(
     .leftJoin("users", "inbox_messages.senderUserId", "users.id")
     .leftJoin("files", "inbox_messages.fileId", "files.id")
     .leftJoin("invoices", "inbox_messages.invoiceId", "invoices.id")
+    .leftJoin(
+      "amenity_bookings",
+      "inbox_messages.amenityBookingId",
+      "amenity_bookings.id",
+    )
+    .leftJoin("events", "amenity_bookings.eventId", "events.id")
+    .leftJoin("amenities", "amenity_bookings.amenityId", "amenities.id")
+    .leftJoin(
+      "files as amenity_files",
+      "amenities.imageFileId",
+      "amenity_files.id",
+    )
+    .leftJoin(
+      "invoices as amenity_booking_invoices",
+      "amenity_bookings.invoiceId",
+      "amenity_booking_invoices.id",
+    )
     .select((eb) => [
       "inbox_messages.id",
       "inbox_messages.subject",
@@ -41,7 +59,26 @@ export async function getThreadMessages(
       "invoices.identifier as invoiceIdentifier",
       "invoices.isPaid as invoiceIsPaid",
       "invoices.strataId as invoiceStrataId",
+      "invoices.status as invoiceStatus",
       "invoices.type as invoiveType",
+
+      // amenity bookings
+      "amenity_bookings.id as amenityBookingId",
+      // amenity booking invoice
+      "amenity_booking_invoices.id as amenityBookingInvoiceId",
+      "amenity_booking_invoices.identifier as amenityBookingInvoiceIdentifier",
+      "amenity_booking_invoices.amount as amenityBookingInvoiceAmount",
+      "amenity_booking_invoices.status as amenityBookingInvoiceStatus",
+      // amenity booking event
+      "events.startDate as amenityBookingStartDate",
+      "events.endDate as amenityBookingEndDate",
+      // amenity bookings amenity
+      "amenities.id as amenityId",
+      "amenities.name as amenityName",
+      "amenities.description as amenityDescription",
+      "amenities.status as amenityStatus",
+      "amenities.costPerHour as amenityCostPerHour",
+      "amenity_files.path as amenityImageSrc",
 
       eb.fn
         .coalesce("users.name", "inbox_messages.senderName")
@@ -79,12 +116,47 @@ export async function getThreadMessages(
       invoiceIdentifier,
       invoiceIsPaid,
       invoiceStrataId,
+      invoiceStatus,
       invoiveType,
+
+      amenityBookingId,
+      amenityBookingInvoiceId,
+      amenityBookingInvoiceIdentifier,
+      amenityBookingInvoiceAmount,
+      amenityBookingInvoiceStatus,
+      amenityBookingEndDate,
+      amenityBookingStartDate,
+      amenityCostPerHour,
+      amenityDescription,
+      amenityId,
+      amenityImageSrc,
+      amenityName,
+      amenityStatus,
 
       ...rest
     }) => {
       return {
         ...rest,
+        amenityBooking: amenityBookingId
+          ? ({
+              invoice: {
+                id: amenityBookingInvoiceId,
+                identifier: amenityBookingInvoiceIdentifier,
+                amount: amenityBookingInvoiceAmount,
+                status: amenityBookingInvoiceStatus,
+              },
+              startDate: amenityBookingStartDate,
+              endDate: amenityBookingEndDate,
+              amenity: {
+                id: amenityId,
+                name: amenityName,
+                description: amenityDescription,
+                costPerHour: amenityCostPerHour,
+                status: amenityStatus,
+                imageSrc: amenityImageSrc,
+              },
+            } as AmenityBooking)
+          : undefined,
         file: fileId
           ? ({
               createdAt: fileCreatedAt,
@@ -109,6 +181,7 @@ export async function getThreadMessages(
               identifier: invoiceIdentifier,
               isPaid: invoiceIsPaid,
               strataId: invoiceStrataId,
+              status: invoiceStatus,
               type: invoiveType,
             } as Invoice)
           : undefined,

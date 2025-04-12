@@ -6,6 +6,7 @@ import * as styles from "./style.css";
 import { useState } from "react";
 
 import { File, Invoice } from "../../data";
+import { AmenityBooking } from "../../data/inbox/getThreadMessages";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { useHash } from "../../hooks/useHash";
@@ -19,11 +20,14 @@ import { ChatIcon } from "../Icon/ChatIcon";
 import { InboxMessageQuote } from "../InboxMessageQuote";
 import { InvoiceChip } from "../InvoiceChip";
 import { Modal } from "../Modal";
+import { Panel } from "../Panel";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
 import { Stack } from "../Stack";
+import { StatusButton } from "../StatusButton";
 import { Text } from "../Text";
 
 interface Props {
+  amenityBooking: AmenityBooking;
   id: string;
   file?: File;
   invoice?: Invoice;
@@ -37,6 +41,7 @@ interface Props {
 }
 
 export function ThreadMessage({
+  amenityBooking,
   id,
   message,
   file,
@@ -85,16 +90,18 @@ export function ThreadMessage({
 
         <Text className={classnames(styles.messageText)}>{message}</Text>
 
-        {invoice && (
-          <InvoiceChip
-            invoice={invoice}
-            markInvoiceAsPaid={markInvoiceAsPaid}
-          />
-        )}
+        <Stack>
+          {invoice && (
+            <InvoiceChip
+              invoice={invoice}
+              markInvoiceAsPaid={markInvoiceAsPaid}
+            />
+          )}
 
-        {file && (
-          <FileAttachmentChip fileName={file.name} filePath={file.path} />
-        )}
+          {file && (
+            <FileAttachmentChip fileName={file.name} filePath={file.path} />
+          )}
+        </Stack>
       </Stack>
 
       {showChatReplyModal && (

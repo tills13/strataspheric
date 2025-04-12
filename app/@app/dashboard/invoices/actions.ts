@@ -54,7 +54,6 @@ export async function upsertInvoiceAction(
       description,
       dueBy,
       fileId,
-      identifier,
       updatedAt: new Date().getTime(),
     });
   } else {

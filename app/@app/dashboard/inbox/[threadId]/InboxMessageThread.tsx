@@ -1,25 +1,34 @@
 import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
+import differenceInDays from "date-fns/differenceInDays";
+
 import { auth } from "../../../../../auth";
 import { Button } from "../../../../../components/Button";
 import { Date } from "../../../../../components/Date";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
+import { EventIcon } from "../../../../../components/Icon/EventIcon";
 import { ShareIcon } from "../../../../../components/Icon/ShareIcon";
+import { InvoiceChip } from "../../../../../components/InvoiceChip";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
+import { Panel } from "../../../../../components/Panel";
 import { SendInboxMessageForm } from "../../../../../components/SendInboxMessageForm";
 import { Stack } from "../../../../../components/Stack";
+import { StatusButton } from "../../../../../components/StatusButton";
 import { Text } from "../../../../../components/Text";
 import { ThreadMessage } from "../../../../../components/ThreadMessage";
+import { Timeline } from "../../../../../components/Timeline";
 import { getThreadEmailParticipants } from "../../../../../data/emails/getThreadEmailParticipants";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
 import { classnames } from "../../../../../utils/classnames";
+import { parseTimestamp } from "../../../../../utils/datetime";
 import { upsertFileAction } from "../../files/actions";
 import {
   markInvoiceAsPaidAction,
   upsertInvoiceAction,
 } from "../../invoices/actions";
+import { InboxMessageThreadAmenityBooking } from "./InboxMessageThreadAmenityBooking";
 
 interface Props {
   sendInboxThreadChatAction: (messageId: string, fd: FormData) => void;
@@ -32,13 +41,24 @@ export async function InboxMessageThread({
   sendInboxThreadChatAction,
   threadId,
 }: Props) {
-  const session = await auth();
-  const messages = await getThreadMessages(threadId);
+  const [session, messages] = await Promise.all([
+    auth(),
+    getThreadMessages(threadId),
+  ]);
 
   const message0 = messages[0];
 
-  const { senderUserId, senderName, senderEmail, subject, sentAt, viewId } =
-    message0;
+  const {
+    amenityBooking,
+    senderUserId,
+    senderName,
+    senderEmail,
+    subject,
+    sentAt,
+    viewId,
+  } = message0;
+
+  // console.log(message0);
 
   const emailParticipants = await getThreadEmailParticipants(threadId);
 
@@ -83,20 +103,25 @@ export async function InboxMessageThread({
         />
       ))}
 
-      <SendInboxMessageForm
-        className={s({ p: "normal" })}
-        showContactInformationFields={!session}
-        sendInboxMessage={sendNewMessageAction}
-        showHeaders={false}
-        showSubjectInput={false}
-        upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
-        upsertFile={upsertFileAction.bind(undefined, undefined)}
-        {...(!session && {
-          defaultEmail: message0.senderEmail,
-          defaultName: message0.senderName,
-          defaultPhoneNumber: message0.senderPhoneNumber,
-        })}
-      />
+      {amenityBooking ? (
+        <InboxMessageThreadAmenityBooking amenityBooking={amenityBooking} />
+      ) : (
+        <SendInboxMessageForm
+          className={s({ p: "normal" })}
+          defaultInvoiceId={message0.amenityBooking?.invoice}
+          showContactInformationFields={!session}
+          sendInboxMessage={sendNewMessageAction}
+          showHeaders={false}
+          showSubjectInput={false}
+          upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
+          upsertFile={upsertFileAction.bind(undefined, undefined)}
+          {...(!session && {
+            defaultEmail: message0.senderEmail,
+            defaultName: message0.senderName,
+            defaultPhoneNumber: message0.senderPhoneNumber,
+          })}
+        />
+      )}
     </div>
   );
 }

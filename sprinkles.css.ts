@@ -12,14 +12,20 @@ const fontProperties = defineProperties({
   },
 });
 
-const widthProperties = defineProperties({
+const sizeProperties = defineProperties({
   properties: {
     width: {
       full: "100%",
     },
+    height: {
+      xs: vars.sizes.xs,
+      small: vars.sizes.small,
+      normal: vars.sizes.normal,
+    },
   },
   shorthands: {
     w: ["width"],
+    h: ["height"],
   },
 });
 
@@ -139,7 +145,7 @@ const marginProperties = defineProperties({
 export const s = createSprinkles(
   marginProperties,
   paddingProperties,
-  widthProperties,
+  sizeProperties,
   fontProperties,
   flexProperties,
 );

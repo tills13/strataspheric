@@ -13,6 +13,7 @@ import { createThreadMessage } from "../../../../data/inbox/createThreadMessage"
 import { createInvoice } from "../../../../data/invoices/createInvoice";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../data/users/permissions";
+import { parseTimestamp } from "../../../../utils/datetime";
 import * as formdata from "../../../../utils/formdata";
 
 export async function upsertAmenityAction(
@@ -77,17 +78,22 @@ export async function createAmenityBookingAction(
   let invoiceId: string | undefined;
 
   if (amenity.costPerHour) {
-    const numHours = differenceInHours(startDate, endDate);
-    const amount = numHours & amenity.costPerHour;
+    const numHours = differenceInHours(
+      parseTimestamp(endDate),
+      parseTimestamp(startDate),
+    );
+    const amount = numHours * amenity.costPerHour;
 
-    const invoice = await createInvoice({
-      identifier: `BOOKING ${startDate}`,
-      amount,
-      status: "draft",
-      strataId: strata.id,
-      type: "incoming",
-      dueBy: startDate,
-    });
+    const invoice = await createInvoice(
+      {
+        amount,
+        status: "draft",
+        strataId: strata.id,
+        type: "incoming",
+        dueBy: startDate,
+      },
+      "BOOKING",
+    );
 
     invoiceId = invoice.id;
   }
@@ -101,14 +107,12 @@ export async function createAmenityBookingAction(
   const { threadId } = await createThreadMessage({
     message: specialRequests,
     amenityBookingId,
-    invoiceId,
+    // invoiceId,
     strataId: strata.id,
     subject: `${amenity.name} Booking Request`,
     senderUserId: session.user.id,
   });
 
   let viewPath = `/dashboard/inbox/${threadId}`;
-
-  revalidatePath(viewPath);
   redirect(viewPath);
 }

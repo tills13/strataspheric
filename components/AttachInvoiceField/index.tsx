@@ -3,12 +3,9 @@
 import React, { useState } from "react";
 
 import { Invoice } from "../../data";
-import { AttachInvoiceButton } from "../AttachInvoice";
 import { AttachInvoiceText } from "../AttachInvoice/AttachInvoiceText";
 
-type AttachInvoiceButtonProps = React.ComponentProps<
-  typeof AttachInvoiceButton
->;
+type AttachInvoiceButtonProps = React.ComponentProps<typeof AttachInvoiceText>;
 
 interface Props {
   buttonClassName?: string;

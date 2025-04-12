@@ -1,5 +1,7 @@
 import { db } from "..";
 
+export type Amenity = Awaited<ReturnType<typeof getAmenity>>;
+
 export function getAmenity(amenityId: string) {
   return db
     .selectFrom("amenities")

@@ -4,20 +4,20 @@ import differenceInDays from "date-fns/differenceInDays";
 import isBefore from "date-fns/isBefore";
 import { useState } from "react";
 
-import { AmenitiesBookingCalendar } from "../../../../components/AmenitiesBookingCalendar";
-import { Group } from "../../../../components/Group";
-import { InfoPanel } from "../../../../components/InfoPanel";
-import { Money } from "../../../../components/Money";
-import { Stack } from "../../../../components/Stack";
-import { StatusButton } from "../../../../components/StatusButton";
-import { Text } from "../../../../components/Text";
-import { TextArea } from "../../../../components/TextArea";
+import { Amenity } from "../../data/amenities/getAmenity";
 import {
   formatDateForDatetime,
   patchDateTimezoneOffset,
-} from "../../../../utils/datetime";
-import { pluralize } from "../../../../utils/pluralize";
-import { Amenity } from "./page";
+} from "../../utils/datetime";
+import { pluralize } from "../../utils/pluralize";
+import { AmenitiesBookingCalendar } from "../AmenitiesBookingCalendar";
+import { Group } from "../Group";
+import { InfoPanel } from "../InfoPanel";
+import { Money } from "../Money";
+import { Stack } from "../Stack";
+import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
+import { TextArea } from "../TextArea";
 
 interface Props {
   amenity: Amenity;

@@ -87,7 +87,7 @@ export interface InvoicesTable {
   payee: string | null;
   type: "incoming" | "outgoing";
   status: "draft" | "final";
-  identifier: string;
+  identifier: ColumnType<string, string, never>;
   description: string | null;
   amount: number;
   fileId: string | null;

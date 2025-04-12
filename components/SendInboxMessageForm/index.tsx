@@ -18,6 +18,9 @@ interface Props {
   defaultName?: string | null;
   defaultEmail?: string | null;
   defaultPhoneNumber?: string | null;
+  defaultInvoiceId?: React.ComponentProps<
+    typeof AttachInvoiceField
+  >["defaultValue"];
   showContactInformationFields: boolean;
   sendInboxMessage: (fd: FormData) => void;
   showHeaders?: boolean;
@@ -31,6 +34,7 @@ export function SendInboxMessageForm({
   defaultName,
   defaultEmail,
   defaultPhoneNumber,
+  defaultInvoiceId,
   showContactInformationFields = false,
   sendInboxMessage,
   showHeaders = true,
@@ -118,6 +122,7 @@ export function SendInboxMessageForm({
               <AttachInvoiceField
                 name="invoiceId"
                 upsertInvoice={upsertInvoice}
+                defaultValue={defaultInvoiceId}
               />
             )}
           </div>

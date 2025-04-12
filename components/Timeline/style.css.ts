@@ -16,6 +16,7 @@ export const timelineItem = style({
   padding: vars.spacing.small,
   paddingLeft: calc(vars.sizes.xs).add(vars.spacing.small).toString(),
   paddingRight: 0,
+  minHeight: calc(vars.sizes.xs).toString(),
 
   selectors: {
     "&:before": {
@@ -29,6 +30,7 @@ export const timelineItem = style({
     },
     "&:first-child": {
       paddingTop: 0,
+      minHeight: calc(vars.sizes.xs).toString(),
     },
     "&:first-child:before": {
       top: calc(vars.spacing.normal).add(vars.spacing.small).toString(),

@@ -3,9 +3,8 @@ import { timelineEntry } from "../MeetingTimelineItem/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const invoiceChip = style({
-  padding: vars.spacing.normal,
-  backgroundColor: vars.colors.grey50,
-  borderRadius: vars.borderRadius,
+  position: "relative",
+  overflow: "hidden",
 
   selectors: {
     [`${timelineEntry} &`]: {
@@ -13,6 +12,21 @@ export const invoiceChip = style({
       borderRadius: 0,
     },
   },
+});
+
+export const draftLabel = style({
+  position: "absolute",
+  display: "block",
+
+  fontSize: vars.sizes.xl,
+  fontWeight: vars.fontWeights.bold,
+  opacity: 0.05,
+  lineHeight: vars.sizes.xl,
+
+  left: "50%",
+  top: "50%",
+  // transform: "translateX(-50%) rotate(-30deg)",
+  transform: "translateX(-50%) translateY(-50%)",
 });
 
 export const invoiceBody = style({
