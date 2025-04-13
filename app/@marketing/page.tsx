@@ -20,7 +20,7 @@ export default async function Page() {
       <section className={classnames(styles.ctaSection, s({ p: "normal" }))}>
         <Header
           className={classnames(styles.ctaHeader, s({ mb: "xl" }))}
-          priority={2}
+          as="h2"
         >
           Take your strata to
           <br />
@@ -46,7 +46,7 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack>
-                  <Header priority={3}>Manage your files.</Header>
+                  <Header as="h3">Manage your files.</Header>
                   <Text>
                     Stored securely and safely in the cloud. There when you, or
                     anyone else in your strata, needs them.
@@ -64,7 +64,7 @@ export default async function Page() {
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack>
-                  <Header priority={3}>Find exactly what you need.</Header>
+                  <Header as="h3">Find exactly what you need.</Header>
                   <Text>
                     Powerful filtering tools to find the documents you are
                     looking for.
@@ -91,7 +91,7 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack>
-                  <Header priority={3}>See the future.</Header>
+                  <Header as="h3">See the future.</Header>
                   <Text>
                     Easily share information about upcoming Strata events.
                     Automatically send email reminders before an important date.
@@ -109,7 +109,7 @@ export default async function Page() {
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack>
-                  <Header priority={3}>
+                  <Header as="h3">
                     Generate revenue from your shared amenities.
                   </Header>
                   <Text>
@@ -138,7 +138,7 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack>
-                  <Header priority={3}>Plan ahead.</Header>
+                  <Header as="h3">Plan ahead.</Header>
                   <Text>
                     Plan meetings based on what&apos;s happening in your
                     strata&apos;s Strataspheric account.
@@ -165,7 +165,7 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack>
-                  <Header priority={3}>Stay connected.</Header>
+                  <Header as="h3">Stay connected.</Header>
                   <Text>
                     Receieve, discuss, and respond to strata members. Archive
                     messages to reference whenever you need to.
@@ -196,7 +196,7 @@ export default async function Page() {
           s({ mb: "large", p: "normal" }),
         )}
       >
-        <Header className={s({ mb: "normal" })} priority={2}>
+        <Header className={s({ mb: "normal" })} as="h2">
           For Professionals
         </Header>
         <p className={s({ mb: "large" })}>
@@ -223,7 +223,7 @@ export default async function Page() {
       </section>
 
       {/* <section className={classnames(s({ p: "normal" }), styles.plansSection)}>
-        <Header className={s({ mb: "normal" })} priority={2}>
+        <Header className={s({ mb: "normal" })} as="h2">
           Simple, month-by-month pricing
         </Header>
 

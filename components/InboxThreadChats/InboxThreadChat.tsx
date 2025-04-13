@@ -33,7 +33,7 @@ export function InboxThreadChat({ ...chat }: Props & Chat) {
       )}
     >
       <Group justify="space-between">
-        <Header priority={3}>{chat.name} said...</Header>
+        <Header as="h3">{chat.name} said...</Header>
         <Text as="span">
           <Date output="compact" timestamp={chat.sentAt} />
         </Text>

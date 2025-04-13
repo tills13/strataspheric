@@ -36,7 +36,7 @@ export function EventWidgetList({ deleteEvent, events }: Props) {
           className={abstractWidgetStyles.abstractWidgetListItem}
         >
           <div>
-            <Header priority={3}>{event.name}</Header>
+            <Header as="h3">{event.name}</Header>
             <p>{event.description}</p>
           </div>
           <div className={styles.eventWidgetListActions}>

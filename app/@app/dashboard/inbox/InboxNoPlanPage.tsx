@@ -13,7 +13,7 @@ export function InboxNoPlanPage() {
       <DashboardHeader />
 
       <Stack className={styles.upsell}>
-        <Header priority={3}>Oops...</Header>
+        <Header as="h3">Oops...</Header>
 
         <Text weight="bold">
           The strata inbox is only available on select plans.

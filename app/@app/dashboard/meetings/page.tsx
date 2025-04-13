@@ -24,7 +24,7 @@ export default async function Page() {
 
       <div className={styles.pageContainer}>
         <Group mb="normal" justify="space-between">
-          <Header priority={2}>Meetings</Header>
+          <Header as="h2">Meetings</Header>
 
           {can(session?.user, p("stratas", "meetings", "create")) && (
             <ScheduleMeetingButton

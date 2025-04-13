@@ -1,11 +1,11 @@
-interface Props {
-  className?: string;
-}
+import { Core, Props as CoreProps } from "../Core";
 
-export function Logo({ className }: Props) {
+interface Props extends Omit<CoreProps<"svg">, "as"> {}
+
+export function Logo(props: Props) {
   return (
-    <svg
-      className={className}
+    <Core
+      as="svg"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       version="1.1"
@@ -14,6 +14,7 @@ export function Logo({ className }: Props) {
       viewBox="0 0 100 100"
       enableBackground="new 0 0 100 100"
       xmlSpace="preserve"
+      {...props}
     >
       <polygon points="25.764,24.056 17.353,35.136 24.952,34.09 " />
       <polygon points="17.197,30.597 13.569,38.001 15.836,35.53 " />
@@ -102,6 +103,6 @@ export function Logo({ className }: Props) {
       <polygon points="77.254,30.433 68.157,34.556 79.021,42.54 " />
       <polygon points="48.624,67.604 40.55,77.66 55.367,78.159 " />
       <polygon points="62.788,65.975 49.498,67.188 56.234,77.734 " />
-    </svg>
+    </Core>
   );
 }

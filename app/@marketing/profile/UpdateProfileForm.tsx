@@ -23,12 +23,12 @@ export function UpdateProfileForm({ user }: Props) {
 
   return (
     <form action={dispatch}>
-      <Header className={s({ mb: "large" })} priority={2}>
+      <Header className={s({ mb: "large" })} as="h2">
         Update Profile
       </Header>
 
       <div className={s({ mb: "large" })}>
-        <Header className={s({ mb: "normal" })} priority={3}>
+        <Header className={s({ mb: "normal" })} as="h3">
           Name
         </Header>
 
@@ -41,7 +41,7 @@ export function UpdateProfileForm({ user }: Props) {
       </div>
 
       <div className={s({ mb: "large" })}>
-        <Header className={s({ mb: "normal" })} priority={3}>
+        <Header className={s({ mb: "normal" })} as="h3">
           Password
         </Header>
         <Input

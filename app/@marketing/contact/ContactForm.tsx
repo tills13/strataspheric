@@ -46,7 +46,7 @@ export function ContactForm({ submitActionReducer }: Props) {
       {state.errorMessage && (
         <InfoPanel
           className={s({ mb: "large" })}
-          header={<Header priority={3}>Oops...</Header>}
+          header={<Header as="h3">Oops...</Header>}
           level="error"
         >
           <Text>{state.errorMessage}</Text>

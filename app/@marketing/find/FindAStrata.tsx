@@ -41,7 +41,7 @@ export async function FindAStrata({
               href={protocol + "//" + strata.domain + "/dashboard"}
               target="_blank"
             >
-              <Header priority={3}>
+              <Header as="h3">
                 {strata.name}
                 {strata.strataId && ` - ${strata.strataId}`}
 

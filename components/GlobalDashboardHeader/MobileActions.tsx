@@ -33,7 +33,7 @@ export function GlobalHeaderMobileActions({ actions, strata }: Props) {
         <Modal
           closeModal={() => setShowMenu(false)}
           title={
-            <Header priority={1}>
+            <Header as="h1">
               <span className={styles.titleLink}>{strata.name}</span>
             </Header>
           }

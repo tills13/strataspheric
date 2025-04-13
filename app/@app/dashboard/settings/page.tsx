@@ -2,7 +2,7 @@ import { s } from "../../../../sprinkles.css";
 import * as parentStyles from "../style.css";
 import * as styles from "./styles.css";
 
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { auth } from "../../../../auth";
 import { ConfirmButton } from "../../../../components/ConfirmButton";
@@ -31,7 +31,7 @@ export default async function Page() {
   const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
 
   if (!can(session?.user, "stratas.edit")) {
-    redirect("/dashboard");
+    notFound();
   }
 
   return (
@@ -59,7 +59,7 @@ export default async function Page() {
               />
 
               <InfoPanel
-                header={<Header priority={3}>Content Visibility</Header>}
+                header={<Header as="h3">Content Visibility</Header>}
                 level="info"
               >
                 <Text>
@@ -76,7 +76,7 @@ export default async function Page() {
                 />
               </InfoPanel>
 
-              <Header priority={2}>Location</Header>
+              <Header as="h2">Location</Header>
               <Text color="secondary">
                 Let people know where to find your strata.
               </Text>
@@ -109,7 +109,7 @@ export default async function Page() {
                 Delete Strata
               </ConfirmButton>
             }
-            header={<Header priority={3}>Danger Zone</Header>}
+            header={<Header as="h3">Danger Zone</Header>}
             level="error"
           >
             <Text>

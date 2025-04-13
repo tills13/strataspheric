@@ -1,11 +1,11 @@
-import { NotFound } from "../components/NotFound";
+import { NotFound } from "../../components/NotFound";
 
 export const runtime = "edge";
 
 export default function Page() {
   return (
     <>
-      <NotFound />
+      <NotFound returnTo="/" />
     </>
   );
 }

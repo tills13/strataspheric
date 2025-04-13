@@ -64,7 +64,7 @@ export function ThreadMessage({
         <Stack gap="0">
           <Group justify="space-between">
             <Group gap="small">
-              <Header priority={3}>{senderName}</Header>
+              <Header as="h3">{senderName}</Header>
               <Text color="secondary">
                 <Date timestamp={sentAt} />
               </Text>

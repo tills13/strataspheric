@@ -99,7 +99,7 @@ export function GetStartedForm({
           </div>
         )}
 
-        <Header priority={2}>Let&apos;s get to know your strata...</Header>
+        <Header as="h2">Let&apos;s get to know your strata...</Header>
 
         <Input
           name="strata_name"
@@ -144,7 +144,7 @@ export function GetStartedForm({
         />
 
         <InfoPanel
-          header={<Header priority={3}>Content Visibility</Header>}
+          header={<Header as="h3">Content Visibility</Header>}
           level="info"
         >
           <Text>

@@ -4,7 +4,9 @@ import { fontHeaderVar, fontPrimaryVar } from "./theme.css";
 
 import { Metadata } from "next";
 
+import { FlexBox } from "../components/FlexBox";
 import { GlobalFooter } from "../components/GlobalFooter";
+import { NotFound } from "../components/NotFound";
 import { protocol, tld } from "../constants";
 import { getCurrentStrata } from "../data/stratas/getStrataByDomain";
 import { variable } from "../theme";
@@ -33,6 +35,7 @@ export default async function RootLayout({
   marketing: React.ReactNode;
 }) {
   const strata = await getCurrentStrata();
+  const node = strata ? app : marketing;
 
   return (
     <html lang="en">
@@ -70,7 +73,13 @@ export default async function RootLayout({
         <meta name="theme-color" content="#272b33" />
       </head>
       <body>
-        <div className={styles.body}>{strata ? app : marketing}</div>
+        {node ? (
+          <div className={styles.body}>{node}</div>
+        ) : (
+          <FlexBox align="center" className={styles.errorBody} justify="center">
+            <NotFound />
+          </FlexBox>
+        )}
 
         <GlobalFooter />
 

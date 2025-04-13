@@ -10,7 +10,7 @@ export const runtime = "edge";
 export default function Page() {
   return (
     <StaticPageContainer>
-      <Header className={s({ mb: "large" })} priority={2}>
+      <Header className={s({ mb: "large" })} as="h2">
         Contact
       </Header>
 

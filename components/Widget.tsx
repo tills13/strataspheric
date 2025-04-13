@@ -34,9 +34,7 @@ export function Widget({
       return (
         <Suspense
           fallback={
-            <WidgetSkeleton
-              title={<Header priority={2}>{widget.title}</Header>}
-            />
+            <WidgetSkeleton title={<Header as="h2">{widget.title}</Header>} />
           }
         >
           <ServerEventWidget
@@ -56,9 +54,7 @@ export function Widget({
       return (
         <Suspense
           fallback={
-            <WidgetSkeleton
-              title={<Header priority={2}>{widget.title}</Header>}
-            />
+            <WidgetSkeleton title={<Header as="h2">{widget.title}</Header>} />
           }
         >
           <ServerFileWidget
@@ -77,9 +73,7 @@ export function Widget({
       return (
         <Suspense
           fallback={
-            <WidgetSkeleton
-              title={<Header priority={2}>{widget.title}</Header>}
-            />
+            <WidgetSkeleton title={<Header as="h2">{widget.title}</Header>} />
           }
         >
           <ServerInfoWidget

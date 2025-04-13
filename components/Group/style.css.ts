@@ -1,8 +1,6 @@
-import { createVar, style, styleVariants } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 
-export const group = style({
-  flexDirection: "row",
-});
+export const group = style({});
 
 export const groupElement = styleVariants({
   default: {},

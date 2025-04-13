@@ -6,7 +6,7 @@ export const runtime = "edge";
 export default function Page() {
   return (
     <StaticPageContainer>
-      <Header priority={2}>About</Header>
+      <Header as="h2">About</Header>
     </StaticPageContainer>
   );
 }

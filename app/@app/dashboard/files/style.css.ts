@@ -55,10 +55,6 @@ export const filesListFileVisibilityIcon = style({
   height: vars.sizes.xxs,
 });
 
-export const filesSearchPanel = style({
-  width: 400,
-});
-
 export const filesSearchClear = style({
   width: "auto",
   flexShrink: 0,

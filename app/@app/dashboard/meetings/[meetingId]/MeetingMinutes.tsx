@@ -49,7 +49,7 @@ export async function MeetingMinutes({
 
   return (
     <div className={className}>
-      <Header className={s({ mb: "normal" })} priority={2}>
+      <Header className={s({ mb: "normal" })} as="h2">
         Minutes
       </Header>
 

@@ -48,7 +48,7 @@ export function MembershipTile({
           justify="space-between"
         >
           <Stack gap="xxs">
-            <Header priority={3}>{membership.name}</Header>
+            <Header as="h3">{membership.name}</Header>
             {membership.unit && (
               <Text color="secondary">Unit {membership.unit}</Text>
             )}

@@ -1,5 +1,7 @@
 import { s } from "../../../../sprinkles.css";
 
+import { notFound } from "next/navigation";
+
 import { auth } from "../../../../auth";
 import { AmenityChip } from "../../../../components/AmenityChip";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
@@ -14,10 +16,13 @@ import { createAmenityBookingAction, upsertAmenityAction } from "./actions";
 export const runtime = "edge";
 
 export default async function Page() {
-  const [session, amenities] = await Promise.all([
-    auth(),
-    listAmenitiesForCurrentStrata(),
-  ]);
+  const session = await auth();
+
+  if (!session) {
+    notFound();
+  }
+
+  const [amenities] = await Promise.all([listAmenitiesForCurrentStrata()]);
 
   return (
     <>
@@ -26,7 +31,7 @@ export default async function Page() {
       <div>
         <div className={s({ p: "normal" })}>
           <Group justify="space-between">
-            <Header priority={2}>Amenities</Header>
+            <Header as="h2">Amenities</Header>
 
             <div>
               {can(session?.user, p("stratas", "memberships", "create")) && (

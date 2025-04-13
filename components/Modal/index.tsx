@@ -45,7 +45,7 @@ export function Modal({
           <div className={styles.modalHeader}>
             <div className={styles.modalHeaderTitleContainer}>
               {typeof title === "string" ? (
-                <Header className={styles.modalHeaderTitle} priority={2}>
+                <Header className={styles.modalHeaderTitle} as="h2">
                   {title}
                 </Header>
               ) : (

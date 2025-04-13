@@ -25,11 +25,11 @@ export function JoinFromTokenForm({
 }: Props) {
   return (
     <form action={onSubmit} className={className}>
-      <Header className={styles.header0} priority={2}>
+      <Header className={styles.header0} as="h2">
         Welcome to Strataspheric, {membershipName}
       </Header>
 
-      <Header className={styles.header1} priority={3}>
+      <Header className={styles.header1} as="h3">
         You have been invited to join {strata.name}
       </Header>
 

@@ -1,41 +1,38 @@
-import { S, s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { classnames } from "../../utils/classnames";
+import { Core } from "../Core";
 
-interface Props extends S {
+interface Props extends Omit<React.ComponentProps<typeof Core<"div">>, "as"> {
   align?: keyof typeof styles.alignItems;
-  className?: string;
   gap?: keyof typeof styles.gap;
-  id?: string;
   justify?: keyof typeof styles.justifyContent;
-  ref?: React.Ref<HTMLDivElement>;
+  direction?: keyof typeof styles.direction;
 }
 
-export function Box({
+export function FlexBox({
   align,
   className,
   children,
+  direction,
   gap = "normal",
-  id,
   justify,
-  ref,
   ...rest
 }: React.PropsWithChildren<Props>) {
   return (
-    <div
+    <Core
+      as="div"
       className={classnames(
         className,
-        styles.box,
+        styles.flexBox,
         align && styles.alignItems[align],
         gap && styles.gap[gap],
         justify && styles.justifyContent[justify],
-        s(rest),
+        direction && styles.direction[direction],
       )}
-      id={id}
-      ref={ref}
+      {...rest}
     >
       {children}
-    </div>
+    </Core>
   );
 }

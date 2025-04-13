@@ -42,7 +42,7 @@ export function MeetingAgendaItem({
           imperativeUpdateAgendaItem={imperativeUpdateAgendaItem}
         />
 
-        <Header className={styles.headerHeader} priority={3}>
+        <Header className={styles.headerHeader} as="h3">
           {agendaItem.title}
         </Header>
 

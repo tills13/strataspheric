@@ -30,13 +30,13 @@ export default async function Onboarding() {
         <Wordmark />
       </Group>
 
-      <Header className={s({ mb: "large" })} priority={2}>
+      <Header className={s({ mb: "large" })} as="h2">
         Welcome to your Strata. Let&apos;s get a few things setup for you...
       </Header>
 
       <Stack>
         <Panel>
-          <Header className={s({ mb: "small" })} priority={3}>
+          <Header className={s({ mb: "small" })} as="h3">
             Address
           </Header>
 
@@ -50,7 +50,7 @@ export default async function Onboarding() {
         </Panel>
 
         <Panel>
-          <Header className={s({ mb: "small" })} priority={3}>
+          <Header className={s({ mb: "small" })} as="h3">
             Bylaws
           </Header>
           <Stack>

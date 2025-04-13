@@ -52,7 +52,7 @@ export function InboxMessageQuote({
       )}
     >
       <Group justify="space-between">
-        <Header priority={3}>
+        <Header as="h3">
           <QuoteIcon className={styles.quotedMessageIcon} /> {senderName}{" "}
           sent...
         </Header>

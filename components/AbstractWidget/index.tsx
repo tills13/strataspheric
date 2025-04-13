@@ -59,7 +59,7 @@ export function AbstractWidget({
     <>
       <div className={classnames(styles.abstractWidget, className)}>
         <div className={styles.abstractWidgetHeader}>
-          {widgetTitle && <Header priority={2}>{widgetTitle}</Header>}
+          {widgetTitle && <Header as="h2">{widgetTitle}</Header>}
 
           {widgetActions.length !== 0 && (
             <DropdownActions

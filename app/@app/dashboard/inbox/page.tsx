@@ -13,7 +13,7 @@ import { InternalLink } from "../../../../components/Link/InternalLink";
 import { listThreads } from "../../../../data/inbox/listThreads";
 import { getCurrentStrataPlan } from "../../../../data/strataPlans/getCurrentStrataPlan";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
-import { can, p } from "../../../../data/users/permissions";
+import { can } from "../../../../data/users/permissions";
 import { InboxNoPlanPage } from "./InboxNoPlanPage";
 import { deleteThreadAction } from "./actions";
 
@@ -27,7 +27,7 @@ export default async function Page() {
   ]);
 
   if (strataPlan.enableInbox !== 1) {
-    if (!can(session?.user, p("stratas", "inbox_messages", "view"))) {
+    if (!can(session?.user, "stratas.inbox_messages.view")) {
       redirect("/dashboard");
     }
 
@@ -40,7 +40,7 @@ export default async function Page() {
 
   const threads = await listThreads({
     strataId: strata.id,
-    ...(!can(session.user, p("stratas", "inbox_messages", "view")) && {
+    ...(!can(session.user, "stratas.inbox_messages.view") && {
       senderUserId: session.user.id,
     }),
   });
@@ -52,7 +52,7 @@ export default async function Page() {
       <div>
         <div className={s({ p: "normal" })}>
           <Group justify="space-between">
-            <Header priority={2}>Inbox</Header>
+            <Header as="h2">Inbox</Header>
 
             <InternalLink href="/dashboard/inbox/send" noUnderline>
               <Button
@@ -61,7 +61,7 @@ export default async function Page() {
                 iconTextBehaviour="centerRemainder"
                 style="secondary"
               >
-                New Message to Strata
+                New Message to {strata.name}
               </Button>
             </InternalLink>
           </Group>

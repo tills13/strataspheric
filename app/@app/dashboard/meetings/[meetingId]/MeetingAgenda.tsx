@@ -25,7 +25,7 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
 
   return (
     <div className={className}>
-      <Header className={classnames(s({ mb: "normal" }))} priority={2}>
+      <Header className={classnames(s({ mb: "normal" }))} as="h2">
         Agenda
       </Header>
 

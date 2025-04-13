@@ -9,6 +9,8 @@ import { Header } from "../../../../../components/Header";
 import { ShareIcon } from "../../../../../components/Icon/ShareIcon";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
 import { SendInboxMessageForm } from "../../../../../components/SendInboxMessageForm";
+import { SendInboxMessageContactDetailsFields } from "../../../../../components/SendInboxMessageForm/SendInboxMessageContactDetailsFields";
+import { SendInboxMessageFields } from "../../../../../components/SendInboxMessageForm/SendInboxMessageFields";
 import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
 import { ThreadMessage } from "../../../../../components/ThreadMessage";
@@ -67,7 +69,7 @@ export async function InboxMessageThread({
         gap="xs"
       >
         <Group justify="space-between">
-          <Header priority={2}>{subject}</Header>
+          <Header as="h2">{subject}</Header>
 
           <ExternalLink
             href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
@@ -101,18 +103,23 @@ export async function InboxMessageThread({
 
       <SendInboxMessageForm
         className={s({ p: "normal" })}
-        showContactInformationFields={!session}
         sendInboxMessage={sendNewMessageAction}
-        showHeaders={false}
-        showSubjectInput={false}
-        upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
-        upsertFile={upsertFileAction.bind(undefined, undefined)}
-        {...(!session && {
-          defaultEmail: message0.senderEmail,
-          defaultName: message0.senderName,
-          defaultPhoneNumber: message0.senderPhoneNumber,
-        })}
-      />
+      >
+        {!session && (
+          <SendInboxMessageContactDetailsFields
+            defaultEmail={message0.senderEmail}
+            defaultName={message0.senderName}
+            defaultPhoneNumber={message0.senderPhoneNumber}
+            mb="large"
+          />
+        )}
+
+        <SendInboxMessageFields
+          showSubjectInput={false}
+          upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
+          upsertFile={upsertFileAction.bind(undefined, undefined)}
+        />
+      </SendInboxMessageForm>
     </div>
   );
 }

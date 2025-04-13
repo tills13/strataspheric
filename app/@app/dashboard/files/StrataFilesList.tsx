@@ -1,7 +1,7 @@
 import * as styles from "./style.css";
 
 import { auth } from "../../../../auth";
-import { InfoPanel } from "../../../../components/InfoPanel";
+import { NothingHere } from "../../../../components/NothingHere";
 import { Stack } from "../../../../components/Stack";
 import { searchFiles } from "../../../../data/files/searchFiles";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
@@ -24,11 +24,8 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
 
   return (
     <Stack className={classnames(styles.filesList)}>
-      {(searchTerm || visibility) && files.length === 0 && (
-        <InfoPanel level="warning">
-          No files matched your search criteria
-        </InfoPanel>
-      )}
+      {files.length === 0 && <NothingHere />}
+
       {files.map((file) => (
         <FilesListFile
           key={file.id}

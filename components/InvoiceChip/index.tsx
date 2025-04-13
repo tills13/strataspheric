@@ -51,7 +51,7 @@ export function InvoiceChip({
       )}
 
       <Stack gap="xs">
-        <Header priority={3}>
+        <Header as="h3">
           <Group gap="xs">
             <Text color="secondary" as="span" size="xl" weight="light">
               #

@@ -32,7 +32,7 @@ export function JoinStrataButton({
 
   if (!user) {
     return (
-      <InternalLink href="/?action=join">
+      <InternalLink href="/?action=join" noUnderline>
         <Button
           color="primary"
           iconRight={<ArrowForwardIcon />}

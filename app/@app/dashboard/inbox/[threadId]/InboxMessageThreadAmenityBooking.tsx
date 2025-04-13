@@ -47,7 +47,7 @@ export function InboxMessageThreadAmenityBooking({
     <div className={s({ p: "normal" })}>
       <Panel>
         <Stack>
-          <Header priority={3}>Booking Request</Header>
+          <Header as="h3">Booking Request</Header>
 
           <AmenitiesBookingCalendar
             amenity={amenityBooking.amenity}

@@ -69,7 +69,7 @@ export function AddNewMeetingAgendaItemButton({
 
           <DividerText className={s({ mv: "large" })}>OR</DividerText>
 
-          <Header className={s({ mb: "large" })} priority={3}>
+          <Header className={s({ mb: "large" })} as="h3">
             Create New Agenda Item
           </Header>
 

@@ -1,7 +1,7 @@
 import { vars } from "../../app/theme.css";
 import { createVar, style, styleVariants } from "@vanilla-extract/css";
 
-export const box = style({
+export const flexBox = style({
   display: "flex",
 });
 
@@ -28,4 +28,9 @@ export const justifyContent = styleVariants({
   center: { justifyContent: "center" },
   end: { justifyContent: "flex-end" },
   "space-between": { justifyContent: "space-between" },
+});
+
+export const direction = styleVariants({
+  row: { flexDirection: "row" },
+  column: { flexDirection: "column" },
 });

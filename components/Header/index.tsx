@@ -3,23 +3,23 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { classnames } from "../../utils/classnames";
+import { Core } from "../Core";
 
-interface Props {
+type ValidHeaderIntrinsicElements = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+interface Props
+  extends React.ComponentProps<typeof Core<ValidHeaderIntrinsicElements>> {
+  as: ValidHeaderIntrinsicElements;
   children: React.ReactNode;
   className?: string;
-  onTouchEnd?: React.TouchEventHandler;
-  priority: 1 | 2 | 3 | 4 | 5;
 }
 
-export function Header({ children, className, onTouchEnd, priority }: Props) {
-  const Tag = `h${priority}` as `h${Props["priority"]}`;
-
-  const mClassName =
-    styles.headerVariants[Tag] ?? styles.headerVariants.default;
+export function Header({ as, children, className, ...rest }: Props) {
+  const mClassName = styles.headerVariants[as] ?? styles.headerVariants.default;
 
   return (
-    <Tag className={classnames(mClassName, className)} onTouchEnd={onTouchEnd}>
+    <Core as={as} className={classnames(mClassName, className)} {...rest}>
       {children}
-    </Tag>
+    </Core>
   );
 }

@@ -53,7 +53,7 @@ export function GetStartedStatus({ strata }: Props) {
         ) : (
           <LoadingIcon className={styles.statusPageLoadingIcon} />
         )}
-        <Header priority={2}>Creating your strata...</Header>
+        <Header as="h2">Creating your strata...</Header>
       </Group>
 
       {domainStatus === "active" ? (

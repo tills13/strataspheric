@@ -24,7 +24,7 @@ export default async function Page() {
       <div>
         <div className={s({ p: "normal" })}>
           <Group justify="space-between">
-            <Header priority={2}>Directory</Header>
+            <Header as="h2">Directory</Header>
 
             <div>
               {can(session?.user, p("stratas", "memberships", "create")) && (

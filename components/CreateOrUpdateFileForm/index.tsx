@@ -64,7 +64,7 @@ export function CreateOrUpdateFileForm({
 
         {can(p("stratas", "files", "create")) && (
           <Stack gap="small">
-            <Header priority={3}>Visibility</Header>
+            <Header as="h3">Visibility</Header>
             <RadioButton
               name="is_public"
               options={["public", "private"]}

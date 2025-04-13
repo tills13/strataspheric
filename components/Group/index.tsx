@@ -3,9 +3,10 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { classnames } from "../../utils/classnames";
-import { Box } from "../Box";
+import { FlexBox } from "../FlexBox";
 
-interface Props extends React.ComponentProps<typeof Box> {
+interface Props
+  extends Omit<React.ComponentProps<typeof FlexBox>, "direction"> {
   equalWidthChildren?: boolean;
   overflow?: keyof typeof styles.groupOverflow;
 }
@@ -20,13 +21,14 @@ export function Group({
   ...delegateProps
 }: Props) {
   return (
-    <Box
+    <FlexBox
       align={align}
       className={classnames(
         styles.group,
         overflow && styles.groupOverflow[overflow],
         className,
       )}
+      direction="row"
       justify={justify}
       {...delegateProps}
     >
@@ -43,6 +45,6 @@ export function Group({
             })
           : c,
       )}
-    </Box>
+    </FlexBox>
   );
 }

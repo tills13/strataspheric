@@ -7,23 +7,32 @@ import React, { useCallback, useState } from "react";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
+import { Group } from "../Group";
+import { CircleXIcon } from "../Icon/CircleXIcon";
 import { MoreVerticalIcon } from "../Icon/MoreVerticalIcon";
+import { RemoveIcon } from "../Icon/RemoveIcon";
 
 interface Props {
   buttonClassName?: string;
+  buttonColor?: React.ComponentProps<typeof Button>["color"];
   buttonSize?: React.ComponentProps<typeof Button>["size"];
   buttonStyle?: React.ComponentProps<typeof Button>["style"];
   className?: string;
   direction?: "up" | "down";
+  icon?: React.ReactNode;
+  openLabel?: React.ReactNode;
   panel: React.ReactNode;
 }
 
 export function DropdownButton({
   buttonClassName,
+  buttonColor,
   buttonSize,
   buttonStyle,
   className,
   direction,
+  icon: propsIcon,
+  openLabel,
   panel,
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -31,22 +40,40 @@ export function DropdownButton({
   const onClickOutside = useCallback(() => setOpen(false), []);
   const ref = useClickOutside(onClickOutside);
 
+  const icon = propsIcon || <MoreVerticalIcon />;
+
   return (
-    <div className={classnames(className, styles.dropdownButton)} ref={ref}>
+    <div
+      className={classnames(className, styles.dropdownButton, {
+        [styles.dropdownButtonOpen]: open,
+      })}
+      ref={ref}
+    >
       <Button
-        className={buttonClassName}
-        icon={<MoreVerticalIcon />}
+        className={classnames(buttonClassName, styles.dropdownButtonButton)}
+        color={open ? undefined : buttonColor}
         onClick={() => setOpen(!open)}
         size={buttonSize}
-        style={buttonStyle}
-      />
+        style={open ? undefined : buttonStyle}
+        icon={!open || !openLabel ? icon : undefined}
+        iconRight={open && openLabel ? icon : undefined}
+      >
+        {open && openLabel}
+      </Button>
 
       <div
         className={classnames(
           direction === "up" ? styles.panelWrapperUp : styles.panelWrapper,
-          { [styles.panelOpen]: open },
         )}
       >
+        <Group justify="end" ph="normal" paddingTop="normal" visibleOn="mobile">
+          <Button
+            icon={<RemoveIcon />}
+            style="tertiary"
+            color="primary"
+            onClick={() => setOpen(false)}
+          />
+        </Group>
         {panel}
       </div>
     </div>

@@ -18,7 +18,7 @@ export default async function Page({ searchParams }: PageProps) {
     <StaticPageContainer>
       <div className={styles.strataSearchContainer}>
         <Stack>
-          <Header priority={2}>Find a Strata</Header>
+          <Header as="h2">Find a Strata</Header>
 
           <StrataSearchForm
             name={name}
@@ -27,7 +27,7 @@ export default async function Page({ searchParams }: PageProps) {
           />
         </Stack>
         <Stack>
-          <Header priority={2}>Stratas</Header>
+          <Header as="h2">Stratas</Header>
 
           <Suspense fallback={<div>Searching...</div>}>
             <FindAStrata searchParams={await searchParams} />

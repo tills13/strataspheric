@@ -19,7 +19,7 @@ export async function ContinueWhereYouLeftOffWidget() {
 
   return (
     <Panel className={styles.continuePanel}>
-      <Header className={s({ mb: "normal" })} priority={3}>
+      <Header className={s({ mb: "normal" })} as="h3">
         Continue where you left off...
       </Header>
       <div className={styles.spacer} />

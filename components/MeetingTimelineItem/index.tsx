@@ -99,7 +99,7 @@ export function MeetingTimelineItem(props: Props) {
       )}
     >
       <Group justify="space-between">
-        <Header priority={3}>{title}</Header>
+        <Header as="h3">{title}</Header>
         <Text color="secondary">
           <Date output="compact" timestamp={item.date} />
         </Text>

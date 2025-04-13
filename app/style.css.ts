@@ -20,3 +20,7 @@ export const body = style({
     [sidebarWidthVar]: "0px",
   },
 });
+
+export const errorBody = style({
+  minHeight: "100vh",
+});

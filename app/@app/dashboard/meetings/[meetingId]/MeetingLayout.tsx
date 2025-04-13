@@ -27,7 +27,7 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
     <Stack className={styles.meetingAgendaContainer} gap="large">
       <Group align="start" justify="space-between">
         <Stack gap="small">
-          <Header priority={2}>{meeting.purpose}</Header>
+          <Header as="h2">{meeting.purpose}</Header>
           <Text color="secondary">
             Called by <b>{meeting.caller}</b> for{" "}
             <Date timestamp={meeting.startDate} />
@@ -68,7 +68,7 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           </ConfirmButton>
         }
         className={styles.meetingAgendaContainerDeleteMeeting}
-        header={<Header priority={3}>Delete Meeting</Header>}
+        header={<Header as="h3">Delete Meeting</Header>}
         level="error"
       >
         <Text>

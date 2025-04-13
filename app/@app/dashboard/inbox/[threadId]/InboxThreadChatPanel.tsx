@@ -20,7 +20,7 @@ export async function InboxThreadChatPanel({ threadId }: Props) {
   return (
     <div className={classnames(styles.chatPanelWrapper, s({ p: "normal" }))}>
       <div className={styles.chatPanelContents}>
-        <Header priority={2}>Chats</Header>
+        <Header as="h2">Chats</Header>
 
         <InfoPanel level="info">
           <Text>

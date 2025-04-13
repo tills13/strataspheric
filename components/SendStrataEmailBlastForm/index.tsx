@@ -32,7 +32,7 @@ export function SendStrataEmailBlastForm({
       action={sendInboxMessage}
     >
       {showHeaders && (
-        <Header className={styles.formHeader} priority={2}>
+        <Header className={styles.formHeader} as="h2">
           Strata Email Blast
         </Header>
       )}

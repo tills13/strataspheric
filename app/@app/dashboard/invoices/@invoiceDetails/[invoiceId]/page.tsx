@@ -62,7 +62,7 @@ export default async function Page({ params }: PageProps) {
             Delete Invoice
           </ConfirmButton>
         }
-        header={<Header priority={3}>Danger Zone</Header>}
+        header={<Header as="h3">Danger Zone</Header>}
         level="error"
       >
         <Text>Deleting an invoice cannot be undone.</Text>

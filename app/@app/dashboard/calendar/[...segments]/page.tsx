@@ -61,7 +61,7 @@ export default async function Page({ params }: PageProps) {
 
       <div className={styles.calendarPageContainer}>
         <Group className={s({ p: "normal" })} justify="space-between">
-          <Header priority={2}>
+          <Header as="h2">
             {monthName}, {year}
           </Header>
 

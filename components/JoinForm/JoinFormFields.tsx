@@ -12,7 +12,7 @@ interface Props {
 export function JoinFormFields({ className }: Props) {
   return (
     <Stack className={className}>
-      <Header priority={2}>Let&apos;s get to know you...</Header>
+      <Header as="h2">Let&apos;s get to know you...</Header>
 
       <Input id="name" name="name" label="Name" required />
       <Input id="email" name="email" type="email" label="Email" required />

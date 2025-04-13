@@ -25,7 +25,7 @@ export function InboxThreads({ deleteThread, threads }: Props) {
     <>
       {threads.length === 0 && (
         <div className={styles.inboxMessagesNoMessages}>
-          <Header priority={2}>Inbox Zero 🎉</Header>
+          <Header as="h2">Inbox Zero 🎉</Header>
           <p>There are no messages in your inbox.</p>
         </div>
       )}
@@ -41,7 +41,7 @@ export function InboxThreads({ deleteThread, threads }: Props) {
           >
             <Stack gap="xs">
               <Group gap="small">
-                <Header className={styles.inboxMessageSender} priority={3}>
+                <Header className={styles.inboxMessageSender} as="h3">
                   {thread.senderName}
                 </Header>
                 &mdash;

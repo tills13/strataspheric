@@ -3,9 +3,9 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { classnames } from "../../utils/classnames";
-import { Box } from "../Box";
+import { FlexBox } from "../FlexBox";
 
-interface Props extends React.ComponentProps<typeof Box> {
+interface Props extends React.ComponentProps<typeof FlexBox> {
   from: keyof typeof styles.flexBreakpoint;
 }
 
@@ -16,7 +16,7 @@ export function Flex({
   ...delegateProps
 }: React.PropsWithChildren<Props>) {
   return (
-    <Box
+    <FlexBox
       className={classnames(
         className,
         styles.flex,
@@ -25,6 +25,6 @@ export function Flex({
       {...delegateProps}
     >
       {children}
-    </Box>
+    </FlexBox>
   );
 }

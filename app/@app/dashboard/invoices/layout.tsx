@@ -1,6 +1,8 @@
 import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
+import { notFound } from "next/navigation";
+
 import type { LayoutProps } from "../../../../.next/types/app/@app/dashboard/invoices/layout";
 import { auth } from "../../../../auth";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
@@ -18,13 +20,17 @@ export default async function InvoicesLayout({
 }: LayoutProps) {
   const session = await auth();
 
+  if (!can(session?.user, "stratas.invoices.view")) {
+    notFound();
+  }
+
   return (
     <>
       <DashboardHeader />
 
       <div className={styles.pageContainer}>
         <Group className={s({ mb: "normal" })} justify="space-between">
-          <Header priority={2}>Invoices</Header>
+          <Header as="h2">Invoices</Header>
           <div>
             {can(session?.user, p("stratas", "invoices", "create")) && (
               <CreateNewInvoiceButton

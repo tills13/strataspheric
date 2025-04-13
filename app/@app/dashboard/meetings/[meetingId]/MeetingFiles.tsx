@@ -25,7 +25,7 @@ export async function MeetingFiles({ className, meetingId }: Props) {
 
   return (
     <div className={className}>
-      <Header className={s({ mb: "normal" })} priority={2}>
+      <Header className={s({ mb: "normal" })} as="h2">
         Files
       </Header>
 

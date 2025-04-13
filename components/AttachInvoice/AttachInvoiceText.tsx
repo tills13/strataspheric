@@ -1,22 +1,16 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { useState } from "react";
 
 import { Invoice } from "../../data";
-import { CreateOrUpdateInvoiceForm } from "../CreateOrUpdateInvoiceForm";
 import { Group } from "../Group";
-import { Header } from "../Header";
 import { PaidDocumentIcon } from "../Icon/PaidDocumentIcon";
-import { InvoiceSelect } from "../InvoiceSelect";
-import { Modal } from "../Modal";
 import { AttachInvoiceModal } from "./AttachInvoiceModal";
 
 interface Props {
   attachInvoiceText?: string;
-  className?: string;
   onSelectInvoice: (file: Invoice | undefined) => void;
   selectedInvoice?: Invoice;
   upsertInvoice: (fd: FormData) => Promise<Invoice>;
@@ -24,7 +18,6 @@ interface Props {
 
 export function AttachInvoiceText({
   attachInvoiceText = "Attach Invoice",
-  className,
   onSelectInvoice,
   selectedInvoice,
   upsertInvoice,
@@ -33,7 +26,7 @@ export function AttachInvoiceText({
 
   return (
     <>
-      <Group gap="xs">
+      <Group gap="small">
         <PaidDocumentIcon className={styles.attachInvoiceTextIcon} />
 
         <button
