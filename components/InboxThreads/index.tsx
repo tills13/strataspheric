@@ -2,7 +2,7 @@
 
 import * as styles from "./style.css";
 
-import { type Thread } from "../../data/inbox/getThreads";
+import { Thread } from "../../data/inbox/getThread";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { Date } from "../Date";
@@ -15,7 +15,7 @@ import { Text } from "../Text";
 
 interface Props {
   deleteThread: (threadId: string) => void;
-  threads: Array<Thread>;
+  threads: Thread[];
 }
 
 export function InboxThreads({ deleteThread, threads }: Props) {

@@ -1,5 +1,4 @@
-import { s } from "../../../sprinkles.css";
-
+import { PageProps } from "../../../.next/types/app/@marketing/join/page";
 import { JoinForm } from "../../../components/JoinForm";
 import { StaticPageContainer } from "../StaticPageContainer";
 import { JoinFromToken } from "./JoinFromToken";
@@ -7,15 +6,13 @@ import { joinAction } from "./actions";
 
 export const runtime = "edge";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Record<string, string>;
-}) {
-  if (searchParams["token"]) {
+export default async function Page({ searchParams }: PageProps) {
+  const { token } = await searchParams;
+
+  if (token && typeof token === "string") {
     return (
       <StaticPageContainer centered>
-        <JoinFromToken token={searchParams["token"]} />
+        <JoinFromToken token={token} />
       </StaticPageContainer>
     );
   }

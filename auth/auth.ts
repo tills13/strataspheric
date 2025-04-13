@@ -1,8 +1,9 @@
 import { headers } from "next/headers";
+import { NextRequest } from "next/server";
 
 import { getJwtFromCookies } from "./cookies";
 import { parseJwt, readJwtFromRequest } from "./jwt";
-import { AuthenticatedApiHandler, Config, Session } from "./types";
+import { AuthenticatedApiHandler, Config } from "./types";
 
 export function internalAuthDoNotUseDirectly(
   config: Config,
@@ -22,7 +23,7 @@ export function internalAuthDoNotUseDirectly(
     });
   } else {
     const [apiHandler] = args;
-    return async (req: Request) => {
+    return async (req: NextRequest) => {
       try {
         const { payload } = await readJwtFromRequest(config, req);
         return apiHandler(payload, req);

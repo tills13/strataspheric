@@ -1,7 +1,12 @@
+import React from "react";
+
 import { EventWidget } from ".";
 import { getWidgetEvents } from "../../data/widgets/getWidgetEvents";
 
-type EventWidgetProps = React.ComponentProps<typeof EventWidget>;
+type EventWidgetProps = Omit<
+  React.ComponentProps<typeof EventWidget>,
+  "initialEvents"
+>;
 
 export async function ServerEventWidget({
   createEvent,

@@ -5,7 +5,6 @@ import {
 } from "../AbstractWidget";
 import { Text } from "../Text";
 import { InfoWidgetContact } from "./InfoWidgetContact";
-import { InfoWidgetMapEmbed } from "./InfoWidgetMapEmbed";
 
 interface Props extends AbstractWidgetProps {
   strata: Strata;

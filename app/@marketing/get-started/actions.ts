@@ -1,7 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
-
 import { auth } from "../../../auth";
 import { CF_PAGES_PROJECT_ID } from "../../../cloudflare/constants";
 import { createRecord } from "../../../cloudflare/dns/createRecord";

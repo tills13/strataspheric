@@ -7,7 +7,7 @@ export const dashboardLayoutContainer = style({
   gridTemplateColumns: "100vw",
 
   "@media": {
-    [breakpoints.tablet]: {
+    [breakpoints.tabletPlus]: {
       gridTemplateColumns: "min-content auto",
       gridTemplateRows: "unset",
       overflow: "hidden",

@@ -3,8 +3,7 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useEffect, useState } from "react";
 
 import { SubmitGetStartedState } from "../../app/@marketing/get-started/actions";
 import { signIn } from "../../auth/actions";
@@ -46,7 +45,7 @@ export function GetStartedForm({
   selectedPlan,
   submitGetStarted,
 }: Props) {
-  const [state, action] = useFormState(
+  const [state, action] = useActionState(
     async (state: SubmitGetStartedState, fd: FormData) => {
       const nextState = await submitGetStarted(state, fd);
 
@@ -162,7 +161,7 @@ export function GetStartedForm({
           />
         </InfoPanel>
 
-        {false && selectedPlan.pricePerUnit !== undefined && (
+        {/* {selectedPlan.pricePerUnit !== undefined && (
           <div className={classnames(styles.estimateContainer)}>
             <div>
               <span className={styles.estimateSummarySeats}>{numUnits}</span>{" "}
@@ -174,7 +173,7 @@ export function GetStartedForm({
               <span className={styles.estimatePeriod}>per month</span>
             </div>
           </div>
-        )}
+        )} */}
 
         {state?.success === false && state?.error && (
           <Panel>{state.error}</Panel>

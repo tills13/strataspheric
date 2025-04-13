@@ -1,7 +1,5 @@
 import * as styles from "./style.css";
 
-import { notFound } from "next/navigation";
-
 import { auth } from "../../../auth";
 import { NewWidgetWidget } from "../../../components/NewWidgetWidget";
 import { Widget } from "../../../components/Widget";
@@ -23,10 +21,6 @@ interface Props {
 
 export async function StrataWidgets({ strata }: Props) {
   const [session, widgets] = await Promise.all([auth(), getWidgets(strata.id)]);
-
-  if (!strata) {
-    notFound();
-  }
 
   return (
     <div className={styles.dashboardWidgetGridContainer}>

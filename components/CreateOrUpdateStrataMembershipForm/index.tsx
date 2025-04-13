@@ -1,5 +1,3 @@
-import * as styles from "./style.css";
-
 import { StrataMembership } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { AddIcon } from "../Icon/AddIcon";

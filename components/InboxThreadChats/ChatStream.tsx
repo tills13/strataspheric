@@ -1,12 +1,8 @@
 "use client";
 
-import * as styles from "./style.css";
-
 import React, { useLayoutEffect, useRef } from "react";
 
 import { Chat } from "../../data/inbox/getThreadChats";
-import { Header } from "../Header";
-import { InfoPanel } from "../InfoPanel";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
 import { InboxThreadChat } from "./InboxThreadChat";

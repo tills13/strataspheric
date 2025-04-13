@@ -4,47 +4,22 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { classnames } from "../../utils/classnames";
+import { Box } from "../Box";
 
-interface Props extends React.AllHTMLAttributes<HTMLDivElement> {
-  divider?: React.ReactNode;
-  justify?: keyof typeof styles.stackJustification;
-  gap?: keyof typeof vars.spacing;
-  tabIndex?: number;
-}
+interface Props extends React.ComponentProps<typeof Box> {}
 
 /** stack is a vertical stacking of elements */
-export function Stack(props: Props) {
-  const {
-    className,
-    children,
-    divider,
-    justify = "start",
-    gap = "normal",
-    ...delegateProps
-  } = props;
-  const numChildren = React.Children.count(children);
-
+export function Stack({ className, children, ...delegateProps }: Props) {
   return (
-    <div
-      className={classnames(
-        styles.stack,
-        styles.stackGap[gap],
-        styles.stackJustification[justify],
-        className,
+    <Box className={classnames(styles.stack, className)} {...delegateProps}>
+      {React.Children.map(children, (c, i) =>
+        React.isValidElement(c) && c.type !== React.Fragment
+          ? React.cloneElement(c, {
+              ...c.props,
+              className: classnames(styles.stackElement, c.props.className),
+            })
+          : c,
       )}
-      {...delegateProps}
-    >
-      {React.Children.map(children, (c, i) => (
-        <>
-          {React.isValidElement(c)
-            ? React.cloneElement(c, {
-                ...c.props,
-                className: classnames(styles.stackElement, c.props.className),
-              })
-            : c}
-          {i !== numChildren - 1 && divider}
-        </>
-      ))}
-    </div>
+    </Box>
   );
 }

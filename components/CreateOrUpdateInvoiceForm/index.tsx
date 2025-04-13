@@ -78,7 +78,6 @@ export function CreateOrUpdateInvoiceForm({
           label="Invoice File"
           name="fileId"
           disabled={!!invoice?.isPaid}
-          placeholder="No invoice file selected..."
           defaultValue={invoice ? invoice.fileId ?? "" : ""}
         />
         {!invoice?.isPaid && (

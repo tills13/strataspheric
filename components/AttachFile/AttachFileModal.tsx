@@ -39,7 +39,6 @@ export function AttachFileModal({
               await onSelectFile?.(file);
               close();
             }}
-            placeholder="Attach Existing File"
             value={selectedFile?.id || ""}
           />
           {selectedFile && (

@@ -3,7 +3,7 @@ import * as styles from "./style.css";
 import { PageProps } from "../../../.next/types/app/@marketing/get-started/page";
 import { auth } from "../../../auth";
 import { GetStartedForm } from "../../../components/GetStarted/Form";
-import { PricingPlanSelector } from "../../../components/PricingPlanSelector";
+// import { PricingPlanSelector } from "../../../components/PricingPlanSelector";
 import { plans } from "../../../data/strataPlans/constants";
 import { StaticPageContainer } from "../StaticPageContainer";
 import { submitGetStarted } from "./actions";

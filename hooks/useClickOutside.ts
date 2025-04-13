@@ -6,7 +6,7 @@ export function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
   nodes?: (HTMLElement | null)[],
 ) {
-  const ref = useRef<T>();
+  const ref = useRef<T>(undefined);
 
   useEffect(() => {
     const listener = (event: any) => {
@@ -35,7 +35,7 @@ export function useClickOutside<T extends HTMLElement = any>(
         document.removeEventListener(fn, listener),
       );
     };
-  }, [ref, handler, nodes]);
+  }, [handler, nodes]);
 
   return ref;
 }

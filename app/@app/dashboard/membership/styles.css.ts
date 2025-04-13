@@ -3,43 +3,6 @@ import { globalStyle, style } from "@vanilla-extract/css";
 
 import { border, padding } from "../../../../theme";
 
-export const pageContainer = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: vars.spacing.normal,
-  "@media": {
-    [breakpoints.tablet]: {
-      alignItems: "flex-start",
-      flexDirection: "row",
-    },
-  },
-});
-
-export const pageSecondaryTitle = style({
-  marginBottom: vars.spacing.large,
-  padding: padding("0", vars.spacing.normal),
-  "@media": {
-    [breakpoints.tablet]: {
-      padding: 0,
-    },
-  },
-});
-
-export const leftColumn = style({ flex: 1 });
-
-export const filesPageContainer = style({
-  display: "grid",
-  gap: vars.spacing.normal,
-  gridTemplateRows: "min-content auto",
-  gridTemplateColumns: "100%",
-
-  "@media": {
-    [breakpoints.tablet]: {
-      gridTemplateColumns: "auto minmax(auto, 500px)",
-    },
-  },
-});
-
 export const membershipGrid = style({
   display: "grid",
   gridTemplateColumns: "repeat(1, 1fr)",

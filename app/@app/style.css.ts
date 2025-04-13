@@ -28,7 +28,3 @@ export const signInToStrataPageFormContainer = style({
 });
 
 export const signInForm = style({});
-
-export const viewPublicLinkContainer = style({
-  textAlign: "right",
-});

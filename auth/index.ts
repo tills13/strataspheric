@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 import { findStrataMemberships } from "../data/strataMemberships/findStrataMemberships";
@@ -8,7 +9,7 @@ import { GET, POST } from "./endpoints";
 import { AuthenticatedApiHandler, Config, Session, User } from "./types";
 
 function createAuth(config: Config) {
-  function iauth(...args: []): Promise<Session>;
+  function iauth(...args: []): Promise<Session | undefined>;
   function iauth(
     ...args: [AuthenticatedApiHandler]
   ): (req: NextRequest) => Promise<NextResponse>;
@@ -51,3 +52,16 @@ export const { auth, handlers } = createAuth({
     secure: isNotDev,
   },
 });
+
+export const mustAuth = async (raiseNotFound?: boolean) => {
+  const session = await auth();
+
+  if (!session) {
+    if (raiseNotFound) {
+      notFound();
+    } else {
+      throw new Error("unauthorized");
+    }
+  }
+  return session;
+};

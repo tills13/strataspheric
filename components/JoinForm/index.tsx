@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
-import { useFormState } from "react-dom";
+import React, { useActionState } from "react";
 
 import { type JoinFormState } from "../../app/@marketing/join/actions";
+import { signIn } from "../../auth/actions";
 import { Strata } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { Checkbox } from "../Checkbox";
@@ -21,12 +21,8 @@ interface Props {
 }
 
 export function JoinForm({ className, onSubmit, strata }: Props) {
-  const [state, onSubmitAction] = useFormState(
+  const [state, onSubmitAction] = useActionState(
     async (state: JoinFormState, fd: FormData) => {
-      if (strata) {
-        fd.set("strataId", strata.id);
-      }
-
       const nextState = await onSubmit(state, fd);
 
       if (nextState?.success) {

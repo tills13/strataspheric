@@ -2,9 +2,10 @@
 import { StrataMembership } from "..";
 
 type Namespaces = "stratas";
-type Scope =
+export type Scope =
   | "*"
   | "amenities"
+  | "amenity_bookings"
   | "events"
   | "files"
   | "inbox_messages"
@@ -13,9 +14,11 @@ type Scope =
   | "meetings"
   | "memberships"
   | "widgets";
-type Action = "*" | "create" | "edit" | "delete" | "view";
 
-type Permission =
+export type Action = "*" | "create" | "edit" | "delete" | "view";
+
+export type Permission =
+  | `${Namespaces}.${Action}`
   | `${Namespaces}.${Scope}.${Action}`
   | `!${Namespaces}.${Scope}.${Action}`;
 
@@ -97,7 +100,7 @@ export function wildcardScopeToRegex(scope: string) {
 
 export function can(
   scoped: HasScope | null | undefined,
-  ...targetScopes: string[]
+  ...targetScopes: Permission[]
 ): boolean {
   if (targetScopes.length !== 1) {
     return targetScopes.every((scope) => can(scoped, scope));
@@ -114,7 +117,7 @@ export function can(
     if (targetScope.startsWith("!")) {
       modifier = false;
       anyNegateModifier = true;
-      targetScope = targetScope.substring(1);
+      targetScope = targetScope.substring(1) as Permission;
     }
 
     for (scope of userScopes) {
@@ -135,7 +138,7 @@ export function can(
 
 export function assertCan(
   scoped: HasScope | null | undefined,
-  ...targetScope: string[]
+  ...targetScope: Permission[]
 ): asserts scoped is HasScope {
   if (!can(scoped, ...targetScope)) {
     throw PermissionsError;

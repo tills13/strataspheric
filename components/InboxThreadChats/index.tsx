@@ -1,20 +1,16 @@
 "use client";
 
-import * as styles from "./style.css";
-
 import { useOptimistic } from "react";
 
 import { File } from "../../data";
 import { Chat } from "../../data/inbox/getThreadChats";
 import * as formdata from "../../utils/formdata";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
-import { Stack } from "../Stack";
 import { ChatStream } from "./ChatStream";
 
 interface Props {
   chats: Chat[];
   sendInboxThreadChat: (fd: FormData) => void;
-
   upsertFile: (fd: FormData) => Promise<File>;
 }
 

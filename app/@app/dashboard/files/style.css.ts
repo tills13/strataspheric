@@ -27,15 +27,6 @@ export const filesListFile = style({
   borderRadius: vars.borderRadius,
 });
 
-export const filesListFileHeader = style({
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-});
-
-export const filesListDetails = style({
-  // marginTop: "3px",
-});
-
 export const filesListFileDescription = style({
   overflow: "hidden",
   display: "-webkit-box",
@@ -64,19 +55,8 @@ export const filesListFileVisibilityIcon = style({
   height: vars.sizes.xxs,
 });
 
-export const filesListFileFooter = style({
-  textAlign: "end",
-});
-
-export const filesListFileUploadDate = style({
-  color: vars.fontColors.secondary,
-  fontSize: vars.fontSizes.small,
-});
-
-export const fileActionsContainer = style({
-  display: "flex",
-  gap: vars.spacing.small,
-  alignItems: "center",
+export const filesSearchPanel = style({
+  width: 400,
 });
 
 export const filesSearchClear = style({

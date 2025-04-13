@@ -1,24 +1,20 @@
 import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { auth } from "../../../../../auth";
 import { Header } from "../../../../../components/Header";
 import { InboxThreadChats } from "../../../../../components/InboxThreadChats";
 import { InfoPanel } from "../../../../../components/InfoPanel";
-import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
 import { getThreadChats } from "../../../../../data/inbox/getThreadChats";
-import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
-import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
 import { upsertFileAction } from "../../files/actions";
 import { sendInboxThreadChatAction } from "./actions";
 
-export default async function InboxThreadChatPanel({
-  threadId,
-}: {
+interface Props {
   threadId: string;
-}) {
+}
+
+export async function InboxThreadChatPanel({ threadId }: Props) {
   const [chats] = await Promise.all([getThreadChats(threadId)]);
 
   return (

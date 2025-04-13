@@ -5,7 +5,9 @@ import { Suspense } from "react";
 
 import { PageProps } from "../../../../.next/types/app/@app/dashboard/files/page";
 import { auth } from "../../../../auth";
+import { Box } from "../../../../components/Box";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
+import { DropdownButton } from "../../../../components/DropdownButton";
 import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { can, p } from "../../../../data/users/permissions";
@@ -31,30 +33,33 @@ export default async function Page({ searchParams }: PageProps) {
           <Header priority={2}>Files</Header>
 
           {can(session?.user, p("stratas", "files", "create")) && (
-            <div>
+            <Group>
+              <DropdownButton
+                panel={
+                  <Box
+                    className={classnames(styles.filesSearchPanel)}
+                    p="normal"
+                  >
+                    <FilesSearch
+                      className={s({ w: "full" })}
+                      searchTerm={search}
+                      visibility={visibility}
+                    />
+                  </Box>
+                }
+              />
               <AddFileButton
                 upsertFile={upsertFileAction.bind(undefined, undefined)}
               />
-            </div>
+            </Group>
           )}
         </Group>
-        <div
-          className={classnames(
-            styles.filesPageContainer,
-            s({ ph: "normal", pb: "normal" }),
-          )}
-        >
-          <Suspense fallback={<FilesLoader />}>
-            <StrataFilesList searchTerm={search} visibility={visibility} />
-          </Suspense>
 
-          <div>
-            <Header className={s({ mb: "large" })} priority={2}>
-              Files Search
-            </Header>
-            <FilesSearch searchTerm={search} visibility={visibility} />
+        <Suspense fallback={<FilesLoader />}>
+          <div className={s({ ph: "normal" })}>
+            <StrataFilesList searchTerm={search} visibility={visibility} />
           </div>
-        </div>
+        </Suspense>
       </div>
     </>
   );

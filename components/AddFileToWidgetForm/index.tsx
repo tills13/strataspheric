@@ -30,7 +30,6 @@ export function AddFileToWidgetForm({ createFile }: Props) {
         className={s({ mb: "large" })}
         label="Attach Existing File"
         name="existing_file"
-        placeholder="Attach Existing File"
       />
       <StatusButton
         color="primary"

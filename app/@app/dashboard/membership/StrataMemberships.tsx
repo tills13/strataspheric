@@ -1,15 +1,8 @@
 import * as styles from "./styles.css";
 
-import { notFound } from "next/navigation";
-
 import { auth } from "../../../../auth";
-import { StrataMembership, User } from "../../../../data";
 import { getStrataMemberships } from "../../../../data/strataMemberships/getStrataMemberships";
-import { getStrataPlan } from "../../../../data/strataPlans/getStrataPlan";
-import {
-  getCurrentStrata,
-  mustGetCurrentStrata,
-} from "../../../../data/stratas/getStrataByDomain";
+import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 import { classnames } from "../../../../utils/classnames";
 import { MembershipTile } from "./MembershipTile";
@@ -24,10 +17,7 @@ interface Props {
 }
 
 export async function StrataMemberships({ className }: Props) {
-  const session = await auth();
-  const strata = await mustGetCurrentStrata();
-
-  // const plan = await getStrataPlan(strata.id);
+  const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
 
   const canUpsert = can(
     session?.user,

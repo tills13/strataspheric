@@ -1,11 +1,6 @@
 import { breakpoints, vars } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const divider = style({
-  marginBottom: vars.spacing.normal,
-  width: "100%",
-});
-
 export const strataSearchContainer = style({
   display: "flex",
   flexDirection: "column",
@@ -54,8 +49,4 @@ export const stratasListItemArrow = style({
   height: vars.fontSizes.large,
   float: "right",
   clear: "both",
-});
-
-export const loadingContainer = style({
-  textAlign: "center",
 });

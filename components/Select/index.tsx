@@ -6,8 +6,8 @@ import { classnames } from "../../utils/classnames";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
-  onChangeValue?: <T extends string>(value: T) => void;
-  selectRef?: React.MutableRefObject<HTMLSelectElement>;
+  onChangeValue?: (value: string) => void;
+  selectRef?: React.Ref<HTMLSelectElement>;
   placeholderEnabled?: boolean;
 }
 
@@ -19,7 +19,6 @@ export function Select({
   name,
   onChange: propsOnChange,
   onChangeValue,
-  placeholder,
   placeholderEnabled,
   selectRef,
   ...delegateProps
@@ -36,17 +35,16 @@ export function Select({
         id={propsId || name}
         name={name}
         onChange={onChangeValue || propsOnChange ? onChange : undefined}
-        placeholder={placeholder}
         ref={selectRef}
         {...delegateProps}
       >
-        {placeholder && (
+        {label && (
           <option
             className={styles.selectPlaceholder}
             value=""
             disabled={!placeholderEnabled}
           >
-            {placeholder}
+            {label}
           </option>
         )}
 

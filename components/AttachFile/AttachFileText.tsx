@@ -12,7 +12,7 @@ import { AttachFileModal } from "./AttachFileModal";
 
 interface Props {
   className?: string;
-  defaultIcon?: React.ReactElement;
+  defaultIcon?: React.ReactElement<{ className: string }>;
   fileTypes?: string[];
   onSelectFile?: (file: File | undefined) => Promise<any> | any;
   placeholder?: React.ReactNode;

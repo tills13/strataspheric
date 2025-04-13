@@ -8,14 +8,14 @@ import isSameDay from "date-fns/isSameDay";
 import { useState, useTransition } from "react";
 import { mutate } from "swr";
 
-import { Event } from "../../data";
+import { CalendarEvent } from ".";
 import { useIsAfterHydration } from "../../hooks/useIsAfterHydration";
 import { classnames } from "../../utils/classnames";
 import { parseTimestamp, patchTimezoneOffset } from "../../utils/datetime";
 
 interface Props {
   date: Date;
-  events: Event[];
+  events: CalendarEvent[];
   isOutOfContext: boolean;
   upsertEvent?: (eventId: string | undefined, fd: FormData) => any;
 }
@@ -63,6 +63,7 @@ export function CalendarDay({
 
         const fd = new FormData();
         fd.set("name", event.name);
+
         fd.set("description", event.description);
 
         const startDate = parseTimestamp(event.startDate);

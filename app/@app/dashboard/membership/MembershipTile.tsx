@@ -13,12 +13,11 @@ import { Header } from "../../../../components/Header";
 import { EditIcon } from "../../../../components/Icon/EditIcon";
 import { RemoveIcon } from "../../../../components/Icon/RemoveIcon";
 import { Modal } from "../../../../components/Modal";
-import { Bone } from "../../../../components/Skeleton/Bone";
 import { Stack } from "../../../../components/Stack";
 import { StatusButton } from "../../../../components/StatusButton";
 import { Text } from "../../../../components/Text";
 import { StrataMembership, User } from "../../../../data";
-import { can, p } from "../../../../data/users/permissions";
+import { p } from "../../../../data/users/permissions";
 import { useCan } from "../../../../hooks/useCan";
 import { classnames } from "../../../../utils/classnames";
 

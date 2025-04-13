@@ -3,13 +3,11 @@
 import { s } from "../../../sprinkles.css";
 
 import Script from "next/script";
-import { useRef, useState } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useRef, useState } from "react";
 
 import { Header } from "../../../components/Header";
 import { InfoPanel } from "../../../components/InfoPanel";
 import { Input } from "../../../components/Input";
-import { Panel } from "../../../components/Panel";
 import { StatusButton } from "../../../components/StatusButton";
 import { Text } from "../../../components/Text";
 import { TextArea } from "../../../components/TextArea";
@@ -25,7 +23,7 @@ interface Props {
 export function ContactForm({ submitActionReducer }: Props) {
   const [turnstileToken, setTurnstileToken] = useState<string>();
   const turnstileRef = useRef<HTMLDivElement>(null!);
-  const [state, submitAction] = useFormState(submitActionReducer, {
+  const [state, submitAction] = useActionState(submitActionReducer, {
     errorMessage: undefined,
     success: undefined,
   });

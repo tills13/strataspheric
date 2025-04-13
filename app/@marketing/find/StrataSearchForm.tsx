@@ -1,14 +1,10 @@
 "use client";
 
-import { s } from "../../../sprinkles.css";
-import * as styles from "./style.css";
-
 import { useRouter } from "next/navigation";
 
 import { Input } from "../../../components/Input";
 import { Stack } from "../../../components/Stack";
 import { StatusButton } from "../../../components/StatusButton";
-import { classnames } from "../../../utils/classnames";
 import * as formdata from "../../../utils/formdata";
 
 interface Props {

@@ -1,8 +1,7 @@
 import { s } from "../../sprinkles.css";
 
-import { File } from "../../data";
+import { Amenity } from "../../data/amenities/getAmenity";
 import { AttachFileField } from "../AttachFileField";
-import { Group } from "../Group";
 import { ImageIcon } from "../Icon/ImageIcon";
 import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
@@ -13,7 +12,7 @@ import { TextArea } from "../TextArea";
 const IMAGE_FILE_TYPES = ["image/png", "image/jpeg"];
 
 interface Props {
-  amenity?: File;
+  amenity?: Amenity;
   upsertAmenity: (fd: FormData) => void;
   upsertFile: React.ComponentProps<typeof AttachFileField>["upsertFile"];
 }
@@ -52,7 +51,7 @@ export function CreateOrUpdateAmenityForm({
         <Input
           name="costPerHour"
           label="Cost per Hour ($)"
-          defaultValue={amenity?.costPerHour}
+          defaultValue={amenity?.costPerHour ?? undefined}
           type="number"
         />
 

@@ -1,13 +1,14 @@
 "use client";
 
-import { sidebarWidthVar, vars } from "../../app/theme.css";
+import { vars } from "../../app/theme.css";
 import * as styles from "./style.css";
 
 import { calc } from "@vanilla-extract/css-utils";
 import differenceInDays from "date-fns/differenceInDays";
 import isSameDay from "date-fns/isSameDay";
-import { useState } from "react";
+import React, { useState } from "react";
 
+import { CalendarEvent } from ".";
 import { Event } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { formatDateForDatetime, parseTimestamp } from "../../utils/datetime";
@@ -19,7 +20,7 @@ import { Wrap } from "../Wrap";
 interface Props {
   createOrUpdateEventModalTitle?: React.ReactNode;
   createOrUpdateEventFormSubmitLabel?: React.ReactNode;
-  events: Array<Event & { meetingId?: string }>;
+  events: CalendarEvent[];
   date: Date;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   deleteEvent?: (eventId: string) => any;
@@ -36,7 +37,7 @@ export function CalendarDayEvents({
   upsertEvent,
 }: Props) {
   const [showNewEventModal, setShowNewEventModal] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState<Event | undefined>();
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent>();
 
   return (
     <>

@@ -1,8 +1,6 @@
 import { breakpoints, vars } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const layoutContainer = style({});
-
 export const plansContainer = style({
   display: "grid",
   gridTemplateColumns: "repeat(1, 300px)",

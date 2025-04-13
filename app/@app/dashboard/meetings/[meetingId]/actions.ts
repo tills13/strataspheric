@@ -16,9 +16,8 @@ import { removeItemFromAgenda } from "../../../../../data/meetings/removeItemFro
 import { removeMinutesFromMeeting } from "../../../../../data/meetings/removeMinutesFromMeeting";
 import { updateMeeting } from "../../../../../data/meetings/updateMeeting";
 import { updateMeetingAgendaItem } from "../../../../../data/meetings/updateMeetingAgendaItem";
-import { updateMeetingEvent } from "../../../../../data/meetings/updateMeetingEvent";
 import { updateMinutes } from "../../../../../data/meetings/updateMinutes";
-import { assertCan, can, p } from "../../../../../data/users/permissions";
+import { assertCan, p } from "../../../../../data/users/permissions";
 import * as formdata from "../../../../../utils/formdata";
 
 export async function upsertAgendaItemAction(

@@ -1,46 +1,37 @@
-import { vars } from "../../app/theme.css";
 import * as styles from "./style.css";
 
-import React, { Fragment } from "react";
+import React from "react";
 
 import { classnames } from "../../utils/classnames";
+import { Box } from "../Box";
 
-interface Props {
-  className?: string;
-  children: React.ReactNode;
+interface Props extends React.ComponentProps<typeof Box> {
   equalWidthChildren?: boolean;
-  gap?: keyof typeof vars.spacing;
-  align?: keyof typeof styles.groupAlignment;
-  justify?: keyof typeof styles.groupJustification;
   overflow?: keyof typeof styles.groupOverflow;
-  tabIndex?: number;
-  wrap?: boolean;
 }
 
 export function Group({
+  align = "center",
   className,
   children,
-  gap = "normal",
-  align = "default",
-  justify = "default",
+  justify = "start",
   overflow,
-  tabIndex,
   equalWidthChildren,
+  ...delegateProps
 }: Props) {
   return (
-    <div
+    <Box
+      align={align}
       className={classnames(
         styles.group,
-        styles.groupGap[gap],
-        styles.groupJustification[justify],
-        styles.groupAlignment[align],
         overflow && styles.groupOverflow[overflow],
         className,
       )}
-      tabIndex={tabIndex}
+      justify={justify}
+      {...delegateProps}
     >
       {React.Children.map(children, (c, i) =>
-        React.isValidElement(c) && c.type !== Fragment
+        React.isValidElement(c) && c.type !== React.Fragment
           ? React.cloneElement(c, {
               ...c.props,
               className: classnames(
@@ -52,6 +43,6 @@ export function Group({
             })
           : c,
       )}
-    </div>
+    </Box>
   );
 }

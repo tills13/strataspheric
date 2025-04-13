@@ -18,7 +18,7 @@ import { TextArea } from "../TextArea";
 interface Props {
   defaultDate?: string;
   deleteEvent?: () => Promise<any>;
-  event?: Event;
+  event?: Pick<Event, "id" | "name" | "description" | "startDate" | "endDate">;
   onDeleteEvent?: () => void;
   submitLabel?: React.ReactNode;
   upsertEvent: (fd: FormData) => Promise<any>;

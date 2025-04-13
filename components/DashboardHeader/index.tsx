@@ -63,11 +63,7 @@ const links: Array<Link | LinkWithPermissions> = [
   [SettingsIcon, "/dashboard/settings", "Settings", ["stratas.strata.edit"]],
 ];
 
-interface Props {
-  actions?: React.ComponentProps<typeof DropdownActions>["actions"];
-}
-
-export function DashboardHeader({ actions }: Props) {
+export function DashboardHeader() {
   const session = useSession();
   const pathname = usePathname();
   const [mobileMenuExpanded, setMobileMenuExpanded] = useState(false);
@@ -122,32 +118,21 @@ export function DashboardHeader({ actions }: Props) {
           })}
         </div>
 
-        <Group gap="small">
-          <Button
-            className={styles.mobileDropdownAction}
-            onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
-            icon={
-              <DownIcon
-                className={
-                  mobileMenuExpanded
-                    ? styles.toggleMobileDropdownIconActive
-                    : styles.toggleMobileDropdownIcon
-                }
-              />
-            }
-            size="small"
-            style="tertiary"
-          />
-          {actions && (
-            <div className={styles.actionsContainer}>
-              <DropdownActions
-                actions={actions}
-                buttonSize="small"
-                buttonStyle="tertiary"
-              />
-            </div>
-          )}
-        </Group>
+        <Button
+          className={styles.mobileDropdownAction}
+          onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
+          icon={
+            <DownIcon
+              className={
+                mobileMenuExpanded
+                  ? styles.toggleMobileDropdownIconActive
+                  : styles.toggleMobileDropdownIcon
+              }
+            />
+          }
+          size="small"
+          style="tertiary"
+        />
       </Group>
     </div>
   );

@@ -5,14 +5,16 @@ import isBefore from "date-fns/isBefore";
 import isSameDay from "date-fns/isSameDay";
 import isSameMonth from "date-fns/isSameMonth";
 import startOfMonth from "date-fns/startOfMonth";
+import React from "react";
 
-import { Event } from "../../data";
+import { CalendarEvent } from ".";
 import { classnames } from "../../utils/classnames";
 import { dateFromDayAndWeekIdx, parseTimestamp } from "../../utils/datetime";
 import { CalendarDay } from "./CalendarDay";
 import { CalendarDayEvents } from "./CalendarDayEvents";
 import { CalendarEventTrack } from "./CalendarEventTrack";
 
+type CalendarDayEventsProps = React.ComponentProps<typeof CalendarDayEvents>;
 type OutOfContextFn = (date: Date, context: Date) => boolean;
 
 export const IS_OUT_OF_CONTEXT_MONTH: OutOfContextFn = (date, context) =>
@@ -20,17 +22,13 @@ export const IS_OUT_OF_CONTEXT_MONTH: OutOfContextFn = (date, context) =>
 
 interface Props {
   className?: string;
-  createOrUpdateEventModalTitle?: React.ComponentProps<
-    typeof CalendarDayEvents
-  >["createOrUpdateEventModalTitle"];
-  createOrUpdateEventFormSubmitLabel?: React.ComponentProps<
-    typeof CalendarDayEvents
-  >["createOrUpdateEventFormSubmitLabel"];
+  createOrUpdateEventModalTitle?: CalendarDayEventsProps["createOrUpdateEventModalTitle"];
+  createOrUpdateEventFormSubmitLabel?: CalendarDayEventsProps["createOrUpdateEventFormSubmitLabel"];
   currentMonth: number;
   currentYear: number;
   dayIsOutOfContext?: OutOfContextFn;
   deleteEvent?: (eventId: string) => any;
-  events: Array<Event & { meetingId?: string }>;
+  events: CalendarEvent[];
   onSelectDate?: (date: Date) => void;
   upsertEvent?: (eventId: string | undefined, fd: FormData) => any;
   weekOfMonth: number;

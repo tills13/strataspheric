@@ -1,21 +1,21 @@
 import { db } from "..";
 import { Amenity } from "./getAmenity";
+import { AmenityBooking } from "./getAmenityBooking";
 
 type ListAmenityBookingsFilter = {
-  startTs: number;
-  endTs: number;
+  amenityId?: string;
+  decision?: AmenityBooking["decision"];
+  startTs?: number;
+  endTs?: number;
 };
 
-export async function listAmenityBookings(
-  amenityId: string,
-  filter: ListAmenityBookingsFilter,
-) {
+export async function listAmenityBookings(filter: ListAmenityBookingsFilter) {
   let query = db
     .selectFrom("amenity_bookings")
     .innerJoin("events", "amenity_bookings.eventId", "events.id")
     .innerJoin("amenities", "amenity_bookings.amenityId", "amenities.id")
     .innerJoin("files", "amenities.imageFileId", "files.id")
-    .innerJoin("invoices", "amenity_bookings.invoiceId", "invoices.id")
+    .leftJoin("invoices", "amenity_bookings.invoiceId", "invoices.id")
     .selectAll("amenities")
     .select([
       // amenity bookings
@@ -35,23 +35,39 @@ export async function listAmenityBookings(
       "amenities.status as amenityStatus",
       "amenities.costPerHour as amenityCostPerHour",
       "files.path as amenityImageSrc",
-    ])
-    .where("amenity_bookings.amenityId", "=", amenityId)
-    .where((eb) =>
-      eb.or([
-        // startDate is before startDateTimestamp but endDate is during startDateTimestamp or after filter.endTs
-        eb.and([
-          eb("events.startDate", "<", filter.startTs),
-          eb.or([
-            eb("events.endDate", ">", filter.endTs),
-            eb.between("events.endDate", filter.startTs, filter.endTs),
-          ]),
-        ]),
+    ]);
 
-        // start date is during filter.startTs -> filter.endTs
-        eb.between("events.startDate", filter.startTs, filter.endTs),
+  if (filter.decision) {
+    query = query.where("amenity_bookings.decision", "=", filter.decision);
+  }
+
+  if (filter.amenityId) {
+    query = query.where("amenity_bookings.amenityId", "=", filter.amenityId);
+  }
+
+  query = query.where((eb) =>
+    eb.or([
+      // startDate is before startDateTimestamp but endDate is during startDateTimestamp or after filter.endTs
+      eb.and([
+        filter.startTs
+          ? eb("events.startDate", "<", filter.startTs)
+          : eb.lit(true),
+        eb.or([
+          filter.endTs ? eb("events.endDate", ">", filter.endTs) : eb.lit(true),
+          filter.startTs && filter.endTs
+            ? eb.between("events.endDate", filter.startTs, filter.endTs)
+            : eb.lit(true),
+        ]),
       ]),
-    )
+
+      // start date is during filter.startTs -> filter.endTs
+      filter.startTs && filter.endTs
+        ? eb.between("events.startDate", filter.startTs, filter.endTs)
+        : eb.lit(true),
+    ]),
+  );
+
+  query = query
     .orderBy("events.startDate", "asc")
     .orderBy("events.endDate", "asc");
 

@@ -2,7 +2,7 @@
 
 import { s } from "../../../sprinkles.css";
 
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 
 import { User } from "../../../auth/types";
 import { Header } from "../../../components/Header";
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export function UpdateProfileForm({ user }: Props) {
-  const [state, dispatch] = useFormState(updateUserActionReducer, {
+  const [state, dispatch] = useActionState(updateUserActionReducer, {
     success: undefined,
   });
 

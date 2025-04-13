@@ -149,3 +149,5 @@ export const s = createSprinkles(
   fontProperties,
   flexProperties,
 );
+
+export type S = Parameters<typeof s>[0];

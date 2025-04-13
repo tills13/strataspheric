@@ -15,8 +15,8 @@ export function filterIsAction(i: Action | undefined | false): i is Action {
 
 type Action = {
   action: (() => void) | string;
-  label: string | JSX.Element;
-  icon?: JSX.Element;
+  label: string | React.ReactNode;
+  icon?: React.ReactNode;
 };
 
 interface Props

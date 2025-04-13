@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Invoice } from "../../data";
 import { Select } from "../Select";
@@ -37,7 +37,6 @@ export function InvoiceSelect({
           invoices.find((invoice) => invoice.id === e.currentTarget.value)!,
         );
       }}
-      placeholder={placeholder}
       label={placeholder}
       {...delegateProps}
     >

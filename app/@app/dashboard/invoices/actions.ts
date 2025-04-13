@@ -57,6 +57,7 @@ export async function upsertInvoiceAction(
       updatedAt: new Date().getTime(),
     });
   } else {
+    // @ts-ignore
     invoice = await createInvoice({
       amount,
       description,
@@ -64,10 +65,8 @@ export async function upsertInvoiceAction(
       fileId,
       identifier,
       strataId: strata.id,
-      // payeeId: session?.user.id,
       status: "final",
       type: "incoming",
-      // @ts-ignore
       updatedAt: new Date().getTime(),
     });
   }

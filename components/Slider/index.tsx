@@ -5,29 +5,28 @@ import * as styles from "./style.css";
 import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
-  timeout?: number;
+  timeoutMs?: number;
 }
 
 export function Slider({
   children,
-  timeout = 5000,
+  timeoutMs = 5000,
 }: React.PropsWithChildren<Props>) {
-  const numChildrne = React.Children.count(children);
+  const numChildren = React.Children.count(children);
   const [activeSlideIdx, setActiveSlideIdx] = useState(0);
   const activeChildRef = useRef<HTMLDivElement>(null!);
-  const timeoutRef = useRef<any>();
 
   useEffect(() => {
     function nextSlide() {
       setActiveSlideIdx(
-        (currentActiveSlideIdx) => (currentActiveSlideIdx + 1) % numChildrne,
+        (currentActiveSlideIdx) => (currentActiveSlideIdx + 1) % numChildren,
       );
     }
 
-    timeoutRef.current = setTimeout(nextSlide, timeout);
+    const timeout = setTimeout(nextSlide, timeoutMs);
 
     return () => {
-      clearTimeout(timeoutRef.current);
+      clearTimeout(timeout);
     };
   });
 
@@ -48,7 +47,7 @@ export function Slider({
       </div>
 
       <div className={styles.slideIndicatorContainer}>
-        {Array.from(new Array(numChildrne)).map((_, idx) => (
+        {Array.from(new Array(numChildren)).map((_, idx) => (
           <div
             key={idx}
             className={

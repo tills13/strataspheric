@@ -9,11 +9,19 @@ export async function getAmenityBooking(amenityBookingId: string) {
     .innerJoin("events", "amenity_bookings.eventId", "events.id")
     .innerJoin("amenities", "amenity_bookings.amenityId", "amenities.id")
     .innerJoin("files", "amenities.imageFileId", "files.id")
-    .innerJoin("invoices", "amenity_bookings.invoiceId", "invoices.id")
+    .leftJoin("invoices", "amenity_bookings.invoiceId", "invoices.id")
+    .leftJoin("users", "amenity_bookings.deciderId", "users.id")
     .selectAll("amenities")
     .select([
       // amenity bookings
       "amenity_bookings.id as amenityBookingId",
+      "amenity_bookings.decision as amenityBookingDecision",
+
+      // decider
+      "users.id as deciderId",
+      "users.name as deciderName",
+      "users.email as deciderEmail",
+
       // amenity booking invoice
       "invoices.id as amenityBookingInvoiceId",
       "invoices.identifier as amenityBookingInvoiceIdentifier",
@@ -35,12 +43,22 @@ export async function getAmenityBooking(amenityBookingId: string) {
 
   return {
     id: row.amenityBookingId,
-    invoice: {
-      id: row.amenityBookingInvoiceId,
-      identifier: row.amenityBookingInvoiceIdentifier,
-      amount: row.amenityBookingInvoiceAmount,
-      status: row.amenityBookingInvoiceStatus,
-    },
+    decision: row.amenityBookingDecision,
+    decider: row.deciderId
+      ? {
+          id: row.deciderId!,
+          name: row.deciderName!,
+          email: row.deciderEmail!,
+        }
+      : undefined,
+    invoice: row.amenityBookingInvoiceId
+      ? {
+          id: row.amenityBookingInvoiceId!,
+          identifier: row.amenityBookingInvoiceIdentifier!,
+          amount: row.amenityBookingInvoiceAmount!,
+          status: row.amenityBookingInvoiceStatus!,
+        }
+      : undefined,
     startDate: row.amenityBookingStartDate,
     endDate: row.amenityBookingEndDate,
     amenity: {

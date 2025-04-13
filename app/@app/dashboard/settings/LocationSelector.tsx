@@ -1,10 +1,9 @@
 "use client";
 
 import { LatLngTuple, LeafletMouseEvent, Map } from "leaflet";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { LeafletMap } from "../../../../components/LeafletMap";
-import { Strata } from "../../../../data";
 
 const DEFAULT_MAP_CENTER = [1, 1];
 

@@ -1,8 +1,6 @@
 "use client";
 
-import { s } from "../../../sprinkles.css";
 import { iconColorVar, vars } from "../../theme.css";
-import * as styles from "./style.css";
 
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { useState } from "react";

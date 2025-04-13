@@ -1,7 +1,8 @@
 import { File, db } from "..";
-import { Pagination, SortableColumn } from "../types";
+import { Pagination } from "../types";
 
 type ListFilesFilter = {
+  strataId?: string;
   userId?: string;
   fileTypes?: string[];
   isPublic?: boolean;
@@ -10,14 +11,14 @@ type ListFilesFilter = {
 type ListFilesPagination = Pagination<"files", File>;
 
 export function listFiles(
-  strataId: string,
   filters: ListFilesFilter,
   pagination?: ListFilesPagination,
 ): Promise<File[]> {
-  let query = db
-    .selectFrom("files")
-    .selectAll()
-    .where("files.strataId", "=", strataId);
+  let query = db.selectFrom("files").selectAll();
+
+  if (filters.strataId) {
+    query = query.where("files.strataId", "=", filters.strataId);
+  }
 
   if (filters.isPublic) {
     query = query.where((eb) =>

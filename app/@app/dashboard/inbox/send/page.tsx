@@ -1,13 +1,12 @@
 import * as styles from "./style.css";
 
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
 import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { SendInboxMessageForm } from "../../../../../components/SendInboxMessageForm";
-import { getStrataMemberships } from "../../../../../data/strataMemberships/getStrataMemberships";
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
-import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { upsertFileAction } from "../../files/actions";
 import { upsertInvoiceAction } from "../../invoices/actions";
 import { createInboxMessageAction } from "../actions";
@@ -15,12 +14,7 @@ import { createInboxMessageAction } from "../actions";
 export const runtime = "edge";
 
 export default async function Page() {
-  const strata = await getCurrentStrata();
-  const u = await auth();
-
-  if (!strata) {
-    notFound();
-  }
+  const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
 
   const strataPlan = await getStrataPlan(strata.id);
 
@@ -28,7 +22,7 @@ export default async function Page() {
     redirect("/dashboard/inbox");
   }
 
-  const memberships = await getStrataMemberships(strata.id);
+  // const memberships = await getStrataMemberships(strata.id);
 
   return (
     <>
@@ -50,7 +44,7 @@ export default async function Page() {
           /> */}
 
           <SendInboxMessageForm
-            showContactInformationFields={!u?.user}
+            showContactInformationFields={!session?.user}
             upsertFile={upsertFileAction.bind(undefined, undefined)}
             upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
             sendInboxMessage={createInboxMessageAction.bind(

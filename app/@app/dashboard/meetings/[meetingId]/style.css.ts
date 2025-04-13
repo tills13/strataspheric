@@ -3,46 +3,14 @@ import { style } from "@vanilla-extract/css";
 
 import { border } from "../../../../../theme";
 
-export const meetingInfoSidebar = style({
-  display: "none",
-  flexDirection: "column",
-  justifyContent: "space-between",
-
-  "@media": {
-    [breakpoints.desktop]: {
-      display: "flex",
-      borderRight: `1px solid ${vars.colors.borderDefault}`,
-    },
-  },
-});
-
 export const meetingAgendaContainer = style({
   padding: vars.spacing.normal,
-});
-
-export const meetingAgendaContainerMeetingInfo = style({
-  "@media": {
-    [breakpoints.desktop]: {
-      display: "none",
-    },
-  },
 });
 
 export const meetingAgendaContainerDeleteMeeting = style({
   "@media": {
     [breakpoints.desktop]: {
       display: "none",
-    },
-  },
-});
-
-export const meetingTimelineSearchContainer = style({
-  overflow: "auto",
-  padding: vars.spacing.normal,
-
-  "@media": {
-    [breakpoints.tablet]: {
-      borderLeft: `1px solid ${vars.colors.borderDefault}`,
     },
   },
 });
@@ -104,6 +72,7 @@ export const minutesUrlApproveButton = style({
   },
 });
 
+// @todo Flex
 export const minutesUrlContainer = style({
   display: "flex",
   gap: vars.spacing.small,

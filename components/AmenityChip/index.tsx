@@ -5,6 +5,7 @@ import { Amenity } from "../../data/amenities/getAmenity";
 import { classnames } from "../../utils/classnames";
 import { getImageUri } from "../../utils/files";
 import { BookAmenityButton } from "../BookAmenityButton";
+import { Flex } from "../Flex";
 import { Group } from "../Group";
 import { Money } from "../Money";
 import { Panel } from "../Panel";
@@ -28,7 +29,7 @@ export function AmenityChip({
 }: Props) {
   return (
     <Panel className={classnames(styles.amenityChip, className)}>
-      <Group gap="normal" align="stretch">
+      <Flex align="stretch" from="tablet" gap="normal">
         <img
           alt={`Image for ${amenity.name}`}
           className={styles.amentityImage}
@@ -53,12 +54,13 @@ export function AmenityChip({
             {createAmenityBooking && (
               <BookAmenityButton
                 amenity={amenity}
+                className={styles.bookAmenityButton}
                 createAmenityBooking={createAmenityBooking}
               />
             )}
           </Group>
         </Stack>
-      </Group>
+      </Flex>
     </Panel>
   );
 }

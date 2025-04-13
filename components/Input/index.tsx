@@ -47,7 +47,6 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
           className={classnames(styles.inputFieldInput, inputClassName)}
           name={name}
           id={propsId || name}
-          label=""
           ref={ref}
           {...inputProps}
           onChange={(e) => {

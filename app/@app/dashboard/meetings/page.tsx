@@ -1,9 +1,6 @@
-import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { notFound } from "next/navigation";
-
-import { auth } from "../../../../auth";
+import { mustAuth } from "../../../../auth";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
@@ -16,30 +13,28 @@ import { upsertMeetingAction } from "./actions";
 export const runtime = "edge";
 
 export default async function Page() {
-  const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
-
-  if (!session) {
-    notFound();
-  }
+  const [session, strata] = await Promise.all([
+    mustAuth(true),
+    mustGetCurrentStrata(),
+  ]);
 
   return (
     <>
       <DashboardHeader />
 
       <div className={styles.pageContainer}>
-        <Group className={s({ mb: "normal" })} justify="space-between">
+        <Group mb="normal" justify="space-between">
           <Header priority={2}>Meetings</Header>
-          <div>
-            {can(session?.user, p("stratas", "meetings", "create")) && (
-              <ScheduleMeetingButton
-                upsertMeeting={upsertMeetingAction.bind(
-                  undefined,
-                  strata.id,
-                  undefined,
-                )}
-              />
-            )}
-          </div>
+
+          {can(session?.user, p("stratas", "meetings", "create")) && (
+            <ScheduleMeetingButton
+              upsertMeeting={upsertMeetingAction.bind(
+                undefined,
+                strata.id,
+                undefined,
+              )}
+            />
+          )}
         </Group>
 
         <MeetingListLayout strataId={strata.id} />

@@ -14,7 +14,16 @@ export function CalendarEventTrack({ children }: Props) {
   const ref = useRef<HTMLDivElement>(null!);
 
   useLayoutEffect(() => {
-    setClientWidth(ref.current.clientWidth);
+    function updateClientWidth() {
+      setClientWidth(ref.current.clientWidth);
+    }
+
+    window.addEventListener("resize", updateClientWidth);
+    updateClientWidth();
+
+    return () => {
+      window.removeEventListener("resize", updateClientWidth);
+    };
   });
 
   return (

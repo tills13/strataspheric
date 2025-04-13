@@ -1,6 +1,5 @@
 "use client";
 
-import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Date } from "../../../../components/Date";
@@ -33,14 +32,8 @@ export function FilesListFile({
   const can = useCan();
 
   return (
-    <Stack
-      className={classnames(
-        styles.filesListFile,
-        s({ p: "normal" }),
-        className,
-      )}
-    >
-      <Group className={styles.filesListDetails} justify="space-between">
+    <Stack className={classnames(styles.filesListFile, className)} p="normal">
+      <Group justify="space-between">
         <Group overflow="hidden" align="start">
           <FileTypeIcon
             className={styles.fileListFileIcon}
@@ -76,11 +69,9 @@ export function FilesListFile({
                   />
                 )}
               </Group>
-              <Date
-                className={styles.filesListFileUploadDate}
-                output="date"
-                timestamp={file.createdAt}
-              />
+              <Text as="span" color="secondary" size="small">
+                <Date output="date" timestamp={file.createdAt} />
+              </Text>
             </Stack>
           </Wrap>
         </Group>

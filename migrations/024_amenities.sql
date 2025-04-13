@@ -6,15 +6,17 @@ CREATE TABLE
         description text not null,
         status text,
         costPerHour float,
-        imageFileId text not null        
+        imageFileId text not null
     );
 
-CREATE TABLE 
+CREATE TABLE
     amenity_bookings (
         id text not null,
         amenityId text not null,
         eventId text not null,
-        approverId text,
+        deciderId text,
+        decision text,
+        requesterId text not null,
         invoiceId text
     );
 

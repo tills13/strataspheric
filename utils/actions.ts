@@ -27,8 +27,6 @@ export function withErrorReporting<S extends { success?: boolean }>(
       const errorMessage =
         e instanceof ServerActionError ? e.externalErrorMessage : undefined;
 
-      console.log(e instanceof ServerActionError, e.externalErrorMessage);
-
       return {
         errorMessage,
         success: false,

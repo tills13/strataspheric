@@ -4,13 +4,18 @@ import differenceInHours from "date-fns/differenceInHours";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { auth } from "../../../../auth";
+import { auth, mustAuth } from "../../../../auth";
 import { createAmenity } from "../../../../data/amenities/createAmenity";
 import { createAmenityBooking } from "../../../../data/amenities/createAmenityBooking";
 import { getAmenity } from "../../../../data/amenities/getAmenity";
+import { getAmenityBooking } from "../../../../data/amenities/getAmenityBooking";
+import { updateAmenityBooking } from "../../../../data/amenities/updateAmenityBooking";
 import { createEvent } from "../../../../data/events/createEvent";
 import { createThreadMessage } from "../../../../data/inbox/createThreadMessage";
+import { listThreads } from "../../../../data/inbox/listThreads";
 import { createInvoice } from "../../../../data/invoices/createInvoice";
+import { deleteInvoice } from "../../../../data/invoices/deleteInvoice";
+import { updateInvoice } from "../../../../data/invoices/updateInvoice";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../data/users/permissions";
 import { parseTimestamp } from "../../../../utils/datetime";
@@ -47,18 +52,85 @@ export async function upsertAmenityAction(
   revalidatePath("/dashboard/amenities");
 }
 
-// Create the Event
-// create the amenitybookingevent
-// create an inbox message that references the amenitybookingevent
-// create a draft invoice?
-// redirect to the
+export async function approveOrRejectAmenityBookingAction(
+  amenityBookingId: string,
+  decision: "approve" | "reject",
+) {
+  const [session, strata, amenityBooking] = await Promise.all([
+    mustAuth(),
+    mustGetCurrentStrata(),
+    getAmenityBooking(amenityBookingId),
+  ]);
+
+  if (!can(session.user, "stratas.amenity_bookings.edit")) {
+    throw new Error("unauthorized");
+  }
+
+  const [thread] = await listThreads({ amenityBookingId: amenityBooking.id });
+
+  if (!thread) {
+    throw new Error("oops, something went wrong");
+  }
+
+  console.log(thread);
+
+  if (decision === "reject") {
+    // await db.transaction().execute(txn => {
+    //   await deleteInvoice(amenityBooking.invoice.id)
+    //   await updateAmen
+    // })
+
+    if (amenityBooking.invoice) {
+      await deleteInvoice(amenityBooking.invoice.id);
+    }
+
+    await updateAmenityBooking(amenityBooking.id, {
+      invoiceId: null,
+      decision: "rejected",
+      deciderId: session.user.id,
+    });
+
+    await createThreadMessage({
+      subject: "",
+      senderName: "Strataspheric",
+      strataId: strata.id,
+      threadId: thread.threadId,
+      message: `Sorry, your booking request has been denied. Someone may follow up in a different message to provide more detail or you may respond to this thread to get more information.`,
+    });
+  } else {
+    await updateAmenityBooking(amenityBooking.id, {
+      decision: "approved",
+      deciderId: session.user.id,
+    });
+
+    if (amenityBooking.invoice) {
+      await updateInvoice(amenityBooking.invoice.id, { status: "final" });
+    }
+
+    await createThreadMessage({
+      subject: "",
+      senderName: "Strataspheric",
+      strataId: strata.id,
+      threadId: thread.threadId,
+      message:
+        `Your booking request has been approved.` +
+        (amenityBooking.invoice
+          ? "Please pay the invoice by the booking's start date."
+          : ""),
+      invoiceId: amenityBooking.invoice?.id,
+    });
+  }
+
+  revalidatePath(`/dashboard/inbox/${thread.threadId}`);
+}
+
 export async function createAmenityBookingAction(
   amenityId: string,
   fd: FormData,
 ) {
   const [strata, session, amenity] = await Promise.all([
     mustGetCurrentStrata(),
-    auth(),
+    mustAuth(),
     getAmenity(amenityId),
   ]);
 
@@ -102,6 +174,7 @@ export async function createAmenityBookingAction(
     amenityId,
     eventId,
     invoiceId,
+    requesterId: session.user.id,
   });
 
   const { threadId } = await createThreadMessage({

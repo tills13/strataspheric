@@ -3,7 +3,7 @@
 import { s } from "../../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 
 import { Group } from "../../../components/Group";
 import { CircleCheckIcon } from "../../../components/Icon/CircleCheckIcon";
@@ -16,14 +16,14 @@ import { classnames } from "../../../utils/classnames";
 import { requestPasswordResetActionReducer } from "./actions";
 
 export function ForgotPasswordForm() {
-  const [state, requestPasswordResetAction] = useFormState(
+  const [state, requestPasswordResetAction] = useActionState(
     requestPasswordResetActionReducer,
     {},
   );
 
   return (
     <form action={requestPasswordResetAction}>
-      <Text className={classnames(s({ mb: "large" }), styles.blurb)}>
+      <Text className={classnames(s({ mb: "large" }))} color="secondary">
         Enter the email address associated with your account and we&apos;ll send
         you a link to reset your password.
       </Text>

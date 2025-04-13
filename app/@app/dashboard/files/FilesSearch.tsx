@@ -17,16 +17,18 @@ import { useCan } from "../../../../hooks/useCan";
 import * as formdata from "../../../../utils/formdata";
 
 interface Props {
+  className?: string;
   searchTerm?: string;
   visibility?: "public" | "private";
 }
 
-export function FilesSearch({ searchTerm, visibility }: Props) {
+export function FilesSearch({ className, searchTerm, visibility }: Props) {
   const router = useRouter();
   const can = useCan();
 
   return (
     <form
+      className={className}
       onSubmit={(e) => {
         e.preventDefault();
 

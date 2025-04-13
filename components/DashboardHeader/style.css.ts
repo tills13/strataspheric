@@ -33,7 +33,7 @@ export const linksRail = style({
   transition: "height 0.5s ease",
 
   "@media": {
-    [breakpoints.tablet]: {
+    [breakpoints.tabletPlus]: {
       flexDirection: "row",
       flex: 1,
       overflow: "auto",
@@ -50,7 +50,7 @@ export const linksRailOpen = style([
       .toString(),
 
     "@media": {
-      [breakpoints.tablet]: {
+      [breakpoints.tabletPlus]: {
         height: calc(vars.sizes.small).toString(),
       },
     },
@@ -64,7 +64,7 @@ export const mobileMenuIcon = style([
     height: vars.sizes.xs,
 
     "@media": {
-      [breakpoints.tablet]: {
+      [breakpoints.tabletPlus]: {
         display: "none",
       },
     },
@@ -86,7 +86,7 @@ export const baseSubheaderLink = style({
   width: "100%",
 
   "@media": {
-    [breakpoints.tablet]: {
+    [breakpoints.tabletPlus]: {
       width: "auto",
       padding: padding(0, vars.spacing.small),
     },
@@ -110,7 +110,7 @@ export const activeSubheaderLink = style([
     order: 1,
 
     "@media": {
-      [breakpoints.tablet]: {
+      [breakpoints.tabletPlus]: {
         backgroundColor: vars.colors.primary,
         color: vars.colors.white,
         borderRadius: vars.borderRadius,
@@ -123,22 +123,17 @@ export const activeSubheaderLink = style([
 export const actionsContainer = style({
   display: "flex",
   gap: vars.spacing.small,
-  // marginRight: calc(vars.spacing.small).add(vars.sizes.small).toString(),
 
   "@media": {
-    [breakpoints.tablet]: {
+    [breakpoints.tabletPlus]: {
       marginRight: "unset",
     },
   },
 });
 
 export const mobileDropdownAction = style({
-  // position: important("absolute"),
-  // right: vars.spacing.normal,
-  // top: vars.spacing.small,
-
   "@media": {
-    [breakpoints.tablet]: {
+    [breakpoints.tabletPlus]: {
       display: important("none"),
     },
   },

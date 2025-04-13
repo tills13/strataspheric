@@ -64,6 +64,7 @@ export async function getThreadMessages(
 
       // amenity bookings
       "amenity_bookings.id as amenityBookingId",
+      "amenity_bookings.decision as amenityBookingDecision",
       // amenity booking invoice
       "amenity_booking_invoices.id as amenityBookingInvoiceId",
       "amenity_booking_invoices.identifier as amenityBookingInvoiceIdentifier",
@@ -120,6 +121,7 @@ export async function getThreadMessages(
       invoiveType,
 
       amenityBookingId,
+      amenityBookingDecision,
       amenityBookingInvoiceId,
       amenityBookingInvoiceIdentifier,
       amenityBookingInvoiceAmount,
@@ -140,12 +142,15 @@ export async function getThreadMessages(
         amenityBooking: amenityBookingId
           ? ({
               id: amenityBookingId,
-              invoice: {
-                id: amenityBookingInvoiceId,
-                identifier: amenityBookingInvoiceIdentifier,
-                amount: amenityBookingInvoiceAmount,
-                status: amenityBookingInvoiceStatus,
-              },
+              decision: amenityBookingDecision,
+              invoice: amenityBookingInvoiceId
+                ? {
+                    id: amenityBookingInvoiceId!,
+                    identifier: amenityBookingInvoiceIdentifier!,
+                    amount: amenityBookingInvoiceAmount!,
+                    status: amenityBookingInvoiceStatus!,
+                  }
+                : undefined,
               startDate: amenityBookingStartDate,
               endDate: amenityBookingEndDate,
               amenity: {

@@ -10,7 +10,7 @@ import { Header } from "../../../../components/Header";
 import { SendIcon } from "../../../../components/Icon/SendIcon";
 import { InboxThreads } from "../../../../components/InboxThreads";
 import { InternalLink } from "../../../../components/Link/InternalLink";
-import { Thread, getThreads } from "../../../../data/inbox/getThreads";
+import { listThreads } from "../../../../data/inbox/listThreads";
 import { getCurrentStrataPlan } from "../../../../data/strataPlans/getCurrentStrataPlan";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../data/users/permissions";
@@ -38,13 +38,12 @@ export default async function Page() {
     redirect("/dashboard/inbox/send");
   }
 
-  let threads: Thread[];
-
-  if (can(session.user, p("stratas", "inbox_messages", "view"))) {
-    threads = await getThreads(strata.id);
-  } else {
-    threads = await getThreads(strata.id, session.user.id);
-  }
+  const threads = await listThreads({
+    strataId: strata.id,
+    ...(!can(session.user, p("stratas", "inbox_messages", "view")) && {
+      senderUserId: session.user.id,
+    }),
+  });
 
   return (
     <>

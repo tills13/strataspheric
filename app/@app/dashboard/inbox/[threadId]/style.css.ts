@@ -23,12 +23,6 @@ export const pageHeader = style({
   borderBottom: border("1px", "solid", vars.colors.borderDefault),
 });
 
-export const pageHeaderSubject = style({
-  lineHeight: vars.fontSizes.large,
-  fontSize: vars.fontSizes.large,
-  fontWeight: vars.fontWeights.bold,
-});
-
 export const outsideMessageWarning = style({
   padding: vars.spacing.normal,
   backgroundColor: vars.colors.red500,

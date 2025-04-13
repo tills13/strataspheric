@@ -3,16 +3,6 @@ import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
-export const layoutContainer = style({
-  // display: "grid",
-  // gap: vars.spacing.large,
-  // "@media": {
-  //   [breakpoints.tabletPlus]: {
-  //     gridTemplateColumns: "300px auto",
-  //   },
-  // },
-});
-
 export const pricingPlanSelector = style({
   marginBottom: vars.spacing.large,
   "@media": {

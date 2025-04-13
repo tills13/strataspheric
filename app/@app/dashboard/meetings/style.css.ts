@@ -7,8 +7,6 @@ export const pageContainer = style({
   padding: vars.spacing.normal,
 });
 
-export const meetingsList = style({});
-
 export const meetingListContainer = style({});
 
 export const meetingListRow = style({

@@ -1,12 +1,17 @@
 import * as styles from "./style.css";
 
-import { Event } from "../../data";
+import { Event } from "../../data/events/getEventsForRange";
 import { CalendarWeek } from "./CalendarWeek";
+
+export type CalendarEvent = Pick<
+  Event,
+  "id" | "name" | "description" | "startDate" | "endDate"
+> & { meetingId?: string };
 
 interface Props {
   upsertEvent: (eventId: string | undefined, fd: FormData) => void;
   deleteEvent: (eventId: string) => void;
-  events: Event[];
+  events: CalendarEvent[];
   month: number;
   year: number;
 }

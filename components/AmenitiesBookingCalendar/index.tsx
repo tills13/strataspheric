@@ -13,11 +13,13 @@ import parse from "date-fns/parse";
 import startOfDay from "date-fns/startOfDay";
 import startOfWeek from "date-fns/startOfWeek";
 import sub from "date-fns/sub";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Amenity } from "../../data/amenities/getAmenity";
+import { AmenityBooking } from "../../data/amenities/getAmenityBooking";
 import { range } from "../../utils/arrays";
 import { Button } from "../Button";
+import { CalendarEvent } from "../Calendar";
 import { CalendarWeek } from "../Calendar/CalendarWeek";
 import { Group } from "../Group";
 import { DownIcon } from "../Icon/DownIcon";
@@ -38,7 +40,7 @@ export function AmenitiesBookingCalendar({
   virtualEvent,
 }: Props) {
   const [weekIdx, setWeekIdx] = useState(getWeek(new Date()));
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState<CalendarEvent[]>([]);
 
   const date = useMemo(
     () => parse(weekIdx.toString(), "I", new Date()),
@@ -58,15 +60,21 @@ export function AmenitiesBookingCalendar({
         "/api/amenityBookings/listAmenityBookings?" + queryParams.toString(),
       );
 
+      const rJson = (await r.json()) as { amenityBookings: AmenityBooking[] };
+
       setBookings(
-        (await r.json()).amenityBookings.filter(
-          (booking) => !virtualEvent || booking.id !== virtualEvent.id,
-        ),
+        rJson.amenityBookings
+          .filter((booking) => !virtualEvent || booking.id !== virtualEvent.id)
+          .map((amenityBooking) => ({
+            name: "",
+            description: "",
+            ...amenityBooking,
+          })),
       );
     }
 
     fetchAmenityBookings();
-  }, [amenity, date]);
+  }, [amenity, date, virtualEvent]);
 
   return (
     <Stack gap="xs">

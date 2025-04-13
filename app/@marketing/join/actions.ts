@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { createStrataMembership } from "../../../data/strataMemberships/createStrataMembership";
 import { findStrataMemberships } from "../../../data/strataMemberships/findStrataMemberships";
+import { getCurrentStrata } from "../../../data/stratas/getStrataByDomain";
 import { getStrataById } from "../../../data/stratas/getStrataById";
 import { deleteUserPasswordResetToken } from "../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
 import { getUserPasswordResetToken } from "../../../data/userPasswordResetTokens/getUserPasswordResetToken";
@@ -26,7 +27,8 @@ export async function joinAction(
   _formState: JoinFormState,
   fd: FormData,
 ): Promise<JoinFormState> {
-  const strataId = formdata.getString(fd, "strataId");
+  const strata = await getCurrentStrata();
+
   const email = formdata.getString(fd, "email");
   const name = formdata.getString(fd, "name");
   const password = formdata.getString(fd, "password");
@@ -39,8 +41,6 @@ export async function joinAction(
       error: "passwords do not match",
     };
   }
-
-  let userId: string;
 
   try {
     const existingUser = await getUser(email);
@@ -60,9 +60,9 @@ export async function joinAction(
         status: "active",
       });
 
-      if (strataId) {
+      if (strata) {
         await createStrataMembership({
-          strataId,
+          strataId: strata.id,
           userId: u.id,
           role: "pending",
         });

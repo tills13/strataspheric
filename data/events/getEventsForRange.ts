@@ -1,18 +1,21 @@
 import { db } from "..";
 
-export type StrataEvent = Awaited<ReturnType<typeof getStrataEventsForRange>>;
+export type Event = Awaited<ReturnType<typeof getEventsForRange>>[number];
+export type GetEventsForRangeFilter = {
+  strataId?: string;
+};
 
-export function getStrataEventsForRange(
-  strataId: string,
+export function getEventsForRange(
   startDateTimestamp: number,
   endDateTimestamp: number,
+  filter: GetEventsForRangeFilter,
 ) {
-  return db
+  let query = db
     .selectFrom("events")
     .selectAll("events")
     .leftJoin("meetings", "meetings.eventId", "events.id")
     .select("meetings.id as meetingId")
-    .where("events.strataId", "=", strataId)
+
     .where((eb) =>
       eb.or([
         // startDate is before startDateTimestamp but endDate is during startDateTimestamp or after endDateTimestamp
@@ -27,7 +30,13 @@ export function getStrataEventsForRange(
         // start date is during startDateTimestamp -> endDateTimestamp
         eb.between("events.startDate", startDateTimestamp, endDateTimestamp),
       ]),
-    )
+    );
+
+  if (filter.strataId) {
+    query = query.where("events.strataId", "=", filter.strataId);
+  }
+
+  return query
     .orderBy("events.startDate", "asc")
     .orderBy("events.endDate", "asc")
     .execute();

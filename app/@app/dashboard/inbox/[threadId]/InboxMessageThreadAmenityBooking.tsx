@@ -1,31 +1,46 @@
+"use client";
+
 import { s } from "../../../../../sprinkles.css";
 
-import differenceInDays from "date-fns/differenceInDays";
+import React, { useMemo } from "react";
 
 import { AmenitiesBookingCalendar } from "../../../../../components/AmenitiesBookingCalendar";
-import { AmenityChip } from "../../../../../components/AmenityChip";
-import { Date } from "../../../../../components/Date";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
-import { EventIcon } from "../../../../../components/Icon/EventIcon";
+import { InfoPanel } from "../../../../../components/InfoPanel";
 import { InvoiceChip } from "../../../../../components/InvoiceChip";
 import { Panel } from "../../../../../components/Panel";
 import { Stack } from "../../../../../components/Stack";
 import { StatusButton } from "../../../../../components/StatusButton";
-import { Text } from "../../../../../components/Text";
-import { Timeline } from "../../../../../components/Timeline";
 import { AmenityBooking } from "../../../../../data/amenities/getAmenityBooking";
-import { parseTimestamp } from "../../../../../utils/datetime";
-import { pluralize } from "../../../../../utils/pluralize";
+import { Event } from "../../../../../data/events/getEventsForRange";
+import { useCan } from "../../../../../hooks/useCan";
 
 interface Props {
   amenityBooking: AmenityBooking;
+  approveOrRejectAmenityBooking: (
+    amenityId: string,
+    decision: "approve" | "reject",
+  ) => void;
 }
 
-export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
-  const bookingDuration = differenceInDays(
-    parseTimestamp(amenityBooking.endDate),
-    parseTimestamp(amenityBooking.startDate),
+export function InboxMessageThreadAmenityBooking({
+  amenityBooking,
+  approveOrRejectAmenityBooking,
+}: Props) {
+  const can = useCan();
+  const virtualEvent = useMemo<Event>(
+    () => ({
+      id: amenityBooking.id,
+      endDate: amenityBooking.endDate,
+      name: "Current Booking",
+      startDate: amenityBooking.startDate,
+      creatorId: "",
+      strataId: "",
+      description: "",
+      meetingId: "",
+    }),
+    [amenityBooking],
   );
 
   return (
@@ -36,24 +51,61 @@ export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
 
           <AmenitiesBookingCalendar
             amenity={amenityBooking.amenity}
-            virtualEvent={{
-              id: amenityBooking.id,
-              endDate: amenityBooking.endDate,
-              name: "Current Booking",
-              startDate: amenityBooking.startDate,
-            }}
+            virtualEvent={virtualEvent}
           />
 
-          <InvoiceChip invoice={amenityBooking.invoice} />
+          {can("stratas.amenity_bookings.edit") && !amenityBooking.decision && (
+            <>
+              {amenityBooking.invoice && (
+                <InvoiceChip invoice={amenityBooking.invoice} />
+              )}
 
-          <Group>
-            <StatusButton style="secondary" color="success">
-              Approve Booking
-            </StatusButton>
-            <StatusButton style="secondary" color="error">
-              Reject Booking
-            </StatusButton>
-          </Group>
+              <InfoPanel level="info">
+                Approving the booking will lock in the date for the booking,
+                publish the above invoice, and automatically generate a response
+                to this thread with the invoice attached. Rejecting the booking
+                will delete the invoice and generate a response to this thread.
+              </InfoPanel>
+
+              <Group>
+                <StatusButton
+                  action={approveOrRejectAmenityBooking.bind(
+                    undefined,
+                    amenityBooking.id,
+                    "approve",
+                  )}
+                  style="secondary"
+                  color="success"
+                  iconTextBehaviour="centerGlobal"
+                >
+                  Approve
+                </StatusButton>
+                <StatusButton
+                  action={approveOrRejectAmenityBooking.bind(
+                    undefined,
+                    amenityBooking.id,
+                    "reject",
+                  )}
+                  style="secondary"
+                  color="error"
+                  iconTextBehaviour="centerGlobal"
+                >
+                  Reject
+                </StatusButton>
+              </Group>
+            </>
+          )}
+
+          {amenityBooking.decision && (
+            <InfoPanel
+              alignment="center"
+              level={
+                amenityBooking.decision === "approved" ? "success" : "error"
+              }
+            >
+              Booking {amenityBooking.decision}
+            </InfoPanel>
+          )}
         </Stack>
       </Panel>
     </div>

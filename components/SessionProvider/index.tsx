@@ -7,7 +7,7 @@ import { Session } from "../../auth/types";
 export const SessionCtx = React.createContext<Session | undefined>(undefined);
 
 interface Props {
-  session: Session;
+  session: Session | undefined;
 }
 
 export function SessionProvider({

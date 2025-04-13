@@ -2,25 +2,23 @@ import { s } from "../../../../sprinkles.css";
 import * as parentStyles from "../style.css";
 import * as styles from "./styles.css";
 
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
 import { ConfirmButton } from "../../../../components/ConfirmButton";
 import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { FileSelect } from "../../../../components/FileSelect";
-import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { SaveIcon } from "../../../../components/Icon/SaveIcon";
 import { InfoPanel } from "../../../../components/InfoPanel";
 import { Input } from "../../../../components/Input";
-import { Panel } from "../../../../components/Panel";
 import { RadioButton } from "../../../../components/RadioButton";
 import { Stack } from "../../../../components/Stack";
 import { StatusButton } from "../../../../components/StatusButton";
 import { StrataAddressFormFields } from "../../../../components/StrataAddressFormFields";
 import { Text } from "../../../../components/Text";
-import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 import { classnames } from "../../../../utils/classnames";
 import { updateStrataAction } from "../../actions";
@@ -30,12 +28,7 @@ import { deleteStrataAction } from "./actions";
 export const runtime = "edge";
 
 export default async function Page() {
-  const session = await auth();
-  const strata = await getCurrentStrata();
-
-  if (!strata) {
-    notFound();
-  }
+  const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
 
   if (!can(session?.user, "stratas.edit")) {
     redirect("/dashboard");
@@ -62,7 +55,6 @@ export default async function Page() {
               <FileSelect
                 label="Strata Bylaws"
                 name="bylawsFileId"
-                placeholder="Select a File"
                 defaultValue={strata.bylawsFileId ?? undefined}
               />
 

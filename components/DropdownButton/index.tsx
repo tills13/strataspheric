@@ -5,6 +5,7 @@ import * as styles from "./style.css";
 import React, { useCallback, useState } from "react";
 
 import { useClickOutside } from "../../hooks/useClickOutside";
+import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { MoreVerticalIcon } from "../Icon/MoreVerticalIcon";
 
@@ -14,7 +15,7 @@ interface Props {
   buttonStyle?: React.ComponentProps<typeof Button>["style"];
   className?: string;
   direction?: "up" | "down";
-  panel: JSX.Element;
+  panel: React.ReactNode;
 }
 
 export function DropdownButton({
@@ -31,7 +32,7 @@ export function DropdownButton({
   const ref = useClickOutside(onClickOutside);
 
   return (
-    <div className={className || styles.dropdownButton} ref={ref}>
+    <div className={classnames(className, styles.dropdownButton)} ref={ref}>
       <Button
         className={buttonClassName}
         icon={<MoreVerticalIcon />}
@@ -40,15 +41,14 @@ export function DropdownButton({
         style={buttonStyle}
       />
 
-      {open && (
-        <div
-          className={
-            direction === "up" ? styles.panelWrapperUp : styles.panelWrapper
-          }
-        >
-          {panel}
-        </div>
-      )}
+      <div
+        className={classnames(
+          direction === "up" ? styles.panelWrapperUp : styles.panelWrapper,
+          { [styles.panelOpen]: open },
+        )}
+      >
+        {panel}
+      </div>
     </div>
   );
 }

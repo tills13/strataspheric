@@ -290,7 +290,9 @@ export interface AmenityBookingsTable {
   id: ColumnType<string, string, never>;
   amenityId: string;
   eventId: string;
-  approverId: string | null;
+  deciderId: string | null;
+  decision: "approved" | "rejected" | null;
+  requesterId: ColumnType<string, string, never>;
   invoiceId: string | null;
 }
 
@@ -327,5 +329,5 @@ export const db = new Kysely<Database>({
   dialect: new D1Dialect({
     database: process.env.DB as unknown as D1Database,
   }),
-  log: ["query"],
+  // log: ["query"],
 });

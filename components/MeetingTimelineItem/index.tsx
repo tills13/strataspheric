@@ -35,13 +35,11 @@ function MeetingTimelineItemBody(item: Props & StrataActivity) {
       <InvoiceChip
         invoice={{
           amount: item.invoiceAmount,
-          createdAt: item.date,
           description: item.invoiceDescription,
-          dueBy: item.invoiceDueBy,
           id: item.invoiceId,
           identifier: item.invoiceIdentifier,
           isPaid: item.invoiceIsPaid,
-          type: item.invoiceType,
+          status: "final",
         }}
       />
     );
@@ -95,6 +93,7 @@ export function MeetingTimelineItem(props: Props) {
   return (
     <Stack
       className={classnames(
+        className,
         styles.timelineEntry,
         s({ mb: "small", p: "normal" }),
       )}

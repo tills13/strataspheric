@@ -16,7 +16,10 @@ function loadFiles(widget: StrataWidget) {
   } else if (widget.type === "files_minutes") {
     return getRecentApprovedMinutes(widget.strataId, 10, 0);
   } else if (widget.type === "files_recent") {
-    return listFiles(widget.strataId, undefined, false, "createdAt desc");
+    return listFiles(
+      { strataId: widget.strataId },
+      { orderBy: "createdAt desc" },
+    );
   }
 
   return [];

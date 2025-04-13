@@ -15,7 +15,7 @@ import { Stack } from "../Stack";
 interface Props {
   close: () => void;
   onSelectInvoice: (invoice: Invoice | undefined) => void;
-  selectedInvoice: Invoice;
+  selectedInvoice?: Invoice;
   upsertInvoice: (fd: FormData) => Promise<Invoice>;
 }
 

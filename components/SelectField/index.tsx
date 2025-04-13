@@ -5,6 +5,7 @@ import React, { PropsWithChildren } from "react";
 import { classnames } from "../../utils/classnames";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  label?: string;
   placeholderEnabled?: boolean;
   selectClassName?: string;
   wrapperClassName?: string;
@@ -31,7 +32,6 @@ export function SelectField({
     >
       <select
         className={classnames(styles.selectFieldSelect, selectClassName)}
-        label=""
         id={propsId || name}
         name={name}
         {...delegateProps}
