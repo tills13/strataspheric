@@ -4,21 +4,17 @@ import * as styles from "./style.css";
 
 import { useTransition } from "react";
 
-import { MeetingAgendaItemUpdate } from "../../data";
+import { imperativeUpdateAgendaItemAction } from "../../app/@app/dashboard/meetings/[meetingId]/actions";
 import { Checkbox } from "../Checkbox";
 import { LoadingIcon } from "../LoadingIcon";
 
 interface Props {
   done: 0 | 1;
-  imperativeUpdateAgendaItem: (
-    agendaItemUpdate: MeetingAgendaItemUpdate,
-  ) => void;
+  itemId: string;
+  meetingId: string;
 }
 
-export function MeetingAgendaItemCheckbox({
-  done,
-  imperativeUpdateAgendaItem,
-}: Props) {
+export function MeetingAgendaItemCheckbox({ done, itemId, meetingId }: Props) {
   const [isPending, startTransition] = useTransition();
 
   if (isPending) {
@@ -28,11 +24,11 @@ export function MeetingAgendaItemCheckbox({
   return (
     <Checkbox
       onChange={() => {
-        startTransition(() => {
-          imperativeUpdateAgendaItem({
+        startTransition(() =>
+          imperativeUpdateAgendaItemAction(meetingId, itemId, {
             done: done === 1 ? 0 : 1,
-          });
-        });
+          }),
+        );
       }}
       checked={done === 1}
     />

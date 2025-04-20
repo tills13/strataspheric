@@ -6,7 +6,7 @@ import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
-import { can, p } from "../../data/users/permissions";
+import { Permission, can, p } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
 import { Button } from "../Button";
 import { DropdownActions } from "../DropdownActions";
@@ -33,7 +33,7 @@ type LinkWithPermissions = [
   icon: React.ComponentType<{ classNameOverride?: string }>,
   href: string,
   label: string,
-  permissions: string[],
+  permissions: Permission[],
 ];
 
 const links: Array<Link | LinkWithPermissions> = [
@@ -60,7 +60,7 @@ const links: Array<Link | LinkWithPermissions> = [
   ],
   [GroupIcon, "/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
   [InboxIcon, "/dashboard/inbox", "Strata Inbox"],
-  [SettingsIcon, "/dashboard/settings", "Settings", ["stratas.strata.edit"]],
+  [SettingsIcon, "/dashboard/settings", "Settings", ["stratas.edit"]],
 ];
 
 export function DashboardHeader() {

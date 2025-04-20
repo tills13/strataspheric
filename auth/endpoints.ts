@@ -21,24 +21,25 @@ export async function GET(config: Config, req: NextRequest) {
   try {
     const { payload } = await readJwtFromRequest(config, req);
     const newPayload = {
-      user: await config.decorateSessionUser({
-        id: payload.user.id,
-        email: payload.user.email,
-        name: payload.user.name,
-        scopes: [],
-      }),
+      ...payload,
       exp: new Date().getTime() + VALIDITY_PERIOD,
     };
 
     const jwt = await buildJwt(await getKey(config), newPayload);
 
-    return new Response(JSON.stringify(newPayload), {
-      headers: {
-        "content-type": "application/json",
-        "set-cookie": formatJwtCookie(config, jwt),
+    return new Response(
+      JSON.stringify({
+        ...newPayload,
+        user: await config.decorateSessionUser(newPayload.user),
+      }),
+      {
+        headers: {
+          "content-type": "application/json",
+          "set-cookie": formatJwtCookie(config, jwt),
+        },
+        status: 200,
       },
-      status: 200,
-    });
+    );
   } catch {
     return new Response("Not Allowed", { status: 403 });
   }
@@ -65,26 +66,30 @@ export async function POST(config: Config, req: NextRequest) {
       );
 
       const payload = {
-        user: await config.decorateSessionUser({
+        user: {
           id: user.id,
           email: user.email,
           name: user.name,
-          scopes: [],
-        }),
+        },
         exp: new Date().getTime() + VALIDITY_PERIOD,
       };
 
       const key = await getKey(config);
-
       const jwt = await buildJwt(key, payload);
 
-      return new Response(JSON.stringify(payload), {
-        headers: {
-          "content-type": "application/json",
-          "set-cookie": formatJwtCookie(config, jwt),
+      return new Response(
+        JSON.stringify({
+          ...payload,
+          user: await config.decorateSessionUser(payload.user),
+        }),
+        {
+          headers: {
+            "content-type": "application/json",
+            "set-cookie": formatJwtCookie(config, jwt),
+          },
+          status: 200,
         },
-        status: 200,
-      });
+      );
     } catch {
       return new Response(
         JSON.stringify({ error: "Incorrect username / password" }),

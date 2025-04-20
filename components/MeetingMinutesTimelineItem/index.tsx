@@ -1,68 +1,91 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
+import {
+  approveMeetingMinutesAction,
+  removeFileFromMeetingAction,
+} from "../../app/@app/dashboard/meetings/[meetingId]/actions";
 import { MeetingMinutes } from "../../data/meetings/getMeetingMinutes";
 import { classnames } from "../../utils/classnames";
 import { Badge } from "../Badge";
 import { FileLink } from "../FileLink";
+import { Flex } from "../Flex";
 import { Group } from "../Group";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { MinutesApprover } from "../MinutesApprover";
 import { Panel } from "../Panel";
 import { RemoveButton } from "../RemoveButton";
 import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
 
 interface Props {
-  approveMeetingMinutes: () => void;
   className?: string;
-  deleteMeetingMinutes: () => void;
   file: MeetingMinutes;
+  meetingId: string;
   showApproveButton: boolean;
   versionNum: number;
 }
 
 export function MeetingMinutesTimelineItem({
-  approveMeetingMinutes,
   className,
-  deleteMeetingMinutes,
   file,
+  meetingId,
   showApproveButton,
   versionNum,
 }: Props) {
   return (
     <Panel className={classnames(className, styles.meetingMinutesTimelineItem)}>
-      <div className={styles.header}>
+      <Flex from="tablet" justify="space-between">
         <Group align="center">
           <Badge level="info">VERSION #{versionNum}</Badge>
-          <FileLink className={styles.fileName} path={file.path}>
-            {file.name}
+          <FileLink
+            className={styles.fileNameContainer}
+            path={file.path}
+            noUnderline
+          >
+            <Text
+              as="span"
+              color="primary"
+              className={styles.fileName}
+              fw="bold"
+            >
+              {file.name}
+            </Text>
           </FileLink>
         </Group>
-        <div className={styles.headerActions}>
+
+        <Group>
           {file.state === "approved" && file.approverName && (
             <MinutesApprover approverName={file.approverName} />
           )}
           {showApproveButton && (
             <>
               <StatusButton
-                action={approveMeetingMinutes}
+                action={approveMeetingMinutesAction.bind(
+                  undefined,
+                  meetingId,
+                  file.id,
+                )}
                 iconRight={<CircleCheckIcon />}
                 iconTextBehaviour="centerRemainder"
                 color="success"
-                size="small"
               >
                 Approve & Publish
               </StatusButton>
               <RemoveButton
-                action={deleteMeetingMinutes}
+                action={removeFileFromMeetingAction.bind(
+                  undefined,
+                  meetingId,
+                  "minutes",
+                  file.id,
+                )}
                 color="error"
-                size="small"
                 style="tertiary"
               />
             </>
           )}
-        </div>
-      </div>
+        </Group>
+      </Flex>
     </Panel>
   );
 }

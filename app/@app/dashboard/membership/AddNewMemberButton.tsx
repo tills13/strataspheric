@@ -7,11 +7,7 @@ import { CreateOrUpdateStrataMembershipForm } from "../../../../components/Creat
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../components/Modal";
 
-interface Props {
-  upsertStrataMembership: (fd: FormData) => Promise<void>;
-}
-
-export function AddNewMemberButton({ upsertStrataMembership }: Props) {
+export function AddNewMemberButton() {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -28,9 +24,7 @@ export function AddNewMemberButton({ upsertStrataMembership }: Props) {
 
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="New Strata Member">
-          <CreateOrUpdateStrataMembershipForm
-            upsertStrataMembership={upsertStrataMembership}
-          />
+          <CreateOrUpdateStrataMembershipForm />
         </Modal>
       )}
     </>

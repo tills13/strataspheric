@@ -4,7 +4,7 @@ import { auth } from "../../../auth";
 import { CF_PAGES_PROJECT_ID } from "../../../cloudflare/constants";
 import { createRecord } from "../../../cloudflare/dns/createRecord";
 import { addCustomDomain } from "../../../cloudflare/pages/addCustomDomain";
-import { createStrataMembership } from "../../../data/strataMemberships/createStrataMembership";
+import { createStrataMembership } from "../../../data/memberships/createStrataMembership";
 import { createPlan } from "../../../data/strataPlans/createStrataPlan";
 import { createStrata } from "../../../data/stratas/createStrata";
 import { updateStrata } from "../../../data/stratas/updateStrata";

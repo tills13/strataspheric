@@ -1,3 +1,6 @@
+import { auth } from "../auth";
+import { Permission, can } from "../data/users/permissions";
+
 export class ServerActionError extends Error {
   constructor(
     internalErrorMessage: string,
@@ -32,5 +35,22 @@ export function withErrorReporting<S extends { success?: boolean }>(
         success: false,
       };
     }
+  };
+}
+
+export function withPermissions<F extends (...args: any) => any>(
+  permissions: Permission[],
+  fn: F,
+) {
+  return async function (...args: Parameters<F>) {
+    const session = await auth();
+
+    if (!can(session?.user, ...permissions)) {
+      throw new ServerActionError(
+        `user does not have permission to do this action`,
+      );
+    }
+
+    return fn(...args);
   };
 }

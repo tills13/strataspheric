@@ -3,11 +3,11 @@ import { sql } from "kysely";
 import { db } from "..";
 
 export type MeetingAgendaItem = Awaited<
-  ReturnType<typeof getMeetingAgendaItems>
+  ReturnType<typeof listMeetingAgendaItems>
 >[number];
 
-export function getMeetingAgendaItems(meetingId: string) {
-  return db
+export async function listMeetingAgendaItems(meetingId: string) {
+  const rows = await db
     .selectFrom("meeting_agenda_items")
     .leftJoin("events", "meeting_agenda_items.eventId", "events.id")
     .leftJoin("files", "meeting_agenda_items.fileId", "files.id")
@@ -16,7 +16,7 @@ export function getMeetingAgendaItems(meetingId: string) {
         eb
           .selectFrom("inbox_messages")
           .leftJoin("users", "inbox_messages.senderUserId", "users.id")
-          .select((eb) => [
+          .select((_) => [
             "inbox_messages.id",
             "inbox_messages.threadId",
             "inbox_messages.senderUserId",
@@ -45,6 +45,7 @@ export function getMeetingAgendaItems(meetingId: string) {
       (join) =>
         join.onRef("inbox_thread_chats.id", "=", "meeting_agenda_items.chatId"),
     )
+    .leftJoin("invoices", "meeting_agenda_items.invoiceId", "invoices.id")
     .select([
       "meeting_agenda_items.id",
       "meeting_agenda_items.title",
@@ -61,6 +62,13 @@ export function getMeetingAgendaItems(meetingId: string) {
       "files.description as fileDescription",
       "files.createdAt as fileCreatedAt",
 
+      "invoices.id as invoiceId",
+      "invoices.status as invoiceStatus",
+      "invoices.identifier as invoiceIdentifier",
+      "invoices.description as invoiceDescription",
+      "invoices.amount as invoiceAmount",
+      "invoices.isPaid as invoiceIsPaid",
+
       "inbox_messages.id as messageId",
       "inbox_messages.threadId as messageThreadId",
       "inbox_messages.subject as messageSubject",
@@ -76,4 +84,87 @@ export function getMeetingAgendaItems(meetingId: string) {
     ])
     .where("meeting_agenda_items.meetingId", "=", meetingId)
     .execute();
+
+  return rows.map(
+    ({
+      chatId,
+      chatMessage,
+      chatSenderName,
+      chatSentAt,
+      chatThreadId,
+
+      eventId,
+      eventDescription,
+      eventName,
+
+      fileId,
+      fileName,
+      filePath,
+      fileDescription,
+      fileCreatedAt,
+
+      invoiceId,
+      invoiceAmount,
+      invoiceDescription,
+      invoiceIdentifier,
+      invoiceIsPaid,
+      invoiceStatus,
+
+      messageId,
+      messageMessage,
+      messageSenderName,
+      messageSentAt,
+      messageSubject,
+      messageThreadId,
+
+      ...rest
+    }) => ({
+      ...rest,
+      chat: chatId
+        ? {
+            id: chatId!,
+            message: chatMessage!,
+            senderName: chatSenderName!,
+            sentAt: chatSentAt!,
+            threadId: chatThreadId!,
+          }
+        : undefined,
+      event: eventId
+        ? {
+            id: eventId,
+            description: eventDescription,
+            name: eventName,
+          }
+        : undefined,
+      file: fileId
+        ? {
+            id: fileId,
+            name: fileName!,
+            path: filePath!,
+            description: fileDescription!,
+            createdAt: fileCreatedAt!,
+          }
+        : undefined,
+      message: messageId
+        ? {
+            id: messageId!,
+            message: messageMessage!,
+            senderName: messageSenderName!,
+            sentAt: messageSentAt!,
+            subject: messageSubject!,
+            threadId: messageThreadId!,
+          }
+        : undefined,
+      invoice: invoiceId
+        ? {
+            id: invoiceId!,
+            amount: invoiceAmount!,
+            description: invoiceDescription!,
+            identifier: invoiceIdentifier!,
+            isPaid: invoiceIsPaid!,
+            status: invoiceStatus!,
+          }
+        : undefined,
+    }),
+  );
 }

@@ -47,8 +47,6 @@ export const buttonSizes = styleVariants({
   },
 });
 
-// export const buttonColors =
-
 export const button = recipe({
   base: [
     buttonBase,

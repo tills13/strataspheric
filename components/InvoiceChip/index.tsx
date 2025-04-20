@@ -5,6 +5,7 @@ import * as styles from "./style.css";
 
 import { useTransition } from "react";
 
+import { markInvoiceAsPaidAction } from "../../app/@app/dashboard/invoices/actions";
 import { Invoice } from "../../data";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
@@ -27,25 +28,16 @@ interface Props {
     Invoice,
     "id" | "status" | "identifier" | "description" | "amount" | "isPaid"
   >;
-  markInvoiceAsPaid?: (invoiceId: string) => Promise<void>;
+
   showEdit?: boolean;
-  overrideClassName?: string;
 }
 
-export function InvoiceChip({
-  className,
-  invoice,
-  markInvoiceAsPaid,
-  showEdit = false,
-  overrideClassName,
-}: Props) {
+export function InvoiceChip({ className, invoice, showEdit = false }: Props) {
   const [isPending, startTransition] = useTransition();
   const can = useCan();
 
   return (
-    <Panel
-      className={overrideClassName || classnames(styles.invoiceChip, className)}
-    >
+    <Panel className={classnames(styles.invoiceChip, className)}>
       {invoice.status === "draft" && (
         <Text className={styles.draftLabel}>DRAFT</Text>
       )}
@@ -53,7 +45,7 @@ export function InvoiceChip({
       <Stack gap="xs">
         <Header as="h3">
           <Group gap="xs">
-            <Text color="secondary" as="span" size="xl" weight="light">
+            <Text color="secondary" as="span" fontSize="xl" fontWeight="light">
               #
             </Text>
             {invoice.identifier}
@@ -77,15 +69,13 @@ export function InvoiceChip({
                 <Button icon={<EditIcon />} style="tertiary" color="primary" />
               </InternalLink>
             )}
-            {invoice.status !== "draft" && markInvoiceAsPaid && (
+            {invoice.status !== "draft" && (
               <StatusButton
                 color="success"
                 iconRight={<CircleCheckIcon />}
                 iconTextBehaviour="centerRemainder"
                 onClick={() =>
-                  startTransition(async () => {
-                    await markInvoiceAsPaid(invoice.id);
-                  })
+                  startTransition(() => markInvoiceAsPaidAction(invoice.id))
                 }
                 isPending={isPending}
                 disabled={invoice.isPaid === 1}

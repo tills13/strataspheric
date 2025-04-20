@@ -13,7 +13,7 @@ export function InfoWidgetContact({ strata }: Props) {
       {strata.latitude && strata.longitude && (
         <InfoWidgetMapEmbed lat={strata.latitude} long={strata.longitude} />
       )}
-      <Text as="address" color="secondary" size="large">
+      <Text as="address" color="secondary" fontSize="large">
         {strata.streetAddress}
         <br />
         {strata.city} {strata.provinceState}

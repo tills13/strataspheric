@@ -14,28 +14,16 @@ import { SendInboxMessageFields } from "../../../../../components/SendInboxMessa
 import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
 import { ThreadMessage } from "../../../../../components/ThreadMessage";
-import { getThreadEmailParticipants } from "../../../../../data/emails/getThreadEmailParticipants";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
 import { classnames } from "../../../../../utils/classnames";
 import { approveOrRejectAmenityBookingAction } from "../../amenities/actions";
-import { upsertFileAction } from "../../files/actions";
-import {
-  markInvoiceAsPaidAction,
-  upsertInvoiceAction,
-} from "../../invoices/actions";
 import { InboxMessageThreadAmenityBooking } from "./InboxMessageThreadAmenityBooking";
 
 interface Props {
-  sendInboxThreadChatAction: (messageId: string, fd: FormData) => void;
-  sendNewMessageAction: (fd: FormData) => void;
   threadId: string;
 }
 
-export async function InboxMessageThread({
-  sendNewMessageAction,
-  sendInboxThreadChatAction,
-  threadId,
-}: Props) {
+export async function InboxMessageThread({ threadId }: Props) {
   const [session, messages] = await Promise.all([
     auth(),
     getThreadMessages(threadId),
@@ -53,7 +41,7 @@ export async function InboxMessageThread({
     viewId,
   } = message0;
 
-  const emailParticipants = await getThreadEmailParticipants(threadId);
+  // const emailParticipants = await getThreadEmailParticipants(threadId);
 
   return (
     <div className={styles.inboxMessageThreadContainer}>
@@ -86,12 +74,7 @@ export async function InboxMessageThread({
       </Stack>
 
       {messages.map((message) => (
-        <ThreadMessage
-          key={message.id}
-          {...message}
-          markInvoiceAsPaid={markInvoiceAsPaidAction}
-          sendThreadChat={sendInboxThreadChatAction.bind(undefined, message.id)}
-        />
+        <ThreadMessage key={message.id} {...message} />
       ))}
 
       {amenityBooking && (
@@ -101,10 +84,7 @@ export async function InboxMessageThread({
         />
       )}
 
-      <SendInboxMessageForm
-        className={s({ p: "normal" })}
-        sendInboxMessage={sendNewMessageAction}
-      >
+      <SendInboxMessageForm className={s({ p: "normal" })} threadId={threadId}>
         {!session && (
           <SendInboxMessageContactDetailsFields
             defaultEmail={message0.senderEmail}
@@ -114,11 +94,7 @@ export async function InboxMessageThread({
           />
         )}
 
-        <SendInboxMessageFields
-          showSubjectInput={false}
-          upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
-          upsertFile={upsertFileAction.bind(undefined, undefined)}
-        />
+        <SendInboxMessageFields showSubjectInput={false} />
       </SendInboxMessageForm>
     </div>
   );

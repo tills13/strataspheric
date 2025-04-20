@@ -10,14 +10,9 @@ import { Modal } from "../Modal";
 interface Props {
   amenity: Amenity;
   className?: string;
-  createAmenityBooking: (fd: FormData) => void;
 }
 
-export function BookAmenityButton({
-  amenity,
-  className,
-  createAmenityBooking,
-}: Props) {
+export function BookAmenityButton({ amenity, className }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -35,10 +30,7 @@ export function BookAmenityButton({
           closeModal={() => setShowModal(false)}
           title={`Book ${amenity.name}`}
         >
-          <BookAmenityForm
-            amenity={amenity}
-            createAmenityBooking={createAmenityBooking}
-          />
+          <BookAmenityForm amenity={amenity} />
         </Modal>
       )}
     </>

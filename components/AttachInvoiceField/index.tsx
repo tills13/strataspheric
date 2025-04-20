@@ -2,33 +2,23 @@
 
 import React, { useState } from "react";
 
-import { Invoice } from "../../data";
 import { AttachInvoiceText } from "../AttachInvoice/AttachInvoiceText";
 
 type AttachInvoiceButtonProps = React.ComponentProps<typeof AttachInvoiceText>;
 
 interface Props {
-  buttonClassName?: string;
   name?: string;
   defaultValue?: AttachInvoiceButtonProps["selectedInvoice"];
-  upsertInvoice: (fd: FormData) => Promise<Invoice>;
 }
 
-export function AttachInvoiceField({
-  buttonClassName,
-  defaultValue,
-  name,
-  upsertInvoice,
-}: Props) {
+export function AttachInvoiceField({ defaultValue, name }: Props) {
   const [selectedInvoice, setSelectedInvoice] = useState(defaultValue);
 
   return (
     <>
       <AttachInvoiceText
-        className={buttonClassName}
         onSelectInvoice={setSelectedInvoice}
         selectedInvoice={selectedInvoice}
-        upsertInvoice={upsertInvoice}
       />
 
       <input type="hidden" name={name} value={selectedInvoice?.id} />

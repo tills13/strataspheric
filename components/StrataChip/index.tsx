@@ -15,11 +15,11 @@ export function StrataChip({ strata }: Props) {
     <div className={styles.strataChip}>
       <Group justify="space-between">
         <Stack gap="xxs">
-          <Text color="primary" size="large" weight="bold">
+          <Text color="primary" fontSize="large" fontWeight="bold">
             {strata.name}
           </Text>
 
-          <Text color="secondary" size="small">
+          <Text color="secondary" fontSize="small">
             {strata.domain}
           </Text>
         </Stack>

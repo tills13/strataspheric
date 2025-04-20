@@ -48,12 +48,12 @@ export function InboxThreads({ deleteThread, threads }: Props) {
                 <Text
                   className={styles.inboxMessageSubject}
                   color="secondary"
-                  weight="bold"
+                  fontWeight="bold"
                 >
                   {thread.subject}
                 </Text>
               </Group>
-              <Text color="secondary" size="small">
+              <Text color="secondary" fontSize="small">
                 <Date timestamp={thread.sentAt} output="date" />
               </Text>
             </Stack>

@@ -1,8 +1,5 @@
-import { s } from "../../sprinkles.css";
-import * as styles from "./style.css";
-
+import { upsertMeetingAction } from "../../app/@app/dashboard/meetings/actions";
 import { Event, Meeting } from "../../data";
-import { classnames } from "../../utils/classnames";
 import { patchTimezoneOffset } from "../../utils/datetime";
 import { DateInput } from "../DateInput";
 import { AddIcon } from "../Icon/AddIcon";
@@ -11,18 +8,17 @@ import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 
 interface Props {
-  upsertMeeting: (fd: FormData) => Promise<any>;
   meeting?: Meeting & Pick<Event, "startDate" | "endDate">;
 }
 
-export function CreateOrUpdateMeetingForm({ upsertMeeting, meeting }: Props) {
+export function CreateOrUpdateMeetingForm({ meeting }: Props) {
   return (
     <form
       action={async (fd) => {
         patchTimezoneOffset(fd, "startDate");
         patchTimezoneOffset(fd, "endDate");
 
-        await upsertMeeting(fd);
+        await upsertMeetingAction(meeting?.id, fd);
       }}
     >
       <Stack>
@@ -35,9 +31,9 @@ export function CreateOrUpdateMeetingForm({ upsertMeeting, meeting }: Props) {
 
         <DateInput
           name="date"
-          endDate={meeting?.endDate}
+          defaultEndValue={meeting?.endDate}
           endPlaceholder="Scheduled End"
-          startDate={meeting?.startDate}
+          defaultStartValue={meeting?.startDate}
           startPlaceholder="Scheduled Start"
           type="range"
         />

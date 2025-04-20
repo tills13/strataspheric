@@ -2,8 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-import { createStrataMembership } from "../../../data/strataMemberships/createStrataMembership";
-import { findStrataMemberships } from "../../../data/strataMemberships/findStrataMemberships";
+import { createStrataMembership } from "../../../data/memberships/createStrataMembership";
+import { listStrataMemberships } from "../../../data/memberships/listStrataMemberships";
 import { getCurrentStrata } from "../../../data/stratas/getStrataByDomain";
 import { getStrataById } from "../../../data/stratas/getStrataById";
 import { deleteUserPasswordResetToken } from "../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
@@ -100,7 +100,7 @@ export async function joinFromTokenAction(token: string, fd: FormData) {
   await updateUser(resetToken.userId, { password });
   await deleteUserPasswordResetToken(resetToken.token);
 
-  const memberships = await findStrataMemberships({
+  const memberships = await listStrataMemberships({
     userId: resetToken.userId,
   });
 

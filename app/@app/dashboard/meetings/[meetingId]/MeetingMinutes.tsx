@@ -4,6 +4,8 @@ import * as styles from "./style.css";
 import { AddFileToMeetingButton } from "../../../../../components/AddFileToMeetingButton";
 import { DividerText } from "../../../../../components/DividerText";
 import { FileTypeIcon } from "../../../../../components/FileTypeIcon";
+import { Flex } from "../../../../../components/Flex";
+import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
 import { RightIcon } from "../../../../../components/Icon/RightIcon";
@@ -16,18 +18,15 @@ import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { MeetingMinutesTimelineItem } from "../../../../../components/MeetingMinutesTimelineItem";
 import { MinutesApprover } from "../../../../../components/MinutesApprover";
 import { RemoveButton } from "../../../../../components/RemoveButton";
+import { Stack } from "../../../../../components/Stack";
 import { StatusButton } from "../../../../../components/StatusButton";
 import { Text } from "../../../../../components/Text";
 import { Timeline } from "../../../../../components/Timeline";
 import { getMeetingMinutes } from "../../../../../data/meetings/getMeetingMinutes";
 import { classnames } from "../../../../../utils/classnames";
-import { upsertFileAction } from "../../files/actions";
 import {
-  addFileToMeetingAction,
-  approveMeetingMinutesAction,
   approveMeetingMinutesUrlAction,
   clearMinutesUrlAction,
-  removeFileFromMeetingAction,
   updateMinutesUrlAction,
 } from "./actions";
 
@@ -48,13 +47,11 @@ export async function MeetingMinutes({
   const anyApproved = files.some((file) => file.state === "approved");
 
   return (
-    <div className={className}>
-      <Header className={s({ mb: "normal" })} as="h2">
-        Minutes
-      </Header>
+    <Stack className={className}>
+      <Header as="h3">Minutes</Header>
 
       {!minutesUrl && files.length === 0 && (
-        <InfoPanel className={s({ mb: "normal" })}>
+        <InfoPanel>
           <Text>
             <strong>No minutes added to this meeting.</strong> Use the button
             below to add draft minutes or add a URL where council members can
@@ -64,69 +61,69 @@ export async function MeetingMinutes({
       )}
 
       {!anyApproved && files.length === 0 && (
-        <form
-          className={classnames(styles.minutesUrlContainer, s({ w: "full" }))}
-          action={updateMinutesUrlAction.bind(undefined, meetingId)}
-        >
-          {!minutesUrl ? (
-            <Input
-              className={classnames(styles.minutesUrlInput, s({ w: "full" }))}
-              name="minutesUrl"
-              label="Minutes URL"
-            />
-          ) : (
-            <ExternalLink
-              className={classnames(s({ w: "full" }), styles.minutesUrl)}
-              href={minutesUrl}
-            >
-              {minutesUrl} <RightIcon height={24} />
-            </ExternalLink>
-          )}
-
-          {!minutesUrl && (
-            <StatusButton
-              className={styles.minutesUrlApproveButton}
-              iconRight={<SaveIcon />}
-              iconTextBehaviour="centerRemainder"
-              style="secondary"
-            >
-              Add Minutes URL
-            </StatusButton>
-          )}
-
-          {minutesUrl ? (
-            minutesUrlApprovedByName ? (
-              <MinutesApprover
-                approverName={minutesUrlApprovedByName}
-                className={styles.minutesUrlApprover}
+        <form action={updateMinutesUrlAction.bind(undefined, meetingId)}>
+          <Flex from="tablet">
+            {!minutesUrl ? (
+              <Input
+                className={classnames(styles.minutesUrlInput, s({ w: "full" }))}
+                name="minutesUrl"
+                label="Minutes URL"
               />
             ) : (
-              <div className={styles.minutesUrlActionsContainer}>
-                <StatusButton
-                  className={styles.minutesUrlApproveButton}
-                  action={approveMeetingMinutesUrlAction.bind(
-                    undefined,
-                    meetingId,
-                  )}
-                  iconRight={<CircleCheckIcon />}
-                  iconTextBehaviour="centerRemainder"
-                  color="success"
-                >
-                  Approve
-                </StatusButton>
-                <RemoveButton
-                  action={clearMinutesUrlAction.bind(undefined, meetingId)}
-                  color="error"
-                  style="tertiary"
+              <ExternalLink
+                className={classnames(s({ w: "full" }), styles.minutesUrl)}
+                href={minutesUrl}
+              >
+                {minutesUrl} <RightIcon height={24} />
+              </ExternalLink>
+            )}
+
+            {!minutesUrl && (
+              <StatusButton
+                className={styles.minutesUrlApproveButton}
+                iconRight={<SaveIcon />}
+                iconTextBehaviour="centerRemainder"
+                color="primary"
+                style="primary"
+              >
+                Add Minutes URL
+              </StatusButton>
+            )}
+
+            {minutesUrl ? (
+              minutesUrlApprovedByName ? (
+                <MinutesApprover
+                  approverName={minutesUrlApprovedByName}
+                  className={styles.minutesUrlApprover}
                 />
-              </div>
-            )
-          ) : null}
+              ) : (
+                <Group className={styles.minutesUrlActionsContainer}>
+                  <StatusButton
+                    className={styles.minutesUrlApproveButton}
+                    action={approveMeetingMinutesUrlAction.bind(
+                      undefined,
+                      meetingId,
+                    )}
+                    iconRight={<CircleCheckIcon />}
+                    iconTextBehaviour="centerRemainder"
+                    color="success"
+                  >
+                    Approve
+                  </StatusButton>
+                  <RemoveButton
+                    action={clearMinutesUrlAction.bind(undefined, meetingId)}
+                    color="error"
+                    style="tertiary"
+                  />
+                </Group>
+              )
+            ) : null}
+          </Flex>
         </form>
       )}
 
       {minutesUrl && minutesUrlApprovedByName && (
-        <InfoPanel className={s({ mt: "normal" })} level="success">
+        <InfoPanel level="success">
           <Text>
             The externally hosted minutes have been approved. Export and upload
             them to your{" "}
@@ -139,7 +136,7 @@ export async function MeetingMinutes({
       )}
 
       {!anyApproved && !minutesUrl && files.length === 0 && (
-        <DividerText className={s({ w: "full", mv: "normal" })}>OR</DividerText>
+        <DividerText w="full">OR</DividerText>
       )}
 
       {files.length !== 0 && (
@@ -157,18 +154,8 @@ export async function MeetingMinutes({
             ),
             contents: (
               <MeetingMinutesTimelineItem
-                approveMeetingMinutes={approveMeetingMinutesAction.bind(
-                  undefined,
-                  meetingId,
-                  file.id,
-                )}
-                deleteMeetingMinutes={removeFileFromMeetingAction.bind(
-                  undefined,
-                  meetingId,
-                  "minutes",
-                  file.id,
-                )}
                 file={file}
+                meetingId={meetingId}
                 showApproveButton={!anyApproved}
                 versionNum={idx + 1}
               />
@@ -178,19 +165,15 @@ export async function MeetingMinutes({
       )}
 
       {!anyApproved && !minutesUrl && (
-        <>
-          <AddFileToMeetingButton
-            addFileToMeeting={addFileToMeetingAction.bind(
-              undefined,
-              meetingId,
-              "minutes",
-            )}
-            placeholder="Add Minutes Document"
-            disabled={!!(minutesUrl && minutesUrlApprovedByName)}
-            upsertFile={upsertFileAction.bind(undefined, undefined)}
-          />
-        </>
+        <AddFileToMeetingButton
+          disabled={!!(minutesUrl && minutesUrlApprovedByName)}
+          meetingId={meetingId}
+          fileType="minutes"
+          placeholder="Add Minutes Document"
+          color="primary"
+          style="primary"
+        />
       )}
-    </div>
+    </Stack>
   );
 }

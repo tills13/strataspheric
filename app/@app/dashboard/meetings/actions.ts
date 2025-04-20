@@ -9,14 +9,14 @@ import { createMeeting } from "../../../../data/meetings/createMeeting";
 import { deleteMeeting } from "../../../../data/meetings/deleteMeeting";
 import { updateMeeting } from "../../../../data/meetings/updateMeeting";
 import { updateMeetingEvent } from "../../../../data/meetings/updateMeetingEvent";
+import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import * as formdata from "../../../../utils/formdata";
 
 export async function upsertMeetingAction(
-  strataId: string,
   meetingId: string | undefined,
   fd: FormData,
 ) {
-  const session = await auth();
+  const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
 
   if (!session) {
     throw new Error("not allowed");
@@ -39,7 +39,7 @@ export async function upsertMeetingAction(
     revalidatePath("/dashboard/meetings/" + meetingId);
   } else {
     const event = await createEvent({
-      strataId,
+      strataId: strata.id,
       creatorId: session.user.id,
       name: purpose,
       description: "",
@@ -48,7 +48,7 @@ export async function upsertMeetingAction(
     });
 
     const { id: meetingId } = await createMeeting({
-      strataId,
+      strataId: strata.id,
       callerId: session.user.id,
       eventId: event.id,
       purpose,

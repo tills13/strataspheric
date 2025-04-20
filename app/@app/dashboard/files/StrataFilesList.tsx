@@ -8,7 +8,6 @@ import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain
 import { can, p } from "../../../../data/users/permissions";
 import { classnames } from "../../../../utils/classnames";
 import { FilesListFile } from "./FilesListFile";
-import { deleteFileAction, upsertFileAction } from "./actions";
 
 interface Props {
   searchTerm?: string;
@@ -16,8 +15,7 @@ interface Props {
 }
 
 export async function StrataFilesList({ searchTerm, visibility }: Props) {
-  const strata = await mustGetCurrentStrata();
-  const session = await auth();
+  const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
   const canDelete = can(session?.user, p("stratas", "files", "delete"));
 
   const files = await searchFiles(strata.id, canDelete, searchTerm, visibility);
@@ -27,12 +25,7 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
       {files.length === 0 && <NothingHere />}
 
       {files.map((file) => (
-        <FilesListFile
-          key={file.id}
-          deleteFileAction={deleteFileAction}
-          file={file}
-          upsertFileAction={upsertFileAction}
-        />
+        <FilesListFile key={file.id} file={file} showImagePreview />
       ))}
     </Stack>
   );

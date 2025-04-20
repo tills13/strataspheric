@@ -13,7 +13,7 @@ type Filter = {
   planish?: string;
 };
 
-export async function findStratas(filter: Filter): Promise<Strata[]> {
+export async function listStratas(filter: Filter): Promise<Strata[]> {
   return db
     .selectFrom("stratas")
     .selectAll()

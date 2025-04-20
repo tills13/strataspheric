@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 
-import { File } from "../../data";
 import { AttachFileText } from "../AttachFile/AttachFileText";
 
 type AttachFileTextProps = Omit<
@@ -11,9 +10,9 @@ type AttachFileTextProps = Omit<
 >;
 
 interface Props extends AttachFileTextProps {
-  defaultValue?: File;
+  defaultValue?: AttachFileTextProps["selectedFile"];
   name: string;
-  value?: File;
+  value?: AttachFileTextProps["selectedFile"];
 }
 
 export function AttachFileField({

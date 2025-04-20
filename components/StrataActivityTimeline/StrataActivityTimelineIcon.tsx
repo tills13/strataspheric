@@ -2,6 +2,7 @@ import * as iconStyles from "../Icon/style.css";
 
 import React from "react";
 
+import { StrataActivity } from "../../data/meetings/listStrataActivity";
 import { classnames } from "../../utils/classnames";
 import { ChatIcon } from "../Icon/ChatIcon";
 import { EventIcon } from "../Icon/EventIcon";
@@ -9,10 +10,10 @@ import { ForumIcon } from "../Icon/ForumIcon";
 import { TextDocumentIcon } from "../Icon/TextDocumentIcon";
 
 interface Props {
-  type: "event" | "file" | "inbox_message" | "invoice" | "chat";
+  type: StrataActivity["type"];
 }
 
-export function MeetingTimelineIcon({ type }: Props) {
+export function StrataActivityTimelineIcon({ type }: Props) {
   const iconClassName = classnames(iconStyles.icon);
 
   switch (type) {

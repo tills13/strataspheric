@@ -3,7 +3,7 @@ import { cache } from "react";
 
 import { Strata } from "..";
 import { getDomain } from "../../utils/getDomain";
-import { findStratas } from "./findStratas";
+import { listStratas } from "./listStratas";
 
 export async function mustGetCurrentStrata(): Promise<Strata> {
   const s = await getCurrentStrata();
@@ -21,7 +21,7 @@ export async function getCurrentStrata() {
 
 export const getStrataByDomain = cache(
   async (domain: string): Promise<Strata | undefined> => {
-    const stratas = await findStratas({ domain });
+    const stratas = await listStratas({ domain });
     return stratas?.[0];
   },
 );

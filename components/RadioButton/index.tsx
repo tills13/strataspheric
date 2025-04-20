@@ -12,7 +12,6 @@ interface RadioButtonButtonProps {
   defaultValue?: string;
   name?: string;
   option: string;
-  size?: Props["size"];
   value?: string;
 }
 
@@ -21,17 +20,13 @@ export function RadioButtonButton({
   defaultValue,
   name,
   option,
-  size = "normal",
+
   value,
 }: RadioButtonButtonProps) {
   const syntheticName = `${name}_${option}`;
   return (
     <label
-      className={classnames(
-        className,
-        styles.radioButtonButtonBase,
-        buttonSizes[size],
-      )}
+      className={classnames(className, styles.radioButtonButton)}
       htmlFor={syntheticName}
     >
       <input
@@ -42,7 +37,7 @@ export function RadioButtonButton({
         defaultChecked={option === defaultValue}
         value={option}
       />
-      <Text weight="bold" color="primary">
+      <Text fontWeight="bold" color="primary">
         {option}
       </Text>
     </label>
@@ -67,10 +62,10 @@ export function RadioButton({
   value,
 }: Props) {
   return (
-    <>
+    <div>
       <Group
         className={classnames(className, styles.radioButton)}
-        gap="0"
+        gap="xs"
         equalWidthChildren
       >
         {options.map((option) => (
@@ -79,10 +74,9 @@ export function RadioButton({
             defaultValue={defaultValue}
             name={name}
             option={option}
-            size={size}
           />
         ))}
       </Group>
-    </>
+    </div>
   );
 }

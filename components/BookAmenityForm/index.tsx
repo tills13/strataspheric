@@ -4,6 +4,7 @@ import differenceInDays from "date-fns/differenceInDays";
 import isBefore from "date-fns/isBefore";
 import { useState } from "react";
 
+import { createAmenityBookingAction } from "../../app/@app/dashboard/amenities/actions";
 import { Amenity } from "../../data/amenities/getAmenity";
 import {
   formatDateForDatetime,
@@ -21,10 +22,9 @@ import { TextArea } from "../TextArea";
 
 interface Props {
   amenity: Amenity;
-  createAmenityBooking: (fd: FormData) => void;
 }
 
-export function BookAmenityForm({ amenity, createAmenityBooking }: Props) {
+export function BookAmenityForm({ amenity }: Props) {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
@@ -45,7 +45,7 @@ export function BookAmenityForm({ amenity, createAmenityBooking }: Props) {
         );
         patchDateTimezoneOffset(fd, "endDate", formatDateForDatetime(endDate));
 
-        await createAmenityBooking(fd);
+        await createAmenityBookingAction(amenity.id, fd);
       }}
     >
       <Stack>
@@ -83,14 +83,14 @@ export function BookAmenityForm({ amenity, createAmenityBooking }: Props) {
         {amenity.costPerHour && typeof bookingLength !== "undefined" && (
           <Stack gap="small">
             <Group justify="space-between">
-              <Text weight="bold">Summary</Text>
+              <Text fontWeight="bold">Summary</Text>
               <Text>
                 {bookingLength} {pluralize("day", bookingLength)} @{" "}
                 <Money amount={amenity.costPerHour * 24} /> per day
               </Text>
             </Group>
             <Group justify="space-between">
-              <Text weight="bold">Approximate Cost</Text>
+              <Text fontWeight="bold">Approximate Cost</Text>
               <Money amount={amenity.costPerHour * 24 * bookingLength} />
             </Group>
           </Stack>

@@ -5,7 +5,6 @@ import { Button } from "../Button";
 import { CreateOrUpdateInvoiceForm } from "../CreateOrUpdateInvoiceForm";
 import { DividerText } from "../DividerText";
 import { Group } from "../Group";
-import { Header } from "../Header";
 import { RemoveIcon } from "../Icon/RemoveIcon";
 import { InvoiceChip } from "../InvoiceChip";
 import { InvoiceSelect } from "../InvoiceSelect";
@@ -16,14 +15,12 @@ interface Props {
   close: () => void;
   onSelectInvoice: (invoice: Invoice | undefined) => void;
   selectedInvoice?: Invoice;
-  upsertInvoice: (fd: FormData) => Promise<Invoice>;
 }
 
 export function AttachInvoiceModal({
   close,
   onSelectInvoice,
   selectedInvoice,
-  upsertInvoice,
 }: Props) {
   return (
     <Modal closeModal={close} title="Attach Invoice">
@@ -60,7 +57,6 @@ export function AttachInvoiceModal({
             onSelectInvoice(invoice);
             close();
           }}
-          upsertInvoice={upsertInvoice}
         />
       </Stack>
     </Modal>

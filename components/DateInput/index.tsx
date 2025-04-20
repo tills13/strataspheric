@@ -6,7 +6,7 @@ import * as styles from "./style.css";
 import add from "date-fns/add";
 import isBefore from "date-fns/isBefore";
 import sub from "date-fns/sub";
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 import { classnames } from "../../utils/classnames";
 import { formatDateForDatetime } from "../../utils/datetime";
@@ -32,12 +32,10 @@ interface SingleProps extends BaseProps {
 interface RangeProps extends BaseProps {
   type: "range";
   defaultStartValue?: string | number;
-  // startDate: number | Date | undefined;
   startPlaceholder?: string;
   startLabel?: string;
   defaultEndValue?: string | number;
   endLabel?: string;
-  // endDate: number | Date | undefined;
   endPlaceholder?: string;
 }
 
@@ -99,6 +97,7 @@ export function DateInput({
           }
         />
         <Button
+          color="primary"
           disabled={disabled}
           icon={<EventIcon />}
           onClick={onClickSetDateToTodayButton}

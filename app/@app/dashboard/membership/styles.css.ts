@@ -1,7 +1,7 @@
 import { breakpoints, vars } from "../../../theme.css";
-import { globalStyle, style } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
-import { border, padding } from "../../../../theme";
+import { padding } from "../../../../theme";
 
 export const membershipGrid = style({
   display: "grid",
@@ -17,13 +17,6 @@ export const membershipGrid = style({
       gridTemplateColumns: "repeat(4, 1fr)",
     },
   },
-});
-
-export const membershipTile = style({
-  padding: vars.spacing.normal,
-  border: border("2px", "solid", vars.colors.borderDefault),
-  borderRadius: vars.borderRadius,
-  backgroundColor: vars.colors.grey50,
 });
 
 export const membershipTileDetails = style({

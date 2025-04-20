@@ -1,26 +1,15 @@
-import { notFound } from "next/navigation";
-
-import { DashboardHeader } from "../../../../../components/DashboardHeader";
-import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { PageProps } from "../../../../../.next/types/app/@app/dashboard/meetings/[meetingId]/page";
+import { ProtectedPage } from "../../../../../components/ProtectedPage";
 import { MeetingLayout } from "./MeetingLayout";
 
 export const runtime = "edge";
 
-export default async function Page({
-  params,
-}: {
-  params: { meetingId: string };
-}) {
-  const strata = await getCurrentStrata();
-
-  if (!strata) {
-    notFound();
-  }
+export default async function Page({ params }: PageProps) {
+  const { meetingId } = await params;
 
   return (
-    <>
-      <DashboardHeader />
-      <MeetingLayout meetingId={params.meetingId} strataId={strata.id} />
-    </>
+    <ProtectedPage permissions={["stratas.meetings.view"]}>
+      <MeetingLayout meetingId={meetingId} />
+    </ProtectedPage>
   );
 }

@@ -2,34 +2,24 @@ import * as styles from "./style.css";
 
 import React from "react";
 
-import { MeetingAgendaItemUpdate } from "../../data";
-import { type MeetingAgendaItem as IMeetingAgendaItem } from "../../data/meetings/getMeetingAgendaItems";
+import { removeItemFromAgendaAction } from "../../app/@app/dashboard/meetings/[meetingId]/actions";
+import { type MeetingAgendaItem as IMeetingAgendaItem } from "../../data/meetings/listMeetingAgendaItems";
 import { classnames } from "../../utils/classnames";
 import { EditMeetingAgendaItemButton } from "../EditMeetingAgendaItemButton";
 import { FileAttachmentChip } from "../FileAttachmentChip";
 import { Header } from "../Header";
 import { InboxMessageQuote } from "../InboxMessageQuote";
+import { InvoiceChip } from "../InvoiceChip";
 import { RemoveButton } from "../RemoveButton";
 import { MeetingAgendaItemCheckbox } from "./Checkbox";
 
 interface Props {
-  className?: string;
   agendaItem: IMeetingAgendaItem;
-  imperativeUpdateAgendaItem: (
-    agendaItemUpdate: MeetingAgendaItemUpdate,
-  ) => void;
-  removeAgendaItem: () => void;
-  updateAgendaItem: (fd: FormData) => void;
-  upsertFile: (fd: FormData) => any;
+  className?: string;
+  meetingId: string;
 }
 
-export function MeetingAgendaItem({
-  agendaItem,
-  imperativeUpdateAgendaItem,
-  removeAgendaItem,
-  updateAgendaItem,
-  upsertFile,
-}: Props) {
+export function MeetingAgendaItem({ agendaItem, meetingId }: Props) {
   return (
     <div
       className={classnames(
@@ -39,23 +29,27 @@ export function MeetingAgendaItem({
       <div className={styles.header}>
         <MeetingAgendaItemCheckbox
           done={agendaItem.done}
-          imperativeUpdateAgendaItem={imperativeUpdateAgendaItem}
+          itemId={agendaItem.id}
+          meetingId={meetingId}
         />
 
-        <Header className={styles.headerHeader} as="h3">
+        <Header className={styles.headerHeader} as="h4">
           {agendaItem.title}
         </Header>
 
         <div className={styles.agendaItemActions}>
           <EditMeetingAgendaItemButton
             agendaItem={agendaItem}
+            meetingId={meetingId}
             size="small"
             style="tertiary"
-            upsertFile={upsertFile}
-            updateMeetingAgendaItem={updateAgendaItem}
           />
           <RemoveButton
-            action={removeAgendaItem}
+            action={removeItemFromAgendaAction.bind(
+              undefined,
+              meetingId,
+              agendaItem.id,
+            )}
             color="error"
             size="small"
             style="tertiary"
@@ -67,34 +61,22 @@ export function MeetingAgendaItem({
         <p className={styles.agendaItemDescription}>{agendaItem.description}</p>
       )}
 
-      {agendaItem.messageId && (
-        <InboxMessageQuote
-          message={agendaItem.messageMessage}
-          messageId={agendaItem.messageId}
-          messageThreadId={agendaItem.messageThreadId}
-          senderName={agendaItem.messageSenderName}
-          timestamp={agendaItem.messageSentAt}
-          linkType="direct"
-        />
+      {agendaItem.message && (
+        <InboxMessageQuote source={agendaItem.message} linkType="direct" />
       )}
 
-      {agendaItem.chatId && (
-        <InboxMessageQuote
-          message={agendaItem.chatMessage}
-          messageId={agendaItem.chatId}
-          messageThreadId={agendaItem.chatThreadId}
-          senderName={agendaItem.chatSenderName}
-          timestamp={agendaItem.chatSentAt}
-          linkType="direct"
-        />
+      {agendaItem.chat && (
+        <InboxMessageQuote source={agendaItem.chat} linkType="direct" />
       )}
 
-      {agendaItem.fileId && agendaItem.filePath && (
+      {agendaItem.file && (
         <FileAttachmentChip
-          fileName={agendaItem.fileName}
-          filePath={agendaItem.filePath}
+          fileName={agendaItem.file.name}
+          filePath={agendaItem.file.path}
         />
       )}
+
+      {agendaItem.invoice && <InvoiceChip invoice={agendaItem.invoice} />}
     </div>
   );
 }

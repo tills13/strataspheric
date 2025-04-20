@@ -10,18 +10,19 @@ import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
 import { getMeeting } from "../../../../../data/meetings/getMeeting";
-import { deleteMeetingAction, upsertMeetingAction } from "../actions";
+import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { deleteMeetingAction } from "../actions";
 import { MeetingAgenda } from "./MeetingAgenda";
 import { MeetingFiles } from "./MeetingFiles";
 import { MeetingMinutes } from "./MeetingMinutes";
 
 interface Props {
   meetingId: string;
-  strataId: string;
 }
 
-export async function MeetingLayout({ meetingId, strataId }: Props) {
-  const meeting = await getMeeting(strataId, meetingId);
+export async function MeetingLayout({ meetingId }: Props) {
+  const strata = await mustGetCurrentStrata();
+  const meeting = await getMeeting(strata.id, meetingId);
 
   return (
     <Stack className={styles.meetingAgendaContainer} gap="large">
@@ -34,14 +35,7 @@ export async function MeetingLayout({ meetingId, strataId }: Props) {
           </Text>
         </Stack>
 
-        <EditMeetingButton
-          meeting={meeting}
-          updateMeeting={upsertMeetingAction.bind(
-            undefined,
-            strataId,
-            meeting.id,
-          )}
-        />
+        <EditMeetingButton meeting={meeting} />
       </Group>
 
       {meeting.notes && <p>{meeting.notes}</p>}

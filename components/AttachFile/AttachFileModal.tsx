@@ -16,7 +16,7 @@ interface Props {
   close: () => void;
   onSelectFile?: (file: File | undefined) => Promise<void>;
   selectedFile?: { id: string; name: string; path: string };
-  upsertFile: (fd: FormData) => Promise<File>;
+  showImagePreview?: boolean;
 }
 
 export function AttachFileModal({
@@ -24,12 +24,19 @@ export function AttachFileModal({
   close,
   onSelectFile,
   selectedFile,
-  upsertFile,
+  showImagePreview,
 }: Props) {
   return (
     <Modal title="Attach File" closeModal={close}>
       <Stack>
-        {selectedFile && <FilesListFile file={selectedFile} />}
+        {selectedFile && (
+          <FilesListFile
+            mb="large"
+            file={selectedFile}
+            showActions={false}
+            showImagePreview={showImagePreview}
+          />
+        )}
         <Group>
           <FileSelect
             className={s({ w: "full" })}
@@ -54,15 +61,12 @@ export function AttachFileModal({
           )}
         </Group>
 
-        <DividerText>OR</DividerText>
-
         <CreateOrUpdateFileForm
           acceptFileTypes={fileTypes}
           onCreateOrUpdateFile={(file) => {
             close();
             onSelectFile?.(file);
           }}
-          upsertFile={upsertFile}
         />
       </Stack>
     </Modal>

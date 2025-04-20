@@ -27,6 +27,18 @@ export const meetingAgendaListItem = style({
   },
 });
 
+export const meetingFilesList = style({
+  overflow: "hidden",
+});
+
+export const meetingFilesListItem = style({
+  overflow: "hidden",
+});
+
+export const meetingFilesListItemAttachmentChip = style({
+  flex: 1,
+});
+
 export const minutesUrlInput = style({
   "@media": {
     [breakpoints.tablet]: {
@@ -47,8 +59,6 @@ export const minutesUrl = style({
 });
 
 export const minutesUrlActionsContainer = style({
-  display: "flex",
-  gap: vars.spacing.small,
   width: "100%",
 
   "@media": {
@@ -72,22 +82,19 @@ export const minutesUrlApproveButton = style({
   },
 });
 
-// @todo Flex
-export const minutesUrlContainer = style({
-  display: "flex",
-  gap: vars.spacing.small,
-  flexDirection: "column",
-  alignItems: "center",
-
-  "@media": {
-    [breakpoints.tablet]: {
-      flexDirection: "row",
-    },
-  },
-});
-
 export const icon = style({
   height: vars.sizes.small,
+});
+
+export const fileNameContainer = style({
+  overflow: "hidden",
+});
+
+export const fileName = style({
+  display: "block",
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
 });
 
 export const strataActivityModalTimelineContainer = style({

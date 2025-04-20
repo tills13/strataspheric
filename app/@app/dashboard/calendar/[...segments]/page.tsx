@@ -6,13 +6,12 @@ import { notFound } from "next/navigation";
 
 import { PageProps } from "../../../../../.next/types/app/@app/dashboard/calendar/[...segments]/page";
 import { Button } from "../../../../../components/Button";
-import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { LeftIcon } from "../../../../../components/Icon/LeftIcon";
 import { RightIcon } from "../../../../../components/Icon/RightIcon";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
-import { getCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { StrataCalendar } from "./StrataCalendar";
 import { deleteEventAction, upsertEventAction } from "./actions";
 
@@ -20,11 +19,7 @@ export const runtime = "edge";
 
 export default async function Page({ params }: PageProps) {
   const { segments } = await params;
-  const strata = await getCurrentStrata();
-
-  if (!strata) {
-    notFound();
-  }
+  const strata = await mustGetCurrentStrata();
 
   let rawYear: string;
   let rawMonth: string;
@@ -56,44 +51,40 @@ export default async function Page({ params }: PageProps) {
     (month === 1 ? year - 1 + "/" + "12" : year + "/" + (month - 1));
 
   return (
-    <>
-      <DashboardHeader />
+    <div className={styles.calendarPageContainer}>
+      <Group className={s({ p: "normal" })} justify="space-between">
+        <Header as="h2">
+          {monthName}, {year}
+        </Header>
 
-      <div className={styles.calendarPageContainer}>
-        <Group className={s({ p: "normal" })} justify="space-between">
-          <Header as="h2">
-            {monthName}, {year}
-          </Header>
-
-          <Group>
-            <InternalLink href={prevLink}>
-              <Button
-                icon={<LeftIcon />}
-                color="primary"
-                size="small"
-                style="tertiary"
-              />
-            </InternalLink>
-            <InternalLink href={nextLink}>
-              <Button
-                icon={<RightIcon />}
-                color="primary"
-                size="small"
-                style="tertiary"
-              />
-            </InternalLink>
-          </Group>
+        <Group>
+          <InternalLink href={prevLink}>
+            <Button
+              icon={<LeftIcon />}
+              color="primary"
+              size="small"
+              style="tertiary"
+            />
+          </InternalLink>
+          <InternalLink href={nextLink}>
+            <Button
+              icon={<RightIcon />}
+              color="primary"
+              size="small"
+              style="tertiary"
+            />
+          </InternalLink>
         </Group>
-        <div className={styles.strataCalendarContainer}>
-          <StrataCalendar
-            deleteEventAction={deleteEventAction}
-            month={month}
-            strata={strata}
-            upsertEventAction={upsertEventAction}
-            year={year}
-          />
-        </div>
+      </Group>
+      <div className={styles.strataCalendarContainer}>
+        <StrataCalendar
+          deleteEventAction={deleteEventAction}
+          month={month}
+          strata={strata}
+          upsertEventAction={upsertEventAction}
+          year={year}
+        />
       </div>
-    </>
+    </div>
   );
 }

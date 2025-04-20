@@ -3,7 +3,8 @@
 import React, { useTransition } from "react";
 
 import { User } from "../../auth/types";
-import { Strata, StrataMembership } from "../../data";
+import { Strata } from "../../data";
+import { StrataMembership } from "../../data/memberships/getStrataMembership";
 import { Button } from "../Button";
 import { ArrowForwardIcon } from "../Icon/ArrowForwardIcon";
 import { InternalLink } from "../Link/InternalLink";
@@ -13,7 +14,7 @@ interface Props {
   buttonStyle?: React.ComponentProps<typeof StatusButton>["style"];
   joinStrata: () => void;
   strata: Strata;
-  strataMembership?: StrataMembership;
+  membership?: StrataMembership;
   user?: User;
 }
 
@@ -21,12 +22,12 @@ export function JoinStrataButton({
   buttonStyle = "primary",
   joinStrata,
   strata,
-  strataMembership,
+  membership,
   user,
 }: Props) {
   const [isPending, startTransition] = useTransition();
 
-  if (strataMembership && strataMembership.role !== "pending") {
+  if (membership && membership.role !== "pending") {
     return null;
   }
 
@@ -48,7 +49,7 @@ export function JoinStrataButton({
   return (
     <StatusButton
       color="primary"
-      disabled={strataMembership?.role === "pending"}
+      disabled={membership?.role === "pending"}
       iconTextBehaviour="centerRemainder"
       isPending={isPending}
       onClick={() => {
@@ -56,7 +57,7 @@ export function JoinStrataButton({
       }}
       style={buttonStyle}
     >
-      {strataMembership?.role === "pending"
+      {membership?.role === "pending"
         ? "Membership Pending"
         : `Join ${strata.name}`}
     </StatusButton>

@@ -7,7 +7,7 @@ export function getAmenity(amenityId: string) {
     .selectFrom("amenities")
     .innerJoin("files", "amenities.imageFileId", "files.id")
     .selectAll("amenities")
-    .select("files.path as imageSrc")
+    .select(["files.path as imageSrc", "files.name as imageName"])
     .where("amenities.id", "=", amenityId)
     .executeTakeFirstOrThrow();
 }

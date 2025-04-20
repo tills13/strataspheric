@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { auth } from "../../auth";
-import { createStrataMembership } from "../../data/strataMemberships/createStrataMembership";
+import { createStrataMembership } from "../../data/memberships/createStrataMembership";
 import { mustGetCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { updateStrata } from "../../data/stratas/updateStrata";
 import * as formdata from "../../utils/formdata";

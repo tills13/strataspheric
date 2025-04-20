@@ -1,16 +1,16 @@
 import React from "react";
 
 import { extname } from "../../utils/files";
+import { Icon } from "../Icon/Icon";
 import { ImageIcon } from "../Icon/ImageIcon";
 import { TextDocumentIcon } from "../Icon/TextDocumentIcon";
 
-interface Props {
-  className?: string;
-  defaultIcon?: React.ReactNode;
+interface Props extends React.ComponentProps<typeof Icon> {
+  defaultIcon?: React.ReactElement<React.ComponentProps<typeof Icon>>;
   filePath: string;
 }
 
-export function FileTypeIcon({ className, defaultIcon, filePath }: Props) {
+export function FileTypeIcon({ defaultIcon, filePath, ...rest }: Props) {
   const extension = extname(filePath);
 
   switch (extension) {
@@ -19,14 +19,15 @@ export function FileTypeIcon({ className, defaultIcon, filePath }: Props) {
     case "csv":
     case "xlsx":
     case "pdf": {
-      return <TextDocumentIcon className={className} />;
+      return <TextDocumentIcon {...rest} />;
     }
     case "jpg":
     case "png": {
-      return <ImageIcon className={className} />;
+      console.log("ere");
+      return <ImageIcon {...rest} />;
     }
     default: {
-      return defaultIcon || null;
+      return defaultIcon ? React.cloneElement(defaultIcon, rest) : null;
     }
   }
 }

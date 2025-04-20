@@ -1,5 +1,6 @@
 import { s } from "../../sprinkles.css";
 
+import { upsertAmenityAction } from "../../app/@app/dashboard/amenities/actions";
 import { Amenity } from "../../data/amenities/getAmenity";
 import { AttachFileField } from "../AttachFileField";
 import { ImageIcon } from "../Icon/ImageIcon";
@@ -13,26 +14,29 @@ const IMAGE_FILE_TYPES = ["image/png", "image/jpeg"];
 
 interface Props {
   amenity?: Amenity;
-  upsertAmenity: (fd: FormData) => void;
-  upsertFile: React.ComponentProps<typeof AttachFileField>["upsertFile"];
 }
 
-export function CreateOrUpdateAmenityForm({
-  amenity,
-  upsertAmenity,
-  upsertFile,
-}: Props) {
+export function CreateOrUpdateAmenityForm({ amenity }: Props) {
   return (
-    <form action={upsertAmenity}>
+    <form action={upsertAmenityAction.bind(undefined, amenity?.id)}>
       <AttachFileField
         className={s({ mb: "large" })}
         defaultIcon={<ImageIcon />}
+        defaultValue={
+          amenity
+            ? {
+                id: amenity.imageFileId,
+                name: amenity.imageName,
+                path: amenity.imageSrc,
+              }
+            : undefined
+        }
         fileTypes={IMAGE_FILE_TYPES}
         name="imageFileId"
         placeholder="Preview Image"
-        upsertFile={upsertFile}
         showImagePreview
       />
+
       <Stack className={s({ flex: 1 })}>
         <Input
           name="name"

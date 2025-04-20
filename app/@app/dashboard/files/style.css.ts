@@ -22,9 +22,14 @@ export const filesList = style({
 });
 
 export const filesListFile = style({
-  overflow: "hidden",
-  backgroundColor: vars.colors.grey50,
-  borderRadius: vars.borderRadius,
+  display: "grid",
+  gap: vars.spacing.normal,
+  gridTemplateColumns: "48px auto",
+  gridTemplateRows: "min-content auto",
+});
+
+export const filesListFileIcon = style({
+  justifySelf: "center",
 });
 
 export const filesListFileDescription = style({
@@ -35,7 +40,6 @@ export const filesListFileDescription = style({
 
   WebkitBoxOrient: "vertical",
   WebkitLineClamp: 2,
-  marginLeft: calc(vars.sizes.xs).add(vars.spacing.normal).toString(),
 });
 
 export const fileListLink = style({ display: "block", overflow: "hidden" });

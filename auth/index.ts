@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-import { findStrataMemberships } from "../data/strataMemberships/findStrataMemberships";
-import { roleScopeToScopes } from "../data/users/permissions";
+import { listStrataMemberships } from "../data/memberships/listStrataMemberships";
 import { getDomain } from "../utils/getDomain";
 import { internalAuthDoNotUseDirectly as _auth } from "./auth";
 import { GET, POST } from "./endpoints";
@@ -27,15 +26,21 @@ function createAuth(config: Config) {
   };
 }
 
-async function decorateSessionUser(baseUser: User): Promise<User> {
-  const [membership] = await findStrataMemberships({
+async function decorateSessionUser(
+  baseUser: Omit<User, "scopes">,
+): Promise<User> {
+  const [membership] = await listStrataMemberships({
     domain: await getDomain(),
     userId: baseUser.id,
   });
 
+  if (!membership) {
+    throw new Error("unauthorized");
+  }
+
   return {
     ...baseUser,
-    scopes: roleScopeToScopes(membership?.role),
+    scopes: membership.scopes,
   };
 }
 

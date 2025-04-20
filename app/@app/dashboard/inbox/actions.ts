@@ -5,13 +5,15 @@ import { redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
 import { protocol } from "../../../../constants";
-import { StrataMembership, User } from "../../../../data";
 import { createThreadEmail } from "../../../../data/emails/createThreadEmail";
 import { createThreadMessage } from "../../../../data/inbox/createThreadMessage";
 import { deleteThread } from "../../../../data/inbox/deleteThread";
 import { deleteThreadChats } from "../../../../data/inbox/deleteThreadChats";
 import { getThreadMessages } from "../../../../data/inbox/getThreadMessages";
-import { getStrataMembership } from "../../../../data/strataMemberships/getStrataMembership";
+import {
+  StrataMembership,
+  getStrataMembership,
+} from "../../../../data/memberships/getStrataMembership";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import * as formdata from "../../../../utils/formdata";
 import { sendEmail } from "../../../../utils/sendEmail";
@@ -80,7 +82,7 @@ export async function createInboxMessageAction(
         recipients.map((r) => getStrataMembership(strata.id, r)),
       )
     )
-      .filter((r): r is StrataMembership & User => !!r)
+      .filter((r): r is StrataMembership => !!r)
       .map((r) => r.email);
 
     for (const recipient of memberRecipients) {

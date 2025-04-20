@@ -26,7 +26,7 @@ export default async function Onboarding() {
       className={styles.pageContainer}
     >
       <Group className={s({ mb: "large" })} justify="center">
-        <Text size="large">Welcome to </Text>
+        <Text fontSize="large">Welcome to </Text>
         <Wordmark />
       </Group>
 

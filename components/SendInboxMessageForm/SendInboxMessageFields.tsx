@@ -1,4 +1,5 @@
-import { classnames } from "../../utils/classnames";
+import React from "react";
+
 import { AttachFileField } from "../AttachFileField";
 import { AttachInvoiceField } from "../AttachInvoiceField";
 import { Flex } from "../Flex";
@@ -11,15 +12,11 @@ type AttachInvoiceFieldProps = React.ComponentProps<typeof AttachInvoiceField>;
 interface Props {
   defaultInvoice?: AttachInvoiceFieldProps["defaultValue"];
   showSubjectInput?: boolean;
-  upsertFile?: React.ComponentProps<typeof AttachFileField>["upsertFile"];
-  upsertInvoice?: AttachInvoiceFieldProps["upsertInvoice"];
 }
 
 export function SendInboxMessageFields({
   defaultInvoice,
   showSubjectInput,
-  upsertFile,
-  upsertInvoice,
 }: Props) {
   return (
     <Stack gap="normal">
@@ -27,21 +24,10 @@ export function SendInboxMessageFields({
 
       <TextArea name="message" label="Message" rows={3} required />
 
-      {(upsertFile || upsertInvoice) && (
-        <Flex from="tablet">
-          {upsertFile && (
-            <AttachFileField name="fileId" upsertFile={upsertFile} />
-          )}
-
-          {upsertInvoice && (
-            <AttachInvoiceField
-              name="invoiceId"
-              upsertInvoice={upsertInvoice}
-              defaultValue={defaultInvoice}
-            />
-          )}
-        </Flex>
-      )}
+      <Flex from="tablet">
+        <AttachFileField name="fileId" />
+        <AttachInvoiceField name="invoiceId" defaultValue={defaultInvoice} />
+      </Flex>
     </Stack>
   );
 }

@@ -6,13 +6,8 @@ import { Button } from "../../../../components/Button";
 import { CreateOrUpdateAmenityForm } from "../../../../components/CreateOrUpdateAmenityForm";
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../components/Modal";
-import { upsertFileAction } from "../files/actions";
 
-interface Props {
-  upsertAmenity: (fd: FormData) => void;
-}
-
-export function AddNewAmenityButton({ upsertAmenity }: Props) {
+export function AddNewAmenityButton() {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -28,10 +23,7 @@ export function AddNewAmenityButton({ upsertAmenity }: Props) {
       </Button>
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="New Amenity">
-          <CreateOrUpdateAmenityForm
-            upsertAmenity={upsertAmenity}
-            upsertFile={upsertFileAction.bind(undefined, undefined)}
-          />
+          <CreateOrUpdateAmenityForm />
         </Modal>
       )}
     </>

@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
 import { Button } from "../../../../components/Button";
-import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { SendIcon } from "../../../../components/Icon/SendIcon";
@@ -46,29 +45,25 @@ export default async function Page() {
   });
 
   return (
-    <>
-      <DashboardHeader />
+    <div>
+      <div className={s({ p: "normal" })}>
+        <Group justify="space-between">
+          <Header as="h2">Inbox</Header>
 
-      <div>
-        <div className={s({ p: "normal" })}>
-          <Group justify="space-between">
-            <Header as="h2">Inbox</Header>
-
-            <InternalLink href="/dashboard/inbox/send" noUnderline>
-              <Button
-                color="primary"
-                iconRight={<SendIcon />}
-                iconTextBehaviour="centerRemainder"
-                style="secondary"
-              >
-                New Message to {strata.name}
-              </Button>
-            </InternalLink>
-          </Group>
-        </div>
-
-        <InboxThreads deleteThread={deleteThreadAction} threads={threads} />
+          <InternalLink href="/dashboard/inbox/send" noUnderline>
+            <Button
+              color="primary"
+              iconRight={<SendIcon />}
+              iconTextBehaviour="centerRemainder"
+              style="secondary"
+            >
+              New Message to {strata.name}
+            </Button>
+          </InternalLink>
+        </Group>
       </div>
-    </>
+
+      <InboxThreads deleteThread={deleteThreadAction} threads={threads} />
+    </div>
   );
 }

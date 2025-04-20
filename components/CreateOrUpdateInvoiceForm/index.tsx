@@ -4,6 +4,10 @@ import { s } from "../../sprinkles.css";
 
 import { useTransition } from "react";
 
+import {
+  deleteInvoiceAction,
+  upsertInvoiceAction,
+} from "../../app/@app/dashboard/invoices/actions";
 import { Invoice } from "../../data";
 import { patchTimezoneOffset } from "../../utils/datetime";
 import { DateInput } from "../DateInput";
@@ -20,16 +24,12 @@ import { TextArea } from "../TextArea";
 interface Props {
   className?: string;
   defaultDate?: string;
-  deleteInvoice?: () => void;
   invoice?: Invoice;
-  upsertInvoice: (fd: FormData) => Promise<Invoice>;
   onCreateOrUpdateInvoice?: (invoice: Invoice) => void;
 }
 
 export function CreateOrUpdateInvoiceForm({
   className,
-  upsertInvoice,
-  deleteInvoice,
   invoice,
   onCreateOrUpdateInvoice,
 }: Props) {
@@ -40,8 +40,8 @@ export function CreateOrUpdateInvoiceForm({
       action={async (fd) => {
         patchTimezoneOffset(fd, "dueBy");
 
-        const invoice = await upsertInvoice(fd);
-        onCreateOrUpdateInvoice?.(invoice);
+        const mInvoice = await upsertInvoiceAction(invoice?.id, fd);
+        onCreateOrUpdateInvoice?.(mInvoice);
       }}
       className={className}
     >
@@ -107,12 +107,10 @@ export function CreateOrUpdateInvoiceForm({
           {invoice ? "Update Invoice" : "Create Invoice"}
         </StatusButton>
 
-        {invoice && deleteInvoice && !invoice.isPaid && (
+        {invoice && !invoice.isPaid && (
           <StatusButton
             onClick={() => {
-              startTransition(() => {
-                deleteInvoice();
-              });
+              startTransition(() => deleteInvoiceAction(invoice.id));
             }}
             color="error"
             style="secondary"

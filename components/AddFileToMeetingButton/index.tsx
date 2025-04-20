@@ -2,18 +2,19 @@
 
 import React from "react";
 
+import { addFileToMeetingAction } from "../../app/@app/dashboard/meetings/[meetingId]/actions";
 import { AttachFileButton } from "../AttachFile/AttachFileButton";
 
 type AttachFileButtonProps = React.ComponentProps<typeof AttachFileButton>;
 
 interface Props extends Omit<AttachFileButtonProps, "onSelectFile"> {
-  addFileToMeeting: (fileId: string) => Promise<any>;
-  upsertFile: (fd: FormData) => Promise<any>;
+  fileType: "minutes" | "file";
+  meetingId: string;
 }
 
 export function AddFileToMeetingButton({
-  addFileToMeeting,
-  upsertFile,
+  meetingId,
+  fileType,
   ...delegateProps
 }: Props) {
   return (
@@ -21,10 +22,9 @@ export function AddFileToMeetingButton({
       {...delegateProps}
       onSelectFile={(file) => {
         if (file) {
-          return addFileToMeeting(file.id);
+          return addFileToMeetingAction(meetingId, fileType, file.id);
         }
       }}
-      upsertFile={upsertFile}
     />
   );
 }

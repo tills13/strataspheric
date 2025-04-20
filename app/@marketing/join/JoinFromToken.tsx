@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { JoinFromTokenForm } from "../../../components/JoinFromTokenForm";
-import { findStrataMemberships } from "../../../data/strataMemberships/findStrataMemberships";
+import { listStrataMemberships } from "../../../data/memberships/listStrataMemberships";
 import { getStrataById } from "../../../data/stratas/getStrataById";
 import { getUserPasswordResetToken } from "../../../data/userPasswordResetTokens/getUserPasswordResetToken";
 import { joinFromTokenAction } from "./actions";
@@ -19,7 +19,7 @@ export async function JoinFromToken({ token: rawToken }: Props) {
     redirect("/");
   }
 
-  const [membership] = await findStrataMemberships({ userId: token.userId });
+  const [membership] = await listStrataMemberships({ userId: token.userId });
 
   if (!membership) {
     redirect("/");

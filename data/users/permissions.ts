@@ -1,28 +1,18 @@
-// actions: create, edit, delete, view
-import { StrataMembership } from "..";
-
-type Namespaces = "stratas";
-export type Scope =
-  | "*"
-  | "amenities"
-  | "amenity_bookings"
-  | "events"
-  | "files"
-  | "inbox_messages"
-  | "inbox_thread_chats"
-  | "invoices"
-  | "meetings"
-  | "memberships"
-  | "widgets";
-
-export type Action = "*" | "create" | "edit" | "delete" | "view";
-
-export type Permission =
-  | `${Namespaces}.${Action}`
-  | `${Namespaces}.${Scope}.${Action}`
-  | `!${Namespaces}.${Scope}.${Action}`;
-
-const roles = [
+export const namespaces = ["stratas"] as const;
+export const scopes = [
+  "amenities",
+  "amenity_bookings",
+  "events",
+  "files",
+  "inbox_messages",
+  "inbox_thread_chats",
+  "invoices",
+  "meetings",
+  "memberships",
+  "widgets",
+] as const;
+export const actions = ["create", "edit", "delete", "view"] as const;
+export const roles = [
   "administrator",
   "president",
   "vice-president",
@@ -31,6 +21,27 @@ const roles = [
   "owner",
   "pending",
 ] as const;
+export const allPermissions = [
+  ...namespaces.flatMap((namespace) =>
+    actions.flatMap((action) => `${namespace}.${action}` as Permission),
+  ),
+  ...namespaces.flatMap((namespace) =>
+    scopes.flatMap((scope) =>
+      actions.flatMap(
+        (action) => `${namespace}.${scope}.${action}` as Permission,
+      ),
+    ),
+  ),
+];
+
+export type Namespaces = (typeof namespaces)[number];
+export type Scope = (typeof scopes)[number] | "*";
+export type Action = (typeof actions)[number] | "*";
+
+export type Permission =
+  | `${Namespaces}.${Action}`
+  | `${Namespaces}.${Scope}.${Action}`
+  | `!${Namespaces}.${Scope}.${Action}`;
 
 export type Role = (typeof roles)[number];
 export type AccountType = "user" | "realtor";
@@ -49,12 +60,6 @@ export function p(
   action: Action = "*",
 ): Permission {
   return [namespace, scope, action].filter(Boolean).join(".") as Permission;
-}
-
-export function memberToScopes(membership: StrataMembership): Permission[] {
-  return [...roleScopeToScopes(membership.role)].filter(
-    (i): i is Permission => !!i,
-  );
 }
 
 export function roleScopeToScopes(
@@ -84,6 +89,22 @@ export function roleScopeToScopes(
       return [];
     }
   }
+}
+
+export function rolePermissionsEqualCustomPermissions(
+  role: Role,
+  customPermissions: Permission[],
+) {
+  const rolePermissions = roleScopeToScopes(role);
+
+  return (
+    rolePermissions.every((permission) =>
+      can({ scopes: customPermissions }, permission),
+    ) &&
+    customPermissions.every((permission) =>
+      can({ scopes: rolePermissions }, permission),
+    )
+  );
 }
 
 interface HasScope {

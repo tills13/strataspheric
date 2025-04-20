@@ -8,7 +8,3 @@ export const panel = style({
   border: border("2px", "solid", vars.colors.borderDefault),
   borderRadius: vars.borderRadius,
 });
-
-export const panelPadding = styleVariants({
-  normal: { padding: vars.spacing.normal },
-});

@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 
 import type { LayoutProps } from "../../../../.next/types/app/@app/dashboard/invoices/layout";
 import { auth } from "../../../../auth";
-import { DashboardHeader } from "../../../../components/DashboardHeader";
 import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { can, p } from "../../../../data/users/permissions";
@@ -25,27 +24,23 @@ export default async function InvoicesLayout({
   }
 
   return (
-    <>
-      <DashboardHeader />
-
-      <div className={styles.pageContainer}>
-        <Group className={s({ mb: "normal" })} justify="space-between">
-          <Header as="h2">Invoices</Header>
-          <div>
-            {can(session?.user, p("stratas", "invoices", "create")) && (
-              <CreateNewInvoiceButton
-                upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
-              />
-            )}
-          </div>
-        </Group>
-
-        <div className={styles.invoicesContainer}>
-          {children}
-
-          <div className={styles.invoicesSidePanel}>{invoiceDetails}</div>
+    <div className={styles.pageContainer}>
+      <Group className={s({ mb: "normal" })} justify="space-between">
+        <Header as="h2">Invoices</Header>
+        <div>
+          {can(session?.user, p("stratas", "invoices", "create")) && (
+            <CreateNewInvoiceButton
+              upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
+            />
+          )}
         </div>
+      </Group>
+
+      <div className={styles.invoicesContainer}>
+        {children}
+
+        <div className={styles.invoicesSidePanel}>{invoiceDetails}</div>
       </div>
-    </>
+    </div>
   );
 }

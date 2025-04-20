@@ -1,17 +1,17 @@
 "use client";
 
-import { s } from "../../../../../sprinkles.css";
-import * as styles from "./style.css";
+import * as styles from "../../app/@app/dashboard/meetings/[meetingId]/style.css";
+import { s } from "../../sprinkles.css";
 
 import { useState } from "react";
 import useSWR from "swr";
 
-import { MeetingTimelineIcon } from "../../../../../components/MeetingTimelineIcon";
-import { MeetingTimelineItem } from "../../../../../components/MeetingTimelineItem";
-import { Select } from "../../../../../components/Select";
-import { Timeline } from "../../../../../components/Timeline";
-import { NewMeetingAgendaItem } from "../../../../../data";
-import { StrataActivity } from "../../../../api/stratas/listActivity/route";
+import { NewMeetingAgendaItem } from "../../data";
+import { StrataActivity } from "../../data/meetings/listStrataActivity";
+import { Select } from "../Select";
+import { Timeline } from "../Timeline";
+import { StrataActivityTimelineIcon } from "./StrataActivityTimelineIcon";
+import { StrataActivityTimelineItem } from "./StrataActivityTimelineItem";
 
 async function fetchStrataEvents(activityType: string | undefined) {
   // const startDate = new Date(year, month - 1, 1);
@@ -77,17 +77,10 @@ function strataActivityToAgendaItem(
 }
 
 export interface Props {
-  addItemToAgendaAction: (
-    meetingId: string,
-    item: Omit<NewMeetingAgendaItem, "id" | "meetingId">,
-  ) => void;
   meetingId: string;
 }
 
-export function StrataActivityTimelime({
-  addItemToAgendaAction,
-  meetingId,
-}: Props) {
+export function StrataActivityTimelime({ meetingId }: Props) {
   const [activityType, setActivityType] = useState<string>();
   const { data: timeline = [] } = useSWR(
     ["activity", `type=${activityType}`],
@@ -112,17 +105,13 @@ export function StrataActivityTimelime({
       <div className={styles.strataActivityModalTimelineContainer}>
         <Timeline
           emptyMessage={`No recent ${activityType} activity`}
-          items={timeline.map((item) => ({
-            icon: <MeetingTimelineIcon type={item.type} />,
+          items={timeline.map((activity) => ({
+            icon: <StrataActivityTimelineIcon type={activity.type} />,
             contents: (
-              <MeetingTimelineItem
-                key={item.id}
-                addItemToAgenda={addItemToAgendaAction.bind(
-                  undefined,
-                  meetingId,
-                  strataActivityToAgendaItem(item),
-                )}
-                {...item}
+              <StrataActivityTimelineItem
+                key={activity.id}
+                activity={activity}
+                meetingId={meetingId}
               />
             ),
           }))}

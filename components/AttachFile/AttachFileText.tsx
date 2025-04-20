@@ -4,22 +4,21 @@ import React, { useState } from "react";
 
 import { File } from "../../data";
 import { classnames } from "../../utils/classnames";
-import { getImageUri, isImageFile } from "../../utils/files";
-import { FileTypeIcon } from "../FileTypeIcon";
+import { FilePreview } from "../FilePreview";
 import { Group } from "../Group";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
+import { Icon } from "../Icon/Icon";
 import { AttachFileModal } from "./AttachFileModal";
 
 interface Props {
   className?: string;
-  defaultIcon?: React.ReactElement<{ className: string }>;
+  defaultIcon?: React.ReactElement<React.ComponentProps<typeof Icon>>;
   fileTypes?: string[];
   onSelectFile?: (file: File | undefined) => Promise<any> | any;
   placeholder?: React.ReactNode;
   selectedFile?: { id: string; name: string; path: string };
   showFileName?: boolean;
   showImagePreview?: boolean;
-  upsertFile: (fd: FormData) => Promise<File>;
 }
 
 export function AttachFileText({
@@ -31,7 +30,6 @@ export function AttachFileText({
   showFileName = true,
   showImagePreview,
   onSelectFile,
-  upsertFile,
 }: Props) {
   const [showAttachFileModal, setShowAttachFileModal] = useState(false);
 
@@ -45,27 +43,18 @@ export function AttachFileText({
         <Group gap="small">
           {selectedFile ? (
             <>
-              {showImagePreview && isImageFile(selectedFile.path) ? (
-                <img
-                  className={styles.attachFileImagePreview}
-                  src={getImageUri(selectedFile.path)}
-                />
-              ) : (
-                <FileTypeIcon
-                  className={styles.attachFileTextIcon}
-                  filePath={selectedFile.path}
-                />
-              )}
+              <FilePreview
+                file={selectedFile}
+                showImagePreview={showImagePreview}
+              />
               {showFileName && selectedFile.name}
             </>
           ) : (
             <>
               {defaultIcon ? (
-                React.cloneElement(defaultIcon, {
-                  className: styles.attachFileTextIcon,
-                })
+                React.cloneElement(defaultIcon, { size: "xs" })
               ) : (
-                <AttachmentIcon className={styles.attachFileTextIcon} />
+                <AttachmentIcon size="xs" />
               )}
               {placeholder}
             </>
@@ -79,7 +68,7 @@ export function AttachFileText({
           fileTypes={fileTypes}
           onSelectFile={onSelectFile}
           selectedFile={selectedFile}
-          upsertFile={upsertFile}
+          showImagePreview={showImagePreview}
         />
       )}
     </>

@@ -1,19 +1,18 @@
-import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { AddFileToMeetingButton } from "../../../../../components/AddFileToMeetingButton";
+import { FileAttachmentChip } from "../../../../../components/FileAttachmentChip";
+import { FileLink } from "../../../../../components/FileLink";
 import { FileTypeIcon } from "../../../../../components/FileTypeIcon";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { TextDocumentIcon } from "../../../../../components/Icon/TextDocumentIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
-import { ExternalLink } from "../../../../../components/Link/ExternalLink";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
 import { getMeetingFiles } from "../../../../../data/meetings/getMeetingFiles";
-import { upsertFileAction } from "../../files/actions";
-import { addFileToMeetingAction, removeFileFromMeetingAction } from "./actions";
+import { removeFileFromMeetingAction } from "./actions";
 
 interface Props {
   className?: string;
@@ -24,13 +23,11 @@ export async function MeetingFiles({ className, meetingId }: Props) {
   const files = await getMeetingFiles(meetingId);
 
   return (
-    <div className={className}>
-      <Header className={s({ mb: "normal" })} as="h2">
-        Files
-      </Header>
+    <Stack className={className}>
+      <Header as="h3">Files</Header>
 
       {files.length === 0 && (
-        <InfoPanel className={s({ mb: "normal" })}>
+        <InfoPanel>
           <Text>
             <strong>No files have been added to this meeting.</strong> Use the
             button below to add documents for discussion, images, or anything
@@ -39,43 +36,37 @@ export async function MeetingFiles({ className, meetingId }: Props) {
         </InfoPanel>
       )}
 
-      <Stack className={s({ mb: "normal" })}>
-        {files.map((file) => (
-          <Group key={file.id} justify="space-between">
-            <Group>
-              <FileTypeIcon
-                className={styles.icon}
-                defaultIcon={<TextDocumentIcon className={styles.icon} />}
+      {files.length !== 0 && (
+        <Stack className={styles.meetingFilesList}>
+          {files.map((file) => (
+            <Group key={file.id} className={styles.meetingFilesListItem}>
+              <FileAttachmentChip
+                className={styles.meetingFilesListItemAttachmentChip}
+                fileName={file.name}
                 filePath={file.path}
-              />{" "}
-              <ExternalLink href={file.path} target="_blank">
-                {file.name}
-              </ExternalLink>
+              />
+              <RemoveButton
+                action={removeFileFromMeetingAction.bind(
+                  undefined,
+                  meetingId,
+                  "file",
+                  file.id,
+                )}
+                color="error"
+                style="secondary"
+              />
             </Group>
-            <RemoveButton
-              action={removeFileFromMeetingAction.bind(
-                undefined,
-                meetingId,
-                "file",
-                file.id,
-              )}
-              color="error"
-              size="small"
-              style="tertiary"
-            />
-          </Group>
-        ))}
-      </Stack>
+          ))}
+        </Stack>
+      )}
 
       <AddFileToMeetingButton
-        addFileToMeeting={addFileToMeetingAction.bind(
-          undefined,
-          meetingId,
-          "file",
-        )}
+        color="primary"
+        meetingId={meetingId}
+        fileType="file"
         placeholder="Add File"
-        upsertFile={upsertFileAction.bind(undefined, undefined)}
+        style="primary"
       />
-    </div>
+    </Stack>
   );
 }

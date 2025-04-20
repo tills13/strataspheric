@@ -16,7 +16,7 @@ const fontProperties = defineProperties({
       text: vars.fontFamilies.text,
     },
     fontWeight: {
-      primary: vars.fontWeights.bold,
+      bold: vars.fontWeights.bold,
       light: vars.fontWeights.light,
       normal: vars.fontWeights.normal,
       xbold: vars.fontWeights.xbold,
@@ -85,6 +85,7 @@ export const flexProperties = defineProperties({
 const paddingProperties = defineProperties({
   properties: {
     padding: {
+      "0": 0,
       xxs: vars.spacing.xxs,
       xs: vars.spacing.xs,
       small: vars.spacing.small,

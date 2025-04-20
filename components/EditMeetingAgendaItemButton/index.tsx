@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-import { MeetingAgendaItem } from "../../data/meetings/getMeetingAgendaItems";
+import { MeetingAgendaItem } from "../../data/meetings/listMeetingAgendaItems";
 import { Button } from "../Button";
 import { CreateOrUpdateMeetingAgendaItemForm } from "../CreateOrUpdateMeetingAgendaItemForm";
 import { EditIcon } from "../Icon/EditIcon";
@@ -12,22 +12,20 @@ type ButtonProps = React.ComponentProps<typeof Button>;
 
 interface Props {
   agendaItem: MeetingAgendaItem;
-  className?: string;
   buttonClassName?: string;
+  className?: string;
+  meetingId: string;
   size?: ButtonProps["size"];
   style?: ButtonProps["style"];
-  upsertFile: (fd: FormData) => any;
-  updateMeetingAgendaItem: (fd: FormData) => void;
 }
 
 export function EditMeetingAgendaItemButton({
-  className,
+  agendaItem,
   buttonClassName,
+  className,
+  meetingId,
   size,
   style,
-  agendaItem,
-  upsertFile,
-  updateMeetingAgendaItem,
 }: Props) {
   const [showModal, setShowModal] = useState(false);
 
@@ -35,6 +33,7 @@ export function EditMeetingAgendaItemButton({
     <div className={className}>
       <Button
         className={buttonClassName}
+        color="primary"
         icon={<EditIcon />}
         onClick={() => setShowModal(true)}
         size={size}
@@ -44,8 +43,7 @@ export function EditMeetingAgendaItemButton({
         <Modal closeModal={() => setShowModal(false)} title="Edit Agenda Item">
           <CreateOrUpdateMeetingAgendaItemForm
             agendaItem={agendaItem}
-            upsertFile={upsertFile}
-            upsertMeetingAgendaItem={updateMeetingAgendaItem}
+            meetingId={meetingId}
           />
         </Modal>
       )}

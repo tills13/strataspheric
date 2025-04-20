@@ -1,51 +1,36 @@
 import { vars } from "../../app/theme.css";
-import { buttonBase, buttonSizes } from "../Button/style.css";
-import { style, styleVariants } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
-export const radioButton = style({});
+export const radioButton = style({
+  height: vars.sizes.normal,
+  padding: vars.spacing.xxs,
+  borderRadius: vars.borderRadius,
+  border: `2px solid ${vars.colors.borderDefault}`,
+});
 
-export const radioButtonButtonBase = style([
-  buttonBase,
-  {
-    position: "relative",
+export const radioButtonButton = style({
+  position: "relative",
+  height: "100%",
 
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    border: "none",
-    outline: "none",
-    overflow: "hidden",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 
-    borderTop: `2px solid ${vars.colors.borderDefault}`,
-    borderBottom: `2px solid ${vars.colors.borderDefault}`,
-    backgroundColor: vars.colors.grey0,
+  backgroundColor: vars.colors.grey0,
+  borderRadius: vars.borderRadius,
 
-    selectors: {
-      [`${radioButton} &:first-child`]: {
-        borderLeft: `2px solid ${vars.colors.borderDefault}`,
-        borderTopLeftRadius: vars.borderRadius,
-        borderBottomLeftRadius: vars.borderRadius,
-      },
-      [`${radioButton} &:last-child`]: {
-        borderRight: `2px solid ${vars.colors.borderDefault}`,
-        borderTopRightRadius: vars.borderRadius,
-        borderBottomRightRadius: vars.borderRadius,
-      },
-      [`${radioButton} &:not(:last-child)`]: {
-        borderRight: `2px solid ${vars.colors.borderDefault}`,
-      },
-      "&:hover": {
-        backgroundColor: vars.colors.grey100,
-      },
-      '&:has(input[type="radio"]:checked)': {
-        backgroundColor: vars.colors.grey200,
-      },
-      '&:has(input[type="radio"]:checked):hover': {
-        backgroundColor: vars.colors.grey100,
-      },
+  selectors: {
+    "&:hover": {
+      backgroundColor: vars.colors.grey100,
+    },
+    "&:not(:disabled):hover": {
+      cursor: "pointer",
+    },
+    '&:has(input[type="radio"]:checked)': {
+      backgroundColor: vars.colors.grey200,
     },
   },
-]);
+});
 
 export const radioButtonHiddenRadioInput = style({
   position: "absolute",

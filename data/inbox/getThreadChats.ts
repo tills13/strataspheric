@@ -1,4 +1,4 @@
-import { InboxThreadChat, User, db } from "..";
+import { InboxThreadChat, db } from "..";
 
 interface BaseThreadChat extends InboxThreadChat {
   name: string;

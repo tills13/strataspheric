@@ -2,17 +2,19 @@
 
 import React, { useTransition } from "react";
 
+import { approveStrataMembershipAction } from "../app/@app/dashboard/membership/actions";
+import { StrataMembership } from "../data/memberships/getStrataMembership";
 import { CircleCheckIcon } from "./Icon/CircleCheckIcon";
 import { StatusButton } from "./StatusButton";
 
 type StatusButtonProps = React.ComponentProps<typeof StatusButton>;
 
 interface Props extends Omit<StatusButtonProps, "isPending" | "onClick"> {
-  approveStrataMembership: () => void;
+  membership: StrataMembership;
 }
 
 export function ApproveStrataMembershipButton({
-  approveStrataMembership,
+  membership,
   ...delegateProps
 }: Props) {
   const [isPending, startTransition] = useTransition();
@@ -20,9 +22,7 @@ export function ApproveStrataMembershipButton({
   return (
     <StatusButton
       onClick={() =>
-        startTransition(() => {
-          approveStrataMembership();
-        })
+        startTransition(() => approveStrataMembershipAction(membership.id))
       }
       iconRight={<CircleCheckIcon />}
       isPending={isPending}

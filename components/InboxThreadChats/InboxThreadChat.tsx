@@ -43,7 +43,7 @@ export function InboxThreadChat({ ...chat }: Props & Chat) {
         <InboxMessageQuote
           messageThreadId={chat.threadId}
           messageId={chat.quotedMessageId}
-          message={chat.quotedMessageMessage}
+          source={chat.quotedMessageMessage}
           senderName={chat.quotedMessageSender}
           timestamp={chat.quotedMessageTimestamp}
           linkType="hash"

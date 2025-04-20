@@ -22,8 +22,8 @@ export function GlobalMarketingHeader() {
           as="h1"
           className={styles.globalHeaderTitle}
           color="primary"
-          size="xl"
-          weight="xbold"
+          fontSize="xl"
+          fontWeight="xbold"
         >
           Strataspheric
         </Text>

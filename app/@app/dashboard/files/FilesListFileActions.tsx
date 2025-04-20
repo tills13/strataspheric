@@ -10,14 +10,13 @@ import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { EditIcon } from "../../../../components/Icon/EditIcon";
 import { Modal } from "../../../../components/Modal";
 import { File } from "../../../../data";
+import { deleteFileAction, upsertFileAction } from "./actions";
 
 interface Props {
-  deleteFile: (fileId: string) => any;
   file: File;
-  upsertFile: (fileId: string, fd: FormData) => any;
 }
 
-export function FilesListFileActions({ deleteFile, file, upsertFile }: Props) {
+export function FilesListFileActions({ file }: Props) {
   const [showEditModal, setShowEditModal] = useState(false);
 
   return (
@@ -33,7 +32,7 @@ export function FilesListFileActions({ deleteFile, file, upsertFile }: Props) {
 
         <ConfirmButton
           icon={<DeleteIcon />}
-          onClickConfirm={deleteFile.bind(undefined, file.id)}
+          onClickConfirm={deleteFileAction.bind(undefined, file.id)}
           size="small"
           color="error"
           style="tertiary"
@@ -44,10 +43,7 @@ export function FilesListFileActions({ deleteFile, file, upsertFile }: Props) {
           closeModal={() => setShowEditModal(false)}
           title={`Edit ${file.name}`}
         >
-          <CreateOrUpdateFileForm
-            file={file}
-            upsertFile={upsertFile.bind(undefined, file.id)}
-          />
+          <CreateOrUpdateFileForm file={file} />
         </Modal>
       )}
     </>

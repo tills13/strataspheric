@@ -25,7 +25,7 @@ type LinkWithPermissions = [
 
 export const NAVIGATION_LINKS: Array<Link | LinkWithPermissions> = [
   [DashboardIcon, "/dashboard", "Dashboard"],
-  [FilesIcon, "/dashboard/files", "Files"],
+  [FilesIcon, "/dashboard/files", "Files", ["stratas.files.view"]],
   [
     PaidDocumentIcon,
     "/dashboard/invoices",

@@ -1,6 +1,6 @@
 import { joinStrataAction } from "../../app/@app/actions";
 import { auth } from "../../auth";
-import { getStrataMembership } from "../../data/strataMemberships/getStrataMembership";
+import { getStrataMembership } from "../../data/memberships/getStrataMembership";
 import { mustGetCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { JoinStrataButton } from "../JoinStrataButton";
 
@@ -20,7 +20,7 @@ export async function HeaderJoinStrataButton() {
       buttonStyle="primary"
       joinStrata={joinStrataAction}
       strata={strata}
-      strataMembership={strataMemebership}
+      membership={strataMemebership}
       user={session?.user}
     />
   );

@@ -10,6 +10,7 @@ import { FileTypeIcon } from "../FileTypeIcon";
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   inputClassName?: string;
   label?: string;
+  onChangeValue?: (newValue: string) => void;
   placeholder?: string;
   wrapperClassName?: string;
 }
@@ -21,6 +22,8 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
       inputClassName,
       name,
       label,
+      onChange,
+      onChangeValue,
       wrapperClassName,
       className,
       ...inputProps
@@ -50,7 +53,8 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
           ref={ref}
           {...inputProps}
           onChange={(e) => {
-            inputProps.onChange?.(e);
+            onChange?.(e);
+            onChangeValue?.(e.target.value);
             setValue(e.currentTarget.value);
           }}
         />

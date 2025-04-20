@@ -79,32 +79,14 @@ export const titleLink = style([
   { whiteSpace: "nowrap" },
 ]);
 
-export const globalHeaderActions = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: vars.spacing.normal,
-  height: "100%",
-
-  "@media": {
-    [breakpoints.tablet]: {
-      flexDirection: "row",
-      alignItems: "center",
-      height: "unset",
-    },
-  },
-});
-
 export const globalHeaderActionsDesktop = style({
   display: "none",
   "@media": {
     [breakpoints.tablet]: {
-      display: "flex",
+      display: "block",
+      marginRight: vars.spacing.normal,
     },
   },
-});
-
-export const spacer = style({
-  flex: 1,
 });
 
 export const sessionInfoRow = style({

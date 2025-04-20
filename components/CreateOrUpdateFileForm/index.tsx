@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 
+import { upsertFileAction } from "../../app/@app/dashboard/files/actions";
 import { File } from "../../data";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
@@ -17,7 +18,6 @@ import { TextArea } from "../TextArea";
 interface Props {
   acceptFileTypes?: string[];
   onCreateOrUpdateFile?: (file: File) => void;
-  upsertFile: (fd: FormData) => Promise<File>;
   file?: File;
 }
 
@@ -25,7 +25,6 @@ export function CreateOrUpdateFileForm({
   acceptFileTypes,
   file,
   onCreateOrUpdateFile,
-  upsertFile,
 }: Props) {
   const nameRef = useRef<HTMLInputElement>(null!);
   const can = useCan();
@@ -33,8 +32,8 @@ export function CreateOrUpdateFileForm({
   return (
     <form
       action={async (fd) => {
-        const file = await upsertFile(fd);
-        onCreateOrUpdateFile?.(file);
+        const result = await upsertFileAction(file?.id, fd);
+        onCreateOrUpdateFile?.(result);
       }}
     >
       <Stack>

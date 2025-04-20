@@ -21,7 +21,7 @@ export interface CookieConfig {
 }
 
 export interface Config {
-  decorateSessionUser: (baseUser: User) => User | Promise<User>;
+  decorateSessionUser: (baseUser: Omit<User, "scopes">) => Promise<User>;
   key: Record<string, unknown>;
   cookies?: CookieConfig;
 }

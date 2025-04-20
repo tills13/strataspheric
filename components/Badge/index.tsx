@@ -1,6 +1,7 @@
 import * as styles from "./style.css";
 
 import { RecipeVariants } from "@vanilla-extract/recipes";
+import React from "react";
 
 import { classnames } from "../../utils/classnames";
 

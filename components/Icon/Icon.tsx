@@ -1,3 +1,4 @@
+import { iconColorVar, vars } from "../../app/theme.css";
 import * as styles from "./style.css";
 
 import { assignInlineVars } from "@vanilla-extract/dynamic";
@@ -8,6 +9,7 @@ import { classnames } from "../../utils/classnames";
 interface Props extends React.SVGAttributes<SVGElement> {
   className?: string;
   classNameOverride?: string;
+  fillColor?: keyof typeof vars.colors;
   height?: number | string;
   size?: keyof typeof styles.iconSize;
 }
@@ -16,9 +18,11 @@ export function Icon({
   children,
   className,
   classNameOverride,
+  fillColor,
   height,
   size,
   style,
+
   ...rest
 }: React.PropsWithChildren<Props>) {
   return (
@@ -41,6 +45,8 @@ export function Icon({
             [styles.dynamicIconHeightVar]:
               typeof height === "number" ? `${height}px` : height,
           })),
+        ...(fillColor &&
+          assignInlineVars({ [iconColorVar]: vars.colors[fillColor] })),
         ...style,
       }}
       {...rest}

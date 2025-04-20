@@ -11,16 +11,15 @@ import { AttachInvoiceModal } from "./AttachInvoiceModal";
 
 interface Props {
   attachInvoiceText?: string;
+
   onSelectInvoice: (file: Invoice | undefined) => void;
   selectedInvoice?: Invoice;
-  upsertInvoice: (fd: FormData) => Promise<Invoice>;
 }
 
 export function AttachInvoiceText({
   attachInvoiceText = "Attach Invoice",
   onSelectInvoice,
   selectedInvoice,
-  upsertInvoice,
 }: Props) {
   const [showAttachInvoiceModal, setShowAttachInvoiceModal] = useState(false);
 
@@ -45,7 +44,6 @@ export function AttachInvoiceText({
           close={() => setShowAttachInvoiceModal(false)}
           selectedInvoice={selectedInvoice}
           onSelectInvoice={onSelectInvoice}
-          upsertInvoice={upsertInvoice}
         />
       )}
     </>

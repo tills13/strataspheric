@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
@@ -13,9 +12,8 @@ import { listFiles } from "../../../../data/files/listFiles";
 import { deleteAllThreadChats } from "../../../../data/inbox/deleteAllThreadChats";
 import { deleteAllThreads } from "../../../../data/inbox/deleteAllThreads";
 import { deleteAllMeetings } from "../../../../data/meetings/deleteAllMeetings";
+import { deleteAllStrataMemberships } from "../../../../data/memberships/deleteAllStrataMemberships";
 import { r2 } from "../../../../data/r2";
-import { deleteAllStrataMemberships } from "../../../../data/strataMemberships/deleteAllStrataMemberships";
-import { updateStrataMembership } from "../../../../data/strataMemberships/updateStrataMembership";
 import { deleteStrata } from "../../../../data/stratas/deleteStrata";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
@@ -53,12 +51,4 @@ export async function deleteStrataAction() {
   }
 
   redirect(`${protocol}//${tld}`);
-}
-
-export async function approveStrataMembershipAction(
-  strataId: string,
-  memberId: string,
-) {
-  await updateStrataMembership(strataId, memberId, { role: "owner" });
-  revalidatePath("/dashboard/membership");
 }

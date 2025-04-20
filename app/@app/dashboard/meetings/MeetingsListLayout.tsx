@@ -1,14 +1,13 @@
 import * as styles from "./style.css";
 
-import { auth } from "../../../../auth";
-import { Button } from "../../../../components/Button";
+import { mustAuth } from "../../../../auth";
 import { Date } from "../../../../components/Date";
 import { DeleteButton } from "../../../../components/DeleteButton";
 import { Group } from "../../../../components/Group";
-import { InfoPanel } from "../../../../components/InfoPanel";
 import { InternalLink } from "../../../../components/Link/InternalLink";
+import { NothingHere } from "../../../../components/NothingHere";
 import { Text } from "../../../../components/Text";
-import { getMeetings } from "../../../../data/meetings/getMeetings";
+import { findMeetings } from "../../../../data/meetings/findMeetings";
 import { can, p } from "../../../../data/users/permissions";
 import { deleteMeetingAction } from "./actions";
 
@@ -17,25 +16,15 @@ interface Props {
 }
 
 export async function MeetingListLayout({ strataId }: Props) {
-  const session = await auth();
-  const meetings = await getMeetings(strataId);
+  const [session, meetings] = await Promise.all([
+    mustAuth(),
+    findMeetings(strataId),
+  ]);
 
   return (
     <>
-      {meetings.length === 0 && (
-        <InfoPanel
-          action={
-            can(session?.user, p("stratas", "meetings", "create")) && (
-              <Button color="primary" style="secondary">
-                Plan a Meeting
-              </Button>
-            )
-          }
-          level="info"
-        >
-          <Text>No Meetings Scheduled</Text>
-        </InfoPanel>
-      )}
+      {meetings.length === 0 && <NothingHere />}
+
       <div className={styles.meetingListContainer}>
         {meetings.map((meeting) => (
           <InternalLink
@@ -47,8 +36,10 @@ export async function MeetingListLayout({ strataId }: Props) {
           >
             <Group align="center" justify="space-between">
               <Group align="center">
-                <h3>{meeting.purpose}</h3>
-                <Date timestamp={meeting.startDate} output="date" />
+                <Text fw="bold">{meeting.purpose}</Text>
+                <Text fc="secondary">
+                  <Date timestamp={meeting.startDate} output="date" />
+                </Text>
               </Group>
 
               <Group gap="small">

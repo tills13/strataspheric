@@ -79,7 +79,7 @@ export function AmenitiesBookingCalendar({
   return (
     <Stack gap="xs">
       <Group justify="space-between">
-        <Text weight="bold">
+        <Text fontWeight="bold">
           {monthName}, {date.getFullYear()}
         </Text>
         <Group gap="normal">

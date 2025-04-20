@@ -1,10 +1,12 @@
+import React from "react";
+
 import { Input } from "../Input";
 import { Stack } from "../Stack";
 
 interface Props extends React.ComponentProps<typeof Stack> {
-  defaultName?: string;
-  defaultEmail?: string;
-  defaultPhoneNumber?: string;
+  defaultName?: string | null;
+  defaultEmail?: string | null;
+  defaultPhoneNumber?: string | null;
 }
 
 export function SendInboxMessageContactDetailsFields({

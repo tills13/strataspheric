@@ -13,11 +13,13 @@ import { Wrap } from "../Wrap";
 interface Props {
   className?: string;
   maxPreviewLength?: number;
-  messageId: string;
-  messageThreadId: string;
-  message: string;
-  senderName: string;
-  timestamp: number;
+  source: {
+    id: string;
+    message: string;
+    senderName: string;
+    sentAt: number;
+    threadId: string;
+  };
   linkType?: "hash" | "direct";
 }
 
@@ -25,11 +27,7 @@ export function InboxMessageQuote({
   className,
   linkType = "hash",
   maxPreviewLength = 200,
-  messageId,
-  messageThreadId,
-  message,
-  senderName,
-  timestamp,
+  source,
 }: Props) {
   return (
     <Wrap
@@ -37,7 +35,7 @@ export function InboxMessageQuote({
       with={(children) => (
         <InternalLink
           className={classnames(styles.quotedMessage, className)}
-          href={`/dashboard/inbox/${messageThreadId}#${messageId}`}
+          href={`/dashboard/inbox/${source.threadId}#${source.id}`}
         >
           {children}
         </InternalLink>
@@ -45,7 +43,7 @@ export function InboxMessageQuote({
       elseWith={(children) => (
         <a
           className={classnames(styles.quotedMessage, className)}
-          href={"#" + messageId}
+          href={"#" + source.id}
         >
           {children}
         </a>
@@ -53,18 +51,18 @@ export function InboxMessageQuote({
     >
       <Group justify="space-between">
         <Header as="h3">
-          <QuoteIcon className={styles.quotedMessageIcon} /> {senderName}{" "}
+          <QuoteIcon className={styles.quotedMessageIcon} /> {source.senderName}{" "}
           sent...
         </Header>
         <Text as="span">
-          <Date output="compact" timestamp={timestamp} />
+          <Date output="compact" timestamp={source.sentAt} />
         </Text>
       </Group>
 
       <Text>
         {maxPreviewLength === -1
-          ? message
-          : truncate(message, maxPreviewLength)}
+          ? source.message
+          : truncate(source.message, maxPreviewLength)}
       </Text>
     </Wrap>
   );

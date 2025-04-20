@@ -122,6 +122,7 @@ export interface MeetingAgendaItemsTable {
   title: string;
   description: string;
   eventId: string | null;
+  invoiceId: string | null;
   fileId: string | null;
   messageId: string | null;
   chatId: string | null;
@@ -192,6 +193,7 @@ export interface StrataMembershipsTable {
   strataId: ColumnType<string, string, never>;
   userId: ColumnType<string, string, never>;
   unit: string | null;
+  rawPermissions: string | null;
   role: Role;
   phoneNumber: string | null;
 }
@@ -329,5 +331,5 @@ export const db = new Kysely<Database>({
   dialect: new D1Dialect({
     database: process.env.DB as unknown as D1Database,
   }),
-  // log: ["query"],
+  log: ["query"],
 });

@@ -3,7 +3,6 @@ import * as styles from "./style.css";
 import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
-import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { Header } from "../../../../../components/Header";
 import { SendInboxMessageForm } from "../../../../../components/SendInboxMessageForm";
 import { SendInboxMessageContactDetailsFields } from "../../../../../components/SendInboxMessageForm/SendInboxMessageContactDetailsFields";
@@ -28,12 +27,9 @@ export default async function Page() {
   // const memberships = await getStrataMemberships(strata.id);
 
   return (
-    <>
-      <DashboardHeader />
-
-      <div className={styles.pageContainer}>
-        <div className={styles.formContainer}>
-          {/* <SendStrataEmailBlastForm
+    <div className={styles.pageContainer}>
+      <div className={styles.formContainer}>
+        {/* <SendStrataEmailBlastForm
             recipients={memberships.map((m) => ({
               userId: m.userId,
               name: m.name,
@@ -46,32 +42,28 @@ export default async function Page() {
             )}
           /> */}
 
-          <Header as="h2" mb="large">
-            New Message to {strata.name}
-          </Header>
+        <Header as="h2" mb="large">
+          New Message to {strata.name}
+        </Header>
 
-          <SendInboxMessageForm
-            sendInboxMessage={createInboxMessageAction.bind(
-              undefined,
-              undefined,
-            )}
-          >
-            {!session?.user && (
-              <>
-                <Header as="h3">Contact Information</Header>
-                <SendInboxMessageContactDetailsFields mb="large" />
-              </>
-            )}
+        <SendInboxMessageForm
+          sendInboxMessage={createInboxMessageAction.bind(undefined, undefined)}
+        >
+          {!session?.user && (
+            <>
+              <Header as="h3">Contact Information</Header>
+              <SendInboxMessageContactDetailsFields mb="large" />
+            </>
+          )}
 
-            <Header as="h3">Message</Header>
+          <Header as="h3">Message</Header>
 
-            <SendInboxMessageFields
-              upsertFile={upsertFileAction.bind(undefined, undefined)}
-              upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
-            />
-          </SendInboxMessageForm>
-        </div>
+          <SendInboxMessageFields
+            upsertFile={upsertFileAction.bind(undefined, undefined)}
+            upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
+          />
+        </SendInboxMessageForm>
       </div>
-    </>
+    </div>
   );
 }

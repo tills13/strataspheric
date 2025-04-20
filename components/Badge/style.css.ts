@@ -1,5 +1,4 @@
 import { vars } from "../../app/theme.css";
-import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 import { recipe } from "@vanilla-extract/recipes";
@@ -8,6 +7,7 @@ import { padding } from "../../theme";
 
 export const badge = recipe({
   base: {
+    whiteSpace: "nowrap",
     fontSize: vars.fontSizes.small,
     height: vars.sizes.small,
     lineHeight: calc(vars.sizes.small).subtract("4px").toString(),

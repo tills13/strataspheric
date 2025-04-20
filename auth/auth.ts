@@ -19,6 +19,14 @@ export function internalAuthDoNotUseDirectly(
 
       const { payload } = parseJwt(token);
 
+      if (config.decorateSessionUser) {
+        const u = config.decorateSessionUser(payload.user);
+
+        return u instanceof Promise
+          ? u.then((user) => ({ ...payload, user }))
+          : { ...payload, user: u };
+      }
+
       return payload;
     });
   } else {
@@ -26,7 +34,10 @@ export function internalAuthDoNotUseDirectly(
     return async (req: NextRequest) => {
       try {
         const { payload } = await readJwtFromRequest(config, req);
-        return apiHandler(payload, req);
+
+        return config
+          .decorateSessionUser(payload.user)
+          .then((u) => apiHandler({ ...payload, user: u }, req));
       } catch {
         return new Response("Not Allowed", { status: 403 });
       }

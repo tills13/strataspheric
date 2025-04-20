@@ -1,7 +1,7 @@
 import { Strata } from "..";
-import { findStratas } from "./findStratas";
+import { listStratas } from "./listStratas";
 
 export async function getStrataById(id: string): Promise<Strata | undefined> {
-  const stratas = await findStratas({ id });
+  const stratas = await listStratas({ id });
   return stratas?.[0];
 }

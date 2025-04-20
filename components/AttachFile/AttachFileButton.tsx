@@ -17,14 +17,12 @@ interface Props extends ButtonProps {
   onSelectFile?: (file: File | undefined) => Promise<any> | any;
   placeholder?: React.ReactNode;
   selectedFile?: { id: string; name: string; path: string };
-  upsertFile: (fd: FormData) => Promise<File>;
 }
 
 export function AttachFileButton({
   placeholder: attachFileText = "Attach File",
   onSelectFile,
   selectedFile,
-  upsertFile,
   ...delegateProps
 }: Props) {
   const [showAttachFileModal, setShowAttachFileModal] = useState(false);
@@ -66,7 +64,6 @@ export function AttachFileButton({
       {showAttachFileModal && (
         <AttachFileModal
           close={() => setShowAttachFileModal(false)}
-          upsertFile={upsertFile}
           selectedFile={selectedFile}
           onSelectFile={onSelectFile}
         />

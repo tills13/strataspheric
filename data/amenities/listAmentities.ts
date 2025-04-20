@@ -9,7 +9,7 @@ export async function listAmenities(filters: ListAmenitiesFilter) {
     .selectFrom("amenities")
     .innerJoin("files", "amenities.imageFileId", "files.id")
     .selectAll("amenities")
-    .select("files.path as imageSrc")
+    .select(["files.path as imageSrc", "files.name as imageName"])
     .where("amenities.strataId", "=", filters.strataId);
 
   return query.execute();

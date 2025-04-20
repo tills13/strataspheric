@@ -27,12 +27,10 @@ interface Props {
   id: string;
   file?: File;
   invoice?: Invoice;
-  markInvoiceAsPaid: (invoiceId: string) => Promise<void>;
   message: string;
   senderName: string;
   senderEmail: string;
   sentAt: number;
-  sendThreadChat: (fd: FormData) => void;
   threadId: string;
 }
 
@@ -41,11 +39,9 @@ export function ThreadMessage({
   message,
   file,
   invoice,
-  markInvoiceAsPaid,
   senderEmail,
   senderName,
   sentAt,
-  sendThreadChat,
   threadId,
 }: Props) {
   const can = useCan();
@@ -86,12 +82,7 @@ export function ThreadMessage({
         <Text className={classnames(styles.messageText)}>{message}</Text>
 
         <Stack>
-          {invoice && (
-            <InvoiceChip
-              invoice={invoice}
-              markInvoiceAsPaid={markInvoiceAsPaid}
-            />
-          )}
+          {invoice && <InvoiceChip invoice={invoice} />}
 
           {file && (
             <FileAttachmentChip fileName={file.name} filePath={file.path} />
@@ -107,13 +98,13 @@ export function ThreadMessage({
           <InboxMessageQuote
             maxPreviewLength={-1}
             messageId={id}
-            message={message}
+            source={message}
             messageThreadId={threadId}
             senderName={senderName}
             timestamp={sentAt}
           />
 
-          <SendInboxThreadChatForm sendInboxThreadChat={sendThreadChat} />
+          <SendInboxThreadChatForm threadId={threadId} />
         </Modal>
       )}
     </>

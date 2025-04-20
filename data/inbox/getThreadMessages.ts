@@ -139,6 +139,8 @@ export async function getThreadMessages(
     }) => {
       return {
         ...rest,
+        senderName: rest.senderName!,
+        senderEmail: rest.senderEmail!,
         amenityBooking: amenityBookingId
           ? ({
               id: amenityBookingId,

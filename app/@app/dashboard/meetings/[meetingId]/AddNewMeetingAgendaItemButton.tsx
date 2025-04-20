@@ -11,25 +11,13 @@ import { DividerText } from "../../../../../components/DividerText";
 import { Header } from "../../../../../components/Header";
 import { AddIcon } from "../../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../../components/Modal";
-import { NewMeetingAgendaItem } from "../../../../../data";
-import { StrataActivityTimelime } from "./StrataActivityTimelime";
+import { StrataActivityTimelime } from "../../../../../components/StrataActivityTimeline";
 
 interface Props {
-  addItemToAgendaAction: (
-    meetingId: string,
-    item: Omit<NewMeetingAgendaItem, "id" | "meetingId">,
-  ) => void;
   meetingId: string;
-  upsertFile: (fd: FormData) => any;
-  upsertMeetingAgendaItem: (fd: FormData) => void;
 }
 
-export function AddNewMeetingAgendaItemButton({
-  addItemToAgendaAction,
-  meetingId,
-  upsertFile,
-  upsertMeetingAgendaItem,
-}: Props) {
+export function AddNewMeetingAgendaItemButton({ meetingId }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [showStrataTimelineSearchModal, setShowStrataTimelineSearchModal] =
     useState(false);
@@ -51,10 +39,7 @@ export function AddNewMeetingAgendaItemButton({
           modalBodyClassName={styles.strataActivityModalTimelineContainer}
           title="Strata Activity"
         >
-          <StrataActivityTimelime
-            addItemToAgendaAction={addItemToAgendaAction}
-            meetingId={meetingId}
-          />
+          <StrataActivityTimelime meetingId={meetingId} />
         </Modal>
       )}
 
@@ -74,9 +59,8 @@ export function AddNewMeetingAgendaItemButton({
           </Header>
 
           <CreateOrUpdateMeetingAgendaItemForm
+            meetingId={meetingId}
             onCreateOrUpdateAgendaItem={() => setShowModal(false)}
-            upsertFile={upsertFile}
-            upsertMeetingAgendaItem={upsertMeetingAgendaItem}
           />
         </Modal>
       )}

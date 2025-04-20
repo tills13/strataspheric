@@ -6,17 +6,6 @@ export const attachFileButton = style({
   maxWidth: "100%",
 });
 
-export const attachFileTextIcon = style({
-  height: vars.sizes.xs,
-});
-
-export const attachFileImagePreview = style({
-  width: vars.sizes.large,
-  aspectRatio: "1/1",
-  borderRadius: vars.borderRadius,
-  objectFit: "cover",
-});
-
 export const attachFileTextText = style({
   whiteSpace: "nowrap",
   textDecoration: "underline",

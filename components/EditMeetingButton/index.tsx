@@ -11,14 +11,9 @@ import { Modal } from "../Modal";
 interface Props {
   className?: string;
   meeting: Meeting & Pick<Event, "startDate" | "endDate">;
-  updateMeeting: (fd: FormData) => Promise<void>;
 }
 
-export function EditMeetingButton({
-  className,
-  meeting,
-  updateMeeting,
-}: Props) {
+export function EditMeetingButton({ className, meeting }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -33,10 +28,7 @@ export function EditMeetingButton({
       />
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="Edit Meeting">
-          <CreateOrUpdateMeetingForm
-            upsertMeeting={updateMeeting}
-            meeting={meeting}
-          />
+          <CreateOrUpdateMeetingForm meeting={meeting} />
         </Modal>
       )}
     </>

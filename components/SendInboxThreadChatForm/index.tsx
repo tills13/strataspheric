@@ -1,6 +1,6 @@
 import { s } from "../../sprinkles.css";
 
-import { File } from "../../data";
+import { sendInboxThreadChatAction } from "../../app/@app/dashboard/inbox/[threadId]/actions";
 import { AttachFileField } from "../AttachFileField";
 import { SendIcon } from "../Icon/SendIcon";
 import { Stack } from "../Stack";
@@ -9,17 +9,26 @@ import { TextArea } from "../TextArea";
 
 interface Props {
   className?: string;
-  sendInboxThreadChat: (fd: FormData) => void;
-  upsertFile?: (fd: FormData) => Promise<File>;
+  messageId?: string;
+  onSendInboxThreadChat?: (fd: FormData) => void;
+  threadId: string;
 }
 
 export function SendInboxThreadChatForm({
   className,
-  sendInboxThreadChat,
-  upsertFile,
+  messageId,
+  onSendInboxThreadChat,
+  threadId,
 }: Props) {
   return (
-    <form className={className} action={sendInboxThreadChat}>
+    <form
+      className={className}
+      action={async (fd) => {
+        console.log("here");
+        onSendInboxThreadChat?.(fd);
+        await sendInboxThreadChatAction(threadId, messageId, fd);
+      }}
+    >
       <Stack>
         <TextArea
           className={s({ w: "full" })}
@@ -29,9 +38,7 @@ export function SendInboxThreadChatForm({
           required
         />
 
-        {upsertFile && (
-          <AttachFileField name="fileId" upsertFile={upsertFile} />
-        )}
+        <AttachFileField name="fileId" />
 
         <StatusButton
           color="primary"

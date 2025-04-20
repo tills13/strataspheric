@@ -1,5 +1,5 @@
 import { breakpoints, iconColorVar, vars } from "../../app/theme.css";
-import { timelineEntry } from "../MeetingTimelineItem/style.css";
+import { timelineEntry } from "../StrataActivityTimeline/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const invoiceChip = style({

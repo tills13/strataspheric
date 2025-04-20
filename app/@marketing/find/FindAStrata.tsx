@@ -7,18 +7,18 @@ import { InfoPanel } from "../../../components/InfoPanel";
 import { ExternalLink } from "../../../components/Link/ExternalLink";
 import { Text } from "../../../components/Text";
 import { protocol } from "../../../constants";
-import { findStratas } from "../../../data/stratas/findStratas";
+import { listStratas } from "../../../data/stratas/listStratas";
 
 export async function FindAStrata({
   searchParams,
 }: {
   searchParams: Awaited<PageProps["searchParams"]>;
 }) {
-  let stratas: Awaited<ReturnType<typeof findStratas>> = [];
+  let stratas: Awaited<ReturnType<typeof listStratas>> = [];
   const { address, name, strataPlan } = searchParams;
 
   if (address || name || strataPlan) {
-    stratas = await findStratas({
+    stratas = await listStratas({
       nameish: name,
       planish: strataPlan,
       address: address,

@@ -7,8 +7,6 @@ import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Text } from "../../../../../components/Text";
 import { getThreadChats } from "../../../../../data/inbox/getThreadChats";
 import { classnames } from "../../../../../utils/classnames";
-import { upsertFileAction } from "../../files/actions";
-import { sendInboxThreadChatAction } from "./actions";
 
 interface Props {
   threadId: string;
@@ -29,15 +27,7 @@ export async function InboxThreadChatPanel({ threadId }: Props) {
             with chats.
           </Text>
         </InfoPanel>
-        <InboxThreadChats
-          chats={chats}
-          upsertFile={upsertFileAction.bind(undefined, undefined)}
-          sendInboxThreadChat={sendInboxThreadChatAction.bind(
-            undefined,
-            threadId,
-            undefined,
-          )}
-        />
+        <InboxThreadChats chats={chats} threadId={threadId} />
       </div>
     </div>
   );

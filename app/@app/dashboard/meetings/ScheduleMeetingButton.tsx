@@ -7,11 +7,7 @@ import { CreateOrUpdateMeetingForm } from "../../../../components/CreateOrUpdate
 import { CalendarIcon } from "../../../../components/Icon/CalendarIcon";
 import { Modal } from "../../../../components/Modal";
 
-interface Props {
-  upsertMeeting: (fd: FormData) => Promise<any>;
-}
-
-export function ScheduleMeetingButton({ upsertMeeting }: Props) {
+export function ScheduleMeetingButton() {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -27,7 +23,7 @@ export function ScheduleMeetingButton({ upsertMeeting }: Props) {
       </Button>
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="Create Meeting">
-          <CreateOrUpdateMeetingForm upsertMeeting={upsertMeeting} />
+          <CreateOrUpdateMeetingForm />
         </Modal>
       )}
     </>

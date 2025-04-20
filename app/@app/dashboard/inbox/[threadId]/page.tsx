@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 
 import { PageProps } from "../../../../../.next/types/app/@app/dashboard/inbox/[threadId]/page";
 import { auth } from "../../../../../auth";
-import { DashboardHeader } from "../../../../../components/DashboardHeader";
 import { Thread, getThread } from "../../../../../data/inbox/getThread";
 import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
@@ -47,26 +46,11 @@ export default async function Page({ params, searchParams }: PageProps) {
   );
 
   return (
-    <>
-      <DashboardHeader />
-      <div
-        className={classnames(
-          canSeeChats && styles.threadPageContainerWithChats,
-        )}
-      >
-        <InboxMessageThread
-          sendInboxThreadChatAction={sendInboxThreadChatAction.bind(
-            undefined,
-            threadId,
-          )}
-          sendNewMessageAction={createInboxMessageAction.bind(
-            undefined,
-            threadId,
-          )}
-          threadId={threadId}
-        />
-        {canSeeChats && <InboxThreadChatPanel threadId={threadId} />}
-      </div>
-    </>
+    <div
+      className={classnames(canSeeChats && styles.threadPageContainerWithChats)}
+    >
+      <InboxMessageThread threadId={threadId} />
+      {canSeeChats && <InboxThreadChatPanel threadId={threadId} />}
+    </div>
   );
 }
