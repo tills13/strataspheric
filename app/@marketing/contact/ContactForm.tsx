@@ -8,6 +8,7 @@ import { useActionState, useRef, useState } from "react";
 import { Header } from "../../../components/Header";
 import { InfoPanel } from "../../../components/InfoPanel";
 import { Input } from "../../../components/Input";
+import { Stack } from "../../../components/Stack";
 import { StatusButton } from "../../../components/StatusButton";
 import { Text } from "../../../components/Text";
 import { TextArea } from "../../../components/TextArea";
@@ -62,48 +63,29 @@ export function ContactForm({ submitActionReducer }: Props) {
           return submitAction(fd);
         }}
       >
-        <Input
-          wrapperClassName={s({ mb: "normal" })}
-          label="Name"
-          name="name"
-          required
-        />
-        <Input
-          wrapperClassName={s({ mb: "normal" })}
-          label="Email"
-          name="email"
-          type="email"
-          required
-        />
-        <Input
-          wrapperClassName={s({ mb: "normal" })}
-          label="Subject"
-          name="subject"
-        />
-        <TextArea
-          className={s({ mb: "normal", w: "full" })}
-          label="Message"
-          name="message"
-          rows={5}
-          required
-        />
+        <Stack>
+          <Input label="Name" name="name" required />
+          <Input label="Email" name="email" type="email" required />
+          <Input label="Subject" name="subject" />
+          <TextArea label="Message" name="message" rows={5} required />
 
-        <input
-          type="hidden"
-          name="turnstileToken"
-          value={turnstileToken || ""}
-        />
+          <input
+            type="hidden"
+            name="turnstileToken"
+            value={turnstileToken || ""}
+          />
 
-        <div className={s({ mb: "normal", w: "full" })} ref={turnstileRef} />
+          <div ref={turnstileRef} />
 
-        <StatusButton
-          disabled={!turnstileToken}
-          color="primary"
-          style="primary"
-          success={state.success}
-        >
-          Submit
-        </StatusButton>
+          <StatusButton
+            disabled={!turnstileToken}
+            color="primary"
+            style="primary"
+            success={state.success}
+          >
+            Submit
+          </StatusButton>
+        </Stack>
       </form>
     </>
   );

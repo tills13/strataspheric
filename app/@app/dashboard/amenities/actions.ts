@@ -72,8 +72,6 @@ export async function approveOrRejectAmenityBookingAction(
     throw new Error("oops, something went wrong");
   }
 
-  console.log(thread);
-
   if (decision === "reject") {
     // await db.transaction().execute(txn => {
     //   await deleteInvoice(amenityBooking.invoice.id)

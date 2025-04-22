@@ -10,7 +10,7 @@ export async function sendEmail(
 ) {
   console.log("[debug] sending email to", to);
 
-  const r = await fetch("https://api.resend.com/emails", {
+  const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,9 +24,10 @@ export async function sendEmail(
     }),
   });
 
-  const rJson = (await r.json()) as { id: string } | { message: string };
+  // @todo typing
+  const rJson = (await response.json()) as any; // as { id: string } | { message: string };
 
-  if (r.status !== 200) {
+  if (response.status !== 200) {
     throw new ServerActionError(
       "[resend] failed to send email: " +
         (rJson.message || "an unknown error occured"),

@@ -6,6 +6,7 @@ import { type JoinFormState } from "../../app/@marketing/join/actions";
 import { signIn } from "../../auth/actions";
 import { Strata } from "../../data";
 import { classnames } from "../../utils/classnames";
+import * as formdata from "../../utils/formdata";
 import { Checkbox } from "../Checkbox";
 import { Group } from "../Group";
 import { InfoPanel } from "../InfoPanel";
@@ -26,7 +27,10 @@ export function JoinForm({ className, onSubmit, strata }: Props) {
       const nextState = await onSubmit(state, fd);
 
       if (nextState?.success) {
-        await signIn(fd.get("email"), fd.get("password"));
+        await signIn(
+          formdata.getString(fd, "email"),
+          formdata.getString(fd, "password"),
+        );
         location.href = "/";
       }
 
@@ -42,7 +46,7 @@ export function JoinForm({ className, onSubmit, strata }: Props) {
 
         <label htmlFor="isRealtor">
           <Group justify="space-between">
-            <Text family="secondaryHeader">I am a realtor</Text>
+            <Text fontFamily="secondaryHeader">I am a realtor</Text>
             <Checkbox id="isRealtor" name="isRealtor" defaultChecked={false} />
           </Group>
         </label>

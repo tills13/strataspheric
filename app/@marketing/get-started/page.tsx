@@ -22,14 +22,13 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <StaticPageContainer>
-      <div className={styles.layoutContainer}>
+      <div>
         {/* <PricingPlanSelector
           className={styles.pricingPlanSelector}
           selectedPlan={plan}
         /> */}
         <GetStartedForm
           className={styles.getStartedForm}
-          session={session}
           selectedPlan={plan}
           submitGetStarted={submitGetStarted}
         />

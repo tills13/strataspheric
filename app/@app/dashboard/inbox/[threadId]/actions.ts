@@ -24,8 +24,6 @@ export async function sendInboxThreadChatAction(
     throw new Error("invalid data");
   }
 
-  console.log(threadId);
-
   await createThreadChat({
     threadId,
     message,

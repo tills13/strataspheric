@@ -223,6 +223,8 @@ export interface StrataWidgetsTable {
     | "info"
     | "info_contact";
   title: string;
+  // @todo
+  body: string;
 }
 
 export type StrataWidget = Selectable<StrataWidgetsTable>;

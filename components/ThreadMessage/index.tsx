@@ -97,11 +97,7 @@ export function ThreadMessage({
         >
           <InboxMessageQuote
             maxPreviewLength={-1}
-            messageId={id}
-            source={message}
-            messageThreadId={threadId}
-            senderName={senderName}
-            timestamp={sentAt}
+            source={{ id, message, senderName, sentAt, threadId }}
           />
 
           <SendInboxThreadChatForm threadId={threadId} />

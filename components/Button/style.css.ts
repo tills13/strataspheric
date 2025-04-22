@@ -1,4 +1,5 @@
 import { iconColorVar, vars } from "../../app/theme.css";
+import { fieldActionContainer } from "../Form/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -20,6 +21,11 @@ export const buttonBase = style({
     "&:disabled": {
       cursor: "not-allowed",
       opacity: 0.8,
+    },
+
+    [`${fieldActionContainer} &`]: {
+      padding: vars.spacing.xxs,
+      height: "100%",
     },
   },
 });

@@ -8,7 +8,6 @@ interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   placeholderEnabled?: boolean;
   selectClassName?: string;
-  wrapperClassName?: string;
 }
 
 export function SelectField({
@@ -19,17 +18,10 @@ export function SelectField({
   id: propsId,
   selectClassName,
   name,
-  wrapperClassName,
   ...delegateProps
 }: PropsWithChildren<Props>) {
   return (
-    <div
-      className={classnames(
-        styles.selectFieldWrapper,
-        wrapperClassName,
-        className,
-      )}
-    >
+    <div className={classnames(styles.selectFieldWrapper, className)}>
       <select
         className={classnames(styles.selectFieldSelect, selectClassName)}
         id={propsId || name}

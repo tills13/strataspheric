@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { classnames } from "../../utils/classnames";
+import { reactNodeCanReceiveClassNameProp } from "../../utils/react";
 import { FlexBox } from "../FlexBox";
 
 interface Props
@@ -33,14 +34,15 @@ export function Group({
       {...delegateProps}
     >
       {React.Children.map(children, (c, i) =>
-        React.isValidElement(c) && c.type !== React.Fragment
+        reactNodeCanReceiveClassNameProp(c)
           ? React.cloneElement(c, {
-              ...c.props,
               className: classnames(
                 equalWidthChildren
                   ? styles.groupElement.fullWidth
                   : styles.groupElement.default,
-                c.props.className,
+                typeof c.props.className === "string"
+                  ? c.props.className
+                  : undefined,
               ),
             })
           : c,

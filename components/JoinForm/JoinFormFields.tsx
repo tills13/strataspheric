@@ -1,5 +1,3 @@
-import * as styles from "./style.css";
-
 import { Header } from "../Header";
 import { InfoPanel } from "../InfoPanel";
 import { Input } from "../Input";

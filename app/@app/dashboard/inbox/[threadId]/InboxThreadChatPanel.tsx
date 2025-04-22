@@ -5,7 +5,7 @@ import { Header } from "../../../../../components/Header";
 import { InboxThreadChats } from "../../../../../components/InboxThreadChats";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Text } from "../../../../../components/Text";
-import { getThreadChats } from "../../../../../data/inbox/getThreadChats";
+import { listThreadChats } from "../../../../../data/inbox/listThreadChats";
 import { classnames } from "../../../../../utils/classnames";
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export async function InboxThreadChatPanel({ threadId }: Props) {
-  const [chats] = await Promise.all([getThreadChats(threadId)]);
+  const [chats] = await Promise.all([listThreadChats(threadId)]);
 
   return (
     <div className={classnames(styles.chatPanelWrapper, s({ p: "normal" }))}>

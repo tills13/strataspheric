@@ -1,4 +1,4 @@
-import { breakpoints, vars } from "../../../../app/theme.css";
+import { breakpoints, iconColorVar, vars } from "../../../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -23,13 +23,28 @@ export const filesList = style({
 
 export const filesListFile = style({
   display: "grid",
-  gap: vars.spacing.normal,
+  columnGap: vars.spacing.normal,
+  rowGap: vars.spacing.small,
   gridTemplateColumns: "48px auto",
   gridTemplateRows: "min-content auto",
 });
 
-export const filesListFileIcon = style({
-  justifySelf: "center",
+export const filesListFileIconContainer = style({
+  selectors: {
+    "&:not(:has(img))": {
+      display: "flex",
+      justifyContent: "center",
+      borderRadius: vars.borderRadius,
+      alignItems: "center",
+      width: vars.sizes.large,
+      aspectRatio: "1/1",
+      backgroundColor: vars.colors.grey100,
+
+      vars: {
+        [iconColorVar]: vars.colors.grey700,
+      },
+    },
+  },
 });
 
 export const filesListFileDescription = style({
@@ -42,13 +57,15 @@ export const filesListFileDescription = style({
   WebkitLineClamp: 2,
 });
 
-export const fileListLink = style({ display: "block", overflow: "hidden" });
+export const fileListLink = style({
+  display: "block",
+  overflow: "hidden",
+});
 
 export const filesListFileHeaderName = style({
   display: "block",
   textOverflow: "ellipsis",
   overflow: "hidden",
-  whiteSpace: "nowrap",
 });
 
 export const fileListFileIcon = style({

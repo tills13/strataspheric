@@ -120,7 +120,9 @@ class D1Connection implements DatabaseConnection {
       }
 
       throw new Error(
-        results?.error || error.message || "an unknown error occurred",
+        results?.error ||
+          (error as Error | { message?: string }).message ||
+          "an unknown error occurred",
       );
     }
 

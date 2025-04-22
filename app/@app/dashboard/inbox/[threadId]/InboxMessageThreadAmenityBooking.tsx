@@ -5,6 +5,7 @@ import { s } from "../../../../../sprinkles.css";
 import React, { useMemo } from "react";
 
 import { AmenitiesBookingCalendar } from "../../../../../components/AmenitiesBookingCalendar";
+import { CalendarEvent } from "../../../../../components/Calendar";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { InfoPanel } from "../../../../../components/InfoPanel";
@@ -13,7 +14,6 @@ import { Panel } from "../../../../../components/Panel";
 import { Stack } from "../../../../../components/Stack";
 import { StatusButton } from "../../../../../components/StatusButton";
 import { AmenityBooking } from "../../../../../data/amenities/getAmenityBooking";
-import { Event } from "../../../../../data/events/getEventsForRange";
 import { useCan } from "../../../../../hooks/useCan";
 
 interface Props {
@@ -29,11 +29,11 @@ export function InboxMessageThreadAmenityBooking({
   approveOrRejectAmenityBooking,
 }: Props) {
   const can = useCan();
-  const virtualEvent = useMemo<Event>(
+  const virtualEvent = useMemo<CalendarEvent>(
     () => ({
       id: amenityBooking.id,
       endDate: amenityBooking.endDate,
-      name: "Current Booking",
+      name: "This Booking",
       startDate: amenityBooking.startDate,
       creatorId: "",
       strataId: "",

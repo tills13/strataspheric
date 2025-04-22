@@ -5,7 +5,6 @@ import * as styles from "./style.css";
 import { Date } from "../../../../components/Date";
 import { FileLink } from "../../../../components/FileLink";
 import { FilePreview } from "../../../../components/FilePreview";
-import { FileTypeIcon } from "../../../../components/FileTypeIcon";
 import { Group } from "../../../../components/Group";
 import { TextDocumentIcon } from "../../../../components/Icon/TextDocumentIcon";
 import { VisibilityIcon } from "../../../../components/Icon/VisibilityIcon";
@@ -13,7 +12,7 @@ import { Panel } from "../../../../components/Panel";
 import { Stack } from "../../../../components/Stack";
 import { Text } from "../../../../components/Text";
 import { Wrap } from "../../../../components/Wrap";
-import { File } from "../../../../data";
+import { File } from "../../../../data/files/getFile";
 import { p } from "../../../../data/users/permissions";
 import { useCan } from "../../../../hooks/useCan";
 import { classnames } from "../../../../utils/classnames";
@@ -47,17 +46,18 @@ export function FilesListFile({
       p="normal"
       {...rest}
     >
-      <FilePreview
-        className={styles.filesListFileIcon}
-        defaultIcon={<TextDocumentIcon />}
-        file={file}
-        showImagePreview={showImagePreview}
-      />
+      <div className={styles.filesListFileIconContainer}>
+        <FilePreview
+          defaultIcon={<TextDocumentIcon />}
+          file={file}
+          showImagePreview={showImagePreview}
+        />
+      </div>
 
-      <Group justify="space-between">
+      <Group overflow="hidden" justify="space-between">
         <Group overflow="hidden" align="start">
           <Wrap
-            if={can(p("stratas", "files", "view"))}
+            if={can("stratas.files.view")}
             with={(children) => (
               <FileLink
                 className={styles.fileListLink}
@@ -100,6 +100,7 @@ export function FilesListFile({
       </Group>
 
       <div />
+
       {isFile(file) && (
         <Text className={styles.filesListFileDescription}>
           {file.description}

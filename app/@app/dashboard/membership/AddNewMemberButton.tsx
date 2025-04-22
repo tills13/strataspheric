@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Button } from "../../../../components/Button";
 import { CreateOrUpdateStrataMembershipForm } from "../../../../components/CreateOrUpdateStrataMembershipForm";
+import { CreateOrUpdateStrataMembershipFormFields } from "../../../../components/CreateOrUpdateStrataMembershipForm/CreateOrUpdateStrataMembershipFormFields";
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../components/Modal";
 
@@ -24,7 +25,9 @@ export function AddNewMemberButton() {
 
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="New Strata Member">
-          <CreateOrUpdateStrataMembershipForm />
+          <CreateOrUpdateStrataMembershipForm>
+            <CreateOrUpdateStrataMembershipFormFields />
+          </CreateOrUpdateStrataMembershipForm>
         </Modal>
       )}
     </>

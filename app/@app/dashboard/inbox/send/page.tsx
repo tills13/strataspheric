@@ -9,9 +9,6 @@ import { SendInboxMessageContactDetailsFields } from "../../../../../components/
 import { SendInboxMessageFields } from "../../../../../components/SendInboxMessageForm/SendInboxMessageFields";
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
-import { upsertFileAction } from "../../files/actions";
-import { upsertInvoiceAction } from "../../invoices/actions";
-import { createInboxMessageAction } from "../actions";
 
 export const runtime = "edge";
 
@@ -35,20 +32,13 @@ export default async function Page() {
               name: m.name,
               unit: m.unit,
             }))}
-            sendInboxMessage={sendInboxMessageAction.bind(
-              undefined,
-              strata.id,
-              undefined,
-            )}
           /> */}
 
         <Header as="h2" mb="large">
           New Message to {strata.name}
         </Header>
 
-        <SendInboxMessageForm
-          sendInboxMessage={createInboxMessageAction.bind(undefined, undefined)}
-        >
+        <SendInboxMessageForm>
           {!session?.user && (
             <>
               <Header as="h3">Contact Information</Header>
@@ -58,10 +48,7 @@ export default async function Page() {
 
           <Header as="h3">Message</Header>
 
-          <SendInboxMessageFields
-            upsertFile={upsertFileAction.bind(undefined, undefined)}
-            upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
-          />
+          <SendInboxMessageFields />
         </SendInboxMessageForm>
       </div>
     </div>

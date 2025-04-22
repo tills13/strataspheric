@@ -47,21 +47,3 @@ export const invoicesListInvoiceContainer = style({
     },
   },
 });
-
-export const totalRevenueTitleDivider = style([
-  dividerText,
-  {
-    fontSize: vars.fontSizes.large,
-  },
-]);
-
-export const totalRevenueMoneyContainer = style({
-  textAlign: "end",
-});
-
-export const totalRevenueMoney = style([
-  money,
-  {
-    fontSize: vars.fontSizes.large,
-  },
-]);

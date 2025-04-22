@@ -2,7 +2,7 @@
 
 import { s } from "../../sprinkles.css";
 
-import { useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 
 import {
   deleteInvoiceAction,
@@ -10,12 +10,15 @@ import {
 } from "../../app/@app/dashboard/invoices/actions";
 import { Invoice } from "../../data";
 import { patchTimezoneOffset } from "../../utils/datetime";
+import { Button } from "../Button";
 import { DateInput } from "../DateInput";
 import { FileSelect } from "../FileSelect";
 import { Group } from "../Group";
 import { AddIcon } from "../Icon/AddIcon";
+import { CycleIcon } from "../Icon/CycleIcon";
 import { InfoPanel } from "../InfoPanel";
 import { Input } from "../Input";
+import { LoadingIcon } from "../LoadingIcon";
 import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { Text } from "../Text";
@@ -23,17 +26,28 @@ import { TextArea } from "../TextArea";
 
 interface Props {
   className?: string;
-  defaultDate?: string;
   invoice?: Invoice;
   onCreateOrUpdateInvoice?: (invoice: Invoice) => void;
+  showDeleteInvoiceButton?: boolean;
 }
 
 export function CreateOrUpdateInvoiceForm({
   className,
   invoice,
   onCreateOrUpdateInvoice,
+  showDeleteInvoiceButton,
 }: Props) {
   const [deletePending, startTransition] = useTransition();
+  const [loadingNextInvoiceId, setLoadingNextInvoiceId] = useState(false);
+  const invoiceIdInputRef = useRef<HTMLInputElement>(null!);
+
+  async function getNextInvoiceId() {
+    setLoadingNextInvoiceId(true);
+    const r = await fetch("/api/invoices/getNextInvoiceId");
+    const rJson = await r.json();
+    setLoadingNextInvoiceId(false);
+    invoiceIdInputRef.current.value = rJson.nextId;
+  }
 
   return (
     <form
@@ -45,16 +59,27 @@ export function CreateOrUpdateInvoiceForm({
       }}
       className={className}
     >
-      <Stack className={s({ mb: "large" })}>
-        <Group gap="normal">
+      <Stack>
+        <Group gap={invoice ? "normal" : "small"}>
           <Input
+            actionRight={
+              <Button
+                icon={<LoadingIcon loading={loadingNextInvoiceId} />}
+                color="primary"
+                onClick={getNextInvoiceId}
+                style="tertiary"
+                type="button"
+              />
+            }
             name="identifier"
             label="Invoice ID"
             placeholder="#"
             disabled={!!invoice}
             defaultValue={invoice?.identifier}
+            ref={invoiceIdInputRef}
             required
           />
+
           <Input
             className={s({ w: "full" })}
             min="0"
@@ -95,32 +120,32 @@ export function CreateOrUpdateInvoiceForm({
           disabled={!!invoice?.isPaid}
           defaultValue={invoice?.dueBy || ""}
         />
-      </Stack>
-      <Group gap="normal">
-        <StatusButton
-          color="primary"
-          disabled={!!invoice?.isPaid}
-          iconRight={<AddIcon />}
-          style="primary"
-          type="submit"
-        >
-          {invoice ? "Update Invoice" : "Create Invoice"}
-        </StatusButton>
-
-        {invoice && !invoice.isPaid && (
+        <Group gap="normal">
           <StatusButton
-            onClick={() => {
-              startTransition(() => deleteInvoiceAction(invoice.id));
-            }}
-            color="error"
-            style="secondary"
-            isPending={deletePending}
-            type="button"
+            color="primary"
+            disabled={!!invoice?.isPaid}
+            iconRight={<AddIcon />}
+            style="primary"
+            type="submit"
           >
-            Delete Invoice
+            {invoice ? "Update Invoice" : "Create Invoice"}
           </StatusButton>
-        )}
-      </Group>
+
+          {showDeleteInvoiceButton && invoice && !invoice.isPaid && (
+            <StatusButton
+              onClick={() => {
+                startTransition(() => deleteInvoiceAction(invoice.id));
+              }}
+              color="error"
+              style="secondary"
+              isPending={deletePending}
+              type="button"
+            >
+              Delete Invoice
+            </StatusButton>
+          )}
+        </Group>
+      </Stack>
     </form>
   );
 }

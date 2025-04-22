@@ -12,7 +12,6 @@ import { Text } from "../../../components/Text";
 import { Wordmark } from "../../../components/Wordmark";
 import { mustGetCurrentStrata } from "../../../data/stratas/getStrataByDomain";
 import { updateStrataAction } from "../actions";
-import { upsertFileAction } from "../dashboard/files/actions";
 import { OnboardingAttachFileField } from "./OnboardingAttachFileField";
 
 export const runtime = "edge";
@@ -59,7 +58,6 @@ export default async function Onboarding() {
             <OnboardingAttachFileField
               placeholder="Attach Strata Bylaws"
               name="bylawsFileId"
-              upsertFile={upsertFileAction.bind(undefined, undefined)}
             />
           </Stack>
         </Panel>

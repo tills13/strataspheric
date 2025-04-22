@@ -1,3 +1,4 @@
+import { sql } from "kysely";
 import { uuidv7 } from "uuidv7";
 
 import { Invoice, NewInvoice, db } from "..";
@@ -21,10 +22,10 @@ export async function createInvoice(
     .values({
       id: uuidv7(),
       identifier:
-        newInvoice.identifier ||
+        (newInvoice as NewInvoice).identifier ||
         ((eb) =>
           eb.fn("concat", [
-            autoIdentifierPrefix + " ",
+            sql.raw(autoIdentifierPrefix + " "),
             eb
               .selectFrom("invoices")
               .select(eb.fn("count", []).as("count"))

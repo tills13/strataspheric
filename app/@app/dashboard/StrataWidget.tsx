@@ -12,7 +12,7 @@ import {
   deleteWidgetEventAction,
   deleteWidgetFileAction,
   upsertFileWidgetFileAction,
-  upsertStrataWidget,
+  upsertStrataWidgetAction,
 } from "./actions";
 
 interface Props {
@@ -36,7 +36,7 @@ export async function StrataWidgets({ strata }: Props) {
           deleteEvent={deleteWidgetEventAction.bind(undefined, widget.id)}
           deleteFile={deleteWidgetFileAction.bind(undefined, widget.id)}
           deleteWidget={deleteWidgetAction.bind(undefined, widget.id)}
-          upsertStrataWidget={upsertStrataWidget.bind(
+          upsertStrataWidget={upsertStrataWidgetAction.bind(
             undefined,
             strata.id,
             widget.id,
@@ -47,7 +47,7 @@ export async function StrataWidgets({ strata }: Props) {
       ))}
       {can(session?.user, p("stratas", "widgets", "create")) && (
         <NewWidgetWidget
-          upsertStrataWidget={upsertStrataWidget.bind(
+          upsertStrataWidget={upsertStrataWidgetAction.bind(
             undefined,
             strata.id,
             undefined,

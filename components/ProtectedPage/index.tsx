@@ -13,7 +13,6 @@ export async function ProtectedPage({
 }: React.PropsWithChildren<Props>) {
   const session = await auth();
 
-  console.log(session?.user, permissions);
   if (!can(session?.user, ...permissions)) {
     notFound();
   }

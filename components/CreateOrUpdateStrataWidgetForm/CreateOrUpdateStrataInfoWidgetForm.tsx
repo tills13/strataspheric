@@ -14,7 +14,9 @@ export function CreateOrUpdateStrataInfoWidgetForm({
   className,
   widget,
 }: Props) {
-  const [selectedType, setSelectedType] = useState(widget?.type || "info");
+  const [selectedType, setSelectedType] = useState<string>(
+    widget?.type || "info",
+  );
   return (
     <Stack className={className}>
       <Select

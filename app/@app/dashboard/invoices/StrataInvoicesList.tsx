@@ -2,12 +2,13 @@ import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { DividerText } from "../../../../components/DividerText";
+import { Group } from "../../../../components/Group";
 import { InvoiceChip } from "../../../../components/InvoiceChip";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Money } from "../../../../components/Money";
+import { Text } from "../../../../components/Text";
 import { listInvoices } from "../../../../data/invoices/listInvoices";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
-import { markInvoiceAsPaidAction } from "./actions";
 
 export async function StrataInvoicesList() {
   const strata = await mustGetCurrentStrata();
@@ -26,31 +27,24 @@ export async function StrataInvoicesList() {
           className={styles.invoicesListInvoiceContainer}
           href={`/dashboard/invoices/${invoice.id}`}
         >
-          <InvoiceChip
-            invoice={invoice}
-            markInvoiceAsPaid={markInvoiceAsPaidAction.bind(
-              undefined,
-              invoice.id,
-            )}
-          />
+          <InvoiceChip invoice={invoice} />
         </InternalLink>
       ))}
 
-      <DividerText
-        overrideClassName={styles.totalRevenueTitleDivider}
-        gravity="left"
-      >
-        Total Revenue
+      <DividerText gravity="left" mb="small">
+        <Text fontSize="large" fw="bold">
+          Total Revenue
+        </Text>
       </DividerText>
 
-      <div className={styles.totalRevenueMoneyContainer}>
+      <Group justify="end">
         <Money
           amount={invoices
             .filter((inv) => inv.isPaid)
             .reduce((acc, i) => acc + i.amount, 0)}
-          overrideClassName={styles.totalRevenueMoney}
+          fontSize="xl"
         />
-      </div>
+      </Group>
     </div>
   );
 }

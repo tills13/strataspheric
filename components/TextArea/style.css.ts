@@ -3,13 +3,7 @@ import { field, fieldLabel } from "../Form/style.css";
 import { inputFieldInput } from "../Input/styles.css";
 import { style } from "@vanilla-extract/css";
 
-export const wrapper = style([
-  field,
-  {
-    height: "unset",
-    padding: 0,
-  },
-]);
+export const wrapper = style([field]);
 
 export const textareaTextarea = style([
   inputFieldInput,

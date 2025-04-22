@@ -213,7 +213,6 @@ export const plansContainer = style({
 });
 
 export const staticPageContainer = style({
-  display: "flex",
   padding: padding(
     0,
     vars.spacing.normal,
@@ -235,6 +234,9 @@ export const staticPageContainer = style({
 });
 
 export const centeredStaticPageContainer = style({
+  display: "flex",
+  flexDirection: "column",
+
   "@media": {
     [breakpoints.tablet]: {
       marginTop: "-72px",

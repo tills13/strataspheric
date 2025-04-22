@@ -1,14 +1,16 @@
-import { File, db } from "..";
+import { File as DBFile, db } from "..";
 import { Pagination } from "../types";
+import { File } from "./getFile";
 
 type ListFilesFilter = {
-  strataId?: string;
-  userId?: string;
   fileTypes?: string[];
   isPublic?: boolean;
+  searchTerm?: string;
+  strataId?: string;
+  userId?: string;
 };
 
-type ListFilesPagination = Pagination<"files", File>;
+type ListFilesPagination = Pagination<"files", DBFile>;
 
 export function listFiles(
   filters: ListFilesFilter,
@@ -31,12 +33,21 @@ export function listFiles(
     );
   }
 
+  if (filters.searchTerm) {
+    query = query.where((eb) =>
+      eb.or([
+        eb("name", "like", `%${filters.searchTerm}%`),
+        eb("description", "like", `%${filters.searchTerm}%`),
+      ]),
+    );
+  }
+
   if (filters.fileTypes) {
     query = query.where("files.mimeType", "in", filters.fileTypes);
   }
 
   if (pagination?.orderBy) {
-    query = query.orderBy(pagination.orderBy);
+    query = query.orderBy([pagination.orderBy]);
   }
 
   return query.execute();

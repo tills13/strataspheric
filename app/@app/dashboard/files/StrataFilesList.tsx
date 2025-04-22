@@ -3,9 +3,9 @@ import * as styles from "./style.css";
 import { auth } from "../../../../auth";
 import { NothingHere } from "../../../../components/NothingHere";
 import { Stack } from "../../../../components/Stack";
-import { searchFiles } from "../../../../data/files/searchFiles";
+import { listFiles } from "../../../../data/files/listFiles";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
-import { can, p } from "../../../../data/users/permissions";
+import { can } from "../../../../data/users/permissions";
 import { classnames } from "../../../../utils/classnames";
 import { FilesListFile } from "./FilesListFile";
 
@@ -16,9 +16,15 @@ interface Props {
 
 export async function StrataFilesList({ searchTerm, visibility }: Props) {
   const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
-  const canDelete = can(session?.user, p("stratas", "files", "delete"));
+  const canDelete = can(session?.user, "stratas.files.delete");
 
-  const files = await searchFiles(strata.id, canDelete, searchTerm, visibility);
+  const files = await listFiles({
+    strataId: strata.id,
+    isPublic:
+      !canDelete ||
+      (typeof visibility === "undefined" ? undefined : visibility === "public"),
+    ...(searchTerm && { searchTerm }),
+  });
 
   return (
     <Stack className={classnames(styles.filesList)}>

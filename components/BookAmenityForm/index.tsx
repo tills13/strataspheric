@@ -67,9 +67,12 @@ export function BookAmenityForm({ amenity }: Props) {
           virtualEvent={
             startDate
               ? {
-                  endDate: endDate || startDate,
-                  name: "Current Booking",
-                  startDate,
+                  id: "THIS_BOOKING",
+                  endDate: endDate ? endDate.getTime() : startDate.getTime(),
+                  name: "This Booking",
+                  startDate: startDate.getTime(),
+                  description: "",
+                  meetingId: undefined,
                 }
               : undefined
           }

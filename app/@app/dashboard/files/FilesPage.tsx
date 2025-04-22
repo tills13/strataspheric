@@ -44,11 +44,7 @@ export async function FilesPage({ search, visibility }: Props) {
               </FlexBox>
             }
           />
-          {can(session.user, "stratas.files.create") && (
-            <AddFileButton
-              upsertFile={upsertFileAction.bind(undefined, undefined)}
-            />
-          )}
+          {can(session.user, "stratas.files.create") && <AddFileButton />}
         </Group>
       </Group>
 

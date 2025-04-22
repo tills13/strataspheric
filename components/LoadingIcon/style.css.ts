@@ -5,6 +5,6 @@ const spinAnimation = keyframes({
   "100%": { transform: "rotate(360deg)" },
 });
 
-export const loadingIcon = style({
+export const loadingIconLoading = style({
   animation: `${spinAnimation} 1s ease infinite`,
 });

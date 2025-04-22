@@ -24,7 +24,6 @@ export function SendInboxThreadChatForm({
     <form
       className={className}
       action={async (fd) => {
-        console.log("here");
         onSendInboxThreadChat?.(fd);
         await sendInboxThreadChatAction(threadId, messageId, fd);
       }}

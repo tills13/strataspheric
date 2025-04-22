@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 
-import { auth } from "../../../../auth";
 import { protocol, tld } from "../../../../constants";
 import { createStrataMembership } from "../../../../data/memberships/createStrataMembership";
 import { deleteStrataMembership } from "../../../../data/memberships/deleteStrataMembership";
@@ -16,33 +15,25 @@ import {
   Permission,
   Role,
   allPermissions,
-  can,
-  p,
   rolePermissionsEqualCustomPermissions,
 } from "../../../../data/users/permissions";
 import { withPermissions } from "../../../../utils/actions";
 import * as formdata from "../../../../utils/formdata";
 import { sendEmail } from "../../../../utils/sendEmail";
 
-export async function deleteStrataMembershipAction(userId: string) {
-  const session = await auth();
-  const strata = await mustGetCurrentStrata();
+export const deleteStrataMembershipAction = withPermissions(
+  ["stratas.memberships.delete"],
+  async (_, userId: string) => {
+    const strata = await mustGetCurrentStrata();
+    await deleteStrataMembership(strata.id, userId);
 
-  if (
-    !session?.user ||
-    !can(session.user, p("stratas", "memberships", "delete"))
-  ) {
-    throw new Error("not allowed");
-  }
-
-  await deleteStrataMembership(strata.id, userId);
-
-  revalidatePath("/dashboard/membership");
-}
+    revalidatePath("/dashboard/membership");
+  },
+);
 
 export const upsertStrataMembershipAction = withPermissions(
   ["stratas.memberships.edit", "stratas.memberships.create"],
-  async (userId: string | undefined, fd: FormData) => {
+  async (session, userId: string | undefined, fd: FormData) => {
     const strata = await mustGetCurrentStrata();
 
     const email = formdata.getString(fd, "email");
@@ -127,21 +118,12 @@ export const upsertStrataMembershipAction = withPermissions(
   },
 );
 
-export async function approveStrataMembershipAction(userId: string) {
-  const session = await auth();
-  const strata = await mustGetCurrentStrata();
+export const approveStrataMembershipAction = withPermissions(
+  ["stratas.memberships.edit", "stratas.memberships.create"],
+  async (_, userId: string) => {
+    const strata = await mustGetCurrentStrata();
+    await updateStrataMembership(strata.id, userId, { role: "owner" });
 
-  if (
-    !session?.user ||
-    !can(
-      session.user,
-      p("stratas", "memberships", "edit"),
-      p("stratas", "memberships", "create"),
-    )
-  ) {
-    throw new Error("not allowed");
-  }
-
-  await updateStrataMembership(strata.id, userId, { role: "owner" });
-  revalidatePath("/dashboard/membership");
-}
+    revalidatePath("/dashboard/membership");
+  },
+);

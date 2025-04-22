@@ -7,11 +7,9 @@ import { CreateOrUpdateFileForm } from "../../../../components/CreateOrUpdateFil
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../components/Modal";
 
-interface Props {
-  upsertFile: (fd: FormData) => any;
-}
+interface Props {}
 
-export function AddFileButton({ upsertFile }: Props) {
+export function AddFileButton({}: Props) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -29,7 +27,6 @@ export function AddFileButton({ upsertFile }: Props) {
         <Modal closeModal={() => setShowModal(false)} title="New File">
           <CreateOrUpdateFileForm
             onCreateOrUpdateFile={() => setShowModal(false)}
-            upsertFile={upsertFile}
           />
         </Modal>
       )}

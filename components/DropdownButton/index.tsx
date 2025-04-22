@@ -8,7 +8,7 @@ import { useClickOutside } from "../../hooks/useClickOutside";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { Group } from "../Group";
-import { CircleXIcon } from "../Icon/CircleXIcon";
+import { Header } from "../Header";
 import { MoreVerticalIcon } from "../Icon/MoreVerticalIcon";
 import { RemoveIcon } from "../Icon/RemoveIcon";
 
@@ -66,7 +66,13 @@ export function DropdownButton({
           direction === "up" ? styles.panelWrapperUp : styles.panelWrapper,
         )}
       >
-        <Group justify="end" ph="normal" paddingTop="normal" visibleOn="mobile">
+        <Group
+          justify="space-between"
+          ph="normal"
+          paddingTop="normal"
+          visibleOn="mobile"
+        >
+          {openLabel && <Header as="h3">{openLabel}</Header>}
           <Button
             icon={<RemoveIcon />}
             style="tertiary"

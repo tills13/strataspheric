@@ -8,7 +8,6 @@ import { can } from "../../../../data/users/permissions";
 export const runtime = "edge";
 
 export const GET = auth(async (session, req) => {
-  console.log(session);
   const strata = await getCurrentStrata();
 
   if (!strata) {

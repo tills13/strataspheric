@@ -10,10 +10,11 @@ import { signIn } from "../../auth/actions";
 import { Session } from "../../auth/types";
 import { tld } from "../../constants";
 import { PricingPlan } from "../../data/strataPlans/constants";
+import { useSession } from "../../hooks/useSession";
 import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 import { classnames } from "../../utils/classnames";
+import * as formdata from "../../utils/formdata";
 import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
-import { pluralize } from "../../utils/pluralize";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
@@ -22,7 +23,6 @@ import { RightIcon } from "../Icon/RightIcon";
 import { InfoPanel } from "../InfoPanel";
 import { Input } from "../Input";
 import { JoinFormFields } from "../JoinForm/JoinFormFields";
-import { Money } from "../Money";
 import { Panel } from "../Panel";
 import { RadioButton } from "../RadioButton";
 import { Stack } from "../Stack";
@@ -32,25 +32,24 @@ import { Text } from "../Text";
 interface Props {
   className?: string;
   selectedPlan: PricingPlan;
-  session: Session | null;
+
   submitGetStarted: (
     state: SubmitGetStartedState,
     fd: FormData,
   ) => Promise<SubmitGetStartedState>;
 }
 
-export function GetStartedForm({
-  className,
-  session,
-  selectedPlan,
-  submitGetStarted,
-}: Props) {
+export function GetStartedForm({ className, submitGetStarted }: Props) {
+  const session = useSession();
   const [state, action] = useActionState(
     async (state: SubmitGetStartedState, fd: FormData) => {
       const nextState = await submitGetStarted(state, fd);
 
       if (nextState?.success === true) {
-        await signIn(fd.get("email"), fd.get("password"));
+        await signIn(
+          formdata.getString(fd, "email"),
+          formdata.getString(fd, "password"),
+        );
 
         location.href = nextState.redirect;
       }

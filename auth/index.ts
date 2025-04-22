@@ -34,13 +34,9 @@ async function decorateSessionUser(
     userId: baseUser.id,
   });
 
-  if (!membership) {
-    throw new Error("unauthorized");
-  }
-
   return {
     ...baseUser,
-    scopes: membership.scopes,
+    scopes: membership?.scopes || [],
   };
 }
 

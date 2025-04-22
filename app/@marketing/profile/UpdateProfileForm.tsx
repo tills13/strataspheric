@@ -1,15 +1,14 @@
 "use client";
 
-import { s } from "../../../sprinkles.css";
-
 import { useActionState } from "react";
 
 import { User } from "../../../auth/types";
 import { Header } from "../../../components/Header";
+import { CycleIcon } from "../../../components/Icon/CycleIcon";
 import { SaveIcon } from "../../../components/Icon/SaveIcon";
 import { Input } from "../../../components/Input";
+import { Stack } from "../../../components/Stack";
 import { StatusButton } from "../../../components/StatusButton";
-import { classnames } from "../../../utils/classnames";
 import { updateUserActionReducer } from "./actions";
 
 interface Props {
@@ -23,56 +22,38 @@ export function UpdateProfileForm({ user }: Props) {
 
   return (
     <form action={dispatch}>
-      <Header className={s({ mb: "large" })} as="h2">
+      <Header mb="large" as="h2">
         Update Profile
       </Header>
 
-      <div className={s({ mb: "large" })}>
-        <Header className={s({ mb: "normal" })} as="h3">
-          Name
-        </Header>
+      <Stack>
+        <Header as="h3">Name</Header>
 
-        <Input
-          className={s({ w: "full" })}
-          label="Full name"
-          name="name"
-          defaultValue={user.name || ""}
-        />
-      </div>
+        <Input label="Full name" name="name" defaultValue={user.name || ""} />
 
-      <div className={s({ mb: "large" })}>
-        <Header className={s({ mb: "normal" })} as="h3">
-          Password
-        </Header>
+        <Header as="h3">Password</Header>
         <Input
-          wrapperClassName={classnames(s({ mb: "small", w: "full" }))}
           label="Current Password"
           name="currentPassword"
           type="password"
         />
 
+        <Input label="Password" name="password" type="password" />
         <Input
-          wrapperClassName={classnames(s({ mb: "small", w: "full" }))}
-          label="Password"
-          name="password"
-          type="password"
-        />
-        <Input
-          wrapperClassName={classnames(s({ mb: "small", w: "full" }))}
           label="Confirm Password"
           name="confirmPassword"
           type="password"
         />
-      </div>
 
-      <StatusButton
-        color="success"
-        iconRight={<SaveIcon />}
-        style="secondary"
-        success={state.success}
-      >
-        Update
-      </StatusButton>
+        <StatusButton
+          color="success"
+          iconRight={<SaveIcon />}
+          style="secondary"
+          success={state.success}
+        >
+          Update
+        </StatusButton>
+      </Stack>
     </form>
   );
 }

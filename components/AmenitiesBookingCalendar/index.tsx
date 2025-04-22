@@ -30,8 +30,8 @@ type CalendarWeekProps = React.ComponentProps<typeof CalendarWeek>;
 
 interface Props {
   amenity: Amenity;
-  onSelectDate: CalendarWeekProps["onSelectDate"];
-  virtualEvent: CalendarWeekProps["events"][number];
+  onSelectDate?: CalendarWeekProps["onSelectDate"];
+  virtualEvent?: CalendarWeekProps["events"][number];
 }
 
 export function AmenitiesBookingCalendar({
@@ -109,7 +109,7 @@ export function AmenitiesBookingCalendar({
             createOrUpdateEventModalTitle={`Book ${amenity.name}`}
             createOrUpdateEventFormSubmitLabel="Submit Booking"
             dayIsOutOfContext={(date) => isBefore(date, startOfDay(new Date()))}
-            events={[...bookings, virtualEvent].filter(Boolean)}
+            events={virtualEvent ? [...bookings, virtualEvent] : bookings}
             currentMonth={getMonth(date) + 1}
             currentYear={getYear(date)}
             onSelectDate={onSelectDate}

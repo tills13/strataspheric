@@ -6,14 +6,10 @@ import { Button } from "../../../../components/Button";
 import { CreateOrUpdateInvoiceForm } from "../../../../components/CreateOrUpdateInvoiceForm";
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../components/Modal";
-import { Invoice } from "../../../../data";
 
-interface Props {
-  upsertInvoice: (fd: FormData) => Promise<Invoice>;
-}
-
-export function CreateNewInvoiceButton({ upsertInvoice }: Props) {
+export function CreateNewInvoiceButton() {
   const [showNewInvoiceModal, setShowNewInvoiceModal] = useState(false);
+
   return (
     <>
       <Button
@@ -32,7 +28,6 @@ export function CreateNewInvoiceButton({ upsertInvoice }: Props) {
         >
           <CreateOrUpdateInvoiceForm
             onCreateOrUpdateInvoice={() => setShowNewInvoiceModal(false)}
-            upsertInvoice={upsertInvoice}
           />
         </Modal>
       )}

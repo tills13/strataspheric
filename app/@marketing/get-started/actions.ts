@@ -91,9 +91,9 @@ export async function submitGetStarted(
     role: "administrator",
   });
 
-  await createWidget({ strataId, title: "Minutes", type: "file" });
-  await createWidget({ strataId, title: "Documents", type: "file" });
-  await createWidget({ strataId, title: "Events", type: "event" });
+  await createWidget({ body: "", strataId, title: "Minutes", type: "file" });
+  await createWidget({ body: "", strataId, title: "Documents", type: "file" });
+  await createWidget({ body: "", strataId, title: "Events", type: "event" });
 
   await createPlan({
     enableInbox: 1,

@@ -5,27 +5,28 @@ import * as styles from "./styles.css";
 import React, { useState } from "react";
 
 import { classnames } from "../../utils/classnames";
+import { Core } from "../Core";
 import { FileTypeIcon } from "../FileTypeIcon";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  actionRight?: React.ReactNode;
   inputClassName?: string;
   label?: string;
   onChangeValue?: (newValue: string) => void;
   placeholder?: string;
-  wrapperClassName?: string;
 }
 
 export const Input = React.forwardRef<HTMLInputElement, Props>(
   (
     {
+      actionRight,
+      className,
       id: propsId,
       inputClassName,
       name,
       label,
       onChange,
       onChangeValue,
-      wrapperClassName,
-      className,
       ...inputProps
     },
     ref,
@@ -33,13 +34,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
     const [value, setValue] = useState<string>();
 
     return (
-      <div
-        className={classnames(
-          styles.inputFieldWrapper,
-          wrapperClassName,
-          className,
-        )}
-      >
+      <div className={classnames(styles.inputFieldWrapper, className)}>
         {inputProps.type === "file" && (
           <FileTypeIcon
             className={styles.inputFieldFileIcon}
@@ -58,6 +53,13 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
             setValue(e.currentTarget.value);
           }}
         />
+
+        {actionRight && (
+          <Core as="div" className={styles.inputFieldActionContainer}>
+            {actionRight}
+          </Core>
+        )}
+
         {label && (
           <label className={styles.inputFieldLabel} htmlFor={propsId || name}>
             {label}

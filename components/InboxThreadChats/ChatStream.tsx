@@ -2,7 +2,7 @@
 
 import React, { useLayoutEffect, useRef } from "react";
 
-import { Chat } from "../../data/inbox/getThreadChats";
+import { Chat } from "../../data/inbox/listThreadChats";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
 import { InboxThreadChat } from "./InboxThreadChat";

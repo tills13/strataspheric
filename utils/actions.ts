@@ -1,5 +1,7 @@
 import { auth } from "../auth";
+import { Session } from "../auth/types";
 import { Permission, can } from "../data/users/permissions";
+import { Tail } from "./type";
 
 export class ServerActionError extends Error {
   constructor(
@@ -38,19 +40,18 @@ export function withErrorReporting<S extends { success?: boolean }>(
   };
 }
 
-export function withPermissions<F extends (...args: any) => any>(
-  permissions: Permission[],
-  fn: F,
-) {
-  return async function (...args: Parameters<F>) {
+export function withPermissions<
+  F extends (session: Session, ...args: any[]) => any,
+>(permissions: Permission[], fn: F) {
+  return async function (...args: Tail<Parameters<F>>) {
     const session = await auth();
 
-    if (!can(session?.user, ...permissions)) {
+    if (!session || !can(session?.user, ...permissions)) {
       throw new ServerActionError(
         `user does not have permission to do this action`,
       );
     }
 
-    return fn(...args);
+    return fn(session, ...args);
   };
 }

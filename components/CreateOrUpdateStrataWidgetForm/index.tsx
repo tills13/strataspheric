@@ -5,18 +5,17 @@ import * as styles from "./style.css";
 
 import { useState } from "react";
 
+import { upsertStrataWidgetAction } from "../../app/@app/dashboard/actions";
 import { StrataWidget } from "../../data";
-import { Button } from "../Button";
 import { AddIcon } from "../Icon/AddIcon";
 import { Input } from "../Input";
 import { Select } from "../Select";
 import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
-import { TextArea } from "../TextArea";
 import { CreateOrUpdateStrataInfoWidgetForm } from "./CreateOrUpdateStrataInfoWidgetForm";
 
 interface Props {
-  upsertStrataWidget: (formData: FormData) => void;
+  strataId: string;
   widget?: StrataWidget;
 }
 
@@ -32,15 +31,15 @@ function mapSubtypeToType(subType: StrataWidget["type"]) {
   return subType;
 }
 
-export function CreateOrUpdateStrataWidgetForm({
-  upsertStrataWidget,
-  widget,
-}: Props) {
+export function CreateOrUpdateStrataWidgetForm({ strataId, widget }: Props) {
   const type = widget ? mapSubtypeToType(widget.type) : undefined;
-  const [selectedType, setSelectedType] = useState(type || "file");
+  const [selectedType, setSelectedType] = useState<string>(type || "file");
 
   return (
-    <form action={upsertStrataWidget} className={styles.newWidgetForm}>
+    <form
+      action={upsertStrataWidgetAction.bind(undefined, strataId, widget?.id)}
+      className={styles.newWidgetForm}
+    >
       <Stack className={s({ mb: "large" })} gap="normal">
         <Input
           name="title"

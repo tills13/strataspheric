@@ -1,7 +1,4 @@
-import {
-  DirectedOrderByStringReference,
-  UndirectedOrderByExpression,
-} from "kysely/dist/cjs/parser/order-by-parser";
+import { OrderByExpression } from "kysely/dist/cjs/parser/order-by-parser";
 
 import { Database } from ".";
 
@@ -15,7 +12,7 @@ export type Pagination<
   S extends Record<string, unknown>,
 > = {
   limit?: number;
-  orderBy:
-    | UndirectedOrderByExpression<Database, QueryTableAlias, S>
-    | DirectedOrderByStringReference<Database, QueryTableAlias, S>;
+  orderBy: OrderByExpression<Database, QueryTableAlias, S>;
+  // | UndirectedOrderByExpression<Database, QueryTableAlias, S>
+  // | DirectedOrderByStringReference<Database, QueryTableAlias, S>;
 };

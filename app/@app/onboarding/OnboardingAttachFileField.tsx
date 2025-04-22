@@ -13,14 +13,9 @@ import { File } from "../../../data";
 interface Props {
   name: string;
   placeholder: string;
-  upsertFile: (fd: FormData) => Promise<File>;
 }
 
-export function OnboardingAttachFileField({
-  name,
-  placeholder,
-  upsertFile,
-}: Props) {
+export function OnboardingAttachFileField({ name, placeholder }: Props) {
   const [selectedFile, setSelectedFile] = useState<File>();
 
   return (
@@ -29,7 +24,6 @@ export function OnboardingAttachFileField({
         placeholder={placeholder}
         name={name}
         onSelectFile={setSelectedFile}
-        upsertFile={upsertFile}
         value={selectedFile}
       />
       {selectedFile && (

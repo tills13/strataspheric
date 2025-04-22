@@ -4,7 +4,7 @@ import * as styles from "./style.css";
 
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Permission, can, p } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
@@ -105,6 +105,7 @@ export function DashboardHeader() {
                   <InternalLink
                     key={href}
                     className={styles.subheaderLink}
+                    onClick={() => setMobileMenuExpanded(false)}
                     href={href}
                   >
                     {children}

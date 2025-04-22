@@ -7,7 +7,7 @@ import {
   type Chat,
   isThreadChatWithFile,
   isThreadChatWithQuote,
-} from "../../data/inbox/getThreadChats";
+} from "../../data/inbox/listThreadChats";
 import { useSession } from "../../hooks/useSession";
 import { classnames } from "../../utils/classnames";
 import { Date } from "../Date";
@@ -41,11 +41,13 @@ export function InboxThreadChat({ ...chat }: Props & Chat) {
 
       {isThreadChatWithQuote(chat) && (
         <InboxMessageQuote
-          messageThreadId={chat.threadId}
-          messageId={chat.quotedMessageId}
-          source={chat.quotedMessageMessage}
-          senderName={chat.quotedMessageSender}
-          timestamp={chat.quotedMessageTimestamp}
+          source={{
+            id: chat.quotedMessageId,
+            threadId: chat.threadId,
+            message: chat.quotedMessageMessage,
+            senderName: chat.quotedMessageSender,
+            sentAt: chat.quotedMessageTimestamp,
+          }}
           linkType="hash"
         />
       )}

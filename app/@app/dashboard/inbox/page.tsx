@@ -14,7 +14,6 @@ import { getCurrentStrataPlan } from "../../../../data/strataPlans/getCurrentStr
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 import { InboxNoPlanPage } from "./InboxNoPlanPage";
-import { deleteThreadAction } from "./actions";
 
 export const runtime = "edge";
 
@@ -57,13 +56,13 @@ export default async function Page() {
               iconTextBehaviour="centerRemainder"
               style="secondary"
             >
-              New Message to {strata.name}
+              Send Message
             </Button>
           </InternalLink>
         </Group>
       </div>
 
-      <InboxThreads deleteThread={deleteThreadAction} threads={threads} />
+      <InboxThreads threads={threads} />
     </div>
   );
 }

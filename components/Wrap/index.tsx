@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment, isValidElement } from "react";
 
 import { classnames } from "../../utils/classnames";
+import { reactNodeCanReceiveClassNameProp } from "../../utils/react";
 
 type WrapFn = (children?: React.ReactNode) => React.ReactNode;
 
@@ -25,10 +26,16 @@ export function Wrap({
 }: React.PropsWithChildren<Props>) {
   const mChild = predicate ? withFn(children) : elseFn(children);
 
-  return React.isValidElement(mChild) && mChild.type !== Fragment
-    ? React.cloneElement(mChild, {
-        ...mChild.props,
-        className: classnames(mChild.props.className, className),
-      })
-    : mChild;
+  if (!reactNodeCanReceiveClassNameProp(mChild) || mChild.type === Fragment) {
+    return mChild;
+  }
+
+  return React.cloneElement(mChild, {
+    className: classnames(
+      typeof mChild.props.className === "string"
+        ? mChild.props.className
+        : undefined,
+      className,
+    ),
+  });
 }

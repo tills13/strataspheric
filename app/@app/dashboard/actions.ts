@@ -103,7 +103,7 @@ export async function upsertFileWidgetFileAction(
   revalidatePath("/dashboard");
 }
 
-export async function upsertStrataWidget(
+export async function upsertStrataWidgetAction(
   strataId: string,
   widgetId: string | undefined,
   fd: FormData,
@@ -132,7 +132,12 @@ export async function upsertStrataWidget(
       await updateWidgetInfo(widgetId, { body });
     }
   } else {
-    const { id: widgetId } = await createWidget({ strataId, title, type });
+    const { id: widgetId } = await createWidget({
+      body,
+      strataId,
+      title,
+      type,
+    });
 
     if (type === "info") {
       await createWidgetInfo({ body, widgetId });

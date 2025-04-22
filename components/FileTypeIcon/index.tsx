@@ -23,7 +23,6 @@ export function FileTypeIcon({ defaultIcon, filePath, ...rest }: Props) {
     }
     case "jpg":
     case "png": {
-      console.log("ere");
       return <ImageIcon {...rest} />;
     }
     default: {

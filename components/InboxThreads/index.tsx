@@ -1,12 +1,7 @@
-"use client";
-
 import * as styles from "./style.css";
 
 import { Thread } from "../../data/inbox/getThread";
-import { p } from "../../data/users/permissions";
-import { useCan } from "../../hooks/useCan";
 import { Date } from "../Date";
-import { DeleteButton } from "../DeleteButton";
 import { Group } from "../Group";
 import { Header } from "../Header";
 import { InternalLink } from "../Link/InternalLink";
@@ -14,13 +9,10 @@ import { Stack } from "../Stack";
 import { Text } from "../Text";
 
 interface Props {
-  deleteThread: (threadId: string) => void;
   threads: Thread[];
 }
 
-export function InboxThreads({ deleteThread, threads }: Props) {
-  const can = useCan();
-
+export function InboxThreads({ threads }: Props) {
   return (
     <>
       {threads.length === 0 && (
@@ -57,20 +49,6 @@ export function InboxThreads({ deleteThread, threads }: Props) {
                 <Date timestamp={thread.sentAt} output="date" />
               </Text>
             </Stack>
-
-            <Group justify="end">
-              {can(p("stratas", "inbox_messages", "delete")) && (
-                <DeleteButton
-                  onConfirmDelete={deleteThread.bind(
-                    undefined,
-                    thread.threadId,
-                  )}
-                  color="error"
-                  size="small"
-                  style="tertiary"
-                />
-              )}
-            </Group>
           </InternalLink>
         ))}
       </div>

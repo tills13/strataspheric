@@ -1,9 +1,9 @@
-import { vars } from "../../app/theme.css";
 import * as styles from "./style.css";
 
 import React from "react";
 
 import { classnames } from "../../utils/classnames";
+import { reactNodeCanReceiveClassNameProp } from "../../utils/react";
 import { FlexBox } from "../FlexBox";
 
 interface Props
@@ -18,10 +18,14 @@ export function Stack({ className, children, ...delegateProps }: Props) {
       {...delegateProps}
     >
       {React.Children.map(children, (c, i) =>
-        React.isValidElement(c) && c.type !== React.Fragment
+        reactNodeCanReceiveClassNameProp(c)
           ? React.cloneElement(c, {
-              ...c.props,
-              className: classnames(styles.stackElement, c.props.className),
+              className: classnames(
+                typeof c.props.className === "string"
+                  ? c.props.className
+                  : undefined,
+                styles.stackElement,
+              ),
             })
           : c,
       )}

@@ -7,12 +7,17 @@ type CycleIconProps = React.ComponentProps<typeof CycleIcon>;
 
 interface Props extends CycleIconProps {
   className?: string;
+  loading?: boolean;
 }
 
-export function LoadingIcon({ className, ...delegateProps }: Props) {
+export function LoadingIcon({
+  className,
+  loading = true,
+  ...delegateProps
+}: Props) {
   return (
     <CycleIcon
-      className={classnames(styles.loadingIcon, className)}
+      className={classnames(loading && styles.loadingIconLoading, className)}
       {...delegateProps}
     />
   );

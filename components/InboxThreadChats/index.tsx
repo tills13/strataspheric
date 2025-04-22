@@ -2,7 +2,8 @@
 
 import { useOptimistic } from "react";
 
-import { Chat } from "../../data/inbox/getThreadChats";
+import { Chat } from "../../data/inbox/listThreadChats";
+import { useSession } from "../../hooks/useSession";
 import * as formdata from "../../utils/formdata";
 import { SendInboxThreadChatForm } from "../SendInboxThreadChatForm";
 import { ChatStream } from "./ChatStream";
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function InboxThreadChats({ chats, threadId }: Props) {
+  const session = useSession(true);
   const [optisticChats, addOptimisticChat] = useOptimistic(
     chats,
     (chats, newChat: Chat) => {
@@ -22,11 +24,11 @@ export function InboxThreadChats({ chats, threadId }: Props) {
 
   function optimisticOnSendInboxThreadChat(fd: FormData) {
     addOptimisticChat({
-      chatId: "tmp",
-      email: "s",
+      chatId: "TMP_CHAT",
+      email: session.user.email,
       id: "tmp",
       message: formdata.getString(fd, "message"),
-      name: "You",
+      name: session.user.name,
       sentAt: Date.now(),
     });
   }

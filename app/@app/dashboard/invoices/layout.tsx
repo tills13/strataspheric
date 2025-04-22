@@ -9,7 +9,6 @@ import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { can, p } from "../../../../data/users/permissions";
 import { CreateNewInvoiceButton } from "./CreateNewInvoiceButton";
-import { upsertInvoiceAction } from "./actions";
 
 export const runtime = "edge";
 
@@ -29,9 +28,7 @@ export default async function InvoicesLayout({
         <Header as="h2">Invoices</Header>
         <div>
           {can(session?.user, p("stratas", "invoices", "create")) && (
-            <CreateNewInvoiceButton
-              upsertInvoice={upsertInvoiceAction.bind(undefined, undefined)}
-            />
+            <CreateNewInvoiceButton />
           )}
         </div>
       </Group>

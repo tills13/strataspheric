@@ -6,12 +6,17 @@ import { calc } from "@vanilla-extract/css-utils";
 
 import { padding } from "../../theme";
 
+export const fieldActionContainer = style({
+  width: "min-content",
+  margin: vars.spacing.xs,
+  height: calc("100%").subtract(calc(vars.spacing.xs).multiply(2)).toString(),
+  flex: 0,
+});
+
 export const field = style({
   position: "relative",
   display: "flex",
   alignItems: "center",
-  padding: `0 ${vars.spacing.normal}`,
-  height: "44px",
   color: vars.fontColors.primary,
   background: "none",
   backgroundColor: vars.colors.white,
@@ -21,6 +26,11 @@ export const field = style({
   outline: "none",
 
   selectors: {
+    "&:not(:has(textarea))": {
+      height: "44px",
+      padding: `0 ${vars.spacing.normal}`,
+    },
+
     "&:hover": {
       borderColor: vars.colors.borderDefaultHover,
     },
@@ -34,6 +44,10 @@ export const field = style({
 
     [`${panel} &`]: {
       backgroundColor: vars.colors.grey0,
+    },
+
+    [`&:has(${fieldActionContainer})`]: {
+      paddingRight: 0,
     },
   },
 });

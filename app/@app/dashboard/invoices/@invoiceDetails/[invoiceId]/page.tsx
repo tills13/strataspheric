@@ -14,7 +14,7 @@ import { Text } from "../../../../../../components/Text";
 import { getInvoice } from "../../../../../../data/invoices/getInvoice";
 import { mustGetCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";
 import { parseTimestamp } from "../../../../../../utils/datetime";
-import { deleteInvoiceAction, upsertInvoiceAction } from "../../actions";
+import { deleteInvoiceAction } from "../../actions";
 
 export const runtime = "edge";
 
@@ -48,7 +48,7 @@ export default async function Page({ params }: PageProps) {
       <CreateOrUpdateInvoiceForm
         className={s({ mb: "large" })}
         invoice={invoice}
-        upsertInvoice={upsertInvoiceAction.bind(undefined, invoice.id)}
+        showDeleteInvoiceButton={false}
       />
 
       <InfoPanel
