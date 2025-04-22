@@ -1,5 +1,4 @@
 import { db } from "..";
-import { File, joinFilesColumns } from "../files/getFile";
 
 type ListThreadChatsFilter = {
   threadId?: string;
@@ -26,6 +25,7 @@ export async function listThreadChats(filter: ListThreadChatsFilter) {
       "inbox_thread_chats.threadId",
       "inbox_thread_chats.userId",
       "inbox_thread_chats.chatId",
+      "inbox_thread_chats.fileId",
       "inbox_thread_chats.messageId",
       "inbox_thread_chats.threadId",
       "inbox_thread_chats.sentAt",
@@ -33,8 +33,9 @@ export async function listThreadChats(filter: ListThreadChatsFilter) {
       "users.name",
       "users.email",
 
-      ...joinFilesColumns,
-
+      "files.name as fileName",
+      "files.description as fileDescription",
+      "files.path as filePath",
       "inbox_messages.id as quotedMessageId",
       eb.fn
         .coalesce("quotedMessageUsers.name", "inbox_messages.senderName")
@@ -47,33 +48,5 @@ export async function listThreadChats(filter: ListThreadChatsFilter) {
     query = query.where("inbox_thread_chats.threadId", "=", filter.threadId);
   }
 
-  const rows = await query.execute();
-  return rows.map(
-    ({
-      quotedMessageId,
-      quotedMessageMessage,
-      quotedMessageSender,
-      quotedMessageTimestamp,
-
-      fileDescription,
-      fileId,
-      fileName,
-      filePath,
-
-      ...rest
-    }) => ({
-      ...rest,
-      file: fileId ? { 
-        createdAt,
-        description,
-        id, 
-        isPublic, 
-        mimeType, 
-        name,
-        path,
-
-
-      } satisfies File
-    }),
-  );
+  return query.execute();
 }

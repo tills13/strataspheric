@@ -13,7 +13,7 @@ interface Props {
 }
 
 export async function InboxThreadChatPanel({ threadId }: Props) {
-  const [chats] = await Promise.all([listThreadChats(threadId)]);
+  const [chats] = await Promise.all([listThreadChats({ threadId })]);
 
   return (
     <div className={classnames(styles.chatPanelWrapper, s({ p: "normal" }))}>
