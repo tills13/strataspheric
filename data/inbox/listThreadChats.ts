@@ -1,5 +1,15 @@
 import { db } from "..";
 
+export type Chat = Awaited<ReturnType<typeof listThreadChats>>[number];
+
+export function isThreadChatWithQuote() {
+  return false;
+}
+
+export function isThreadChatWithFile() {
+  return false;
+}
+
 type ListThreadChatsFilter = {
   threadId?: string;
 };
