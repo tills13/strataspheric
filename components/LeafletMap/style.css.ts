@@ -1,7 +1,7 @@
 import { vars } from "../../app/theme.css";
 import { createVar, fallbackVar, style } from "@vanilla-extract/css";
 
-export const heightVar = createVar();
+const heightVar = createVar();
 
 export const leafletMapContainer = style({
   width: "100%",

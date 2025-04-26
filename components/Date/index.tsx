@@ -2,16 +2,25 @@
 
 import * as styles from "./style.css";
 
-import differenceInDays from "date-fns/differenceInDays";
 import differenceInSeconds from "date-fns/differenceInSeconds";
 import isSameDay from "date-fns/isSameDay";
+import React from "react";
 
 import { classnames } from "../../utils/classnames";
 import { parseTimestamp } from "../../utils/datetime";
 import { ClientOnly } from "../ClientOnly";
 import { Bone } from "../Skeleton/Bone";
+import { Text } from "../Text";
 
-function formatDate(d: Date, output: Props["output"]): string {
+const SECONDS_IN_ONE_MINUTE = 60;
+// const SECONDS_IN_ONE_HOUR = SECONDS_IN_ONE_MINUTE * 60;
+// const SECONDS_IN_ONE_DAY = SECONDS_IN_ONE_HOUR * 24;
+
+function formatDate(
+  d: Date,
+  output: Props["output"],
+  compactOutputPrefix?: boolean,
+): string {
   if (output === "date") {
     return d.toLocaleDateString();
   } else if (output === "time") {
@@ -22,14 +31,11 @@ function formatDate(d: Date, output: Props["output"]): string {
   } else if (output === "datetime") {
     return d.toLocaleString();
   } else {
+    // compact output
     const now = new window.Date();
 
     const secondsSince = differenceInSeconds(now, d);
     const mIsSameDay = isSameDay(now, d);
-
-    const SECONDS_IN_ONE_MINUTE = 60;
-    const SECONDS_IN_ONE_HOUR = SECONDS_IN_ONE_MINUTE * 60;
-    const SECONDS_IN_ONE_DAY = SECONDS_IN_ONE_HOUR * 24;
 
     // under 10 minutes, return a special time string
     if (secondsSince < SECONDS_IN_ONE_MINUTE) {
@@ -42,25 +48,42 @@ function formatDate(d: Date, output: Props["output"]): string {
 
     // otherwise do something different based on whether it's the same day
 
-    return mIsSameDay ? formatDate(d, "time") : formatDate(d, "date");
+    return [
+      compactOutputPrefix ? (mIsSameDay ? "at" : "on") : "",
+      mIsSameDay ? formatDate(d, "time") : formatDate(d, "date"),
+    ]
+      .filter(Boolean)
+      .join(" ");
   }
 }
 
-interface Props {
+interface Props extends Omit<React.ComponentProps<typeof Text>, "as"> {
   className?: string;
+  compactOutputPrefix?: boolean;
   output?: "date" | "time" | "datetime" | "compact";
   timestamp: number;
 }
 
-export function Date({ className, output, timestamp }: Props) {
+export function Date({
+  className,
+  compactOutputPrefix,
+  output,
+  timestamp,
+  ...rest
+}: Props) {
   return (
-    <time
+    <Text
+      as="time"
       className={classnames(styles.date, className)}
       dateTime={parseTimestamp(timestamp).toISOString()}
+      title={parseTimestamp(timestamp).toISOString()}
+      {...rest}
     >
       <ClientOnly fallback={() => <Bone className={styles.dateBone} inline />}>
-        {() => formatDate(parseTimestamp(timestamp), output)}
+        {() =>
+          formatDate(parseTimestamp(timestamp), output, compactOutputPrefix)
+        }
       </ClientOnly>
-    </time>
+    </Text>
   );
 }

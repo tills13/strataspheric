@@ -64,7 +64,7 @@ export async function readJwtFromRequest(config: Config, req: Request) {
   return parseJwt(rawJwt);
 }
 
-export function verifyJwt(key: CryptoKey, rawJwt: string) {
+function verifyJwt(key: CryptoKey, rawJwt: string) {
   const { rawHeader, rawPayload, sig } = parseJwt(rawJwt);
 
   return crypto.subtle.verify(

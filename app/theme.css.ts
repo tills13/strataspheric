@@ -15,6 +15,7 @@ export const sidebarWidthVar = createVar();
 
 export const vars = createGlobalTheme(":root", {
   borderRadius: "4px",
+  borderWidth: "2px",
 
   spacing: {
     "0": "0px",
@@ -107,6 +108,10 @@ export const vars = createGlobalTheme(":root", {
 
     secondary: "#393e46",
     secondaryHover: "#494f58",
+
+    success: "#78A973", // green500
+    error: "#B12A2A", // red500
+    warning: "#F3A73C", // orange500
 
     borderDefault: "#EAEDEE",
     borderDefaultHover: "#D5DCDD",

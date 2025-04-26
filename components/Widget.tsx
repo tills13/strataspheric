@@ -8,26 +8,11 @@ import { ServerInfoWidget } from "./InfoWidget/ServerInfoWidget";
 import { WidgetSkeleton } from "./Skeleton/WidgetSkeleton";
 
 interface Props {
-  createEvent: (fd: FormData) => Promise<void>;
-  deleteEvent: (eventId: string) => Promise<void>;
-  createFile: (fd: FormData) => Promise<void>;
-  deleteFile: (fileId: string) => Promise<void>;
-  deleteWidget: () => Promise<void>;
-  upsertStrataWidget: (fd: FormData) => Promise<void>;
   strata: Strata;
   widget: StrataWidget;
 }
 
-export function Widget({
-  createEvent,
-  createFile,
-  deleteEvent,
-  deleteFile,
-  deleteWidget,
-  upsertStrataWidget,
-  strata,
-  widget,
-}: Props) {
+export function Widget({ strata, widget }: Props) {
   switch (widget.type) {
     case "events_upcoming":
     case "event": {
@@ -37,13 +22,7 @@ export function Widget({
             <WidgetSkeleton title={<Header as="h2">{widget.title}</Header>} />
           }
         >
-          <ServerEventWidget
-            createEvent={createEvent}
-            deleteEvent={deleteEvent}
-            deleteWidget={deleteWidget}
-            upsertStrataWidget={upsertStrataWidget}
-            widget={widget}
-          />
+          <ServerEventWidget strataId={strata.id} widget={widget} />
         </Suspense>
       );
     }
@@ -57,13 +36,7 @@ export function Widget({
             <WidgetSkeleton title={<Header as="h2">{widget.title}</Header>} />
           }
         >
-          <ServerFileWidget
-            createFile={createFile}
-            deleteFile={deleteFile}
-            deleteWidget={deleteWidget}
-            upsertStrataWidget={upsertStrataWidget}
-            widget={widget}
-          />
+          <ServerFileWidget strataId={strata.id} widget={widget} />
         </Suspense>
       );
     }
@@ -77,9 +50,8 @@ export function Widget({
           }
         >
           <ServerInfoWidget
-            deleteWidget={deleteWidget}
             strata={strata}
-            upsertStrataWidget={upsertStrataWidget}
+            strataId={strata.id}
             widget={widget}
           />
         </Suspense>

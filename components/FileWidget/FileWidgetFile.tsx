@@ -1,7 +1,8 @@
 import * as abstractWidgetStyles from "../AbstractWidget/style.css";
 import * as styles from "./style.css";
 
-import { File } from "../../data";
+import { deleteWidgetFileAction } from "../../app/@app/dashboard/actions";
+import { File, StrataWidget } from "../../data";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { classnames } from "../../utils/classnames";
@@ -13,12 +14,12 @@ import { RemoveButton } from "../RemoveButton";
 import { Wrap } from "../Wrap";
 
 interface Props {
-  deleteFile: (fileId: string) => Promise<void>;
   deleteable?: boolean;
   file: File;
+  widget: StrataWidget;
 }
 
-export function FileWidgetFile({ deleteFile, deleteable, file }: Props) {
+export function FileWidgetFile({ deleteable, file, widget }: Props) {
   const can = useCan();
 
   return (
@@ -51,7 +52,11 @@ export function FileWidgetFile({ deleteFile, deleteable, file }: Props) {
             <>
               {can(p("stratas", "widgets", "edit")) && (
                 <RemoveButton
-                  action={deleteFile.bind(undefined, file.id)}
+                  action={deleteWidgetFileAction.bind(
+                    undefined,
+                    widget.id,
+                    file.id,
+                  )}
                   color="error"
                   size="small"
                   style="tertiary"

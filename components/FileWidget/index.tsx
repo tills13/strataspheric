@@ -20,21 +20,11 @@ import { Text } from "../Text";
 import { FileWidgetFile } from "./FileWidgetFile";
 
 interface Props extends AbstractWidgetProps {
-  createFile: (fd: FormData) => Promise<void>;
-  deleteFile: (fileId: string) => Promise<void>;
   files: File[];
   widget: StrataWidget;
-  upsertStrataWidget: (fd: FormData) => Promise<void>;
 }
 
-export function FileWidget({
-  createFile,
-  deleteFile,
-  deleteWidget,
-  files,
-  widget,
-  upsertStrataWidget,
-}: Props) {
+export function FileWidget({ files, strataId, widget }: Props) {
   const session = useSession();
   const [showCreateModal, setShowCreateModal] = useState(false);
 
@@ -53,14 +43,13 @@ export function FileWidget({
           },
       ]}
       className={styles.fileWidget}
-      deleteWidget={deleteWidget}
-      upsertStrataWidget={upsertStrataWidget}
+      strataId={strataId}
       widget={widget}
       widgetTitle={widget.title}
     >
       <div className={abstractWidgetStyles.abstractWidgetList}>
         {files.length === 0 && (
-          <InfoPanel alignment="center" level="info">
+          <InfoPanel alignment="center" level="default">
             <Text>There are no selected files.</Text>
           </InfoPanel>
         )}
@@ -68,9 +57,9 @@ export function FileWidget({
         {files.map((file) => (
           <FileWidgetFile
             key={file.id}
-            deleteFile={deleteFile}
             deleteable={widget.type === "file"}
             file={file}
+            widget={widget}
           />
         ))}
       </div>
@@ -80,7 +69,7 @@ export function FileWidget({
           closeModal={() => setShowCreateModal(false)}
           title={"Add File to " + widget.title}
         >
-          <AddFileToWidgetForm createFile={createFile} />
+          <AddFileToWidgetForm strataId={strataId} widgetId={widget.id} />
         </Modal>
       )}
     </AbstractWidget>

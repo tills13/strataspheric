@@ -46,7 +46,7 @@ export const userStrataSelectorText = style({
   },
 });
 
-export const userStrataSelectorIconBase = style({
+const userStrataSelectorIconBase = style({
   position: "relative",
   transition: "left 1s ease, opacity 1s ease",
 
@@ -89,13 +89,13 @@ export const globalHeaderActionsDesktop = style({
   },
 });
 
-export const sessionInfoRow = style({
+const sessionInfoRow = style({
   display: "flex",
   alignItems: "center",
   gap: vars.spacing.normal,
 });
 
-export const sessionUserName = style({
+const sessionUserName = style({
   color: vars.colors.primary,
   whiteSpace: "nowrap",
 });
@@ -109,15 +109,15 @@ export const globalMobileHeaderActions = style({
   },
 });
 
-export const globalMobileHeaderModal = style({
+const globalMobileHeaderModal = style({
   padding: vars.spacing.small,
 });
 
-export const hamburgerIcon = style({
+const hamburgerIcon = style({
   height: "24px",
 });
 
-export const globalMobileHeaderModalActions = style({
+const globalMobileHeaderModalActions = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "stretch",
@@ -132,7 +132,7 @@ export const globalHeaderActionsButton = style({
   },
 });
 
-export const breadcrumbs = style({
+const breadcrumbs = style({
   display: "flex",
   gap: vars.spacing.xs,
   alignItems: "baseline",

@@ -2,28 +2,23 @@ import * as styles from "./style.css";
 
 import React from "react";
 
-import { classnames } from "../../utils/classnames";
 import { Group } from "../Group";
+import { Text } from "../Text";
 
 interface Props extends React.ComponentProps<typeof Group> {
   children: React.ReactNode;
-  className?: string;
-
   gravity?: "left" | "center" | "right";
 }
 
-export function DividerText({
-  className,
-  children,
-  gravity = "center",
-  ...rest
-}: Props) {
+export function DividerText({ children, gravity = "center", ...rest }: Props) {
   return (
-    <Group className={classnames(styles.dividerText, className)} {...rest}>
+    <Group {...rest}>
       {(gravity === "right" || gravity === "center") && (
         <span className={styles.dividerTextDivider} />
       )}
-      <span className={styles.dividerTextText}>{children}</span>
+      <Text as="span" fw="bold" color="secondary" whiteSpace="nowrap">
+        {children}
+      </Text>
       {(gravity === "left" || gravity === "center") && (
         <span className={styles.dividerTextDivider} />
       )}

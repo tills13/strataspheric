@@ -1,8 +1,11 @@
 import { s } from "../../sprinkles.css";
-import * as styles from "./style.css";
 
 import { mutate } from "swr";
 
+import {
+  deleteEventAction,
+  upsertEventAction,
+} from "../../app/@app/dashboard/calendar/[...segments]/actions";
 import { Event } from "../../data";
 import { patchTimezoneOffset } from "../../utils/datetime";
 import { ConfirmButton } from "../ConfirmButton";
@@ -17,29 +20,24 @@ import { TextArea } from "../TextArea";
 
 interface Props {
   defaultDate?: string;
-  deleteEvent?: () => Promise<any>;
   event?: Pick<Event, "id" | "name" | "description" | "startDate" | "endDate">;
   onDeleteEvent?: () => void;
   submitLabel?: React.ReactNode;
-  upsertEvent: (fd: FormData) => Promise<any>;
 }
 
 export function CreateOrUpdateEventForm({
   defaultDate,
-  deleteEvent,
   event,
   onDeleteEvent,
   submitLabel,
-  upsertEvent,
 }: Props) {
   return (
     <form
-      className={styles.newEventForm}
       action={async (fd) => {
         patchTimezoneOffset(fd, "date_start");
         patchTimezoneOffset(fd, "date_end");
 
-        await upsertEvent(fd);
+        await upsertEventAction(event?.id, fd);
         mutate((k) => Array.isArray(k) && k[1] === "events");
       }}
     >
@@ -61,10 +59,10 @@ export function CreateOrUpdateEventForm({
       </Stack>
 
       <Group gap="normal">
-        {event && deleteEvent && (
+        {event && (
           <ConfirmButton
             onClickConfirm={async () => {
-              await deleteEvent();
+              await deleteEventAction(event.id);
               mutate((k) => Array.isArray(k) && k[1] === "events");
               onDeleteEvent?.();
             }}

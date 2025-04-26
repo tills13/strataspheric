@@ -43,7 +43,7 @@ export async function SettingsPage() {
 
             <InfoPanel
               header={<Header as="h3">Content Visibility</Header>}
-              level="info"
+              level="default"
             >
               <Text>
                 Controls access to strata content by outsiders. If your strata

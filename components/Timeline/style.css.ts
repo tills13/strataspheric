@@ -22,7 +22,7 @@ export const timelineItem = style({
     "&:before": {
       position: "absolute",
       content: " ",
-      left: calc(vars.sizes.xs).divide(2).subtract("2px").toString(),
+      left: calc(vars.sizes.xs).divide(2).subtract(vars.borderWidth).toString(),
       top: 0,
       bottom: 0,
       width: 4,
@@ -52,7 +52,10 @@ export const timelineItem = style({
       paddingRight: 0,
       selectors: {
         "&:before": {
-          left: calc(vars.sizes.small).divide(2).subtract("2px").toString(),
+          left: calc(vars.sizes.small)
+            .divide(2)
+            .subtract(vars.borderWidth)
+            .toString(),
           width: 4,
         },
       },

@@ -2,33 +2,32 @@ import { vars } from "./app/theme.css";
 
 import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles";
 
-const fontProperties = defineProperties({
+const textProperties = defineProperties({
   properties: {
     color: {
-      primary: vars.fontColors.primary,
-      secondary: vars.fontColors.secondary,
-      tertiary: vars.fontColors.tertiary,
+      ...vars.colors,
+      ...vars.fontColors,
     },
-    fontFamily: {
-      primary: vars.fontFamilies.primary,
-      primaryHeader: vars.fontFamilies.primaryHeader,
-      secondaryHeader: vars.fontFamilies.secondaryHeader,
-      text: vars.fontFamilies.text,
+    fontFamily: vars.fontFamilies,
+    fontWeight: vars.fontWeights,
+    fontSize: vars.fontSizes,
+    textAlign: {
+      center: "center",
+      start: "start",
+      end: "end",
     },
-    fontWeight: {
-      bold: vars.fontWeights.bold,
-      light: vars.fontWeights.light,
-      normal: vars.fontWeights.normal,
-      xbold: vars.fontWeights.xbold,
+    textDecoration: {
+      underline: "underline",
+      none: "none",
     },
-
-    fontSize: {
-      large: vars.fontSizes.large,
-      larger: vars.fontSizes.larger,
-      normal: vars.fontSizes.normal,
-      small: vars.fontSizes.small,
-      xl: vars.fontSizes.xl,
-      xxl: vars.fontSizes.xxl,
+    textTransform: {
+      capitalize: "capitalize",
+      lowercase: "lowercase",
+      uppercase: "uppercase",
+    },
+    whiteSpace: {
+      nowrap: "nowrap",
+      pre: "pre",
     },
   },
   shorthands: {
@@ -36,35 +35,21 @@ const fontProperties = defineProperties({
     ff: ["fontFamily"],
     fw: ["fontWeight"],
     fs: ["fontSize"],
+    ta: ["textAlign"],
+    td: ["textDecoration"],
+    tt: ["textTransform"],
+    ws: ["whiteSpace"],
   },
 });
 
 const sizeProperties = defineProperties({
   properties: {
     width: {
-      xxs: vars.sizes.xxs,
-      xs: vars.sizes.xs,
-      small: vars.sizes.small,
-      normal: vars.sizes.normal,
-      large: vars.sizes.large,
-      xl: vars.sizes.xl,
-      xxl: vars.sizes.xxl,
-      xxl2: vars.sizes.xxl2,
-      xxl3: vars.sizes.xxl3,
-      xxl4: vars.sizes.xxl4,
+      ...vars.sizes,
       full: "100%",
     },
     height: {
-      xxs: vars.sizes.xxs,
-      xs: vars.sizes.xs,
-      small: vars.sizes.small,
-      normal: vars.sizes.normal,
-      large: vars.sizes.large,
-      xl: vars.sizes.xl,
-      xxl: vars.sizes.xxl,
-      xxl2: vars.sizes.xxl2,
-      xxl3: vars.sizes.xxl3,
-      xxl4: vars.sizes.xxl4,
+      ...vars.sizes,
       full: "100%",
     },
   },
@@ -74,62 +59,39 @@ const sizeProperties = defineProperties({
   },
 });
 
-export const flexProperties = defineProperties({
+const flexProperties = defineProperties({
   properties: {
+    alignItems: {
+      start: "flex-start",
+      end: "flex-end",
+      center: "center",
+      stretch: "stretch",
+    },
     flex: {
       1: "1",
     },
+    flexDirection: {
+      row: "row",
+      column: "column",
+    },
+    justifyContent: {
+      start: "flex-start",
+      center: "center",
+      end: "flex-end",
+      "space-between": "space-between",
+      stretch: "stretch",
+    },
+    gap: vars.spacing,
   },
 });
 
 const paddingProperties = defineProperties({
   properties: {
-    padding: {
-      "0": 0,
-      xxs: vars.spacing.xxs,
-      xs: vars.spacing.xs,
-      small: vars.spacing.small,
-      normal: vars.spacing.normal,
-      large: vars.spacing.large,
-      xl: vars.spacing.xl,
-      xxl: vars.spacing.xxl,
-    },
-    paddingBottom: {
-      xxs: vars.spacing.xxs,
-      xs: vars.spacing.xs,
-      small: vars.spacing.small,
-      normal: vars.spacing.normal,
-      large: vars.spacing.large,
-      xl: vars.spacing.xl,
-      xxl: vars.spacing.xxl,
-    },
-    paddingTop: {
-      xxs: vars.spacing.xxs,
-      xs: vars.spacing.xs,
-      small: vars.spacing.small,
-      normal: vars.spacing.normal,
-      large: vars.spacing.large,
-      xl: vars.spacing.xl,
-      xxl: vars.spacing.xxl,
-    },
-    paddingLeft: {
-      xxs: vars.spacing.xxs,
-      xs: vars.spacing.xs,
-      small: vars.spacing.small,
-      normal: vars.spacing.normal,
-      large: vars.spacing.large,
-      xl: vars.spacing.xl,
-      xxl: vars.spacing.xxl,
-    },
-    paddingRight: {
-      xxs: vars.spacing.xxs,
-      xs: vars.spacing.xs,
-      small: vars.spacing.small,
-      normal: vars.spacing.normal,
-      large: vars.spacing.large,
-      xl: vars.spacing.xl,
-      xxl: vars.spacing.xxl,
-    },
+    padding: vars.spacing,
+    paddingBottom: vars.spacing,
+    paddingTop: vars.spacing,
+    paddingLeft: vars.spacing,
+    paddingRight: vars.spacing,
   },
   shorthands: {
     p: ["padding"],
@@ -141,42 +103,10 @@ const paddingProperties = defineProperties({
 
 const marginProperties = defineProperties({
   properties: {
-    marginBottom: {
-      xxs: vars.spacing.xxs,
-      xs: vars.spacing.xs,
-      small: vars.spacing.small,
-      normal: vars.spacing.normal,
-      large: vars.spacing.large,
-      xl: vars.spacing.xl,
-      xxl: vars.spacing.xxl,
-    },
-    marginTop: {
-      xxs: vars.spacing.xxs,
-      xs: vars.spacing.xs,
-      small: vars.spacing.small,
-      normal: vars.spacing.normal,
-      large: vars.spacing.large,
-      xl: vars.spacing.xl,
-      xxl: vars.spacing.xxl,
-    },
-    marginLeft: {
-      xxs: vars.spacing.xxs,
-      xs: vars.spacing.xs,
-      small: vars.spacing.small,
-      normal: vars.spacing.normal,
-      large: vars.spacing.large,
-      xl: vars.spacing.xl,
-      xxl: vars.spacing.xxl,
-    },
-    marginRight: {
-      xxs: vars.spacing.xxs,
-      xs: vars.spacing.xs,
-      small: vars.spacing.small,
-      normal: vars.spacing.normal,
-      large: vars.spacing.large,
-      xl: vars.spacing.xl,
-      xxl: vars.spacing.xxl,
-    },
+    marginBottom: vars.spacing,
+    marginTop: vars.spacing,
+    marginLeft: vars.spacing,
+    marginRight: vars.spacing,
   },
   shorthands: {
     mb: ["marginBottom"],
@@ -192,7 +122,7 @@ export const s = createSprinkles(
   marginProperties,
   paddingProperties,
   sizeProperties,
-  fontProperties,
+  textProperties,
   flexProperties,
 );
 

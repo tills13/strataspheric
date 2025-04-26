@@ -1,7 +1,7 @@
 import { VALIDITY_PERIOD } from "./jwt";
 import { Config } from "./types";
 
-export const COOKIE_NAME = "strataspheric.session";
+const COOKIE_NAME = "strataspheric.session";
 
 export function getJwtFromCookies(
   rawCookieHeader: string | undefined | null,

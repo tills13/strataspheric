@@ -1,4 +1,15 @@
-// import "@vanilla-extract/css";
+export function invertBreakpoint(rawBreakpoint: string) {
+  const [, direction, breakpoint] = /\((min|max)-width: (\d+)px\)/.exec(
+    rawBreakpoint,
+  )!;
+
+  if (direction === "min") {
+    const px = parseInt(breakpoint, 10) - 1;
+    return `(max-width: ${px}px)`;
+  }
+
+  throw new Error("invalid breakpoint: " + rawBreakpoint);
+}
 
 export function important<T>(value: T): T {
   return `${value} !important` as T;

@@ -1,5 +1,10 @@
 import { vars } from "../../app/theme.css";
-import { field, fieldActionContainer, fieldLabel } from "../Form/style.css";
+import {
+  field,
+  fieldLabel,
+  fieldLeftActionContainer,
+  fieldRightActionContainer,
+} from "../Form/style.css";
 import { groupElement } from "../Group/style.css";
 import { stackElement } from "../Stack/style.css";
 import { style } from "@vanilla-extract/css";
@@ -61,6 +66,9 @@ export const inputFieldFileIcon = style({
   marginRight: vars.spacing.small,
 });
 
-export const inputFieldActionContainer = style([fieldActionContainer]);
+export const inputFieldLeftActionContainer = style([fieldLeftActionContainer]);
+export const inputFieldRightActionContainer = style([
+  fieldRightActionContainer,
+]);
 
 export const inputFieldLabel = style([fieldLabel]);

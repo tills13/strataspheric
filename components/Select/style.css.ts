@@ -4,6 +4,7 @@ import { inputFieldInput, inputFieldWrapper } from "../Input/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const selectWrapper = style([field, inputFieldWrapper]);
+export const selectPlaceholder = style({});
 
 export const select = style([
   inputFieldInput,
@@ -21,11 +22,13 @@ export const select = style([
     backgroundPosition: "right 0.0rem center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "1.5rem 1.5rem",
+
+    selectors: {
+      [`&:not(:has(option:not(${selectPlaceholder}):checked))`]: {
+        color: vars.fontColors.placeholder,
+      },
+    },
   },
 ]);
-
-export const selectPlaceholder = style({
-  color: vars.fontColors.placeholder,
-});
 
 export const selectFieldLabel = style([fieldLabel]);

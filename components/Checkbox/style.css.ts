@@ -11,7 +11,7 @@ export const checkbox = style({
   flexShrink: 0,
 
   padding: 0,
-  border: `2px solid ${vars.colors.borderDefault}`,
+  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius,
   boxShadow: "none",
   outline: "none",
@@ -25,7 +25,7 @@ export const checkbox = style({
     },
 
     "&::placeholder": {
-      color: vars.fontColors.secondary,
+      color: vars.fontColors.placeholder,
     },
 
     "&:hover": {

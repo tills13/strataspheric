@@ -54,7 +54,7 @@ export const minutesUrl = style({
   padding: vars.spacing.small,
   justifyContent: "space-between",
   backgroundColor: vars.colors.grey50,
-  border: border("2px", "solid", vars.colors.grey400),
+  border: border(vars.borderWidth, "solid", vars.colors.grey400),
   borderRadius: vars.borderRadius,
 });
 
@@ -80,21 +80,6 @@ export const minutesUrlApproveButton = style({
       flex: 1,
     },
   },
-});
-
-export const icon = style({
-  height: vars.sizes.small,
-});
-
-export const fileNameContainer = style({
-  overflow: "hidden",
-});
-
-export const fileName = style({
-  display: "block",
-  textOverflow: "ellipsis",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
 });
 
 export const strataActivityModalTimelineContainer = style({

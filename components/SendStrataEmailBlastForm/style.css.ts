@@ -34,7 +34,7 @@ export const recipient = style({
   display: "block",
   padding: vars.spacing.small,
   color: vars.fontColors.primary,
-  border: `2px solid ${vars.colors.borderDefault}`,
+  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius,
   cursor: "pointer",
   overflow: "hidden",
@@ -42,9 +42,6 @@ export const recipient = style({
   selectors: {
     [`&:has(${recipientCheckbox}:checked)`]: {
       borderColor: vars.colors.borderDefaultHover,
-    },
-    "&:hover": {
-      // backgroundColor: vars.colors.primaryHover,
     },
   },
 });

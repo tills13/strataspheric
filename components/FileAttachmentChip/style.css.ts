@@ -10,7 +10,7 @@ export const fileAttachmentChip = style({
   gap: vars.spacing.small,
   padding: `0 ${vars.spacing.small}`,
   backgroundColor: vars.colors.grey50,
-  border: border("2px", "solid", vars.colors.grey50),
+  border: border(vars.borderWidth, "solid", vars.colors.grey50),
   alignItems: "center",
   height: vars.sizes.normal,
   color: "inherit",

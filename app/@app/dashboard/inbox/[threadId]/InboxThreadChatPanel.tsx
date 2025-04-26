@@ -20,7 +20,7 @@ export async function InboxThreadChatPanel({ threadId }: Props) {
       <div className={styles.chatPanelContents}>
         <Header as="h2">Chats</Header>
 
-        <InfoPanel level="info">
+        <InfoPanel level="default">
           <Text>
             Chats are private with authorized members of the council or
             individuals who are explicitly given the ability to see and engage

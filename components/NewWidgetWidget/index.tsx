@@ -9,10 +9,10 @@ import { AddIcon } from "../Icon/AddIcon";
 import { Modal } from "../Modal";
 
 interface Props {
-  upsertStrataWidget: (fd: FormData) => void;
+  strataId: string;
 }
 
-export function NewWidgetWidget({ upsertStrataWidget }: Props) {
+export function NewWidgetWidget({ strataId }: Props) {
   const [showNewWidgetModal, setShowNewWidgetModal] = useState(false);
 
   return (
@@ -32,10 +32,8 @@ export function NewWidgetWidget({ upsertStrataWidget }: Props) {
           title="New Widget"
         >
           <CreateOrUpdateStrataWidgetForm
-            upsertStrataWidget={(fd) => {
-              upsertStrataWidget(fd);
-              setShowNewWidgetModal(false);
-            }}
+            onUpsertWidget={() => setShowNewWidgetModal(false)}
+            strataId={strataId}
           />
         </Modal>
       )}

@@ -1,17 +1,26 @@
+import {
+  fieldBaseActionContainer,
+  fieldRightActionContainer,
+} from "../Form/style.css";
 import * as styles from "./style.css";
 
 import React, { PropsWithChildren } from "react";
 
 import { classnames } from "../../utils/classnames";
+import { Core } from "../Core";
+import { Group } from "../Group";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  actionRight?: React.ReactNode;
   label?: string;
   onChangeValue?: (value: string) => void;
-  selectRef?: React.Ref<HTMLSelectElement>;
+  ref?: React.Ref<HTMLSelectElement>;
+  placeholder?: string;
   placeholderEnabled?: boolean;
 }
 
 export function Select({
+  actionRight,
   children,
   className,
   id: propsId,
@@ -19,14 +28,17 @@ export function Select({
   name,
   onChange: propsOnChange,
   onChangeValue,
+  placeholder,
   placeholderEnabled,
-  selectRef,
+  ref,
   ...delegateProps
 }: PropsWithChildren<Props>) {
   function onChange(e: React.ChangeEvent<HTMLSelectElement>) {
     onChangeValue?.(e.target.value);
     propsOnChange?.(e);
   }
+
+  const placeholderOption = label || placeholder;
 
   return (
     <div className={classnames(styles.selectWrapper, className)}>
@@ -35,21 +47,26 @@ export function Select({
         id={propsId || name}
         name={name}
         onChange={onChangeValue || propsOnChange ? onChange : undefined}
-        ref={selectRef}
+        ref={ref}
         {...delegateProps}
       >
-        {label && (
+        {placeholderOption && (
           <option
             className={styles.selectPlaceholder}
             value=""
             disabled={!placeholderEnabled}
           >
-            {label}
+            {placeholderOption}
           </option>
         )}
 
         {children}
       </select>
+
+      {actionRight && (
+        <Group className={fieldRightActionContainer}>{actionRight}</Group>
+      )}
+
       {label && (
         <label className={styles.selectFieldLabel} htmlFor={propsId || name}>
           {label}

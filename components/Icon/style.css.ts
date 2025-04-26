@@ -1,7 +1,7 @@
 import { iconColorVar, vars } from "../../app/theme.css";
 import * as buttonStyles from "../Button/style.css";
 import * as dropdownActionsStyles from "../DropdownActions/style.css";
-import { fieldActionContainer } from "../Form/style.css";
+import { fieldBaseActionContainer } from "../Form/style.css";
 import { timelineIconContainer } from "../Timeline/style.css";
 import {
   ComplexStyleRule,
@@ -32,7 +32,7 @@ export const icon = style({
     [`${timelineIconContainer} &`]: {
       height: vars.sizes.xxs,
     },
-    [`${fieldActionContainer} &`]: {
+    [`${fieldBaseActionContainer} &`]: {
       height: "100%",
     },
   },

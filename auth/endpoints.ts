@@ -6,10 +6,10 @@ import { formatJwtCookie } from "./cookies";
 import { VALIDITY_PERIOD, buildJwt, getKey, readJwtFromRequest } from "./jwt";
 import { Config } from "./types";
 
-export const BASE_ENDPOINT = "/api/session";
-export const SIGN_IN_ENDPOINT = `${BASE_ENDPOINT}/create`;
-export const SIGN_OUT_ENDPOINT = `${BASE_ENDPOINT}/destroy`;
-export const REFRESH_ENDPOINT = `${BASE_ENDPOINT}/refresh`;
+const BASE_ENDPOINT = "/api/session";
+const SIGN_IN_ENDPOINT = `${BASE_ENDPOINT}/create`;
+const SIGN_OUT_ENDPOINT = `${BASE_ENDPOINT}/destroy`;
+const REFRESH_ENDPOINT = `${BASE_ENDPOINT}/refresh`;
 
 export async function GET(config: Config, req: NextRequest) {
   const reqUrl = new URL(req.url);

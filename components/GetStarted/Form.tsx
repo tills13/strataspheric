@@ -144,7 +144,7 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
 
         <InfoPanel
           header={<Header as="h3">Content Visibility</Header>}
-          level="info"
+          level="default"
         >
           <Text>
             Controls access to strata content by outsiders. If your strata is

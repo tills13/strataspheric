@@ -9,7 +9,7 @@ import { AttachInvoiceModal } from "./AttachInvoiceModal";
 
 interface Props {
   className?: string;
-  onSelectInvoice: (file: Invoice | undefined) => void;
+  onSelectInvoice?: (file: Invoice | undefined) => void;
   selectedInvoice?: Invoice;
 }
 
@@ -28,7 +28,7 @@ export function AttachInvoiceButton({
           color="error"
           style="secondary"
           iconRight={<PaidDocumentIcon />}
-          onClick={() => onSelectInvoice(undefined)}
+          onClick={() => onSelectInvoice?.(undefined)}
           type="button"
         >
           Unattach Invoice (#{selectedInvoice.identifier})

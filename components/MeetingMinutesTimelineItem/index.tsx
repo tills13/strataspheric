@@ -37,7 +37,7 @@ export function MeetingMinutesTimelineItem({
     <Panel className={classnames(className, styles.meetingMinutesTimelineItem)}>
       <Flex from="tablet" justify="space-between">
         <Group align="center">
-          <Badge level="info">VERSION #{versionNum}</Badge>
+          <Badge level="default">VERSION #{versionNum}</Badge>
           <FileLink
             className={styles.fileNameContainer}
             path={file.path}

@@ -1,11 +1,12 @@
 import { db } from "..";
 
-export function getInvoice(strataId: string, invoiceId: string) {
+export type Invoice = Awaited<ReturnType<typeof getInvoice>>;
+
+export function getInvoice(invoiceId: string) {
   let query = db
     .selectFrom("invoices")
     .selectAll()
-    .where("invoices.strataId", "=", strataId)
     .where("invoices.id", "=", invoiceId);
 
-  return query.executeTakeFirst();
+  return query.executeTakeFirstOrThrow();
 }

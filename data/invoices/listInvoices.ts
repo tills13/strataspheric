@@ -1,13 +1,22 @@
 import { db } from "..";
+import { Invoice } from "./getInvoice";
 
-export function listInvoices(strataId: string, userId?: string | undefined) {
-  let query = db
-    .selectFrom("invoices")
-    .selectAll()
-    .where("invoices.strataId", "=", strataId);
+type ListInvoicesFilter = {
+  strataId?: string;
+  payeeId?: string;
+};
 
-  if (userId) {
-    query = query.where("invoices.payee", "=", userId);
+export function listInvoices(
+  filter: ListInvoicesFilter = {},
+): Promise<Invoice[]> {
+  let query = db.selectFrom("invoices").selectAll();
+
+  if (filter.strataId) {
+    query = query.where("invoices.strataId", "=", filter.strataId);
+  }
+
+  if (filter.payeeId) {
+    query = query.where("invoices.payee", "=", filter.payeeId);
   }
 
   return query.execute();

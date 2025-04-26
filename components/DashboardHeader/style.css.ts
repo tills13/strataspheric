@@ -75,7 +75,7 @@ export const mobileMenuText = style({
   flex: 1,
 });
 
-export const baseSubheaderLink = style({
+const baseSubheaderLink = style({
   display: "flex",
   alignItems: "center",
   gap: vars.spacing.normal,
@@ -120,7 +120,7 @@ export const activeSubheaderLink = style([
   },
 ]);
 
-export const actionsContainer = style({
+const actionsContainer = style({
   display: "flex",
   gap: vars.spacing.small,
 

@@ -1,4 +1,3 @@
-import { vars } from "../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const centerContainer = style({
@@ -7,13 +6,3 @@ export const centerContainer = style({
 });
 
 export const form = style({});
-
-export const formElement = style({
-  width: "100%",
-});
-
-export const visibilityLabel = style({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-});

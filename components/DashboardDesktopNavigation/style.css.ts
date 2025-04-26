@@ -18,7 +18,7 @@ export const navigation = style({
   },
 });
 
-export const baseNavigationItem = style({
+const baseNavigationItem = style({
   borderRadius: vars.borderRadius,
   textDecoration: "none",
 });

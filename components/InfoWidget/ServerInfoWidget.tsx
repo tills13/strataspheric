@@ -11,16 +11,10 @@ interface Props extends AbstractWidgetProps {
   widget: StrataWidget;
 }
 
-export async function ServerInfoWidget({
-  deleteWidget,
-  strata,
-  upsertStrataWidget,
-  widget,
-}: Props) {
+export async function ServerInfoWidget({ strata, strataId, widget }: Props) {
   return (
     <AbstractWidget
-      deleteWidget={deleteWidget}
-      upsertStrataWidget={upsertStrataWidget}
+      strataId={strataId}
       widget={widget}
       widgetTitle={widget.title}
     >

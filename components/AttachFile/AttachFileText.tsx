@@ -1,3 +1,5 @@
+"use client";
+
 import * as styles from "./style.css";
 
 import React, { useState } from "react";
@@ -8,6 +10,7 @@ import { FilePreview } from "../FilePreview";
 import { Group } from "../Group";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
 import { Icon } from "../Icon/Icon";
+import { Text } from "../Text";
 import { AttachFileModal } from "./AttachFileModal";
 
 interface Props {
@@ -47,7 +50,11 @@ export function AttachFileText({
                 file={selectedFile}
                 showImagePreview={showImagePreview}
               />
-              {showFileName && selectedFile.name}
+              {showFileName && (
+                <Text fw="bold" td="underline" ws="nowrap">
+                  {selectedFile.name}
+                </Text>
+              )}
             </>
           ) : (
             <>
@@ -56,7 +63,9 @@ export function AttachFileText({
               ) : (
                 <AttachmentIcon size="xs" />
               )}
-              {placeholder}
+              <Text fw="bold" td="underline" ws="nowrap">
+                {placeholder}
+              </Text>
             </>
           )}
         </Group>

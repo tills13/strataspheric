@@ -4,6 +4,7 @@ import * as styles from "./style.css";
 
 import React, { startTransition, useState } from "react";
 
+import { deleteWidgetAction } from "../../app/@app/dashboard/actions";
 import { StrataWidget } from "../../data";
 import { can } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
@@ -18,41 +19,37 @@ import { Modal } from "../Modal";
 export interface Props {
   additionalActions?: React.ComponentProps<typeof DropdownActions>["actions"];
   className?: string;
-  deleteWidget?: () => Promise<void>;
+  strataId: string;
   widgetTitle?: React.ReactNode;
   widget: StrataWidget;
-  upsertStrataWidget: (fd: FormData) => Promise<void>;
 }
 
 export function AbstractWidget({
   additionalActions = [],
   className,
-  deleteWidget,
   children,
+  strataId,
   widget,
   widgetTitle,
-  upsertStrataWidget,
 }: React.PropsWithChildren<Props>) {
   const session = useSession();
   const [showEditWidgetModal, setShowEditWidgetModal] = useState(false);
 
   const widgetActions = [
     ...additionalActions,
-    can(session?.user, "stratas.widgets.edit") &&
-      deleteWidget && {
-        label: "Edit Widget",
-        action: () => setShowEditWidgetModal(true),
-        icon: <EditIcon />,
-      },
-    can(session?.user, "stratas.widgets.delete") &&
-      deleteWidget && {
-        label: "Delete Widget",
-        action: () =>
-          startTransition(() => {
-            deleteWidget();
-          }),
-        icon: <DeleteIcon />,
-      },
+    can(session?.user, "stratas.widgets.edit") && {
+      label: "Edit Widget",
+      action: () => setShowEditWidgetModal(true),
+      icon: <EditIcon />,
+    },
+    can(session?.user, "stratas.widgets.delete") && {
+      label: "Delete Widget",
+      action: () =>
+        startTransition(() => {
+          deleteWidgetAction(widget.id);
+        }),
+      icon: <DeleteIcon />,
+    },
   ].filter(filterIsAction);
 
   return (
@@ -64,8 +61,8 @@ export function AbstractWidget({
           {widgetActions.length !== 0 && (
             <DropdownActions
               actions={widgetActions}
-              buttonSize="small"
               buttonStyle="tertiary"
+              mobileOnlyOpenLabel="Widget Actions"
             />
           )}
         </div>
@@ -76,10 +73,7 @@ export function AbstractWidget({
           closeModal={() => setShowEditWidgetModal(false)}
           title={`Edit ${widgetTitle}`}
         >
-          <CreateOrUpdateStrataWidgetForm
-            widget={widget}
-            upsertStrataWidget={upsertStrataWidget}
-          />
+          <CreateOrUpdateStrataWidgetForm strataId={strataId} widget={widget} />
         </Modal>
       )}
     </>

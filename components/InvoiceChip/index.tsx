@@ -3,13 +3,15 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
+import isAfter from "date-fns/isAfter";
 import { useTransition } from "react";
 
 import { markInvoiceAsPaidAction } from "../../app/@app/dashboard/invoices/actions";
-import { Invoice } from "../../data";
-import { p } from "../../data/users/permissions";
+import { Invoice } from "../../data/invoices/getInvoice";
 import { useCan } from "../../hooks/useCan";
 import { classnames } from "../../utils/classnames";
+import { parseTimestamp } from "../../utils/datetime";
+import { Badge } from "../Badge";
 import { Button } from "../Button";
 import { Group } from "../Group";
 import { Header } from "../Header";
@@ -26,15 +28,30 @@ interface Props {
   className?: string;
   invoice: Pick<
     Invoice,
-    "id" | "status" | "identifier" | "description" | "amount" | "isPaid"
+    | "id"
+    | "status"
+    | "identifier"
+    | "description"
+    | "amount"
+    | "isPaid"
+    | "dueBy"
   >;
 
   showEdit?: boolean;
+  showMarkPaid?: boolean;
 }
 
-export function InvoiceChip({ className, invoice, showEdit = false }: Props) {
+export function InvoiceChip({
+  className,
+  invoice,
+  showEdit = false,
+  showMarkPaid = true,
+}: Props) {
   const [isPending, startTransition] = useTransition();
   const can = useCan();
+
+  const isOverdue =
+    invoice.dueBy && isAfter(new Date(), parseTimestamp(invoice.dueBy));
 
   return (
     <Panel className={classnames(styles.invoiceChip, className)}>
@@ -42,13 +59,32 @@ export function InvoiceChip({ className, invoice, showEdit = false }: Props) {
         <Text className={styles.draftLabel}>DRAFT</Text>
       )}
 
-      <Stack gap="xs">
+      <Stack>
         <Header as="h3">
-          <Group gap="xs">
-            <Text color="secondary" as="span" fontSize="xl" fontWeight="light">
-              #
-            </Text>
-            {invoice.identifier}
+          <Group>
+            <Badge
+              level={
+                invoice.isPaid === 1
+                  ? "success"
+                  : isOverdue
+                    ? "error"
+                    : "warning"
+              }
+            >
+              {invoice.isPaid === 1 ? "paid" : isOverdue ? "overdue" : "unpaid"}
+            </Badge>
+
+            <Group gap="xs">
+              <Text
+                color="secondary"
+                as="span"
+                fontSize="xl"
+                fontWeight="light"
+              >
+                #
+              </Text>
+              {invoice.identifier}
+            </Group>
           </Group>
         </Header>
 
@@ -60,16 +96,16 @@ export function InvoiceChip({ className, invoice, showEdit = false }: Props) {
       </Stack>
 
       <Group justify="space-between">
-        <Money className={styles.invoiceAmount} amount={invoice.amount} />
+        <Money amount={invoice.amount} fs="xxl" />
 
-        {can(p("stratas", "invoices", "edit")) && (
+        {can("stratas.invoices.edit") && (
           <Group gap="small">
             {showEdit && (
               <InternalLink href={`/dashboard/invoices/${invoice.id}`}>
                 <Button icon={<EditIcon />} style="tertiary" color="primary" />
               </InternalLink>
             )}
-            {invoice.status !== "draft" && (
+            {showMarkPaid && invoice.status !== "draft" && (
               <StatusButton
                 color="success"
                 iconRight={<CircleCheckIcon />}

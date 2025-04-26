@@ -45,7 +45,7 @@ export const calendarDay = style({
   height: "100%",
   zIndex: 1,
   borderRadius: vars.borderRadius,
-  border: `2px solid ${vars.colors.borderDefault}`,
+  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
 });
 
 export const isDropTarget = style({

@@ -31,7 +31,7 @@ export function JoinFormFields({ className }: Props) {
         required
       />
 
-      <InfoPanel level="info">
+      <InfoPanel level="default">
         Create a strong password to protect your account and your strata&apos;s
         data.
       </InfoPanel>

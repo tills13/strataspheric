@@ -8,8 +8,8 @@ export const abstractWidget = style({
   flexDirection: "column",
   padding: vars.spacing.normal,
   borderRadius: vars.borderRadius,
-  border: `2px solid ${vars.colors.borderDefault}`,
-  // overflow: "hidden",
+  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
+  height: "400px",
 });
 
 export const abstractWidgetHeader = style({

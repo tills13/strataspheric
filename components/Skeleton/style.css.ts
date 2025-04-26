@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const widgetSkeleton = style({});
 
-export const tableSkeleton = style({
+const tableSkeleton = style({
   width: "100%",
 });
 

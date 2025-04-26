@@ -19,20 +19,3 @@ export const pageContainer = style({
   padding: vars.spacing.normal,
   overflow: "auto",
 });
-
-export const dashboardWidgetGridContainer = style({
-  display: "grid",
-  gridTemplateColumns: "100%",
-  gap: vars.spacing.normal,
-  overflow: "auto",
-
-  "@media": {
-    [breakpoints.tablet]: {
-      gridTemplateColumns: "repeat(2, 1fr)",
-      gridAutoRows: "400px",
-    },
-    [breakpoints.desktop]: {
-      gridTemplateColumns: "repeat(3, 1fr)",
-    },
-  },
-});

@@ -14,11 +14,6 @@ import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { CreateOrUpdateStrataInfoWidgetForm } from "./CreateOrUpdateStrataInfoWidgetForm";
 
-interface Props {
-  strataId: string;
-  widget?: StrataWidget;
-}
-
 function mapSubtypeToType(subType: StrataWidget["type"]) {
   if (subType.startsWith("file")) {
     return "file";
@@ -31,13 +26,26 @@ function mapSubtypeToType(subType: StrataWidget["type"]) {
   return subType;
 }
 
-export function CreateOrUpdateStrataWidgetForm({ strataId, widget }: Props) {
+interface Props {
+  onUpsertWidget?: () => void;
+  strataId: string;
+  widget?: StrataWidget;
+}
+
+export function CreateOrUpdateStrataWidgetForm({
+  onUpsertWidget,
+  strataId,
+  widget,
+}: Props) {
   const type = widget ? mapSubtypeToType(widget.type) : undefined;
   const [selectedType, setSelectedType] = useState<string>(type || "file");
 
   return (
     <form
-      action={upsertStrataWidgetAction.bind(undefined, strataId, widget?.id)}
+      action={async (fd) => {
+        await upsertStrataWidgetAction(strataId, widget?.id, fd);
+        onUpsertWidget?.();
+      }}
       className={styles.newWidgetForm}
     >
       <Stack className={s({ mb: "large" })} gap="normal">

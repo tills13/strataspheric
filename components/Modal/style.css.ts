@@ -5,7 +5,7 @@ import { calc } from "@vanilla-extract/css-utils";
 
 import { border, padding } from "../../theme";
 
-export const MODAL_GUTTER = "100px";
+const MODAL_GUTTER = "100px";
 
 export const modalWrapper = style({
   position: "fixed",
@@ -36,7 +36,7 @@ export const modal = style({
       maxHeight: calc("100dvh")
         .subtract(calc(MODAL_GUTTER).multiply(2))
         .toString(),
-      border: border("2px", "solid", vars.colors.borderDefault),
+      border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
       borderRadius: vars.borderRadius,
     },
   },

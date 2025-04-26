@@ -1,6 +1,7 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
+import { upsertFileWidgetFileAction } from "../../app/@app/dashboard/actions";
 import { DividerText } from "../DividerText";
 import { FileSelect } from "../FileSelect";
 import { AddIcon } from "../Icon/AddIcon";
@@ -10,12 +11,16 @@ import { StatusButton } from "../StatusButton";
 import { TextArea } from "../TextArea";
 
 interface Props {
-  createFile: (fd: FormData) => Promise<void>;
+  strataId: string;
+  widgetId: string;
 }
 
-export function AddFileToWidgetForm({ createFile }: Props) {
+export function AddFileToWidgetForm({ strataId, widgetId }: Props) {
   return (
-    <form className={styles.addFileToWidgetForm} action={createFile}>
+    <form
+      className={styles.addFileToWidgetForm}
+      action={upsertFileWidgetFileAction.bind(undefined, strataId, widgetId)}
+    >
       <Stack>
         <Input name="name" label="Name" placeholder="e.g. AGM Minutes" />
         <TextArea

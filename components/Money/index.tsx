@@ -18,9 +18,18 @@ interface Props extends React.ComponentProps<typeof Text> {
 
 export function Money({ amount, className, unit = "$", ...rest }: Props) {
   return (
-    <Text as="span" className={classnames(styles.money, className)} {...rest}>
-      <span className={styles.moneyUnit}>{unit}</span>
-      <span className={styles.moneyAmount}>{Dollars.format(amount)}</span>
+    <Text
+      as="span"
+      className={classnames(styles.money, className)}
+      whiteSpace="nowrap"
+      {...rest}
+    >
+      <Text as="span" color="secondary" fontSize="unset">
+        {unit}
+      </Text>
+      <Text as="span" fontSize="unset" fw="bold">
+        {Dollars.format(amount)}
+      </Text>
     </Text>
   );
 }

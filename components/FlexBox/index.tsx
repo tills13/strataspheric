@@ -1,13 +1,20 @@
 import * as styles from "./style.css";
 
+import React from "react";
+
 import { classnames } from "../../utils/classnames";
 import { Core } from "../Core";
 
-interface Props extends Omit<React.ComponentProps<typeof Core<"div">>, "as"> {
-  align?: keyof typeof styles.alignItems;
-  gap?: keyof typeof styles.gap;
-  justify?: keyof typeof styles.justifyContent;
-  direction?: keyof typeof styles.direction;
+type CoreProps = React.ComponentProps<typeof Core<"div">>;
+
+interface Props
+  extends Omit<
+    CoreProps,
+    "as" | "alignItems" | "justifyContent" | "flexDirection"
+  > {
+  align?: CoreProps["alignItems"];
+  justify?: CoreProps["justifyContent"];
+  direction?: CoreProps["flexDirection"];
 }
 
 export function FlexBox({
@@ -22,14 +29,11 @@ export function FlexBox({
   return (
     <Core
       as="div"
-      className={classnames(
-        className,
-        styles.flexBox,
-        align && styles.alignItems[align],
-        gap && styles.gap[gap],
-        justify && styles.justifyContent[justify],
-        direction && styles.direction[direction],
-      )}
+      className={classnames(className, styles.flexBox)}
+      alignItems={align}
+      flexDirection={direction}
+      gap={gap}
+      justifyContent={justify}
       {...rest}
     >
       {children}

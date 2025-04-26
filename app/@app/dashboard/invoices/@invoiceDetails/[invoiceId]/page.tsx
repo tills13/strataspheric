@@ -1,7 +1,6 @@
 import { s } from "../../../../../../sprinkles.css";
 
 import isAfter from "date-fns/isAfter";
-import { notFound } from "next/navigation";
 
 import { PageProps } from "../../../../../../.next/types/app/@app/dashboard/invoices/@invoiceDetails/[invoiceId]/page";
 import { ConfirmButton } from "../../../../../../components/ConfirmButton";
@@ -12,27 +11,26 @@ import { DeleteIcon } from "../../../../../../components/Icon/DeleteIcon";
 import { InfoPanel } from "../../../../../../components/InfoPanel";
 import { Text } from "../../../../../../components/Text";
 import { getInvoice } from "../../../../../../data/invoices/getInvoice";
-import { mustGetCurrentStrata } from "../../../../../../data/stratas/getStrataByDomain";
 import { parseTimestamp } from "../../../../../../utils/datetime";
 import { deleteInvoiceAction } from "../../actions";
 
 export const runtime = "edge";
 
 export default async function Page({ params }: PageProps) {
-  const strata = await mustGetCurrentStrata();
-  const invoice = await getInvoice(strata.id, (await params).invoiceId);
-
-  if (!invoice) {
-    notFound();
-  }
+  const invoice = await getInvoice((await params).invoiceId);
 
   return (
     <>
       {!!invoice.isPaid && (
         <InfoPanel className={s({ mb: "large" })} level="success">
           <Text>
-            This invoice was marked paid on{" "}
-            <DateOutput timestamp={invoice.updatedAt} />
+            This invoice was marked paid{" "}
+            <DateOutput
+              fw="bold"
+              timestamp={invoice.updatedAt}
+              compactOutputPrefix
+            />
+            .
           </Text>
         </InfoPanel>
       )}

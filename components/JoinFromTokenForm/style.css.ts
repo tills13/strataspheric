@@ -11,11 +11,11 @@ export const header1 = style({
   marginBottom: vars.spacing.large,
 });
 
-export const blurb = style({
+const blurb = style({
   marginBottom: vars.spacing.large,
 });
 
-export const submitButtonIcon = style({
+const submitButtonIcon = style({
   verticalAlign: "top",
   fill: important(vars.colors.green500),
 });

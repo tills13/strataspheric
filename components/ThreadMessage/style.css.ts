@@ -11,7 +11,7 @@ export const message = style({
   },
 });
 
-export const highlightAnimation = keyframes({
+const highlightAnimation = keyframes({
   "25%": {
     backgroundColor: `color-mix(in srgb, ${vars.colors.orange100} 60%, transparent)`,
   },

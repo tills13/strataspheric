@@ -5,7 +5,7 @@ export const radioButton = style({
   height: vars.sizes.normal,
   padding: vars.spacing.xxs,
   borderRadius: vars.borderRadius,
-  border: `2px solid ${vars.colors.borderDefault}`,
+  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
 });
 
 export const radioButtonButton = style({

@@ -5,7 +5,7 @@ import { calc } from "@vanilla-extract/css-utils";
 
 import { padding } from "../../theme";
 
-export const section = style({});
+const section = style({});
 
 export const centerContent = style({
   textAlign: "center",
@@ -85,15 +85,6 @@ export const sideBySideTextContainer = style({
   },
 });
 
-export const sideBySideTitle = style({
-  fontSize: vars.fontSizes.large,
-});
-
-export const sideBySideParagraph = style({
-  fontSize: vars.fontSizes.normal,
-  lineHeight: 1.4,
-});
-
 export const sideBySideImageStack = style({
   position: "relative",
 });
@@ -150,18 +141,7 @@ export const landingWrapper = style({
   marginBottom: 100,
 });
 
-export const sectionHeader = style({});
-
-export const plansSection = style({
-  textAlign: "center",
-});
-
-export const plansSectionHeader = style([
-  sectionHeader,
-  {
-    marginBottom: vars.spacing.xl,
-  },
-]);
+const sectionHeader = style({});
 
 export const ctaSection = style([
   {
@@ -176,9 +156,6 @@ export const ctaHeader = style([
     fontSize: vars.fontSizes.xxl,
   },
 ]);
-export const ctaText = style({
-  marginBottom: vars.spacing.normal,
-});
 
 export const ctaLink = style({
   display: "block",
@@ -197,21 +174,6 @@ export const ctaButton = style({
   maxWidth: 300,
 });
 
-export const plansContainer = style({
-  display: "grid",
-  justifyContent: "center",
-  gap: vars.spacing.normal,
-  marginBottom: vars.spacing.large,
-  "@media": {
-    "(min-width: 650px)": {
-      gridTemplateColumns: "repeat(2, 300px)",
-    },
-    [breakpoints.desktop]: {
-      gridTemplateColumns: "repeat(3, 300px)",
-    },
-  },
-});
-
 export const staticPageContainer = style({
   padding: padding(
     0,
@@ -223,6 +185,7 @@ export const staticPageContainer = style({
   "@media": {
     [breakpoints.tablet]: {
       padding: 0,
+      paddingBottom: vars.spacing.normal,
       marginLeft: calc(vars.sizes.xxl)
         .add(calc(vars.spacing.xs).multiply(2))
         .toString(),

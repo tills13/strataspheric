@@ -1,5 +1,5 @@
-export const namespaces = ["stratas"] as const;
-export const scopes = [
+const namespaces = ["stratas"] as const;
+const scopes = [
   "amenities",
   "amenity_bookings",
   "events",
@@ -11,8 +11,8 @@ export const scopes = [
   "memberships",
   "widgets",
 ] as const;
-export const actions = ["create", "edit", "delete", "view"] as const;
-export const roles = [
+const actions = ["create", "edit", "delete", "view"] as const;
+const roles = [
   "administrator",
   "president",
   "vice-president",
@@ -113,7 +113,7 @@ interface HasScope {
 
 const PermissionsError = new Error("insufficient permissions");
 
-export function wildcardScopeToRegex(scope: string) {
+function wildcardScopeToRegex(scope: string) {
   return new RegExp(
     "^" + scope.replaceAll(".", "\\.").replace("*", ".+") + "$",
   );
@@ -123,6 +123,11 @@ export function can(
   scoped: HasScope | null | undefined,
   ...targetScopes: Permission[]
 ): boolean {
+  // todo -- figure out
+  // if (process.env.NODE_ENV === "development") {
+  //   return true;
+  // }
+
   if (targetScopes.length !== 1) {
     return targetScopes.every((scope) => can(scoped, scope));
   }

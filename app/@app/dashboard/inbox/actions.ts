@@ -23,6 +23,7 @@ export async function deleteThreadAction(threadId: string) {
   await deleteThreadChats(threadId);
 
   revalidatePath("/dashboard/inbox");
+  redirect("/dashboard/inbox");
 }
 
 export async function createInboxMessageAction(

@@ -12,7 +12,7 @@ import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain
 
 export async function StrataInvoicesList() {
   const strata = await mustGetCurrentStrata();
-  const invoices = await listInvoices(strata.id);
+  const invoices = await listInvoices({ strataId: strata.id });
 
   return (
     <div className={styles.invoicesList}>
@@ -27,7 +27,7 @@ export async function StrataInvoicesList() {
           className={styles.invoicesListInvoiceContainer}
           href={`/dashboard/invoices/${invoice.id}`}
         >
-          <InvoiceChip invoice={invoice} />
+          <InvoiceChip invoice={invoice} showMarkPaid={false} />
         </InternalLink>
       ))}
 

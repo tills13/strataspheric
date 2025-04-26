@@ -14,7 +14,7 @@ export const attachInvoiceTextText = style({
   border: "none",
 });
 
-export const fileName = style({
+const fileName = style({
   textOverflow: "ellipsis",
   overflow: "hidden",
   textTransform: "none",

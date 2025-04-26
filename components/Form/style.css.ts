@@ -1,17 +1,19 @@
 import { vars } from "../../app/theme.css";
-import { panel } from "../Panel/style.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
 import { padding } from "../../theme";
 
-export const fieldActionContainer = style({
+export const fieldBaseActionContainer = style({
   width: "min-content",
   margin: vars.spacing.xs,
   height: calc("100%").subtract(calc(vars.spacing.xs).multiply(2)).toString(),
   flex: 0,
 });
+
+export const fieldLeftActionContainer = style([fieldBaseActionContainer, {}]);
+export const fieldRightActionContainer = style([fieldBaseActionContainer, {}]);
 
 export const field = style({
   position: "relative",
@@ -20,7 +22,7 @@ export const field = style({
   color: vars.fontColors.primary,
   background: "none",
   backgroundColor: vars.colors.white,
-  border: `2px solid ${vars.colors.borderDefault}`,
+  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius,
   boxShadow: "none",
   outline: "none",
@@ -30,23 +32,13 @@ export const field = style({
       height: "44px",
       padding: `0 ${vars.spacing.normal}`,
     },
-
     "&:hover": {
       borderColor: vars.colors.borderDefaultHover,
     },
-    "&:disabled": {
-      opacity: 0.7,
-      cursor: "not-allowed",
+    [`&:has(${fieldLeftActionContainer})`]: {
+      paddingLeft: 0,
     },
-    "&::placeholder": {
-      color: vars.fontColors.secondary,
-    },
-
-    [`${panel} &`]: {
-      backgroundColor: vars.colors.grey0,
-    },
-
-    [`&:has(${fieldActionContainer})`]: {
+    [`&:has(${fieldRightActionContainer})`]: {
       paddingRight: 0,
     },
   },
@@ -60,12 +52,20 @@ export const fieldLabel = style({
   padding: padding(0, vars.spacing.small),
   fontWeight: vars.fontWeights.bold,
   color: vars.fontColors.secondary,
-  backgroundColor: vars.colors.white,
   zIndex: 100,
 
   selectors: {
-    [`${panel} &`]: {
-      backgroundColor: vars.colors.grey0,
+    "&:before": {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: 9,
+      display: "block",
+      backgroundColor: vars.colors.white,
+      height: vars.borderWidth,
+      content: " ",
+      padding: `0 ${vars.spacing.small}`,
+      zIndex: -1,
     },
   },
 });

@@ -112,6 +112,10 @@ class D1Connection implements DatabaseConnection {
       error = e;
     }
 
+    if (error && error instanceof Error) {
+      throw error;
+    }
+
     if (!results || results.error) {
       // if (error && error instanceof Error && error.message.includes("D1_")) {
       // @ts-ignore
@@ -119,11 +123,7 @@ class D1Connection implements DatabaseConnection {
         console.log("[D1]", "query:", compiledQuery.sql);
       }
 
-      throw new Error(
-        results?.error ||
-          (error as Error | { message?: string }).message ||
-          "an unknown error occurred",
-      );
+      throw new Error(results?.error || "an unknown error occurred");
     }
 
     const numAffectedRows =

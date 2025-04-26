@@ -5,7 +5,7 @@ export const strataChip = style({
   padding: vars.spacing.normal,
   backgroundColor: vars.colors.grey50,
   borderRadius: vars.borderRadius,
-  border: `2px solid ${vars.colors.grey50}`,
+  border: `${vars.borderWidth} solid ${vars.colors.grey50}`,
   textDecoration: "none",
 
   selectors: {

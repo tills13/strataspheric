@@ -60,7 +60,7 @@ export function InboxMessageThreadAmenityBooking({
                 <InvoiceChip invoice={amenityBooking.invoice} />
               )}
 
-              <InfoPanel level="info">
+              <InfoPanel level="default">
                 Approving the booking will lock in the date for the booking,
                 publish the above invoice, and automatically generate a response
                 to this thread with the invoice attached. Rejecting the booking

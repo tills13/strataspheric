@@ -27,12 +27,12 @@ export const stratasListItem = style({
   textDecoration: "none",
   backgroundColor: vars.colors.grey100,
   borderRadius: vars.borderRadius,
-  border: `2px solid ${vars.colors.grey100}`,
+  border: `${vars.borderWidth} solid ${vars.colors.grey100}`,
 
   selectors: {
     "&:hover": {
       backgroundColor: vars.colors.white,
-      border: `2px solid ${vars.colors.primary}`,
+      border: `${vars.borderWidth} solid ${vars.colors.primary}`,
     },
   },
 });

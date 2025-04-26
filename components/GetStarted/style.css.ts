@@ -5,7 +5,7 @@ import { important } from "../../theme";
 
 export const getStartedForm = style({});
 
-export const isPublicField = style([
+const isPublicField = style([
   {
     display: "flex",
     gap: vars.spacing.normal,
@@ -29,7 +29,7 @@ export const subdomainFieldSubdomain = style({
   fontWeight: 700,
 });
 
-export const subdomainStatusIcon = style({
+const subdomainStatusIcon = style({
   height: vars.sizes.small,
 });
 
@@ -69,21 +69,21 @@ export const subdomainStatusError = style([
   },
 ]);
 
-export const estimateContainer = style({
+const estimateContainer = style({
   display: "flex",
   justifyContent: "space-between",
   fontSize: vars.fontSizes.xxl,
   fontWeight: 400,
 });
 
-export const estimateSummarySeats = style({ fontWeight: 700 });
-export const estimatePeriod = style({
+const estimateSummarySeats = style({ fontWeight: 700 });
+const estimatePeriod = style({
   display: "block",
   fontSize: vars.fontSizes.small,
   textAlign: "end",
 });
 
-export const statusPageStatusIcon = style({
+const statusPageStatusIcon = style({
   height: vars.sizes.small,
 });
 

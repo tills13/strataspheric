@@ -52,7 +52,7 @@ export const panelWrapper = style({
       transition: "opacity 0.25s ease, margin-top 0.25s ease",
       display: "block",
       opacity: 1,
-      marginTop: "-2px",
+      marginTop: calc(vars.borderWidth).negate().toString(),
     },
   },
 
@@ -64,7 +64,7 @@ export const panelWrapper = style({
       left: "unset",
 
       width: 400,
-      border: border("2px", "solid", vars.colors.borderDefault),
+      border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
       borderRadius: vars.borderRadius,
       borderTopRightRadius: 0,
     },

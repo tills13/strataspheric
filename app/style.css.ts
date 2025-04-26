@@ -7,6 +7,7 @@ export const body = style({
   gridTemplateColumns: "100vw",
   minHeight: "100vh",
   overflow: "hidden",
+  // background: `linear-gradient(135deg, color-mix(in srgb, ${vars.colors.blue500} 0%, transparent), color-mix(in srgb, ${vars.colors.blue500} 10%, transparent) 75%)`,
 
   "@media": {
     [breakpoints.tablet]: {

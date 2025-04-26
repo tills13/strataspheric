@@ -5,8 +5,11 @@ import * as styles from "./style.css";
 import React from "react";
 
 import { DropdownButton } from "../DropdownButton";
+import { Group } from "../Group";
 import { ExternalLink } from "../Link/ExternalLink";
 import { InternalLink } from "../Link/InternalLink";
+import { Stack } from "../Stack";
+import { Text } from "../Text";
 import { Wrap } from "../Wrap";
 
 export function filterIsAction(i: Action | undefined | false): i is Action {
@@ -40,7 +43,7 @@ export function DropdownActions({
     <DropdownButton
       className={className}
       panel={
-        <>
+        <Stack p="normal" gap="small">
           {filteredActions.map((action, idx) => (
             <Wrap
               key={idx}
@@ -64,18 +67,19 @@ export function DropdownActions({
                 }
               }}
             >
-              <div
+              <Group
                 className={styles.actionRow}
+                padding="small"
                 onClick={
                   typeof action.action === "string" ? undefined : action.action
                 }
               >
                 {action.icon}
-                {action.label}
-              </div>
+                <Text as="span">{action.label}</Text>
+              </Group>
             </Wrap>
           ))}
-        </>
+        </Stack>
       }
       {...delegateProps}
     />

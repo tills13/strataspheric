@@ -1,5 +1,5 @@
 import { iconColorVar, vars } from "../../app/theme.css";
-import { fieldActionContainer } from "../Form/style.css";
+import { fieldBaseActionContainer } from "../Form/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -23,7 +23,7 @@ export const buttonBase = style({
       opacity: 0.8,
     },
 
-    [`${fieldActionContainer} &`]: {
+    [`${fieldBaseActionContainer} &`]: {
       padding: vars.spacing.xxs,
       height: "100%",
     },
@@ -431,7 +431,7 @@ export const iconContainer = style({
   height: "100%",
   flexGrow: 0,
   aspectRatio: "1/1",
-  borderRadius: calc(vars.borderRadius).subtract("2px").toString(),
+  borderRadius: calc(vars.borderRadius).subtract(vars.borderWidth).toString(),
   backgroundColor: "rgba(255, 255, 255, 0.1)",
 
   selectors: {

@@ -22,22 +22,17 @@ export const base = style({
       width: vars.sizes.xs,
     },
     "&::placeholder": {
-      color: vars.fontColors.secondary,
+      color: vars.fontColors.placeholder,
     },
     "&:hover": {
       backgroundColor: vars.colors.white,
       color: vars.fontColors.primaryInverse,
-      opacity: 0.9,
       borderColor: vars.colors.borderDefaultHover,
     },
-    // "&:hover::placeholder": {
-    //     color: vars.fontColors.primaryInverse,
-    // },
     "&:focus": {
       outline: "none",
     },
     "&:disabled": {
-      opacity: 0.7,
       cursor: "not-allowed",
     },
   },

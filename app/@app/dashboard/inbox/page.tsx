@@ -10,7 +10,7 @@ import { SendIcon } from "../../../../components/Icon/SendIcon";
 import { InboxThreads } from "../../../../components/InboxThreads";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { listThreads } from "../../../../data/inbox/listThreads";
-import { getCurrentStrataPlan } from "../../../../data/strataPlans/getCurrentStrataPlan";
+import { getCurrentStrataPlan } from "../../../../data/strataPlans/getStrataPlanByDomain";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 import { InboxNoPlanPage } from "./InboxNoPlanPage";

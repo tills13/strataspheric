@@ -18,49 +18,36 @@ import { EventWidgetList } from "./EventWidgetList";
 
 interface Props extends AbstractWidgetProps {
   initialEvents: React.ComponentProps<typeof EventWidgetList>["events"];
-  createEvent: (fd: FormData) => Promise<void>;
-  deleteEvent: (eventId: string) => Promise<void>;
+  strataId: string;
   widget: StrataWidget;
 }
 
-export function EventWidget({
-  initialEvents,
-  createEvent,
-  deleteEvent,
-  deleteWidget,
-  upsertStrataWidget,
-  widget,
-}: Props) {
+export function EventWidget({ initialEvents, strataId, widget }: Props) {
   const session = useSession();
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   return (
     <AbstractWidget
       additionalActions={[
-        can(
-          session?.user,
-          p("stratas", "events", "create"),
-          p("stratas", "widgets", "edit"),
-        ) && {
+        can(session?.user, "stratas.events.create", "stratas.widgets.edit") && {
           label: "Add Event",
           action: () => setShowCreateModal(true),
           icon: <AddIcon />,
         },
       ]}
       className={styles.eventWidget}
-      deleteWidget={deleteWidget}
-      upsertStrataWidget={upsertStrataWidget}
+      strataId={strataId}
       widgetTitle={widget.title}
       widget={widget}
     >
-      <EventWidgetList deleteEvent={deleteEvent} events={initialEvents} />
+      <EventWidgetList events={initialEvents} />
 
       {showCreateModal && (
         <Modal
           closeModal={() => setShowCreateModal(false)}
           title={"Add Event to " + widget.title}
         >
-          <CreateOrUpdateEventForm upsertEvent={createEvent} />
+          <CreateOrUpdateEventForm />
         </Modal>
       )}
     </AbstractWidget>

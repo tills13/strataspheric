@@ -13,7 +13,7 @@ import { Stack } from "../Stack";
 
 interface Props {
   close: () => void;
-  onSelectInvoice: (invoice: Invoice | undefined) => void;
+  onSelectInvoice?: (invoice: Invoice | undefined) => void;
   selectedInvoice?: Invoice;
 }
 
@@ -32,7 +32,7 @@ export function AttachInvoiceModal({
             label="Attach Existing Invoice"
             className={s({ w: "full" })}
             onSelectInvoice={(invoice) => {
-              onSelectInvoice(invoice);
+              onSelectInvoice?.(invoice);
               close();
             }}
             value={selectedInvoice?.id || ""}
@@ -54,7 +54,7 @@ export function AttachInvoiceModal({
 
         <CreateOrUpdateInvoiceForm
           onCreateOrUpdateInvoice={(invoice) => {
-            onSelectInvoice(invoice);
+            onSelectInvoice?.(invoice);
             close();
           }}
         />

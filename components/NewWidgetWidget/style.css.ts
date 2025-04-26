@@ -9,12 +9,13 @@ export const addWidgetWidget = style({
   justifyContent: "center",
   alignItems: "center",
   cursor: "pointer",
+  height: "400px",
 
   selectors: {
     "&:hover": {
       backgroundColor: vars.colors.grey100,
       borderRadius: vars.borderRadius,
-      border: border("2px", "solid", vars.colors.borderDefault),
+      border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
     },
   },
 });

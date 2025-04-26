@@ -8,6 +8,7 @@ import { PageProps } from "../../.next/types/app/@app/page";
 import { auth } from "../../auth";
 import { Button } from "../../components/Button";
 import { DividerText } from "../../components/DividerText";
+import { ArrowForwardIcon } from "../../components/Icon/ArrowForwardIcon";
 import { JoinForm } from "../../components/JoinForm";
 import { InternalLink } from "../../components/Link/InternalLink";
 import { SignInForm } from "../../components/SignInForm";
@@ -49,7 +50,13 @@ export default async function Page({ searchParams }: PageProps) {
           <>
             <DividerText>OR</DividerText>
             <InternalLink className={linkStyles.noUnderline} href="/dashboard">
-              <Button fullWidth size="large">
+              <Button
+                fullWidth
+                size="large"
+                color="primary"
+                style="secondary"
+                iconRight={<ArrowForwardIcon />}
+              >
                 view public content
               </Button>
             </InternalLink>

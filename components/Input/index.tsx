@@ -5,69 +5,73 @@ import * as styles from "./styles.css";
 import React, { useState } from "react";
 
 import { classnames } from "../../utils/classnames";
-import { Core } from "../Core";
 import { FileTypeIcon } from "../FileTypeIcon";
+import { Group } from "../Group";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   actionRight?: React.ReactNode;
+  actionLeft?: React.ReactNode;
   inputClassName?: string;
   label?: string;
   onChangeValue?: (newValue: string) => void;
   placeholder?: string;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, Props>(
-  (
-    {
-      actionRight,
-      className,
-      id: propsId,
-      inputClassName,
-      name,
-      label,
-      onChange,
-      onChangeValue,
-      ...inputProps
-    },
-    ref,
-  ) => {
-    const [value, setValue] = useState<string>();
+export function Input({
+  actionRight,
+  actionLeft,
+  className,
+  id: propsId,
+  inputClassName,
+  name,
+  label,
+  onChange,
+  onChangeValue,
+  ref,
+  ...inputProps
+}: Props) {
+  const [value, setValue] = useState<string>();
 
-    return (
-      <div className={classnames(styles.inputFieldWrapper, className)}>
-        {inputProps.type === "file" && (
-          <FileTypeIcon
-            className={styles.inputFieldFileIcon}
-            filePath={value || "something.txt"}
-          />
-        )}
-        <input
-          className={classnames(styles.inputFieldInput, inputClassName)}
-          name={name}
-          id={propsId || name}
-          ref={ref}
-          {...inputProps}
-          onChange={(e) => {
-            onChange?.(e);
-            onChangeValue?.(e.target.value);
-            setValue(e.currentTarget.value);
-          }}
+  return (
+    <div className={classnames(styles.inputFieldWrapper, className)}>
+      {inputProps.type === "file" && (
+        <FileTypeIcon
+          className={styles.inputFieldFileIcon}
+          filePath={value || "something.txt"}
         />
+      )}
 
-        {actionRight && (
-          <Core as="div" className={styles.inputFieldActionContainer}>
-            {actionRight}
-          </Core>
-        )}
+      {actionLeft && (
+        <Group className={styles.inputFieldLeftActionContainer}>
+          {actionLeft}
+        </Group>
+      )}
 
-        {label && (
-          <label className={styles.inputFieldLabel} htmlFor={propsId || name}>
-            {label}
-          </label>
-        )}
-      </div>
-    );
-  },
-);
+      <input
+        className={classnames(styles.inputFieldInput, inputClassName)}
+        name={name}
+        id={propsId || name}
+        ref={ref}
+        {...inputProps}
+        onChange={(e) => {
+          onChange?.(e);
+          onChangeValue?.(e.target.value);
+          setValue(e.currentTarget.value);
+        }}
+      />
 
-Input.displayName = "Input";
+      {actionRight && (
+        <Group className={styles.inputFieldRightActionContainer}>
+          {actionRight}
+        </Group>
+      )}
+
+      {label && (
+        <label className={styles.inputFieldLabel} htmlFor={propsId || name}>
+          {label}
+        </label>
+      )}
+    </div>
+  );
+}

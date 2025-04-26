@@ -11,8 +11,7 @@ import { AttachInvoiceModal } from "./AttachInvoiceModal";
 
 interface Props {
   attachInvoiceText?: string;
-
-  onSelectInvoice: (file: Invoice | undefined) => void;
+  onSelectInvoice?: (file: Invoice | undefined) => void;
   selectedInvoice?: Invoice;
 }
 

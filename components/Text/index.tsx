@@ -16,22 +16,28 @@ type ValidTextIntrinsicElements =
   | "h3"
   | "h4"
   | "h5"
-  | "h6";
+  | "h6"
+  | "time";
 
 interface BaseProps<E extends ValidTextIntrinsicElements> {
   as?: E;
   color?: S["color"] | "unset";
-  noWrap?: boolean;
+  fontSize?: S["fontSize"] | "unset";
+  fs?: S["fontSize"] | "unset";
+  noLineHeight?: boolean;
 }
 
 type Props<E extends ValidTextIntrinsicElements> = BaseProps<E> &
-  Omit<React.ComponentProps<typeof Core<E>>, "as" | "color">;
+  Omit<
+    React.ComponentProps<typeof Core<E>>,
+    "as" | "color" | "fontSize" | "fs"
+  >;
 
 export function Text<E extends ValidTextIntrinsicElements = "p">({
   as,
   children,
   className,
-  noWrap,
+  noLineHeight,
 
   color: propsColor,
   fc: propsColorShort,
@@ -45,13 +51,17 @@ export function Text<E extends ValidTextIntrinsicElements = "p">({
   ...rest
 }: React.PropsWithChildren<Props<E>>) {
   const fontFamily = propsFontFamily || propsFontFamilyShort || "text";
-
-  const fontSize = propsFontSize || propsFontSizeShort || "normal";
-
+  let fontSize = propsFontSize || propsFontSizeShort;
   let color = propsColor || propsColorShort;
 
   if (color === "unset") {
     color = undefined;
+  }
+
+  if (typeof fontSize === "undefined") {
+    fontSize = "normal";
+  } else if (fontSize === "unset") {
+    fontSize = undefined;
   }
 
   return (
@@ -60,7 +70,7 @@ export function Text<E extends ValidTextIntrinsicElements = "p">({
       className={classnames(
         styles.text,
         className,
-        noWrap && styles.textNoWrap,
+        !noLineHeight && styles.textLineHeight,
         !color &&
           (propsColor || propsColorShort) !== "unset" &&
           styles.textColorInherit,

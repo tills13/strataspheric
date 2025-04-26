@@ -1,16 +1,19 @@
 import * as styles from "./style.css";
 
 import { RecipeVariants } from "@vanilla-extract/recipes";
-import React, { ButtonHTMLAttributes } from "react";
+import React from "react";
 
 import { classnames } from "../../utils/classnames";
+import { Core } from "../Core";
 
 type ButtonRecipeProps = Omit<
   NonNullable<RecipeVariants<typeof styles.button>>,
   "icon"
 >;
 
-interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "style"> {
+interface Props
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    Omit<React.ComponentProps<typeof Core>, "as" | "color"> {
   icon?: React.ReactNode;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
@@ -39,7 +42,8 @@ export function Button({
     propsFullWidth === true || (propsFullWidth === undefined && !iconOnly);
 
   return (
-    <button
+    <Core
+      as="button"
       className={classnames(
         className,
         styles.button({
@@ -83,6 +87,6 @@ export function Button({
           {iconRight}
         </div>
       )}
-    </button>
+    </Core>
   );
 }

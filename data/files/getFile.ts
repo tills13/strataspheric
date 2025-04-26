@@ -14,7 +14,7 @@ import { Database, db } from "..";
 
 export type File = Awaited<ReturnType<typeof getFile>>;
 
-export const joinFilesColumns = [
+const joinFilesColumns = [
   "files.createdAt as fileCreatedAt",
   "files.description as fileDescription",
   "files.id as fileId",
@@ -33,7 +33,7 @@ type JoinFilesColumns = Selection<
   (typeof joinFilesColumns)[number]
 >;
 
-export function receiveJoinFiles(row: JoinFilesColumns) {
+function receiveJoinFiles(row: JoinFilesColumns) {
   if (!row.fileId) {
     return undefined;
   }

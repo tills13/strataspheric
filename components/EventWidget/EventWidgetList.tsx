@@ -5,6 +5,7 @@ import * as styles from "./style.css";
 
 import { startTransition } from "react";
 
+import { deleteEventAction } from "../../app/@app/dashboard/calendar/[...segments]/actions";
 import { Event } from "../../data";
 import { can, p } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
@@ -16,16 +17,15 @@ import { InfoPanel } from "../InfoPanel";
 import { Text } from "../Text";
 
 interface Props {
-  deleteEvent: (eventId: string) => Promise<void>;
   events: Event[];
 }
 
-export function EventWidgetList({ deleteEvent, events }: Props) {
+export function EventWidgetList({ events }: Props) {
   const session = useSession();
   return (
     <div className={abstractWidgetStyles.abstractWidgetList}>
       {events.length === 0 && (
-        <InfoPanel alignment="center" level="info">
+        <InfoPanel alignment="center" level="default">
           <Text>There are no selected or upcoming events.</Text>
         </InfoPanel>
       )}
@@ -46,9 +46,7 @@ export function EventWidgetList({ deleteEvent, events }: Props) {
                 can(session?.user, p("stratas", "widgets", "edit")) && {
                   label: "Delete Event",
                   action: () =>
-                    startTransition(() => {
-                      deleteEvent(event.id);
-                    }),
+                    startTransition(() => deleteEventAction(event.id)),
                   icon: <DeleteIcon />,
                 },
               ]}

@@ -1,19 +1,34 @@
 import { breakpoints } from "../../app/theme.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
-import { important } from "../../theme";
+import { important, invertBreakpoint } from "../../theme";
 
 export const core = style({});
 
 export const coreVisibleFrom = styleVariants({
   mobile: {
-    visibility: "hidden",
-
     "@media": {
-      [breakpoints.mobile]: {
-        visibility: "visible",
-      },
+      [invertBreakpoint(breakpoints.mobile)]: { display: "none" },
     },
+  },
+  mobilePlus: {
+    "@media": {
+      [invertBreakpoint(breakpoints.mobilePlus)]: { display: "none" },
+    },
+  },
+
+  tablet: {
+    "@media": { [invertBreakpoint(breakpoints.tablet)]: { display: "none" } },
+  },
+
+  tabletPlus: {
+    "@media": {
+      [invertBreakpoint(breakpoints.tabletPlus)]: { display: "none" },
+    },
+  },
+
+  desktop: {
+    "@media": { [invertBreakpoint(breakpoints.desktop)]: { display: "none" } },
   },
 });
 
@@ -21,7 +36,6 @@ export const coreVisibleOn = styleVariants({
   mobile: {
     "@media": {
       [breakpoints.mobilePlus]: {
-        // visibility: "hidden",
         display: important("none"),
       },
     },

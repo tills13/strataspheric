@@ -8,6 +8,7 @@ import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { ShareIcon } from "../../../../../components/Icon/ShareIcon";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
+import { RemoveButton } from "../../../../../components/RemoveButton";
 import { SendInboxMessageForm } from "../../../../../components/SendInboxMessageForm";
 import { SendInboxMessageContactDetailsFields } from "../../../../../components/SendInboxMessageForm/SendInboxMessageContactDetailsFields";
 import { SendInboxMessageFields } from "../../../../../components/SendInboxMessageForm/SendInboxMessageFields";
@@ -17,6 +18,7 @@ import { ThreadMessage } from "../../../../../components/ThreadMessage";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
 import { classnames } from "../../../../../utils/classnames";
 import { approveOrRejectAmenityBookingAction } from "../../amenities/actions";
+import { deleteThreadAction } from "../actions";
 import { InboxMessageThreadAmenityBooking } from "./InboxMessageThreadAmenityBooking";
 
 interface Props {
@@ -59,12 +61,25 @@ export async function InboxMessageThread({ threadId }: Props) {
         <Group justify="space-between">
           <Header as="h2">{subject}</Header>
 
-          <ExternalLink
-            href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
-            target="_blank"
-          >
-            <Button icon={<ShareIcon />} size="small" style="tertiary" />
-          </ExternalLink>
+          <Group>
+            <RemoveButton
+              action={deleteThreadAction.bind(undefined, threadId)}
+              color="primary"
+              size="small"
+              style="tertiary"
+            />
+            <ExternalLink
+              href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
+              target="_blank"
+            >
+              <Button
+                icon={<ShareIcon />}
+                color="primary"
+                size="small"
+                style="tertiary"
+              />
+            </ExternalLink>
+          </Group>
         </Group>
         <Group>
           <Text color="secondary">

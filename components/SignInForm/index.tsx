@@ -13,13 +13,14 @@ import { Input } from "../Input";
 import { ExternalLink } from "../Link/ExternalLink";
 import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
 
 interface Props {
   className?: string;
 }
 
 export function SignInForm({ className }: Props) {
-  const [error, setHasError] = useState(false);
+  const [error, setError] = useState<string>();
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -27,7 +28,7 @@ export function SignInForm({ className }: Props) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
 
-    setHasError(false);
+    setError(undefined);
 
     try {
       const result = await signIn(
@@ -36,7 +37,7 @@ export function SignInForm({ className }: Props) {
       );
 
       if (!result || result.error) {
-        setHasError(true);
+        setError(result.error);
         return;
       }
 
@@ -67,7 +68,11 @@ export function SignInForm({ className }: Props) {
           label="Password"
         />
 
-        {error && <div>Incorrect username or password</div>}
+        {error && (
+          <Text color="error" textAlign="center">
+            {error}
+          </Text>
+        )}
 
         <StatusButton color="primary" type="submit" isPending={loading}>
           Sign in

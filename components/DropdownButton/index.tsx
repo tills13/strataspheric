@@ -21,6 +21,7 @@ interface Props {
   direction?: "up" | "down";
   icon?: React.ReactNode;
   openLabel?: React.ReactNode;
+  mobileOnlyOpenLabel?: React.ReactNode;
   panel: React.ReactNode;
 }
 
@@ -33,6 +34,7 @@ export function DropdownButton({
   direction,
   icon: propsIcon,
   openLabel,
+  mobileOnlyOpenLabel,
   panel,
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -57,6 +59,7 @@ export function DropdownButton({
         style={open ? undefined : buttonStyle}
         icon={!open || !openLabel ? icon : undefined}
         iconRight={open && openLabel ? icon : undefined}
+        iconTextBehaviour="centerRemainder"
       >
         {open && openLabel}
       </Button>
@@ -72,7 +75,11 @@ export function DropdownButton({
           paddingTop="normal"
           visibleOn="mobile"
         >
-          {openLabel && <Header as="h3">{openLabel}</Header>}
+          {mobileOnlyOpenLabel || openLabel ? (
+            <Header as="h3">{mobileOnlyOpenLabel || openLabel}</Header>
+          ) : (
+            <div />
+          )}
           <Button
             icon={<RemoveIcon />}
             style="tertiary"

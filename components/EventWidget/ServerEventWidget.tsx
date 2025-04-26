@@ -9,22 +9,12 @@ type EventWidgetProps = Omit<
 >;
 
 export async function ServerEventWidget({
-  createEvent,
-  deleteEvent,
-  deleteWidget,
-  upsertStrataWidget,
+  strataId,
   widget,
 }: EventWidgetProps) {
   const events = await getWidgetEvents(widget.id, 10, 0);
 
   return (
-    <EventWidget
-      createEvent={createEvent}
-      deleteEvent={deleteEvent}
-      deleteWidget={deleteWidget}
-      initialEvents={events}
-      widget={widget}
-      upsertStrataWidget={upsertStrataWidget}
-    />
+    <EventWidget initialEvents={events} strataId={strataId} widget={widget} />
   );
 }

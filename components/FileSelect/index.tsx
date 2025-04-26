@@ -1,21 +1,17 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
-import * as styles from "./style.css";
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { File } from "../../data";
-import { classnames } from "../../utils/classnames";
-import { Group } from "../Group";
+import { Button } from "../Button";
+import { RemoveIcon } from "../Icon/RemoveIcon";
+import { Input } from "../Input";
 import { LoadingIcon } from "../LoadingIcon";
-import { Panel } from "../Panel";
 import { Select } from "../Select";
-import { Text } from "../Text";
 
 interface Props extends React.ComponentProps<typeof Select> {
   fileTypes?: string[];
-  onSelectFile?: (file: File) => void;
+  onSelectFile?: (file: File | undefined) => void;
 }
 
 export function FileSelect({
@@ -25,6 +21,7 @@ export function FileSelect({
 }: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [files, setFiles] = useState<File[]>([]);
+  const ref = useRef<HTMLSelectElement>(null!);
 
   useEffect(() => {
     async function loadFiles() {
@@ -55,25 +52,38 @@ export function FileSelect({
 
   if (isLoading) {
     return (
-      <Panel
-        className={classnames(styles.loadingState, s({ w: "full" }))}
-        noPadding
-      >
-        <Group className={s({ w: "full" })} justify="space-between">
-          <Text color="secondary">Loading files...</Text>
-          <LoadingIcon size="xs" />
-        </Group>
-      </Panel>
+      <Input
+        actionRight={
+          <Button
+            icon={<LoadingIcon loading />}
+            color="primary"
+            style="tertiary"
+            type="button"
+          />
+        }
+        placeholder={delegateProps.placeholder}
+        disabled
+      />
     );
   }
 
   return (
     <Select
+      actionRight={
+        <Button
+          icon={<RemoveIcon />}
+          color="primary"
+          onClick={() => (ref.current.value = "")}
+          style="tertiary"
+          type="button"
+        />
+      }
       onChange={(e) => {
         onSelectFile?.(
           files.find((file) => file.id === e.currentTarget.value)!,
         );
       }}
+      ref={ref}
       {...delegateProps}
     >
       {files.map((file) => (

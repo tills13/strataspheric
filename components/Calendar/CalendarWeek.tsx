@@ -17,7 +17,7 @@ import { CalendarEventTrack } from "./CalendarEventTrack";
 type CalendarDayEventsProps = React.ComponentProps<typeof CalendarDayEvents>;
 type OutOfContextFn = (date: Date, context: Date) => boolean;
 
-export const IS_OUT_OF_CONTEXT_MONTH: OutOfContextFn = (date, context) =>
+const IS_OUT_OF_CONTEXT_MONTH: OutOfContextFn = (date, context) =>
   !isSameMonth(date, context);
 
 interface Props {

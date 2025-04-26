@@ -20,3 +20,7 @@ export const flexBreakpoint = styleVariants(
     ]),
   ) as Record<keyof typeof breakpoints, ComplexStyleRule>,
 );
+
+export const flexElement = style({
+  // flex: 1,
+});

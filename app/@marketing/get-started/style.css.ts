@@ -3,17 +3,6 @@ import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
-export const pricingPlanSelector = style({
-  marginBottom: vars.spacing.large,
-  "@media": {
-    [breakpoints.tablet]: {
-      marginBottom: vars.spacing.xl,
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-  },
-});
-
 export const getStartedForm = style({
   width: "100%",
   "@media": {

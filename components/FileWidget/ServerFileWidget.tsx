@@ -5,10 +5,7 @@ import { getRecentApprovedMinutes } from "../../data/meetings/getRecentApprovedM
 import { getWidgetFiles } from "../../data/widgets/getWidgetFiles";
 import { type Props as AbstractWidgetProps } from "../AbstractWidget";
 
-interface Props extends AbstractWidgetProps {
-  createFile: (fd: FormData) => Promise<void>;
-  deleteFile: (fileId: string) => Promise<void>;
-}
+interface Props extends AbstractWidgetProps {}
 
 function loadFiles(widget: StrataWidget) {
   if (widget.type === "file") {
@@ -25,23 +22,8 @@ function loadFiles(widget: StrataWidget) {
   return [];
 }
 
-export async function ServerFileWidget({
-  createFile,
-  deleteFile,
-  deleteWidget,
-  widget,
-  upsertStrataWidget,
-}: Props) {
+export async function ServerFileWidget({ strataId, widget }: Props) {
   const files = await loadFiles(widget);
 
-  return (
-    <FileWidget
-      createFile={createFile}
-      deleteFile={deleteFile}
-      deleteWidget={deleteWidget}
-      files={files}
-      widget={widget}
-      upsertStrataWidget={upsertStrataWidget}
-    />
-  );
+  return <FileWidget files={files} strataId={strataId} widget={widget} />;
 }

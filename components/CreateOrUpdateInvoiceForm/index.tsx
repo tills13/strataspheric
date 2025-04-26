@@ -1,11 +1,10 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
-
 import { useRef, useState, useTransition } from "react";
 
 import {
   deleteInvoiceAction,
+  markInvoiceAsPaidAction,
   upsertInvoiceAction,
 } from "../../app/@app/dashboard/invoices/actions";
 import { Invoice } from "../../data";
@@ -13,9 +12,10 @@ import { patchTimezoneOffset } from "../../utils/datetime";
 import { Button } from "../Button";
 import { DateInput } from "../DateInput";
 import { FileSelect } from "../FileSelect";
+import { Flex } from "../Flex";
 import { Group } from "../Group";
 import { AddIcon } from "../Icon/AddIcon";
-import { CycleIcon } from "../Icon/CycleIcon";
+import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { InfoPanel } from "../InfoPanel";
 import { Input } from "../Input";
 import { LoadingIcon } from "../LoadingIcon";
@@ -37,7 +37,8 @@ export function CreateOrUpdateInvoiceForm({
   onCreateOrUpdateInvoice,
   showDeleteInvoiceButton,
 }: Props) {
-  const [deletePending, startTransition] = useTransition();
+  const [deletePending, startDeleteTransition] = useTransition();
+  const [markPaidPending, startMarkPaidTransition] = useTransition();
   const [loadingNextInvoiceId, setLoadingNextInvoiceId] = useState(false);
   const invoiceIdInputRef = useRef<HTMLInputElement>(null!);
 
@@ -60,7 +61,7 @@ export function CreateOrUpdateInvoiceForm({
       className={className}
     >
       <Stack>
-        <Group gap={invoice ? "normal" : "small"}>
+        <Flex from="tablet">
           <Input
             actionRight={
               <Button
@@ -81,17 +82,28 @@ export function CreateOrUpdateInvoiceForm({
           />
 
           <Input
-            className={s({ w: "full" })}
+            actionLeft={
+              <Text color="secondary" fw="bold" paddingLeft="small">
+                $
+              </Text>
+            }
             min="0"
             name="amount"
             label="Amount"
             pattern="\d+(\.\d\d?)?"
-            placeholder="$"
             disabled={!!invoice?.isPaid}
             defaultValue={invoice?.amount}
             required
           />
-        </Group>
+
+          <DateInput
+            label="Due Date"
+            name="dueBy"
+            type="single"
+            disabled={!!invoice?.isPaid}
+            defaultValue={invoice?.dueBy || ""}
+          />
+        </Flex>
         <TextArea
           name="description"
           label="Description"
@@ -99,27 +111,20 @@ export function CreateOrUpdateInvoiceForm({
           disabled={!!invoice?.isPaid}
           defaultValue={invoice?.description || ""}
         />
-        <FileSelect
-          label="Invoice File"
-          name="fileId"
-          disabled={!!invoice?.isPaid}
-          defaultValue={invoice ? invoice.fileId ?? "" : ""}
-        />
-        {!invoice?.isPaid && (
-          <InfoPanel level="info">
-            <Text>
-              Select an <b>Invoice File</b> if the invoice references a physical
-              file that has been scanned and uploaded to Strataspheric.
-            </Text>
-          </InfoPanel>
-        )}
-        <DateInput
-          label="Due Date"
-          name="dueBy"
-          type="single"
-          disabled={!!invoice?.isPaid}
-          defaultValue={invoice?.dueBy || ""}
-        />
+
+        <InfoPanel level="default">
+          <Text>
+            Select an <b>Invoice File</b> if the invoice references a physical
+            file that has been scanned and uploaded to Strataspheric.
+          </Text>
+          <FileSelect
+            name="fileId"
+            disabled={!!invoice?.isPaid}
+            defaultValue={invoice ? invoice.fileId ?? "" : ""}
+            placeholder="Invoice File"
+          />
+        </InfoPanel>
+
         <Group gap="normal">
           <StatusButton
             color="primary"
@@ -131,10 +136,28 @@ export function CreateOrUpdateInvoiceForm({
             {invoice ? "Update Invoice" : "Create Invoice"}
           </StatusButton>
 
+          {invoice && invoice.status !== "draft" && (
+            <StatusButton
+              color="success"
+              iconRight={<CircleCheckIcon />}
+              iconTextBehaviour="centerRemainder"
+              onClick={() =>
+                startMarkPaidTransition(() =>
+                  markInvoiceAsPaidAction(invoice.id),
+                )
+              }
+              isPending={markPaidPending}
+              disabled={invoice.isPaid === 1}
+              fullWidth={false}
+            >
+              {invoice.isPaid === 1 ? "Paid" : "Mark Paid"}
+            </StatusButton>
+          )}
+
           {showDeleteInvoiceButton && invoice && !invoice.isPaid && (
             <StatusButton
               onClick={() => {
-                startTransition(() => deleteInvoiceAction(invoice.id));
+                startDeleteTransition(() => deleteInvoiceAction(invoice.id));
               }}
               color="error"
               style="secondary"
