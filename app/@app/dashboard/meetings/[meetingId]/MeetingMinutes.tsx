@@ -2,13 +2,15 @@ import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { AddFileToMeetingButton } from "../../../../../components/AddFileToMeetingButton";
+import { Button } from "../../../../../components/Button";
 import { DividerText } from "../../../../../components/DividerText";
 import { FileTypeIcon } from "../../../../../components/FileTypeIcon";
 import { Flex } from "../../../../../components/Flex";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
+import { ArrowForwardIcon } from "../../../../../components/Icon/ArrowForwardIcon";
 import { CircleCheckIcon } from "../../../../../components/Icon/CircleCheckIcon";
-import { RightIcon } from "../../../../../components/Icon/RightIcon";
+import { RemoveIcon } from "../../../../../components/Icon/RemoveIcon";
 import { SaveIcon } from "../../../../../components/Icon/SaveIcon";
 import { TextDocumentIcon } from "../../../../../components/Icon/TextDocumentIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
@@ -17,13 +19,11 @@ import { ExternalLink } from "../../../../../components/Link/ExternalLink";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { MeetingMinutesTimelineItem } from "../../../../../components/MeetingMinutesTimelineItem";
 import { MinutesApprover } from "../../../../../components/MinutesApprover";
-import { RemoveButton } from "../../../../../components/RemoveButton";
 import { Stack } from "../../../../../components/Stack";
 import { StatusButton } from "../../../../../components/StatusButton";
 import { Text } from "../../../../../components/Text";
 import { Timeline } from "../../../../../components/Timeline";
 import { getMeetingMinutes } from "../../../../../data/meetings/getMeetingMinutes";
-import { classnames } from "../../../../../utils/classnames";
 import {
   approveMeetingMinutesUrlAction,
   clearMinutesUrlAction,
@@ -63,20 +63,39 @@ export async function MeetingMinutes({
       {!anyApproved && files.length === 0 && (
         <form action={updateMinutesUrlAction.bind(undefined, meetingId)}>
           <Flex from="tablet">
-            {!minutesUrl ? (
-              <Input
-                className={classnames(styles.minutesUrlInput, s({ w: "full" }))}
-                name="minutesUrl"
-                label="Minutes URL"
-              />
-            ) : (
-              <ExternalLink
-                className={classnames(s({ w: "full" }), styles.minutesUrl)}
-                href={minutesUrl}
-              >
-                {minutesUrl} <RightIcon height={24} />
-              </ExternalLink>
-            )}
+            <Input
+              actionRight={
+                minutesUrl &&
+                (minutesUrlApprovedByName ? (
+                  <ExternalLink href={minutesUrl} target="_blank">
+                    <Button icon={<ArrowForwardIcon />} type="button" />
+                  </ExternalLink>
+                ) : (
+                  <Group gap="small">
+                    <StatusButton
+                      action={clearMinutesUrlAction.bind(undefined, meetingId)}
+                      icon={<RemoveIcon />}
+                      color="error"
+                      style="secondary"
+                    />
+                    <StatusButton
+                      action={approveMeetingMinutesUrlAction.bind(
+                        undefined,
+                        meetingId,
+                      )}
+                      icon={<CircleCheckIcon />}
+                      color="success"
+                      style="secondary"
+                    />
+                  </Group>
+                ))
+              }
+              disabled={!!minutesUrlApprovedByName}
+              name="minutesUrl"
+              label="Minutes URL"
+              defaultValue={minutesUrl || ""}
+              className={s({ w: "full" })}
+            />
 
             {!minutesUrl && (
               <StatusButton
@@ -90,34 +109,9 @@ export async function MeetingMinutes({
               </StatusButton>
             )}
 
-            {minutesUrl ? (
-              minutesUrlApprovedByName ? (
-                <MinutesApprover
-                  approverName={minutesUrlApprovedByName}
-                  className={styles.minutesUrlApprover}
-                />
-              ) : (
-                <Group className={styles.minutesUrlActionsContainer}>
-                  <StatusButton
-                    className={styles.minutesUrlApproveButton}
-                    action={approveMeetingMinutesUrlAction.bind(
-                      undefined,
-                      meetingId,
-                    )}
-                    iconRight={<CircleCheckIcon />}
-                    iconTextBehaviour="centerRemainder"
-                    color="success"
-                  >
-                    Approve
-                  </StatusButton>
-                  <RemoveButton
-                    action={clearMinutesUrlAction.bind(undefined, meetingId)}
-                    color="error"
-                    style="tertiary"
-                  />
-                </Group>
-              )
-            ) : null}
+            {minutesUrlApprovedByName && (
+              <MinutesApprover approverName={minutesUrlApprovedByName} />
+            )}
           </Flex>
         </form>
       )}

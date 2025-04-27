@@ -10,6 +10,7 @@ import { Event } from "../../data";
 import { patchTimezoneOffset } from "../../utils/datetime";
 import { ConfirmButton } from "../ConfirmButton";
 import { DateInput } from "../DateInput";
+import { Flex } from "../Flex";
 import { Group } from "../Group";
 import { AddIcon } from "../Icon/AddIcon";
 import { DeleteIcon } from "../Icon/DeleteIcon";
@@ -41,7 +42,7 @@ export function CreateOrUpdateEventForm({
         mutate((k) => Array.isArray(k) && k[1] === "events");
       }}
     >
-      <Stack className={s({ mb: "large" })}>
+      <Stack>
         <Input name="name" label="Name" defaultValue={event?.name} />
 
         <DateInput
@@ -56,33 +57,33 @@ export function CreateOrUpdateEventForm({
           label="Description"
           defaultValue={event?.description}
         />
-      </Stack>
 
-      <Group gap="normal">
-        {event && (
-          <ConfirmButton
-            onClickConfirm={async () => {
-              await deleteEventAction(event.id);
-              mutate((k) => Array.isArray(k) && k[1] === "events");
-              onDeleteEvent?.();
-            }}
-            iconRight={<DeleteIcon />}
-            color="error"
-            style="secondary"
+        <Flex from="tablet">
+          {event && (
+            <ConfirmButton
+              onClickConfirm={async () => {
+                await deleteEventAction(event.id);
+                mutate((k) => Array.isArray(k) && k[1] === "events");
+                onDeleteEvent?.();
+              }}
+              iconRight={<DeleteIcon />}
+              color="error"
+              style="secondary"
+            >
+              Delete Event
+            </ConfirmButton>
+          )}
+
+          <StatusButton
+            color="primary"
+            iconRight={<AddIcon />}
+            style="primary"
+            type="submit"
           >
-            Delete Event
-          </ConfirmButton>
-        )}
-
-        <StatusButton
-          color="primary"
-          iconRight={<AddIcon />}
-          style="primary"
-          type="submit"
-        >
-          {submitLabel || (event ? "Update Event" : "Create Event")}
-        </StatusButton>
-      </Group>
+            {submitLabel || (event ? "Update Event" : "Create Event")}
+          </StatusButton>
+        </Flex>
+      </Stack>
     </form>
   );
 }

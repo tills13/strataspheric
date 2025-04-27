@@ -3,8 +3,11 @@ import * as styles from "./style.css";
 import React, { PropsWithChildren } from "react";
 
 import { classnames } from "../../utils/classnames";
+import { Core } from "../Core";
 
-interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+interface Props
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
+    Omit<React.ComponentProps<typeof Core<"a">>, "as" | "color"> {
   noUnderline?: boolean;
 }
 
@@ -15,7 +18,8 @@ export function ExternalLink({
   ...props
 }: PropsWithChildren<Props>) {
   return (
-    <a
+    <Core
+      as="a"
       className={classnames(
         className,
         noUnderline ? styles.noUnderline : styles.link,
@@ -23,6 +27,6 @@ export function ExternalLink({
       {...props}
     >
       {children}
-    </a>
+    </Core>
   );
 }

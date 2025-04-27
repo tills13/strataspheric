@@ -4,15 +4,14 @@ import { useRef } from "react";
 
 import { upsertFileAction } from "../../app/@app/dashboard/files/actions";
 import { File } from "../../data";
-import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
-import { Checkbox } from "../Checkbox";
 import { Header } from "../Header";
 import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
 import { RadioButton } from "../RadioButton";
 import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
+import { Text } from "../Text";
 import { TextArea } from "../TextArea";
 
 interface Props {
@@ -61,9 +60,11 @@ export function CreateOrUpdateFileForm({
           defaultValue={file?.description}
         />
 
-        {can(p("stratas", "files", "create")) && (
+        {can("stratas.files.create") && (
           <Stack gap="small">
-            <Header as="h3">Visibility</Header>
+            <Text as="label" color="secondary" fontWeight="bold">
+              Visibility
+            </Text>
             <RadioButton
               name="is_public"
               options={["public", "private"]}

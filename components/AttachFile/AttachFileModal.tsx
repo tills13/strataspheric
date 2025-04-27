@@ -2,12 +2,9 @@ import { s } from "../../sprinkles.css";
 
 import { FilesListFile } from "../../app/@app/dashboard/files/FilesListFile";
 import { File } from "../../data";
-import { Button } from "../Button";
 import { CreateOrUpdateFileForm } from "../CreateOrUpdateFileForm";
-import { DividerText } from "../DividerText";
 import { FileSelect } from "../FileSelect";
 import { Group } from "../Group";
-import { RemoveIcon } from "../Icon/RemoveIcon";
 import { Modal } from "../Modal";
 import { Stack } from "../Stack";
 
@@ -48,17 +45,6 @@ export function AttachFileModal({
             }}
             value={selectedFile?.id || ""}
           />
-          {selectedFile && (
-            <Button
-              icon={<RemoveIcon />}
-              onClick={() => {
-                onSelectFile?.(undefined);
-                close();
-              }}
-              size="small"
-              style="tertiary"
-            />
-          )}
         </Group>
 
         <CreateOrUpdateFileForm

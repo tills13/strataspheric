@@ -22,6 +22,8 @@ type ValidTextIntrinsicElements =
 interface BaseProps<E extends ValidTextIntrinsicElements> {
   as?: E;
   color?: S["color"] | "unset";
+  fontFamily?: S["fontFamily"] | "unset";
+  ff?: S["fontFamily"] | "unset";
   fontSize?: S["fontSize"] | "unset";
   fs?: S["fontSize"] | "unset";
   noLineHeight?: boolean;
@@ -30,7 +32,7 @@ interface BaseProps<E extends ValidTextIntrinsicElements> {
 type Props<E extends ValidTextIntrinsicElements> = BaseProps<E> &
   Omit<
     React.ComponentProps<typeof Core<E>>,
-    "as" | "color" | "fontSize" | "fs"
+    "as" | "color" | "fontFamily" | "ff" | "fontSize" | "fs"
   >;
 
 export function Text<E extends ValidTextIntrinsicElements = "p">({
@@ -50,9 +52,15 @@ export function Text<E extends ValidTextIntrinsicElements = "p">({
 
   ...rest
 }: React.PropsWithChildren<Props<E>>) {
-  const fontFamily = propsFontFamily || propsFontFamilyShort || "text";
+  let fontFamily = propsFontFamily || propsFontFamilyShort;
   let fontSize = propsFontSize || propsFontSizeShort;
   let color = propsColor || propsColorShort;
+
+  if (typeof fontFamily === "undefined") {
+    fontFamily = "text";
+  } else if (fontFamily === "unset") {
+    fontFamily = undefined;
+  }
 
   if (color === "unset") {
     color = undefined;

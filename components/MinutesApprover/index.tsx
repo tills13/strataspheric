@@ -1,7 +1,8 @@
 import * as styles from "./style.css";
 
-import { classnames } from "../../utils/classnames";
+import { Group } from "../Group";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
+import { Text } from "../Text";
 
 interface Props {
   className?: string;
@@ -10,9 +11,9 @@ interface Props {
 
 export function MinutesApprover({ approverName, className }: Props) {
   return (
-    <span className={classnames(styles.minutesApproverContainer, className)}>
-      <CircleCheckIcon className={styles.minutesApproverIcon} /> Approved by{" "}
-      {approverName}
-    </span>
+    <Group className={className} as="span" whiteSpace="nowrap" gap="small">
+      <CircleCheckIcon className={styles.minutesApproverIcon} />
+      <Text as="span">Approved by {approverName}</Text>
+    </Group>
   );
 }

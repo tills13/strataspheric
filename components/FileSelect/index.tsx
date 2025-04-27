@@ -61,6 +61,7 @@ export function FileSelect({
             type="button"
           />
         }
+        className={delegateProps.className}
         placeholder={delegateProps.placeholder}
         disabled
       />

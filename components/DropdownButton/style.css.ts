@@ -21,12 +21,15 @@ export const dropdownButtonButton = style({
       transition: "background-color 0.25s ease, border-color 0.25s ease",
       selectors: {
         [`${dropdownButtonOpen} &`]: {
-          zIndex: "1012",
+          zIndex: "10",
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
           borderColor: vars.colors.borderDefault,
           borderBottom: "none",
           backgroundColor: vars.colors.white,
+        },
+        "&:active": {
+          borderBottom: "none",
         },
       },
     },
@@ -39,20 +42,25 @@ export const panelWrapper = style({
   bottom: 0,
   right: 0,
   left: 0,
-  display: "none",
   marginTop: calc(vars.spacing.normal).negate().toString(),
   opacity: 0,
-
+  pointerEvents: "none",
   transition: "opacity 0.25s ease, margin-top 0.25s ease",
+
+  // display: "none",
+  // transition: "all 1s ease allow-discrete",
+  // transitionProperty: "display, opacity, margin-top",
+  // "transition-behaviour": "allow-discrete",
+
   backgroundColor: vars.colors.white,
-  zIndex: vars.zIndex.modal,
+  zIndex: "9",
 
   selectors: {
     [`${dropdownButtonOpen} &`]: {
-      transition: "opacity 0.25s ease, margin-top 0.25s ease",
-      display: "block",
       opacity: 1,
       marginTop: calc(vars.borderWidth).negate().toString(),
+      pointerEvents: "initial",
+      // display: "block",
     },
   },
 

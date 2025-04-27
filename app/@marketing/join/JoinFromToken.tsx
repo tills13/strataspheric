@@ -1,3 +1,5 @@
+import * as styles from "./style.css";
+
 import { redirect } from "next/navigation";
 
 import { JoinFromTokenForm } from "../../../components/JoinFromTokenForm";
@@ -33,6 +35,7 @@ export async function JoinFromToken({ token: rawToken }: Props) {
 
   return (
     <JoinFromTokenForm
+      className={styles.joinForm}
       membershipName={membership.name}
       onSubmit={joinFromTokenAction.bind(undefined, token.token)}
       strata={strata}

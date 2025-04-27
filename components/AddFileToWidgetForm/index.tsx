@@ -29,21 +29,17 @@ export function AddFileToWidgetForm({ strataId, widgetId }: Props) {
           placeholder="Description"
         />
         <Input name="file" label="Upload File" type="file" />
+        <DividerText>OR</DividerText>
+        <FileSelect label="Attach Existing File" name="existing_file" />
+        <StatusButton
+          color="primary"
+          iconRight={<AddIcon />}
+          style="primary"
+          type="submit"
+        >
+          Add File
+        </StatusButton>
       </Stack>
-      <DividerText className={s({ mv: "large" })}>OR</DividerText>
-      <FileSelect
-        className={s({ mb: "large" })}
-        label="Attach Existing File"
-        name="existing_file"
-      />
-      <StatusButton
-        color="primary"
-        iconRight={<AddIcon />}
-        style="primary"
-        type="submit"
-      >
-        Add File
-      </StatusButton>
     </form>
   );
 }

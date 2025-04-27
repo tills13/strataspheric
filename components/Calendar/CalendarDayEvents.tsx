@@ -9,7 +9,6 @@ import isSameDay from "date-fns/isSameDay";
 import React, { useState } from "react";
 
 import { CalendarEvent } from ".";
-import { Event } from "../../data";
 import { classnames } from "../../utils/classnames";
 import { formatDateForDatetime, parseTimestamp } from "../../utils/datetime";
 import { CreateOrUpdateEventForm } from "../CreateOrUpdateEventForm";
@@ -23,8 +22,6 @@ interface Props {
   events: CalendarEvent[];
   date: Date;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
-  deleteEvent?: (eventId: string) => any;
-  upsertEvent?: (eventId: string | undefined, fd: FormData) => any;
 }
 
 export function CalendarDayEvents({
@@ -33,8 +30,6 @@ export function CalendarDayEvents({
   date,
   events,
   onClick,
-  deleteEvent,
-  upsertEvent,
 }: Props) {
   const [showNewEventModal, setShowNewEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent>();
@@ -120,7 +115,7 @@ export function CalendarDayEvents({
           );
         })}
       </div>
-      {showNewEventModal && upsertEvent && (
+      {showNewEventModal && (
         <Modal
           closeModal={() => setShowNewEventModal(false)}
           title={createOrUpdateEventModalTitle}
@@ -128,19 +123,16 @@ export function CalendarDayEvents({
           <CreateOrUpdateEventForm
             defaultDate={formatDateForDatetime(date)}
             submitLabel={createOrUpdateEventFormSubmitLabel}
-            upsertEvent={upsertEvent.bind(undefined, undefined)}
             onDeleteEvent={() => setShowNewEventModal(false)}
           />
         </Modal>
       )}
-      {selectedEvent && upsertEvent && (
+      {selectedEvent && (
         <Modal
           closeModal={() => setSelectedEvent(undefined)}
           title="Edit Event"
         >
           <CreateOrUpdateEventForm
-            upsertEvent={upsertEvent.bind(undefined, selectedEvent.id)}
-            deleteEvent={deleteEvent?.bind(undefined, selectedEvent.id)}
             onDeleteEvent={() => setSelectedEvent(undefined)}
             event={selectedEvent}
           />

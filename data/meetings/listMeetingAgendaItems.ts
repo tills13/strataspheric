@@ -51,6 +51,7 @@ export async function listMeetingAgendaItems(meetingId: string) {
       "meeting_agenda_items.title",
       "meeting_agenda_items.description",
       "meeting_agenda_items.done",
+      "meeting_agenda_items.minutes",
 
       "events.id as eventId",
       "events.name as eventName",

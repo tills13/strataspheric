@@ -88,8 +88,10 @@ export function BookAmenityForm({ amenity }: Props) {
             <Group justify="space-between">
               <Text fontWeight="bold">Summary</Text>
               <Text>
-                {bookingLength} {pluralize("day", bookingLength)} @{" "}
-                <Money amount={amenity.costPerHour * 24} /> per day
+                <b>
+                  {bookingLength} {pluralize("day", bookingLength)}
+                </b>{" "}
+                at <Money amount={amenity.costPerHour * 24} /> per day
               </Text>
             </Group>
             <Group justify="space-between">
@@ -101,10 +103,11 @@ export function BookAmenityForm({ amenity }: Props) {
 
         {startDate && endDate && (
           <InfoPanel>
-            Submit your booking request and council will get back to you
-            {amenity.costPerHour ? " with an invoice" : ""} as soon as possible.
-            Please note that your selected dates may not be available after
-            council has responded to existing pending booking requests.
+            <Text>
+              Council will respond to your booking request as soon as possible.
+              Please note that your selected dates may not be available after
+              council has responded to existing pending booking requests.
+            </Text>
           </InfoPanel>
         )}
 

@@ -9,6 +9,7 @@ import { createAmenity } from "../../../../data/amenities/createAmenity";
 import { createAmenityBooking } from "../../../../data/amenities/createAmenityBooking";
 import { getAmenity } from "../../../../data/amenities/getAmenity";
 import { getAmenityBooking } from "../../../../data/amenities/getAmenityBooking";
+import { updateAmenity } from "../../../../data/amenities/updateAmenity";
 import { updateAmenityBooking } from "../../../../data/amenities/updateAmenityBooking";
 import { createEvent } from "../../../../data/events/createEvent";
 import { createThreadMessage } from "../../../../data/inbox/createThreadMessage";
@@ -46,6 +47,13 @@ export async function upsertAmenityAction(
       status: "active",
       costPerHour,
       strataId: strata.id,
+    });
+  } else {
+    await updateAmenity(amenityId, {
+      costPerHour,
+      description,
+      imageFileId,
+      name,
     });
   }
 

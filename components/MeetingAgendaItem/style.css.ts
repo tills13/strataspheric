@@ -2,27 +2,13 @@ import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const agendaItem = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: vars.spacing.normal,
-  padding: vars.spacing.normal,
-  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
-  borderRadius: vars.borderRadius,
   position: "relative",
 });
 
-export const agendaItemDone = style([
-  agendaItem,
-  { opacity: 0.5, textDecoration: "line-through" },
-]);
+export const agendaItemDone = style([agendaItem, { opacity: 0.5 }]);
 
 export const agendaItemCheckboxPendingIcon = style({
   height: vars.sizes.xs,
-});
-
-export const header = style({
-  display: "flex",
-  gap: vars.spacing.normal,
 });
 
 export const headerHeader = style({
@@ -34,9 +20,4 @@ export const headerHeader = style({
 
 export const agendaItemDescription = style({
   whiteSpace: "pre-line",
-});
-
-export const agendaItemActions = style({
-  display: "flex",
-  gap: vars.spacing.small,
 });

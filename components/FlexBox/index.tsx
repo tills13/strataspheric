@@ -5,13 +5,14 @@ import React from "react";
 import { classnames } from "../../utils/classnames";
 import { Core } from "../Core";
 
-type CoreProps = React.ComponentProps<typeof Core<"div">>;
+type CoreProps = React.ComponentProps<typeof Core<"div" | "span">>;
 
 interface Props
   extends Omit<
     CoreProps,
     "as" | "alignItems" | "justifyContent" | "flexDirection"
   > {
+  as?: CoreProps["as"];
   align?: CoreProps["alignItems"];
   justify?: CoreProps["justifyContent"];
   direction?: CoreProps["flexDirection"];

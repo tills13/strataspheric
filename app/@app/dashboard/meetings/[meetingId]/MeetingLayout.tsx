@@ -6,8 +6,10 @@ import { EditMeetingButton } from "../../../../../components/EditMeetingButton";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { DeleteIcon } from "../../../../../components/Icon/DeleteIcon";
+import { RemoveIcon } from "../../../../../components/Icon/RemoveIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Stack } from "../../../../../components/Stack";
+import { StatusButton } from "../../../../../components/StatusButton";
 import { Text } from "../../../../../components/Text";
 import { getMeeting } from "../../../../../data/meetings/getMeeting";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
@@ -35,7 +37,16 @@ export async function MeetingLayout({ meetingId }: Props) {
           </Text>
         </Stack>
 
-        <EditMeetingButton meeting={meeting} />
+        <Group>
+          <StatusButton
+            action={deleteMeetingAction.bind(undefined, meetingId)}
+            icon={<RemoveIcon />}
+            color="error"
+            style="tertiary"
+            size="small"
+          />
+          <EditMeetingButton meeting={meeting} />
+        </Group>
       </Group>
 
       {meeting.notes && <p>{meeting.notes}</p>}

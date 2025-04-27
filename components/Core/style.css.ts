@@ -1,9 +1,17 @@
-import { breakpoints } from "../../app/theme.css";
+import { breakpoints, vars } from "../../app/theme.css";
+import { fieldBaseActionContainer } from "../Form/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
 import { important, invertBreakpoint } from "../../theme";
 
-export const core = style({});
+export const core = style({
+  selectors: {
+    [`${fieldBaseActionContainer} &`]: {
+      padding: vars.spacing.xxs,
+      height: "100%",
+    },
+  },
+});
 
 export const coreVisibleFrom = styleVariants({
   mobile: {

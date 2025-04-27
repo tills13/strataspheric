@@ -28,6 +28,7 @@ export async function upsertAgendaItemAction(
   const title = formdata.getString(fd, "title");
   const description = formdata.getString(fd, "description");
   const fileId = formdata.getString(fd, "fileId");
+  const invoiceId = formdata.getString(fd, "invoiceId");
 
   if (title === "") {
     throw new Error("invalid fields");
@@ -38,6 +39,7 @@ export async function upsertAgendaItemAction(
       title,
       description,
       fileId,
+      invoiceId,
     };
 
     await updateMeetingAgendaItem(agendaItemId, meetingAgendaItemUpdate);
@@ -46,6 +48,7 @@ export async function upsertAgendaItemAction(
       title,
       description,
       fileId,
+      invoiceId,
     });
   }
 

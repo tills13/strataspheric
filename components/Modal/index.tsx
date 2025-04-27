@@ -8,6 +8,7 @@ import ReactDOM from "react-dom";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { DisableScroll } from "../DisableScroll";
+import { Group } from "../Group";
 import { Header } from "../Header";
 import { RemoveIcon } from "../Icon/RemoveIcon";
 
@@ -42,7 +43,11 @@ export function Modal({
 
       <div className={styles.modal}>
         <div className={styles.modalBodyContainer}>
-          <div className={styles.modalHeader}>
+          <Group
+            className={styles.modalHeader}
+            justify="space-between"
+            pv="normal"
+          >
             <div className={styles.modalHeaderTitleContainer}>
               {typeof title === "string" ? (
                 <Header className={styles.modalHeaderTitle} as="h2">
@@ -58,7 +63,7 @@ export function Modal({
               onClick={closeModal}
               style="tertiary"
             />
-          </div>
+          </Group>
           <div
             className={classnames(
               modalBodyClassName,

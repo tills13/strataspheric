@@ -4,6 +4,7 @@ import { style } from "@vanilla-extract/css";
 export const actionRow = style({
   borderRadius: vars.borderRadius,
   cursor: "pointer",
+  height: vars.sizes.normal,
 
   selectors: {
     "&:hover": {

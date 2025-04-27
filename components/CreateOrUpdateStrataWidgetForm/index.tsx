@@ -48,7 +48,7 @@ export function CreateOrUpdateStrataWidgetForm({
       }}
       className={styles.newWidgetForm}
     >
-      <Stack className={s({ mb: "large" })} gap="normal">
+      <Stack>
         <Input
           name="title"
           type="title"
@@ -92,15 +92,15 @@ export function CreateOrUpdateStrataWidgetForm({
         {selectedType === "info" && (
           <CreateOrUpdateStrataInfoWidgetForm widget={widget} />
         )}
+        <StatusButton
+          color="success"
+          iconRight={<AddIcon />}
+          style="primary"
+          type="submit"
+        >
+          {widget ? "Update" : "Create"} Widget
+        </StatusButton>
       </Stack>
-      <StatusButton
-        color="success"
-        iconRight={<AddIcon />}
-        style="primary"
-        type="submit"
-      >
-        {widget ? "Update" : "Create"} Widget
-      </StatusButton>
     </form>
   );
 }

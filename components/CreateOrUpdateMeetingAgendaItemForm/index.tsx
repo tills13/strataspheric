@@ -1,15 +1,11 @@
-"use client";
-
 import { s } from "../../sprinkles.css";
-import * as styles from "./style.css";
 
-import React, { useState } from "react";
+import React from "react";
 
 import { upsertAgendaItemAction } from "../../app/@app/dashboard/meetings/[meetingId]/actions";
 import { MeetingAgendaItem } from "../../data/meetings/listMeetingAgendaItems";
-import { classnames } from "../../utils/classnames";
 import { AttachFileField } from "../AttachFileField";
-import { FileAttachmentChip } from "../FileAttachmentChip";
+import { AttachInvoiceField } from "../AttachInvoiceField";
 import { AddIcon } from "../Icon/AddIcon";
 import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
@@ -50,13 +46,12 @@ export function CreateOrUpdateMeetingAgendaItemForm({
           defaultValue={agendaItem?.description}
         />
 
-        <div className={classnames(styles.fileAttachmentContainer)}>
-          <AttachFileField
-            className={styles.fileAttachmentButton}
-            defaultValue={agendaItem?.file}
-            name="fileId"
-          />
-        </div>
+        <AttachFileField defaultValue={agendaItem?.file} name="fileId" />
+
+        <AttachInvoiceField
+          name="invoiceId"
+          defaultValue={agendaItem?.invoice}
+        />
 
         <StatusButton
           color={agendaItem ? "primary" : "success"}

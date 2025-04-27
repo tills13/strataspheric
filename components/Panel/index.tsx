@@ -16,7 +16,7 @@ export function Panel({ children, className, noPadding, ...rest }: Props) {
       as="div"
       className={classnames(styles.panel, className)}
       {...rest}
-      p={noPadding ? "0" : rest.p || "normal"}
+      p={noPadding ? undefined : rest.p || "normal"}
     >
       {children}
     </Core>

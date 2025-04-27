@@ -121,6 +121,7 @@ export interface MeetingAgendaItemsTable {
   meetingId: string;
   title: string;
   description: string;
+  minutes: string | null;
   eventId: string | null;
   invoiceId: string | null;
   fileId: string | null;

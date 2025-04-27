@@ -39,23 +39,9 @@ export const meetingFilesListItemAttachmentChip = style({
   flex: 1,
 });
 
-export const minutesUrlInput = style({
-  "@media": {
-    [breakpoints.tablet]: {
-      flexGrow: 1,
-      flexBasis: "100%",
-    },
-  },
-});
-
 export const minutesUrl = style({
   display: "flex",
-  height: vars.sizes.normal,
-  padding: vars.spacing.small,
-  justifyContent: "space-between",
-  backgroundColor: vars.colors.grey50,
-  border: border(vars.borderWidth, "solid", vars.colors.grey400),
-  borderRadius: vars.borderRadius,
+  alignItems: "center",
 });
 
 export const minutesUrlActionsContainer = style({
@@ -68,10 +54,6 @@ export const minutesUrlActionsContainer = style({
       flexBasis: "25%",
     },
   },
-});
-
-export const minutesUrlApprover = style({
-  whiteSpace: "nowrap",
 });
 
 export const minutesUrlApproveButton = style({

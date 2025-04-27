@@ -30,7 +30,7 @@ export async function SettingsPage() {
           action={updateStrataAction.bind(undefined, strata.id)}
           className={classnames(styles.form, s({ mb: "large", mt: "large" }))}
         >
-          <Stack gap="normal" className={s({ mb: "large" })}>
+          <Stack className={s({ mb: "large" })}>
             <Input name="name" label="Strata Name" defaultValue={strata.name} />
 
             <StrataAddressFormFields strata={strata} />
@@ -70,15 +70,15 @@ export async function SettingsPage() {
                   : undefined
               }
             />
+            <StatusButton
+              color="success"
+              iconRight={<SaveIcon />}
+              style="primary"
+              type="submit"
+            >
+              Update Strata
+            </StatusButton>
           </Stack>
-          <StatusButton
-            color="success"
-            iconRight={<SaveIcon />}
-            style="primary"
-            type="submit"
-          >
-            Update Strata
-          </StatusButton>
         </form>
 
         <InfoPanel
