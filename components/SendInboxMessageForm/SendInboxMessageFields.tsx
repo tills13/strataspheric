@@ -16,7 +16,7 @@ interface Props {
 
 export function SendInboxMessageFields({
   defaultInvoice,
-  showSubjectInput,
+  showSubjectInput = true,
 }: Props) {
   return (
     <Stack gap="normal">
