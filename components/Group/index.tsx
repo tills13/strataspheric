@@ -33,19 +33,19 @@ export function Group({
       justify={justify}
       {...delegateProps}
     >
-      {React.Children.map(children, (c, i) =>
-        reactNodeCanReceiveClassNameProp(c)
-          ? React.cloneElement(c, {
+      {React.Children.map(children, (child) =>
+        reactNodeCanReceiveClassNameProp(child)
+          ? React.cloneElement(child, {
               className: classnames(
                 equalWidthChildren
                   ? styles.groupElement.fullWidth
                   : styles.groupElement.default,
-                typeof c.props.className === "string"
-                  ? c.props.className
+                typeof child.props.className === "string"
+                  ? child.props.className
                   : undefined,
               ),
             })
-          : c,
+          : child,
       )}
     </FlexBox>
   );

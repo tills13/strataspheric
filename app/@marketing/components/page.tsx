@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 
 import { AttachFileButton } from "../../../components/AttachFile/AttachFileButton";

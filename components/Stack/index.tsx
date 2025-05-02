@@ -6,8 +6,7 @@ import { classnames } from "../../utils/classnames";
 import { reactNodeCanReceiveClassNameProp } from "../../utils/react";
 import { FlexBox } from "../FlexBox";
 
-interface Props
-  extends Omit<React.ComponentProps<typeof FlexBox>, "direction"> {}
+type Props = Omit<React.ComponentProps<typeof FlexBox>, "direction">;
 
 /** stack is a vertical stacking of elements */
 export function Stack({ className, children, ...delegateProps }: Props) {
@@ -17,17 +16,17 @@ export function Stack({ className, children, ...delegateProps }: Props) {
       direction="column"
       {...delegateProps}
     >
-      {React.Children.map(children, (c, i) =>
-        reactNodeCanReceiveClassNameProp(c)
-          ? React.cloneElement(c, {
+      {React.Children.map(children, (child) =>
+        reactNodeCanReceiveClassNameProp(child)
+          ? React.cloneElement(child, {
               className: classnames(
-                typeof c.props.className === "string"
-                  ? c.props.className
+                typeof child.props.className === "string"
+                  ? child.props.className
                   : undefined,
                 styles.stackElement,
               ),
             })
-          : c,
+          : child,
       )}
     </FlexBox>
   );

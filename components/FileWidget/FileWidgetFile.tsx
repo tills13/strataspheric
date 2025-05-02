@@ -3,7 +3,6 @@ import * as styles from "./style.css";
 
 import { deleteWidgetFileAction } from "../../app/@app/dashboard/actions";
 import { File, StrataWidget } from "../../data";
-import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { classnames } from "../../utils/classnames";
 import { Date } from "../Date";
@@ -24,7 +23,7 @@ export function FileWidgetFile({ deleteable, file, widget }: Props) {
 
   return (
     <Wrap
-      if={can(p("stratas", "files", "view"))}
+      if={can("stratas.files.view")}
       with={(children) => <FileLink path={file.path}>{children}</FileLink>}
     >
       <Group
@@ -50,7 +49,7 @@ export function FileWidgetFile({ deleteable, file, widget }: Props) {
           />
           {deleteable && (
             <>
-              {can(p("stratas", "widgets", "edit")) && (
+              {can("stratas.widgets.edit") && (
                 <RemoveButton
                   action={deleteWidgetFileAction.bind(
                     undefined,

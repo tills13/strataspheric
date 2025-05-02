@@ -2,7 +2,7 @@ import * as styles from "./style.css";
 
 import { Map } from "leaflet";
 import Script from "next/script";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 
 interface Props {
   defaultZoom?: number;

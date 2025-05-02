@@ -2,7 +2,7 @@ import { ComponentProps } from "react";
 
 import { Select } from "../Select";
 
-interface Props extends ComponentProps<typeof Select> {}
+export type Props = ComponentProps<typeof Select>;
 
 export function StrataRoleSelect(props: Props) {
   return (

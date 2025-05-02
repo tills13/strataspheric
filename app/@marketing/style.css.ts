@@ -1,5 +1,5 @@
 import { breakpoints, vars } from "../theme.css";
-import { createVar, style, styleVariants } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 

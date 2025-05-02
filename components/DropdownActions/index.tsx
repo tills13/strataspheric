@@ -49,22 +49,17 @@ export function DropdownActions({
               key={idx}
               if={typeof action.action === "string"}
               with={(children) => {
-                if (/^https?:\/\//.test(action.action as string)) {
-                  return (
-                    <ExternalLink
-                      href={action.action as string}
-                      target="_blank"
-                    >
+                if (typeof action.action === "string") {
+                  return /^https?:\/\//.test(action.action) ? (
+                    <ExternalLink href={action.action} target="_blank">
                       {children}
                     </ExternalLink>
-                  );
-                } else {
-                  return (
-                    <InternalLink href={action.action as string}>
-                      {children}
-                    </InternalLink>
+                  ) : (
+                    <InternalLink href={action.action}>{children}</InternalLink>
                   );
                 }
+
+                return children;
               }}
             >
               <Group

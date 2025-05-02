@@ -7,10 +7,8 @@ import { auth } from "../../../../../auth";
 import { Thread, getThread } from "../../../../../data/inbox/getThread";
 import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
-import { createInboxMessageAction } from "../actions";
 import { InboxMessageThread } from "./InboxMessageThread";
 import { InboxThreadChatPanel } from "./InboxThreadChatPanel";
-import { sendInboxThreadChatAction } from "./actions";
 
 export const runtime = "edge";
 

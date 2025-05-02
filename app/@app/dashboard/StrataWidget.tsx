@@ -1,11 +1,9 @@
-import * as styles from "./style.css";
-
 import { auth } from "../../../auth";
 import { Grid } from "../../../components/Grid";
 import { NewWidgetWidget } from "../../../components/NewWidgetWidget";
 import { Widget } from "../../../components/Widget";
 import { Strata } from "../../../data";
-import { can, p } from "../../../data/users/permissions";
+import { can } from "../../../data/users/permissions";
 import { getWidgets } from "../../../data/widgets/getWidgets";
 
 interface Props {

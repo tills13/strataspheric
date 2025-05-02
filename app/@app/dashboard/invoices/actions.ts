@@ -34,7 +34,6 @@ export async function upsertInvoiceAction(
   fd: FormData,
 ): Promise<Invoice> {
   const strata = await mustGetCurrentStrata();
-  const session = await auth();
 
   const identifier = formdata.getString(fd, "identifier");
   const description = formdata.getString(fd, "description");
@@ -57,7 +56,6 @@ export async function upsertInvoiceAction(
       updatedAt: new Date().getTime(),
     });
   } else {
-    // @ts-ignore
     invoice = await createInvoice({
       amount,
       description,

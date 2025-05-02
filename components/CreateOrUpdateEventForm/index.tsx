@@ -1,5 +1,3 @@
-import { s } from "../../sprinkles.css";
-
 import { mutate } from "swr";
 
 import {
@@ -11,7 +9,6 @@ import { patchTimezoneOffset } from "../../utils/datetime";
 import { ConfirmButton } from "../ConfirmButton";
 import { DateInput } from "../DateInput";
 import { Flex } from "../Flex";
-import { Group } from "../Group";
 import { AddIcon } from "../Icon/AddIcon";
 import { DeleteIcon } from "../Icon/DeleteIcon";
 import { Input } from "../Input";

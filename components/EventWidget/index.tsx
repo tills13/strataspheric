@@ -5,7 +5,7 @@ import * as styles from "./style.css";
 import { useState } from "react";
 
 import { StrataWidget } from "../../data";
-import { can, p } from "../../data/users/permissions";
+import { can } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
 import {
   AbstractWidget,

@@ -3,7 +3,7 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import React, { act, useTransition } from "react";
+import React, { useTransition } from "react";
 
 import { addItemToAgendaAction } from "../../app/@app/dashboard/meetings/[meetingId]/actions";
 import { StrataActivity } from "../../data/meetings/listStrataActivity";
@@ -59,8 +59,9 @@ function strataActivityToAgentItem(
     }
   }
 
-  // @ts-ignore
-  throw new Error("unhandled activity type: " + activity.type);
+  throw new Error(
+    "unhandled activity type: " + (activity as { type: string }).type,
+  );
 }
 
 interface Props {
@@ -75,7 +76,7 @@ export function StrataActivityTimelineItem({
   meetingId,
 }: Props) {
   const [isPending, startTransition] = useTransition();
-  let sourceUserName = activity.sourceUserName || "Someone";
+  const sourceUserName = activity.sourceUserName || "Someone";
 
   let title = sourceUserName;
 

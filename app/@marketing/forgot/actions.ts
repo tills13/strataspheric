@@ -26,21 +26,21 @@ export async function requestPasswordResetActionReducer(
     };
   }
 
-  const u = await getUser(emailAddress);
+  const user = await getUser(emailAddress);
 
-  if (!u) {
+  if (!user) {
     return { success: true };
   }
 
   try {
-    let token = await getUserPasswordResetToken({ userId: u.id });
+    let token = await getUserPasswordResetToken({ userId: user.id });
 
     if (!token) {
-      token = await createUserPasswordResetToken({ userId: u.id });
+      token = await createUserPasswordResetToken({ userId: user.id });
     }
 
     await sendEmail(
-      u.email,
+      user.email,
       "Strataspheric: Password Reset",
       `
     A password reset has been requested for your account on Strataspheric.
@@ -52,9 +52,11 @@ export async function requestPasswordResetActionReducer(
   } catch (e) {
     // do nothing but log the error
     console.log(e);
-  } finally {
-    return { success: true };
   }
+
+  return {
+    success: true,
+  };
 }
 
 export async function resetPasswordAction(fd: FormData) {

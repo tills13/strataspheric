@@ -40,6 +40,7 @@ export function CreateOrUpdateInvoiceForm({
   const [deletePending, startDeleteTransition] = useTransition();
   const [markPaidPending, startMarkPaidTransition] = useTransition();
   const [loadingNextInvoiceId, setLoadingNextInvoiceId] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const invoiceIdInputRef = useRef<HTMLInputElement>(null!);
 
   async function getNextInvoiceId() {

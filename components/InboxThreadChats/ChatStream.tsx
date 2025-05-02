@@ -12,6 +12,7 @@ interface Props {
 }
 
 export function ChatStream({ chats }: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const ref = useRef<HTMLDivElement>(null!);
 
   useLayoutEffect(() => {

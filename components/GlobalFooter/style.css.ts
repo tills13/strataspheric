@@ -1,5 +1,4 @@
 import { breakpoints, iconColorVar, vars } from "../../app/theme.css";
-import * as iconStyles from "../Icon/style.css";
 import { colorVar } from "../Wordmark/style.css";
 import { style } from "@vanilla-extract/css";
 

@@ -31,7 +31,7 @@ export function processRows(...rows: Row[]) {
 }
 
 export async function getStrataMembership(strataId: string, userId: string) {
-  let query = baseQuery
+  const query = baseQuery
     .where("strata_memberships.strataId", "=", strataId)
     .where("strata_memberships.userId", "=", userId);
 

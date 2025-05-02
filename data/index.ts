@@ -93,7 +93,7 @@ export interface InvoicesTable {
   fileId: string | null;
   isPaid: ColumnType<0 | 1, 0 | 1 | undefined>;
   createdAt: ColumnType<number, never, never>;
-  updatedAt: ColumnType<number, never, number>;
+  updatedAt: number;
   dueBy: number | null;
 }
 

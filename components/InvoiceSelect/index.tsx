@@ -13,7 +13,7 @@ interface Props extends React.ComponentProps<typeof Select> {
 export function InvoiceSelect({
   className,
   label: placeholder = "Attach an Invoice",
-  onSelectInvoice: onSelectInvoice,
+  onSelectInvoice,
   ...delegateProps
 }: Props) {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
@@ -33,9 +33,16 @@ export function InvoiceSelect({
     <Select
       className={className}
       onChange={(e) => {
-        onSelectInvoice?.(
-          invoices.find((invoice) => invoice.id === e.currentTarget.value)!,
+        const selectedInvoice = invoices.find(
+          (invoice) => invoice.id === e.currentTarget.value,
         );
+
+        if (!selectedInvoice) {
+          // something went wrong
+          return;
+        }
+
+        onSelectInvoice?.(selectedInvoice);
       }}
       label={placeholder}
       {...delegateProps}

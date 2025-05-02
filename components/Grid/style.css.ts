@@ -1,10 +1,5 @@
 import { breakpoints } from "../../app/theme.css";
-import {
-  createVar,
-  fallbackVar,
-  style,
-  styleVariants,
-} from "@vanilla-extract/css";
+import { createVar, fallbackVar, style } from "@vanilla-extract/css";
 
 export const grid = style({
   display: "grid",

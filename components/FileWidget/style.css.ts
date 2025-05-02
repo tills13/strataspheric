@@ -1,8 +1,6 @@
 import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { padding } from "../../theme";
-
 export const fileWidget = style({});
 
 export const fileWidgetListItem = style({

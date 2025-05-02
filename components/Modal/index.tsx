@@ -27,7 +27,13 @@ export function Modal({
   modalBodyClassName,
   title,
 }: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const wrapperRef = useRef<HTMLDivElement>(null!);
+  const node = document.querySelector("#modal-root");
+
+  if (!node) {
+    throw new Error("invalid portal selector");
+  }
 
   return ReactDOM.createPortal(
     <div
@@ -75,6 +81,6 @@ export function Modal({
         </div>
       </div>
     </div>,
-    document.querySelector("#modal-root")!,
+    node,
   );
 }

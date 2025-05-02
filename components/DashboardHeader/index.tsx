@@ -4,12 +4,11 @@ import * as styles from "./style.css";
 
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Permission, can, p } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
 import { Button } from "../Button";
-import { DropdownActions } from "../DropdownActions";
 import { Group } from "../Group";
 import { BedIcon } from "../Icon/BedIcon";
 import { CalendarIcon } from "../Icon/CalendarIcon";
@@ -90,31 +89,18 @@ export function DashboardHeader() {
                 : pathname?.startsWith(href);
 
             return (
-              <Wrap
+              <InternalLink
                 key={href}
-                if={isActive}
-                with={(children) => (
-                  <div
-                    className={styles.activeSubheaderLink}
-                    onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
-                  >
-                    {children}
-                  </div>
-                )}
-                elseWith={(children) => (
-                  <InternalLink
-                    key={href}
-                    className={styles.subheaderLink}
-                    onClick={() => setMobileMenuExpanded(false)}
-                    href={href}
-                  >
-                    {children}
-                  </InternalLink>
-                )}
+                className={
+                  isActive ? styles.activeSubheaderLink : styles.subheaderLink
+                }
+                onClick={() => setMobileMenuExpanded(false)}
+                href={href}
               >
                 <IconComponent classNameOverride={styles.mobileMenuIcon} />
+
                 <div className={styles.mobileMenuText}>{label}</div>
-              </Wrap>
+              </InternalLink>
             );
           })}
         </div>

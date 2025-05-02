@@ -8,12 +8,11 @@ import { FlexBox } from "../../../../components/FlexBox";
 import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { SearchIcon } from "../../../../components/Icon/SearchIcon";
-import { can, p } from "../../../../data/users/permissions";
+import { can } from "../../../../data/users/permissions";
 import { AddFileButton } from "./AddFileButton";
 import { FilesLoader } from "./FilesLoader";
 import { FilesSearch } from "./FilesSearch";
 import { StrataFilesList } from "./StrataFilesList";
-import { upsertFileAction } from "./actions";
 
 interface Props {
   search?: string;

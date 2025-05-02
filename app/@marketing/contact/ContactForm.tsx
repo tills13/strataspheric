@@ -23,6 +23,7 @@ interface Props {
 
 export function ContactForm({ submitActionReducer }: Props) {
   const [turnstileToken, setTurnstileToken] = useState<string>();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const turnstileRef = useRef<HTMLDivElement>(null!);
   const [state, submitAction] = useActionState(submitActionReducer, {
     errorMessage: undefined,
@@ -36,7 +37,7 @@ export function ContactForm({ submitActionReducer }: Props) {
         strategy="afterInteractive"
         onLoad={() => {
           window.turnstile.render(turnstileRef.current, {
-            sitekey: process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY!,
+            sitekey: process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY,
             callback(token) {
               setTurnstileToken(token);
             },

@@ -1,8 +1,6 @@
 import { breakpoints, vars } from "../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-import { border } from "../../../../../theme";
-
 export const meetingAgendaContainer = style({
   padding: vars.spacing.normal,
 });

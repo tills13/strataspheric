@@ -46,7 +46,7 @@ export function CalendarDayEvents({
 
           const diffFromStartDate = differenceInDays(date, startDate);
           const totalRemainder = differenceInDays(endDate, date) + 1;
-          const totalLength = differenceInDays(endDate, startDate);
+          // const totalLength = differenceInDays(endDate, startDate);
 
           const eventWrapsToFollowingWeek = date.getDay() + totalRemainder > 7;
           const eventWrapsFromPrevWeek = date.getDay() - diffFromStartDate < 0;
@@ -63,15 +63,20 @@ export function CalendarDayEvents({
           return (
             <Wrap
               key={idx}
-              if={!!event.meetingId}
-              with={(children) => (
-                <InternalLink
-                  key={idx}
-                  href={`/dashboard/meetings/${event.meetingId!}`}
-                >
-                  {children}
-                </InternalLink>
-              )}
+              with={(children) => {
+                if (event.meetingId) {
+                  return (
+                    <InternalLink
+                      key={idx}
+                      href={`/dashboard/meetings/${event.meetingId}`}
+                    >
+                      {children}
+                    </InternalLink>
+                  );
+                }
+
+                return children;
+              }}
             >
               <div
                 className={classnames(styles.calendarEvent, {

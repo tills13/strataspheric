@@ -1,6 +1,7 @@
 import { assetsOrigin } from "../constants";
 
 export function extname(input: string): string {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return input.split(".").filter(Boolean).pop()!;
 }
 

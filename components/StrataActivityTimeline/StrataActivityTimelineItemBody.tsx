@@ -26,6 +26,7 @@ export function StrataActivityTimelineItemBody({ activity }: Props) {
           identifier: activity.invoiceIdentifier,
           isPaid: activity.invoiceIsPaid,
           status: activity.invoiceStatus as Invoice["status"],
+          dueBy: activity.invoiceDueBy,
         }}
       />
     );
@@ -50,7 +51,7 @@ export function StrataActivityTimelineItemBody({ activity }: Props) {
           message: activity.chatMessage,
           senderName: activity.sourceUserName || "Someone",
           sentAt: activity.date,
-          threadId: activity.chatThreadId!,
+          threadId: activity.chatThreadId,
         }}
         linkType="direct"
       />

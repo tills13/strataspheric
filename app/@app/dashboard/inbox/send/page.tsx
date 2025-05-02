@@ -40,13 +40,8 @@ export default async function Page() {
 
         <SendInboxMessageForm>
           {!session?.user && (
-            <>
-              <Header as="h3">Contact Information</Header>
-              <SendInboxMessageContactDetailsFields mb="large" />
-            </>
+            <SendInboxMessageContactDetailsFields mb="large" />
           )}
-
-          <Header as="h3">Message</Header>
 
           <SendInboxMessageFields />
         </SendInboxMessageForm>

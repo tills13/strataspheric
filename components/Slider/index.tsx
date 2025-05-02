@@ -14,6 +14,7 @@ export function Slider({
 }: React.PropsWithChildren<Props>) {
   const numChildren = React.Children.count(children);
   const [activeSlideIdx, setActiveSlideIdx] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const activeChildRef = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {

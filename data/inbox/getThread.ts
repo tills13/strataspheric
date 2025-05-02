@@ -27,6 +27,8 @@ export function getThread(threadId: string, filter: GetThreadFilter) {
       "inbox_messages.senderUserId",
       "inbox_messages.strataId",
       "inbox_messages.fileId",
+      "inbox_messages.invoiceId",
+      "inbox_messages.amenityBookingId",
       eb.fn
         .coalesce("users.name", "inbox_messages.senderName")
         .as("senderName"),

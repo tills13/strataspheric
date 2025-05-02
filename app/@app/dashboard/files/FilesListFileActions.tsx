@@ -10,7 +10,7 @@ import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { EditIcon } from "../../../../components/Icon/EditIcon";
 import { Modal } from "../../../../components/Modal";
 import { File } from "../../../../data";
-import { deleteFileAction, upsertFileAction } from "./actions";
+import { deleteFileAction } from "./actions";
 
 interface Props {
   file: File;

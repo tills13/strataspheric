@@ -1,5 +1,3 @@
-import { dividerText } from "../../../../components/DividerText/style.css";
-import { money } from "../../../../components/Money/style.css";
 import { breakpoints, vars } from "../../../theme.css";
 import { style } from "@vanilla-extract/css";
 

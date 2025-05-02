@@ -1,6 +1,5 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import React, { useState } from "react";

@@ -15,7 +15,7 @@ interface Props {
   closeModal: () => void;
   description?: React.ReactNode;
   title?: React.ReactNode;
-  onClickConfirm: () => Promise<any> | any;
+  onClickConfirm: () => void;
 }
 
 export function ConfirmModal({

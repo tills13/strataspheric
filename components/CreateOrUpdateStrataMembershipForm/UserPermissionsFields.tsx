@@ -1,6 +1,5 @@
 "use client";
 
-import { vars } from "../../app/theme.css";
 import * as styles from "./style.css";
 
 import { useState } from "react";

@@ -7,7 +7,6 @@ import { useActionState, useEffect, useState } from "react";
 
 import { SubmitGetStartedState } from "../../app/@marketing/get-started/actions";
 import { signIn } from "../../auth/actions";
-import { Session } from "../../auth/types";
 import { tld } from "../../constants";
 import { PricingPlan } from "../../data/strataPlans/constants";
 import { useSession } from "../../hooks/useSession";
@@ -62,7 +61,7 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
   const [strataName, setStrataName] = useState("");
   const [isDomainAvailable, setIsDomainAvailable] = useState(undefined);
   const deferredStrataName = useTimeDeferredValue(strataName);
-  const [numUnits, setNumUnits] = useState(0);
+  // const [numUnits, setNumUnits] = useState(0);
 
   const suggestedSubdomain = normalizeStrataNameToSubdomain(deferredStrataName);
 
@@ -137,8 +136,8 @@ export function GetStartedForm({ className, submitGetStarted }: Props) {
           min={1}
           type="number"
           label="# of Units"
-          onChange={(e) => {
-            setNumUnits(parseInt(e.target.value, 10));
+          onChange={(_e) => {
+            // setNumUnits(parseInt(e.target.value, 10));
           }}
         />
 

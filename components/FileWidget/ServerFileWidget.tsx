@@ -5,7 +5,7 @@ import { getRecentApprovedMinutes } from "../../data/meetings/getRecentApprovedM
 import { getWidgetFiles } from "../../data/widgets/getWidgetFiles";
 import { type Props as AbstractWidgetProps } from "../AbstractWidget";
 
-interface Props extends AbstractWidgetProps {}
+type Props = AbstractWidgetProps;
 
 function loadFiles(widget: StrataWidget) {
   if (widget.type === "file") {

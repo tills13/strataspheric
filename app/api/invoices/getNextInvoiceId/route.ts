@@ -6,7 +6,8 @@ import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain
 
 export const runtime = "edge";
 
-export const GET = auth(async (session, req) => {
+// @todo permissions
+export const GET = auth(async () => {
   const strata = await mustGetCurrentStrata();
   const { count } = await getNextInvoiceId(strata.id);
 

@@ -11,8 +11,7 @@ export type Pagination<
   QueryTableAlias extends keyof Database,
   S extends Record<string, unknown>,
 > = {
+  offset?: number;
   limit?: number;
-  orderBy: OrderByExpression<Database, QueryTableAlias, S>;
-  // | UndirectedOrderByExpression<Database, QueryTableAlias, S>
-  // | DirectedOrderByStringReference<Database, QueryTableAlias, S>;
+  orderBy?: OrderByExpression<Database, QueryTableAlias, S>;
 };

@@ -89,17 +89,6 @@ export const globalHeaderActionsDesktop = style({
   },
 });
 
-const sessionInfoRow = style({
-  display: "flex",
-  alignItems: "center",
-  gap: vars.spacing.normal,
-});
-
-const sessionUserName = style({
-  color: vars.colors.primary,
-  whiteSpace: "nowrap",
-});
-
 export const globalMobileHeaderActions = style({
   display: "block",
   "@media": {
@@ -107,14 +96,6 @@ export const globalMobileHeaderActions = style({
       display: "none",
     },
   },
-});
-
-const globalMobileHeaderModal = style({
-  padding: vars.spacing.small,
-});
-
-const hamburgerIcon = style({
-  height: "24px",
 });
 
 const globalMobileHeaderModalActions = style({
@@ -130,10 +111,4 @@ export const globalHeaderActionsButton = style({
       width: "100%",
     },
   },
-});
-
-const breadcrumbs = style({
-  display: "flex",
-  gap: vars.spacing.xs,
-  alignItems: "baseline",
 });

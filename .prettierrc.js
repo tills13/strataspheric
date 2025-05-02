@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   importOrderSortSpecifiers: true,
   plugins: ["@trivago/prettier-plugin-sort-imports"],

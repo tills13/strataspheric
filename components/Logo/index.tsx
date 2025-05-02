@@ -1,6 +1,6 @@
 import { Core, Props as CoreProps } from "../Core";
 
-interface Props extends Omit<CoreProps<"svg">, "as"> {}
+type Props = Omit<CoreProps<"svg">, "as">;
 
 export function Logo(props: Props) {
   return (

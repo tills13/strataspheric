@@ -4,7 +4,6 @@ import { useActionState } from "react";
 
 import { User } from "../../../auth/types";
 import { Header } from "../../../components/Header";
-import { CycleIcon } from "../../../components/Icon/CycleIcon";
 import { SaveIcon } from "../../../components/Icon/SaveIcon";
 import { Input } from "../../../components/Input";
 import { Stack } from "../../../components/Stack";

@@ -2,7 +2,7 @@
 
 import { type SelectQueryBuilder } from "kysely";
 
-import { Strata, db } from "../../../data";
+import { Database, Strata, db } from "../../../data";
 
 interface State {
   stratas: Strata[] | undefined;
@@ -16,7 +16,7 @@ export async function findYourStratasActionReducer(
   const strataName = fd.get("strata_name");
 
   let membershipsQuery:
-    | SelectQueryBuilder<any, any, { strataId: string }>
+    | SelectQueryBuilder<Database, "strata_memberships", { strataId: string }>
     | undefined;
 
   if (typeof email === "string" && email) {
@@ -28,7 +28,7 @@ export async function findYourStratasActionReducer(
   }
 
   let stratasQuery:
-    | SelectQueryBuilder<any, any, { strataId: string }>
+    | SelectQueryBuilder<Database, "stratas", { strataId: string }>
     | undefined;
 
   if (typeof strataName === "string" && strataName) {
@@ -49,7 +49,6 @@ export async function findYourStratasActionReducer(
     .where(
       "stratas.id",
       "in",
-      // @ts-ignore
       membershipsQuery && stratasQuery
         ? membershipsQuery.union(stratasQuery)
         : membershipsQuery || stratasQuery,

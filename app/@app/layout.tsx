@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 import { auth } from "../../auth";
 import { GlobalDashboardHeader } from "../../components/GlobalDashboardHeader";
@@ -6,12 +6,11 @@ import { SessionProvider } from "../../components/SessionProvider";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { SWRProvider } from "./SWRProvider";
 
-export async function generateMetadata(
-  _: any,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
+  // _: unknown,
+  // parent: ResolvingMetadata,
   const strata = await getCurrentStrata();
-  const p = await parent;
+  // const p = await parent;
 
   if (!strata) {
     return {};

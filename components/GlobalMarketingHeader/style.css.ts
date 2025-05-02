@@ -1,9 +1,5 @@
 import { breakpoints, vars } from "../../app/theme.css";
-import { createVar, keyframes, style } from "@vanilla-extract/css";
-
-import { calc } from "@vanilla-extract/css-utils";
-
-import { padding } from "../../theme";
+import { keyframes, style } from "@vanilla-extract/css";
 
 export const globalHeader = style({
   position: "sticky",

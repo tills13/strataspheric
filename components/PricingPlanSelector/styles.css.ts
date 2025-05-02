@@ -1,4 +1,4 @@
-import { breakpoints, vars } from "../../app/theme.css";
+import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const pricingPlanSelectorContainer = style({

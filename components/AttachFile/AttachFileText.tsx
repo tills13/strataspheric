@@ -17,7 +17,7 @@ interface Props {
   className?: string;
   defaultIcon?: React.ReactElement<React.ComponentProps<typeof Icon>>;
   fileTypes?: string[];
-  onSelectFile?: (file: File | undefined) => Promise<any> | any;
+  onSelectFile?: (file: File | undefined) => void;
   placeholder?: React.ReactNode;
   selectedFile?: { id: string; name: string; path: string };
   showFileName?: boolean;

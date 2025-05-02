@@ -2,8 +2,6 @@ import * as styles from "./style.css";
 
 import React from "react";
 
-import { classnames } from "../../utils/classnames";
-
 interface Props {
   className?: string;
   cellClassName?: string;
@@ -18,7 +16,7 @@ export function TableSkeleton({
   rows = 1,
 }: Props) {
   return (
-    <table className={classnames(styles.tableSkeleton, className)}>
+    <table className={className}>
       <thead>
         <tr>
           {Array.from(new Array(columns)).map((_, i) => (

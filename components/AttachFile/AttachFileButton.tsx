@@ -14,7 +14,7 @@ import { AttachFileModal } from "./AttachFileModal";
 type ButtonProps = Omit<React.ComponentProps<typeof Button>, "placeholder">;
 
 interface Props extends ButtonProps {
-  onSelectFile?: (file: File | undefined) => Promise<any> | any;
+  onSelectFile?: (file: File | undefined) => void;
   placeholder?: React.ReactNode;
   selectedFile?: { id: string; name: string; path: string };
 }

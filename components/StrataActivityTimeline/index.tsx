@@ -6,7 +6,6 @@ import { s } from "../../sprinkles.css";
 import { useState } from "react";
 import useSWR from "swr";
 
-import { NewMeetingAgendaItem } from "../../data";
 import { StrataActivity } from "../../data/meetings/listStrataActivity";
 import { Select } from "../Select";
 import { Timeline } from "../Timeline";
@@ -28,52 +27,6 @@ async function fetchStrataEvents(activityType: string | undefined) {
   );
 
   return (await response.json()).activity as StrataActivity[];
-}
-
-function strataActivityToAgendaItem(
-  activity: StrataActivity,
-): Omit<NewMeetingAgendaItem, "id" | "meetingId"> {
-  let sourceUserName = activity.sourceUserName || "Someone";
-
-  switch (activity.type) {
-    case "event": {
-      return {
-        description: activity.eventName + " is scheduled for " + activity.date,
-        eventId: activity.eventId,
-        title: sourceUserName + " scheduled an event",
-      };
-    }
-    case "file": {
-      return {
-        description: "",
-        fileId: activity.fileId,
-        title: sourceUserName + " added a file",
-      };
-    }
-    case "invoice": {
-      return {
-        description: "",
-        // @ts-ignore
-        invoiceId: activity.invoiceId,
-        title: sourceUserName + " added an invoice",
-      };
-    }
-    case "inbox_message": {
-      return {
-        description: "",
-        messageId: activity.messageId,
-        title: sourceUserName + " sent a message",
-      };
-    }
-
-    case "chat": {
-      return {
-        description: "",
-        messageId: activity.chatThreadId,
-        title: sourceUserName + " chatted about a received message",
-      };
-    }
-  }
 }
 
 export interface Props {

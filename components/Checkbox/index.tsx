@@ -2,31 +2,30 @@
 
 import * as styles from "./style.css";
 
-import React, { InputHTMLAttributes, useId } from "react";
+import React, { useId } from "react";
 
 import { classnames } from "../../utils/classnames";
 
-interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {}
+interface Props
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+  ref?: React.Ref<HTMLInputElement>;
+}
 
-export const Checkbox = React.forwardRef<HTMLInputElement, Props>(
-  ({ className, id: propsId, ...rest }, ref) => {
-    const id = useId();
+export function Checkbox({ className, id: propsId, ref, ...rest }: Props) {
+  const id = useId();
 
-    return (
-      <label
-        className={classnames(styles.checkbox, className)}
-        htmlFor={propsId || id}
-      >
-        <input
-          className={styles.checkboxElement}
-          ref={ref}
-          type="checkbox"
-          id={propsId || id}
-          {...rest}
-        />
-      </label>
-    );
-  },
-);
-
-Checkbox.displayName = "Checkbox";
+  return (
+    <label
+      className={classnames(styles.checkbox, className)}
+      htmlFor={propsId || id}
+    >
+      <input
+        className={styles.checkboxElement}
+        ref={ref}
+        type="checkbox"
+        id={propsId || id}
+        {...rest}
+      />
+    </label>
+  );
+}

@@ -25,7 +25,7 @@ export async function createInvoice(
         (newInvoice as NewInvoice).identifier ||
         ((eb) =>
           eb.fn("concat", [
-            sql.raw(autoIdentifierPrefix + " "),
+            sql.raw(`"${autoIdentifierPrefix + " "}"`),
             eb
               .selectFrom("invoices")
               .select(eb.fn("count", []).as("count"))

@@ -2,11 +2,8 @@ import * as styles from "./style.css";
 
 import { AddFileToMeetingButton } from "../../../../../components/AddFileToMeetingButton";
 import { FileAttachmentChip } from "../../../../../components/FileAttachmentChip";
-import { FileLink } from "../../../../../components/FileLink";
-import { FileTypeIcon } from "../../../../../components/FileTypeIcon";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
-import { TextDocumentIcon } from "../../../../../components/Icon/TextDocumentIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { Stack } from "../../../../../components/Stack";

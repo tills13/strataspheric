@@ -9,6 +9,7 @@ import { useState, useTransition } from "react";
 import { mutate } from "swr";
 
 import { CalendarEvent } from ".";
+import { upsertEventAction } from "../../app/@app/dashboard/calendar/[...segments]/actions";
 import { useIsAfterHydration } from "../../hooks/useIsAfterHydration";
 import { classnames } from "../../utils/classnames";
 import { parseTimestamp, patchTimezoneOffset } from "../../utils/datetime";
@@ -17,15 +18,9 @@ interface Props {
   date: Date;
   events: CalendarEvent[];
   isOutOfContext: boolean;
-  upsertEvent?: (eventId: string | undefined, fd: FormData) => any;
 }
 
-export function CalendarDay({
-  events,
-  date,
-  isOutOfContext,
-  upsertEvent,
-}: Props) {
+export function CalendarDay({ events, date, isOutOfContext }: Props) {
   const isToday = isSameDay(new Date(), date);
   const showToday = useIsAfterHydration();
   const [isDropTarget, setIsDropTarget] = useState(false);
@@ -49,10 +44,6 @@ export function CalendarDay({
       }}
       onDragLeave={() => setIsDropTarget(false)}
       onDrop={(e) => {
-        if (!upsertEvent) {
-          return;
-        }
-
         e.preventDefault();
         const eventId = e.dataTransfer.getData("text/plain");
         const event = events.find((ev) => ev.id === eventId);
@@ -80,8 +71,8 @@ export function CalendarDay({
         patchTimezoneOffset(fd, "date_end");
 
         startTransition(async () => {
-          await upsertEvent(event.id, fd);
-          mutate((k) => Array.isArray(k) && k[1] === "events");
+          await upsertEventAction(event.id, fd);
+          await mutate((k) => Array.isArray(k) && k[1] === "events");
         });
         setIsDropTarget(false);
       }}

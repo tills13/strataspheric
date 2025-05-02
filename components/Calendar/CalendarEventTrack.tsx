@@ -11,6 +11,7 @@ interface Props {
 
 export function CalendarEventTrack({ children }: Props) {
   const [clientWidth, setClientWidth] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const ref = useRef<HTMLDivElement>(null!);
 
   useLayoutEffect(() => {

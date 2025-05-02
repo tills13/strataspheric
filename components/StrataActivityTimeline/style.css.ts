@@ -1,6 +1,5 @@
 import { iconColorVar, vars } from "../../app/theme.css";
 import { buttonBase } from "../Button/style.css";
-import { invoiceChip } from "../InvoiceChip/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const timelineEntry = style({

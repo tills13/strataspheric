@@ -20,16 +20,6 @@ export const pricingCardPlanName = style({
   padding: padding(vars.spacing.small, vars.spacing.normal),
 });
 
-const numSeatsField = style({
-  display: "flex",
-  gap: vars.spacing.small,
-  width: "100%",
-});
-
-const numSeatsInput = style({
-  flex: 1,
-});
-
 export const pricingContainer = style({
   padding: padding(vars.spacing.normal, "0"),
   borderTop: border("1px", "solid", vars.colors.borderDefault),
@@ -85,20 +75,6 @@ export const planFeaturesFeatureIconIncluded = style([
   planFeaturesFeatureIcon,
   { fill: important(vars.colors.green500) },
 ]);
-
-const estimateContainer = style({
-  display: "flex",
-  justifyContent: "space-between",
-  fontSize: vars.fontSizes.xl,
-  fontWeight: 400,
-});
-const estimateSummarySeats = style({ fontWeight: 700 });
-
-const estimatePeriod = style({
-  display: "block",
-  fontSize: vars.fontSizes.small,
-  textAlign: "end",
-});
 
 export const selectPlanButtonLink = style({
   textDecoration: "none",

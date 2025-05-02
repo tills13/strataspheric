@@ -1,4 +1,3 @@
-import { buttonSizes } from "../Button/style.css";
 import * as styles from "./style.css";
 
 import { classnames } from "../../utils/classnames";
@@ -9,19 +8,10 @@ interface Props {
   className?: string;
   name: string;
   options: string[];
-  size?: keyof typeof buttonSizes;
   defaultValue?: string;
-  value?: string;
 }
 
-export function RadioButton({
-  className,
-  defaultValue,
-  name,
-  options,
-  size,
-  value,
-}: Props) {
+export function RadioButton({ className, defaultValue, name, options }: Props) {
   return (
     <div>
       <Group

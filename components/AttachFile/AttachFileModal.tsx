@@ -11,7 +11,7 @@ import { Stack } from "../Stack";
 interface Props {
   fileTypes?: string[];
   close: () => void;
-  onSelectFile?: (file: File | undefined) => Promise<void>;
+  onSelectFile?: (file: File | undefined) => void;
   selectedFile?: { id: string; name: string; path: string };
   showImagePreview?: boolean;
 }

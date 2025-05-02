@@ -61,7 +61,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
 
   let invoicesQuery = db
     .selectFrom("invoices")
-    .select((eb) => [
+    .select((_eb) => [
       "invoices.payee as sourceUserId",
       "invoices.createdAt as date",
       sql.lit("invoice" as const).as("type"),
@@ -94,7 +94,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
 
   let messagesQuery = db
     .selectFrom("inbox_messages")
-    .select((eb) => [
+    .select((_eb) => [
       "inbox_messages.senderUserId as sourceUserId",
       "inbox_messages.sentAt as date",
       sql.lit("inbox_message" as const).as("type"),
@@ -127,7 +127,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
 
   let filesQuery = db
     .selectFrom("files")
-    .select((eb) => [
+    .select((_eb) => [
       "files.uploaderId as sourceUserId",
       "files.createdAt as date",
       sql.lit("file" as const).as("type"),
@@ -165,7 +165,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
       "inbox_thread_chats.threadId",
       "inbox_messages.threadId",
     )
-    .select((eb) => [
+    .select((_eb) => [
       "inbox_thread_chats.userId as sourceUserId",
       "inbox_thread_chats.sentAt as date",
       sql.lit("chat" as const).as("type"),
@@ -222,6 +222,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
         .union(invoicesQuery)
         .union(messagesQuery)
         .union(filesQuery)
+        .union(threadChatsQuery)
         .as("results"),
     )
     .leftJoin("users", "results.sourceUserId", "users.id")

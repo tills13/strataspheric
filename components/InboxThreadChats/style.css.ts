@@ -1,14 +1,5 @@
-import { breakpoints, vars } from "../../app/theme.css";
+import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
-
-const chatsContainer = style({
-  "@media": {
-    [breakpoints.tablet]: {
-      height: "100%",
-      overflow: "hidden",
-    },
-  },
-});
 
 export const chatBubble = style({
   display: "flex",
@@ -25,7 +16,3 @@ export const selfChatBubble = style([
     color: vars.colors.white,
   },
 ]);
-
-const chatMessage = style({
-  whiteSpace: "pre-line",
-});

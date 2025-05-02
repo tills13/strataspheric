@@ -169,6 +169,7 @@ export async function createAmenityBookingAction(
         strataId: strata.id,
         type: "incoming",
         dueBy: startDate,
+        updatedAt: new Date().getTime(),
       },
       "BOOKING",
     );
@@ -192,6 +193,5 @@ export async function createAmenityBookingAction(
     senderUserId: session.user.id,
   });
 
-  let viewPath = `/dashboard/inbox/${threadId}`;
-  redirect(viewPath);
+  redirect(`/dashboard/inbox/${threadId}`);
 }

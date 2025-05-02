@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 import {
   GetCustomDomainData,
   getCustomDomain,
@@ -11,7 +13,7 @@ export interface GetDomainStatusResponseData {
 }
 
 export async function GET(req: Request) {
-  const u = new URL(req.url!);
+  const u = new URL(req.url);
   const domain = u.searchParams.get("domain");
 
   if (!domain) {
@@ -44,15 +46,7 @@ export async function GET(req: Request) {
     return new Response("Not Found", { status: 404 });
   }
 
-  return new Response(
-    JSON.stringify({
-      status: json.result.status,
-    } as GetDomainStatusResponseData),
-    {
-      status: 200,
-      headers: {
-        "content-type": "application/json",
-      },
-    },
-  );
+  return NextResponse.json({
+    status: json.result.status,
+  } satisfies GetDomainStatusResponseData);
 }

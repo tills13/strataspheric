@@ -44,7 +44,7 @@ export async function pbkdf2Verify(
 
   try {
     compositeStr = atob(hashedPassword);
-  } catch (e) {
+  } catch {
     throw new Error("Invalid key");
   }
 

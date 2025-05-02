@@ -4,7 +4,7 @@ export function useTimeDeferredValue(input: string): string {
   const [currentValue, setCurrentValue] = useState(input);
 
   useLayoutEffect(() => {
-    let timeout: any = setTimeout(() => {
+    const timeout = setTimeout(() => {
       setCurrentValue(input);
     }, 250);
 

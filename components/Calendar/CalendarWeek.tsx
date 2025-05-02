@@ -27,10 +27,9 @@ interface Props {
   currentMonth: number;
   currentYear: number;
   dayIsOutOfContext?: OutOfContextFn;
-  deleteEvent?: (eventId: string) => any;
   events: CalendarEvent[];
   onSelectDate?: (date: Date) => void;
-  upsertEvent?: (eventId: string | undefined, fd: FormData) => any;
+
   weekOfMonth: number;
 }
 
@@ -41,9 +40,7 @@ export function CalendarWeek({
   currentMonth,
   currentYear,
   dayIsOutOfContext = IS_OUT_OF_CONTEXT_MONTH,
-  deleteEvent,
   events,
-  upsertEvent,
   onSelectDate,
   weekOfMonth,
 }: Props) {
@@ -69,7 +66,6 @@ export function CalendarWeek({
               date={date}
               events={events}
               isOutOfContext={dayIsOutOfContext(date, day0)}
-              upsertEvent={upsertEvent}
             />
           );
         })}
@@ -91,7 +87,6 @@ export function CalendarWeek({
                 createOrUpdateEventFormSubmitLabel
               }
               date={date}
-              deleteEvent={deleteEvent}
               events={events
                 .filter(
                   (e) =>
@@ -102,7 +97,6 @@ export function CalendarWeek({
                 )
                 .sort((a, b) => (a.startDate > b.startDate ? 0 : 1))}
               onClick={onSelectDate ? () => onSelectDate(date) : undefined}
-              upsertEvent={upsertEvent}
             />
           );
         })}

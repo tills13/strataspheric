@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { D1Database, D1Result } from "@cloudflare/workers-types";
 import {
   CompiledQuery,

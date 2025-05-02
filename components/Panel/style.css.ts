@@ -1,5 +1,5 @@
 import { vars } from "../../app/theme.css";
-import { style, styleVariants } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 import { border } from "../../theme";
 

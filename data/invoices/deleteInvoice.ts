@@ -1,6 +1,4 @@
-import { uuidv7 } from "uuidv7";
-
-import { Invoice, NewInvoice, db } from "..";
+import { db } from "..";
 
 export async function deleteInvoice(invoiceId: string) {
   return db.transaction().execute(async (txn) => {

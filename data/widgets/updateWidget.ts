@@ -1,6 +1,4 @@
-import { uuidv7 } from "uuidv7";
-
-import { NewStrataWidget, StrataWidgetUpdate, db } from "..";
+import { StrataWidgetUpdate, db } from "..";
 
 export function updateWidget(
   widgetId: string,

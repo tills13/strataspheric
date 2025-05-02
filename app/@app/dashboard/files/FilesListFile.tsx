@@ -13,7 +13,6 @@ import { Stack } from "../../../../components/Stack";
 import { Text } from "../../../../components/Text";
 import { Wrap } from "../../../../components/Wrap";
 import { File } from "../../../../data/files/getFile";
-import { p } from "../../../../data/users/permissions";
 import { useCan } from "../../../../hooks/useCan";
 import { classnames } from "../../../../utils/classnames";
 import { FilesListFileActions } from "./FilesListFileActions";

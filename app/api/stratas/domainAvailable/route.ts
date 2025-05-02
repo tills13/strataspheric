@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
 
 export const runtime = "edge";
@@ -7,7 +9,7 @@ interface IsDomainAvailableResponseData {
 }
 
 export async function GET(req: Request) {
-  const u = new URL(req.url!);
+  const u = new URL(req.url);
 
   const domain = u.searchParams.get("domain");
 
@@ -17,13 +19,7 @@ export async function GET(req: Request) {
 
   const strata = await getStrataByDomain(domain);
 
-  return new Response(
-    JSON.stringify({ isAvailable: !strata } as IsDomainAvailableResponseData),
-    {
-      status: 200,
-      headers: {
-        "content-type": "application/json",
-      },
-    },
-  );
+  return NextResponse.json({
+    isAvailable: !strata,
+  } satisfies IsDomainAvailableResponseData);
 }

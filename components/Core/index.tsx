@@ -43,7 +43,6 @@ export function Core<E extends keyof JSX.IntrinsicElements = "div">({
     },
   );
 
-  // @ts-ignore
   return (
     <IsomorphicComponent
       className={classnames(

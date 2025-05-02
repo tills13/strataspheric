@@ -5,13 +5,12 @@ import { padding } from "../../theme";
 
 export const inboxMessagesContainer = style({
   display: "grid",
-  gridTemplateColumns: "auto min-content",
+  gridTemplateColumns: "min-content min-content auto min-content",
   columnGap: vars.spacing.normal,
-  gridTemplateRows: "repeat(10, min-content)",
 
   "@media": {
     [breakpoints.tablet]: {
-      columnGap: vars.spacing.large,
+      padding: padding(0, vars.spacing.normal),
     },
   },
 });
@@ -32,17 +31,35 @@ export const inboxMessage = style({
 
   gridColumn: "1/-1",
   gridTemplateColumns: "subgrid",
-  gridAutoRows: `minmax(${vars.sizes.large}, auto)`,
-
   alignItems: "center",
-  borderBottom: `1px solid ${vars.colors.borderDefault}`,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      borderRadius: vars.borderRadius,
+    },
+  },
 
   selectors: {
-    "&:first-child": {
-      borderTop: `1px solid ${vars.colors.borderDefault}`,
-    },
     "&:hover": {
       backgroundColor: vars.colors.grey100,
+    },
+  },
+});
+
+export const inboxMessageSubjectMessage = style({
+  overflow: "hidden",
+});
+
+export const inboxMessageCheckbox = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      visibility: "hidden",
+
+      selectors: {
+        [`${inboxMessage}:hover &, &:has(input[type=checkbox]:checked)`]: {
+          visibility: "visible",
+        },
+      },
     },
   },
 });
@@ -55,4 +72,25 @@ export const inboxMessageSubject = style({
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
+});
+
+export const inboxMessageActions = style({
+  display: "none",
+
+  position: "absolute",
+  right: vars.spacing.xs,
+  top: vars.spacing.small,
+  bottom: vars.spacing.small,
+  padding: vars.spacing.xxs,
+  border: `2px solid ${vars.colors.borderDefault}`,
+  borderRadius: vars.borderRadius,
+  backgroundColor: vars.colors.grey100,
+
+  alignSelf: "center",
+
+  selectors: {
+    [`${inboxMessage}:hover &`]: {
+      display: "block",
+    },
+  },
 });

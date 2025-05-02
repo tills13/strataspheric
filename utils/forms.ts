@@ -7,7 +7,7 @@ export async function validateTurnstileToken(
   token: string,
   connectingIp: string,
 ) {
-  let formData = new FormData();
+  const formData = new FormData();
   formData.append("secret", CF_TURNSTILE_SECRET_KEY);
   formData.append("response", token);
   formData.append("remoteip", connectingIp);

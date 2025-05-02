@@ -5,7 +5,6 @@ import { useRef } from "react";
 import { upsertFileAction } from "../../app/@app/dashboard/files/actions";
 import { File } from "../../data";
 import { useCan } from "../../hooks/useCan";
-import { Header } from "../Header";
 import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
 import { RadioButton } from "../RadioButton";
@@ -25,6 +24,7 @@ export function CreateOrUpdateFileForm({
   file,
   onCreateOrUpdateFile,
 }: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const nameRef = useRef<HTMLInputElement>(null!);
   const can = useCan();
 

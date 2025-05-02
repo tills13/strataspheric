@@ -15,9 +15,7 @@ import { InternalLink } from "../Link/InternalLink";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
 
-interface Props {}
-
-export function DashboardDesktopNavigation({}: Props) {
+export function DashboardDesktopNavigation() {
   const session = useSession();
   const pathname = usePathname();
 

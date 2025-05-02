@@ -1,5 +1,5 @@
-const namespaces = ["stratas"] as const;
-const scopes = [
+export const namespaces = ["stratas"] as const;
+export const scopes = [
   "amenities",
   "amenity_bookings",
   "events",
@@ -11,8 +11,8 @@ const scopes = [
   "memberships",
   "widgets",
 ] as const;
-const actions = ["create", "edit", "delete", "view"] as const;
-const roles = [
+export const actions = ["create", "edit", "delete", "view"] as const;
+export const roles = [
   "administrator",
   "president",
   "vice-president",
@@ -46,13 +46,10 @@ export type Permission =
 export type Role = (typeof roles)[number];
 export type AccountType = "user" | "realtor";
 
-export function p(): Permission;
-export function p(namespace: "stratas"): Permission;
-export function p(namespace: "stratas", scope: Scope): Permission;
 export function p(
-  namespace: "stratas",
-  scope: Scope,
-  action: Action,
+  namespace?: "stratas",
+  scope?: Scope,
+  action?: Action,
 ): Permission;
 export function p(
   namespace: "stratas" = "stratas",

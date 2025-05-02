@@ -41,7 +41,7 @@ export function withErrorReporting<S extends { success?: boolean }>(
 }
 
 export function withPermissions<
-  F extends (session: Session, ...args: any[]) => any,
+  F extends (session: Session, ...args: any[]) => Promise<void>,
 >(permissions: Permission[], fn: F) {
   return async function (...args: Tail<Parameters<F>>) {
     const session = await auth();

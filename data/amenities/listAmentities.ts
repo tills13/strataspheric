@@ -5,7 +5,7 @@ type ListAmenitiesFilter = {
 };
 
 export async function listAmenities(filters: ListAmenitiesFilter) {
-  let query = db
+  const query = db
     .selectFrom("amenities")
     .innerJoin("files", "amenities.imageFileId", "files.id")
     .selectAll("amenities")

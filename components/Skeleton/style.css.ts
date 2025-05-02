@@ -3,10 +3,6 @@ import { style } from "@vanilla-extract/css";
 
 export const widgetSkeleton = style({});
 
-const tableSkeleton = style({
-  width: "100%",
-});
-
 export const skeletonBone = style({
   display: "block",
   height: "1em",

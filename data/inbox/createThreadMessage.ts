@@ -8,11 +8,13 @@ export function createThreadMessage({
 }: Omit<NewInboxMessage, "id" | "threadId" | "viewId"> & {
   threadId?: string;
 }) {
+  const id = uuidv7();
+
   return db
     .insertInto("inbox_messages")
     .values({
-      id: uuidv7(),
-      threadId: threadId || uuidv7(),
+      id,
+      threadId: threadId || id,
       viewId: threadId ? undefined : uuidv7(),
       ...rest,
     })

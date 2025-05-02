@@ -8,7 +8,6 @@ interface Props {
   defaultValue?: string;
   name?: string;
   option: string;
-  value?: string;
 }
 
 export function RadioButtonButton({
@@ -16,7 +15,6 @@ export function RadioButtonButton({
   defaultValue,
   name,
   option,
-  value,
 }: React.PropsWithChildren<Props>) {
   const syntheticName = `${name}_${option}`;
   return (

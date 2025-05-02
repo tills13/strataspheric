@@ -18,7 +18,7 @@ export async function listStratas(filter: Filter): Promise<Strata[]> {
     .selectFrom("stratas")
     .selectAll()
     .where((eb) => {
-      let stmts: OperandExpression<SqlBool>[] = [];
+      const stmts: OperandExpression<SqlBool>[] = [];
 
       if (filter.id) {
         stmts.push(eb("stratas.id", "=", filter.id));

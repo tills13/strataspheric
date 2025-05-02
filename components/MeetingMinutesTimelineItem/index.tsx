@@ -1,4 +1,3 @@
-import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import {

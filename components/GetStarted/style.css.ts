@@ -5,15 +5,6 @@ import { important } from "../../theme";
 
 export const getStartedForm = style({});
 
-const isPublicField = style([
-  {
-    display: "flex",
-    gap: vars.spacing.normal,
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-]);
-
 export const subdomainField = style({
   display: "flex",
   justifyContent: "flex-end",
@@ -68,20 +59,6 @@ export const subdomainStatusError = style([
     fill: important(vars.colors.red500),
   },
 ]);
-
-const estimateContainer = style({
-  display: "flex",
-  justifyContent: "space-between",
-  fontSize: vars.fontSizes.xxl,
-  fontWeight: 400,
-});
-
-const estimateSummarySeats = style({ fontWeight: 700 });
-const estimatePeriod = style({
-  display: "block",
-  fontSize: vars.fontSizes.small,
-  textAlign: "end",
-});
 
 const statusPageStatusIcon = style({
   height: vars.sizes.small,

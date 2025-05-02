@@ -13,7 +13,7 @@ function createAuth(config: Config) {
     ...args: [AuthenticatedApiHandler]
   ): (req: NextRequest) => Promise<NextResponse>;
 
-  function iauth(...args: any) {
+  function iauth(...args: [] | [AuthenticatedApiHandler]) {
     return _auth(config, ...args);
   }
 

@@ -40,7 +40,7 @@ export function DropdownButton({
   const [open, setOpen] = useState(false);
 
   const onClickOutside = useCallback(() => setOpen(false), []);
-  const ref = useClickOutside(onClickOutside);
+  const ref = useClickOutside<HTMLDivElement>(onClickOutside);
 
   const icon = propsIcon || <MoreVerticalIcon />;
 

@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 
 import { LeafletMap } from "../../../../components/LeafletMap";
 
-const DEFAULT_MAP_CENTER = [1, 1];
-
 interface Props {
   defaultCenter?: LatLngTuple;
 }

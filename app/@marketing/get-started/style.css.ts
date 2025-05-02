@@ -1,4 +1,4 @@
-import { breakpoints, vars } from "../../theme.css";
+import { breakpoints } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";

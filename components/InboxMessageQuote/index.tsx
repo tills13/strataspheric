@@ -31,23 +31,23 @@ export function InboxMessageQuote({
 }: Props) {
   return (
     <Wrap
-      if={linkType === "direct"}
-      with={(children) => (
-        <InternalLink
-          className={classnames(styles.quotedMessage, className)}
-          href={`/dashboard/inbox/${source.threadId}#${source.id}`}
-        >
-          {children}
-        </InternalLink>
-      )}
-      elseWith={(children) => (
-        <a
-          className={classnames(styles.quotedMessage, className)}
-          href={"#" + source.id}
-        >
-          {children}
-        </a>
-      )}
+      with={(children) =>
+        linkType === "direct" ? (
+          <InternalLink
+            className={classnames(styles.quotedMessage, className)}
+            href={`/dashboard/inbox/${source.threadId}#${source.id}`}
+          >
+            {children}
+          </InternalLink>
+        ) : (
+          <a
+            className={classnames(styles.quotedMessage, className)}
+            href={"#" + source.id}
+          >
+            {children}
+          </a>
+        )
+      }
     >
       <Group justify="space-between">
         <Header as="h3">

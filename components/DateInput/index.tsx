@@ -49,6 +49,7 @@ export function DateInput({
   placeholder,
   ...rest
 }: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const startInputRef = useRef<HTMLInputElement>(null!);
   const endInputRef = useRef<HTMLInputElement | null>(null);
 

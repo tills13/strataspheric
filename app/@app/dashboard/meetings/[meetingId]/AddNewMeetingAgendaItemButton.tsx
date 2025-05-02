@@ -1,6 +1,5 @@
 "use client";
 
-import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { useState } from "react";
@@ -8,7 +7,6 @@ import { useState } from "react";
 import { Button } from "../../../../../components/Button";
 import { CreateOrUpdateMeetingAgendaItemForm } from "../../../../../components/CreateOrUpdateMeetingAgendaItemForm";
 import { DividerText } from "../../../../../components/DividerText";
-import { Header } from "../../../../../components/Header";
 import { AddIcon } from "../../../../../components/Icon/AddIcon";
 import { SearchIcon } from "../../../../../components/Icon/SearchIcon";
 import { Modal } from "../../../../../components/Modal";

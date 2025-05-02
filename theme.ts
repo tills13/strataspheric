@@ -1,11 +1,13 @@
 export function invertBreakpoint(rawBreakpoint: string) {
-  const [, direction, breakpoint] = /\((min|max)-width: (\d+)px\)/.exec(
-    rawBreakpoint,
-  )!;
+  const match = /\((min|max)-width: (\d+)px\)/.exec(rawBreakpoint);
 
-  if (direction === "min") {
-    const px = parseInt(breakpoint, 10) - 1;
-    return `(max-width: ${px}px)`;
+  if (match) {
+    const [, direction, breakpoint] = match;
+
+    if (direction === "min") {
+      const px = parseInt(breakpoint, 10) - 1;
+      return `(max-width: ${px}px)`;
+    }
   }
 
   throw new Error("invalid breakpoint: " + rawBreakpoint);

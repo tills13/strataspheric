@@ -3,6 +3,7 @@ import { ServerActionError } from "./actions";
 
 const FROM_ADDR = process.env.EMAIL_FROM_ADDR || "no-reply@strataspheric.app";
 
+/** @todo templates */
 export async function sendEmail(
   to: string | string[],
   subject: string,
@@ -25,13 +26,29 @@ export async function sendEmail(
   });
 
   // @todo typing
-  const rJson = (await response.json()) as any; // as { id: string } | { message: string };
+  const rJson = (await response.json()) as unknown; // as { id: string } | { message: string };
 
-  if (response.status !== 200) {
+  if (
+    response.status !== 200 ||
+    !rJson ||
+    typeof rJson !== "object" ||
+    !("id" in rJson) ||
+    typeof rJson.id !== "string"
+  ) {
+    let internalErrorMessage = "an unknown error occured";
+
+    if (
+      rJson !== null &&
+      typeof rJson === "object" &&
+      "message" in rJson &&
+      typeof rJson.message === "string"
+    ) {
+      internalErrorMessage = rJson.message;
+    }
+
     throw new ServerActionError(
-      "[resend] failed to send email: " +
-        (rJson.message || "an unknown error occured"),
-      "Something went wrong, please try again later.x",
+      "[resend] failed to send email: " + internalErrorMessage,
+      "Something went wrong, please try again later.",
     );
   }
 

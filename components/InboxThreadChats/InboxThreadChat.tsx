@@ -18,9 +18,7 @@ import { InboxMessageQuote } from "../InboxMessageQuote";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
 
-interface Props {}
-
-export function InboxThreadChat({ ...chat }: Props & Chat) {
+export function InboxThreadChat({ ...chat }: Chat) {
   const session = useSession();
 
   return (

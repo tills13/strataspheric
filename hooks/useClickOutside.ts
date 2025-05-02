@@ -1,16 +1,20 @@
 import { useEffect, useRef } from "react";
 
-const DEFAULT_EVENTS = ["mousedown", "touchstart"];
+const DEFAULT_EVENTS = ["mousedown", "touchstart"] as const;
 
-export function useClickOutside<T extends HTMLElement = any>(
+export function useClickOutside<T extends HTMLElement>(
   handler: () => void,
   nodes?: (HTMLElement | null)[],
 ) {
   const ref = useRef<T>(undefined);
 
   useEffect(() => {
-    const listener = (event: any) => {
+    const listener = (event: MouseEvent | TouchEvent) => {
       const { target } = event ?? {};
+
+      if (!target || !(target instanceof HTMLElement)) {
+        return;
+      }
 
       if (Array.isArray(nodes)) {
         const shouldIgnore =

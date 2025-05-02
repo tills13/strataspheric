@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { auth } from "../../../auth";
+import { mustAuth } from "../../../auth";
 import { StrataWidget } from "../../../data";
 import { createEvent } from "../../../data/events/createEvent";
 import { createAndUploadFile } from "../../../data/files/createAndUploadFile";
@@ -22,11 +22,7 @@ export async function createEventAction(
   widgetId: string,
   formData: FormData,
 ) {
-  const session = await auth();
-
-  if (!session) {
-    throw new Error("not allowed");
-  }
+  const session = await mustAuth();
 
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description");
@@ -42,7 +38,7 @@ export async function createEventAction(
     startDate,
     endDate: startDate,
     strataId,
-    creatorId: session.user.id!,
+    creatorId: session.user.id,
   });
 
   if (!eventId) {
@@ -59,11 +55,7 @@ export async function upsertFileWidgetFileAction(
   widgetId: string,
   formData: FormData,
 ) {
-  const session = await auth();
-
-  if (!session) {
-    throw new Error("not allowed");
-  }
+  const session = await mustAuth();
 
   const name = formdata.getString(formData, "name");
   const description = formdata.getString(formData, "description") || "";

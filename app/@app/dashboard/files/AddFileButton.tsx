@@ -7,9 +7,7 @@ import { CreateOrUpdateFileForm } from "../../../../components/CreateOrUpdateFil
 import { AddIcon } from "../../../../components/Icon/AddIcon";
 import { Modal } from "../../../../components/Modal";
 
-interface Props {}
-
-export function AddFileButton({}: Props) {
+export function AddFileButton() {
   const [showModal, setShowModal] = useState(false);
 
   return (

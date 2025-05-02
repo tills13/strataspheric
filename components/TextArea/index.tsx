@@ -6,11 +6,10 @@ import { classnames } from "../../utils/classnames";
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
-  compact?: boolean;
 }
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ className, compact, label, ...rest }, ref) => (
+  ({ className, label, ...rest }, ref) => (
     <div className={classnames(styles.wrapper, className)}>
       <textarea
         className={classnames(styles.textareaTextarea)}

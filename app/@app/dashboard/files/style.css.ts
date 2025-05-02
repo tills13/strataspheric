@@ -1,4 +1,4 @@
-import { breakpoints, iconColorVar, vars } from "../../../../app/theme.css";
+import { iconColorVar, vars } from "../../../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const filesList = style({

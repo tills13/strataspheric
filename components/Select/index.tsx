@@ -1,13 +1,9 @@
-import {
-  fieldBaseActionContainer,
-  fieldRightActionContainer,
-} from "../Form/style.css";
+import { fieldRightActionContainer } from "../Form/style.css";
 import * as styles from "./style.css";
 
 import React, { PropsWithChildren } from "react";
 
 import { classnames } from "../../utils/classnames";
-import { Core } from "../Core";
 import { Group } from "../Group";
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {

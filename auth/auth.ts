@@ -8,7 +8,7 @@ import { AuthenticatedApiHandler, Config } from "./types";
 export function internalAuthDoNotUseDirectly(
   config: Config,
   ...args: [] | [AuthenticatedApiHandler]
-): any {
+): unknown {
   if (args.length === 0) {
     return headers().then((head) => {
       const token = getJwtFromCookies(head.get("cookie"));

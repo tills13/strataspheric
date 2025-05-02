@@ -5,15 +5,11 @@ import React from "react";
 import { RemoveIcon } from "../Icon/RemoveIcon";
 import { StatusButton } from "../StatusButton";
 
-type ButtonProps = Omit<
+type Props = Omit<
   React.ComponentProps<typeof StatusButton>,
   "icon" | "iconLeft" | "iconRight"
 >;
 
-interface Props extends ButtonProps {
-  action: () => void;
-}
-
 export function RemoveButton(delegateProps: Props) {
-  return <StatusButton {...delegateProps} icon={<RemoveIcon />} />;
+  return <StatusButton icon={<RemoveIcon />} {...delegateProps} />;
 }

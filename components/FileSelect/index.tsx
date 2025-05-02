@@ -21,6 +21,7 @@ export function FileSelect({
 }: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [files, setFiles] = useState<File[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const ref = useRef<HTMLSelectElement>(null!);
 
   useEffect(() => {
@@ -80,9 +81,16 @@ export function FileSelect({
         />
       }
       onChange={(e) => {
-        onSelectFile?.(
-          files.find((file) => file.id === e.currentTarget.value)!,
+        const selectedFile = files.find(
+          (file) => file.id === e.currentTarget.value,
         );
+
+        if (!selectedFile) {
+          // something went wrong
+          return;
+        }
+
+        onSelectFile?.(selectedFile);
       }}
       ref={ref}
       {...delegateProps}

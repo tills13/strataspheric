@@ -120,17 +120,6 @@ export const activeSubheaderLink = style([
   },
 ]);
 
-const actionsContainer = style({
-  display: "flex",
-  gap: vars.spacing.small,
-
-  "@media": {
-    [breakpoints.tabletPlus]: {
-      marginRight: "unset",
-    },
-  },
-});
-
 export const mobileDropdownAction = style({
   "@media": {
     [breakpoints.tabletPlus]: {
