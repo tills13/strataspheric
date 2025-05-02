@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
+import { getStrataMembershipByDomainAndUserId } from "../data/memberships/getStrataMembershipByDomainAndUserId";
 import { listStrataMemberships } from "../data/memberships/listStrataMemberships";
 import { getDomain } from "../utils/getDomain";
 import { internalAuthDoNotUseDirectly as _auth } from "./auth";
@@ -29,10 +30,10 @@ function createAuth(config: Config) {
 async function decorateSessionUser(
   baseUser: Omit<User, "scopes">,
 ): Promise<User> {
-  const [membership] = await listStrataMemberships({
-    domain: await getDomain(),
-    userId: baseUser.id,
-  });
+  const membership = await getStrataMembershipByDomainAndUserId(
+    await getDomain(),
+    baseUser.id,
+  );
 
   return {
     ...baseUser,
