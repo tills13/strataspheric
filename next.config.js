@@ -4,7 +4,9 @@ const withVanillaExtract = createVanillaExtractPlugin({});
 
 /** @type {import('next').NextConfig} */
 module.exports = withVanillaExtract({
-  eslint: false,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   logging: {
     fetches: {
       fullUrl: true,

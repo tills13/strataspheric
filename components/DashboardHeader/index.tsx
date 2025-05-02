@@ -21,7 +21,6 @@ import { PaidDocumentIcon } from "../Icon/PaidDocumentIcon";
 import { PersonIcon } from "../Icon/PersonIcon";
 import { SettingsIcon } from "../Icon/SettingsIcon";
 import { InternalLink } from "../Link/InternalLink";
-import { Wrap } from "../Wrap";
 
 type Link = [
   icon: React.ComponentType<{ classNameOverride?: string }>,
