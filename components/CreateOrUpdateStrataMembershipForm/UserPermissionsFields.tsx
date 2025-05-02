@@ -11,7 +11,6 @@ import {
   roleScopeToScopes,
 } from "../../data/users/permissions";
 import { Checkbox } from "../Checkbox";
-import { Flex } from "../Flex";
 import { Group } from "../Group";
 import { Header } from "../Header";
 import { WarningIcon } from "../Icon/WarningIcon";
@@ -38,14 +37,14 @@ export function UserPermissionsFields({ membership }: Props) {
 
   return (
     <>
-      <Flex align="center" justify="space-between" from="tablet">
+      <Group justify="space-between">
         <Header as="h3">Permissions</Header>
         <Input
           onChangeValue={setSearchTerm}
           placeholder="Search Permissions"
           value={searchTerm}
         />
-      </Flex>
+      </Group>
 
       {membership.role === "administrator" && (
         <InfoPanel level="warning" mb="normal">
