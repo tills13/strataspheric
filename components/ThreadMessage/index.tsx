@@ -5,7 +5,7 @@ import * as styles from "./style.css";
 
 import { useState } from "react";
 
-import { File, Invoice } from "../../data";
+import { InboxThreadMessage } from "../../data/inbox/getThreadMessages";
 import { p } from "../../data/users/permissions";
 import { useCan } from "../../hooks/useCan";
 import { useHash } from "../../hooks/useHash";
@@ -25,25 +25,17 @@ import { Text } from "../Text";
 
 interface Props {
   id: string;
-  file?: File;
-  invoice?: Invoice;
-  message: string;
-  senderName: string;
-  senderEmail: string;
-  sentAt: number;
-  threadId: string;
+  inboxThreadMessage: InboxThreadMessage;
+  showSenderDetails?: boolean;
 }
 
 export function ThreadMessage({
   id,
-  message,
-  file,
-  invoice,
-  senderEmail,
-  senderName,
-  sentAt,
-  threadId,
+  inboxThreadMessage,
+  showSenderDetails = true,
 }: Props) {
+  const { file, invoice, message, senderEmail, senderName, sentAt, threadId } =
+    inboxThreadMessage;
   const can = useCan();
   const [showChatReplyModal, setShowChatReplyModal] = useState(false);
   const hash = useHash();
@@ -57,27 +49,31 @@ export function ThreadMessage({
           s({ p: "normal" }),
         )}
       >
-        <Stack gap="0">
-          <Group justify="space-between">
-            <Group gap="small">
-              <Header as="h3">{senderName}</Header>
-              <Text color="secondary">
-                <Date timestamp={sentAt} />
-              </Text>
-            </Group>
-            <div>
-              {can(p("stratas", "inbox_thread_chats", "view")) && (
-                <Button
-                  icon={<ChatIcon />}
-                  onClick={() => setShowChatReplyModal(true)}
-                  size="small"
-                  style="tertiary"
-                />
-              )}
-            </div>
-          </Group>
-          <Text color="secondary">{senderEmail}</Text>
-        </Stack>
+        <Group justify="space-between">
+          {showSenderDetails ? (
+            <Stack gap="xs">
+              <Group gap="small">
+                <Header as="h3">{senderName}</Header>
+                <Text color="secondary">
+                  <Date timestamp={sentAt} />
+                </Text>
+              </Group>
+              <Text color="secondary">{senderEmail}</Text>
+            </Stack>
+          ) : (
+            <div />
+          )}
+          <div>
+            {can(p("stratas", "inbox_thread_chats", "view")) && (
+              <Button
+                icon={<ChatIcon />}
+                onClick={() => setShowChatReplyModal(true)}
+                size="small"
+                style="tertiary"
+              />
+            )}
+          </div>
+        </Group>
 
         <Text className={classnames(styles.messageText)}>{message}</Text>
 

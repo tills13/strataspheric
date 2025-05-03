@@ -2,6 +2,7 @@
 
 import React, { useTransition } from "react";
 
+import { joinStrataAction } from "../../app/@app/actions";
 import { User } from "../../auth/types";
 import { Strata } from "../../data";
 import { StrataMembership } from "../../data/memberships/getStrataMembership";
@@ -12,7 +13,8 @@ import { StatusButton } from "../StatusButton";
 
 interface Props {
   buttonStyle?: React.ComponentProps<typeof StatusButton>["style"];
-  joinStrata: () => void;
+  buttonColor?: React.ComponentProps<typeof StatusButton>["color"];
+
   strata: Strata;
   membership?: StrataMembership;
   user?: User;
@@ -20,7 +22,7 @@ interface Props {
 
 export function JoinStrataButton({
   buttonStyle = "primary",
-  joinStrata,
+  buttonColor = "primary",
   strata,
   membership,
   user,
@@ -35,9 +37,9 @@ export function JoinStrataButton({
     return (
       <InternalLink href="/?action=join" noUnderline>
         <Button
-          color="primary"
+          color={buttonColor}
           iconRight={<ArrowForwardIcon />}
-          style="primary"
+          style={buttonStyle}
           iconTextBehaviour="centerRemainder"
         >
           Join {strata.name}
@@ -48,12 +50,12 @@ export function JoinStrataButton({
 
   return (
     <StatusButton
-      color="primary"
+      color={buttonColor}
       disabled={membership?.role === "pending"}
       iconTextBehaviour="centerRemainder"
       isPending={isPending}
       onClick={() => {
-        startTransition(() => joinStrata());
+        startTransition(() => joinStrataAction());
       }}
       style={buttonStyle}
     >

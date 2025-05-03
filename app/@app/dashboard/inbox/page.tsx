@@ -1,4 +1,5 @@
 import { s } from "../../../../sprinkles.css";
+import * as styles from "./style.css";
 
 import { redirect } from "next/navigation";
 
@@ -59,7 +60,7 @@ export default async function Page({ searchParams }: PageProps) {
     <div>
       <div className={s({ p: "normal" })}>
         <Group justify="space-between">
-          <Group paddingLeft="normal">
+          <Group className={styles.inboxPageHeader}>
             <Checkbox />
             <Header as="h2">Inbox</Header>
           </Group>

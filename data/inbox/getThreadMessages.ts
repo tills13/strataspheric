@@ -1,6 +1,10 @@
 import { File, Invoice, db } from "..";
 import { AmenityBooking } from "../amenities/getAmenityBooking";
 
+export type InboxThreadMessage = Awaited<
+  ReturnType<typeof getThreadMessages>
+>[number];
+
 export async function getThreadMessages(
   threadId: string,
   viewId?: string | undefined,

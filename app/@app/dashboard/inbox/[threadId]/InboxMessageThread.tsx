@@ -88,9 +88,16 @@ export async function InboxMessageThread({ threadId }: Props) {
         </Group>
       </Stack>
 
-      {messages.map((message) => (
-        <ThreadMessage key={message.id} {...message} />
-      ))}
+      {messages.map((message, idx) =>
+        message.message === "" ? null : (
+          <ThreadMessage
+            key={message.id}
+            id={message.id}
+            inboxThreadMessage={message}
+            showSenderDetails={idx !== 0}
+          />
+        ),
+      )}
 
       {amenityBooking && (
         <InboxMessageThreadAmenityBooking

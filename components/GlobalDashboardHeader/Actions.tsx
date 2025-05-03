@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import { auth } from "../../auth";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
+import { Flex } from "../Flex";
 import { Group } from "../Group";
 import { InternalLink } from "../Link/InternalLink";
 import { SignOutButton } from "../SignOutButton";
@@ -21,7 +22,7 @@ export async function GlobalHeaderActions({ className }: Props) {
 
   return (
     <div className={className}>
-      <Group>
+      <Flex from="mobilePlus" align="center">
         <Suspense>
           <HeaderJoinStrataButton />
         </Suspense>
@@ -43,13 +44,13 @@ export async function GlobalHeaderActions({ className }: Props) {
             <Button
               className={classnames(styles.globalHeaderActionsButton)}
               color="primary"
-              style="tertiary"
+              style="primary"
             >
               Sign In
             </Button>
           </InternalLink>
         )}
-      </Group>
+      </Flex>
     </div>
   );
 }

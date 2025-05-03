@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { auth } from "../../auth";
+import { mustAuth } from "../../auth";
 import { createStrataMembership } from "../../data/memberships/createStrataMembership";
 import { mustGetCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { updateStrata } from "../../data/stratas/updateStrata";
@@ -10,12 +10,10 @@ import * as formdata from "../../utils/formdata";
 import { geolocate } from "../../utils/geolocate";
 
 export async function joinStrataAction() {
-  const strata = await mustGetCurrentStrata();
-  const session = await auth();
-
-  if (!session?.user) {
-    return;
-  }
+  const [strata, session] = await Promise.all([
+    mustGetCurrentStrata(),
+    mustAuth(),
+  ]);
 
   await createStrataMembership({
     role: "pending",

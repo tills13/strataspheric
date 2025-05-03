@@ -74,18 +74,15 @@ export async function approveOrRejectAmenityBookingAction(
     throw new Error("unauthorized");
   }
 
-  const [thread] = await listThreads({ amenityBookingId: amenityBooking.id });
+  const {
+    results: [thread],
+  } = await listThreads({ amenityBookingId: amenityBooking.id });
 
   if (!thread) {
     throw new Error("oops, something went wrong");
   }
 
   if (decision === "reject") {
-    // await db.transaction().execute(txn => {
-    //   await deleteInvoice(amenityBooking.invoice.id)
-    //   await updateAmen
-    // })
-
     if (amenityBooking.invoice) {
       await deleteInvoice(amenityBooking.invoice.id);
     }
