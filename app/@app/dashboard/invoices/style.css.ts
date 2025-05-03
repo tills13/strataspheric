@@ -1,27 +1,47 @@
 import { breakpoints, vars } from "../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { padding } from "../../../../theme";
+
 export const pageContainer = style({
   padding: vars.spacing.normal,
 });
 
 export const invoicesContainer = style({
   display: "grid",
-  gap: vars.spacing.normal,
-  gridTemplateRows: "min-content auto",
-  gridTemplateColumns: "100%",
+  gridTemplateColumns: "min-content min-content auto min-content",
+  columnGap: vars.spacing.normal,
 
   "@media": {
     [breakpoints.tablet]: {
-      gridTemplateRows: "unset",
-      gridTemplateColumns: "450px auto",
+      padding: padding(0, vars.spacing.normal),
     },
   },
 });
 
-export const invoicesList = style({
-  maxWidth: "100%",
-  borderSpacing: 0,
+export const invoiceListItem = style({
+  display: "grid",
+  padding: padding(vars.spacing.small, vars.spacing.normal),
+  minHeight: vars.sizes.large,
+  textDecoration: "none",
+  color: vars.fontColors.primary,
+  position: "relative",
+
+  gridColumn: "1/-1",
+  gridTemplateColumns: "subgrid",
+  alignItems: "center",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      borderRadius: vars.borderRadius,
+    },
+  },
+
+  selectors: {
+    "&:hover": {
+      backgroundColor: vars.colors.grey100,
+    },
+  },
 });
 
 export const invoicesSidePanel = style({

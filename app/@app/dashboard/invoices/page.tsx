@@ -1,25 +1,34 @@
-import * as styles from "./style.css";
+import { s } from "../../../../sprinkles.css";
 
-import { Suspense } from "react";
-
-import { InvoiceChipSkeleton } from "../../../../components/InvoiceChip/Skeleton";
+import { auth } from "../../../../auth";
+import { Group } from "../../../../components/Group";
+import { Header } from "../../../../components/Header";
+import { Stack } from "../../../../components/Stack";
+import { can } from "../../../../data/users/permissions";
+import { CreateNewInvoiceButton } from "./CreateNewInvoiceButton";
 import { StrataInvoicesList } from "./StrataInvoicesList";
 
-export default function Page() {
+export const runtime = "edge";
+
+export default async function Page() {
+  const session = await auth();
+
   return (
-    <Suspense
-      fallback={
-        <div className={styles.invoicesList}>
-          <div className={styles.invoicesListInvoiceContainer}>
-            <InvoiceChipSkeleton />
-          </div>
-          <div className={styles.invoicesListInvoiceContainer}>
-            <InvoiceChipSkeleton />
-          </div>
+    <Stack>
+      <Group p="normal" justify="space-between">
+        <Header as="h2">Invoices</Header>
+        <div>
+          {can(session?.user, "stratas.invoices.create") && (
+            <CreateNewInvoiceButton />
+          )}
         </div>
-      }
-    >
+      </Group>
+
       <StrataInvoicesList />
-    </Suspense>
+
+      {/* <Group p="normal" justify="end">
+        <Pagination currentPage={pageNum} totalPages={Math.ceil(total / 10)} />
+      </Group> */}
+    </Stack>
   );
 }

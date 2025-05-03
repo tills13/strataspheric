@@ -17,6 +17,7 @@ import { Group } from "../Group";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { EditIcon } from "../Icon/EditIcon";
+import { InvoiceStatusBadge } from "../InvoiceStatusBadge";
 import { InternalLink } from "../Link/InternalLink";
 import { Money } from "../Money";
 import { Panel } from "../Panel";
@@ -50,9 +51,6 @@ export function InvoiceChip({
   const [isPending, startTransition] = useTransition();
   const can = useCan();
 
-  const isOverdue =
-    invoice.dueBy && isAfter(new Date(), parseTimestamp(invoice.dueBy));
-
   return (
     <Panel className={classnames(styles.invoiceChip, className)}>
       {invoice.status === "draft" && (
@@ -62,17 +60,7 @@ export function InvoiceChip({
       <Stack>
         <Header as="h3">
           <Group>
-            <Badge
-              level={
-                invoice.isPaid === 1
-                  ? "success"
-                  : isOverdue
-                    ? "error"
-                    : "warning"
-              }
-            >
-              {invoice.isPaid === 1 ? "paid" : isOverdue ? "overdue" : "unpaid"}
-            </Badge>
+            <InvoiceStatusBadge invoice={invoice} />
 
             <Group gap="xs">
               <Text

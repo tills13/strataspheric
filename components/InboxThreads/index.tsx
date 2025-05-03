@@ -2,6 +2,7 @@ import * as styles from "./style.css";
 
 import { Thread } from "../../data/inbox/getThread";
 import { Header } from "../Header";
+import { Table } from "../Table";
 import { InboxThreadRow } from "./InboxThreadRow";
 
 interface Props {
@@ -18,11 +19,11 @@ export function InboxThreads({ threads }: Props) {
         </div>
       )}
 
-      <div className={styles.inboxMessagesContainer}>
+      <Table>
         {threads.map((thread) => (
           <InboxThreadRow key={thread.id} thread={thread} />
         ))}
-      </div>
+      </Table>
     </>
   );
 }

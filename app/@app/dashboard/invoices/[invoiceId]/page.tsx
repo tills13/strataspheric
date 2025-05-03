@@ -1,31 +1,31 @@
-import { s } from "../../../../../../sprinkles.css";
+// import { PageProps } from "../../../../../.next/types/app/@app/dashboard/invoices/";
+import { s } from "../../../../../sprinkles.css";
 
 import isAfter from "date-fns/isAfter";
 
-import { PageProps } from "../../../../../../.next/types/app/@app/dashboard/invoices/@invoiceDetails/[invoiceId]/page";
-import { ConfirmButton } from "../../../../../../components/ConfirmButton";
-import { CreateOrUpdateInvoiceForm } from "../../../../../../components/CreateOrUpdateInvoiceForm";
-import { Date as DateOutput } from "../../../../../../components/Date";
-import { Header } from "../../../../../../components/Header";
-import { DeleteIcon } from "../../../../../../components/Icon/DeleteIcon";
-import { InfoPanel } from "../../../../../../components/InfoPanel";
-import { Text } from "../../../../../../components/Text";
-import { getInvoice } from "../../../../../../data/invoices/getInvoice";
-import { parseTimestamp } from "../../../../../../utils/datetime";
-import { deleteInvoiceAction } from "../../actions";
+import { ConfirmButton } from "../../../../../components/ConfirmButton";
+import { CreateOrUpdateInvoiceForm } from "../../../../../components/CreateOrUpdateInvoiceForm";
+import { Date as DateComponent } from "../../../../../components/Date";
+import { Header } from "../../../../../components/Header";
+import { DeleteIcon } from "../../../../../components/Icon/DeleteIcon";
+import { InfoPanel } from "../../../../../components/InfoPanel";
+import { Text } from "../../../../../components/Text";
+import { getInvoice } from "../../../../../data/invoices/getInvoice";
+import { parseTimestamp } from "../../../../../utils/datetime";
+import { deleteInvoiceAction } from "../actions";
 
 export const runtime = "edge";
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }) {
   const invoice = await getInvoice((await params).invoiceId);
 
   return (
-    <>
+    <div className={s({ p: "normal" })}>
       {!!invoice.isPaid && (
         <InfoPanel className={s({ mb: "large" })} level="success">
           <Text>
             This invoice was marked paid{" "}
-            <DateOutput
+            <DateComponent
               fw="bold"
               timestamp={invoice.updatedAt}
               compactOutputPrefix
@@ -64,6 +64,6 @@ export default async function Page({ params }: PageProps) {
       >
         <Text>Deleting an invoice cannot be undone.</Text>
       </InfoPanel>
-    </>
+    </div>
   );
 }
