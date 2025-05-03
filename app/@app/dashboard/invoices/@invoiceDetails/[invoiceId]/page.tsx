@@ -46,7 +46,6 @@ export default async function Page({ params }: PageProps) {
       <CreateOrUpdateInvoiceForm
         className={s({ mb: "large" })}
         invoice={invoice}
-        showDeleteInvoiceButton={false}
       />
 
       <InfoPanel

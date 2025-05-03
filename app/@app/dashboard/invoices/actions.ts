@@ -9,13 +9,13 @@ import { createInvoice } from "../../../../data/invoices/createInvoice";
 import { deleteInvoice } from "../../../../data/invoices/deleteInvoice";
 import { updateInvoice } from "../../../../data/invoices/updateInvoice";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
-import { can, p } from "../../../../data/users/permissions";
+import { can } from "../../../../data/users/permissions";
 import * as formdata from "../../../../utils/formdata";
 
 export async function markInvoiceAsPaidAction(invoiceId: string) {
   const session = await auth();
 
-  if (!can(session?.user, p("stratas", "invoices", "edit"))) {
+  if (!can(session?.user, "stratas.invoices.edit")) {
     return;
   }
 
@@ -75,5 +75,6 @@ export async function upsertInvoiceAction(
 
 export async function deleteInvoiceAction(invoiceId: string) {
   await deleteInvoice(invoiceId);
+  revalidatePath("/dashboard/invoices");
   redirect("/dashboard/invoices");
 }

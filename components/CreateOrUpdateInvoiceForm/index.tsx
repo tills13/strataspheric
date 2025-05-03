@@ -3,7 +3,6 @@
 import { useRef, useState, useTransition } from "react";
 
 import {
-  deleteInvoiceAction,
   markInvoiceAsPaidAction,
   upsertInvoiceAction,
 } from "../../app/@app/dashboard/invoices/actions";
@@ -13,7 +12,6 @@ import { Button } from "../Button";
 import { DateInput } from "../DateInput";
 import { FileSelect } from "../FileSelect";
 import { Flex } from "../Flex";
-import { Group } from "../Group";
 import { AddIcon } from "../Icon/AddIcon";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { InfoPanel } from "../InfoPanel";
@@ -28,16 +26,13 @@ interface Props {
   className?: string;
   invoice?: Invoice;
   onCreateOrUpdateInvoice?: (invoice: Invoice) => void;
-  showDeleteInvoiceButton?: boolean;
 }
 
 export function CreateOrUpdateInvoiceForm({
   className,
   invoice,
   onCreateOrUpdateInvoice,
-  showDeleteInvoiceButton,
 }: Props) {
-  const [deletePending, startDeleteTransition] = useTransition();
   const [markPaidPending, startMarkPaidTransition] = useTransition();
   const [loadingNextInvoiceId, setLoadingNextInvoiceId] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -126,7 +121,7 @@ export function CreateOrUpdateInvoiceForm({
           />
         </InfoPanel>
 
-        <Group gap="normal">
+        <Flex gap="normal" from="mobilePlus">
           <StatusButton
             color="primary"
             disabled={!!invoice?.isPaid}
@@ -141,7 +136,6 @@ export function CreateOrUpdateInvoiceForm({
             <StatusButton
               color="success"
               iconRight={<CircleCheckIcon />}
-              iconTextBehaviour="centerRemainder"
               onClick={() =>
                 startMarkPaidTransition(() =>
                   markInvoiceAsPaidAction(invoice.id),
@@ -154,21 +148,7 @@ export function CreateOrUpdateInvoiceForm({
               {invoice.isPaid === 1 ? "Paid" : "Mark Paid"}
             </StatusButton>
           )}
-
-          {showDeleteInvoiceButton && invoice && !invoice.isPaid && (
-            <StatusButton
-              onClick={() => {
-                startDeleteTransition(() => deleteInvoiceAction(invoice.id));
-              }}
-              color="error"
-              style="secondary"
-              isPending={deletePending}
-              type="button"
-            >
-              Delete Invoice
-            </StatusButton>
-          )}
-        </Group>
+        </Flex>
       </Stack>
     </form>
   );

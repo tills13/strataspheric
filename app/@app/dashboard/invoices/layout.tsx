@@ -7,7 +7,7 @@ import type { LayoutProps } from "../../../../.next/types/app/@app/dashboard/inv
 import { auth } from "../../../../auth";
 import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
-import { can, p } from "../../../../data/users/permissions";
+import { can } from "../../../../data/users/permissions";
 import { CreateNewInvoiceButton } from "./CreateNewInvoiceButton";
 
 export const runtime = "edge";
@@ -27,7 +27,7 @@ export default async function InvoicesLayout({
       <Group className={s({ mb: "normal" })} justify="space-between">
         <Header as="h2">Invoices</Header>
         <div>
-          {can(session?.user, p("stratas", "invoices", "create")) && (
+          {can(session?.user, "stratas.invoices.create") && (
             <CreateNewInvoiceButton />
           )}
         </div>
