@@ -4,9 +4,12 @@ import * as styles from "./style.css";
 import { auth } from "../../../../../auth";
 import { Button } from "../../../../../components/Button";
 import { Date } from "../../../../../components/Date";
+import { FileAttachmentChip } from "../../../../../components/FileAttachmentChip";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
+import { DeleteIcon } from "../../../../../components/Icon/DeleteIcon";
 import { ShareIcon } from "../../../../../components/Icon/ShareIcon";
+import { InvoiceChip } from "../../../../../components/InvoiceChip";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { SendInboxMessageForm } from "../../../../../components/SendInboxMessageForm";
@@ -26,12 +29,12 @@ interface Props {
 }
 
 export async function InboxMessageThread({ threadId }: Props) {
-  const [session, messages] = await Promise.all([
+  const [session, allMessages] = await Promise.all([
     auth(),
     getThreadMessages(threadId),
   ]);
 
-  const message0 = messages[0];
+  const [message0, ...messages] = allMessages;
 
   const {
     amenityBooking,
@@ -54,38 +57,48 @@ export async function InboxMessageThread({ threadId }: Props) {
         </div>
       )}
 
-      <Stack
-        className={classnames(styles.pageHeader, s({ p: "normal" }))}
-        gap="xs"
-      >
-        <Group justify="space-between">
-          <Header as="h2">{subject}</Header>
+      <Stack className={classnames(styles.pageHeader)} p="normal">
+        <Stack gap="xs">
+          <Group justify="space-between">
+            <Header as="h2">{subject}</Header>
 
-          <Group>
-            <RemoveButton
-              action={deleteThreadAction.bind(undefined, threadId)}
-              color="primary"
-              size="small"
-              style="tertiary"
-            />
-            <ExternalLink
-              href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
-              target="_blank"
-            >
-              <Button
-                icon={<ShareIcon />}
+            <Group>
+              <RemoveButton
+                action={deleteThreadAction.bind(undefined, threadId)}
+                icon={<DeleteIcon />}
                 color="primary"
                 size="small"
                 style="tertiary"
               />
-            </ExternalLink>
+              <ExternalLink
+                href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
+                target="_blank"
+              >
+                <Button
+                  icon={<ShareIcon />}
+                  color="primary"
+                  size="small"
+                  style="tertiary"
+                />
+              </ExternalLink>
+            </Group>
           </Group>
-        </Group>
-        <Group>
-          <Text color="secondary">
+
+          <Text as="span" color="secondary">
             {senderName} ({senderEmail}) &bull; <Date timestamp={sentAt} />
           </Text>
-        </Group>
+        </Stack>
+
+        <Text whiteSpace="pre-wrap">{message0.message}</Text>
+
+        {message0.invoice && <InvoiceChip invoice={message0.invoice} />}
+
+        {message0.file && (
+          <FileAttachmentChip
+            fileName={message0.file.name}
+            filePath={message0.file.path}
+          />
+        )}
       </Stack>
 
       {messages.map((message, idx) =>

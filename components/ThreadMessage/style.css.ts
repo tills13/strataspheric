@@ -18,7 +18,3 @@ export const messageHighighted = style([
     backgroundColor: `color-mix(in srgb, ${vars.colors.orange100} 30%, transparent)`,
   },
 ]);
-
-export const messageText = style({
-  whiteSpace: "pre-wrap",
-});

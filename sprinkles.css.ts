@@ -28,6 +28,7 @@ const textProperties = defineProperties({
     whiteSpace: {
       nowrap: "nowrap",
       pre: "pre",
+      "pre-wrap": "pre-wrap",
     },
   },
   shorthands: {

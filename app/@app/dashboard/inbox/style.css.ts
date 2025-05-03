@@ -1,10 +1,10 @@
-import { breakpoints } from "../../../theme.css";
+import { breakpoints, vars } from "../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const inboxPageHeader = style({
   "@media": {
     [breakpoints.tablet]: {
-      paddingLeft: "normal",
+      paddingLeft: vars.spacing.normal,
     },
   },
 });

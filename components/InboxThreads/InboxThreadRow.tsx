@@ -5,7 +5,6 @@ import { Thread } from "../../data/inbox/getThread";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 import { Date } from "../Date";
-import { DeleteButton } from "../DeleteButton";
 import { Group } from "../Group";
 import { ArchiveIcon } from "../Icon/ArchiveIcon";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";

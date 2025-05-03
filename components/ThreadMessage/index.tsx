@@ -29,11 +29,7 @@ interface Props {
   showSenderDetails?: boolean;
 }
 
-export function ThreadMessage({
-  id,
-  inboxThreadMessage,
-  showSenderDetails = true,
-}: Props) {
+export function ThreadMessage({ id, inboxThreadMessage }: Props) {
   const { file, invoice, message, senderEmail, senderName, sentAt, threadId } =
     inboxThreadMessage;
   const can = useCan();
@@ -46,23 +42,20 @@ export function ThreadMessage({
         id={id}
         className={classnames(
           hash === id ? styles.messageHighighted : styles.message,
-          s({ p: "normal" }),
         )}
+        p="normal"
       >
         <Group justify="space-between">
-          {showSenderDetails ? (
-            <Stack gap="xs">
-              <Group gap="small">
-                <Header as="h3">{senderName}</Header>
-                <Text color="secondary">
-                  <Date timestamp={sentAt} />
-                </Text>
-              </Group>
-              <Text color="secondary">{senderEmail}</Text>
-            </Stack>
-          ) : (
-            <div />
-          )}
+          <Stack gap="xs">
+            <Group gap="small">
+              <Header as="h3">{senderName}</Header>
+              <Text color="secondary">
+                <Date timestamp={sentAt} />
+              </Text>
+            </Group>
+            <Text color="secondary">{senderEmail}</Text>
+          </Stack>
+
           <div>
             {can(p("stratas", "inbox_thread_chats", "view")) && (
               <Button
@@ -75,15 +68,13 @@ export function ThreadMessage({
           </div>
         </Group>
 
-        <Text className={classnames(styles.messageText)}>{message}</Text>
+        <Text whiteSpace="pre-wrap">{message}</Text>
 
-        <Stack>
-          {invoice && <InvoiceChip invoice={invoice} />}
+        {invoice && <InvoiceChip invoice={invoice} />}
 
-          {file && (
-            <FileAttachmentChip fileName={file.name} filePath={file.path} />
-          )}
-        </Stack>
+        {file && (
+          <FileAttachmentChip fileName={file.name} filePath={file.path} />
+        )}
       </Stack>
 
       {showChatReplyModal && (
