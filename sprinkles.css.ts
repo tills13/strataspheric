@@ -96,6 +96,7 @@ const paddingProperties = defineProperties({
   },
   shorthands: {
     p: ["padding"],
+    pt: ["paddingTop"],
     pb: ["paddingBottom"],
     ph: ["paddingLeft", "paddingRight"],
     pv: ["paddingTop", "paddingBottom"],
@@ -119,12 +120,24 @@ const marginProperties = defineProperties({
   },
 });
 
+const boxProperties = defineProperties({
+  properties: {
+    overflow: {
+      hidden: "hidden",
+    },
+    textOverflow: {
+      ellipsis: "ellipsis",
+    },
+  },
+});
+
 export const s = createSprinkles(
   marginProperties,
   paddingProperties,
   sizeProperties,
   textProperties,
   flexProperties,
+  boxProperties,
 );
 
 export type S = Parameters<typeof s>[0];

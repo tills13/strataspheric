@@ -1,16 +1,13 @@
 import { s } from "../../../../sprinkles.css";
 
-import { Suspense } from "react";
-
 import { mustAuth } from "../../../../auth";
+import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { DropdownButton } from "../../../../components/DropdownButton";
 import { FlexBox } from "../../../../components/FlexBox";
 import { Group } from "../../../../components/Group";
-import { Header } from "../../../../components/Header";
 import { SearchIcon } from "../../../../components/Icon/SearchIcon";
 import { can } from "../../../../data/users/permissions";
 import { AddFileButton } from "./AddFileButton";
-import { FilesLoader } from "./FilesLoader";
 import { FilesSearch } from "./FilesSearch";
 import { StrataFilesList } from "./StrataFilesList";
 
@@ -23,10 +20,8 @@ export async function FilesPage({ search, visibility }: Props) {
   const session = await mustAuth();
 
   return (
-    <div>
-      <Group justify="space-between" p="normal">
-        <Header as="h2">Files</Header>
-
+    <DashboardLayout
+      actions={
         <Group>
           <DropdownButton
             buttonColor="primary"
@@ -45,13 +40,10 @@ export async function FilesPage({ search, visibility }: Props) {
           />
           {can(session.user, "stratas.files.create") && <AddFileButton />}
         </Group>
-      </Group>
-
-      <Suspense fallback={<FilesLoader />}>
-        <div className={s({ ph: "normal" })}>
-          <StrataFilesList searchTerm={search} visibility={visibility} />
-        </div>
-      </Suspense>
-    </div>
+      }
+      title="Files"
+    >
+      <StrataFilesList searchTerm={search} visibility={visibility} />
+    </DashboardLayout>
   );
 }

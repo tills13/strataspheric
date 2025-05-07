@@ -78,14 +78,10 @@ export function CreateOrUpdateInvoiceForm({
           />
 
           <Input
-            actionLeft={
-              <Text color="secondary" fw="bold" paddingLeft="small">
-                $
-              </Text>
-            }
             min="0"
             name="amount"
             label="Amount"
+            placeholder="$"
             pattern="\d+(\.\d\d?)?"
             disabled={!!invoice?.isPaid}
             defaultValue={invoice?.amount}

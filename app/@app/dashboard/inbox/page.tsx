@@ -1,14 +1,10 @@
-import { s } from "../../../../sprinkles.css";
-import * as styles from "./style.css";
-
 import { redirect } from "next/navigation";
 
 import { PageProps } from "../../../../.next/types/app/@app/dashboard/inbox/page";
 import { auth } from "../../../../auth";
 import { Button } from "../../../../components/Button";
-import { Checkbox } from "../../../../components/Checkbox";
+import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { Group } from "../../../../components/Group";
-import { Header } from "../../../../components/Header";
 import { SendIcon } from "../../../../components/Icon/SendIcon";
 import { InboxThreads } from "../../../../components/InboxThreads";
 import { InternalLink } from "../../../../components/Link/InternalLink";
@@ -54,35 +50,27 @@ export default async function Page({ searchParams }: PageProps) {
     { offset },
   );
 
-  console.log(total);
-
   return (
-    <div>
-      <div className={s({ p: "normal" })}>
-        <Group justify="space-between">
-          <Group className={styles.inboxPageHeader}>
-            <Checkbox />
-            <Header as="h2">Inbox</Header>
-          </Group>
-
-          <InternalLink href="/dashboard/inbox/send" noUnderline>
-            <Button
-              color="primary"
-              iconRight={<SendIcon />}
-              iconTextBehaviour="centerRemainder"
-              style="secondary"
-            >
-              Send Message
-            </Button>
-          </InternalLink>
-        </Group>
-      </div>
-
+    <DashboardLayout
+      actions={
+        <InternalLink href="/dashboard/inbox/send" noUnderline>
+          <Button
+            color="primary"
+            iconRight={<SendIcon />}
+            iconTextBehaviour="centerRemainder"
+            style="secondary"
+          >
+            Send Message
+          </Button>
+        </InternalLink>
+      }
+      title="Inbox"
+    >
       <InboxThreads threads={threads} />
 
       <Group p="normal" justify="end">
         <Pagination currentPage={pageNum} totalPages={Math.ceil(total / 10)} />
       </Group>
-    </div>
+    </DashboardLayout>
   );
 }

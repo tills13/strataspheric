@@ -9,7 +9,6 @@ import { FlexBox } from "../FlexBox";
 interface Props
   extends Omit<React.ComponentProps<typeof FlexBox>, "direction"> {
   equalWidthChildren?: boolean;
-  overflow?: keyof typeof styles.groupOverflow;
 }
 
 export function Group({
@@ -17,7 +16,6 @@ export function Group({
   className,
   children,
   justify = "start",
-  overflow,
   equalWidthChildren,
   ...delegateProps
 }: Props) {
@@ -26,7 +24,7 @@ export function Group({
       align={align}
       className={classnames(
         styles.group,
-        overflow && styles.groupOverflow[overflow],
+
         className,
       )}
       direction="row"

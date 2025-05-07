@@ -1,34 +1,40 @@
-import { s } from "../../../../sprinkles.css";
+import { notFound } from "next/navigation";
 
-import { auth } from "../../../../auth";
+import { PageProps } from "../../../../.next/types/app/@app/dashboard/invoices/page";
+import { mustAuth } from "../../../../auth";
 import { Group } from "../../../../components/Group";
-import { Header } from "../../../../components/Header";
-import { Stack } from "../../../../components/Stack";
+import { Pagination } from "../../../../components/Pagination";
+import { listInvoices } from "../../../../data/invoices/listInvoices";
+import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
-import { CreateNewInvoiceButton } from "./CreateNewInvoiceButton";
 import { StrataInvoicesList } from "./StrataInvoicesList";
 
 export const runtime = "edge";
 
-export default async function Page() {
-  const session = await auth();
+export default async function Page({ searchParams }: PageProps) {
+  const session = await mustAuth();
+
+  if (!can(session.user, "stratas.invoices.view")) {
+    notFound();
+  }
+
+  const { page: rawPageNum } = await searchParams;
+  const pageNum = parseInt(rawPageNum || "1", 10);
+  const offset = (pageNum - 1) * 10;
+
+  const strata = await mustGetCurrentStrata();
+  const { results: invoices, total } = await listInvoices(
+    { strataId: strata.id },
+    { offset },
+  );
 
   return (
-    <Stack>
-      <Group p="normal" justify="space-between">
-        <Header as="h2">Invoices</Header>
-        <div>
-          {can(session?.user, "stratas.invoices.create") && (
-            <CreateNewInvoiceButton />
-          )}
-        </div>
-      </Group>
+    <>
+      <StrataInvoicesList invoices={invoices} strata={strata} />
 
-      <StrataInvoicesList />
-
-      {/* <Group p="normal" justify="end">
+      <Group p="normal" justify="end">
         <Pagination currentPage={pageNum} totalPages={Math.ceil(total / 10)} />
-      </Group> */}
-    </Stack>
+      </Group>
+    </>
   );
 }

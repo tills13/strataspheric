@@ -27,7 +27,7 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
   });
 
   return (
-    <Stack className={classnames(styles.filesList)}>
+    <Stack p="normal" pt="0" className={classnames(styles.filesList)}>
       {files.length === 0 && <NothingHere />}
 
       {files.map((file) => (

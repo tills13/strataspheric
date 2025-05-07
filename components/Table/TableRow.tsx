@@ -43,9 +43,11 @@ export function TableRow({
         </Wrap>
       </div>
 
-      <Group justify="end">{rowEnd}</Group>
+      <Group className={styles.tableRowEnd} justify="end">
+        {rowEnd}
+      </Group>
 
-      <div className={styles.tableRowActions}>{actions}</div>
+      {actions && <div className={styles.tableRowActions}>{actions}</div>}
     </div>
   );
 }

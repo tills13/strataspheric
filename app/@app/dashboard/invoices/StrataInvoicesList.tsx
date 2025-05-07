@@ -1,25 +1,23 @@
-import { s } from "../../../../sprinkles.css";
-
-import { DividerText } from "../../../../components/DividerText";
 import { Group } from "../../../../components/Group";
 import { CircleCheckIcon } from "../../../../components/Icon/CircleCheckIcon";
 import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { InvoiceStatusBadge } from "../../../../components/InvoiceStatusBadge";
 import { Money } from "../../../../components/Money";
 import { RemoveButton } from "../../../../components/RemoveButton";
-import { Stack } from "../../../../components/Stack";
 import { StatusButton } from "../../../../components/StatusButton";
 import { Table } from "../../../../components/Table";
 import { TableRow } from "../../../../components/Table/TableRow";
 import { Text } from "../../../../components/Text";
-import { listInvoices } from "../../../../data/invoices/listInvoices";
-import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { Strata } from "../../../../data";
+import { Invoice } from "../../../../data/invoices/getInvoice";
 import { deleteInvoiceAction, markInvoiceAsPaidAction } from "./actions";
 
-export async function StrataInvoicesList() {
-  const strata = await mustGetCurrentStrata();
-  const invoices = await listInvoices({ strataId: strata.id });
+interface Props {
+  invoices: Invoice[];
+  strata: Strata;
+}
 
+export async function StrataInvoicesList({ invoices, strata }: Props) {
   return (
     <>
       {invoices.length === 0 && (
@@ -32,15 +30,15 @@ export async function StrataInvoicesList() {
             key={invoice.id}
             actions={
               <Group gap="small">
-                {invoice.isPaid !== 1 && (
-                  <StatusButton
-                    action={markInvoiceAsPaidAction.bind(undefined, invoice.id)}
-                    icon={<CircleCheckIcon />}
-                    size="small"
-                    style="tertiary"
-                    color="success"
-                  />
-                )}
+                <StatusButton
+                  action={markInvoiceAsPaidAction.bind(undefined, invoice.id)}
+                  disabled={invoice.isPaid === 1}
+                  icon={<CircleCheckIcon />}
+                  size="small"
+                  style="tertiary"
+                  color={invoice.isPaid === 1 ? undefined : "success"}
+                />
+
                 <RemoveButton
                   action={deleteInvoiceAction.bind(undefined, invoice.id)}
                   icon={<DeleteIcon />}
@@ -51,8 +49,7 @@ export async function StrataInvoicesList() {
               </Group>
             }
             content={
-              <Group>
-                <InvoiceStatusBadge invoice={invoice} />
+              <Group overflow="hidden">
                 <Group gap="xs">
                   <Text
                     color="secondary"
@@ -67,9 +64,17 @@ export async function StrataInvoicesList() {
                   </Text>
                 </Group>
 
-                <Text whiteSpace="nowrap" color="secondary">
+                <Text
+                  whiteSpace="nowrap"
+                  color="secondary"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  flex={1}
+                >
                   {invoice.description?.split("\n")[0]}
                 </Text>
+
+                <InvoiceStatusBadge invoice={invoice} />
               </Group>
             }
             link={{ pathname: "/dashboard/invoices/" + invoice.id }}
@@ -77,23 +82,6 @@ export async function StrataInvoicesList() {
           />
         ))}
       </Table>
-
-      <Stack p="normal">
-        <DividerText gravity="left">
-          <Text fontSize="large" fw="bold">
-            Total Revenue
-          </Text>
-        </DividerText>
-
-        <Group justify="end">
-          <Money
-            amount={invoices
-              .filter((inv) => inv.isPaid)
-              .reduce((acc, i) => acc + i.amount, 0)}
-            fontSize="xl"
-          />
-        </Group>
-      </Stack>
     </>
   );
 }

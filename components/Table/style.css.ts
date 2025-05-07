@@ -61,6 +61,8 @@ export const tableRowContent = style({
   textOverflow: "ellipsis",
 });
 
+export const tableRowEnd = style({});
+
 export const tableRowActions = style({
   display: "none",
 
@@ -75,9 +77,13 @@ export const tableRowActions = style({
 
   alignSelf: "center",
 
-  selectors: {
-    [`${tableRow}:hover &`]: {
-      display: "block",
+  "@media": {
+    [breakpoints.desktop]: {
+      selectors: {
+        [`${tableRow}:hover &`]: {
+          display: "block",
+        },
+      },
     },
   },
 });

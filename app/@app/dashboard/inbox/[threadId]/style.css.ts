@@ -19,6 +19,10 @@ export const inboxMessageThreadContainer = style({
   overflowY: "auto",
 });
 
+export const inboxMessageThreadBackNavigationButton = style({
+  marginTop: "6px",
+});
+
 export const pageHeader = style({
   borderBottom: border("1px", "solid", vars.colors.borderDefault),
 });

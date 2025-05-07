@@ -9,6 +9,7 @@ export const skeletonBone = style({
   width: "100%",
   backgroundColor: vars.colors.borderDefault,
   borderRadius: vars.borderRadius,
+  minWidth: "50px",
 
   selectors: {
     [`${widgetSkeleton} &:not(:last-child)`]: {

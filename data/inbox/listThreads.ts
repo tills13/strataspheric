@@ -1,5 +1,5 @@
 import { db } from "..";
-import { Pagination } from "../types";
+import { PaginatedResults, Pagination } from "../types";
 import { Thread } from "./getThread";
 
 export type ListThreadsFilter = {
@@ -9,7 +9,6 @@ export type ListThreadsFilter = {
 };
 
 export type ListThreadsPagination = Pagination<"inbox_messages", Thread>;
-export type PaginatedResults<T> = { results: T[]; total: number };
 
 export async function listThreads(
   filter: ListThreadsFilter,
@@ -17,7 +16,7 @@ export async function listThreads(
 ): Promise<PaginatedResults<Thread>> {
   let limitQuery = db
     .selectFrom("inbox_messages")
-    .select((eb) => eb.fn("count", []).as("count"));
+    .select((eb) => eb.fn<number>("count", []).as("count"));
 
   let query = db
     .selectFrom("inbox_messages")

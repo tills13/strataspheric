@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 
 import { auth } from "../../../../../auth";
 import { Button } from "../../../../../components/Button";
+import { NavigateBackButton } from "../../../../../components/DashboardLayout/NavigateBackButton";
 import { Date } from "../../../../../components/Date";
 import { FileAttachmentChip } from "../../../../../components/FileAttachmentChip";
 import { Group } from "../../../../../components/Group";
@@ -58,36 +59,37 @@ export async function InboxMessageThread({ threadId }: Props) {
       )}
 
       <Stack className={classnames(styles.pageHeader)} p="normal">
-        <Stack gap="xs">
-          <Group justify="space-between">
-            <Header as="h2">{subject}</Header>
+        <Group justify="space-between" align="start">
+          <Stack gap="xs">
+            <Group gap="small" align="start">
+              <NavigateBackButton /> <Header as="h2">{subject}</Header>
+            </Group>
+            <Text as="span" color="secondary">
+              {senderName} ({senderEmail}) &bull; <Date timestamp={sentAt} />
+            </Text>
+          </Stack>
 
-            <Group>
-              <RemoveButton
-                action={deleteThreadAction.bind(undefined, threadId)}
-                icon={<DeleteIcon />}
+          <Group>
+            <RemoveButton
+              action={deleteThreadAction.bind(undefined, threadId)}
+              icon={<DeleteIcon />}
+              color="primary"
+              size="small"
+              style="tertiary"
+            />
+            <ExternalLink
+              href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
+              target="_blank"
+            >
+              <Button
+                icon={<ShareIcon />}
                 color="primary"
                 size="small"
                 style="tertiary"
               />
-              <ExternalLink
-                href={"/dashboard/inbox/" + threadId + "?viewId=" + viewId}
-                target="_blank"
-              >
-                <Button
-                  icon={<ShareIcon />}
-                  color="primary"
-                  size="small"
-                  style="tertiary"
-                />
-              </ExternalLink>
-            </Group>
+            </ExternalLink>
           </Group>
-
-          <Text as="span" color="secondary">
-            {senderName} ({senderEmail}) &bull; <Date timestamp={sentAt} />
-          </Text>
-        </Stack>
+        </Group>
 
         <Text whiteSpace="pre-wrap">{message0.message}</Text>
 

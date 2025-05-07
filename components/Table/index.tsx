@@ -3,7 +3,7 @@ import * as styles from "./style.css";
 import { classnames } from "../../utils/classnames";
 
 interface Props {
-  children: React.ReactNode[];
+  children: React.ReactNode;
   className?: string;
 }
 

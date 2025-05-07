@@ -1,17 +1,11 @@
-import * as styles from "./styles.css";
-
 import { auth } from "../../../../auth";
+import { Grid } from "../../../../components/Grid";
 import { listStrataMemberships } from "../../../../data/memberships/listStrataMemberships";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
-import { classnames } from "../../../../utils/classnames";
 import { MembershipTile } from "./MembershipTile";
 
-interface Props {
-  className?: string;
-}
-
-export async function Memberships({ className }: Props) {
+export async function Memberships() {
   const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
 
   const canUpsert = can(
@@ -26,10 +20,10 @@ export async function Memberships({ className }: Props) {
   });
 
   return (
-    <div className={classnames(className, styles.membershipGrid)}>
+    <Grid cols={{ base: 1, tablet: 2, desktop: 4 }} p="normal" pt="0">
       {memberships.map((membership) => (
         <MembershipTile key={membership.id} membership={membership} />
       ))}
-    </div>
+    </Grid>
   );
 }

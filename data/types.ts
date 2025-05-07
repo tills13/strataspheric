@@ -15,3 +15,5 @@ export type Pagination<
   limit?: number;
   orderBy?: OrderByExpression<Database, QueryTableAlias, S>;
 };
+
+export type PaginatedResults<T> = { results: T[]; total: number };
