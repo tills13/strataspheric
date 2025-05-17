@@ -23,6 +23,8 @@ import { deleteStrataAction } from "./actions";
 export async function SettingsPage() {
   const [strata] = await Promise.all([mustGetCurrentStrata()]);
 
+  console.log("asd", strata.bylawsFileId);
+
   return (
     <div className={parentStyles.pageContainer}>
       <div className={styles.centerContainer}>

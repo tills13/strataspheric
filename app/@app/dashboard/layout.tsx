@@ -13,8 +13,11 @@ export default async function Layout({
   return (
     <div className={styles.dashboardLayoutContainer}>
       <DashboardDesktopNavigation />
-      <DashboardHeader />
-      {children}
+
+      <div className={styles.dashboardContentsContainer}>
+        <DashboardHeader />
+        {children}
+      </div>
     </div>
   );
 }

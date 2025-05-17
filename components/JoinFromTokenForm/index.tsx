@@ -2,7 +2,11 @@
 
 import React from "react";
 
+import { joinFromTokenAction } from "../../app/@marketing/join/actions";
+import { signIn } from "../../auth/actions";
 import { Strata } from "../../data";
+import { StrataMembership } from "../../data/memberships/getStrataMembership";
+import * as formdata from "../../utils/formdata";
 import { Header } from "../Header";
 import { Input } from "../Input";
 import { Stack } from "../Stack";
@@ -11,28 +15,35 @@ import { Text } from "../Text";
 
 interface Props {
   className?: string;
-  membershipName: string;
-  onSubmit: (fd: FormData) => void;
+  membership: StrataMembership;
+
   strata: Strata;
+  token: string;
 }
 
 export function JoinFromTokenForm({
   className,
-  membershipName,
-  onSubmit,
+  membership,
   strata,
+  token,
 }: Props) {
   return (
-    <form action={onSubmit} className={className}>
+    <form
+      action={async (fd) => {
+        await joinFromTokenAction(token, fd);
+        await signIn(membership.email, formdata.getString(fd, "password"));
+      }}
+      className={className}
+    >
       <Stack>
         <Header as="h2">
           Welcome to Strataspheric,{" "}
           <Text as="span" color="secondary" fontFamily="unset" fontSize="unset">
-            {membershipName}
+            {membership.name}
           </Text>
         </Header>
 
-        <Text color="secondary" mb="large">
+        <Text mb="large">
           You have been invited to join <b>{strata.name}</b> on Strataspheric.
           Finish setting up your account be creating a password. After you've
           signed in, you can complete your Strataspheric profile.

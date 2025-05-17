@@ -35,6 +35,7 @@ export function Select({
   }
 
   const placeholderOption = label || placeholder;
+  console.log(name, delegateProps);
 
   return (
     <div className={classnames(styles.selectWrapper, className)}>

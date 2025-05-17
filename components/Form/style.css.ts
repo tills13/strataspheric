@@ -15,10 +15,9 @@ export const fieldBaseActionContainer = style({
 export const fieldLeftActionContainer = style([fieldBaseActionContainer, {}]);
 export const fieldRightActionContainer = style([fieldBaseActionContainer, {}]);
 
-export const field = style({
+export const fieldBase = style({
   position: "relative",
-  display: "flex",
-  alignItems: "center",
+
   color: vars.fontColors.primary,
   background: "none",
   backgroundColor: vars.colors.white,
@@ -28,10 +27,6 @@ export const field = style({
   outline: "none",
 
   selectors: {
-    "&:not(:has(textarea))": {
-      height: "44px",
-      padding: `0 ${vars.spacing.normal}`,
-    },
     "&:hover": {
       borderColor: vars.colors.borderDefaultHover,
     },
@@ -43,6 +38,20 @@ export const field = style({
     },
   },
 });
+
+export const field = style([
+  fieldBase,
+  {
+    display: "flex",
+    alignItems: "center",
+    selectors: {
+      "&:not(:has(textarea))": {
+        height: "44px",
+        padding: `0 ${vars.spacing.normal}`,
+      },
+    },
+  },
+]);
 
 export const fieldLabel = style({
   position: "absolute",

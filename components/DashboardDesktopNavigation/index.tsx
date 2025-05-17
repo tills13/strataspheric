@@ -1,54 +1,43 @@
-"use client";
-
-import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { usePathname } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 
+import { auth } from "../../auth";
 import { NAVIGATION_LINKS } from "../../constants/navigation";
+import { mustGetCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { can } from "../../data/users/permissions";
-import { useSession } from "../../hooks/useSession";
 import { classnames } from "../../utils/classnames";
-import { Group } from "../Group";
-import { InternalLink } from "../Link/InternalLink";
+import { ServerUserStrataSelectorButton } from "../GlobalDashboardHeader/ServerUserStrataSelectorButton";
+import { UserStrataSelectorButton } from "../GlobalDashboardHeader/UserStrataSelectorButton";
 import { Stack } from "../Stack";
-import { Text } from "../Text";
+import { NavigationItem } from "./NavigationItem";
 
-export function DashboardDesktopNavigation() {
-  const session = useSession();
-  const pathname = usePathname();
+export async function DashboardDesktopNavigation() {
+  const session = await auth();
+  const strata = await mustGetCurrentStrata();
 
   const filteredMenuItems = NAVIGATION_LINKS.filter(
-    ([, , , permissions]) => !permissions || can(session?.user, ...permissions),
+    ([, , permissions]) => !permissions || can(session?.user, ...permissions),
   );
 
   return (
-    <div className={classnames(styles.navigation, s({ p: "small" }))}>
-      <Stack gap="small">
-        {filteredMenuItems.map(([IconComponent, href, label]) => {
-          const isActive =
-            href === "/dashboard"
-              ? pathname === href
-              : pathname?.startsWith(href);
-
-          return (
-            <InternalLink
-              key={href}
-              className={
-                isActive ? styles.activeNavigationItem : styles.navigationItem
-              }
-              href={href}
-            >
-              <Group className={s({ pv: "small", ph: "normal" })}>
-                <IconComponent size="xs" />
-                <Text as="span" whiteSpace="nowrap">
-                  {label}
-                </Text>
-              </Group>
-            </InternalLink>
-          );
-        })}
+    <div className={classnames(styles.navigation)}>
+      <Suspense
+        fallback={
+          <UserStrataSelectorButton
+            currentStrata={strata}
+            sessionStratas={[]}
+          />
+        }
+      >
+        <ServerUserStrataSelectorButton currentStrata={strata} />
+      </Suspense>
+      <Stack gap="small" p="small">
+        {filteredMenuItems.map(([href, label]) => (
+          <NavigationItem key={href} href={href}>
+            {label}
+          </NavigationItem>
+        ))}
       </Stack>
     </div>
   );

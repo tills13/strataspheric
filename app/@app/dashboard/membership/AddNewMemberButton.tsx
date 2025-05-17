@@ -20,12 +20,14 @@ export function AddNewMemberButton() {
         onClick={() => setShowModal(true)}
         style="secondary"
       >
-        Add New Member
+        Add Member
       </Button>
 
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="New Strata Member">
-          <CreateOrUpdateStrataMembershipForm>
+          <CreateOrUpdateStrataMembershipForm
+            onUpsertMember={() => setShowModal(false)}
+          >
             <CreateOrUpdateStrataMembershipFormFields />
           </CreateOrUpdateStrataMembershipForm>
         </Modal>

@@ -2,6 +2,7 @@ import { AmenityBooking, baseQuery, processRows } from "./getAmenityBooking";
 
 type ListAmenityBookingsFilter = {
   amenityId?: string;
+  invoiceId?: string;
   decision?: AmenityBooking["decision"];
   startTs?: number;
   endTs?: number;
@@ -16,6 +17,10 @@ export async function listAmenityBookings(filter: ListAmenityBookingsFilter) {
 
   if (filter.amenityId) {
     query = query.where("amenity_bookings.amenityId", "=", filter.amenityId);
+  }
+
+  if (filter.invoiceId) {
+    query = query.where("amenity_bookings.invoiceId", "=", filter.invoiceId);
   }
 
   query = query.where((eb) =>

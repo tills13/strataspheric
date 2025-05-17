@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { File } from "../../data";
 import { Button } from "../Button";
 import { RemoveIcon } from "../Icon/RemoveIcon";
-import { Input } from "../Input";
 import { LoadingIcon } from "../LoadingIcon";
 import { Select } from "../Select";
 
@@ -51,29 +50,12 @@ export function FileSelect({
     loadFiles();
   }, [delegateProps.disabled, fileTypes]);
 
-  if (isLoading) {
-    return (
-      <Input
-        actionRight={
-          <Button
-            icon={<LoadingIcon loading />}
-            color="primary"
-            style="tertiary"
-            type="button"
-          />
-        }
-        className={delegateProps.className}
-        placeholder={delegateProps.placeholder}
-        disabled
-      />
-    );
-  }
-
   return (
     <Select
+      key={isLoading ? "SelectLoading" : "SelectLoaded"}
       actionRight={
         <Button
-          icon={<RemoveIcon />}
+          icon={isLoading ? <LoadingIcon loading /> : <RemoveIcon />}
           color="primary"
           onClick={() => (ref.current.value = "")}
           style="tertiary"

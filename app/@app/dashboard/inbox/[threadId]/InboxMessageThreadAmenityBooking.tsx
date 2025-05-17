@@ -51,7 +51,7 @@ export function InboxMessageThreadAmenityBooking({
 
           <AmenitiesBookingCalendar
             amenity={amenityBooking.amenity}
-            virtualEvent={virtualEvent}
+            booking={virtualEvent}
           />
 
           {can("stratas.amenity_bookings.edit") && !amenityBooking.decision && (

@@ -67,7 +67,7 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
     provinceState,
     latitude,
     longitude,
-    ...(bylawsFileId && { bylawsFileId }),
+    bylawsFileId,
     isPublic: isPublic ? 1 : 0,
   });
 

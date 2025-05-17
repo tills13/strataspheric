@@ -100,15 +100,15 @@ export async function joinFromTokenAction(token: string, fd: FormData) {
   await updateUser(resetToken.userId, { password });
   await deleteUserPasswordResetToken(resetToken.token);
 
-  const memberships = await listStrataMemberships({
+  const [membership] = await listStrataMemberships({
     userId: resetToken.userId,
   });
 
-  if (!memberships) {
+  if (!membership) {
     throw new Error("");
   }
 
-  const strata = await getStrataById(memberships[0].strataId);
+  const strata = await getStrataById(membership.strataId);
 
   if (!strata) {
     throw new Error("");

@@ -118,7 +118,7 @@ export async function approveOrRejectAmenityBookingAction(
       message:
         `Your booking request has been approved.` +
         (amenityBooking.invoice
-          ? "Please pay the invoice by the booking's start date."
+          ? " Please pay the invoice by the booking's start date."
           : ""),
       invoiceId: amenityBooking.invoice?.id,
     });

@@ -1,3 +1,4 @@
+import { GlobalFooter } from "../../components/GlobalFooter";
 import { GlobalMarketingHeader } from "../../components/GlobalMarketingHeader";
 
 export default async function RootMarketingLayout({
@@ -9,6 +10,7 @@ export default async function RootMarketingLayout({
     <>
       <GlobalMarketingHeader />
       {children}
+      <GlobalFooter />
     </>
   );
 }

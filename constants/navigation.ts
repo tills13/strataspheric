@@ -1,3 +1,5 @@
+import React from "react";
+
 import { BedIcon } from "../components/Icon/BedIcon";
 import { CalendarIcon } from "../components/Icon/CalendarIcon";
 import { DashboardIcon } from "../components/Icon/DashboardIcon";
@@ -10,32 +12,37 @@ import { PersonIcon } from "../components/Icon/PersonIcon";
 import { SettingsIcon } from "../components/Icon/SettingsIcon";
 import { Permission } from "../data/users/permissions";
 
-type Link = [
-  icon: React.ComponentType<React.ComponentProps<typeof Icon>>,
-  href: string,
-  label: string,
-];
+type Link = [href: string, label: string];
 
 type LinkWithPermissions = [
-  icon: React.ComponentType<React.ComponentProps<typeof Icon>>,
   href: string,
   label: string,
   permissions: Permission[],
 ];
 
 export const NAVIGATION_LINKS: Array<Link | LinkWithPermissions> = [
-  [DashboardIcon, "/dashboard", "Dashboard"],
-  [FilesIcon, "/dashboard/files", "Files", ["stratas.files.view"]],
-  [
-    PaidDocumentIcon,
-    "/dashboard/invoices",
-    "Invoices",
-    ["stratas.invoices.view"],
-  ],
-  [CalendarIcon, "/dashboard/calendar", "Events", ["stratas.events.view"]],
-  [PersonIcon, "/dashboard/membership", "Directory"],
-  [BedIcon, "/dashboard/amenities", "Amenities", ["stratas.amenities.view"]],
-  [GroupIcon, "/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
-  [InboxIcon, "/dashboard/inbox", "Strata Inbox"],
-  [SettingsIcon, "/dashboard/settings", "Settings", ["stratas.edit"]],
+  ["/dashboard", "Dashboard"],
+  ["/dashboard/files", "Files", ["stratas.files.view"]],
+  ["/dashboard/invoices", "Invoices", ["stratas.invoices.view"]],
+  ["/dashboard/calendar", "Events", ["stratas.events.view"]],
+  ["/dashboard/membership", "Directory"],
+  ["/dashboard/amenities", "Amenities", ["stratas.amenities.view"]],
+  ["/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
+  ["/dashboard/inbox", "Strata Inbox"],
+  ["/dashboard/settings", "Settings", ["stratas.edit"]],
 ];
+
+export const NAVIGATION_LINK_ICONS: Record<
+  string,
+  React.ComponentType<React.ComponentProps<typeof Icon>>
+> = {
+  "/dashboard": DashboardIcon,
+  "/dashboard/files": FilesIcon,
+  "/dashboard/invoices": PaidDocumentIcon,
+  "/dashboard/calendar": CalendarIcon,
+  "/dashboard/membership": PersonIcon,
+  "/dashboard/amenities": BedIcon,
+  "/dashboard/meetings": GroupIcon,
+  "/dashboard/inbox": InboxIcon,
+  "/dashboard/settings": SettingsIcon,
+};

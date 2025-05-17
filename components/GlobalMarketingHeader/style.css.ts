@@ -2,8 +2,6 @@ import { breakpoints, vars } from "../../app/theme.css";
 import { keyframes, style } from "@vanilla-extract/css";
 
 export const globalHeader = style({
-  position: "sticky",
-  top: 0,
   borderBottom: 0,
   marginBottom: vars.spacing.large,
   padding: `${vars.spacing.xs} ${vars.spacing.normal} ${vars.spacing.xs} ${vars.spacing.xs}`,

@@ -30,11 +30,7 @@ export default async function RootAppLayout({
 
   return (
     <SWRProvider>
-      <SessionProvider session={session}>
-        <GlobalDashboardHeader />
-
-        {children}
-      </SessionProvider>
+      <SessionProvider session={session}>{children}</SessionProvider>
     </SWRProvider>
   );
 }

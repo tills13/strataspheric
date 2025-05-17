@@ -60,13 +60,15 @@ export function CreateOrUpdateInvoiceForm({
         <Flex from="tablet">
           <Input
             actionRight={
-              <Button
-                icon={<LoadingIcon loading={loadingNextInvoiceId} />}
-                color="primary"
-                onClick={getNextInvoiceId}
-                style="tertiary"
-                type="button"
-              />
+              !invoice && (
+                <Button
+                  icon={<LoadingIcon loading={loadingNextInvoiceId} />}
+                  color="primary"
+                  onClick={getNextInvoiceId}
+                  style="tertiary"
+                  type="button"
+                />
+              )
             }
             name="identifier"
             label="Invoice ID"

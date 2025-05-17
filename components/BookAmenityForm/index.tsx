@@ -64,7 +64,7 @@ export function BookAmenityForm({ amenity }: Props) {
               }
             }
           }}
-          virtualEvent={
+          booking={
             startDate
               ? {
                   id: "THIS_BOOKING",

@@ -26,18 +26,26 @@ import { DownIcon } from "../Icon/DownIcon";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
 
+function isAmenityBooking(
+  booking: Props["booking"],
+): booking is AmenityBooking {
+  return !!booking && "amenity" in booking;
+}
+
 type CalendarWeekProps = React.ComponentProps<typeof CalendarWeek>;
 
 interface Props {
   amenity: Amenity;
+  booking?: CalendarWeekProps["events"][number] | AmenityBooking;
+  loadOtherBookings?: boolean;
   onSelectDate?: CalendarWeekProps["onSelectDate"];
-  virtualEvent?: CalendarWeekProps["events"][number];
 }
 
 export function AmenitiesBookingCalendar({
   amenity,
+  booking,
+  loadOtherBookings,
   onSelectDate,
-  virtualEvent,
 }: Props) {
   const [weekIdx, setWeekIdx] = useState(getWeek(new Date()));
   const [bookings, setBookings] = useState<CalendarEvent[]>([]);
@@ -64,7 +72,7 @@ export function AmenitiesBookingCalendar({
 
       setBookings(
         rJson.amenityBookings
-          .filter((booking) => !virtualEvent || booking.id !== virtualEvent.id)
+          .filter((booking) => !booking || booking.id !== booking.id)
           .map((amenityBooking) => ({
             name: "",
             description: "",
@@ -73,8 +81,22 @@ export function AmenitiesBookingCalendar({
       );
     }
 
-    fetchAmenityBookings();
-  }, [amenity, date, virtualEvent]);
+    if (loadOtherBookings) {
+      fetchAmenityBookings();
+    }
+  }, [amenity, booking, date, loadOtherBookings]);
+
+  const virtualEvent = booking
+    ? isAmenityBooking(booking)
+      ? {
+          name: "This Booking",
+          description: "",
+          meetingId: undefined,
+          ...booking,
+          id: "THIS_BOOKING",
+        }
+      : booking
+    : undefined;
 
   return (
     <Stack gap="xs">

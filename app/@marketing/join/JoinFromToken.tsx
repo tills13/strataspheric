@@ -6,7 +6,6 @@ import { JoinFromTokenForm } from "../../../components/JoinFromTokenForm";
 import { listStrataMemberships } from "../../../data/memberships/listStrataMemberships";
 import { getStrataById } from "../../../data/stratas/getStrataById";
 import { getUserPasswordResetToken } from "../../../data/userPasswordResetTokens/getUserPasswordResetToken";
-import { joinFromTokenAction } from "./actions";
 
 interface Props {
   token: string;
@@ -36,9 +35,9 @@ export async function JoinFromToken({ token: rawToken }: Props) {
   return (
     <JoinFromTokenForm
       className={styles.joinForm}
-      membershipName={membership.name}
-      onSubmit={joinFromTokenAction.bind(undefined, token.token)}
+      membership={membership}
       strata={strata}
+      token={token.token}
     />
   );
 }

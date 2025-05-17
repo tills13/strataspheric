@@ -81,7 +81,7 @@ export default async function RootLayout({
           </FlexBox>
         )}
 
-        <GlobalFooter />
+        {/* <GlobalFooter /> */}
 
         <div id="modal-root" />
       </body>

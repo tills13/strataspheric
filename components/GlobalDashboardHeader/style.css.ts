@@ -2,19 +2,29 @@ import { breakpoints, sidebarWidthVar, vars } from "../../app/theme.css";
 import * as linkStyles from "../Link/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
+export const GLOBAL_HEADER_HEIGHT_PX = 57;
+
 export const globalHeader = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   borderBottom: `1px solid ${vars.colors.borderDefault}`,
-});
-
-export const userStrataSelectorContainer = style({
-  borderRight: `1px solid ${vars.colors.borderDefault}`,
-  cursor: "pointer",
+  height: GLOBAL_HEADER_HEIGHT_PX,
 
   "@media": {
     [breakpoints.tabletPlus]: {
+      justifyContent: "end",
+    },
+  },
+});
+
+export const userStrataSelectorContainer = style({
+  cursor: "pointer",
+  height: GLOBAL_HEADER_HEIGHT_PX,
+
+  "@media": {
+    [breakpoints.tabletPlus]: {
+      borderBottom: `1px solid ${vars.colors.borderDefault}`,
       width: sidebarWidthVar,
     },
   },
@@ -22,6 +32,16 @@ export const userStrataSelectorContainer = style({
   selectors: {
     "&:hover": {
       backgroundColor: vars.colors.grey100,
+    },
+
+    [`${globalHeader} &`]: {
+      borderRight: `1px solid ${vars.colors.borderDefault}`,
+
+      "@media": {
+        [breakpoints.tabletPlus]: {
+          display: "none",
+        },
+      },
     },
   },
 });

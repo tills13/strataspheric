@@ -28,7 +28,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     thread = await getThread(threadId, { viewId });
   } else {
     thread = await getThread(threadId, {
-      senderUserId: can(session.user, p("stratas", "inbox_messages", "view"))
+      senderUserId: can(session.user, "stratas.inbox_messages.view")
         ? undefined
         : session.user.id,
     });

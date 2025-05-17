@@ -6,6 +6,7 @@ import { Flex } from "../Flex";
 import { Input } from "../Input";
 import { Stack } from "../Stack";
 import { TextArea } from "../TextArea";
+import { WYSIWYGEditor } from "../WYSIWYGEditor";
 
 type AttachInvoiceFieldProps = React.ComponentProps<typeof AttachInvoiceField>;
 
@@ -22,6 +23,7 @@ export function SendInboxMessageFields({
     <Stack gap="normal">
       {showSubjectInput && <Input name="subject" label="Subject" required />}
 
+      {/* <WYSIWYGEditor /> */}
       <TextArea name="message" label="Message" rows={3} required />
 
       <Flex from="tablet">

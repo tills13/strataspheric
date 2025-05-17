@@ -57,7 +57,7 @@ export function InvoiceChip({
         <Text className={styles.draftLabel}>DRAFT</Text>
       )}
 
-      <Stack>
+      <Stack mb="normal">
         <Header as="h3">
           <Group>
             <InvoiceStatusBadge invoice={invoice} />

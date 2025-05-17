@@ -1,3 +1,5 @@
+"use client";
+
 import { upsertStrataMembershipAction } from "../../app/@app/dashboard/membership/actions";
 import { StrataMembership } from "../../data/memberships/getStrataMembership";
 import { classnames } from "../../utils/classnames";
@@ -9,17 +11,21 @@ import { StatusButton } from "../StatusButton";
 interface Props {
   className?: string;
   membership?: StrataMembership;
-  strataRoleSelectDisabled?: boolean;
+  onUpsertMember?: () => void;
 }
 
 export function CreateOrUpdateStrataMembershipForm({
   className,
   children,
   membership,
+  onUpsertMember,
 }: React.PropsWithChildren<Props>) {
   return (
     <form
-      action={upsertStrataMembershipAction.bind(undefined, membership?.userId)}
+      action={async (fd) => {
+        await upsertStrataMembershipAction(membership?.userId, fd);
+        onUpsertMember?.();
+      }}
       className={classnames(className)}
     >
       <Stack>
