@@ -44,7 +44,7 @@ interface Props {
 export function AmenitiesBookingCalendar({
   amenity,
   booking,
-  loadOtherBookings,
+  loadOtherBookings = true,
   onSelectDate,
 }: Props) {
   const [weekIdx, setWeekIdx] = useState(getWeek(new Date()));

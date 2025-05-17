@@ -44,7 +44,7 @@ export function InboxThreadRow({ thread }: Props) {
             {thread.senderName}
           </Text>
 
-          <Group flex={1}>
+          <Group flex={1} overflow="hidden">
             <Text
               className={styles.inboxMessageSubject}
               color="primary"
