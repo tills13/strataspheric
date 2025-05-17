@@ -62,15 +62,12 @@ export async function InboxMessageThread({ threadId }: Props) {
 
       <Stack className={classnames(styles.pageHeader)} p="normal">
         <Group justify="space-between" align="start">
-          <Group gap="small" align="start">
-            <NavigateBackButton />{" "}
-            <Stack gap="xs">
-              <Header as="h2">{subject}</Header>
-              <Text as="span" color="secondary">
-                {senderName} ({senderEmail}) &bull; <Date timestamp={sentAt} />
-              </Text>
-            </Stack>
-          </Group>
+          <Stack gap="xs">
+            <Header as="h2">{subject}</Header>
+            <Text as="span" color="secondary">
+              {senderName} ({senderEmail}) &bull; <Date timestamp={sentAt} />
+            </Text>
+          </Stack>
         </Group>
 
         {message0.message && (

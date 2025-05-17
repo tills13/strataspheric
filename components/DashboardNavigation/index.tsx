@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { mustGetCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { GlobalHeader } from "../GlobalHeader";
 import { GlobalHeaderActions } from "./Actions";
+import { Breadcrumbs } from "./Breadcrumbs";
 import { GlobalHeaderMobileActions } from "./MobileActions";
 import { ServerUserStrataSelectorButton } from "./ServerUserStrataSelectorButton";
 import { UserStrataSelectorButton } from "./UserStrataSelectorButton";
@@ -24,6 +25,7 @@ export async function GlobalDashboardHeader() {
       >
         <ServerUserStrataSelectorButton currentStrata={strata} />
       </Suspense>
+      <Breadcrumbs className={styles.globalHeaderBreadcrumbs} />
       <GlobalHeaderActions className={styles.globalHeaderActionsDesktop} />
       <GlobalHeaderMobileActions
         actions={<GlobalHeaderActions />}

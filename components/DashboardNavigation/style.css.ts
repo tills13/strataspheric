@@ -1,8 +1,55 @@
-import { breakpoints, sidebarWidthVar, vars } from "../../app/theme.css";
+import {
+  breakpoints,
+  iconColorVar,
+  sidebarWidthVar,
+  vars,
+} from "../../app/theme.css";
 import * as linkStyles from "../Link/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
 export const GLOBAL_HEADER_HEIGHT_PX = 57;
+
+export const sidebar = style({
+  display: "none",
+  width: sidebarWidthVar,
+  borderRight: `1px solid ${vars.colors.borderDefault}`,
+
+  "@media": {
+    [breakpoints.tabletPlus]: {
+      display: "block",
+    },
+  },
+});
+
+const baseSidebarNavigationItem = style({
+  borderRadius: vars.borderRadius,
+  textDecoration: "none",
+});
+
+export const sidebarNavigationItem = style([
+  baseSidebarNavigationItem,
+  {
+    color: vars.colors.primary,
+    selectors: {
+      "&:hover": {
+        backgroundColor: vars.colors.grey100,
+        textDecoration: "underline",
+      },
+    },
+  },
+]);
+export const activeSidebarNavigationItem = style([
+  baseSidebarNavigationItem,
+  {
+    backgroundColor: vars.colors.primary,
+    color: vars.colors.white,
+    fontWeight: vars.fontWeights.bold,
+
+    vars: {
+      [iconColorVar]: vars.colors.white,
+    },
+  },
+]);
 
 export const globalHeader = style({
   display: "flex",
@@ -12,9 +59,7 @@ export const globalHeader = style({
   height: GLOBAL_HEADER_HEIGHT_PX,
 
   "@media": {
-    [breakpoints.tabletPlus]: {
-      justifyContent: "end",
-    },
+    [breakpoints.tabletPlus]: {},
   },
 });
 
@@ -44,6 +89,12 @@ export const userStrataSelectorContainer = style({
       },
     },
   },
+});
+
+export const globalHeaderBreadcrumbs = style({
+  flex: 1,
+  overflowX: "auto",
+  height: GLOBAL_HEADER_HEIGHT_PX,
 });
 
 export const selectedStrataContainer = style({

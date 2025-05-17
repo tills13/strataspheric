@@ -14,7 +14,7 @@ interface Props {
   children: string;
 }
 
-export function NavigationItem({ children, href }: Props) {
+export function SidebarNavigationItem({ children, href }: Props) {
   const pathname = usePathname();
 
   const isActive =
@@ -24,7 +24,11 @@ export function NavigationItem({ children, href }: Props) {
   return (
     <InternalLink
       key={href}
-      className={isActive ? styles.activeNavigationItem : styles.navigationItem}
+      className={
+        isActive
+          ? styles.activeSidebarNavigationItem
+          : styles.sidebarNavigationItem
+      }
       href={href}
     >
       <Group pv="small" ph="normal">

@@ -7,12 +7,12 @@ import { NAVIGATION_LINKS } from "../../constants/navigation";
 import { mustGetCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { can } from "../../data/users/permissions";
 import { classnames } from "../../utils/classnames";
-import { ServerUserStrataSelectorButton } from "../GlobalDashboardHeader/ServerUserStrataSelectorButton";
-import { UserStrataSelectorButton } from "../GlobalDashboardHeader/UserStrataSelectorButton";
 import { Stack } from "../Stack";
-import { NavigationItem } from "./NavigationItem";
+import { ServerUserStrataSelectorButton } from "./ServerUserStrataSelectorButton";
+import { SidebarNavigationItem } from "./SidebarNavigationItem";
+import { UserStrataSelectorButton } from "./UserStrataSelectorButton";
 
-export async function DashboardDesktopNavigation() {
+export async function Sidebar() {
   const session = await auth();
   const strata = await mustGetCurrentStrata();
 
@@ -21,7 +21,7 @@ export async function DashboardDesktopNavigation() {
   );
 
   return (
-    <div className={classnames(styles.navigation)}>
+    <div className={classnames(styles.sidebar)}>
       <Suspense
         fallback={
           <UserStrataSelectorButton
@@ -34,9 +34,9 @@ export async function DashboardDesktopNavigation() {
       </Suspense>
       <Stack gap="small" p="small">
         {filteredMenuItems.map(([href, label]) => (
-          <NavigationItem key={href} href={href}>
+          <SidebarNavigationItem key={href} href={href}>
             {label}
-          </NavigationItem>
+          </SidebarNavigationItem>
         ))}
       </Stack>
     </div>

@@ -1,4 +1,4 @@
-import { GlobalDashboardHeader } from "../GlobalDashboardHeader";
+import { GlobalDashboardHeader } from "../DashboardNavigation";
 import { MobileSubheaderNavigation } from "./MobileSubheaderNavigation";
 
 export function DashboardHeader() {

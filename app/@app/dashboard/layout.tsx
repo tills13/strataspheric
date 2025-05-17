@@ -2,8 +2,8 @@ import * as styles from "./style.css";
 
 import React from "react";
 
-import { DashboardDesktopNavigation } from "../../../components/DashboardDesktopNavigation";
 import { DashboardHeader } from "../../../components/DashboardHeader";
+import { Sidebar } from "../../../components/DashboardNavigation/Sidebar";
 
 export default async function Layout({
   children,
@@ -12,7 +12,7 @@ export default async function Layout({
 }) {
   return (
     <div className={styles.dashboardLayoutContainer}>
-      <DashboardDesktopNavigation />
+      <Sidebar />
 
       <div className={styles.dashboardContentsContainer}>
         <DashboardHeader />
