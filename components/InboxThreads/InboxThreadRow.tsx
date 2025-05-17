@@ -62,9 +62,11 @@ export function InboxThreadRow({ thread }: Props) {
             </Text>
           </Group>
 
-          {thread.fileId && <AttachmentIcon size="xs" />}
-          {thread.invoiceId && <PaidDocumentIcon size="xs" />}
-          {thread.amenityBookingId && <BedIcon size="xs" />}
+          <Group gap="small">
+            {thread.fileId && <AttachmentIcon size="xxs" />}
+            {thread.invoiceId && <PaidDocumentIcon size="xxs" />}
+            {thread.amenityBookingId && <BedIcon size="xxs" />}
+          </Group>
         </Group>
       }
       link={{ pathname: "/dashboard/inbox/" + thread.threadId }}

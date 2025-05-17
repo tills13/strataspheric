@@ -21,7 +21,7 @@ export function AttachInvoiceField({ defaultValue, name }: Props) {
         selectedInvoice={selectedInvoice}
       />
 
-      <input type="hidden" name={name} value={selectedInvoice?.id} />
+      <input type="hidden" name={name} value={selectedInvoice?.id || ""} />
     </>
   );
 }
