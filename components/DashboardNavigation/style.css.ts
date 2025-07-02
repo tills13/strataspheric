@@ -7,6 +7,8 @@ import {
 import * as linkStyles from "../Link/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
+import { padding } from "../../theme";
+
 export const GLOBAL_HEADER_HEIGHT_PX = 57;
 
 export const sidebar = style({
@@ -59,13 +61,16 @@ export const globalHeader = style({
   height: GLOBAL_HEADER_HEIGHT_PX,
 
   "@media": {
-    [breakpoints.tabletPlus]: {},
+    [breakpoints.tabletPlus]: {
+      padding: padding(0, vars.spacing.normal),
+    },
   },
 });
 
-export const userStrataSelectorContainer = style({
+export const selectedStrataContainer = style({
   cursor: "pointer",
   height: GLOBAL_HEADER_HEIGHT_PX,
+  overflow: "hidden",
 
   "@media": {
     [breakpoints.tabletPlus]: {
@@ -92,13 +97,18 @@ export const userStrataSelectorContainer = style({
 });
 
 export const globalHeaderBreadcrumbs = style({
+  display: "none",
   flex: 1,
   overflowX: "auto",
   height: GLOBAL_HEADER_HEIGHT_PX,
-});
+  paddingLeft: vars.spacing.normal,
 
-export const selectedStrataContainer = style({
-  overflow: "hidden",
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "flex",
+      padding: 0,
+    },
+  },
 });
 
 export const userStrataSelectorText = style({
@@ -122,7 +132,7 @@ const userStrataSelectorIconBase = style({
   transition: "left 1s ease, opacity 1s ease",
 
   selectors: {
-    [`${userStrataSelectorContainer}:hover &`]: {
+    [`${selectedStrataContainer}:hover &`]: {
       left: "5px",
     },
   },
@@ -155,7 +165,6 @@ export const globalHeaderActionsDesktop = style({
   "@media": {
     [breakpoints.tablet]: {
       display: "block",
-      marginRight: vars.spacing.normal,
     },
   },
 });

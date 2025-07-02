@@ -14,13 +14,11 @@ export function AddFileButton() {
     <>
       <Button
         color="success"
-        iconRight={<AddIcon />}
-        iconTextBehaviour="centerRemainder"
+        icon={<AddIcon />}
         onClick={() => setShowModal(true)}
         style="secondary"
-      >
-        Add File
-      </Button>
+        size="small"
+      />
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="New File">
           <CreateOrUpdateFileForm

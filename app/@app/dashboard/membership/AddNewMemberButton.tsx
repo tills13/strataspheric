@@ -15,13 +15,11 @@ export function AddNewMemberButton() {
     <>
       <Button
         color="success"
-        iconRight={<AddIcon />}
-        iconTextBehaviour="centerRemainder"
+        icon={<AddIcon />}
         onClick={() => setShowModal(true)}
         style="secondary"
-      >
-        Add Member
-      </Button>
+        size="small"
+      />
 
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="New Strata Member">

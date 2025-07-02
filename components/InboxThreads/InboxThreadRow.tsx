@@ -69,7 +69,7 @@ export function InboxThreadRow({ thread }: Props) {
           </Group>
         </Group>
       }
-      link={{ pathname: "/dashboard/inbox/" + thread.threadId }}
+      link={"/dashboard/inbox/" + thread.threadId}
       rowEnd={
         <Date
           timestamp={thread.sentAt}
@@ -79,6 +79,7 @@ export function InboxThreadRow({ thread }: Props) {
           whiteSpace="nowrap"
         />
       }
+      rowId={thread.threadId}
     />
   );
 }

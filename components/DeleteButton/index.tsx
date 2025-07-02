@@ -6,7 +6,7 @@ import { DeleteIcon } from "../Icon/DeleteIcon";
 
 type ButtonProps = Omit<
   React.ComponentProps<typeof Button>,
-  "icon" | "iconLeft" | "iconRight"
+  "icon" | "iconLeft" | "icon"
 >;
 
 interface Props extends ButtonProps {

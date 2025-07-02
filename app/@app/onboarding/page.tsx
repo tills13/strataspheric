@@ -1,6 +1,8 @@
 import { s } from "../../../sprinkles.css";
 import * as styles from "./style.css";
 
+import { redirect } from "next/navigation";
+
 import { Group } from "../../../components/Group";
 import { Header } from "../../../components/Header";
 import { CircleCheckIcon } from "../../../components/Icon/CircleCheckIcon";
@@ -21,7 +23,11 @@ export default async function Onboarding() {
 
   return (
     <form
-      action={updateStrataAction.bind(undefined, strata.id)}
+      action={async (fd) => {
+        "use server";
+        await updateStrataAction(strata.id, fd);
+        redirect("/dashboard");
+      }}
       className={styles.pageContainer}
     >
       <Group className={s({ mb: "large" })} justify="center">
@@ -61,7 +67,7 @@ export default async function Onboarding() {
             />
           </Stack>
         </Panel>
-        <StatusButton iconRight={<CircleCheckIcon />} color="primary">
+        <StatusButton icon={<CircleCheckIcon />} color="primary">
           Ok, I&apos;m Done
         </StatusButton>
       </Stack>

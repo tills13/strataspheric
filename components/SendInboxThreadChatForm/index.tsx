@@ -42,7 +42,7 @@ export function SendInboxThreadChatForm({
         <StatusButton
           color="primary"
           style="primary"
-          iconRight={<SendIcon />}
+          icon={<SendIcon />}
           type="submit"
         >
           Send Chat

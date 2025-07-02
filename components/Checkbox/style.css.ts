@@ -25,7 +25,7 @@ export const checkbox = style({
     },
 
     "&:has(input[type=checkbox]:checked):hover": {
-      backgroundColor: vars.colors.red100,
+      backgroundColor: vars.colors.grey200,
     },
 
     "&::placeholder": {

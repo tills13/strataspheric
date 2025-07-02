@@ -103,21 +103,7 @@ export const subheaderLink = style([
 
 export const activeSubheaderLink = style([
   baseSubheaderLink,
-  {
-    color: vars.fontColors.primary,
-    fontWeight: vars.fontWeights.xbold,
-    textDecoration: "none",
-    order: 1,
-
-    "@media": {
-      [breakpoints.tabletPlus]: {
-        backgroundColor: vars.colors.primary,
-        color: vars.colors.white,
-        borderRadius: vars.borderRadius,
-        order: 2,
-      },
-    },
-  },
+  { height: "100%", order: 1 },
 ]);
 
 export const mobileDropdownAction = style({

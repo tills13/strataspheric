@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 import { PageProps } from "../../../../../.next/types/app/@app/dashboard/calendar/[...segments]/page";
 import { Button } from "../../../../../components/Button";
+import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { LeftIcon } from "../../../../../components/Icon/LeftIcon";
@@ -51,40 +52,42 @@ export default async function Page({ params }: PageProps) {
     (month === 1 ? year - 1 + "/" + "12" : year + "/" + (month - 1));
 
   return (
-    <div className={styles.calendarPageContainer}>
-      <Group className={s({ p: "normal" })} justify="space-between">
-        <Header as="h2">
-          {monthName}, {year}
-        </Header>
+    <DashboardLayout>
+      <div className={styles.calendarPageContainer}>
+        <Group className={s({ p: "normal" })} justify="space-between">
+          <Header as="h2">
+            {monthName}, {year}
+          </Header>
 
-        <Group>
-          <InternalLink href={prevLink}>
-            <Button
-              icon={<LeftIcon />}
-              color="primary"
-              size="small"
-              style="tertiary"
-            />
-          </InternalLink>
-          <InternalLink href={nextLink}>
-            <Button
-              icon={<RightIcon />}
-              color="primary"
-              size="small"
-              style="tertiary"
-            />
-          </InternalLink>
+          <Group>
+            <InternalLink href={prevLink}>
+              <Button
+                icon={<LeftIcon />}
+                color="primary"
+                size="small"
+                style="tertiary"
+              />
+            </InternalLink>
+            <InternalLink href={nextLink}>
+              <Button
+                icon={<RightIcon />}
+                color="primary"
+                size="small"
+                style="tertiary"
+              />
+            </InternalLink>
+          </Group>
         </Group>
-      </Group>
-      <div className={styles.strataCalendarContainer}>
-        <StrataCalendar
-          deleteEventAction={deleteEventAction}
-          month={month}
-          strata={strata}
-          upsertEventAction={upsertEventAction}
-          year={year}
-        />
+        <div className={styles.strataCalendarContainer}>
+          <StrataCalendar
+            deleteEventAction={deleteEventAction}
+            month={month}
+            strata={strata}
+            upsertEventAction={upsertEventAction}
+            year={year}
+          />
+        </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

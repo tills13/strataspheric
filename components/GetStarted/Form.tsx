@@ -1,186 +1,103 @@
 "use client";
 
-import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { useActionState, useEffect, useState } from "react";
+import { Stripe, StripeElements } from "@stripe/stripe-js";
+import Script from "next/script";
+import { createContext, useActionState, useContext, useRef } from "react";
 
-import { SubmitGetStartedState } from "../../app/@marketing/get-started/actions";
+import { submitGetStartedAction } from "../../app/@marketing/get-started/actions";
+import { GetStartedFormStep } from "../../app/@marketing/get-started/types";
 import { signIn } from "../../auth/actions";
-import { tld } from "../../constants";
-import { PricingPlan } from "../../data/strataPlans/constants";
+import { useRefreshSession } from "../../hooks/useRefreshSession";
 import { useSession } from "../../hooks/useSession";
-import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 import { classnames } from "../../utils/classnames";
 import * as formdata from "../../utils/formdata";
-import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
-import { Header } from "../Header";
-import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
-import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
-import { CycleIcon } from "../Icon/CycleIcon";
-import { RightIcon } from "../Icon/RightIcon";
-import { InfoPanel } from "../InfoPanel";
-import { Input } from "../Input";
-import { JoinFormFields } from "../JoinForm/JoinFormFields";
-import { Panel } from "../Panel";
-import { RadioButton } from "../RadioButton";
-import { Stack } from "../Stack";
-import { StatusButton } from "../StatusButton";
-import { Text } from "../Text";
+
+export const FormStateContext = createContext<GetStartedFormStep | undefined>(
+  undefined,
+);
+
+export function useFormState() {
+  return useContext(FormStateContext);
+}
 
 interface Props {
   className?: string;
-  selectedPlan: PricingPlan;
-
-  submitGetStarted: (
-    state: SubmitGetStartedState,
-    fd: FormData,
-  ) => Promise<SubmitGetStartedState>;
+  children: React.ReactNode;
 }
 
-export function GetStartedForm({ className, submitGetStarted }: Props) {
+export function GetStartedForm({ className, children }: Props) {
   const session = useSession();
-  const [state, action] = useActionState(
-    async (state: SubmitGetStartedState, fd: FormData) => {
-      const nextState = await submitGetStarted(state, fd);
 
-      if (nextState?.success === true) {
+  const refreshSession = useRefreshSession();
+
+  const stripeRef = useRef<Stripe>(undefined);
+  const elementsRef = useRef<StripeElements>(undefined);
+
+  const [actionState, action] = useActionState<GetStartedFormStep, FormData>(
+    async (state: GetStartedFormStep, fd: FormData) => {
+      if (state.step === "SUBMIT_PAYMENT") {
+        if (!elementsRef.current || !stripeRef.current) {
+          return { ...state, error: "something went wrong..." };
+        }
+
+        await elementsRef.current.submit();
+        await stripeRef.current.confirmSetup({
+          elements: elementsRef.current,
+          clientSecret: state.stripeClientSecret,
+          redirect: "if_required",
+        });
+      }
+
+      const nextState = await submitGetStartedAction(state, fd);
+
+      if (
+        state.step === "CREATE_ACCOUNT" &&
+        nextState.step !== "CREATE_ACCOUNT"
+      ) {
         await signIn(
           formdata.getString(fd, "email"),
           formdata.getString(fd, "password"),
         );
-
+        await refreshSession();
+      } else if (nextState.step === "SUCCESS") {
         location.href = nextState.redirect;
       }
 
       return nextState;
     },
-    undefined,
+    session ? { step: "CREATE_STRATA" } : { step: "CREATE_ACCOUNT" },
   );
-
-  const [strataName, setStrataName] = useState("");
-  const [isDomainAvailable, setIsDomainAvailable] = useState(undefined);
-  const deferredStrataName = useTimeDeferredValue(strataName);
-  // const [numUnits, setNumUnits] = useState(0);
-
-  const suggestedSubdomain = normalizeStrataNameToSubdomain(deferredStrataName);
-
-  useEffect(() => {
-    async function fetchIsDomainAvailable() {
-      setIsDomainAvailable(undefined);
-
-      const r = await fetch(
-        "/api/stratas/domainAvailable?domain=" +
-          encodeURIComponent(`${suggestedSubdomain}.${tld}`),
-      );
-      const rJson = await r.json();
-
-      setIsDomainAvailable(rJson.isAvailable);
-    }
-
-    if (!suggestedSubdomain) {
-      return;
-    }
-
-    fetchIsDomainAvailable();
-  }, [suggestedSubdomain]);
 
   return (
     <form
       action={action}
       className={classnames(styles.getStartedForm, className)}
     >
-      <Stack>
-        {!session && (
-          <div>
-            <JoinFormFields />
-          </div>
-        )}
+      <FormStateContext.Provider value={actionState}>
+        {actionState.step === "SUBMIT_PAYMENT" && (
+          <Script
+            src="https://js.stripe.com/basil/stripe.js"
+            onLoad={() => {
+              const stripe = window.Stripe(
+                process.env.NEXT_PUBLIC_STRIPE_PUSHABLE_KEY,
+              );
+              stripeRef.current = stripe;
+              const appearance = {};
 
-        <Header as="h2">Let&apos;s get to know your strata...</Header>
+              const elements = stripe.elements({
+                clientSecret: actionState.stripeClientSecret,
+                appearance,
+              });
 
-        <Input
-          name="strata_name"
-          label="Strata Name"
-          onChange={(e) => setStrataName(e.target.value)}
-          required
-        />
-
-        {suggestedSubdomain !== "" && (
-          <div className={styles.subdomainField}>
-            {isDomainAvailable === undefined && suggestedSubdomain ? (
-              <CycleIcon className={styles.subdomainStatusLoading} />
-            ) : isDomainAvailable ? (
-              <CircleCheckIcon className={styles.subdomainStatusOk} />
-            ) : (
-              <CircleErrorIcon className={styles.subdomainStatusError} />
-            )}
-
-            <div>
-              <span className={styles.subdomainFieldSubdomain}>
-                {suggestedSubdomain}
-              </span>
-              <span className={styles.subdomainFieldRootDomain}>.{tld}</span>
-            </div>
-
-            <input
-              name="strata_domain"
-              type="hidden"
-              value={`${suggestedSubdomain}.${tld}`}
-            />
-          </div>
-        )}
-
-        <Input
-          name="num_units"
-          min={1}
-          type="number"
-          label="# of Units"
-          onChange={(_e) => {
-            // setNumUnits(parseInt(e.target.value, 10));
-          }}
-        />
-
-        <InfoPanel
-          header={<Header as="h3">Content Visibility</Header>}
-          level="default"
-        >
-          <Text>
-            Controls access to strata content by outsiders. If your strata is
-            public, visitors to your Strataspheric page that are not members
-            will be able to see content on your dashboard, certain files that
-            are public, and upcoming events.
-          </Text>
-          <RadioButton
-            className={s({ flex: 1 })}
-            name="visibility"
-            options={["private", "public"]}
-            defaultValue="private"
+              elementsRef.current = elements;
+              elements.create("payment", {}).mount("#payment-element");
+            }}
           />
-        </InfoPanel>
-
-        {/* {selectedPlan.pricePerUnit !== undefined && (
-          <div className={classnames(styles.estimateContainer)}>
-            <div>
-              <span className={styles.estimateSummarySeats}>{numUnits}</span>{" "}
-              {pluralize("Unit", numUnits)}
-            </div>
-
-            <div>
-              <Money amount={numUnits * selectedPlan.pricePerUnit} />
-              <span className={styles.estimatePeriod}>per month</span>
-            </div>
-          </div>
-        )} */}
-
-        {state?.success === false && state?.error && (
-          <Panel>{state.error}</Panel>
         )}
-
-        <StatusButton color="primary" iconRight={<RightIcon />} type="submit">
-          Let&apos;s Get Started
-        </StatusButton>
-      </Stack>
+        {children}
+      </FormStateContext.Provider>
     </form>
   );
 }

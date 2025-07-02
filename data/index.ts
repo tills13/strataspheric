@@ -173,6 +173,7 @@ export interface StratasTable {
   latitude: number | null;
   longitude: number | null;
   bylawsFileId: string | null;
+  stripeCustomerId: ColumnType<string, string, never>;
   createdAt: ColumnType<number, never, never>;
 }
 
@@ -207,6 +208,12 @@ export interface StrataPlansTable {
   id: string;
   strataId: string;
   enableInbox: 0 | 1;
+  enableInvoices: 0 | 1;
+  enableAmenities: 0 | 1;
+  enableDirectory: 0 | 1;
+  enableEmailNotifications: 0 | 1;
+  enableMeetings: 0 | 1;
+  subscriptionId: ColumnType<string, string, never>;
 }
 
 export type StrataPlan = Selectable<StrataPlansTable>;
@@ -225,7 +232,7 @@ export interface StrataWidgetsTable {
     | "info_contact";
   title: string;
   // @todo
-  body: string;
+  // body: string;
 }
 
 export type StrataWidget = Selectable<StrataWidgetsTable>;

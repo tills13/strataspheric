@@ -1,11 +1,11 @@
-import * as styles from "./style.css";
-
 import { PageProps } from "../../../.next/types/app/@marketing/get-started/page";
+import { Flex } from "../../../components/Flex";
+import { GetStartedFormFields } from "../../../components/GetStarted/Fields";
 import { GetStartedForm } from "../../../components/GetStarted/Form";
-// import { PricingPlanSelector } from "../../../components/PricingPlanSelector";
+import { PricingPlanSelector } from "../../../components/PricingPlanSelector";
+import { Stack } from "../../../components/Stack";
 import { plans } from "../../../data/strataPlans/constants";
 import { StaticPageContainer } from "../StaticPageContainer";
-import { submitGetStarted } from "./actions";
 
 export const runtime = "edge";
 
@@ -20,17 +20,14 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <StaticPageContainer>
-      <div>
-        {/* <PricingPlanSelector
-          className={styles.pricingPlanSelector}
-          selectedPlan={plan}
-        /> */}
-        <GetStartedForm
-          className={styles.getStartedForm}
-          selectedPlan={plan}
-          submitGetStarted={submitGetStarted}
-        />
-      </div>
+      <GetStartedForm>
+        <Flex from="desktop">
+          <PricingPlanSelector selectedPlan={plan} />
+          <Stack flex={1}>
+            <GetStartedFormFields selectedPlan={plan} />
+          </Stack>
+        </Flex>
+      </GetStartedForm>
     </StaticPageContainer>
   );
 }

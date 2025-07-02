@@ -7,7 +7,6 @@ import { User } from "../../auth/types";
 import { Strata } from "../../data";
 import { StrataMembership } from "../../data/memberships/getStrataMembership";
 import { Button } from "../Button";
-import { ArrowForwardIcon } from "../Icon/ArrowForwardIcon";
 import { InternalLink } from "../Link/InternalLink";
 import { StatusButton } from "../StatusButton";
 
@@ -36,12 +35,7 @@ export function JoinStrataButton({
   if (!user) {
     return (
       <InternalLink href="/?action=join" noUnderline>
-        <Button
-          color={buttonColor}
-          iconRight={<ArrowForwardIcon />}
-          style={buttonStyle}
-          iconTextBehaviour="centerRemainder"
-        >
+        <Button color={buttonColor} style={buttonStyle}>
           Join {strata.name}
         </Button>
       </InternalLink>

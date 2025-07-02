@@ -1,6 +1,5 @@
 import { mustAuth } from "../../../../auth";
-import { Group } from "../../../../components/Group";
-import { Header } from "../../../../components/Header";
+import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 import { MeetingListLayout } from "./MeetingsListLayout";
@@ -13,18 +12,15 @@ export async function MeetingsPage() {
   ]);
 
   return (
-    <div>
-      <Group p="normal" justify="space-between">
-        <Header as="h2">Meetings</Header>
-
-        {can(session.user, "stratas.meetings.create") && (
-          <Group>
-            <ScheduleMeetingButton />
-          </Group>
-        )}
-      </Group>
-
+    <DashboardLayout
+      actions={
+        can(session.user, "stratas.meetings.create") && (
+          <ScheduleMeetingButton />
+        )
+      }
+      title="Meetings"
+    >
       <MeetingListLayout strataId={strata.id} />
-    </div>
+    </DashboardLayout>
   );
 }

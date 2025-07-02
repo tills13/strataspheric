@@ -4,12 +4,14 @@ import { fontHeaderVar, fontPrimaryVar } from "./theme.css";
 
 import { Metadata } from "next";
 
+import { auth } from "../auth";
 import { FlexBox } from "../components/FlexBox";
-import { GlobalFooter } from "../components/GlobalFooter";
 import { NotFound } from "../components/NotFound";
+import { SessionProvider } from "../components/SessionProvider";
 import { protocol, tld } from "../constants";
 import { getCurrentStrata } from "../data/stratas/getStrataByDomain";
 import { variable } from "../theme";
+import { ReactQueryQueryClientProvider } from "./ReactQueryQueryClientProvider";
 import { laila, sourceSans } from "./fonts";
 
 const fontPrimaryVariable = variable(fontPrimaryVar);
@@ -34,7 +36,8 @@ export default async function RootLayout({
   app: React.ReactNode;
   marketing: React.ReactNode;
 }) {
-  const strata = await getCurrentStrata();
+  const [session, strata] = await Promise.all([auth(), getCurrentStrata()]);
+
   const node = strata ? app : marketing;
 
   return (
@@ -73,17 +76,23 @@ export default async function RootLayout({
         <meta name="theme-color" content="#272b33" />
       </head>
       <body>
-        {node ? (
-          <div className={styles.body}>{node}</div>
-        ) : (
-          <FlexBox align="center" className={styles.errorBody} justify="center">
-            <NotFound />
-          </FlexBox>
-        )}
+        <ReactQueryQueryClientProvider>
+          <SessionProvider session={session}>
+            {node ? (
+              <div className={styles.body}>{node}</div>
+            ) : (
+              <FlexBox
+                align="center"
+                className={styles.errorBody}
+                justify="center"
+              >
+                <NotFound />
+              </FlexBox>
+            )}
 
-        {/* <GlobalFooter /> */}
-
-        <div id="modal-root" />
+            <div id="modal-root" />
+          </SessionProvider>
+        </ReactQueryQueryClientProvider>
       </body>
     </html>
   );

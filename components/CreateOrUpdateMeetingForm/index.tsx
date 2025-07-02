@@ -39,7 +39,7 @@ export function CreateOrUpdateMeetingForm({ meeting }: Props) {
         />
 
         <StatusButton
-          iconRight={<AddIcon />}
+          icon={<AddIcon />}
           color="primary"
           style="primary"
           type="submit"

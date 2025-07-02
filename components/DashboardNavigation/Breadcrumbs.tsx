@@ -14,9 +14,10 @@ import { Text } from "../Text";
 
 interface Props {
   className?: string;
+  subPageTitle?: string;
 }
 
-export function Breadcrumbs({ className }: Props) {
+export function Breadcrumbs({ className, subPageTitle }: Props) {
   const pathname = usePathname();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -45,7 +46,7 @@ export function Breadcrumbs({ className }: Props) {
   }
 
   return (
-    <Group className={className} gap="xs" ph="normal" ref={ref}>
+    <Group className={className} gap="xs" ref={ref}>
       <InternalLink href="/dashboard" noUnderline>
         <Text color="secondary">Dashboard</Text>
       </InternalLink>
@@ -65,7 +66,10 @@ export function Breadcrumbs({ className }: Props) {
       {isSubSubpage && (
         <>
           <RightIcon size="xxs" />
-          <SubSubpageIconComponent size="xs" />
+          <Group gap="xs">
+            <SubSubpageIconComponent size="xs" />
+            {subPageTitle}
+          </Group>
         </>
       )}
     </Group>

@@ -37,7 +37,7 @@ export function AttachFileButton({
           )}
           color="error"
           style="secondary"
-          iconRight={<TextDocumentIcon />}
+          icon={<TextDocumentIcon />}
           onClick={() => onSelectFile?.(undefined)}
           type="button"
           {...delegateProps}
@@ -52,7 +52,7 @@ export function AttachFileButton({
           )}
           color="primary"
           style="secondary"
-          iconRight={<AttachmentIcon />}
+          icon={<AttachmentIcon />}
           onClick={() => setShowAttachFileModal(true)}
           type="button"
           {...delegateProps}

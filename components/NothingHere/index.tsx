@@ -2,17 +2,17 @@
 
 import * as styles from "./style.css";
 
-// import { useSession } from "../../hooks/useSession";
 import { classnames } from "../../utils/classnames";
-// import { Flex } from "../Flex";
 import { FlexBox } from "../FlexBox";
 import { Logo } from "../Logo";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
 
-export function NothingHere() {
-  //   const session = useSession();
-
+export function NothingHere({
+  children = "Oops, there's nothing here.",
+}: {
+  children?: React.ReactNode;
+}) {
   return (
     <FlexBox align="center" justify="center">
       <Stack align="center">
@@ -30,7 +30,7 @@ export function NothingHere() {
           </Text>
         </div>
         <Text fontSize="xl" fontFamily="secondaryHeader">
-          Oops, there's nothing here.
+          {children}
         </Text>
       </Stack>
     </FlexBox>

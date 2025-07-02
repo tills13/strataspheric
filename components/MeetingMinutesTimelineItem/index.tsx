@@ -65,7 +65,7 @@ export function MeetingMinutesTimelineItem({
                   meetingId,
                   file.id,
                 )}
-                iconRight={<CircleCheckIcon />}
+                icon={<CircleCheckIcon />}
                 iconTextBehaviour="centerRemainder"
                 color="success"
               >

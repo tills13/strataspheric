@@ -1,9 +1,7 @@
-import { s } from "../../../../sprinkles.css";
-
 import { mustAuth } from "../../../../auth";
 import { AmenityChip } from "../../../../components/AmenityChip";
-import { Group } from "../../../../components/Group";
-import { Header } from "../../../../components/Header";
+import { DashboardLayout } from "../../../../components/DashboardLayout";
+import { NothingHere } from "../../../../components/NothingHere";
 import { Stack } from "../../../../components/Stack";
 import { listAmenitiesForCurrentStrata } from "../../../../data/amenities/listAmenitiesForCurrentStrata";
 import { can } from "../../../../data/users/permissions";
@@ -16,24 +14,22 @@ export async function AmenitiesPage() {
   ]);
 
   return (
-    <div>
-      <div className={s({ p: "normal" })}>
-        <Group justify="space-between">
-          <Header as="h2">Amenities</Header>
-
-          <div>
-            {can(session.user, "stratas.memberships.create") && (
-              <AddNewAmenityButton />
-            )}
-          </div>
-        </Group>
-      </div>
-
-      <Stack ph="normal">
+    <DashboardLayout
+      actions={
+        can(session.user, "stratas.memberships.create") && (
+          <AddNewAmenityButton />
+        )
+      }
+      title="Amenities"
+    >
+      {amenities.length === 0 && (
+        <NothingHere>This strata has no amenities.</NothingHere>
+      )}
+      <Stack p="normal">
         {amenities.map((amenity) => (
           <AmenityChip key={amenity.id} amenity={amenity} />
         ))}
       </Stack>
-    </div>
+    </DashboardLayout>
   );
 }

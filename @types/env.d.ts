@@ -7,5 +7,7 @@ declare namespace NodeJS {
     CF_AUTH_KEY: string;
     CF_AUTH_EMAIL: string;
     CF_TURNSTILE_SECRET_KEY: string;
+    STRIPE_SECRET_KEY: string;
+    NEXT_PUBLIC_STRIPE_PUSHABLE_KEY: string;
   }
 }

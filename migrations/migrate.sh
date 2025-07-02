@@ -2,8 +2,8 @@
 
 migrations_dir=$( dirname $0 )
 migrations=($( ls $migrations_dir ))
-target="--remote "
-# target="--local "
+# target="--remote "
+target="--local "
 
 npx wrangler d1 execute strataspheric ${target}\
     --command "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key)"
@@ -14,6 +14,10 @@ executed_migrations=($( npx wrangler d1 execute strataspheric ${target}--json \
 
 for file in "${migrations[@]}"; do
     if [ "$file" == "migrate.sh" ]; then
+        continue
+    elif [ "$file" == "reset_database.sh" ]; then
+        continue
+    elif [ "$file" == "_remove_all_data.sql" ]; then
         continue
     fi
 

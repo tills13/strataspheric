@@ -34,8 +34,7 @@ export function Select({
     propsOnChange?.(e);
   }
 
-  const placeholderOption = label || placeholder;
-  console.log(name, delegateProps);
+  const placeholderOption = placeholder || label;
 
   return (
     <div className={classnames(styles.selectWrapper, className)}>

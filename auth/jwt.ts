@@ -2,7 +2,7 @@ import { getJwtFromCookies } from "./cookies";
 import { Config } from "./types";
 
 // 24 hour validity
-export const VALIDITY_PERIOD = 60 * 60 * 24;
+export const VALIDITY_PERIOD = 60 * 60 * 24 * 1000;
 
 export function getKey(config: Config) {
   return crypto.subtle.importKey(

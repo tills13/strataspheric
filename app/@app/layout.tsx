@@ -1,7 +1,5 @@
 import { Metadata } from "next";
 
-import { auth } from "../../auth";
-import { SessionProvider } from "../../components/SessionProvider";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { SWRProvider } from "./SWRProvider";
 
@@ -25,11 +23,5 @@ export default async function RootAppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-
-  return (
-    <SWRProvider>
-      <SessionProvider session={session}>{children}</SessionProvider>
-    </SWRProvider>
-  );
+  return <SWRProvider>{children}</SWRProvider>;
 }

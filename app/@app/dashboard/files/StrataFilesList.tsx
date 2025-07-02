@@ -1,13 +1,12 @@
-import * as styles from "./style.css";
+import { s } from "../../../../sprinkles.css";
 
 import { auth } from "../../../../auth";
 import { NothingHere } from "../../../../components/NothingHere";
-import { Stack } from "../../../../components/Stack";
+import { Table } from "../../../../components/Table";
 import { listFiles } from "../../../../data/files/listFiles";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
-import { classnames } from "../../../../utils/classnames";
-import { FilesListFile } from "./FilesListFile";
+import { FileRow } from "./FileRow";
 
 interface Props {
   searchTerm?: string;
@@ -27,12 +26,14 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
   });
 
   return (
-    <Stack p="normal" pt="0" className={classnames(styles.filesList)}>
+    <>
       {files.length === 0 && <NothingHere />}
 
-      {files.map((file) => (
-        <FilesListFile key={file.id} file={file} showImagePreview />
-      ))}
-    </Stack>
+      <Table className={s({ ph: "normal" })}>
+        {files.map((file) => (
+          <FileRow key={file.id} file={file} />
+        ))}
+      </Table>
+    </>
   );
 }

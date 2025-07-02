@@ -18,7 +18,7 @@ export function InvoiceChipSkeleton() {
 
         <StatusButton
           color="success"
-          iconRight={<CircleCheckIcon />}
+          icon={<CircleCheckIcon />}
           iconTextBehaviour="centerRemainder"
           disabled={true}
           fullWidth={false}

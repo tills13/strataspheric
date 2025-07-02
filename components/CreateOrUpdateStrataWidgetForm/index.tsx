@@ -93,7 +93,7 @@ export function CreateOrUpdateStrataWidgetForm({
         )}
         <StatusButton
           color="success"
-          iconRight={<AddIcon />}
+          icon={<AddIcon />}
           style="primary"
           type="submit"
         >

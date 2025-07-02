@@ -57,11 +57,10 @@ export function DropdownButton({
         onClick={() => setOpen(!open)}
         size={buttonSize}
         style={open ? undefined : buttonStyle}
-        icon={!open || !openLabel ? icon : undefined}
-        iconRight={open && openLabel ? icon : undefined}
+        icon={icon}
         iconTextBehaviour="centerRemainder"
       >
-        {open && openLabel}
+        {openLabel}
       </Button>
 
       <div

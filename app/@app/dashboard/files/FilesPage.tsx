@@ -27,7 +27,7 @@ export async function FilesPage({ search, visibility }: Props) {
             buttonColor="primary"
             buttonStyle="primary"
             icon={<SearchIcon />}
-            openLabel="File Search"
+            openLabel="Search"
             panel={
               <FlexBox p="normal">
                 <FilesSearch
@@ -37,6 +37,7 @@ export async function FilesPage({ search, visibility }: Props) {
                 />
               </FlexBox>
             }
+            buttonSize="small"
           />
           {can(session.user, "stratas.files.create") && <AddFileButton />}
         </Group>

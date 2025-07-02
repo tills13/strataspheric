@@ -46,7 +46,7 @@ export function UpdateProfileForm({ user }: Props) {
 
         <StatusButton
           color="success"
-          iconRight={<SaveIcon />}
+          icon={<SaveIcon />}
           style="secondary"
           success={state.success}
         >

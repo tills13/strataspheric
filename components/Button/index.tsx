@@ -15,8 +15,6 @@ interface Props
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     Omit<React.ComponentProps<typeof Core>, "as" | "color"> {
   icon?: React.ReactNode;
-  iconLeft?: React.ReactNode;
-  iconRight?: React.ReactNode;
   iconTextBehaviour?: "centerRemainder" | "centerGlobal";
   className?: string;
   children?: React.ReactNode;
@@ -29,17 +27,15 @@ export function Button({
   fullWidth: propsFullWidth,
   icon,
   iconTextBehaviour = "centerGlobal",
-  iconLeft,
-  iconRight,
-  size,
+  size = "normal",
   style,
   ...rest
 }: Props & ButtonRecipeProps) {
-  const iconOnly = !!icon;
-  const withIcon = !!iconLeft || !!iconRight;
+  const mChildren = React.Children.toArray(children);
 
   const fullWidth =
-    propsFullWidth === true || (propsFullWidth === undefined && !iconOnly);
+    propsFullWidth === true ||
+    (propsFullWidth === undefined && !icon && !children);
 
   return (
     <Core
@@ -50,43 +46,23 @@ export function Button({
           color,
           fullWidth,
           size,
-          iconOnly,
           style,
-          withIcon,
         }),
+        !icon && styles.buttonSpacing[size],
+        !!icon && styles.iconButton,
+        !!icon &&
+          iconTextBehaviour === "centerRemainder" &&
+          styles.iconCenterRemainder,
       )}
       {...rest}
     >
-      {((withIcon && iconTextBehaviour !== "centerRemainder") || iconLeft) && (
-        <div
-          className={
-            iconLeft ? styles.iconContainer : styles.emptyIconContainer
-          }
-        >
-          {iconLeft}
-        </div>
+      {icon && children && iconTextBehaviour !== "centerRemainder" && (
+        <div className={styles.iconContainer} />
       )}
 
-      <div
-        className={classnames(styles.buttonContentContainer, {
-          [styles.remainderPaddingLeft]:
-            !iconLeft && withIcon && iconTextBehaviour === "centerRemainder",
-          [styles.remainderPaddingRight]:
-            !iconRight && withIcon && iconTextBehaviour === "centerRemainder",
-        })}
-      >
-        {children || icon}
-      </div>
+      {mChildren || icon}
 
-      {((withIcon && iconTextBehaviour !== "centerRemainder") || iconRight) && (
-        <div
-          className={
-            iconRight ? styles.iconContainer : styles.emptyIconContainer
-          }
-        >
-          {iconRight}
-        </div>
-      )}
+      {icon && <div className={styles.iconContainer}>{icon}</div>}
     </Core>
   );
 }

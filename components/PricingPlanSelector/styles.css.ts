@@ -1,11 +1,17 @@
-import { vars } from "../../app/theme.css";
+import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const pricingPlanSelectorContainer = style({
   display: "grid",
   gridTemplateColumns: "repeat(1, 1fr)",
   gridAutoRows: 150,
-  gap: vars.spacing.large,
+  gap: vars.spacing.normal,
+
+  "@media": {
+    [breakpoints.desktop]: {
+      width: 400,
+    },
+  },
 });
 
 export const pricingPlanSelectorLink = style({

@@ -111,7 +111,7 @@ export function StrataActivityTimelineItem({
 
       <StatusButton
         className={styles.timelineEntryAddToAgendaButton}
-        iconRight={<AddIcon />}
+        icon={<AddIcon />}
         onClick={() =>
           startTransition(() =>
             addItemToAgendaAction(

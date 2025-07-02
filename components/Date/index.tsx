@@ -8,6 +8,7 @@ import React from "react";
 
 import { classnames } from "../../utils/classnames";
 import { parseTimestamp } from "../../utils/datetime";
+import { pluralize } from "../../utils/pluralize";
 import { ClientOnly } from "../ClientOnly";
 import { Bone } from "../Skeleton/Bone";
 import { Text } from "../Text";
@@ -34,16 +35,20 @@ function formatDate(
     // compact output
     const now = new window.Date();
 
-    const secondsSince = differenceInSeconds(now, d);
+    let secondsSince = differenceInSeconds(now, d);
     const mIsSameDay = isSameDay(now, d);
+
+    const isInTheFuture = secondsSince < 0;
+    secondsSince = Math.abs(secondsSince);
 
     // under 10 minutes, return a special time string
     if (secondsSince < SECONDS_IN_ONE_MINUTE) {
-      return "just now";
+      return isInTheFuture ? "now" : "just now";
     } else if (secondsSince < SECONDS_IN_ONE_MINUTE * 10) {
       const minutes = Math.floor(secondsSince / SECONDS_IN_ONE_MINUTE);
 
-      return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
+      const baseText = `${minutes} ${pluralize("minute", minutes)}`;
+      return isInTheFuture ? `in ${baseText}` : `${baseText} ago`;
     }
 
     // otherwise do something different based on whether it's the same day

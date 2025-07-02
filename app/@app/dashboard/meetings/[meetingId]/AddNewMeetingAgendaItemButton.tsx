@@ -25,7 +25,7 @@ export function AddNewMeetingAgendaItemButton({ meetingId }: Props) {
   return (
     <>
       <Button
-        iconRight={<AddIcon />}
+        icon={<AddIcon />}
         color="primary"
         size="large"
         onClick={() => setShowModal(true)}
@@ -51,7 +51,7 @@ export function AddNewMeetingAgendaItemButton({ meetingId }: Props) {
           <Stack>
             <Button
               onClick={() => setShowStrataTimelineSearchModal(true)}
-              iconRight={<SearchIcon />}
+              icon={<SearchIcon />}
               color="primary"
               style="secondary"
             >

@@ -75,7 +75,7 @@ export function CreateOrUpdateFileForm({
 
         <StatusButton
           color="primary"
-          iconRight={<SaveIcon />}
+          icon={<SaveIcon />}
           style="primary"
           type="submit"
         >

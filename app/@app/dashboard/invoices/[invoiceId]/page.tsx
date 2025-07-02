@@ -77,7 +77,7 @@ export default async function Page({ params }: PageProps) {
               >
                 <Button
                   color="primary"
-                  iconRight={<ArrowForwardIcon />}
+                  icon={<ArrowForwardIcon />}
                   iconTextBehaviour="centerRemainder"
                   style="primary"
                 >
@@ -107,7 +107,7 @@ export default async function Page({ params }: PageProps) {
       <InfoPanel
         action={
           <ConfirmButton
-            iconRight={<DeleteIcon />}
+            icon={<DeleteIcon />}
             onClickConfirm={deleteInvoiceAction.bind(undefined, invoice.id)}
             color="error"
             style="secondary"

@@ -111,6 +111,7 @@ export function MeetingAgendaItem({ agendaItem, meetingId }: Props) {
         <TextArea
           defaultValue={agendaItem.minutes || ""}
           disabled={pending || agendaItem.done === 1}
+          label="Minutes"
           onBlur={onBlur}
           placeholder="Minutes"
         />

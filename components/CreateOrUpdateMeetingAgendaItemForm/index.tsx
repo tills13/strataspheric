@@ -35,14 +35,14 @@ export function CreateOrUpdateMeetingAgendaItemForm({
         <Input
           className={s({ w: "full" })}
           name="title"
-          label="Title"
+          label="Description"
           defaultValue={agendaItem?.title}
         />
 
         <TextArea
           className={s({ w: "full" })}
           name="description"
-          label="Description"
+          label="Details"
           defaultValue={agendaItem?.description}
         />
 
@@ -55,7 +55,7 @@ export function CreateOrUpdateMeetingAgendaItemForm({
 
         <StatusButton
           color={agendaItem ? "primary" : "success"}
-          iconRight={agendaItem ? <SaveIcon /> : <AddIcon />}
+          icon={agendaItem ? <SaveIcon /> : <AddIcon />}
           style="primary"
           type="submit"
         >

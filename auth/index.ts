@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 import { getStrataMembershipByDomainAndUserId } from "../data/memberships/getStrataMembershipByDomainAndUserId";
-import { listStrataMemberships } from "../data/memberships/listStrataMemberships";
 import { getDomain } from "../utils/getDomain";
 import { internalAuthDoNotUseDirectly as _auth } from "./auth";
 import { GET, POST } from "./endpoints";
@@ -41,18 +40,20 @@ async function decorateSessionUser(
   };
 }
 
-const isNotDev = process.env.NODE_ENV !== "development";
+const isDev = process.env.NODE_ENV === "development";
 
 export const { auth, handlers } = createAuth({
   decorateSessionUser,
   key: JSON.parse(process.env.AUTH_KEY || "{}"),
-  cookies: {
+  cookies: (req) => ({
     httpOnly: true,
     sameSite: "lax",
     path: "/",
-    domain: isNotDev ? ".strataspheric.app" : ".strataspheric.local",
-    secure: isNotDev,
-  },
+    ...((isDev || req.headers.get("host")?.includes("strataspheric.app")) && {
+      domain: !isDev ? ".strataspheric.app" : ".strataspheric.local",
+    }),
+    secure: !isDev,
+  }),
 });
 
 export const mustAuth = async (raiseNotFound?: boolean) => {

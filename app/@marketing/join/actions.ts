@@ -9,7 +9,7 @@ import { getStrataById } from "../../../data/stratas/getStrataById";
 import { deleteUserPasswordResetToken } from "../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
 import { getUserPasswordResetToken } from "../../../data/userPasswordResetTokens/getUserPasswordResetToken";
 import { createUser } from "../../../data/users/createUser";
-import { getUser } from "../../../data/users/getUser";
+import { getUserByEmail } from "../../../data/users/getUser";
 import { updateUser } from "../../../data/users/updateUser";
 import * as formdata from "../../../utils/formdata";
 
@@ -43,7 +43,7 @@ export async function joinAction(
   }
 
   try {
-    const existingUser = await getUser(email);
+    const existingUser = await getUserByEmail(email);
 
     if (existingUser && existingUser.status !== "pending") {
       throw new Error("User already exists.");

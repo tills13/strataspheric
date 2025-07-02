@@ -10,7 +10,11 @@ import { GlobalHeaderMobileActions } from "./MobileActions";
 import { ServerUserStrataSelectorButton } from "./ServerUserStrataSelectorButton";
 import { UserStrataSelectorButton } from "./UserStrataSelectorButton";
 
-export async function GlobalDashboardHeader() {
+interface Props {
+  subPageTitle?: string;
+}
+
+export async function GlobalDashboardHeader({ subPageTitle }: Props) {
   const strata = await mustGetCurrentStrata();
 
   return (
@@ -25,7 +29,10 @@ export async function GlobalDashboardHeader() {
       >
         <ServerUserStrataSelectorButton currentStrata={strata} />
       </Suspense>
-      <Breadcrumbs className={styles.globalHeaderBreadcrumbs} />
+      <Breadcrumbs
+        className={styles.globalHeaderBreadcrumbs}
+        subPageTitle={subPageTitle}
+      />
       <GlobalHeaderActions className={styles.globalHeaderActionsDesktop} />
       <GlobalHeaderMobileActions
         actions={<GlobalHeaderActions />}

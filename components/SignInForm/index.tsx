@@ -82,7 +82,7 @@ export function SignInForm({ className }: Props) {
           className={styles.forgotLink}
           href={protocol + "//" + tld + "/forgot"}
         >
-          <Button style="tertiary" color="primary" type="button">
+          <Button style="tertiary" color="primary" type="button" w="full">
             Forgot Password
           </Button>
         </ExternalLink>

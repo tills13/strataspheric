@@ -7,26 +7,19 @@ export const table = style({
   display: "grid",
   gridTemplateColumns: "min-content auto min-content",
   columnGap: vars.spacing.normal,
-
-  "@media": {
-    [breakpoints.tablet]: {
-      padding: padding(0, vars.spacing.normal),
-    },
-  },
 });
 
 export const tableRow = style({
   display: "grid",
+  gridColumn: "1/-1",
+  gridTemplateColumns: "subgrid",
+
   minHeight: vars.sizes.large,
   // padding: padding(vars.spacing.normal, vars.spacing.small),
   padding: padding(vars.spacing.small, vars.spacing.normal),
   textDecoration: "none",
   color: vars.fontColors.primary,
   position: "relative",
-
-  gridColumn: "1/-1",
-  gridTemplateColumns: "subgrid",
-  alignItems: "center",
 
   "@media": {
     [breakpoints.tablet]: {
@@ -42,14 +35,22 @@ export const tableRow = style({
   },
 });
 
+export const tableRowInner = style({
+  width: "100%",
+  display: "grid",
+  gridColumn: "1/-1",
+  gridTemplateColumns: "subgrid",
+  alignItems: "center",
+});
+
 export const tableRowCheckbox = style({
   "@media": {
     [breakpoints.tablet]: {
-      visibility: "hidden",
+      // visibility: "hidden",
 
       selectors: {
         [`${tableRow}:hover &, &:has(input[type=checkbox]:checked)`]: {
-          visibility: "visible",
+          // visibility: "visible",
         },
       },
     },

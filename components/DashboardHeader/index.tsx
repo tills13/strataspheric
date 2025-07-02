@@ -1,11 +1,13 @@
 import { GlobalDashboardHeader } from "../DashboardNavigation";
 import { MobileSubheaderNavigation } from "./MobileSubheaderNavigation";
 
-export function DashboardHeader() {
+export function DashboardHeader(
+  props: React.ComponentProps<typeof GlobalDashboardHeader>,
+) {
   return (
     <>
-      <GlobalDashboardHeader />
-      <MobileSubheaderNavigation />
+      <GlobalDashboardHeader {...props} />
+      <MobileSubheaderNavigation {...props} />
     </>
   );
 }

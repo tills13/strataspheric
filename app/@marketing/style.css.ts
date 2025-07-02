@@ -199,6 +199,7 @@ export const staticPageContainer = style({
 export const centeredStaticPageContainer = style({
   display: "flex",
   flexDirection: "column",
+  minHeight: calc("100vh").subtract("152px").subtract("72px").toString(),
 
   "@media": {
     [breakpoints.tablet]: {

@@ -36,7 +36,7 @@ export function GoToStrataLinkButton({
   if (disabled) {
     return (
       <Button
-        iconRight={<RightIcon />}
+        icon={<RightIcon />}
         color={buttonColor}
         size={buttonSize}
         style={buttonStyle}
@@ -55,7 +55,7 @@ export function GoToStrataLinkButton({
     >
       <Button
         color={buttonColor}
-        iconRight={<RightIcon />}
+        icon={<RightIcon />}
         size={buttonSize}
         style={buttonStyle}
       >

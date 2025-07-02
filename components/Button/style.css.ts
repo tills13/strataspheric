@@ -31,26 +31,19 @@ export const buttonBase = style({
 });
 
 export const buttonSizes = styleVariants({
-  small: {
-    height: vars.sizes.small,
-    padding: `0 ${vars.spacing.small}`,
-  },
-  normal: {
-    height: vars.sizes.normal,
-    padding: `0 ${vars.spacing.normal}`,
-  },
-  large: {
-    height: vars.sizes.large,
-    padding: `0 ${vars.spacing.large}`,
-  },
-  xl: {
-    height: vars.sizes.xl,
-    padding: `0 ${vars.spacing.xl}`,
-  },
-  xxl: {
-    height: vars.sizes.xxl,
-    padding: `0 ${vars.spacing.xxl}`,
-  },
+  small: { height: vars.sizes.small },
+  normal: { height: vars.sizes.normal },
+  large: { height: vars.sizes.large },
+  xl: { height: vars.sizes.xl },
+  xxl: { height: vars.sizes.xxl },
+});
+
+export const buttonSpacing = styleVariants({
+  small: { padding: `0 ${vars.spacing.small}` },
+  normal: { padding: `0 ${vars.spacing.normal}` },
+  large: { padding: `0 ${vars.spacing.large}` },
+  xl: { padding: `0 ${vars.spacing.xl}` },
+  xxl: { padding: `0 ${vars.spacing.xxl}` },
 });
 
 export const button = recipe({
@@ -179,16 +172,6 @@ export const button = recipe({
     fullWidth: {
       true: {
         width: "100%",
-      },
-    },
-
-    withIcon: {
-      true: {
-        display: "flex",
-        alignItems: "center",
-        padding: vars.spacing.xs,
-        height: vars.sizes.normal,
-        gap: vars.spacing.normal,
       },
     },
   },
@@ -425,6 +408,31 @@ export const button = recipe({
   },
 });
 
+export const iconButton = style({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: vars.spacing.normal,
+
+  selectors: {
+    "&:has(:nth-child(2))": {
+      padding: vars.spacing.xxs,
+    },
+    [`${button.classNames.variants.size.small}&`]: {
+      background: "blue",
+      gap: vars.spacing.xs,
+    },
+  },
+});
+
+export const iconCenterRemainder = style({
+  // selectors: {
+  //   "&:has(:nth-child(2))": {
+  //   }
+  // }
+  paddingLeft: vars.spacing.normal,
+});
+
 export const iconContainer = style({
   display: "flex",
   alignItems: "center",
@@ -438,21 +446,14 @@ export const iconContainer = style({
     [`${button.classNames.variants.style.secondary} &`]: {
       backgroundColor: "rgba(0, 0, 0, 0.05)",
     },
-  },
-});
-
-export const emptyIconContainer = style([
-  iconContainer,
-  {
-    background: "none",
-
-    selectors: {
-      [`${button.classNames.variants.style.secondary} &`]: {
-        background: "none",
-      },
+    "&:empty": {
+      background: "none",
+    },
+    "&:only-child": {
+      background: "none",
     },
   },
-]);
+});
 
 export const buttonContentContainer = style({
   display: "flex",

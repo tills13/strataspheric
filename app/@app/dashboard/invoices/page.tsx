@@ -12,7 +12,10 @@ import { StrataInvoicesList } from "./StrataInvoicesList";
 export const runtime = "edge";
 
 export default async function Page({ searchParams }: PageProps) {
-  const session = await mustAuth();
+  const [session, strata] = await Promise.all([
+    mustAuth(),
+    mustGetCurrentStrata(),
+  ]);
 
   if (!can(session.user, "stratas.invoices.view")) {
     notFound();
@@ -22,7 +25,6 @@ export default async function Page({ searchParams }: PageProps) {
   const pageNum = parseInt(rawPageNum || "1", 10);
   const offset = (pageNum - 1) * 10;
 
-  const strata = await mustGetCurrentStrata();
   const { results: invoices, total } = await listInvoices(
     { strataId: strata.id },
     { offset },

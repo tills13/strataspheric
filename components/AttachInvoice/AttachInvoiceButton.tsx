@@ -27,7 +27,7 @@ export function AttachInvoiceButton({
           className={className}
           color="error"
           style="secondary"
-          iconRight={<PaidDocumentIcon />}
+          icon={<PaidDocumentIcon />}
           onClick={() => onSelectInvoice?.(undefined)}
           type="button"
         >
@@ -38,7 +38,7 @@ export function AttachInvoiceButton({
           className={className}
           color="primary"
           style="secondary"
-          iconRight={<PaidDocumentIcon />}
+          icon={<PaidDocumentIcon />}
           onClick={() => setShowAttachInvoiceModal(true)}
           type="button"
         >

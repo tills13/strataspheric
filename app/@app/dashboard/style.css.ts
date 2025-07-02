@@ -1,4 +1,4 @@
-import { breakpoints, vars } from "../../theme.css";
+import { breakpoints } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const dashboardLayoutContainer = style({
@@ -19,13 +19,10 @@ export const dashboardLayoutContainer = style({
 export const dashboardContentsContainer = style({
   "@media": {
     [breakpoints.tabletPlus]: {
+      display: "grid",
+      gridTemplateRows: "min-content min-content auto",
       maxHeight: "100vh",
       overflowY: "auto",
     },
   },
-});
-
-export const pageContainer = style({
-  padding: vars.spacing.normal,
-  overflow: "auto",
 });

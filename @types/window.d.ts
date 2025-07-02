@@ -1,4 +1,5 @@
 interface Window {
+  Stripe: (pk: string) => import("@stripe/stripe-js").Stripe;
   turnstile: {
     render(
       element: string | Element,

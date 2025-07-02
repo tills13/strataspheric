@@ -7,7 +7,6 @@ import { auth } from "../../auth";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { Flex } from "../Flex";
-import { Group } from "../Group";
 import { InternalLink } from "../Link/InternalLink";
 import { SignOutButton } from "../SignOutButton";
 import { Text } from "../Text";

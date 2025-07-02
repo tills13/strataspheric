@@ -39,13 +39,21 @@ export const calendarEventTrack = style({
 });
 
 export const calendarDay = style({
+  aspectRatio: "1/1",
   position: "relative",
   padding: 0,
   width: "100%",
   height: "100%",
+  // maxHeight: "calc((100vh - 72px - 72px)/6)",
   zIndex: 1,
   borderRadius: vars.borderRadius,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
+
+  "@media": {
+    [breakpoints.desktop]: {
+      // minHeight: vars.sizes.xxl2,
+    },
+  },
 });
 
 export const isDropTarget = style({

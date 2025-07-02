@@ -4,7 +4,11 @@ import * as styles from "./style.css";
 
 import React from "react";
 
-import { PricingPlan } from "../../data/strataPlans/constants";
+import {
+  ALL_OPTIONAL_FEATURES,
+  FEATURE_DESCRIPTIONS,
+  PricingPlan,
+} from "../../data/strataPlans/constants";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
@@ -65,23 +69,23 @@ export function PricingCard({
       <div className={styles.featuresSection}>
         <h4 className={styles.planFeaturesListHeader}>Features</h4>
         <ul className={styles.planFeaturesList}>
-          {features.map(({ description, included }, idx) => (
+          {ALL_OPTIONAL_FEATURES.map((optionalFeature, idx) => (
             <li
               key={idx}
               className={
-                included
+                features.includes(optionalFeature)
                   ? styles.planFeaturesIncludedFeature
                   : styles.planFeaturesFeature
               }
             >
-              {included ? (
+              {features.includes(optionalFeature) ? (
                 <CircleCheckIcon
                   className={styles.planFeaturesFeatureIconIncluded}
                 />
               ) : (
                 <CircleXIcon className={styles.planFeaturesFeatureIcon} />
               )}
-              {description}
+              {FEATURE_DESCRIPTIONS[optionalFeature]}
             </li>
           ))}
         </ul>
@@ -91,7 +95,7 @@ export function PricingCard({
         className={styles.selectPlanButtonLink}
         href={`/get-started?plan=${name.toLowerCase()}`}
       >
-        <Button color="primary" iconRight={<RightIcon />} fullWidth>
+        <Button color="primary" icon={<RightIcon />} fullWidth>
           Select Plan
         </Button>
       </InternalLink>

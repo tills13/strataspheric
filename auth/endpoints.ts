@@ -13,6 +13,8 @@ const REFRESH_ENDPOINT = `${BASE_ENDPOINT}/refresh`;
 
 export async function GET(config: Config, req: NextRequest) {
   const reqUrl = new URL(req.url);
+  const cookieConfig =
+    typeof config.cookies === "function" ? config.cookies(req) : config.cookies;
 
   if (reqUrl.pathname !== REFRESH_ENDPOINT) {
     return new Response("Not Found", { status: 4040 });
@@ -35,24 +37,32 @@ export async function GET(config: Config, req: NextRequest) {
       {
         headers: {
           "content-type": "application/json",
-          "set-cookie": formatJwtCookie(config, jwt),
+          "set-cookie": formatJwtCookie(cookieConfig, jwt),
         },
         status: 200,
       },
     );
   } catch {
-    return new Response("Not Allowed", { status: 403 });
+    return new Response("Not Allowed", {
+      headers: {
+        "content-type": "application/json",
+        "set-cookie": formatJwtCookie(cookieConfig, "", -1),
+      },
+      status: 403,
+    });
   }
 }
 
 export async function POST(config: Config, req: NextRequest) {
   const requestUrl = new URL(req.url);
+  const cookieConfig =
+    typeof config.cookies === "function" ? config.cookies(req) : config.cookies;
 
   if (requestUrl.pathname === SIGN_OUT_ENDPOINT) {
     return new Response("", {
       headers: {
         "content-type": "application/json",
-        "set-cookie": formatJwtCookie(config, "", -1),
+        "set-cookie": formatJwtCookie(cookieConfig, "", -1),
       },
       status: 200,
     });
@@ -85,7 +95,7 @@ export async function POST(config: Config, req: NextRequest) {
         {
           headers: {
             "content-type": "application/json",
-            "set-cookie": formatJwtCookie(config, jwt),
+            "set-cookie": formatJwtCookie(cookieConfig, jwt),
           },
           status: 200,
         },
@@ -96,7 +106,7 @@ export async function POST(config: Config, req: NextRequest) {
         {
           headers: {
             "content-type": "application/json",
-            "set-cookie": formatJwtCookie(config, "", -1),
+            "set-cookie": formatJwtCookie(cookieConfig, "", -1),
           },
           status: 400,
         },

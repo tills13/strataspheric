@@ -283,19 +283,19 @@ export default async function Page() {
               Text Center Remainder
             </Button>
 
-            <Button color="primary" iconRight={<AddIcon />}>
+            <Button color="primary" icon={<AddIcon />}>
               Icon Right
             </Button>
             <Button
               color="primary"
-              iconRight={<AddIcon />}
+              icon={<AddIcon />}
               iconTextBehaviour="centerGlobal"
             >
               Text Center Global
             </Button>
             <Button
               color="primary"
-              iconRight={<AddIcon />}
+              icon={<AddIcon />}
               iconTextBehaviour="centerRemainder"
             >
               Text Center Remainder

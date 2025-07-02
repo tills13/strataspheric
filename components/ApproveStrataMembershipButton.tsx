@@ -24,7 +24,7 @@ export function ApproveStrataMembershipButton({
       onClick={() =>
         startTransition(() => approveStrataMembershipAction(membership.id))
       }
-      iconRight={<CircleCheckIcon />}
+      icon={<CircleCheckIcon />}
       isPending={isPending}
       color="success"
       {...delegateProps}

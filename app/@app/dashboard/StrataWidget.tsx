@@ -14,7 +14,7 @@ export async function StrataWidgets({ strata }: Props) {
   const [session, widgets] = await Promise.all([auth(), getWidgets(strata.id)]);
 
   return (
-    <Grid cols={{ base: 1, tabletPlus: 2, desktop: 3 }}>
+    <Grid cols={{ base: 1, tabletPlus: 2, desktop: 3 }} p="normal">
       {widgets.map((widget) => (
         <Widget key={widget.id} strata={strata} widget={widget} />
       ))}

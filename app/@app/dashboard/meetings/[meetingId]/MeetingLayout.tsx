@@ -9,7 +9,6 @@ import { DeleteIcon } from "../../../../../components/Icon/DeleteIcon";
 import { RemoveIcon } from "../../../../../components/Icon/RemoveIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Stack } from "../../../../../components/Stack";
-import { StatusButton } from "../../../../../components/StatusButton";
 import { Text } from "../../../../../components/Text";
 import { getMeeting } from "../../../../../data/meetings/getMeeting";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
@@ -38,8 +37,8 @@ export async function MeetingLayout({ meetingId }: Props) {
         </Stack>
 
         <Group>
-          <StatusButton
-            action={deleteMeetingAction.bind(undefined, meetingId)}
+          <ConfirmButton
+            onClickConfirm={deleteMeetingAction.bind(undefined, meetingId)}
             icon={<RemoveIcon />}
             color="error"
             style="tertiary"
@@ -65,7 +64,7 @@ export async function MeetingLayout({ meetingId }: Props) {
         action={
           <ConfirmButton
             color="error"
-            iconRight={<DeleteIcon />}
+            icon={<DeleteIcon />}
             onClickConfirm={deleteMeetingAction.bind(undefined, meeting.id)}
             style="secondary"
           >

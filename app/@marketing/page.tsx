@@ -2,14 +2,15 @@ import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Button } from "../../components/Button";
+import { Grid } from "../../components/Grid";
 import { Header } from "../../components/Header";
 import { InternalLink } from "../../components/Link/InternalLink";
-// import { PricingCard } from "../../components/PricingCard";
+import { PricingCard } from "../../components/PricingCard";
 import { Stack } from "../../components/Stack";
 import { TabLayout } from "../../components/TabLayout";
 import { Tab } from "../../components/TabLayout/Tab";
 import { Text } from "../../components/Text";
-// import { plans } from "../../data/strataPlans/constants";
+import { plans } from "../../data/strataPlans/constants";
 import { classnames } from "../../utils/classnames";
 
 export const runtime = "edge";
@@ -222,7 +223,7 @@ export default async function Page() {
         </InternalLink>
       </section>
 
-      {/* <section className={classnames(s({ p: "normal" }), styles.plansSection)}>
+      <section className={classnames(s({ p: "normal" }))}>
         <Header className={s({ mb: "normal" })} as="h2">
           Simple, month-by-month pricing
         </Header>
@@ -233,12 +234,12 @@ export default async function Page() {
           no risk.
         </p>
 
-        <div className={styles.plansContainer}>
+        <Grid cols={{ base: 1, desktop: 3 }}>
           {plans.map((plan) => (
             <PricingCard key={plan.name} {...plan} />
           ))}
-        </div>
-      </section> */}
+        </Grid>
+      </section>
     </div>
   );
 }

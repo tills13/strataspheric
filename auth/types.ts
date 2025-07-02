@@ -16,14 +16,14 @@ export interface CookieConfig {
   httpOnly: boolean;
   sameSite: "lax" | "strict";
   path: string;
-  domain: string;
+  domain?: string;
   secure: boolean;
 }
 
 export interface Config {
   decorateSessionUser: (baseUser: Omit<User, "scopes">) => Promise<User>;
   key: Record<string, unknown>;
-  cookies?: CookieConfig;
+  cookies?: CookieConfig | ((req: NextRequest) => CookieConfig);
 }
 
 export type AuthenticatedApiHandler = (

@@ -21,7 +21,7 @@ export async function MeetingFiles({ className, meetingId }: Props) {
 
   return (
     <Stack className={className}>
-      <Header as="h3">Files</Header>
+      <Header as="h3">Meeting Files</Header>
 
       {files.length === 0 && (
         <InfoPanel>

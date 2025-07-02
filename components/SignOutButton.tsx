@@ -15,7 +15,7 @@ export function SignOutButton(props: Props) {
         await signOut();
         location.href = "/";
       }}
-      iconRight={<SignOutIcon />}
+      icon={<SignOutIcon />}
       iconTextBehaviour="centerRemainder"
       {...props}
     >

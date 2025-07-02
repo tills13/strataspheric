@@ -33,7 +33,7 @@ export function CreateOrUpdateStrataMembershipForm({
 
         <StatusButton
           color="primary"
-          iconRight={membership ? <SaveIcon /> : <AddIcon />}
+          icon={membership ? <SaveIcon /> : <AddIcon />}
           type="submit"
         >
           {membership

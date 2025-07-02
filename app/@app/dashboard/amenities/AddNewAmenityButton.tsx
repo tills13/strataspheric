@@ -13,14 +13,12 @@ export function AddNewAmenityButton() {
   return (
     <>
       <Button
-        iconRight={<AddIcon />}
+        icon={<AddIcon />}
         color="success"
-        iconTextBehaviour="centerRemainder"
         onClick={() => setShowModal(true)}
         style="secondary"
-      >
-        Add Amenity
-      </Button>
+        size="small"
+      />
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="New Amenity">
           <CreateOrUpdateAmenityForm />

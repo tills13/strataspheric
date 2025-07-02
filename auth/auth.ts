@@ -19,6 +19,10 @@ export function internalAuthDoNotUseDirectly(
 
       const { payload } = parseJwt(token);
 
+      if (payload.exp < Date.now()) {
+        return undefined;
+      }
+
       if (config.decorateSessionUser) {
         const u = config.decorateSessionUser(payload.user);
 

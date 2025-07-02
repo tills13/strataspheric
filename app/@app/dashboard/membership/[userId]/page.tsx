@@ -4,8 +4,7 @@ import { PageProps } from "../../../../../.next/types/app/@app/dashboard/members
 import { CreateOrUpdateStrataMembershipForm } from "../../../../../components/CreateOrUpdateStrataMembershipForm";
 import { CreateOrUpdateStrataMembershipFormFields } from "../../../../../components/CreateOrUpdateStrataMembershipForm/CreateOrUpdateStrataMembershipFormFields";
 import { UserPermissionsFields } from "../../../../../components/CreateOrUpdateStrataMembershipForm/UserPermissionsFields";
-import { Header } from "../../../../../components/Header";
-import { Stack } from "../../../../../components/Stack";
+import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { getStrataMembership } from "../../../../../data/memberships/getStrataMembership";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 
@@ -18,13 +17,14 @@ export default async function Page({ params }: PageProps) {
   const membership = await getStrataMembership((await strata).id, userId);
 
   return (
-    <Stack p="normal" pt="0">
-      <Header as="h2">{membership.name}</Header>
-
-      <CreateOrUpdateStrataMembershipForm membership={membership}>
+    <DashboardLayout>
+      <CreateOrUpdateStrataMembershipForm
+        className={s({ ph: "normal", pb: "normal" })}
+        membership={membership}
+      >
         <CreateOrUpdateStrataMembershipFormFields membership={membership} />
         <UserPermissionsFields membership={membership} />
       </CreateOrUpdateStrataMembershipForm>
-    </Stack>
+    </DashboardLayout>
   );
 }

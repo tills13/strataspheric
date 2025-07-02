@@ -2,7 +2,6 @@ import * as styles from "./style.css";
 
 import React from "react";
 
-import { DashboardHeader } from "../../../components/DashboardHeader";
 import { Sidebar } from "../../../components/DashboardNavigation/Sidebar";
 
 export default async function Layout({
@@ -14,10 +13,7 @@ export default async function Layout({
     <div className={styles.dashboardLayoutContainer}>
       <Sidebar />
 
-      <div className={styles.dashboardContentsContainer}>
-        <DashboardHeader />
-        {children}
-      </div>
+      <div className={styles.dashboardContentsContainer}>{children}</div>
     </div>
   );
 }

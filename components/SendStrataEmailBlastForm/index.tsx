@@ -60,7 +60,7 @@ export function SendStrataEmailBlastForm({
       />
 
       <StatusButton
-        iconRight={<SendIcon />}
+        icon={<SendIcon />}
         color="primary"
         size="normal"
         type="submit"

@@ -4,7 +4,7 @@ import { protocol, tld } from "../../../constants";
 import { createUserPasswordResetToken } from "../../../data/userPasswordResetTokens/createUserPasswordResetToken";
 import { deleteUserPasswordResetToken } from "../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
 import { getUserPasswordResetToken } from "../../../data/userPasswordResetTokens/getUserPasswordResetToken";
-import { getUser } from "../../../data/users/getUser";
+import { getUserByEmail } from "../../../data/users/getUser";
 import { updateUser } from "../../../data/users/updateUser";
 import { sendEmail } from "../../../utils/sendEmail";
 
@@ -26,7 +26,7 @@ export async function requestPasswordResetActionReducer(
     };
   }
 
-  const user = await getUser(emailAddress);
+  const user = await getUserByEmail(emailAddress);
 
   if (!user) {
     return { success: true };

@@ -9,7 +9,6 @@ export const signInFormInput = style({
 export const forgotLink = style([
   linkStyles.link,
   {
-    textAlign: "center",
-    fontSize: vars.fontSizes.normal,
+    width: "100%",
   },
 ]);

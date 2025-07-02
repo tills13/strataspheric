@@ -1,8 +1,12 @@
+"use client";
+
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { auth } from "../../auth";
+import { useQuery } from "@tanstack/react-query";
+
 import { getUserStratas } from "../../data/users/getUserStratas";
+import { useSession } from "../../hooks/useSession";
 import { Button } from "../Button";
 import { GoToStrataLinkButton } from "../GoToStrataLinkButton";
 import { Group } from "../Group";
@@ -11,11 +15,14 @@ import { InternalLink } from "../Link/InternalLink";
 import { Panel } from "../Panel";
 import { ContinueWhereYouLeftOffWidgetDropdownActions } from "./ContinueWhereYouLeftOffWidgetDropdownActions";
 
-export async function ContinueWhereYouLeftOffWidget() {
-  const session = await auth();
-  const sessionStratas = session?.user?.id
-    ? await getUserStratas(session.user.id)
-    : [];
+export function ContinueWhereYouLeftOffWidget() {
+  const session = useSession();
+
+  const { data: sessionStratas = [] } = useQuery({
+    queryKey: [session?.user?.id, "stratas"],
+    queryFn: () =>
+      session ? getUserStratas(session.user.id) : Promise.resolve([]),
+  });
 
   return (
     <Panel className={styles.continuePanel}>

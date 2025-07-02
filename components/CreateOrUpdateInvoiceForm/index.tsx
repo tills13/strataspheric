@@ -123,9 +123,10 @@ export function CreateOrUpdateInvoiceForm({
           <StatusButton
             color="primary"
             disabled={!!invoice?.isPaid}
-            iconRight={<AddIcon />}
+            icon={<AddIcon />}
             style="primary"
             type="submit"
+            w="full"
           >
             {invoice ? "Update Invoice" : "Create Invoice"}
           </StatusButton>
@@ -133,7 +134,7 @@ export function CreateOrUpdateInvoiceForm({
           {invoice && invoice.status !== "draft" && (
             <StatusButton
               color="success"
-              iconRight={<CircleCheckIcon />}
+              icon={<CircleCheckIcon />}
               onClick={() =>
                 startMarkPaidTransition(() =>
                   markInvoiceAsPaidAction(invoice.id),

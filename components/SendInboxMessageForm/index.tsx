@@ -23,7 +23,7 @@ export function SendInboxMessageForm({
       <Stack>
         {children}
 
-        <StatusButton color="primary" iconRight={<SendIcon />} type="submit">
+        <StatusButton color="primary" icon={<SendIcon />} type="submit">
           Send Message
         </StatusButton>
       </Stack>

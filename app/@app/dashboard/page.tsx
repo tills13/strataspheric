@@ -1,7 +1,6 @@
-import * as styles from "./style.css";
-
 import React, { Suspense } from "react";
 
+import { DashboardLayout } from "../../../components/DashboardLayout";
 import { Grid } from "../../../components/Grid";
 import { WidgetSkeleton } from "../../../components/Skeleton/WidgetSkeleton";
 import { mustGetCurrentStrata } from "../../../data/stratas/getStrataByDomain";
@@ -13,7 +12,7 @@ export default async function Page() {
   const strata = await mustGetCurrentStrata();
 
   return (
-    <div className={styles.pageContainer}>
+    <DashboardLayout>
       <Suspense
         fallback={
           <Grid cols={{ base: 1, tabletPlus: 2, desktop: 3 }}>
@@ -25,6 +24,6 @@ export default async function Page() {
       >
         <StrataWidgets strata={strata} />
       </Suspense>
-    </div>
+    </DashboardLayout>
   );
 }

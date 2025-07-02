@@ -10,7 +10,7 @@ import { updateStrataMembership } from "../../../../data/memberships/updateStrat
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { createUserPasswordResetToken } from "../../../../data/userPasswordResetTokens/createUserPasswordResetToken";
 import { createUser } from "../../../../data/users/createUser";
-import { getUser } from "../../../../data/users/getUser";
+import { getUserByEmail } from "../../../../data/users/getUser";
 import {
   Permission,
   Role,
@@ -76,7 +76,7 @@ export const upsertStrataMembershipAction = withPermissions(
         }),
       });
     } else {
-      const existingUser = await getUser(email);
+      const existingUser = await getUserByEmail(email);
 
       if (existingUser) {
         userId = existingUser.id;

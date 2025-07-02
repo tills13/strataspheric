@@ -1,64 +1,39 @@
-import * as styles from "./style.css";
-
-import { mustAuth } from "../../../../auth";
-import { Date } from "../../../../components/Date";
-import { DeleteButton } from "../../../../components/DeleteButton";
-import { Group } from "../../../../components/Group";
-import { InternalLink } from "../../../../components/Link/InternalLink";
+import { Header } from "../../../../components/Header";
 import { NothingHere } from "../../../../components/NothingHere";
-import { Text } from "../../../../components/Text";
-import { findMeetings } from "../../../../data/meetings/findMeetings";
-import { can, p } from "../../../../data/users/permissions";
-import { deleteMeetingAction } from "./actions";
+import { Stack } from "../../../../components/Stack";
+import { Table } from "../../../../components/Table";
+import { listMeetings } from "../../../../data/meetings/listMeetings";
+import { MeetingRow } from "./MeetingRow";
 
 interface Props {
   strataId: string;
 }
 
 export async function MeetingListLayout({ strataId }: Props) {
-  const [session, meetings] = await Promise.all([
-    mustAuth(),
-    findMeetings(strataId),
+  const [futureMeetings, pastMeetings] = await Promise.all([
+    listMeetings({ strataId, startDateAfter: Date.now() / 1000 }),
+    listMeetings(
+      { strataId, startDateBefore: Date.now() / 1000 },
+      { limit: 5 },
+    ),
   ]);
 
   return (
-    <>
-      {meetings.length === 0 && <NothingHere />}
-
-      <div className={styles.meetingListContainer}>
-        {meetings.map((meeting) => (
-          <InternalLink
-            key={meeting.id}
-            className={styles.meetingListRow}
-            href={{
-              pathname: "/dashboard/meetings/" + meeting.id,
-            }}
-          >
-            <Group align="center" justify="space-between">
-              <Group align="center">
-                <Text fw="bold">{meeting.purpose}</Text>
-                <Text fc="secondary">
-                  <Date timestamp={meeting.startDate} output="date" />
-                </Text>
-              </Group>
-
-              <Group gap="small">
-                {can(session?.user, p("stratas", "meetings", "delete")) && (
-                  <DeleteButton
-                    onConfirmDelete={deleteMeetingAction.bind(
-                      undefined,
-                      meeting.id,
-                    )}
-                    color="error"
-                    size="small"
-                    style="tertiary"
-                  />
-                )}
-              </Group>
-            </Group>
-          </InternalLink>
+    <Stack ph="normal">
+      <Header as="h2">Upcoming Meetings</Header>
+      {futureMeetings.length === 0 && <NothingHere />}
+      <Table>
+        {futureMeetings.map((meeting) => (
+          <MeetingRow key={meeting.id} meeting={meeting} />
         ))}
-      </div>
-    </>
+      </Table>
+
+      <Header as="h2">Recent Meetings</Header>
+      <Table>
+        {pastMeetings.map((meeting) => (
+          <MeetingRow key={meeting.id} meeting={meeting} />
+        ))}
+      </Table>
+    </Stack>
   );
 }

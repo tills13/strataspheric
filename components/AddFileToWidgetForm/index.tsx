@@ -32,7 +32,7 @@ export function AddFileToWidgetForm({ strataId, widgetId }: Props) {
         <FileSelect label="Attach Existing File" name="existing_file" />
         <StatusButton
           color="primary"
-          iconRight={<AddIcon />}
+          icon={<AddIcon />}
           style="primary"
           type="submit"
         >

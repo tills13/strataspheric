@@ -1,6 +1,7 @@
 import type { OperandExpression, SqlBool } from "kysely";
 
-import { Strata, db } from "..";
+import { db } from "..";
+import { Strata } from "./getStrataById";
 
 type Filter = {
   address?: string;
@@ -16,6 +17,7 @@ type Filter = {
 export async function listStratas(filter: Filter): Promise<Strata[]> {
   return db
     .selectFrom("stratas")
+    .leftJoin("strata_plans", "stratas.id", "strata_plans.strataId")
     .selectAll()
     .where((eb) => {
       const stmts: OperandExpression<SqlBool>[] = [];

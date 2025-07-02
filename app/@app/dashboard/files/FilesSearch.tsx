@@ -3,6 +3,7 @@
 import * as styles from "./style.css";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { Button } from "../../../../components/Button";
 import { Group } from "../../../../components/Group";
@@ -12,7 +13,6 @@ import { Input } from "../../../../components/Input";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Select } from "../../../../components/Select";
 import { Stack } from "../../../../components/Stack";
-import { p } from "../../../../data/users/permissions";
 import { useCan } from "../../../../hooks/useCan";
 import * as formdata from "../../../../utils/formdata";
 
@@ -25,6 +25,7 @@ interface Props {
 export function FilesSearch({ className, searchTerm, visibility }: Props) {
   const router = useRouter();
   const can = useCan();
+  const [selectedVisibility, setSelectedVisibility] = useState(visibility);
 
   return (
     <form
@@ -56,9 +57,27 @@ export function FilesSearch({ className, searchTerm, visibility }: Props) {
           defaultValue={searchTerm}
           required={false}
         />
-        {can(p("stratas", "files", "create")) && (
-          <Select name="visibility" label="Visibility">
-            <option value="">All Visibilities</option>
+        {can("stratas.files.create") && (
+          <Select
+            actionRight={
+              selectedVisibility && (
+                <Button
+                  icon={<RemoveIcon />}
+                  color="primary"
+                  onClick={() => setSelectedVisibility(undefined)}
+                  style="tertiary"
+                  type="button"
+                />
+              )
+            }
+            name="visibility"
+            onChange={(e) =>
+              setSelectedVisibility(e.currentTarget.value as typeof visibility)
+            }
+            placeholder="Visibility"
+            label="Visibility"
+            value={selectedVisibility || ""}
+          >
             <option value="private">Private</option>
             <option value="public">Public</option>
           </Select>
@@ -67,9 +86,10 @@ export function FilesSearch({ className, searchTerm, visibility }: Props) {
           <Button
             type="submit"
             defaultValue={visibility}
-            iconRight={<SearchIcon />}
+            icon={<SearchIcon />}
             style="primary"
             color="primary"
+            w="full"
           >
             Search
           </Button>

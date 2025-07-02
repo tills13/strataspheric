@@ -1,9 +1,11 @@
+import { s } from "../../../../sprinkles.css";
+
 import { auth } from "../../../../auth";
-import { Grid } from "../../../../components/Grid";
+import { Table } from "../../../../components/Table";
 import { listStrataMemberships } from "../../../../data/memberships/listStrataMemberships";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
-import { MembershipTile } from "./MembershipTile";
+import { MembershipTableRow } from "./MembershipTableRow";
 
 export async function Memberships() {
   const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
@@ -20,10 +22,12 @@ export async function Memberships() {
   });
 
   return (
-    <Grid cols={{ base: 1, tablet: 2, desktop: 4 }} p="normal" pt="0">
-      {memberships.map((membership) => (
-        <MembershipTile key={membership.id} membership={membership} />
-      ))}
-    </Grid>
+    <div className={s({ ph: "normal" })}>
+      <Table>
+        {memberships.map((membership) => (
+          <MembershipTableRow key={membership.id} membership={membership} />
+        ))}
+      </Table>
+    </div>
   );
 }

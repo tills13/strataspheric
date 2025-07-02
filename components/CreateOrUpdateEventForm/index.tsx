@@ -63,7 +63,7 @@ export function CreateOrUpdateEventForm({
                 mutate((k) => Array.isArray(k) && k[1] === "events");
                 onDeleteEvent?.();
               }}
-              iconRight={<DeleteIcon />}
+              icon={<DeleteIcon />}
               color="error"
               style="secondary"
             >
@@ -73,7 +73,7 @@ export function CreateOrUpdateEventForm({
 
           <StatusButton
             color="primary"
-            iconRight={<AddIcon />}
+            icon={<AddIcon />}
             style="primary"
             type="submit"
           >

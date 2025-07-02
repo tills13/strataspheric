@@ -9,13 +9,20 @@ import { SendIcon } from "../../../../components/Icon/SendIcon";
 import { InboxThreads } from "../../../../components/InboxThreads";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Pagination } from "../../../../components/Pagination";
+import { Upsell } from "../../../../components/Upsell";
 import { listThreads } from "../../../../data/inbox/listThreads";
 import { getCurrentStrataPlan } from "../../../../data/strataPlans/getStrataPlanByDomain";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
-import { InboxNoPlanPage } from "./InboxNoPlanPage";
 
 export const runtime = "edge";
+
+const INBOX_UPSELL = `
+ Stop worrying about shared email accounts or private emails being used
+to store official strata communication. The strata inbox streamlines
+conversations with council, automatically keeping a history of all
+correspondance forever.
+`.trim();
 
 export default async function Page({ searchParams }: PageProps) {
   const { page: rawPageNum } = await searchParams;
@@ -30,7 +37,12 @@ export default async function Page({ searchParams }: PageProps) {
       redirect("/dashboard");
     }
 
-    return <InboxNoPlanPage />;
+    return (
+      <Upsell
+        upsellDescription={INBOX_UPSELL}
+        upsellFeature="The strata inbox"
+      />
+    );
   }
 
   if (!session || !session.user) {
@@ -56,15 +68,13 @@ export default async function Page({ searchParams }: PageProps) {
         <InternalLink href="/dashboard/inbox/send" noUnderline>
           <Button
             color="primary"
-            iconRight={<SendIcon />}
-            iconTextBehaviour="centerRemainder"
             style="secondary"
-          >
-            Send Message
-          </Button>
+            size="small"
+            icon={<SendIcon />}
+          />
         </InternalLink>
       }
-      title="Inbox"
+      title={`Inbox (${threads.length})`}
     >
       <InboxThreads threads={threads} />
 

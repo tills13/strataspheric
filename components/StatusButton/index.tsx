@@ -31,7 +31,7 @@ export function StatusButton({
   const status = useFormStatus();
   const [actionIsPending, startActionTransition] = useTransition();
 
-  const iconProperty = buttonProps.icon ? "icon" : "iconRight";
+  const iconProperty = buttonProps.icon ? "icon" : "icon";
 
   if (status.pending || isPending || actionIsPending) {
     return (

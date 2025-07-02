@@ -2,7 +2,6 @@ import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { auth } from "../../../../../auth";
-import { NavigateBackButton } from "../../../../../components/DashboardLayout/NavigateBackButton";
 import { Date } from "../../../../../components/Date";
 import { FileAttachmentChip } from "../../../../../components/FileAttachmentChip";
 import { Group } from "../../../../../components/Group";
@@ -20,10 +19,6 @@ import { approveOrRejectAmenityBookingAction } from "../../amenities/actions";
 // import { deleteThreadAction } from "../actions";
 import { InboxMessageThreadAmenityBooking } from "./InboxMessageThreadAmenityBooking";
 
-function Test() {
-  return null;
-}
-
 interface Props {
   threadId: string;
 }
@@ -33,9 +28,6 @@ export async function InboxMessageThread({ threadId }: Props) {
     auth(),
     getThreadMessages(threadId),
   ]);
-
-  const test = <Test />;
-  console.log(test);
 
   const [message0, ...messages] = allMessages;
 

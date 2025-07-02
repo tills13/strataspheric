@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { PageProps } from "../../../../../.next/types/app/@app/dashboard/inbox/[threadId]/page";
 import { auth } from "../../../../../auth";
+import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Thread, getThread } from "../../../../../data/inbox/getThread";
 import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
@@ -44,11 +45,15 @@ export default async function Page({ params, searchParams }: PageProps) {
   );
 
   return (
-    <div
-      className={classnames(canSeeChats && styles.threadPageContainerWithChats)}
-    >
-      <InboxMessageThread threadId={threadId} />
-      {canSeeChats && <InboxThreadChatPanel threadId={threadId} />}
-    </div>
+    <DashboardLayout subPageTitle={thread.subject}>
+      <div
+        className={classnames(
+          canSeeChats && styles.threadPageContainerWithChats,
+        )}
+      >
+        <InboxMessageThread threadId={threadId} />
+        {canSeeChats && <InboxThreadChatPanel threadId={threadId} />}
+      </div>
+    </DashboardLayout>
   );
 }

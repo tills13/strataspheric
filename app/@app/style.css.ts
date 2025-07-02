@@ -4,7 +4,7 @@ import { style } from "@vanilla-extract/css";
 export const signInToStrataPageContainer = style({
   display: "flex",
   justifyContent: "center",
-  height: "100%",
+  height: "100vh",
   "@media": {
     [breakpoints.tablet]: {
       alignItems: "center",

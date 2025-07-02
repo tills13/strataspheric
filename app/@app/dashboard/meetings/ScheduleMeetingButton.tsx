@@ -14,13 +14,11 @@ export function ScheduleMeetingButton() {
     <>
       <Button
         color="success"
-        iconRight={<CalendarIcon />}
-        iconTextBehaviour="centerRemainder"
+        icon={<CalendarIcon />}
         onClick={() => setShowModal(true)}
+        size="small"
         style="secondary"
-      >
-        Schedule Meeting
-      </Button>
+      />
       {showModal && (
         <Modal closeModal={() => setShowModal(false)} title="Create Meeting">
           <CreateOrUpdateMeetingForm />

@@ -22,11 +22,7 @@ export function NotFound({ returnTo = protocol + "//" + tld }: Props) {
           Oops, this page is missing...
         </Text>
         <ExternalLink href={returnTo} noUnderline>
-          <Button
-            style="primary"
-            color="primary"
-            iconRight={<ArrowForwardIcon />}
-          >
+          <Button style="primary" color="primary" icon={<ArrowForwardIcon />}>
             Return to Strataspheric
           </Button>
         </ExternalLink>

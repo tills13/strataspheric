@@ -1,6 +1,7 @@
 import * as linkStyles from "../../components/Link/style.css";
 import * as styles from "./style.css";
 
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -13,6 +14,7 @@ import { JoinForm } from "../../components/JoinForm";
 import { InternalLink } from "../../components/Link/InternalLink";
 import { SignInForm } from "../../components/SignInForm";
 import { Stack } from "../../components/Stack";
+import { Text } from "../../components/Text";
 import { protocol, tld } from "../../constants";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { joinAction } from "../@marketing/join/actions";
@@ -46,6 +48,14 @@ export default async function Page({ searchParams }: PageProps) {
           <SignInForm className={styles.signInForm} />
         )}
 
+        <InternalLink
+          href={"?action=" + (action === "join" ? "signin" : "join")}
+        >
+          <Text>
+            {action === "join" ? "I have an account" : "I'd like to join"}
+          </Text>
+        </InternalLink>
+
         {strata.isPublic === 1 && (
           <>
             <DividerText>OR</DividerText>
@@ -55,7 +65,7 @@ export default async function Page({ searchParams }: PageProps) {
                 size="large"
                 color="primary"
                 style="secondary"
-                iconRight={<ArrowForwardIcon />}
+                icon={<ArrowForwardIcon />}
               >
                 view public content
               </Button>

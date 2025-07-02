@@ -6,7 +6,8 @@ import { Flex } from "../Flex";
 import { Input } from "../Input";
 import { Stack } from "../Stack";
 import { TextArea } from "../TextArea";
-import { WYSIWYGEditor } from "../WYSIWYGEditor";
+
+// import { WYSIWYGEditor } from "../WYSIWYGEditor";
 
 type AttachInvoiceFieldProps = React.ComponentProps<typeof AttachInvoiceField>;
 

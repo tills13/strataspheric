@@ -1,5 +1,5 @@
 import { VALIDITY_PERIOD } from "./jwt";
-import { Config } from "./types";
+import { CookieConfig } from "./types";
 
 const COOKIE_NAME = "strataspheric.session";
 
@@ -10,15 +10,15 @@ export function getJwtFromCookies(
 }
 
 export function formatJwtCookie(
-  config: Config,
+  config: CookieConfig | undefined,
   data: unknown,
   maxAge = VALIDITY_PERIOD,
 ) {
-  const path = config.cookies?.path ?? "/";
-  const domain = config.cookies?.domain;
-  const httpOnly = !!config.cookies?.httpOnly;
-  const sameSite = config.cookies?.sameSite;
-  const secure = !!config.cookies?.secure;
+  const path = config?.path ?? "/";
+  const domain = config?.domain;
+  const httpOnly = !!config?.httpOnly;
+  const sameSite = config?.sameSite;
+  const secure = !!config?.secure;
 
   return [
     `${COOKIE_NAME}=${data}`,

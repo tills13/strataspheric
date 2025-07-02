@@ -61,7 +61,7 @@ export function CreateOrUpdateAmenityForm({ amenity }: Props) {
 
         <StatusButton
           color="primary"
-          iconRight={<SaveIcon />}
+          icon={<SaveIcon />}
           style="primary"
           type="submit"
         >

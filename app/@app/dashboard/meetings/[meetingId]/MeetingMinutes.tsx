@@ -48,7 +48,7 @@ export async function MeetingMinutes({
 
   return (
     <Stack className={className}>
-      <Header as="h3">Minutes</Header>
+      <Header as="h3">Meeting Minutes</Header>
 
       {!minutesUrl && files.length === 0 && (
         <InfoPanel>
@@ -93,6 +93,7 @@ export async function MeetingMinutes({
               disabled={!!minutesUrlApprovedByName}
               name="minutesUrl"
               label="Minutes URL"
+              placeholder="https://docs.google.com/..."
               defaultValue={minutesUrl || ""}
               className={s({ w: "full" })}
             />
@@ -100,7 +101,7 @@ export async function MeetingMinutes({
             {!minutesUrl && (
               <StatusButton
                 className={styles.minutesUrlApproveButton}
-                iconRight={<SaveIcon />}
+                icon={<SaveIcon />}
                 iconTextBehaviour="centerRemainder"
                 color="primary"
                 style="primary"

@@ -96,7 +96,7 @@ export function InvoiceChip({
             {showMarkPaid && invoice.status !== "draft" && (
               <StatusButton
                 color="success"
-                iconRight={<CircleCheckIcon />}
+                icon={<CircleCheckIcon />}
                 iconTextBehaviour="centerRemainder"
                 onClick={() =>
                   startTransition(() => markInvoiceAsPaidAction(invoice.id))

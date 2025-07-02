@@ -35,10 +35,6 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
     formdata.getEnum(fd, "visibility", ["private", "public"]) === "public";
   const bylawsFileId = formdata.getString(fd, "bylawsFileId");
 
-  if (strataName === "") {
-    throw new Error("invalid fields");
-  }
-
   let latitude = formdata.getFloat(fd, "latitude");
   let longitude = formdata.getFloat(fd, "longitude");
 
@@ -59,7 +55,7 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
   }
 
   await updateStrata(strataId, {
-    name: strataName,
+    ...(strataName && { name: strataName }),
     strataId: strataPlanId,
     streetAddress,
     postalCode,

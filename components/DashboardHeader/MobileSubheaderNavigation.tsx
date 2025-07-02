@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { Permission, can, p } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
 import { Button } from "../Button";
-// import { GlobalDashboardHeader } from "../GlobalDashboardHeader";
+import { Breadcrumbs } from "../DashboardNavigation/Breadcrumbs";
 import { Group } from "../Group";
 import { BedIcon } from "../Icon/BedIcon";
 import { CalendarIcon } from "../Icon/CalendarIcon";
@@ -62,7 +62,11 @@ const links: Array<Link | LinkWithPermissions> = [
   [SettingsIcon, "/dashboard/settings", "Settings", ["stratas.edit"]],
 ];
 
-export function MobileSubheaderNavigation() {
+export function MobileSubheaderNavigation({
+  subPageTitle,
+}: {
+  subPageTitle?: string;
+}) {
   const session = useSession();
   const pathname = usePathname();
   const [mobileMenuExpanded, setMobileMenuExpanded] = useState(false);
@@ -88,20 +92,28 @@ export function MobileSubheaderNavigation() {
                 ? pathname === href
                 : pathname?.startsWith(href);
 
-            return (
-              <InternalLink
-                key={href}
-                className={
-                  isActive ? styles.activeSubheaderLink : styles.subheaderLink
-                }
-                onClick={() => setMobileMenuExpanded(false)}
-                href={href}
-              >
-                <IconComponent classNameOverride={styles.mobileMenuIcon} />
+            if (isActive) {
+              return (
+                <div key={href} className={styles.activeSubheaderLink}>
+                  <IconComponent classNameOverride={styles.mobileMenuIcon} />
+                  <Breadcrumbs subPageTitle={subPageTitle} />
+                  &nbsp;
+                </div>
+              );
+            } else {
+              return (
+                <InternalLink
+                  key={href}
+                  className={styles.subheaderLink}
+                  onClick={() => setMobileMenuExpanded(false)}
+                  href={href}
+                >
+                  <IconComponent classNameOverride={styles.mobileMenuIcon} />
 
-                <div className={styles.mobileMenuText}>{label}</div>
-              </InternalLink>
-            );
+                  <div className={styles.mobileMenuText}>{label}</div>
+                </InternalLink>
+              );
+            }
           })}
         </div>
 
