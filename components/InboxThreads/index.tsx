@@ -1,4 +1,3 @@
-import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { Thread } from "../../data/inbox/getThread";
@@ -20,7 +19,7 @@ export function InboxThreads({ threads }: Props) {
         </div>
       )}
 
-      <Table className={s({ ph: "normal" })}>
+      <Table className={styles.inboxThreadsTable}>
         {threads.map((thread) => (
           <InboxThreadRow key={thread.id} thread={thread} />
         ))}

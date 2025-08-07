@@ -22,12 +22,11 @@ export async function FilesPage({ search, visibility }: Props) {
   return (
     <DashboardLayout
       actions={
-        <Group>
+        <Group gap="small">
           <DropdownButton
             buttonColor="primary"
-            buttonStyle="primary"
+            buttonStyle="tertiary"
             icon={<SearchIcon />}
-            openLabel="Search"
             panel={
               <FlexBox p="normal">
                 <FilesSearch

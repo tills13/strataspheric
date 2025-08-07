@@ -1,19 +1,16 @@
 import { s } from "../../../../../sprinkles.css";
 
 import isAfter from "date-fns/isAfter";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PageProps } from "../../../../../.next/types/app/@app/dashboard/invoices/[invoiceId]/page";
 import { mustAuth } from "../../../../../auth";
 import { AmenitiesBookingCalendar } from "../../../../../components/AmenitiesBookingCalendar";
-import { AmenityChip } from "../../../../../components/AmenityChip";
 import { Button } from "../../../../../components/Button";
 import { ConfirmButton } from "../../../../../components/ConfirmButton";
 import { CreateOrUpdateInvoiceForm } from "../../../../../components/CreateOrUpdateInvoiceForm";
 import { Date as DateComponent } from "../../../../../components/Date";
 import { Flex } from "../../../../../components/Flex";
-import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { ArrowForwardIcon } from "../../../../../components/Icon/ArrowForwardIcon";
 import { DeleteIcon } from "../../../../../components/Icon/DeleteIcon";
@@ -80,6 +77,7 @@ export default async function Page({ params }: PageProps) {
                   icon={<ArrowForwardIcon />}
                   iconTextBehaviour="centerRemainder"
                   style="primary"
+                  fullWidth
                 >
                   Go to Booking Request
                 </Button>

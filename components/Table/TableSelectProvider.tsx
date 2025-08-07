@@ -11,6 +11,8 @@ export const TableSelectCtx = React.createContext<
   TableSelectContext | undefined
 >(undefined);
 
+export const TableSelectedValuesCtx = React.createContext<string[]>([]);
+
 export function TableSelectProvider({
   children,
 }: {
@@ -39,6 +41,10 @@ export function TableSelectProvider({
   );
 
   return (
-    <TableSelectCtx.Provider value={value}>{children}</TableSelectCtx.Provider>
+    <TableSelectCtx.Provider value={value}>
+      <TableSelectedValuesCtx.Provider value={selectedRows}>
+        {children}
+      </TableSelectedValuesCtx.Provider>
+    </TableSelectCtx.Provider>
   );
 }

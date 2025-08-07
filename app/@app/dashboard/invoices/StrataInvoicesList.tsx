@@ -1,3 +1,5 @@
+import * as styles from "./style.css";
+
 import { Group } from "../../../../components/Group";
 import { CircleCheckIcon } from "../../../../components/Icon/CircleCheckIcon";
 import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
@@ -24,10 +26,11 @@ export async function StrataInvoicesList({ invoices, strata }: Props) {
         <Text p="normal">{strata.name} has no invoices on record.</Text>
       )}
 
-      <Table>
+      <Table className={styles.invoicesTable}>
         {invoices.map((invoice) => (
           <TableRow
             key={invoice.id}
+            rowId={invoice.id}
             actions={
               <Group gap="small">
                 <StatusButton
@@ -50,7 +53,7 @@ export async function StrataInvoicesList({ invoices, strata }: Props) {
             }
             content={
               <Group overflow="hidden">
-                <Group gap="xs">
+                <Group gap="0" whiteSpace="nowrap">
                   <Text
                     color="secondary"
                     as="span"
@@ -77,7 +80,7 @@ export async function StrataInvoicesList({ invoices, strata }: Props) {
                 <InvoiceStatusBadge invoice={invoice} />
               </Group>
             }
-            link={{ pathname: "/dashboard/invoices/" + invoice.id }}
+            link={"/dashboard/invoices/" + invoice.id}
             rowEnd={<Money amount={invoice.amount} />}
           />
         ))}

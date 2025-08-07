@@ -68,6 +68,7 @@ export function FileRow({ file }: Props) {
           </Group>
         }
         link={getImageUri(file.path)}
+        rowId={file.id}
         rowEnd={
           <Date
             timestamp={file.createdAt}

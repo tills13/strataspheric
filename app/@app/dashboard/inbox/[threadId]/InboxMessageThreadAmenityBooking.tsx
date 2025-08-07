@@ -15,19 +15,13 @@ import { Stack } from "../../../../../components/Stack";
 import { StatusButton } from "../../../../../components/StatusButton";
 import { AmenityBooking } from "../../../../../data/amenities/getAmenityBooking";
 import { useCan } from "../../../../../hooks/useCan";
+import { approveOrRejectAmenityBookingAction } from "../../amenities/actions";
 
 interface Props {
   amenityBooking: AmenityBooking;
-  approveOrRejectAmenityBooking: (
-    amenityId: string,
-    decision: "approve" | "reject",
-  ) => void;
 }
 
-export function InboxMessageThreadAmenityBooking({
-  amenityBooking,
-  approveOrRejectAmenityBooking,
-}: Props) {
+export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
   const can = useCan();
   const virtualEvent = useMemo<CalendarEvent>(
     () => ({
@@ -67,9 +61,9 @@ export function InboxMessageThreadAmenityBooking({
                 will delete the invoice and generate a response to this thread.
               </InfoPanel>
 
-              <Group>
+              <Group equalWidthChildren>
                 <StatusButton
-                  action={approveOrRejectAmenityBooking.bind(
+                  action={approveOrRejectAmenityBookingAction.bind(
                     undefined,
                     amenityBooking.id,
                     "approve",
@@ -81,7 +75,7 @@ export function InboxMessageThreadAmenityBooking({
                   Approve
                 </StatusButton>
                 <StatusButton
-                  action={approveOrRejectAmenityBooking.bind(
+                  action={approveOrRejectAmenityBookingAction.bind(
                     undefined,
                     amenityBooking.id,
                     "reject",

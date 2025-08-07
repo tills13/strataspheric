@@ -1,6 +1,11 @@
+"use client";
+
 import * as styles from "./style.css";
 
+import { useContext } from "react";
+
 import { classnames } from "../../utils/classnames";
+import { TableSelectCtx } from "./TableSelectProvider";
 
 interface Props {
   children: React.ReactNode;
@@ -8,5 +13,15 @@ interface Props {
 }
 
 export function Table({ children, className }: Props) {
-  return <div className={classnames(className, styles.table)}>{children}</div>;
+  const hasTableSelectCtx = !!useContext(TableSelectCtx);
+  return (
+    <div
+      className={classnames(
+        className,
+        hasTableSelectCtx ? styles.tableWithSelect : styles.table,
+      )}
+    >
+      {children}
+    </div>
+  );
 }

@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import { PageProps } from "../../../../.next/types/app/@app/dashboard/inbox/page";
 import { auth } from "../../../../auth";
+import ArchiveSelectedInboxMessagesButton from "../../../../components/ArchiveSelectedInboxMessagesButton";
 import { Button } from "../../../../components/Button";
 import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { Group } from "../../../../components/Group";
@@ -9,6 +10,7 @@ import { SendIcon } from "../../../../components/Icon/SendIcon";
 import { InboxThreads } from "../../../../components/InboxThreads";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Pagination } from "../../../../components/Pagination";
+import { TableSelectProvider } from "../../../../components/Table/TableSelectProvider";
 import { Upsell } from "../../../../components/Upsell";
 import { listThreads } from "../../../../data/inbox/listThreads";
 import { getCurrentStrataPlan } from "../../../../data/strataPlans/getStrataPlanByDomain";
@@ -63,24 +65,32 @@ export default async function Page({ searchParams }: PageProps) {
   );
 
   return (
-    <DashboardLayout
-      actions={
-        <InternalLink href="/dashboard/inbox/send" noUnderline>
-          <Button
-            color="primary"
-            style="secondary"
-            size="small"
-            icon={<SendIcon />}
-          />
-        </InternalLink>
-      }
-      title={`Inbox (${threads.length})`}
-    >
-      <InboxThreads threads={threads} />
+    <TableSelectProvider>
+      <DashboardLayout
+        actions={
+          <Group gap="small">
+            <ArchiveSelectedInboxMessagesButton />
+            <InternalLink href="/dashboard/inbox/send" noUnderline>
+              <Button
+                color="primary"
+                style="tertiary"
+                size="small"
+                icon={<SendIcon />}
+              />
+            </InternalLink>
+          </Group>
+        }
+        title={`Inbox (${threads.length})`}
+      >
+        <InboxThreads threads={threads} />
 
-      <Group p="normal" justify="end">
-        <Pagination currentPage={pageNum} totalPages={Math.ceil(total / 10)} />
-      </Group>
-    </DashboardLayout>
+        <Group p="normal" justify="end">
+          <Pagination
+            currentPage={pageNum}
+            totalPages={Math.ceil(total / 10)}
+          />
+        </Group>
+      </DashboardLayout>
+    </TableSelectProvider>
   );
 }

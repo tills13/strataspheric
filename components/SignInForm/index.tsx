@@ -9,8 +9,12 @@ import { protocol, tld } from "../../constants";
 import { classnames } from "../../utils/classnames";
 import * as formdata from "../../utils/formdata";
 import { Button } from "../Button";
+import { Flex } from "../Flex";
+import { Group } from "../Group";
+import { ArrowForwardIcon } from "../Icon/ArrowForwardIcon";
 import { Input } from "../Input";
 import { ExternalLink } from "../Link/ExternalLink";
+import { InternalLink } from "../Link/InternalLink";
 import { Stack } from "../Stack";
 import { StatusButton } from "../StatusButton";
 import { Text } from "../Text";
@@ -78,14 +82,24 @@ export function SignInForm({ className }: Props) {
           Sign in
         </StatusButton>
 
-        <ExternalLink
-          className={styles.forgotLink}
-          href={protocol + "//" + tld + "/forgot"}
-        >
-          <Button style="tertiary" color="primary" type="button" w="full">
-            Forgot Password
-          </Button>
-        </ExternalLink>
+        <Flex from="mobilePlus">
+          <ExternalLink href={protocol + "//" + tld + "/forgot"} w="full">
+            <Button style="tertiary" color="primary" type="button" w="full">
+              Forgot Password
+            </Button>
+          </ExternalLink>
+          <InternalLink href="?action=join" noUnderline>
+            <Button
+              icon={<ArrowForwardIcon />}
+              style="tertiary"
+              color="primary"
+              type="button"
+              w="full"
+            >
+              Join Strataspheric
+            </Button>
+          </InternalLink>
+        </Flex>
       </Stack>
     </form>
   );

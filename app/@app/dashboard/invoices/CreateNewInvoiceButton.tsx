@@ -14,10 +14,10 @@ export function CreateNewInvoiceButton() {
     <>
       <Button
         icon={<AddIcon />}
-        color="success"
+        color="primary"
         onClick={() => setShowNewInvoiceModal(true)}
         size="small"
-        style="secondary"
+        style="tertiary"
       />
       {showNewInvoiceModal && (
         <Modal

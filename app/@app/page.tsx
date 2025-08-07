@@ -1,7 +1,6 @@
 import * as linkStyles from "../../components/Link/style.css";
 import * as styles from "./style.css";
 
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -12,9 +11,9 @@ import { DividerText } from "../../components/DividerText";
 import { ArrowForwardIcon } from "../../components/Icon/ArrowForwardIcon";
 import { JoinForm } from "../../components/JoinForm";
 import { InternalLink } from "../../components/Link/InternalLink";
+import { Logo } from "../../components/Logo";
 import { SignInForm } from "../../components/SignInForm";
 import { Stack } from "../../components/Stack";
-import { Text } from "../../components/Text";
 import { protocol, tld } from "../../constants";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { joinAction } from "../@marketing/join/actions";
@@ -41,20 +40,13 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <div className={styles.signInToStrataPageContainer}>
-      <Stack className={styles.signInToStrataPageFormContainer}>
+      <Stack className={styles.signInToStrataPageFormContainer} align="center">
+        <Logo h="xxl" mb="large" />
         {action === "join" ? (
           <JoinForm onSubmit={joinAction} strata={strata} />
         ) : (
           <SignInForm className={styles.signInForm} />
         )}
-
-        <InternalLink
-          href={"?action=" + (action === "join" ? "signin" : "join")}
-        >
-          <Text>
-            {action === "join" ? "I have an account" : "I'd like to join"}
-          </Text>
-        </InternalLink>
 
         {strata.isPublic === 1 && (
           <>
@@ -67,7 +59,7 @@ export default async function Page({ searchParams }: PageProps) {
                 style="secondary"
                 icon={<ArrowForwardIcon />}
               >
-                view public content
+                View Public Content
               </Button>
             </InternalLink>
           </>

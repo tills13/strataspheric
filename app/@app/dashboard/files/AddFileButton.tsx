@@ -13,10 +13,10 @@ export function AddFileButton() {
   return (
     <>
       <Button
-        color="success"
+        color="primary"
         icon={<AddIcon />}
         onClick={() => setShowModal(true)}
-        style="secondary"
+        style="tertiary"
         size="small"
       />
       {showModal && (

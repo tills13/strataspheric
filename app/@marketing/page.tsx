@@ -216,7 +216,7 @@ export default async function Page() {
           </Button>
         </InternalLink>
 
-        <InternalLink href="/join">
+        <InternalLink href="/join" noUnderline>
           <Button className={classnames(styles.ctaButton)} style="tertiary">
             Join Strataspheric
           </Button>

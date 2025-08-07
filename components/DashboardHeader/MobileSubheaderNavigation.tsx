@@ -96,7 +96,7 @@ export function MobileSubheaderNavigation({
               return (
                 <div key={href} className={styles.activeSubheaderLink}>
                   <IconComponent classNameOverride={styles.mobileMenuIcon} />
-                  <Breadcrumbs subPageTitle={subPageTitle} />
+                  <Breadcrumbs subPageTitle={subPageTitle || label} />
                   &nbsp;
                 </div>
               );

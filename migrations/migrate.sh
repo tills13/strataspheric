@@ -2,8 +2,8 @@
 
 migrations_dir=$( dirname $0 )
 migrations=($( ls $migrations_dir ))
-# target="--remote "
-target="--local "
+target="--remote "
+# target="--local "
 
 npx wrangler d1 execute strataspheric ${target}\
     --command "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key)"

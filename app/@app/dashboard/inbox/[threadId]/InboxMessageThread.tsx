@@ -15,8 +15,6 @@ import { Text } from "../../../../../components/Text";
 import { ThreadMessage } from "../../../../../components/ThreadMessage";
 import { getThreadMessages } from "../../../../../data/inbox/getThreadMessages";
 import { classnames } from "../../../../../utils/classnames";
-import { approveOrRejectAmenityBookingAction } from "../../amenities/actions";
-// import { deleteThreadAction } from "../actions";
 import { InboxMessageThreadAmenityBooking } from "./InboxMessageThreadAmenityBooking";
 
 interface Props {
@@ -88,10 +86,7 @@ export async function InboxMessageThread({ threadId }: Props) {
       )}
 
       {amenityBooking && (
-        <InboxMessageThreadAmenityBooking
-          amenityBooking={amenityBooking}
-          approveOrRejectAmenityBooking={approveOrRejectAmenityBookingAction}
-        />
+        <InboxMessageThreadAmenityBooking amenityBooking={amenityBooking} />
       )}
 
       <SendInboxMessageForm className={s({ p: "normal" })} threadId={threadId}>

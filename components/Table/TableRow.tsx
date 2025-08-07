@@ -33,49 +33,52 @@ export function TableRow({
 
   return (
     <div className={classnames(className, styles.tableRow)}>
-      <Wrap
-        with={(children) => {
-          if (link) {
-            const isInternalLink = link.startsWith("/");
-
-            return isInternalLink ? (
-              <InternalLink
-                className={styles.tableRowInner}
-                href={link}
-                noUnderline
-              >
-                {children}
-              </InternalLink>
-            ) : (
-              <ExternalLink
-                className={styles.tableRowInner}
-                target="_blank"
-                href={link}
-                noUnderline
-              >
-                {children}
-              </ExternalLink>
-            );
-          }
-
-          return <div className={styles.tableRowInner}>{children}</div>;
-        }}
-      >
+      <div className={styles.tableRowInner}>
         {tableSelectContext && (
           <Checkbox
             className={styles.tableRowCheckbox}
             checked={tableSelectContext.isRowSelected(rowId)}
-            onClick={() => tableSelectContext.toggleRowSelected(rowId)}
+            onChange={() => {
+              tableSelectContext.toggleRowSelected(rowId);
+            }}
           />
         )}
 
-        <div className={styles.tableRowContent}>{content}</div>
+        <Wrap
+          with={(children) => {
+            if (link) {
+              const isInternalLink = link.startsWith("/");
 
-        <Group className={styles.tableRowEnd} justify="end">
-          {rowEnd}
-        </Group>
-      </Wrap>
+              return isInternalLink ? (
+                <InternalLink
+                  className={styles.tableRowInnerInner}
+                  href={link}
+                  noUnderline
+                >
+                  {children}
+                </InternalLink>
+              ) : (
+                <ExternalLink
+                  className={styles.tableRowInnerInner}
+                  target="_blank"
+                  href={link}
+                  noUnderline
+                >
+                  {children}
+                </ExternalLink>
+              );
+            }
 
+            return <div className={styles.tableRowInnerInner}>{children}</div>;
+          }}
+        >
+          <div className={styles.tableRowContent}>{content}</div>
+
+          <Group className={styles.tableRowEnd} justify="end">
+            {rowEnd}
+          </Group>
+        </Wrap>
+      </div>
       {actions && <div className={styles.tableRowActions}>{actions}</div>}
     </div>
   );

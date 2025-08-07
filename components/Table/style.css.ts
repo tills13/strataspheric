@@ -1,12 +1,20 @@
-import { breakpoints, vars } from "../../app/theme.css";
+import { breakpoints, media, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 import { padding } from "../../theme";
 
 export const table = style({
   display: "grid",
+  gridTemplateColumns: "auto min-content",
+  columnGap: vars.spacing.normal,
+  rowGap: vars.spacing.xs,
+});
+
+export const tableWithSelect = style({
+  display: "grid",
   gridTemplateColumns: "min-content auto min-content",
   columnGap: vars.spacing.normal,
+  rowGap: vars.spacing.xs,
 });
 
 export const tableRow = style({
@@ -15,21 +23,23 @@ export const tableRow = style({
   gridTemplateColumns: "subgrid",
 
   minHeight: vars.sizes.large,
-  // padding: padding(vars.spacing.normal, vars.spacing.small),
-  padding: padding(vars.spacing.small, vars.spacing.normal),
+  borderRadius: vars.borderRadius,
   textDecoration: "none",
-  color: vars.fontColors.primary,
+
   position: "relative",
 
   "@media": {
-    [breakpoints.tablet]: {
-      // padding: padding(vars.spacing.small, vars.spacing.normal),
-      borderRadius: vars.borderRadius,
-    },
+    [breakpoints.tablet]: {},
   },
 
   selectors: {
     "&:hover": {
+      backgroundColor: vars.colors.grey100,
+    },
+    "&:nth-child(odd)": {
+      backgroundColor: vars.colors.grey50,
+    },
+    "&:nth-child(odd):hover": {
       backgroundColor: vars.colors.grey100,
     },
   },
@@ -38,9 +48,35 @@ export const tableRow = style({
 export const tableRowInner = style({
   width: "100%",
   display: "grid",
+  gridTemplateColumns: "subgrid",
   gridColumn: "1/-1",
+  alignItems: "center",
+
+  selectors: {
+    [`${tableWithSelect} &`]: {
+      paddingLeft: vars.spacing.normal,
+    },
+  },
+});
+
+export const tableRowInnerInner = style({
+  width: "100%",
+  display: "grid",
   gridTemplateColumns: "subgrid",
   alignItems: "center",
+  height: "100%",
+  color: "inherit",
+
+  selectors: {
+    [`${table} &`]: {
+      gridColumn: "1/-1",
+      padding: padding(vars.spacing["0"], vars.spacing.normal),
+    },
+    [`${tableWithSelect} &`]: {
+      paddingRight: vars.spacing.normal,
+      gridColumn: "2/-1",
+    },
+  },
 });
 
 export const tableRowCheckbox = style({
@@ -79,7 +115,7 @@ export const tableRowActions = style({
   alignSelf: "center",
 
   "@media": {
-    [breakpoints.desktop]: {
+    [media.pointerFine]: {
       selectors: {
         [`${tableRow}:hover &`]: {
           display: "block",

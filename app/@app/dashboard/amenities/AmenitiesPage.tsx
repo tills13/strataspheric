@@ -25,7 +25,7 @@ export async function AmenitiesPage() {
       {amenities.length === 0 && (
         <NothingHere>This strata has no amenities.</NothingHere>
       )}
-      <Stack p="normal">
+      <Stack ph="normal">
         {amenities.map((amenity) => (
           <AmenityChip key={amenity.id} amenity={amenity} />
         ))}

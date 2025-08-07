@@ -8,6 +8,10 @@ export const breakpoints = {
   desktop: "(min-width: 1200px)",
 };
 
+export const media = {
+  pointerFine: "(pointer: fine)",
+};
+
 export const iconColorVar = createVar();
 export const fontHeaderVar = createVar();
 export const fontPrimaryVar = createVar();

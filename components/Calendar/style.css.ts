@@ -45,6 +45,7 @@ export const calendarDay = style({
   width: "100%",
   height: "100%",
   // maxHeight: "calc((100vh - 72px - 72px)/6)",
+  maxHeight: "75px",
   zIndex: 1,
   borderRadius: vars.borderRadius,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,

@@ -14,9 +14,9 @@ export function AddNewAmenityButton() {
     <>
       <Button
         icon={<AddIcon />}
-        color="success"
+        color="primary"
         onClick={() => setShowModal(true)}
-        style="secondary"
+        style="tertiary"
         size="small"
       />
       {showModal && (

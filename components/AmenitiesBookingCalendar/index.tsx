@@ -47,7 +47,10 @@ export function AmenitiesBookingCalendar({
   loadOtherBookings = true,
   onSelectDate,
 }: Props) {
-  const [weekIdx, setWeekIdx] = useState(getWeek(new Date()));
+  console.log(booking?.startDate);
+  const [weekIdx, setWeekIdx] = useState(
+    getWeek(booking ? new Date(booking.startDate * 1000) : new Date()),
+  );
   const [bookings, setBookings] = useState<CalendarEvent[]>([]);
 
   const date = useMemo(
@@ -72,7 +75,7 @@ export function AmenitiesBookingCalendar({
 
       setBookings(
         rJson.amenityBookings
-          .filter((booking) => !booking || booking.id !== booking.id)
+          .filter((mBooking) => !booking || booking.id !== mBooking.id)
           .map((amenityBooking) => ({
             name: "",
             description: "",

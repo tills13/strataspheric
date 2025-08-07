@@ -19,7 +19,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <DashboardLayout>
       <CreateOrUpdateStrataMembershipForm
-        className={s({ ph: "normal", pb: "normal" })}
+        className={s({ p: "normal" })}
         membership={membership}
       >
         <CreateOrUpdateStrataMembershipFormFields membership={membership} />

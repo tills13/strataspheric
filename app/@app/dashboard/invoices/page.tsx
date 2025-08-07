@@ -4,6 +4,7 @@ import { PageProps } from "../../../../.next/types/app/@app/dashboard/invoices/p
 import { mustAuth } from "../../../../auth";
 import { Group } from "../../../../components/Group";
 import { Pagination } from "../../../../components/Pagination";
+import { TableSelectProvider } from "../../../../components/Table/TableSelectProvider";
 import { listInvoices } from "../../../../data/invoices/listInvoices";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
@@ -31,12 +32,12 @@ export default async function Page({ searchParams }: PageProps) {
   );
 
   return (
-    <>
+    <TableSelectProvider>
       <StrataInvoicesList invoices={invoices} strata={strata} />
 
       <Group p="normal" justify="end">
         <Pagination currentPage={pageNum} totalPages={Math.ceil(total / 10)} />
       </Group>
-    </>
+    </TableSelectProvider>
   );
 }

@@ -41,27 +41,27 @@ export function Breadcrumbs({ className, subPageTitle }: Props) {
   const SubSubpageIconComponent = NAVIGATION_LINK_ICONS[activeSubpageHref];
   const isSubSubpage = pathname !== activeSubpageHref;
 
-  if (pathname === "/dashboard") {
-    return <div />;
-  }
-
   return (
     <Group className={className} gap="xs" ref={ref}>
       <InternalLink href="/dashboard" noUnderline>
         <Text color="secondary">Dashboard</Text>
       </InternalLink>
 
-      <RightIcon size="xxs" />
+      {pathname !== "/dashboard" && (
+        <>
+          <RightIcon size="xxs" />
 
-      <InternalLink href={activeSubpageHref} noUnderline={!isSubSubpage}>
-        <Text
-          color="primary"
-          fw={isSubSubpage ? "normal" : "bold"}
-          whiteSpace="nowrap"
-        >
-          {activeSubpageLabel}
-        </Text>
-      </InternalLink>
+          <InternalLink href={activeSubpageHref} noUnderline={!isSubSubpage}>
+            <Text
+              color="primary"
+              fw={isSubSubpage ? "normal" : "bold"}
+              whiteSpace="nowrap"
+            >
+              {activeSubpageLabel}
+            </Text>
+          </InternalLink>
+        </>
+      )}
 
       {isSubSubpage && (
         <>
