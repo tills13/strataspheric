@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getStrataMembershipByDomainAndUserId } from "../data/memberships/getStrataMembershipByDomainAndUserId";
 import { getDomain } from "../utils/getDomain";
-import { internalAuthDoNotUseDirectly as _auth } from "./auth";
+import { internalAuthDoNotUseDirectly } from "./auth";
 import { GET, POST } from "./endpoints";
 import { AuthenticatedApiHandler, Config, Session, User } from "./types";
 
@@ -14,7 +14,7 @@ function createAuth(config: Config) {
   ): (req: NextRequest) => Promise<NextResponse>;
 
   function iauth(...args: [] | [AuthenticatedApiHandler]) {
-    return _auth(config, ...args);
+    return internalAuthDoNotUseDirectly(config, ...args);
   }
 
   return {

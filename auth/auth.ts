@@ -1,37 +1,32 @@
 import { headers } from "next/headers";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-import { getJwtFromCookies } from "./cookies";
-import { parseJwt, readJwtFromRequest } from "./jwt";
-import { AuthenticatedApiHandler, Config } from "./types";
+import { readJwtFromHeaders, readJwtFromRequest } from "./jwt";
+import { AuthenticatedApiHandler, Config, Session } from "./types";
 
 export function internalAuthDoNotUseDirectly(
   config: Config,
   ...args: [] | [AuthenticatedApiHandler]
-): unknown {
+):
+  | Promise<Session | undefined>
+  | ((req: NextRequest) => Promise<NextResponse>) {
   if (args.length === 0) {
-    return headers().then((head) => {
-      const token = getJwtFromCookies(head.get("cookie"));
+    return Promise.resolve().then(async () => {
+      try {
+        const { payload } = await readJwtFromHeaders(config, await headers());
 
-      if (!token) {
+        if (config.decorateSessionUser) {
+          const u = config.decorateSessionUser(payload.user);
+
+          return u instanceof Promise
+            ? u.then((user) => ({ ...payload, user }))
+            : { ...payload, user: u };
+        }
+
+        return payload;
+      } catch {
         return undefined;
       }
-
-      const { payload } = parseJwt(token);
-
-      if (payload.exp < Date.now()) {
-        return undefined;
-      }
-
-      if (config.decorateSessionUser) {
-        const u = config.decorateSessionUser(payload.user);
-
-        return u instanceof Promise
-          ? u.then((user) => ({ ...payload, user }))
-          : { ...payload, user: u };
-      }
-
-      return payload;
     });
   } else {
     const [apiHandler] = args;
@@ -43,7 +38,7 @@ export function internalAuthDoNotUseDirectly(
           .decorateSessionUser(payload.user)
           .then((u) => apiHandler({ ...payload, user: u }, req));
       } catch {
-        return new Response("Not Allowed", { status: 403 });
+        return new NextResponse("Not Allowed", { status: 403 });
       }
     };
   }

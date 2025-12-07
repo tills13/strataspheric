@@ -47,9 +47,21 @@ export function parseJwt(rawJwt: string) {
   };
 }
 
-export async function readJwtFromRequest(config: Config, req: Request) {
-  const rawJwt = getJwtFromCookies(req.headers.get("cookie"));
+export async function readJwtFromHeaders(config: Config, headers: Headers) {
+  return validateAndParseJwt(config, getJwtFromCookies(headers.get("cookie")));
+}
 
+export async function readJwtFromRequest(config: Config, req: Request) {
+  return validateAndParseJwt(
+    config,
+    getJwtFromCookies(req.headers.get("cookie")),
+  );
+}
+
+export async function validateAndParseJwt(
+  config: Config,
+  rawJwt: string | undefined,
+) {
   if (!rawJwt) {
     throw new Error("jwt missing");
   }
@@ -61,7 +73,13 @@ export async function readJwtFromRequest(config: Config, req: Request) {
     throw new Error("jwt is invalid");
   }
 
-  return parseJwt(rawJwt);
+  const parsedJwt = parseJwt(rawJwt);
+
+  if (!parsedJwt || parsedJwt.payload.exp < Date.now()) {
+    throw new Error("jwt is expired");
+  }
+
+  return parsedJwt;
 }
 
 function verifyJwt(key: CryptoKey, rawJwt: string) {

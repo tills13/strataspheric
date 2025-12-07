@@ -29,4 +29,4 @@ export interface Config {
 export type AuthenticatedApiHandler = (
   session: Session,
   req: NextRequest,
-) => Promise<NextResponse | Response>;
+) => Promise<NextResponse>;
