@@ -8,6 +8,7 @@ export interface User {
 }
 
 export interface Session {
+  iat: number;
   exp: number;
   user: User;
 }

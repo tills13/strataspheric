@@ -17,14 +17,21 @@ export async function GET(config: Config, req: NextRequest) {
     typeof config.cookies === "function" ? config.cookies(req) : config.cookies;
 
   if (reqUrl.pathname !== REFRESH_ENDPOINT) {
-    return new Response("Not Found", { status: 4040 });
+    return new Response("Not Found", { status: 404 });
   }
 
   try {
     const { payload } = await readJwtFromRequest(config, req);
+    const now = Date.now();
+
+    // Require re-authentication if token was issued more than 24 hours ago
+    if (!payload.iat || now - payload.iat > VALIDITY_PERIOD) {
+      throw new Error("session too old, re-authentication required");
+    }
+
     const newPayload = {
       ...payload,
-      exp: new Date().getTime() + VALIDITY_PERIOD,
+      exp: now + VALIDITY_PERIOD,
     };
 
     const jwt = await buildJwt(await getKey(config), newPayload);
@@ -75,13 +82,15 @@ export async function POST(config: Config, req: NextRequest) {
         formdata.getString(fd, "password"),
       );
 
+      const now = Date.now();
       const payload = {
         user: {
           id: user.id,
           email: user.email,
           name: user.name,
         },
-        exp: new Date().getTime() + VALIDITY_PERIOD,
+        iat: now,
+        exp: now + VALIDITY_PERIOD,
       };
 
       const key = await getKey(config);
