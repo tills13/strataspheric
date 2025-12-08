@@ -9,7 +9,7 @@ type ListAmenityBookingsFilter = {
 };
 
 export async function listAmenityBookings(filter: ListAmenityBookingsFilter) {
-  let query = baseQuery;
+  let query = baseQuery();
 
   if (filter.decision) {
     query = query.where("amenity_bookings.decision", "=", filter.decision);

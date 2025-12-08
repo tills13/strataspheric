@@ -7,7 +7,7 @@ export function getUserPasswordResetToken(
     return Promise.resolve(undefined);
   }
 
-  let query = db.selectFrom("user_password_reset_tokens").selectAll();
+  let query = db().selectFrom("user_password_reset_tokens").selectAll();
 
   for (const [key, value] of Object.entries(userPasswordResetToken) as Array<
     [keyof UserPasswordResetToken, string]

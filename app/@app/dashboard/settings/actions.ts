@@ -32,7 +32,7 @@ export async function deleteStrataAction() {
   const files = await listFiles({ strataId: currentStrata.id });
 
   if (files.length !== 0) {
-    await r2.delete(files.map((file) => file.path));
+    await r2().delete(files.map((file) => file.path));
   }
 
   // await deleteAllEmails();

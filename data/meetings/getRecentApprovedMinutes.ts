@@ -5,7 +5,7 @@ export async function getRecentApprovedMinutes(
   limit: number,
   offset: number,
 ): Promise<File[]> {
-  return db
+  return db()
     .selectFrom("files")
     .selectAll("files")
     .leftJoin("meeting_minutes", "files.id", "meeting_minutes.fileId")

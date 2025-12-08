@@ -7,7 +7,7 @@ export type MeetingAgendaItem = Awaited<
 >[number];
 
 export async function listMeetingAgendaItems(meetingId: string) {
-  const rows = await db
+  const rows = await db()
     .selectFrom("meeting_agenda_items")
     .leftJoin("events", "meeting_agenda_items.eventId", "events.id")
     .leftJoin("files", "meeting_agenda_items.fileId", "files.id")

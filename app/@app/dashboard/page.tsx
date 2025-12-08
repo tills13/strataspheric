@@ -6,7 +6,6 @@ import { WidgetSkeleton } from "../../../components/Skeleton/WidgetSkeleton";
 import { mustGetCurrentStrata } from "../../../data/stratas/getStrataByDomain";
 import { StrataWidgets } from "./StrataWidget";
 
-export const runtime = "edge";
 
 export default async function Page() {
   const strata = await mustGetCurrentStrata();

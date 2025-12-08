@@ -6,7 +6,6 @@ import {
 } from "../../../../cloudflare/pages/getCustomDomain";
 import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
 
-export const runtime = "edge";
 
 export interface GetDomainStatusResponseData {
   status: GetCustomDomainData["status"];

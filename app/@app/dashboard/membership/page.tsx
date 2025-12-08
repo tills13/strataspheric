@@ -6,7 +6,6 @@ import { can } from "../../../../data/users/permissions";
 import { AddNewMemberButton } from "./AddNewMemberButton";
 import { Memberships } from "./Memberships";
 
-export const runtime = "edge";
 
 export default async function Page() {
   const session = await auth();

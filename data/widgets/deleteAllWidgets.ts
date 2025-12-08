@@ -1,7 +1,7 @@
 import { db } from "..";
 
 export async function deleteAllWidgets(strataId: string) {
-  return db.transaction().execute(async (t) => {
+  return db().transaction().execute(async (t) => {
     await t
       .deleteFrom("widget_events")
       .where("widget_events.widgetId", "in", (eb) =>

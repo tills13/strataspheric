@@ -1,7 +1,7 @@
 import { db } from "..";
 
 export async function deleteInvoice(invoiceId: string) {
-  return db.transaction().execute(async (txn) => {
+  return db().transaction().execute(async (txn) => {
     await txn
       .deleteFrom("invoices")
       .where("invoices.id", "=", invoiceId)

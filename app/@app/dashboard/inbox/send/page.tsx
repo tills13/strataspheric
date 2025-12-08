@@ -11,7 +11,6 @@ import { SendInboxMessageFields } from "../../../../../components/SendInboxMessa
 import { getStrataPlan } from "../../../../../data/strataPlans/getStrataPlan";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 
-export const runtime = "edge";
 
 export default async function Page() {
   const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);

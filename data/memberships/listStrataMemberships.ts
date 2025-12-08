@@ -14,7 +14,7 @@ interface FindMembersFilters {
 export async function listStrataMemberships(
   filter: FindMembersFilters,
 ): Promise<StrataMembership[]> {
-  let query = baseQuery.innerJoin(
+  let query = baseQuery().innerJoin(
     "stratas",
     "stratas.id",
     "strata_memberships.strataId",

@@ -6,7 +6,7 @@ export async function addItemToMeetingAgenda(
   meetingId: string,
   newMeetingAgendaItem: Omit<NewMeetingAgendaItem, "id" | "meetingId">,
 ) {
-  return db
+  return db()
     .insertInto("meeting_agenda_items")
     .values({ id: uuidv7(), meetingId, ...newMeetingAgendaItem })
     .execute();

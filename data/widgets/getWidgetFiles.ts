@@ -5,7 +5,7 @@ export async function getWidgetFiles(
   limit: number,
   offset: number,
 ): Promise<File[]> {
-  return db
+  return db()
     .selectFrom("files")
     .selectAll("files")
     .innerJoin("widget_files", "files.id", "widget_files.fileId")

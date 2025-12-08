@@ -20,7 +20,7 @@ export async function deleteFileAction(fileId: string) {
     return;
   }
 
-  await r2.delete(f.path);
+  await r2().delete(f.path);
   await deleteFile(fileId);
 
   revalidatePath("/dashboard/files");

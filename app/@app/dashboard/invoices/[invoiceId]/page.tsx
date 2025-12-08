@@ -26,7 +26,6 @@ import { can } from "../../../../../data/users/permissions";
 import { parseTimestamp } from "../../../../../utils/datetime";
 import { deleteInvoiceAction } from "../actions";
 
-export const runtime = "edge";
 
 export default async function Page({ params }: PageProps) {
   const invoiceId = (await params).invoiceId;

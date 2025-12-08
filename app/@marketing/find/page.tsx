@@ -9,7 +9,6 @@ import { StaticPageContainer } from "../StaticPageContainer";
 import { FindAStrata } from "./FindAStrata";
 import { StrataSearchForm } from "./StrataSearchForm";
 
-export const runtime = "edge";
 
 export default async function Page({ searchParams }: PageProps) {
   const { name, strataPlan, address } = await searchParams;

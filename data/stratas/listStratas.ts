@@ -15,7 +15,7 @@ type Filter = {
 };
 
 export async function listStratas(filter: Filter): Promise<Strata[]> {
-  return db
+  return db()
     .selectFrom("stratas")
     .leftJoin("strata_plans", "stratas.id", "strata_plans.strataId")
     .selectAll()

@@ -4,7 +4,6 @@ import { PricingCard } from "../../../components/PricingCard";
 import { plans } from "../../../data/strataPlans/constants";
 import { StaticPageContainer } from "../StaticPageContainer";
 
-export const runtime = "edge";
 
 export default function Page() {
   return (

@@ -4,7 +4,7 @@ export function updateStrata(
   strataId: Strata["id"],
   strataUpdate: StrataUpdate,
 ) {
-  return db
+  return db()
     .updateTable("stratas")
     .set(strataUpdate)
     .where("stratas.id", "=", strataId)

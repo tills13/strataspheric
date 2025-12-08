@@ -16,7 +16,6 @@ import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDom
 import { StrataCalendar } from "./StrataCalendar";
 import { deleteEventAction, upsertEventAction } from "./actions";
 
-export const runtime = "edge";
 
 export default async function Page({ params }: PageProps) {
   const { segments } = await params;

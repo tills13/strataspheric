@@ -6,7 +6,6 @@ import { can } from "../../../../data/users/permissions";
 import { formatTimestampForSql } from "../../../../utils/datetime";
 import { intParam } from "../../../../utils/url";
 
-export const runtime = "edge";
 
 export const GET = auth(async (session, req) => {
   const amenityId = req.nextUrl.searchParams.get("amenityId");

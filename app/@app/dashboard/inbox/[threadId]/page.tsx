@@ -11,7 +11,6 @@ import { classnames } from "../../../../../utils/classnames";
 import { InboxMessageThread } from "./InboxMessageThread";
 import { InboxThreadChatPanel } from "./InboxThreadChatPanel";
 
-export const runtime = "edge";
 
 export default async function Page({ params, searchParams }: PageProps) {
   const session = await auth();

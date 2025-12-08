@@ -17,7 +17,6 @@ import { getCurrentStrataPlan } from "../../../../data/strataPlans/getStrataPlan
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 
-export const runtime = "edge";
 
 const INBOX_UPSELL = `
  Stop worrying about shared email accounts or private emails being used

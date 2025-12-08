@@ -15,7 +15,7 @@ type ListThreadChatsFilter = {
 };
 
 export async function listThreadChats(filter: ListThreadChatsFilter) {
-  let query = db
+  let query = db()
     .selectFrom("inbox_thread_chats")
     .innerJoin("users", "inbox_thread_chats.userId", "users.id")
     .leftJoin("files", "files.id", "inbox_thread_chats.fileId")

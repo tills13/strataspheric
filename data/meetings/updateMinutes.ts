@@ -5,7 +5,7 @@ export function updateMinutes(
   fileId: string,
   meetingMinutesUpdate: MeetingMinutesUpdate,
 ) {
-  return db
+  return db()
     .updateTable("meeting_minutes")
     .set(meetingMinutesUpdate)
     .where("meeting_minutes.meetingId", "=", meetingId)

@@ -3,46 +3,48 @@ import { Amenity } from "./getAmenity";
 
 export type AmenityBooking = Awaited<ReturnType<typeof getAmenityBooking>>;
 
-export const baseQuery = db
-  .selectFrom("amenity_bookings")
-  .innerJoin("events", "amenity_bookings.eventId", "events.id")
-  .innerJoin("amenities", "amenity_bookings.amenityId", "amenities.id")
-  .innerJoin("files", "amenities.imageFileId", "files.id")
-  .leftJoin("invoices", "amenity_bookings.invoiceId", "invoices.id")
-  .leftJoin("users", "amenity_bookings.deciderId", "users.id")
-  .selectAll("amenities")
-  .select([
-    // amenity bookings
-    "amenity_bookings.id as amenityBookingId",
-    "amenity_bookings.decision as amenityBookingDecision",
+export function baseQuery() {
+  return db()
+    .selectFrom("amenity_bookings")
+    .innerJoin("events", "amenity_bookings.eventId", "events.id")
+    .innerJoin("amenities", "amenity_bookings.amenityId", "amenities.id")
+    .innerJoin("files", "amenities.imageFileId", "files.id")
+    .leftJoin("invoices", "amenity_bookings.invoiceId", "invoices.id")
+    .leftJoin("users", "amenity_bookings.deciderId", "users.id")
+    .selectAll("amenities")
+    .select([
+      // amenity bookings
+      "amenity_bookings.id as amenityBookingId",
+      "amenity_bookings.decision as amenityBookingDecision",
 
-    // decider
-    "users.id as deciderId",
-    "users.name as deciderName",
-    "users.email as deciderEmail",
+      // decider
+      "users.id as deciderId",
+      "users.name as deciderName",
+      "users.email as deciderEmail",
 
-    // amenity booking invoice
-    "invoices.id as amenityBookingInvoiceId",
-    "invoices.identifier as amenityBookingInvoiceIdentifier",
-    "invoices.amount as amenityBookingInvoiceAmount",
-    "invoices.status as amenityBookingInvoiceStatus",
-    "invoices.description as amenityBookingInvoiceDescription",
-    "invoices.isPaid as amenityBookingInvoiceIsPaid",
+      // amenity booking invoice
+      "invoices.id as amenityBookingInvoiceId",
+      "invoices.identifier as amenityBookingInvoiceIdentifier",
+      "invoices.amount as amenityBookingInvoiceAmount",
+      "invoices.status as amenityBookingInvoiceStatus",
+      "invoices.description as amenityBookingInvoiceDescription",
+      "invoices.isPaid as amenityBookingInvoiceIsPaid",
 
-    // amenity booking event
-    "events.startDate as amenityBookingStartDate",
-    "events.endDate as amenityBookingEndDate",
-    // amenity bookings amenity
-    "amenities.id as amenityId",
-    "amenities.name as amenityName",
-    "amenities.description as amenityDescription",
-    "amenities.status as amenityStatus",
-    "amenities.costPerHour as amenityCostPerHour",
-    "files.path as amenityImageSrc",
-    "files.name as amenityImageName",
-  ]);
+      // amenity booking event
+      "events.startDate as amenityBookingStartDate",
+      "events.endDate as amenityBookingEndDate",
+      // amenity bookings amenity
+      "amenities.id as amenityId",
+      "amenities.name as amenityName",
+      "amenities.description as amenityDescription",
+      "amenities.status as amenityStatus",
+      "amenities.costPerHour as amenityCostPerHour",
+      "files.path as amenityImageSrc",
+      "files.name as amenityImageName",
+    ]);
+}
 
-type Row = Awaited<ReturnType<(typeof baseQuery)["executeTakeFirstOrThrow"]>>;
+type Row = Awaited<ReturnType<ReturnType<typeof baseQuery>["executeTakeFirstOrThrow"]>>;
 
 export function processRows(...rows: Row[]) {
   return rows.map((row) => ({
@@ -82,7 +84,7 @@ export function processRows(...rows: Row[]) {
 }
 
 export async function getAmenityBooking(amenityBookingId: string) {
-  const row = await baseQuery
+  const row = await baseQuery()
     .where("amenity_bookings.id", "=", amenityBookingId)
     .executeTakeFirstOrThrow();
 

@@ -6,7 +6,7 @@ export async function updateUser(userId: string, userUpdate: UserUpdate) {
     userUpdate.password = await pbkdf2(userUpdate.password);
   }
 
-  return db
+  return db()
     .updateTable("users")
     .set(userUpdate)
     .where("id", "=", userId)

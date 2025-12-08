@@ -10,7 +10,7 @@ export function getEventsForRange(
   endDateTimestamp: number,
   filter: GetEventsForRangeFilter,
 ) {
-  let query = db
+  let query = db()
     .selectFrom("events")
     .selectAll("events")
     .leftJoin("meetings", "meetings.eventId", "events.id")

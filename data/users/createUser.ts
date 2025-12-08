@@ -7,7 +7,7 @@ import { User } from "./getUser";
 export async function createUser(newUser: Omit<NewUser, "id">): Promise<User> {
   newUser.password = await pbkdf2(newUser.password);
 
-  return db
+  return db()
     .insertInto("users")
     .values({ id: uuidv7(), ...newUser })
     .returningAll()

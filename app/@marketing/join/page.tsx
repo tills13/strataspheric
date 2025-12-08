@@ -4,7 +4,6 @@ import { StaticPageContainer } from "../StaticPageContainer";
 import { JoinFromToken } from "./JoinFromToken";
 import { joinAction } from "./actions";
 
-export const runtime = "edge";
 
 export default async function Page({ searchParams }: PageProps) {
   const { token } = await searchParams;

@@ -4,20 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "vercel-build": "next build",
     "dev": "next dev -H 0.0.0.0",
+    "build": "opennextjs-cloudflare build",
+    "preview": "opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare deploy",
     "lint": "eslint",
     "lint:typescript": "npx tsc --noEmit",
     "prettier": "prettier -l **/*",
     "prettier:fix": "prettier --write -l **/*",
     "dev:generate-key": "tsx auth/generateKey.ts",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "knip": "knip"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@cloudflare/next-on-pages": "^1.11.3",
     "@cloudflare/workers-types": "^4.20231025.0",
+    "@opennextjs/cloudflare": "^1.14.4",
     "@stripe/stripe-js": "^7.3.0",
     "@tanstack/react-query": "^5.77.0",
     "@vanilla-extract/css": "^1.17.1",
@@ -36,7 +39,8 @@
     "stripe": "^18.1.1",
     "swr": "^2.3.3",
     "tsx": "^4.19.3",
-    "uuidv7": "^0.6.3"
+    "uuidv7": "^0.6.3",
+    "wrangler": "^4.53.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.1",

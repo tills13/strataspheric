@@ -19,7 +19,7 @@ type ListStrataActivityFilter = {
 };
 
 export async function listStrataActivity(filter: ListStrataActivityFilter) {
-  let eventsQuery = db
+  let eventsQuery = db()
     .selectFrom("events")
     .select([
       sql.ref<string | null>("events.creatorId").as("sourceUserId"),
@@ -59,7 +59,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
         .where("events.id", "=", "meetings.eventId"),
     );
 
-  let invoicesQuery = db
+  let invoicesQuery = db()
     .selectFrom("invoices")
     .select((_eb) => [
       "invoices.payee as sourceUserId",
@@ -92,7 +92,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
       sql.lit(null).as("chatThreadId"),
     ]);
 
-  let messagesQuery = db
+  let messagesQuery = db()
     .selectFrom("inbox_messages")
     .select((_eb) => [
       "inbox_messages.senderUserId as sourceUserId",
@@ -125,7 +125,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
       sql.lit(null).as("chatThreadId"),
     ]);
 
-  let filesQuery = db
+  let filesQuery = db()
     .selectFrom("files")
     .select((_eb) => [
       "files.uploaderId as sourceUserId",
@@ -158,7 +158,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
       sql.lit(null).as("chatThreadId"),
     ]);
 
-  let threadChatsQuery = db
+  let threadChatsQuery = db()
     .selectFrom("inbox_thread_chats")
     .innerJoin(
       "inbox_messages",
@@ -216,7 +216,7 @@ export async function listStrataActivity(filter: ListStrataActivityFilter) {
     );
   }
 
-  let query = db
+  let query = db()
     .selectFrom(
       eventsQuery
         .union(invoicesQuery)

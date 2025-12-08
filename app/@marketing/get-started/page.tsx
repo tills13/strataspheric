@@ -7,7 +7,6 @@ import { Stack } from "../../../components/Stack";
 import { plans } from "../../../data/strataPlans/constants";
 import { StaticPageContainer } from "../StaticPageContainer";
 
-export const runtime = "edge";
 
 export default async function Page({ searchParams }: PageProps) {
   const { plan: planName } = await searchParams;

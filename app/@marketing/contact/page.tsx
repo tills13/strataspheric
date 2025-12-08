@@ -5,7 +5,6 @@ import { StaticPageContainer } from "../StaticPageContainer";
 import { ContactForm } from "./ContactForm";
 import { submitContactFormActionReducer } from "./actions";
 
-export const runtime = "edge";
 
 export default function Page() {
   return (

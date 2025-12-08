@@ -16,7 +16,7 @@ export function listFiles(
   filters: ListFilesFilter,
   pagination?: ListFilesPagination,
 ): Promise<File[]> {
-  let query = db.selectFrom("files").selectAll();
+  let query = db().selectFrom("files").selectAll();
 
   if (filters.strataId) {
     query = query.where("files.strataId", "=", filters.strataId);

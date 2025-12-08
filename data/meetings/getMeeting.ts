@@ -1,7 +1,7 @@
 import { db } from "..";
 
 export function getMeeting(strataId: string, meetingId: string) {
-  return db
+  return db()
     .selectFrom("meetings")
     .innerJoin("users", "meetings.callerId", "users.id")
     .innerJoin("events", "meetings.eventId", "events.id")

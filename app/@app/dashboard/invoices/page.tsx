@@ -10,7 +10,6 @@ import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain
 import { can } from "../../../../data/users/permissions";
 import { StrataInvoicesList } from "./StrataInvoicesList";
 
-export const runtime = "edge";
 
 export default async function Page({ searchParams }: PageProps) {
   const [session, strata] = await Promise.all([

@@ -4,7 +4,7 @@ export function updateWidgetInfo(
   widgetId: string,
   widgetInfoUpdate: WidgetInfoUpdate,
 ) {
-  return db
+  return db()
     .updateTable("widget_info")
     .set(widgetInfoUpdate)
     .where("widget_info.widgetId", "=", widgetId)

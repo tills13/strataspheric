@@ -5,7 +5,7 @@ export async function signInUser(
   email: string,
   password: string,
 ): Promise<User> {
-  const user = await db
+  const user = await db()
     .selectFrom("users")
     .selectAll()
     .where("users.email", "=", email)

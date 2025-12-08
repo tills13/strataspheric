@@ -18,7 +18,6 @@ import { protocol, tld } from "../../constants";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { joinAction } from "../@marketing/join/actions";
 
-export const runtime = "edge";
 
 export default async function Page({ searchParams }: PageProps) {
   const session = await auth();

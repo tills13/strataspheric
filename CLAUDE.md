@@ -34,15 +34,16 @@ The root `app/layout.tsx` determines which slot to render based on whether `getC
 
 ### Database Layer (Cloudflare D1 + Kysely)
 
-- `data/index.ts` - Database schema types and Kysely instance (`db`)
+- `data/index.ts` - Database schema types and `db()` function
 - `data/d1.ts` - Custom Kysely dialect for Cloudflare D1
 - Data operations are organized by entity: `data/{entity}/` contains query files (e.g., `getUser.ts`, `createUser.ts`, `listUsers.ts`)
+- **Important**: `db` and `r2` are functions that must be called: `db().selectFrom(...)`, `r2().put(...)`
 - Uses `uuidv7` for ID generation
 - Migrations live in `migrations/` as numbered SQL files
 
 ### File Storage (Cloudflare R2)
 
-- `data/r2.ts` - R2 bucket instance
+- `data/r2.ts` - `r2()` function for R2 bucket access
 - Files are stored with paths and referenced via `files` table
 
 ### Styling (Vanilla Extract)
@@ -78,7 +79,7 @@ The root `app/layout.tsx` determines which slot to render based on whether `getC
 
 - Development uses `strataspheric.local:3000` domain
 - Production uses `strataspheric.app` domain
-- D1/R2 bindings configured via `wrangler.toml` and `next.config.js` (setupDevBindings)
+- D1/R2 bindings configured via `wrangler.jsonc`
 
 ## Code Conventions
 
@@ -86,3 +87,9 @@ The root `app/layout.tsx` determines which slot to render based on whether `getC
 - ESLint with TypeScript strict mode
 - Unused variables must be prefixed with `_`
 - Data layer files allow `@typescript-eslint/no-non-null-assertion`
+- Project uses both `.ts` and `.tsx` files - ensure searches cover both extensions
+
+## Communication Style
+
+- Be direct and concise. Avoid sycophantic or sugar-coated responses.
+- State issues plainly without excessive hedging.

@@ -10,7 +10,7 @@ export function createThreadMessage({
 }) {
   const id = uuidv7();
 
-  return db
+  return db()
     .insertInto("inbox_messages")
     .values({
       id,

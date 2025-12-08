@@ -1,7 +1,6 @@
 import { ProtectedPage } from "../../../../components/ProtectedPage";
 import { MeetingsPage } from "./MeetingsPage";
 
-export const runtime = "edge";
 
 export default async function Page() {
   return (

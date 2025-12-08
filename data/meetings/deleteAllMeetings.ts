@@ -1,7 +1,7 @@
 import { db } from "..";
 
 export function deleteAllMeetings(strataId: string) {
-  return db.transaction().execute(async (trx) => {
+  return db().transaction().execute(async (trx) => {
     await trx
       .deleteFrom("events")
       .where("events.id", "in", (eb) =>

@@ -1,7 +1,7 @@
 import { StrataWidget, db } from "..";
 
 export async function getWidgets(strataId: string): Promise<StrataWidget[]> {
-  return db
+  return db()
     .selectFrom("strata_widgets")
     .selectAll()
     .leftJoin("widget_info", "strata_widgets.id", "widget_info.widgetId")

@@ -7,7 +7,6 @@ import {
 } from "../../../../data/meetings/listStrataActivity";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 
-export const runtime = "edge";
 
 export const GET = auth(async (_, req) => {
   const strata = await getCurrentStrata();

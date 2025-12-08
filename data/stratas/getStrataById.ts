@@ -3,7 +3,7 @@ import { StrataPlan, db } from "..";
 export type Strata = Awaited<ReturnType<typeof getStrataById>>;
 
 export async function getStrataById(id: string) {
-  const row = await db
+  const row = await db()
     .selectFrom("stratas")
     .innerJoin("strata_plans", "stratas.id", "strata_plans.strataId")
     .selectAll("stratas")

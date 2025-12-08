@@ -22,7 +22,7 @@ export async function getCurrentStrata() {
 
 export const getStrataByDomain = cache(
   async (domain: string): Promise<Strata | undefined> => {
-    const row = await db
+    const row = await db()
       .selectFrom("stratas")
       .innerJoin("strata_plans", "stratas.id", "strata_plans.strataId")
       .selectAll("stratas")

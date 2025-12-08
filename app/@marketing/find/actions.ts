@@ -20,7 +20,7 @@ export async function findYourStratasActionReducer(
     | undefined;
 
   if (typeof email === "string" && email) {
-    membershipsQuery = db
+    membershipsQuery = db()
       .selectFrom("strata_memberships")
       .select("strata_memberships.strataId")
       .innerJoin("users", "strata_memberships.userId", "users.id")
@@ -32,7 +32,7 @@ export async function findYourStratasActionReducer(
     | undefined;
 
   if (typeof strataName === "string" && strataName) {
-    stratasQuery = db
+    stratasQuery = db()
       .selectFrom("stratas")
       .select("stratas.id as strataId")
       .where((eb) =>
@@ -43,7 +43,7 @@ export async function findYourStratasActionReducer(
       );
   }
 
-  const stratas = await db
+  const stratas = await db()
     .selectFrom("stratas")
     .selectAll()
     .where(

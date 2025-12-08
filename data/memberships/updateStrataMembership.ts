@@ -5,7 +5,7 @@ export function updateStrataMembership(
   userId: string,
   strataMember: StrataMembershipUpdate,
 ) {
-  return db
+  return db()
     .updateTable("strata_memberships")
     .set(strataMember)
     .where("strata_memberships.strataId", "=", strataId)

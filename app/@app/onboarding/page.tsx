@@ -16,7 +16,6 @@ import { mustGetCurrentStrata } from "../../../data/stratas/getStrataByDomain";
 import { updateStrataAction } from "../actions";
 import { OnboardingAttachFileField } from "./OnboardingAttachFileField";
 
-export const runtime = "edge";
 
 export default async function Onboarding() {
   const strata = await mustGetCurrentStrata();

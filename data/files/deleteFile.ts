@@ -1,7 +1,7 @@
 import { db } from "..";
 
 export async function deleteFile(fileId: string) {
-  return db.transaction().execute(async (trx) => {
+  return db().transaction().execute(async (trx) => {
     await trx
       .updateTable("inbox_messages")
       .set({ fileId: null })

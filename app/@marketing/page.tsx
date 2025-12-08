@@ -13,7 +13,6 @@ import { Text } from "../../components/Text";
 import { plans } from "../../data/strataPlans/constants";
 import { classnames } from "../../utils/classnames";
 
-export const runtime = "edge";
 
 export default async function Page() {
   return (

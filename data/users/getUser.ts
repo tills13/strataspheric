@@ -3,7 +3,7 @@ import { db } from "..";
 export type User = Awaited<ReturnType<typeof getUserByEmail>>;
 
 export function getUserByEmail(email: string) {
-  return db
+  return db()
     .selectFrom("users")
     .select(["users.id", "users.email", "users.status"])
     .where("users.email", "=", email)
@@ -11,7 +11,7 @@ export function getUserByEmail(email: string) {
 }
 
 export function getUserById(id: string) {
-  return db
+  return db()
     .selectFrom("users")
     .select(["users.id", "users.email", "users.status"])
     .where("users.id", "=", id)

@@ -1,7 +1,7 @@
 import { db } from "..";
 
 export function getNextInvoiceId(strataId: string) {
-  return db
+  return db()
     .selectFrom("invoices")
     .select((eb) => eb.fn<number>("count", []).as("count"))
     .leftJoin("amenity_bookings", "invoices.id", "amenity_bookings.invoiceId")

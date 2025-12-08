@@ -1,7 +1,7 @@
 import { db } from "..";
 
 export async function deleteStrata(strataId: string) {
-  return db
+  return db()
     .deleteFrom("stratas")
     .where("stratas.id", "=", strataId)
     .executeTakeFirstOrThrow();

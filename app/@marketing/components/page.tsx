@@ -115,7 +115,6 @@ const ICONS = [
   ZipFileIcon,
 ];
 
-export const runtime = "edge";
 
 const MOCK_INVOICE: Invoice = {
   id: "123",

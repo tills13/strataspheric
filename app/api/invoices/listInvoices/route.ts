@@ -3,7 +3,6 @@ import { listInvoices } from "../../../../data/invoices/listInvoices";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 
-export const runtime = "edge";
 
 export const GET = auth(async () => {
   const [session, strata] = await Promise.all([mustAuth(), getCurrentStrata()]);

@@ -3,7 +3,6 @@ import { Upsell } from "../../../../components/Upsell";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { AmenitiesPage } from "./AmenitiesPage";
 
-export const runtime = "edge";
 
 const AMENITIES_UPSELL = `
 Manage amenity bookings & invoicing directly within Strataspheric.

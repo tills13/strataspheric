@@ -13,7 +13,7 @@ export function listMeetings(
   filter: ListMeetingsFilter = {},
   pagination: ListMeetingsPagination = {},
 ) {
-  let query = db
+  let query = db()
     .selectFrom("meetings")
     .innerJoin("users", "meetings.callerId", "users.id")
     .innerJoin("events", "meetings.eventId", "events.id")

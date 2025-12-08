@@ -4,7 +4,7 @@ export function updateWidget(
   widgetId: string,
   widgetUpdate: StrataWidgetUpdate,
 ) {
-  return db
+  return db()
     .updateTable("strata_widgets")
     .set(widgetUpdate)
     .where("id", "=", widgetId)

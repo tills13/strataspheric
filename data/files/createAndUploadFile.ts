@@ -19,7 +19,7 @@ export async function createAndUploadFile(
   const key =
     strataId + "/" + Buffer.from(uuidv7()).toString("base64") + "." + extension;
 
-  await r2.put(key, await file.arrayBuffer(), {
+  await r2().put(key, await file.arrayBuffer(), {
     httpMetadata: { contentType: file.type },
   });
 

@@ -9,7 +9,7 @@ export async function getThreadMessages(
   threadId: string,
   viewId?: string | undefined,
 ) {
-  let query = db
+  let query = db()
     .selectFrom("inbox_messages")
     .leftJoin("users", "inbox_messages.senderUserId", "users.id")
     .leftJoin("files", "inbox_messages.fileId", "files.id")

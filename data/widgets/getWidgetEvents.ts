@@ -5,7 +5,7 @@ export function getWidgetEvents(
   limit: number,
   offset: number,
 ): Promise<Event[]> {
-  return db
+  return db()
     .selectFrom("events")
     .selectAll("events")
     .innerJoin("widget_events", "events.id", "widget_events.eventId")

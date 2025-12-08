@@ -2,7 +2,6 @@ import { PageProps } from "../../../../../.next/types/app/@app/dashboard/meeting
 import { ProtectedPage } from "../../../../../components/ProtectedPage";
 import { MeetingLayout } from "./MeetingLayout";
 
-export const runtime = "edge";
 
 export default async function Page({ params }: PageProps) {
   const { meetingId } = await params;

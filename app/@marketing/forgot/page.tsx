@@ -7,7 +7,6 @@ import { StaticPageContainer } from "../StaticPageContainer";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
 import { resetPasswordAction } from "./actions";
 
-export const runtime = "edge";
 
 export default async function Page({ searchParams }: PageProps) {
   const { token } = await searchParams;

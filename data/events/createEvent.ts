@@ -5,7 +5,7 @@ import { Event, NewEvent, db } from "..";
 export async function createEvent(
   newEvent: Omit<NewEvent, "id">,
 ): Promise<Event> {
-  return db
+  return db()
     .insertInto("events")
     .values({
       id: uuidv7(),

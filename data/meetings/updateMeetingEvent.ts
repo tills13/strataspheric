@@ -4,7 +4,7 @@ export async function updateMeetingEvent(
   meetingId: string,
   eventUpdate: EventUpdate,
 ) {
-  return db
+  return db()
     .updateTable("events")
     .set(eventUpdate)
     .where("events.id", "=", (eb) =>

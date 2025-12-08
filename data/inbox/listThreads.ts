@@ -14,11 +14,11 @@ export async function listThreads(
   filter: ListThreadsFilter,
   pagination: ListThreadsPagination = {},
 ): Promise<PaginatedResults<Thread>> {
-  let limitQuery = db
+  let limitQuery = db()
     .selectFrom("inbox_messages")
     .select((eb) => eb.fn<number>("count", []).as("count"));
 
-  let query = db
+  let query = db()
     .selectFrom("inbox_messages")
     .leftJoin("users", "inbox_messages.senderUserId", "users.id")
     .select((eb) => [

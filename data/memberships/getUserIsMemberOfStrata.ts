@@ -5,7 +5,7 @@ export async function getUserIsMemberOfStrata(
   userId: string,
 ) {
   return !!(
-    await db
+    await db()
       .selectFrom("strata_memberships")
       .select((eb) => eb.val(1).as("exists"))
       .where("strata_memberships.strataId", "=", strataId)

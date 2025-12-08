@@ -1,3 +1,7 @@
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { type R2Bucket } from "@cloudflare/workers-types";
 
-export const r2 = process.env.R2 as unknown as R2Bucket;
+export function r2() {
+  const { env } = getCloudflareContext();
+  return env.R2 as R2Bucket;
+}

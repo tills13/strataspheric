@@ -17,7 +17,7 @@ export async function createInvoice(
   newInvoice: AutoIdentifierNewInvoice | Omit<NewInvoice, "id">,
   autoIdentifierPrefix?: string,
 ): Promise<Invoice> {
-  return db
+  return db()
     .insertInto("invoices")
     .values({
       id: uuidv7(),

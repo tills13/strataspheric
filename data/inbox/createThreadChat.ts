@@ -5,7 +5,7 @@ import { NewInboxThreadChat, db } from "..";
 export function createThreadChat(
   newInboxThreadChat: Omit<NewInboxThreadChat, "id">,
 ) {
-  return db
+  return db()
     .insertInto("inbox_thread_chats")
     .values({
       id: uuidv7(),

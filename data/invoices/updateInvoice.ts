@@ -4,7 +4,7 @@ export async function updateInvoice(
   invoiceId: string,
   invoiceUpdate: InvoiceUpdate,
 ): Promise<Invoice> {
-  return db
+  return db()
     .updateTable("invoices")
     .set(invoiceUpdate)
     .where("invoices.id", "=", invoiceId)

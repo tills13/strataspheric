@@ -12,10 +12,10 @@ export async function listInvoices(
   filter: ListInvoicesFilter = {},
   pagination: ListInvoicesPagination = {},
 ): Promise<PaginatedResults<Invoice>> {
-  let limitQuery = db
+  let limitQuery = db()
     .selectFrom("invoices")
     .select((eb) => eb.fn<number>("count", []).as("count"));
-  let query = db.selectFrom("invoices").selectAll();
+  let query = db().selectFrom("invoices").selectAll();
 
   if (filter.strataId) {
     limitQuery = limitQuery.where("invoices.strataId", "=", filter.strataId);

@@ -41,7 +41,7 @@ export type File = Awaited<ReturnType<typeof getFile>>;
 // }
 
 export async function getFile(fileId: string) {
-  return db
+  return db()
     .selectFrom("files")
     .selectAll()
     .where("files.id", "=", fileId)

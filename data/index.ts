@@ -1,3 +1,4 @@
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { D1Database } from "@cloudflare/workers-types";
 import { ColumnType, Insertable, Kysely, Selectable, Updateable } from "kysely";
 
@@ -337,9 +338,12 @@ export interface Database {
   widget_info: WidgetInfoTable;
 }
 
-export const db = new Kysely<Database>({
-  dialect: new D1Dialect({
-    database: process.env.DB as unknown as D1Database,
-  }),
-  log: ["query"],
-});
+export function db() {
+  const { env } = getCloudflareContext();
+  return new Kysely<Database>({
+    dialect: new D1Dialect({
+      database: env.DB as D1Database,
+    }),
+    log: ["query"],
+  });
+}

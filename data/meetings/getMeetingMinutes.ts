@@ -3,7 +3,7 @@ import { db } from "..";
 export type MeetingMinutes = Awaited<ReturnType<typeof getMeetingMinutes>>[0];
 
 export function getMeetingMinutes(meetingId: string) {
-  return db
+  return db()
     .selectFrom("meeting_minutes")
     .innerJoin("files", "files.id", "meeting_minutes.fileId")
     .leftJoin("users", "users.id", "meeting_minutes.approverId")

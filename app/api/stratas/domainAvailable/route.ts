@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
 
-export const runtime = "edge";
 
 interface IsDomainAvailableResponseData {
   isAvailable: boolean;

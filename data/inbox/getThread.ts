@@ -8,7 +8,7 @@ type GetThreadFilter = {
 };
 
 export function getThread(threadId: string, filter: GetThreadFilter) {
-  let query = db
+  let query = db()
     .selectFrom("inbox_messages")
     .leftJoin(
       "strata_memberships",

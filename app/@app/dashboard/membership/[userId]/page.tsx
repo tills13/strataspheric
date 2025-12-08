@@ -8,7 +8,6 @@ import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { getStrataMembership } from "../../../../../data/memberships/getStrataMembership";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 
-export const runtime = "edge";
 
 export default async function Page({ params }: PageProps) {
   const { userId } = await params;
