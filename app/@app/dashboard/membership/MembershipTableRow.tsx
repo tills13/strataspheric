@@ -1,7 +1,11 @@
 import { auth } from "../../../../auth";
 import { Badge } from "../../../../components/Badge";
+import { Button } from "../../../../components/Button";
 import { Group } from "../../../../components/Group";
+import { EmailIcon } from "../../../../components/Icon/EmailIcon";
+import { PhoneIcon } from "../../../../components/Icon/PhoneIcon";
 import { RemoveIcon } from "../../../../components/Icon/RemoveIcon";
+import { ExternalLink } from "../../../../components/Link/ExternalLink";
 import { StatusButton } from "../../../../components/StatusButton";
 import { TableRow } from "../../../../components/Table/TableRow";
 import { Text } from "../../../../components/Text";
@@ -21,7 +25,27 @@ export async function MembershipTableRow({ membership }: Props) {
   return (
     <TableRow
       actions={
-        <>
+        <Group gap="xs">
+          {membership.email && (
+            <ExternalLink href={`mailto:${membership.email}`} noUnderline>
+              <Button
+                icon={<EmailIcon />}
+                style="tertiary"
+                color="default"
+                size="small"
+              />
+            </ExternalLink>
+          )}
+          {membership.phoneNumber && (
+            <ExternalLink href={`tel:${membership.phoneNumber}`} noUnderline>
+              <Button
+                icon={<PhoneIcon />}
+                style="tertiary"
+                color="default"
+                size="small"
+              />
+            </ExternalLink>
+          )}
           {canUpsert && (
             <StatusButton
               action={deleteStrataMembershipAction.bind(
@@ -34,7 +58,7 @@ export async function MembershipTableRow({ membership }: Props) {
               size="small"
             />
           )}
-        </>
+        </Group>
       }
       content={
         <Group flex={1}>
