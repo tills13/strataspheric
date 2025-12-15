@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+
 import { upsertStrataMembershipAction } from "../../app/@app/dashboard/membership/actions";
 import { StrataMembership } from "../../data/memberships/getStrataMembership";
 import { classnames } from "../../utils/classnames";
@@ -20,13 +22,18 @@ export function CreateOrUpdateStrataMembershipForm({
   membership,
   onUpsertMember,
 }: React.PropsWithChildren<Props>) {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const ref = useRef<HTMLFormElement>(null!);
+
   return (
     <form
       action={async (fd) => {
         await upsertStrataMembershipAction(membership?.userId, fd);
         onUpsertMember?.();
+        ref.current.reset();
       }}
       className={classnames(className)}
+      ref={ref}
     >
       <Stack>
         {children}

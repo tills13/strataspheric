@@ -24,18 +24,18 @@ export function getString(fd: FormData, name: string): string {
   return "";
 }
 
-export function getEnum<T>(
+export function getEnum<T extends unknown[] | readonly unknown[]>(
   fd: FormData,
   name: string,
-  allowedValues: T[],
-): T | undefined {
+  allowedValues: T,
+): T[number] | undefined {
   const rawValue = getString(fd, name);
 
-  if (!allowedValues.includes(rawValue as T)) {
+  if (!allowedValues.includes(rawValue)) {
     return undefined;
   }
 
-  return rawValue as T;
+  return rawValue as T[number];
 }
 
 export function getBoolean(fd: FormData, name: string): boolean {

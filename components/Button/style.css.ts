@@ -449,9 +449,9 @@ export const iconContainer = style({
     "&:empty": {
       background: "none",
     },
-    "&:only-child": {
-      background: "none",
-    },
+    // "&:only-child": {
+    //   background: "none",
+    // },
   },
 });
 

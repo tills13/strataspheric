@@ -58,7 +58,6 @@ export function DropdownButton({
         size={buttonSize}
         style={open ? undefined : buttonStyle}
         icon={icon}
-        iconTextBehaviour="centerRemainder"
       >
         {openLabel}
       </Button>

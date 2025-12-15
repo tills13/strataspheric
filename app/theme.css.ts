@@ -10,6 +10,7 @@ export const breakpoints = {
 
 export const media = {
   pointerFine: "(pointer: fine)",
+  pointerCoarse: "(pointer: coarse)",
 };
 
 export const iconColorVar = createVar();

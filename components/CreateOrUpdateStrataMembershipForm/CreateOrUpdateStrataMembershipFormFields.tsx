@@ -50,6 +50,7 @@ export function CreateOrUpdateStrataMembershipFormFields({
       />
 
       <StrataRoleSelect
+        key={membership?.role}
         label="Strata Role"
         name="role"
         defaultValue={membership?.role || "owner"}

@@ -46,7 +46,7 @@ export async function MembershipTableRow({ membership }: Props) {
               />
             </ExternalLink>
           )}
-          {canUpsert && (
+          {canUpsert && membership.role !== "administrator" && (
             <StatusButton
               action={deleteStrataMembershipAction.bind(
                 undefined,
@@ -70,7 +70,7 @@ export async function MembershipTableRow({ membership }: Props) {
         </Group>
       }
       rowId={membership.id}
-      link={canUpsert ? `/dashboard/membership/${membership.id}` : undefined}
+      link={`/dashboard/membership/${membership.id}`}
     />
   );
 }

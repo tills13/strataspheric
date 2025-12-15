@@ -17,6 +17,7 @@ import {
   allPermissions,
   isRoleHigherThan,
   rolePermissionsEqualCustomPermissions,
+  roles,
 } from "../../../../data/users/permissions";
 import { withPermissions } from "../../../../utils/actions";
 import * as formdata from "../../../../utils/formdata";
@@ -41,7 +42,7 @@ export const upsertStrataMembershipAction = withPermissions(
     const name = formdata.getString(fd, "name");
     const phoneNumber = formdata.getString(fd, "phone_number");
     const unit = formdata.getString(fd, "unit");
-    const role = formdata.getString(fd, "role") as Role;
+    const role = formdata.getEnum(fd, "role", roles);
     const password = formdata.getString(fd, "password");
     const rawPermissions = formdata.getObject(fd, "permission");
 
@@ -53,7 +54,7 @@ export const upsertStrataMembershipAction = withPermissions(
     const currentUserRole = currentUserMembership.role;
 
     // Validate: Cannot assign a role higher than your own
-    if (isRoleHigherThan(role, currentUserRole)) {
+    if (role && isRoleHigherThan(role, currentUserRole)) {
       throw new Error("Cannot assign a role higher than your own");
     }
 
@@ -69,6 +70,7 @@ export const upsertStrataMembershipAction = withPermissions(
       if (
         session.user.id === userId &&
         currentUserRole === "administrator" &&
+        role &&
         role !== "administrator"
       ) {
         throw new Error("Administrators cannot change their own role");
@@ -83,20 +85,21 @@ export const upsertStrataMembershipAction = withPermissions(
         )
         .map(([permissionName]) => permissionName);
 
-      const permissions = rolePermissionsEqualCustomPermissions(
-        membership.role,
-        parsedPermissions,
-      )
-        ? rawPermissions
-          ? // undefined -> don't update, null -> clear
-            null
-          : undefined
-        : parsedPermissions;
+      // Reset permissions to role defaults if the role is changing
+      const roleChanged = role && role !== membership.role;
+      const permissions = roleChanged
+        ? null
+        : rolePermissionsEqualCustomPermissions(membership.role, parsedPermissions)
+          ? rawPermissions
+            ? // undefined -> don't update, null -> clear
+              null
+            : undefined
+          : parsedPermissions;
 
       await updateStrataMembership(strata.id, userId, {
         unit,
-        role: role as Role,
         phoneNumber,
+        ...(role && { role }),
         ...(permissions !== undefined && {
           rawPermissions:
             permissions === null ? null : JSON.stringify(permissions),
