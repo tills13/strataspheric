@@ -74,33 +74,32 @@ export async function InboxMessageThread({ threadId }: Props) {
         )}
       </Stack>
 
-      {messages.map((message, idx) =>
-        message.message === "" ? null : (
-          <ThreadMessage
-            key={message.id}
-            id={message.id}
-            inboxThreadMessage={message}
-            showSenderDetails={idx !== 0}
-          />
-        ),
-      )}
+      {messages.map((message, idx) => (
+        <ThreadMessage
+          key={message.id}
+          id={message.id}
+          inboxThreadMessage={message}
+          showSenderDetails={idx !== 0}
+        />
+      ))}
 
-      {amenityBooking && (
-        <InboxMessageThreadAmenityBooking amenityBooking={amenityBooking} />
-      )}
-
-      <SendInboxMessageForm className={s({ p: "normal" })} threadId={threadId}>
-        {!session && (
-          <SendInboxMessageContactDetailsFields
-            defaultEmail={message0.senderEmail}
-            defaultName={message0.senderName}
-            defaultPhoneNumber={message0.senderPhoneNumber}
-            mb="large"
-          />
+      <Stack className={s({ p: "normal" })}>
+        {amenityBooking && (
+          <InboxMessageThreadAmenityBooking amenityBooking={amenityBooking} />
         )}
 
-        <SendInboxMessageFields showSubjectInput={false} />
-      </SendInboxMessageForm>
+        <SendInboxMessageForm threadId={threadId}>
+          {!session && (
+            <SendInboxMessageContactDetailsFields
+              defaultEmail={message0.senderEmail}
+              defaultName={message0.senderName}
+              defaultPhoneNumber={message0.senderPhoneNumber}
+            />
+          )}
+
+          <SendInboxMessageFields showSubjectInput={false} />
+        </SendInboxMessageForm>
+      </Stack>
     </div>
   );
 }

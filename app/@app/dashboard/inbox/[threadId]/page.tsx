@@ -2,7 +2,6 @@ import * as styles from "./style.css";
 
 import { redirect } from "next/navigation";
 
-import { PageProps } from "../../../../../.next/types/app/@app/dashboard/inbox/[threadId]/page";
 import { auth } from "../../../../../auth";
 import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Thread, getThread } from "../../../../../data/inbox/getThread";
@@ -12,7 +11,7 @@ import { InboxMessageThread } from "./InboxMessageThread";
 import { InboxThreadChatPanel } from "./InboxThreadChatPanel";
 
 
-export default async function Page({ params, searchParams }: PageProps) {
+export default async function Page({ params, searchParams }: PageProps<"/dashboard/inbox/[threadId]">) {
   const session = await auth();
 
   const { threadId } = await params;

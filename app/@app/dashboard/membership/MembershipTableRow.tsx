@@ -1,3 +1,4 @@
+import { auth } from "../../../../auth";
 import { Badge } from "../../../../components/Badge";
 import { Group } from "../../../../components/Group";
 import { RemoveIcon } from "../../../../components/Icon/RemoveIcon";
@@ -5,26 +6,35 @@ import { StatusButton } from "../../../../components/StatusButton";
 import { TableRow } from "../../../../components/Table/TableRow";
 import { Text } from "../../../../components/Text";
 import { StrataMembership } from "../../../../data/memberships/getStrataMembership";
+import { can } from "../../../../data/users/permissions";
 import { deleteStrataMembershipAction } from "./actions";
 
 interface Props {
   membership: StrataMembership;
 }
 
-export function MembershipTableRow({ membership }: Props) {
+export async function MembershipTableRow({ membership }: Props) {
+  const session = await auth();
+
+  const canUpsert = can(session?.user, "stratas.memberships.edit");
+
   return (
     <TableRow
       actions={
-        <StatusButton
-          action={deleteStrataMembershipAction.bind(
-            undefined,
-            membership.userId,
+        <>
+          {canUpsert && (
+            <StatusButton
+              action={deleteStrataMembershipAction.bind(
+                undefined,
+                membership.userId,
+              )}
+              icon={<RemoveIcon />}
+              style="tertiary"
+              color="error"
+              size="small"
+            />
           )}
-          icon={<RemoveIcon />}
-          style="tertiary"
-          color="error"
-          size="small"
-        />
+        </>
       }
       content={
         <Group flex={1}>
@@ -36,7 +46,7 @@ export function MembershipTableRow({ membership }: Props) {
         </Group>
       }
       rowId={membership.id}
-      link={`/dashboard/membership/${membership.id}`}
+      link={canUpsert ? `/dashboard/membership/${membership.id}` : undefined}
     />
   );
 }

@@ -1,4 +1,3 @@
-import { PageProps } from "../../../.next/types/app/@marketing/forgot/page";
 import { Input } from "../../../components/Input";
 import { Panel } from "../../../components/Panel";
 import { Stack } from "../../../components/Stack";
@@ -8,7 +7,7 @@ import { ForgotPasswordForm } from "./ForgotPasswordForm";
 import { resetPasswordAction } from "./actions";
 
 
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page({ searchParams }: PageProps<"/forgot">) {
   const { token } = await searchParams;
 
   if (token) {

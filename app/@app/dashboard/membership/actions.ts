@@ -15,6 +15,7 @@ import {
   Permission,
   Role,
   allPermissions,
+  isRoleHigherThan,
   rolePermissionsEqualCustomPermissions,
 } from "../../../../data/users/permissions";
 import { withPermissions } from "../../../../utils/actions";
@@ -40,12 +41,38 @@ export const upsertStrataMembershipAction = withPermissions(
     const name = formdata.getString(fd, "name");
     const phoneNumber = formdata.getString(fd, "phone_number");
     const unit = formdata.getString(fd, "unit");
-    const role = formdata.getString(fd, "role");
+    const role = formdata.getString(fd, "role") as Role;
     const password = formdata.getString(fd, "password");
     const rawPermissions = formdata.getObject(fd, "permission");
 
+    // Get current user's membership to check their role
+    const currentUserMembership = await getStrataMembership(
+      strata.id,
+      session.user.id,
+    );
+    const currentUserRole = currentUserMembership.role;
+
+    // Validate: Cannot assign a role higher than your own
+    if (isRoleHigherThan(role, currentUserRole)) {
+      throw new Error("Cannot assign a role higher than your own");
+    }
+
     if (userId) {
       const membership = await getStrataMembership(strata.id, userId);
+
+      // Validate: Cannot change the role of someone with a higher role
+      if (isRoleHigherThan(membership.role, currentUserRole)) {
+        throw new Error("Cannot modify a member with a higher role than yours");
+      }
+
+      // Validate: Administrator cannot change their own role
+      if (
+        session.user.id === userId &&
+        currentUserRole === "administrator" &&
+        role !== "administrator"
+      ) {
+        throw new Error("Administrators cannot change their own role");
+      }
 
       const parsedPermissions = Object.entries(rawPermissions)
         .filter(

@@ -3,6 +3,7 @@ import { AmenityChip } from "../../../../components/AmenityChip";
 import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { NothingHere } from "../../../../components/NothingHere";
 import { Stack } from "../../../../components/Stack";
+import { UpcomingAmenityBookings } from "../../../../components/UpcomingAmenityBookings";
 import { listAmenitiesForCurrentStrata } from "../../../../data/amenities/listAmenitiesForCurrentStrata";
 import { can } from "../../../../data/users/permissions";
 import { AddNewAmenityButton } from "./AddNewAmenityButton";
@@ -22,13 +23,16 @@ export async function AmenitiesPage() {
       }
       title="Amenities"
     >
-      {amenities.length === 0 && (
-        <NothingHere>This strata has no amenities.</NothingHere>
-      )}
-      <Stack ph="normal">
-        {amenities.map((amenity) => (
-          <AmenityChip key={amenity.id} amenity={amenity} />
-        ))}
+      <Stack gap="large">
+        <UpcomingAmenityBookings userId={session.user.id} />
+        {amenities.length === 0 && (
+          <NothingHere>This strata has no amenities.</NothingHere>
+        )}
+        <Stack ph="normal">
+          {amenities.map((amenity) => (
+            <AmenityChip key={amenity.id} amenity={amenity} />
+          ))}
+        </Stack>
       </Stack>
     </DashboardLayout>
   );

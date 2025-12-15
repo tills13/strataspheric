@@ -21,6 +21,29 @@ export const roles = [
   "owner",
   "pending",
 ] as const;
+
+/** Lower index = higher rank. Administrator is highest (0), pending is lowest. */
+export function getRoleRank(role: Role): number {
+  return roles.indexOf(role);
+}
+
+/** Returns true if roleA is higher than or equal to roleB in hierarchy */
+export function isRoleAtLeast(roleA: Role, roleB: Role): boolean {
+  return getRoleRank(roleA) <= getRoleRank(roleB);
+}
+
+/** Returns true if roleA is strictly higher than roleB in hierarchy */
+export function isRoleHigherThan(roleA: Role, roleB: Role): boolean {
+  return getRoleRank(roleA) < getRoleRank(roleB);
+}
+
+/** Returns roles that the current user can assign (their role and below) */
+export function getAssignableRoles(currentUserRole: Role): Role[] {
+  const currentRank = getRoleRank(currentUserRole);
+  return roles.filter(
+    (role) => getRoleRank(role) >= currentRank && role !== "pending",
+  );
+}
 export const allPermissions = [
   ...namespaces.flatMap((namespace) =>
     actions.flatMap((action) => `${namespace}.${action}` as Permission),

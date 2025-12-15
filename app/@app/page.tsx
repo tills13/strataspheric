@@ -2,9 +2,7 @@ import * as linkStyles from "../../components/Link/style.css";
 import * as styles from "./style.css";
 
 import { redirect } from "next/navigation";
-import React from "react";
 
-import { PageProps } from "../../.next/types/app/@app/page";
 import { auth } from "../../auth";
 import { Button } from "../../components/Button";
 import { DividerText } from "../../components/DividerText";
@@ -18,8 +16,7 @@ import { protocol, tld } from "../../constants";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
 import { joinAction } from "../@marketing/join/actions";
 
-
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page({ searchParams }: PageProps<"/">) {
   const session = await auth();
   const { action } = await searchParams;
 

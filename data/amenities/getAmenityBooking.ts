@@ -29,6 +29,7 @@ export function baseQuery() {
       "invoices.status as amenityBookingInvoiceStatus",
       "invoices.description as amenityBookingInvoiceDescription",
       "invoices.isPaid as amenityBookingInvoiceIsPaid",
+      "invoices.dueBy as amenityBookingInvoiceDueBy",
 
       // amenity booking event
       "events.startDate as amenityBookingStartDate",
@@ -65,6 +66,7 @@ export function processRows(...rows: Row[]) {
           status: row.amenityBookingInvoiceStatus!,
           description: row.amenityBookingInvoiceDescription!,
           isPaid: row.amenityBookingInvoiceIsPaid!,
+          dueBy: row.amenityBookingInvoiceDueBy!,
         }
       : undefined,
     startDate: row.amenityBookingStartDate,

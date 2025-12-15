@@ -4,7 +4,6 @@ import * as styles from "./style.css";
 import format from "date-fns/format";
 import { notFound } from "next/navigation";
 
-import { PageProps } from "../../../../../.next/types/app/@app/dashboard/calendar/[...segments]/page";
 import { Button } from "../../../../../components/Button";
 import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Group } from "../../../../../components/Group";
@@ -17,7 +16,7 @@ import { StrataCalendar } from "./StrataCalendar";
 import { deleteEventAction, upsertEventAction } from "./actions";
 
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps<"/dashboard/calendar/[...segments]">) {
   const { segments } = await params;
   const strata = await mustGetCurrentStrata();
 

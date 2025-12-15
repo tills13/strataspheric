@@ -17,13 +17,20 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
   const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
   const canDelete = can(session?.user, "stratas.files.delete");
 
-  const files = await listFiles({
-    strataId: strata.id,
-    isPublic:
-      !canDelete ||
-      (typeof visibility === "undefined" ? undefined : visibility === "public"),
-    ...(searchTerm && { searchTerm }),
-  });
+  const files = await listFiles(
+    {
+      strataId: strata.id,
+      isPublic:
+        !canDelete ||
+        (typeof visibility === "undefined"
+          ? undefined
+          : visibility === "public"),
+      ...(searchTerm && { searchTerm }),
+    },
+    {
+      orderBy: "createdAt desc",
+    },
+  );
 
   return (
     <>

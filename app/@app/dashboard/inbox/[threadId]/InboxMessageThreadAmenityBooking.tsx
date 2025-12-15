@@ -1,7 +1,5 @@
 "use client";
 
-import { s } from "../../../../../sprinkles.css";
-
 import React, { useMemo } from "react";
 
 import { AmenitiesBookingCalendar } from "../../../../../components/AmenitiesBookingCalendar";
@@ -18,6 +16,7 @@ import { useCan } from "../../../../../hooks/useCan";
 import { approveOrRejectAmenityBookingAction } from "../../amenities/actions";
 
 interface Props {
+  className?: string;
   amenityBooking: AmenityBooking;
 }
 
@@ -38,70 +37,66 @@ export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
   );
 
   return (
-    <div className={s({ p: "normal" })}>
-      <Panel>
-        <Stack>
-          <Header as="h3">Booking Request</Header>
+    <Panel>
+      <Stack>
+        <Header as="h3">Booking Request</Header>
 
-          <AmenitiesBookingCalendar
-            amenity={amenityBooking.amenity}
-            booking={virtualEvent}
-          />
+        <AmenitiesBookingCalendar
+          amenity={amenityBooking.amenity}
+          booking={virtualEvent}
+        />
 
-          {can("stratas.amenity_bookings.edit") && !amenityBooking.decision && (
-            <>
-              {amenityBooking.invoice && (
-                <InvoiceChip invoice={amenityBooking.invoice} />
-              )}
+        {can("stratas.amenity_bookings.edit") && !amenityBooking.decision && (
+          <>
+            {amenityBooking.invoice && (
+              <InvoiceChip invoice={amenityBooking.invoice} />
+            )}
 
-              <InfoPanel level="default">
-                Approving the booking will lock in the date for the booking,
-                publish the above invoice, and automatically generate a response
-                to this thread with the invoice attached. Rejecting the booking
-                will delete the invoice and generate a response to this thread.
-              </InfoPanel>
-
-              <Group equalWidthChildren>
-                <StatusButton
-                  action={approveOrRejectAmenityBookingAction.bind(
-                    undefined,
-                    amenityBooking.id,
-                    "approve",
-                  )}
-                  style="secondary"
-                  color="success"
-                  iconTextBehaviour="centerGlobal"
-                >
-                  Approve
-                </StatusButton>
-                <StatusButton
-                  action={approveOrRejectAmenityBookingAction.bind(
-                    undefined,
-                    amenityBooking.id,
-                    "reject",
-                  )}
-                  style="secondary"
-                  color="error"
-                  iconTextBehaviour="centerGlobal"
-                >
-                  Reject
-                </StatusButton>
-              </Group>
-            </>
-          )}
-
-          {amenityBooking.decision && (
-            <InfoPanel
-              alignment="center"
-              level={
-                amenityBooking.decision === "approved" ? "success" : "error"
-              }
-            >
-              Booking {amenityBooking.decision}
+            <InfoPanel level="default">
+              Approving the booking will lock in the date for the booking,
+              publish the above invoice, and automatically generate a response
+              to this thread with the invoice attached. Rejecting the booking
+              will delete the invoice and generate a response to this thread.
             </InfoPanel>
-          )}
-        </Stack>
-      </Panel>
-    </div>
+
+            <Group equalWidthChildren>
+              <StatusButton
+                action={approveOrRejectAmenityBookingAction.bind(
+                  undefined,
+                  amenityBooking.id,
+                  "approve",
+                )}
+                style="secondary"
+                color="success"
+                iconTextBehaviour="centerGlobal"
+              >
+                Approve
+              </StatusButton>
+              <StatusButton
+                action={approveOrRejectAmenityBookingAction.bind(
+                  undefined,
+                  amenityBooking.id,
+                  "reject",
+                )}
+                style="secondary"
+                color="error"
+                iconTextBehaviour="centerGlobal"
+              >
+                Reject
+              </StatusButton>
+            </Group>
+          </>
+        )}
+
+        {amenityBooking.decision && (
+          <InfoPanel
+            alignment="center"
+            level={amenityBooking.decision === "approved" ? "success" : "error"}
+          >
+            Booking {amenityBooking.decision}
+          </InfoPanel>
+        )}
+      </Stack>
+    </Panel>
   );
 }

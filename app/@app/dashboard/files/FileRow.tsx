@@ -54,11 +54,8 @@ export function FileRow({ file }: Props) {
         }
         content={
           <Group>
-            <FilePreview
-              defaultIcon={<TextDocumentIcon />}
-              file={file}
-              showImagePreview
-            />
+            <FilePreview defaultIcon={<TextDocumentIcon />} file={file} />
+
             <Text color="primary" whiteSpace="nowrap">
               {file.name}
             </Text>

@@ -1,11 +1,19 @@
 import { NextRequest } from "next/server";
 
-import { r2 } from "../../../../../data/r2";
-
+import { r2 } from "../../../../data/r2";
 
 export const GET = async (req: NextRequest) => {
-  const segments = req.nextUrl.searchParams.getAll("segments");
-  const response = await r2().get(segments.join("/"));
+  let key = req.nextUrl.searchParams.get("key");
+
+  if (!key) {
+    return new Response("Bad Request", { status: 400 });
+  }
+
+  if (key.startsWith("/")) {
+    key = key.substring(1);
+  }
+
+  const response = await r2().get(key);
 
   if (!response) {
     return new Response("Not Found", { status: 404 });

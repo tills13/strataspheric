@@ -6,9 +6,9 @@ import { can } from "../../../../data/users/permissions";
 import { AddNewMemberButton } from "./AddNewMemberButton";
 import { Memberships } from "./Memberships";
 
-
 export default async function Page() {
   const session = await auth();
+
   return (
     <DashboardLayout
       actions={

@@ -105,12 +105,14 @@ const paddingProperties = defineProperties({
 
 const marginProperties = defineProperties({
   properties: {
+    margin: vars.spacing,
     marginBottom: vars.spacing,
     marginTop: vars.spacing,
     marginLeft: vars.spacing,
     marginRight: vars.spacing,
   },
   shorthands: {
+    m: ["margin"],
     mb: ["marginBottom"],
     mt: ["marginTop"],
     ml: ["marginLeft"],

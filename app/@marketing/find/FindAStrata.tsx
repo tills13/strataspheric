@@ -1,6 +1,5 @@
 import * as styles from "./style.css";
 
-import { PageProps } from "../../../.next/types/app/@marketing/find/page";
 import { Header } from "../../../components/Header";
 import { RightIcon } from "../../../components/Icon/RightIcon";
 import { InfoPanel } from "../../../components/InfoPanel";
@@ -12,7 +11,7 @@ import { listStratas } from "../../../data/stratas/listStratas";
 export async function FindAStrata({
   searchParams,
 }: {
-  searchParams: Awaited<PageProps["searchParams"]>;
+  searchParams: Awaited<PageProps<"/find">["searchParams"]>;
 }) {
   let stratas: Awaited<ReturnType<typeof listStratas>> = [];
   const { address, name, strataPlan } = searchParams;

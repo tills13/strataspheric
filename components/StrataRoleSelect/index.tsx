@@ -1,17 +1,42 @@
 import { ComponentProps } from "react";
 
+import { Role } from "../../data/users/permissions";
 import { Select } from "../Select";
 
-export type Props = ComponentProps<typeof Select>;
+export interface Props extends ComponentProps<typeof Select> {
+  /** Roles available for selection. If not provided, shows all roles. */
+  availableRoles?: Role[];
+}
 
-export function StrataRoleSelect(props: Props) {
+const roleLabels: Record<Role, string> = {
+  owner: "Owner",
+  secretary: "Secretary",
+  treasurer: "Treasurer",
+  "vice-president": "Vice President",
+  president: "President",
+  administrator: "Administrator",
+  pending: "Pending",
+};
+
+const defaultRoles: Role[] = [
+  "owner",
+  "secretary",
+  "treasurer",
+  "vice-president",
+  "president",
+  "administrator",
+];
+
+export function StrataRoleSelect({ availableRoles, ...props }: Props) {
+  const roles = availableRoles ?? defaultRoles;
+
   return (
     <Select {...props}>
-      <option value="owner">Owner</option>
-      <option value="treasurer">Treasurer</option>
-      <option value="vice-president">Vice President</option>
-      <option value="president">President</option>
-      <option value="administrator">Administrator</option>
+      {roles.map((role) => (
+        <option key={role} value={role}>
+          {roleLabels[role]}
+        </option>
+      ))}
     </Select>
   );
 }

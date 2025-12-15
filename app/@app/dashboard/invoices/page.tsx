@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 
-import { PageProps } from "../../../../.next/types/app/@app/dashboard/invoices/page";
 import { mustAuth } from "../../../../auth";
 import { Group } from "../../../../components/Group";
 import { Pagination } from "../../../../components/Pagination";
@@ -11,7 +10,7 @@ import { can } from "../../../../data/users/permissions";
 import { StrataInvoicesList } from "./StrataInvoicesList";
 
 
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page({ searchParams }: PageProps<"/dashboard/invoices">) {
   const [session, strata] = await Promise.all([
     mustAuth(),
     mustGetCurrentStrata(),

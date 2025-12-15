@@ -1,15 +1,18 @@
 import { StrataMembership } from "../../data/memberships/getStrataMembership";
+import { Role } from "../../data/users/permissions";
 import { Input } from "../Input";
 import { StrataRoleSelect } from "../StrataRoleSelect";
 
 interface Props {
   membership?: StrataMembership;
   strataRoleSelectDisabled?: boolean;
+  availableRoles?: Role[];
 }
 
 export function CreateOrUpdateStrataMembershipFormFields({
   membership,
   strataRoleSelectDisabled,
+  availableRoles,
 }: Props) {
   return (
     <>
@@ -51,6 +54,7 @@ export function CreateOrUpdateStrataMembershipFormFields({
         name="role"
         defaultValue={membership?.role || "owner"}
         disabled={strataRoleSelectDisabled}
+        availableRoles={availableRoles}
         required
       />
     </>

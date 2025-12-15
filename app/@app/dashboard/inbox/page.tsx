@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 
-import { PageProps } from "../../../../.next/types/app/@app/dashboard/inbox/page";
 import { auth } from "../../../../auth";
 import ArchiveSelectedInboxMessagesButton from "../../../../components/ArchiveSelectedInboxMessagesButton";
 import { Button } from "../../../../components/Button";
@@ -25,7 +24,7 @@ conversations with council, automatically keeping a history of all
 correspondance forever.
 `.trim();
 
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page({ searchParams }: PageProps<"/dashboard/inbox">) {
   const { page: rawPageNum } = await searchParams;
   const [session, strata, strataPlan] = await Promise.all([
     auth(),

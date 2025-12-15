@@ -8,5 +8,5 @@ export const tld =
 
 export const assetsOrigin =
   process.env.NODE_ENV === "development"
-    ? "/api/dev/assets"
+    ? "/api/dev/assets?key="
     : "https://assets.strataspheric.app";

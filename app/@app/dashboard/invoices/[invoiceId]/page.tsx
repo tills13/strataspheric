@@ -3,7 +3,6 @@ import { s } from "../../../../../sprinkles.css";
 import isAfter from "date-fns/isAfter";
 import { notFound } from "next/navigation";
 
-import { PageProps } from "../../../../../.next/types/app/@app/dashboard/invoices/[invoiceId]/page";
 import { mustAuth } from "../../../../../auth";
 import { AmenitiesBookingCalendar } from "../../../../../components/AmenitiesBookingCalendar";
 import { Button } from "../../../../../components/Button";
@@ -27,7 +26,7 @@ import { parseTimestamp } from "../../../../../utils/datetime";
 import { deleteInvoiceAction } from "../actions";
 
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps<"/dashboard/invoices/[invoiceId]">) {
   const invoiceId = (await params).invoiceId;
   const [session, invoice, [amenityBooking]] = await Promise.all([
     mustAuth(),

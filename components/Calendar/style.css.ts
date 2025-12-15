@@ -1,6 +1,8 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import { createVar, style } from "@vanilla-extract/css";
 
+import { calc } from "@vanilla-extract/css-utils";
+
 import { padding } from "../../theme";
 
 export const calendarEventTrackWidth = createVar();
@@ -75,6 +77,8 @@ export const calendarDayOutOfScope = style([
 export const calendarDate = style({
   position: "relative",
   display: "inline-block",
+  left: calc(vars.borderWidth).negate().toString(),
+  top: calc(vars.borderWidth).negate().toString(),
   aspectRatio: "1/1",
   height: "24px",
   padding: vars.spacing.xs,

@@ -1,9 +1,8 @@
-import { PageProps } from "../../../../../.next/types/app/@app/dashboard/meetings/[meetingId]/page";
 import { ProtectedPage } from "../../../../../components/ProtectedPage";
 import { MeetingLayout } from "./MeetingLayout";
 
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps<"/dashboard/meetings/[meetingId]">) {
   const { meetingId } = await params;
 
   return (
