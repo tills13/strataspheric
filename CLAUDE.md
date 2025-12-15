@@ -93,3 +93,5 @@ The root `app/layout.tsx` determines which slot to render based on whether `getC
 
 - Be direct and concise. Avoid sycophantic or sugar-coated responses.
 - State issues plainly without excessive hedging.
+- Avoid "as" in TypeScript -- prefer resolving actual types where possible or using runtime type-guards
+- Avoid "any" in TypeScript -- use "unknown" instead
