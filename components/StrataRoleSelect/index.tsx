@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 
-import { Role } from "../../data/users/permissions";
+import { Role, roleLabels } from "../../data/users/permissions";
 import { Select } from "../Select";
 
 export interface Props extends ComponentProps<typeof Select> {
@@ -8,17 +8,7 @@ export interface Props extends ComponentProps<typeof Select> {
   availableRoles?: Role[];
 }
 
-const roleLabels: Record<Role, string> = {
-  owner: "Owner",
-  secretary: "Secretary",
-  treasurer: "Treasurer",
-  "vice-president": "Vice President",
-  president: "President",
-  administrator: "Administrator",
-  pending: "Pending",
-};
-
-const defaultRoles: Role[] = [
+const DEFAULT_ROLES: Role[] = [
   "owner",
   "secretary",
   "treasurer",
@@ -28,7 +18,7 @@ const defaultRoles: Role[] = [
 ];
 
 export function StrataRoleSelect({ availableRoles, ...props }: Props) {
-  const roles = availableRoles ?? defaultRoles;
+  const roles = availableRoles ?? DEFAULT_ROLES;
 
   return (
     <Select {...props}>

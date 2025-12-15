@@ -6,7 +6,7 @@ import { StatusButton } from "../../../../components/StatusButton";
 import { TableRow } from "../../../../components/Table/TableRow";
 import { Text } from "../../../../components/Text";
 import { StrataMembership } from "../../../../data/memberships/getStrataMembership";
-import { can } from "../../../../data/users/permissions";
+import { can, roleLabels } from "../../../../data/users/permissions";
 import { deleteStrataMembershipAction } from "./actions";
 
 interface Props {
@@ -42,7 +42,7 @@ export async function MembershipTableRow({ membership }: Props) {
           <Text fw="bold" whiteSpace="nowrap" color="primary">
             {membership.name}
           </Text>
-          <Text color="secondary">{membership.role}</Text>
+          <Text color="secondary">{roleLabels[membership.role]}</Text>
         </Group>
       }
       rowId={membership.id}

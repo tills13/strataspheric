@@ -22,6 +22,16 @@ export const roles = [
   "pending",
 ] as const;
 
+export const roleLabels: Record<Role, string> = {
+  owner: "Owner",
+  secretary: "Secretary",
+  treasurer: "Treasurer",
+  "vice-president": "Vice President",
+  president: "President",
+  administrator: "Administrator",
+  pending: "Pending",
+};
+
 /** Lower index = higher rank. Administrator is highest (0), pending is lowest. */
 export function getRoleRank(role: Role): number {
   return roles.indexOf(role);
