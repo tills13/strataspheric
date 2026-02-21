@@ -26,7 +26,7 @@ export const tabs = style({
   padding: vars.spacing.xs,
 
   //   borderRadius: calc(vars.sizes.normal).divide(2).toString(),
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   backgroundColor: vars.colors.grey100,
 });
 
@@ -35,7 +35,7 @@ export const tabsTab = style({
   paddingRight: vars.spacing.normal,
   lineHeight: vars.sizes.normal,
   //   borderRadius: calc(vars.sizes.normal).divide(2).toString(),
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
 
   cursor: "pointer",
 });
@@ -63,7 +63,7 @@ export const tab = style({
   overflow: "hidden",
   pointerEvents: "none",
 
-  transition: "left 0.25s ease, opacity 0.25s ease",
+  transition: `left ${vars.transitions.normal}, opacity ${vars.transitions.normal}`,
 });
 
 export const activeTab = style([

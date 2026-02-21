@@ -13,7 +13,7 @@ globalStyle("html, body", {
 
 globalStyle("body", {
   padding: 0,
-  lineHeight: 1.2,
+  lineHeight: 1.4,
   fontSmooth: "always",
   MozOsxFontSmoothing: "always",
   WebkitFontSmoothing: "always",
@@ -46,4 +46,20 @@ globalStyle("#root, #__next", {
 
 globalStyle("#modal-root > :not(:last-child):not(:only-child)", {
   display: "none",
+});
+
+globalStyle("button", {
+  cursor: "pointer",
+  border: "none",
+  background: "none",
+});
+
+globalStyle("a", {
+  color: "inherit",
+  textDecoration: "none",
+});
+
+globalStyle("table", {
+  borderCollapse: "collapse",
+  borderSpacing: 0,
 });

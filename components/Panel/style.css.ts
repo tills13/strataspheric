@@ -6,5 +6,6 @@ import { border } from "../../theme";
 export const panel = style({
   backgroundColor: vars.colors.grey0,
   border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.lg,
+  boxShadow: vars.shadows.sm,
 });

@@ -73,7 +73,7 @@ export const timelineIconContainer = style({
   height: vars.sizes.xs,
   width: vars.sizes.xs,
   backgroundColor: vars.colors.primary,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
 
   vars: {
     [iconColorVar]: vars.colors.white,

@@ -12,7 +12,7 @@ export const checkbox = style({
 
   padding: 0,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.sm,
   boxShadow: "none",
   outline: "none",
   overflow: "hidden",

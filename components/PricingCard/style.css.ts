@@ -11,7 +11,7 @@ export const pricingCard = style({
 
 export const pricingCardPlanName = style({
   display: "inline-block",
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   textAlign: "center",
   fontFamily: vars.fontFamilies.primary,
   backgroundColor: vars.colors.grey100,
@@ -68,7 +68,7 @@ export const planFeaturesIncludedFeature = style([
 export const planFeaturesFeatureIcon = style({
   verticalAlign: "top",
   marginLeft: `calc(-1 * ${vars.spacing.large})`,
-  marginRight: "12px",
+  marginRight: vars.spacing["12"],
   height: "24px",
 });
 export const planFeaturesFeatureIconIncluded = style([

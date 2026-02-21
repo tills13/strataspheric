@@ -1,16 +1,28 @@
+import { GLOBAL_HEADER_HEIGHT_PX } from "../../../../../components/DashboardNavigation/style.css";
+import { headerOffsetKeyframes } from "../../../../scrollAnimation.css";
 import { breakpoints, vars } from "../../../../theme.css";
-import { style } from "@vanilla-extract/css";
+import { StyleRule, style } from "@vanilla-extract/css";
 
-import { calc } from "@vanilla-extract/css-utils";
+import { border, calcMinusHeaderOffset } from "../../../../../theme";
 
-import { border } from "../../../../../theme";
+type ScrollDrivenAnimationProps = {
+  animationTimeline?: string;
+  animationRange?: string;
+};
+
+type ExtendedStyleRule = StyleRule & ScrollDrivenAnimationProps;
 
 export const threadPageContainerWithChats = style({
   "@media": {
     [breakpoints.tablet]: {
       display: "grid",
       gridTemplateColumns: "auto 400px",
-    },
+      animationName: headerOffsetKeyframes,
+      animationTimingFunction: "linear",
+      animationFillMode: "both",
+      animationTimeline: "scroll()",
+      animationRange: `0px ${GLOBAL_HEADER_HEIGHT_PX}px`,
+    } as ExtendedStyleRule,
   },
 });
 
@@ -35,25 +47,28 @@ export const outsideMessageWarning = style({
 
 export const chatPanelWrapper = style({
   borderLeft: "1px solid " + vars.colors.borderDefault,
-  overflow: "hidden",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      position: "sticky",
+      top: 0,
+      height: calcMinusHeaderOffset("100vh"),
+      maxHeight: "100vh",
+      overflow: "hidden",
+    },
+  },
 });
 
 export const chatPanelContents = style({
   display: "flex",
   flexDirection: "column",
   gap: vars.spacing.normal,
+  height: "100%",
 
   "@media": {
     [breakpoints.tablet]: {
       display: "grid",
-      gridTemplateRows: "min-content min-content auto min-content",
-      position: "sticky",
-      top: 0,
-      overflow: "scroll",
-      height: calc("100vh")
-        .subtract("57px")
-        .subtract(calc(vars.spacing.normal).multiply(2))
-        .toString(),
+      gridTemplateRows: "min-content min-content 1fr min-content",
     },
   },
 });

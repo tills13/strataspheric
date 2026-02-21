@@ -1,3 +1,5 @@
+import { calc } from "@vanilla-extract/css-utils";
+
 export function invertBreakpoint(rawBreakpoint: string) {
   const match = /\((min|max)-width: (\d+)px\)/.exec(rawBreakpoint);
 
@@ -50,4 +52,32 @@ export function padding(
 
 export function variable(input: string): string {
   return input.substring(4, input.length - 1);
+}
+
+/**
+ * CSS variable name for the header offset used in scroll-driven animations.
+ * This variable animates from GLOBAL_HEADER_HEIGHT_PX to 0 as the user scrolls,
+ * allowing sticky elements to adjust their height/position accordingly.
+ */
+export const HEADER_OFFSET_VAR = "--header-offset";
+
+/**
+ * The header offset CSS variable formatted for use in CSS values.
+ * Use this when you need to reference the variable in calc() or other CSS functions.
+ *
+ * @example
+ * height: calc("100vh").subtract(headerOffsetVarRef).toString()
+ */
+export const headerOffsetVarRef = `var(${HEADER_OFFSET_VAR})`;
+
+/**
+ * Helper to calculate a value minus the header offset.
+ * Useful for sticky elements that need to account for the disappearing header.
+ *
+ * @example
+ * height: calcMinusHeaderOffset("100vh")
+ * // Returns: "calc(100vh - var(--header-offset))"
+ */
+export function calcMinusHeaderOffset(value: string): string {
+  return calc(value).subtract(headerOffsetVarRef).toString();
 }

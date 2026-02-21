@@ -5,18 +5,18 @@ export const base = style({
   appearance: "none",
   background: "transparent",
   cursor: "pointer",
-  width: "15rem",
+  width: vars.sizes.xxl3,
 
   selectors: {
     "&::-webkit-slider-runnable-track": {
       backgroundColor: vars.colors.grey600,
-      borderRadius: "0.5rem",
-      height: "0.5rem",
+      borderRadius: vars.borderRadius.md,
+      height: vars.spacing.small,
     },
     "&::-webkit-slider-thumb": {
       appearance: "none",
-      marginTop: -8,
-      borderRadius: 2,
+      marginTop: `-${vars.spacing.small}`,
+      borderRadius: vars.borderRadius.sm,
       backgroundColor: vars.colors.grey700,
       height: vars.sizes.xs,
       width: vars.sizes.xs,

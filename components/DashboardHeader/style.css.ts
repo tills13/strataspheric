@@ -30,7 +30,7 @@ export const linksRail = style({
   height: calc(vars.sizes.small).toString(),
   overflow: "hidden",
   width: "100%",
-  transition: "height 0.5s ease",
+  transition: `height ${vars.transitions.slow}`,
 
   "@media": {
     [breakpoints.tabletPlus]: {
@@ -116,7 +116,7 @@ export const mobileDropdownAction = style({
 
 export const toggleMobileDropdownIcon = style({
   transform: "rotate(0deg)",
-  transition: "transform 0.2s ease",
+  transition: `transform ${vars.transitions.normal}`,
 });
 
 export const toggleMobileDropdownIconActive = style([

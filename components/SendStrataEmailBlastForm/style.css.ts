@@ -35,7 +35,8 @@ export const recipient = style({
   padding: vars.spacing.small,
   color: vars.fontColors.primary,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
+  transition: `border-color ${vars.transitions.fast}`,
   cursor: "pointer",
   overflow: "hidden",
 

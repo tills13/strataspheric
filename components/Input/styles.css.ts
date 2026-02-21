@@ -31,7 +31,7 @@ export const inputFieldInput = style({
 
   selectors: {
     "&[type=file]": {
-      paddingTop: "6px",
+      paddingTop: vars.spacing["6"],
       cursor: "pointer",
     },
     "&[type=file]::file-selector-button": {

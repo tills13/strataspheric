@@ -1,5 +1,7 @@
 "use client";
 
+import * as styles from "./style.css";
+
 import React, { useLayoutEffect, useRef } from "react";
 
 import { Chat } from "../../data/inbox/listThreadChats";
@@ -20,7 +22,7 @@ export function ChatStream({ chats }: Props) {
   });
 
   return (
-    <Stack ref={ref}>
+    <Stack ref={ref} className={styles.chatStream}>
       {chats.length === 0 && (
         <Text color="secondary">
           No chats, yet. Start a conversation about this thread using the form

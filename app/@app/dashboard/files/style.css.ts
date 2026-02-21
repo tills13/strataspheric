@@ -19,7 +19,7 @@ export const filesListFileIconContainer = style({
     "&:not(:has(img))": {
       display: "flex",
       justifyContent: "center",
-      borderRadius: vars.borderRadius,
+      borderRadius: vars.borderRadius.md,
       alignItems: "center",
       width: vars.sizes.large,
       aspectRatio: "1/1",

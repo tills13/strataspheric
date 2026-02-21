@@ -1,0 +1,12 @@
+/**
+ * CSS @property registration for --header-offset.
+ * This enables smooth animation of the custom property in scroll-driven animations.
+ *
+ * The initial value matches GLOBAL_HEADER_HEIGHT_PX from DashboardNavigation.
+ * Keep these values in sync if the header height changes.
+ */
+@property --header-offset {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 57px;
+}

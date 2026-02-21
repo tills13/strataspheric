@@ -4,7 +4,7 @@ import { style } from "@vanilla-extract/css";
 export const permissionTable = style({});
 export const permissionTableRow = style({
   padding: vars.spacing.normal,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   selectors: {
     [`${permissionTable} &:nth-child(odd)`]: {
       backgroundColor: vars.colors.grey50,

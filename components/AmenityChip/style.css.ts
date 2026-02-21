@@ -9,7 +9,7 @@ export const amentityImage = style({
   height: "auto",
   width: "100%",
   aspectRatio: "1/1",
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.lg,
 
   "@media": {
     [breakpoints.tablet]: {

@@ -3,6 +3,6 @@ import { style } from "@vanilla-extract/css";
 
 export const leafletMapContainer = style({
   width: "100%",
-  height: "200px",
-  borderRadius: vars.borderRadius,
+  height: vars.sizes.xxl2,
+  borderRadius: vars.borderRadius.lg,
 });

@@ -26,7 +26,8 @@ export const stratasListItem = style({
   color: vars.fontColors.primary,
   textDecoration: "none",
   backgroundColor: vars.colors.grey100,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.lg,
+  transition: `background-color ${vars.transitions.fast}, border-color ${vars.transitions.fast}`,
   border: `${vars.borderWidth} solid ${vars.colors.grey100}`,
 
   selectors: {

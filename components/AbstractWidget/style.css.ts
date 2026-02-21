@@ -7,9 +7,10 @@ export const abstractWidget = style({
   display: "flex",
   flexDirection: "column",
   padding: vars.spacing.normal,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.lg,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
-  height: "400px",
+  boxShadow: vars.shadows.sm,
+  height: vars.sizes.xxl4,
 });
 
 export const abstractWidgetHeader = style({

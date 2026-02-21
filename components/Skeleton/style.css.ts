@@ -8,7 +8,7 @@ export const skeletonBone = style({
   height: "1em",
   width: "100%",
   backgroundColor: vars.colors.borderDefault,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.sm,
   minWidth: "50px",
 
   selectors: {

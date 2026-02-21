@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 import { border, padding } from "../../theme";
 
-const MODAL_GUTTER = "100px";
+const MODAL_GUTTER = vars.spacing.xl;
 
 export const modalWrapper = style({
   position: "fixed",
@@ -38,7 +38,8 @@ export const modal = style({
       //   .subtract(calc(MODAL_GUTTER).multiply(2))
       //   .toString(),
       border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
-      borderRadius: vars.borderRadius,
+      borderRadius: vars.borderRadius.lg,
+      boxShadow: vars.shadows.xl,
     },
   },
 });
@@ -49,7 +50,7 @@ export const modalBodyContainer = style({
 });
 
 export const modalBodyContainerInner = style({
-  paddingTop: "6px",
+  paddingTop: vars.spacing["6"],
   paddingBottom: vars.spacing.normal,
   // overflowY: "auto",
   // height: "100%",

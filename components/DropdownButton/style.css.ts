@@ -18,7 +18,7 @@ export const dropdownButtonOpen = style({});
 export const dropdownButtonButton = style({
   "@media": {
     [breakpoints.tablet]: {
-      transition: "background-color 0.25s ease, border-color 0.25s ease",
+      transition: `background-color ${vars.transitions.normal}, border-color ${vars.transitions.normal}`,
       selectors: {
         [`${dropdownButtonOpen} &`]: {
           zIndex: "10",
@@ -45,7 +45,7 @@ export const panelWrapper = style({
   marginTop: calc(vars.spacing.normal).negate().toString(),
   opacity: 0,
   pointerEvents: "none",
-  transition: "opacity 0.25s ease, margin-top 0.25s ease",
+  transition: `opacity ${vars.transitions.normal}, margin-top ${vars.transitions.normal}`,
 
   // display: "none",
   // transition: "all 1s ease allow-discrete",
@@ -73,7 +73,8 @@ export const panelWrapper = style({
 
       width: 400,
       border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
-      borderRadius: vars.borderRadius,
+      borderRadius: vars.borderRadius.lg,
+      boxShadow: vars.shadows.lg,
       borderTopRightRadius: 0,
     },
   },

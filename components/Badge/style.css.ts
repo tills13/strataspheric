@@ -9,9 +9,9 @@ export const badge = recipe({
   base: {
     whiteSpace: "nowrap",
     height: vars.sizes.small,
-    lineHeight: calc(vars.sizes.small).subtract("4px").toString(),
+    lineHeight: calc(vars.sizes.small).subtract(vars.spacing.xs).toString(),
     padding: padding(0, vars.spacing.small),
-    borderRadius: vars.borderRadius,
+    borderRadius: vars.borderRadius.md,
     borderStyle: "solid",
     borderWidth: 2,
     textTransform: "uppercase",

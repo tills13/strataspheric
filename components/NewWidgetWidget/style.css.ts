@@ -9,19 +9,20 @@ export const addWidgetWidget = style({
   justifyContent: "center",
   alignItems: "center",
   cursor: "pointer",
-  height: "400px",
+  height: vars.sizes.xxl4,
+  transition: `background-color ${vars.transitions.fast}, border-color ${vars.transitions.fast}`,
 
   selectors: {
     "&:hover": {
       backgroundColor: vars.colors.grey100,
-      borderRadius: vars.borderRadius,
+      borderRadius: vars.borderRadius.lg,
       border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
     },
   },
 });
 
 export const addWidgetWidgetContainer = style({
-  width: 100,
+  width: vars.sizes.xxl2,
   textAlign: "center",
   fontSize: vars.fontSizes.normal,
 });

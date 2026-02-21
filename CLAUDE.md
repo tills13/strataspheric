@@ -50,8 +50,33 @@ The root `app/layout.tsx` determines which slot to render based on whether `getC
 
 - CSS-in-TypeScript using Vanilla Extract
 - `sprinkles.css.ts` - Utility-first CSS sprinkles (spacing, typography, flex)
-- `app/theme.css.ts` - Theme variables (colors, sizes, fonts)
+- `app/theme.css.ts` - Theme variables (colors, sizes, fonts, shadows, transitions)
+- `app/globalStyles.css.ts` - Global resets (box-sizing, margins, font inheritance)
 - Component styles live alongside components as `*.css.ts` files
+
+#### Theme Token Reference
+
+**Border Radius** (use `vars.borderRadius.*`):
+- `sm` (4px) - small elements like checkboxes, slider indicators
+- `md` (6px) - default for inputs, buttons, badges
+- `lg` (8px) - cards, panels, modals, images
+- `xl` (12px) - large containers
+- `full` (9999px) - pills, avatars
+
+**Shadows** (use `vars.shadows.*`):
+- `sm` - subtle elevation for cards/panels
+- `md` - hover states, dropdowns
+- `lg` - elevated components like dropdown panels
+- `xl` - modals
+
+**Transitions** (use `vars.transitions.*`):
+- `fast` (150ms) - hover states, micro-interactions
+- `normal` (200ms) - focus states, UI changes
+- `slow` (300ms) - layout animations
+
+**Focus Ring**: Use `vars.focusRing` for focus-within states on form fields
+
+**Spacing**: Includes `"6"`, `"10"`, `"12"`, `"20"`, `"24"` in addition to named values
 
 ### Authentication
 

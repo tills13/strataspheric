@@ -5,7 +5,7 @@ import { recipe } from "@vanilla-extract/recipes";
 export const infoPanel = recipe({
   base: {
     padding: vars.spacing.normal,
-    borderRadius: vars.borderRadius,
+    borderRadius: vars.borderRadius.lg,
     borderStyle: "solid",
     borderWidth: 2,
   },

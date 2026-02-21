@@ -6,7 +6,8 @@ export const fileWidget = style({});
 export const fileWidgetListItem = style({
   padding: vars.spacing.normal,
   backgroundColor: vars.colors.grey100,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
+  transition: `background-color ${vars.transitions.fast}`,
 
   selectors: {
     "&:hover": {

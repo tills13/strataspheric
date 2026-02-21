@@ -50,7 +50,8 @@ export const button = recipe({
   base: [
     buttonBase,
     {
-      borderRadius: vars.borderRadius,
+      borderRadius: vars.borderRadius.md,
+      transition: `background-color ${vars.transitions.fast}, border-color ${vars.transitions.fast}, box-shadow ${vars.transitions.fast}`,
     },
   ],
 
@@ -85,6 +86,7 @@ export const button = recipe({
         borderColor: vars.colors.primary,
         backgroundColor: vars.colors.primary,
         color: vars.colors.white,
+        boxShadow: vars.shadows.sm,
 
         vars: {
           [iconColorVar]: vars.colors.white,
@@ -97,6 +99,7 @@ export const button = recipe({
                 backgroundColor: vars.colors.primaryHover,
                 borderColor: vars.colors.primaryHover,
                 color: vars.colors.white,
+                boxShadow: vars.shadows.md,
               },
             },
           },
@@ -439,7 +442,7 @@ export const iconContainer = style({
   height: "100%",
   flexGrow: 0,
   aspectRatio: "1/1",
-  borderRadius: calc(vars.borderRadius).subtract(vars.borderWidth).toString(),
+  borderRadius: calc(vars.borderRadius.md).subtract(vars.borderWidth).toString(),
   backgroundColor: "rgba(255, 255, 255, 0.1)",
 
   selectors: {

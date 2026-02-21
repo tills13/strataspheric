@@ -24,8 +24,9 @@ export const sidebar = style({
 });
 
 const baseSidebarNavigationItem = style({
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   textDecoration: "none",
+  transition: `background-color ${vars.transitions.fast}`,
 });
 
 export const sidebarNavigationItem = style([
@@ -129,11 +130,11 @@ export const userStrataSelectorText = style({
 
 const userStrataSelectorIconBase = style({
   position: "relative",
-  transition: "left 1s ease, opacity 1s ease",
+  transition: `left ${vars.transitions.slow}, opacity ${vars.transitions.slow}`,
 
   selectors: {
     [`${selectedStrataContainer}:hover &`]: {
-      left: "5px",
+      left: vars.spacing.xs,
     },
   },
 });
@@ -142,7 +143,7 @@ export const userStrataSelectorIcon = styleVariants({
   false: [
     userStrataSelectorIconBase,
     {
-      left: "-20px",
+      left: `-${vars.spacing.normal}`,
       opacity: 0,
     },
   ],

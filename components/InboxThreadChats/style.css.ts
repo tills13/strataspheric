@@ -1,12 +1,29 @@
-import { vars } from "../../app/theme.css";
+import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
+
+export const inboxThreadChatsContainer = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "contents",
+    },
+  },
+});
+
+export const chatStream = style({
+  "@media": {
+    [breakpoints.tablet]: {
+      overflowY: "auto",
+      minHeight: 0,
+    },
+  },
+});
 
 export const chatBubble = style({
   display: "flex",
   flexDirection: "column",
   backgroundColor: vars.colors.grey100,
   color: vars.colors.grey700,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.lg,
 });
 
 export const selfChatBubble = style([

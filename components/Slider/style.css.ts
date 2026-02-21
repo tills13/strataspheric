@@ -23,7 +23,7 @@ export const slide = style({
   overflow: "hidden",
   pointerEvents: "none",
 
-  transition: "left 0.25s ease, opacity 0.25s ease",
+  transition: `left ${vars.transitions.normal}, opacity ${vars.transitions.normal}`,
 });
 
 export const activeSlide = style([
@@ -46,7 +46,7 @@ export const slideIndicator = style({
   display: "block",
   height: 4,
   width: 30,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.sm,
   backgroundColor: vars.colors.grey500,
   cursor: "pointer",
 });

@@ -19,7 +19,7 @@ export const selectFieldSelect = style({
   appearance: "none",
   top: 0,
   width: "100%",
-  transition: "top 0.1s ease",
+  transition: `top ${vars.transitions.fast}`,
 });
 
 export const selectFieldPlaceholder = style({
@@ -28,7 +28,7 @@ export const selectFieldPlaceholder = style({
   top: 7,
   left: vars.spacing.normal,
   color: vars.fontColors.secondary,
-  transition: "top 0.1s ease, left 0.1s ease 0.1s, padding 0.1s ease 0.1s",
+  transition: `top ${vars.transitions.fast}, left ${vars.transitions.fast} 0.1s, padding ${vars.transitions.fast} 0.1s`,
 
   selectors: {
     [`${selectFieldSelect}:not(:placeholder-shown) ~ &`]: {

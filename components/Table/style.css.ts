@@ -23,7 +23,7 @@ export const tableRow = style({
   gridTemplateColumns: "subgrid",
 
   minHeight: vars.sizes.large,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   textDecoration: "none",
 
   position: "relative",
@@ -109,7 +109,7 @@ export const tableRowActions = style({
   bottom: vars.spacing.small,
   padding: vars.spacing.xxs,
   border: `2px solid ${vars.colors.borderDefault}`,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   backgroundColor: vars.colors.grey100,
 
   alignSelf: "center",

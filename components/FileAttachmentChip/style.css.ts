@@ -14,7 +14,7 @@ export const fileAttachmentChip = style({
   alignItems: "center",
   height: vars.sizes.normal,
   color: "inherit",
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   overflow: "hidden",
 
   selectors: {

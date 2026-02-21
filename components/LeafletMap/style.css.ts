@@ -6,5 +6,5 @@ const heightVar = createVar();
 export const leafletMapContainer = style({
   width: "100%",
   height: fallbackVar(heightVar, "200px"),
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.lg,
 });

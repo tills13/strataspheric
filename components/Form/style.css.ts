@@ -22,13 +22,18 @@ export const fieldBase = style({
   background: "none",
   backgroundColor: vars.colors.white,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   boxShadow: "none",
   outline: "none",
+  transition: `border-color ${vars.transitions.fast}, box-shadow ${vars.transitions.fast}`,
 
   selectors: {
     "&:hover": {
       borderColor: vars.colors.borderDefaultHover,
+    },
+    "&:focus-within": {
+      borderColor: vars.colors.blue600,
+      boxShadow: vars.focusRing,
     },
     [`&:has(${fieldLeftActionContainer})`]: {
       paddingLeft: 0,

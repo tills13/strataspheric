@@ -1,5 +1,7 @@
 "use client";
 
+import * as styles from "./style.css";
+
 import { useOptimistic } from "react";
 
 import { Chat } from "../../data/inbox/listThreadChats";
@@ -34,12 +36,12 @@ export function InboxThreadChats({ chats, threadId }: Props) {
   }
 
   return (
-    <>
+    <div className={styles.inboxThreadChatsContainer}>
       <ChatStream chats={optisticChats} />
       <SendInboxThreadChatForm
         onSendInboxThreadChat={optimisticOnSendInboxThreadChat}
         threadId={threadId}
       />
-    </>
+    </div>
   );
 }

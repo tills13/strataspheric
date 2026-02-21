@@ -40,7 +40,7 @@ export const tabLayoutTabs = style({
   "@media": {
     [breakpoints.tablet]: {
       width: "auto",
-      borderRadius: vars.borderRadius,
+      borderRadius: vars.borderRadius.md,
     },
   },
 });
@@ -90,7 +90,7 @@ export const sideBySideImageStack = style({
 });
 
 export const sideBySideImage = style({
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.lg,
   border: "2px solid " + vars.colors.grey100,
   boxShadow: `0.3px 0.5px 0.7px hsl(0deg 0% 63% / 0.36),
   0.8px 1.6px 2px -0.8px hsl(0deg 0% 63% / 0.36),

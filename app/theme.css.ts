@@ -19,19 +19,46 @@ export const fontPrimaryVar = createVar();
 export const sidebarWidthVar = createVar();
 
 export const vars = createGlobalTheme(":root", {
-  borderRadius: "4px",
+  borderRadius: {
+    sm: "4px",
+    md: "6px",
+    lg: "8px",
+    xl: "12px",
+    full: "9999px",
+  },
   borderWidth: "2px",
 
   spacing: {
     "0": "0px",
     xxs: "2px",
     xs: "4px",
+    "6": "6px",
     small: "8px",
+    "10": "10px",
+    "12": "12px",
     normal: "16px",
+    "20": "20px",
+    "24": "24px",
     large: "32px",
     xl: "64px",
     xxl: "128px",
   },
+
+  shadows: {
+    none: "none",
+    sm: "0 1px 2px rgba(0,0,0,0.05)",
+    md: "0 2px 4px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04)",
+    lg: "0 4px 8px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.06)",
+    xl: "0 12px 24px rgba(0,0,0,0.12), 0 6px 12px rgba(0,0,0,0.08)",
+  },
+
+  transitions: {
+    fast: "150ms ease",
+    normal: "200ms ease",
+    slow: "300ms ease",
+  },
+
+  focusRing: "0 0 0 3px rgba(36,210,249,0.15)",
 
   sizes: {
     xxs: "16px",

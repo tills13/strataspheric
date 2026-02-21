@@ -47,9 +47,9 @@ export const calendarDay = style({
   width: "100%",
   height: "100%",
   // maxHeight: "calc((100vh - 72px - 72px)/6)",
-  maxHeight: "75px",
+  maxHeight: vars.sizes.xxl,
   zIndex: 1,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
 
   "@media": {
@@ -85,8 +85,8 @@ export const calendarDate = style({
   textAlign: "center",
   fontSize: vars.fontSizes.normal,
   backgroundColor: vars.colors.grey100,
-  borderTopLeftRadius: vars.borderRadius,
-  borderBottomRightRadius: vars.borderRadius,
+  borderTopLeftRadius: vars.borderRadius.md,
+  borderBottomRightRadius: vars.borderRadius.md,
   selectors: {
     [`${today} &`]: {
       backgroundColor: vars.colors.primary,
@@ -130,10 +130,10 @@ export const calendarEvent = style({
 });
 
 export const withLeftBorderRadius = style({
-  borderTopLeftRadius: vars.borderRadius,
-  borderBottomLeftRadius: vars.borderRadius,
+  borderTopLeftRadius: vars.borderRadius.sm,
+  borderBottomLeftRadius: vars.borderRadius.sm,
 });
 export const withRightBorderRadius = style({
-  borderTopRightRadius: vars.borderRadius,
-  borderBottomRightRadius: vars.borderRadius,
+  borderTopRightRadius: vars.borderRadius.sm,
+  borderBottomRightRadius: vars.borderRadius.sm,
 });

@@ -13,7 +13,7 @@ export const textareaTextarea = style([
     background: "none",
     boxShadow: "none",
     outline: "none",
-    padding: `12px ${vars.spacing.normal}`,
+    padding: `${vars.spacing["12"]} ${vars.spacing.normal}`,
   },
 ]);
 

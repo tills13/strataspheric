@@ -16,7 +16,7 @@ export const quotedMessage = style({
   padding: vars.spacing.normal,
   backgroundColor: "rgba(255, 255, 255, 0.1)",
   overflow: "hidden",
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
 
   display: "grid",
   gridTemplateRows: "min-content auto",

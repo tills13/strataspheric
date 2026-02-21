@@ -4,7 +4,7 @@ import { style } from "@vanilla-extract/css";
 export const radioButton = style({
   height: vars.sizes.normal,
   padding: vars.spacing.xxs,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
 });
 
@@ -17,7 +17,7 @@ export const radioButtonButton = style({
   alignItems: "center",
 
   backgroundColor: vars.colors.grey0,
-  borderRadius: vars.borderRadius,
+  borderRadius: vars.borderRadius.md,
 
   selectors: {
     "&:hover": {

@@ -1,3 +1,4 @@
+import "../../../../scrollAnimationCssProperty.css";
 import * as styles from "./style.css";
 
 import { redirect } from "next/navigation";
@@ -10,8 +11,10 @@ import { classnames } from "../../../../../utils/classnames";
 import { InboxMessageThread } from "./InboxMessageThread";
 import { InboxThreadChatPanel } from "./InboxThreadChatPanel";
 
-
-export default async function Page({ params, searchParams }: PageProps<"/dashboard/inbox/[threadId]">) {
+export default async function Page({
+  params,
+  searchParams,
+}: PageProps<"/dashboard/inbox/[threadId]">) {
   const session = await auth();
 
   const { threadId } = await params;
