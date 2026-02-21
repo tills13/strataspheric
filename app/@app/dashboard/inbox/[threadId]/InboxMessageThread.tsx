@@ -30,7 +30,6 @@ export async function InboxMessageThread({ threadId }: Props) {
   const [message0, ...messages] = allMessages;
 
   const {
-    amenityBooking,
     senderUserId,
     senderName,
     senderEmail,
@@ -66,6 +65,12 @@ export async function InboxMessageThread({ threadId }: Props) {
 
         {message0.invoice && <InvoiceChip invoice={message0.invoice} />}
 
+        {message0.amenityBooking && (
+          <InboxMessageThreadAmenityBooking
+            amenityBooking={message0.amenityBooking}
+          />
+        )}
+
         {message0.file && (
           <FileAttachmentChip
             fileName={message0.file.name}
@@ -83,11 +88,7 @@ export async function InboxMessageThread({ threadId }: Props) {
         />
       ))}
 
-      <Stack className={s({ p: "normal" })}>
-        {amenityBooking && (
-          <InboxMessageThreadAmenityBooking amenityBooking={amenityBooking} />
-        )}
-
+      <div className={s({ ph: "normal", pt: "normal" })}>
         <SendInboxMessageForm threadId={threadId}>
           {!session && (
             <SendInboxMessageContactDetailsFields
@@ -99,7 +100,7 @@ export async function InboxMessageThread({ threadId }: Props) {
 
           <SendInboxMessageFields showSubjectInput={false} />
         </SendInboxMessageForm>
-      </Stack>
+      </div>
     </div>
   );
 }

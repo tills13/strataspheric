@@ -28,15 +28,14 @@ export const modal = style({
   width: "100vw",
   height: "100dvh",
   overflow: "hidden",
+  display: "flex",
+  flexDirection: "column",
 
   "@media": {
     [breakpoints.tablet]: {
+      display: "block",
       width: "600px",
       height: "min-content",
-      // height: "fit-content",
-      // maxHeight: calc("100dvh")
-      //   .subtract(calc(MODAL_GUTTER).multiply(2))
-      //   .toString(),
       border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
       borderRadius: vars.borderRadius.lg,
       boxShadow: vars.shadows.xl,
@@ -44,16 +43,11 @@ export const modal = style({
   },
 });
 
-export const modalBodyContainer = style({
-  // height: "100%",
-  // overflow: "hidden",
-});
+export const modalBodyContainer = style({});
 
 export const modalBodyContainerInner = style({
   paddingTop: vars.spacing["6"],
   paddingBottom: vars.spacing.normal,
-  // overflowY: "auto",
-  // height: "100%",
 });
 
 export const modalHeader = style({

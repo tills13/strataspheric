@@ -26,6 +26,7 @@ export function InboxThreadChats({ chats, threadId }: Props) {
 
   function optimisticOnSendInboxThreadChat(fd: FormData) {
     addOptimisticChat({
+      userId: session.user.id,
       chatId: "TMP_CHAT",
       email: session.user.email,
       id: "tmp",

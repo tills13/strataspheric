@@ -46,10 +46,12 @@ export const outsideMessageWarning = style({
 });
 
 export const chatPanelWrapper = style({
+  display: "none",
   borderLeft: "1px solid " + vars.colors.borderDefault,
 
   "@media": {
     [breakpoints.tablet]: {
+      display: "block",
       position: "sticky",
       top: 0,
       height: calcMinusHeaderOffset("100vh"),
@@ -59,16 +61,32 @@ export const chatPanelWrapper = style({
   },
 });
 
+export const mobileChatButton = style({
+  position: "fixed",
+  bottom: vars.spacing.normal,
+  right: vars.spacing.normal,
+  zIndex: 10,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "none",
+    },
+  },
+});
+
 export const chatPanelContents = style({
   display: "flex",
   flexDirection: "column",
   gap: vars.spacing.normal,
+  padding: vars.spacing.normal,
   height: "100%",
 
   "@media": {
     [breakpoints.tablet]: {
       display: "grid",
-      gridTemplateRows: "min-content min-content 1fr min-content",
+      gridTemplateRows: "1fr min-content",
     },
   },
 });
+
+export const chatPanelHeader = style({});

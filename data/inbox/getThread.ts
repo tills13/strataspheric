@@ -7,7 +7,7 @@ type GetThreadFilter = {
   viewId?: string;
 };
 
-export function getThread(threadId: string, filter: GetThreadFilter) {
+export function getThread(threadId: string, filter: GetThreadFilter = {}) {
   let query = db()
     .selectFrom("inbox_messages")
     .leftJoin(

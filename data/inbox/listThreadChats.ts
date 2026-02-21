@@ -2,12 +2,12 @@ import { db } from "..";
 
 export type Chat = Awaited<ReturnType<typeof listThreadChats>>[number];
 
-export function isThreadChatWithQuote() {
-  return false;
+export function isThreadChatWithQuote(chat: unknown) {
+  return !!chat.quotedMessageId;
 }
 
-export function isThreadChatWithFile() {
-  return false;
+export function isThreadChatWithFile(chat: unknown) {
+  return !!chat.fileId;
 }
 
 type ListThreadChatsFilter = {

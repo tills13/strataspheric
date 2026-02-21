@@ -49,6 +49,7 @@
     "@types/node": "^18.19.86",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "baseline-browser-mapping": "^2.10.0",
     "eslint": "^9.25.1",
     "knip": "^5.50.5",
     "typescript": "^5.8.3",

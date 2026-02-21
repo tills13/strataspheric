@@ -1,34 +1,28 @@
-import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
-import { Header } from "../../../../../components/Header";
 import { InboxThreadChats } from "../../../../../components/InboxThreadChats";
-import { InfoPanel } from "../../../../../components/InfoPanel";
-import { Text } from "../../../../../components/Text";
+import { getThread } from "../../../../../data/inbox/getThread";
 import { listThreadChats } from "../../../../../data/inbox/listThreadChats";
-import { classnames } from "../../../../../utils/classnames";
+import { InboxThreadChatsMobileButton } from "./InboxThreadChatsMobileButton";
 
 interface Props {
   threadId: string;
 }
 
 export async function InboxThreadChatPanel({ threadId }: Props) {
-  const [chats] = await Promise.all([listThreadChats({ threadId })]);
+  const [chats, thread] = await Promise.all([
+    listThreadChats({ threadId }),
+    getThread(threadId),
+  ]);
 
   return (
-    <div className={classnames(styles.chatPanelWrapper, s({ p: "normal" }))}>
-      <div className={styles.chatPanelContents}>
-        <Header as="h2">Chats</Header>
-
-        <InfoPanel level="default">
-          <Text>
-            Chats are private with authorized members of the council or
-            individuals who are explicitly given the ability to see and engage
-            with chats.
-          </Text>
-        </InfoPanel>
-        <InboxThreadChats chats={chats} threadId={threadId} />
+    <>
+      <div className={styles.chatPanelWrapper}>
+        <div className={styles.chatPanelContents}>
+          <InboxThreadChats chats={chats} threadId={threadId} />
+        </div>
       </div>
-    </div>
+      <InboxThreadChatsMobileButton chats={chats} thread={thread} />
+    </>
   );
 }

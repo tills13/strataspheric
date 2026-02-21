@@ -18,6 +18,16 @@ export const chatStream = style({
   },
 });
 
+export const chatMessageGroup = style({
+  marginRight: vars.spacing.normal,
+  marginLeft: 0,
+});
+
+export const chatSelfMessageGroup = style({
+  marginRight: 0,
+  marginLeft: vars.spacing.normal,
+});
+
 export const chatBubble = style({
   display: "flex",
   flexDirection: "column",

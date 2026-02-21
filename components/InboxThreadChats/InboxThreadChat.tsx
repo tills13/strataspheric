@@ -10,33 +10,29 @@ import {
 } from "../../data/inbox/listThreadChats";
 import { useSession } from "../../hooks/useSession";
 import { classnames } from "../../utils/classnames";
-import { Date } from "../Date";
 import { FileAttachmentChip } from "../FileAttachmentChip";
-import { Group } from "../Group";
-import { Header } from "../Header";
 import { InboxMessageQuote } from "../InboxMessageQuote";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
 
-export function InboxThreadChat({ ...chat }: Chat) {
+interface InboxTheadChatProps {
+  chat: Chat;
+}
+
+export function InboxThreadChat({ chat }: InboxTheadChatProps) {
   const session = useSession();
+  const isSelf = chat.userId === session?.user.id;
+
+  console.log(chat);
 
   return (
     <Stack
       className={classnames(
-        chat.userId === session?.user.id
-          ? styles.selfChatBubble
-          : styles.chatBubble,
+        isSelf ? styles.selfChatBubble : styles.chatBubble,
         s({ p: "normal" }),
       )}
+      gap="small"
     >
-      <Group justify="space-between">
-        <Header as="h3">{chat.name} said...</Header>
-        <Text as="span">
-          <Date output="compact" timestamp={chat.sentAt} />
-        </Text>
-      </Group>
-
       {isThreadChatWithQuote(chat) && (
         <InboxMessageQuote
           source={{
@@ -49,7 +45,9 @@ export function InboxThreadChat({ ...chat }: Chat) {
           linkType="hash"
         />
       )}
+
       <Text>{chat.message}</Text>
+
       {isThreadChatWithFile(chat) && (
         <FileAttachmentChip fileName={chat.fileName} filePath={chat.filePath} />
       )}
