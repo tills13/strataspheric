@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev -H 0.0.0.0 --webpack",
-    "build": "opennextjs-cloudflare build",
-    "preview": "opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare deploy",
+    "build": "next build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
     "lint": "eslint",
     "lint:typescript": "npx tsc --noEmit",
     "prettier": "prettier -l **/*",
