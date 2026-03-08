@@ -41,10 +41,12 @@ export function CreateOrUpdateInvoiceForm({
   async function getNextInvoiceId() {
     setLoadingNextInvoiceId(true);
     const r = await fetch("/api/invoices/getNextInvoiceId");
-    const rJson = await r.json();
+    const rJson = (await r.json()) as { nextId: number };
     setLoadingNextInvoiceId(false);
-    invoiceIdInputRef.current.value = rJson.nextId;
+    invoiceIdInputRef.current.value = String(rJson.nextId);
   }
+
+  const showPayerEmail = !invoice || !invoice.stripeInvoiceId;
 
   return (
     <form
@@ -105,6 +107,28 @@ export function CreateOrUpdateInvoiceForm({
           disabled={!!invoice?.isPaid}
           defaultValue={invoice?.description || ""}
         />
+
+        {showPayerEmail && (
+          <Input
+            type="email"
+            name="payerEmail"
+            label="Payer Email"
+            placeholder="owner@example.com"
+            disabled={!!invoice?.isPaid}
+            defaultValue={invoice?.payerEmail ?? ""}
+          />
+        )}
+
+        {invoice?.stripeInvoiceId && invoice.stripeInvoiceUrl && (
+          <InfoPanel level="default">
+            <Text>
+              This invoice has been sent via Stripe.{" "}
+              <a href={invoice.stripeInvoiceUrl} target="_blank" rel="noreferrer">
+                View Stripe Invoice
+              </a>
+            </Text>
+          </InfoPanel>
+        )}
 
         <InfoPanel level="default">
           <Text>

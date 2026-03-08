@@ -23,8 +23,6 @@ export function InboxThreadChat({ chat }: InboxTheadChatProps) {
   const session = useSession();
   const isSelf = chat.userId === session?.user.id;
 
-  console.log(chat);
-
   return (
     <Stack
       className={classnames(

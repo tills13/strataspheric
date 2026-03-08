@@ -59,6 +59,12 @@ const links: Array<Link | LinkWithPermissions> = [
   ],
   [GroupIcon, "/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
   [InboxIcon, "/dashboard/inbox", "Strata Inbox"],
+  [
+    PaidDocumentIcon,
+    "/dashboard/subscription",
+    "Subscription",
+    ["stratas.settings.edit"],
+  ],
   [SettingsIcon, "/dashboard/settings", "Settings", ["stratas.edit"]],
 ];
 

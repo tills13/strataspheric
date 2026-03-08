@@ -130,6 +130,9 @@ const MOCK_INVOICE: Invoice = {
   strataId: "123",
   type: "incoming",
   updatedAt: Date.now(),
+  stripeInvoiceId: null,
+  stripeInvoiceUrl: null,
+  payerEmail: null,
 };
 
 export default async function Page() {

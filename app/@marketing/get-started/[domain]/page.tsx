@@ -4,9 +4,11 @@ import { GetStartedStatus } from "../../../../components/GetStarted/Status";
 import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
 import { StaticPageContainer } from "../../StaticPageContainer";
 
-
-export default async function Page({ params }: { params: { domain: string } }) {
-  const strata = await getStrataByDomain(decodeURIComponent(params.domain));
+export default async function Page({
+  params,
+}: PageProps<"/get-started/[domain]">) {
+  const { domain } = await params;
+  const strata = await getStrataByDomain(decodeURIComponent(domain));
 
   if (!strata) {
     redirect("/get-started");

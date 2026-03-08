@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import Stripe from "stripe";
 
 import { auth } from "../../../../auth";
 import { deleteRecord } from "../../../../cloudflare/dns/deleteRecord";
@@ -15,9 +16,15 @@ import { deleteAllMeetings } from "../../../../data/meetings/deleteAllMeetings";
 import { deleteAllStrataMemberships } from "../../../../data/memberships/deleteAllStrataMemberships";
 import { r2 } from "../../../../data/r2";
 import { deleteStrata } from "../../../../data/stratas/deleteStrata";
-import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import {
+  getCurrentStrata,
+  mustGetCurrentStrata,
+} from "../../../../data/stratas/getStrataByDomain";
+import { updateStrata } from "../../../../data/stratas/updateStrata";
 import { can } from "../../../../data/users/permissions";
 import { deleteAllWidgets } from "../../../../data/widgets/deleteAllWidgets";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const NotAuthorized = new Error("not authorized");
 
@@ -25,7 +32,7 @@ export async function deleteStrataAction() {
   const currentStrata = await getCurrentStrata();
   const session = await auth();
 
-  if (!currentStrata || !can(session?.user, "stratas.delete")) {
+  if (!currentStrata || !can(session?.user, "stratas.settings.edit")) {
     throw NotAuthorized;
   }
 
@@ -51,4 +58,56 @@ export async function deleteStrataAction() {
   }
 
   redirect(`${protocol}//${tld}`);
+}
+
+export async function createStripeConnectAccountAction() {
+  const session = await auth();
+
+  if (!can(session?.user, "stratas.settings.edit")) {
+    throw NotAuthorized;
+  }
+
+  const strata = await mustGetCurrentStrata();
+
+  const returnUrl = `${protocol}//${strata.domain}/api/stripe/connect/return?strataId=${strata.id}`;
+  const refreshUrl = `${protocol}//${strata.domain}/dashboard/settings`;
+
+  let accountId = strata.stripeAccountId;
+
+  if (!accountId) {
+    const account = await stripe.accounts.create({ type: "express" });
+    accountId = account.id;
+    await updateStrata(strata.id, {
+      stripeAccountId: accountId,
+      stripeAccountStatus: "pending",
+    });
+  }
+
+  const accountLink = await stripe.accountLinks.create({
+    account: accountId,
+    refresh_url: refreshUrl,
+    return_url: returnUrl,
+    type: "account_onboarding",
+  });
+
+  redirect(accountLink.url);
+}
+
+export async function createStripeConnectDashboardLinkAction() {
+  const session = await auth();
+
+  if (!can(session?.user, "stratas.settings.view")) {
+    throw NotAuthorized;
+  }
+
+  const strata = await mustGetCurrentStrata();
+
+  if (!strata.stripeAccountId) {
+    redirect("/dashboard/settings");
+  }
+
+  const loginLink = await stripe.accounts.createLoginLink(
+    strata.stripeAccountId,
+  );
+  redirect(loginLink.url);
 }

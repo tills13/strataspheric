@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import Stripe from "stripe";
 
 import { auth } from "../../../../auth";
 import { Invoice } from "../../../../data";
@@ -11,6 +12,8 @@ import { updateInvoice } from "../../../../data/invoices/updateInvoice";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 import * as formdata from "../../../../utils/formdata";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function markInvoiceAsPaidAction(invoiceId: string) {
   const session = await auth();
@@ -29,6 +32,90 @@ export async function markInvoiceAsPaidAction(invoiceId: string) {
   revalidatePath("/dashboard/inbox/*");
 }
 
+async function syncStripeInvoice(invoice: Invoice, stripeAccountId: string) {
+  const { payerEmail } = invoice;
+
+  if (!payerEmail) {
+    return;
+  }
+
+  // If already synced, void and recreate
+  if (invoice.stripeInvoiceId) {
+    try {
+      await stripe.invoices.voidInvoice(invoice.stripeInvoiceId, {
+        stripeAccount: stripeAccountId,
+      });
+    } catch {
+      // ignore if already voided/paid
+    }
+  }
+
+  // Find or create customer on the Connect account
+  const existingCustomers = await stripe.customers.list(
+    { email: payerEmail, limit: 1 },
+    { stripeAccount: stripeAccountId },
+  );
+
+  const customer =
+    existingCustomers.data[0] ??
+    (await stripe.customers.create(
+      { email: payerEmail, name: invoice.payee ?? undefined },
+      { stripeAccount: stripeAccountId },
+    ));
+
+  // Create invoice item
+  await stripe.invoiceItems.create(
+    {
+      customer: customer.id,
+      amount: Math.round(invoice.amount * 100),
+      currency: "cad",
+      description: invoice.description ?? invoice.identifier,
+    },
+    { stripeAccount: stripeAccountId },
+  );
+
+  // Create invoice
+  const stripeInvoice = await stripe.invoices.create(
+    {
+      customer: customer.id,
+      auto_advance: false,
+      collection_method: "send_invoice",
+      days_until_due: 30,
+    },
+    { stripeAccount: stripeAccountId },
+  );
+
+  const stripeInvoiceId = stripeInvoice.id;
+
+  if (!stripeInvoiceId) {
+    throw new Error("Failed to create Stripe invoice: missing id");
+  }
+
+  // Finalize
+  const finalizedInvoice = await stripe.invoices.finalizeInvoice(
+    stripeInvoiceId,
+    {},
+    { stripeAccount: stripeAccountId },
+  );
+
+  const finalizedInvoiceId = finalizedInvoice.id;
+
+  if (!finalizedInvoiceId) {
+    throw new Error("Failed to finalize Stripe invoice: missing id");
+  }
+
+  // Send email to payee
+  await stripe.invoices.sendInvoice(finalizedInvoiceId, {
+    stripeAccount: stripeAccountId,
+  });
+
+  await updateInvoice(invoice.id, {
+    stripeInvoiceId: finalizedInvoiceId,
+    stripeInvoiceUrl: finalizedInvoice.hosted_invoice_url ?? null,
+    updatedAt: new Date().getTime(),
+  });
+}
+
 export async function upsertInvoiceAction(
   invoiceId: string | undefined,
   fd: FormData,
@@ -40,6 +127,7 @@ export async function upsertInvoiceAction(
   const amount = formdata.getFloat(fd, "amount");
   const fileId = formdata.getString(fd, "fileId");
   const dueBy = formdata.getTimestamp(fd, "dueBy");
+  const payerEmail = formdata.getString(fd, "payerEmail") || null;
 
   if (!amount) {
     throw new Error("invalid");
@@ -53,6 +141,7 @@ export async function upsertInvoiceAction(
       description,
       dueBy,
       fileId,
+      payerEmail,
       updatedAt: new Date().getTime(),
     });
   } else {
@@ -62,11 +151,23 @@ export async function upsertInvoiceAction(
       dueBy,
       fileId,
       identifier,
+      payerEmail,
       strataId: strata.id,
       status: "final",
       type: "incoming",
       updatedAt: new Date().getTime(),
     });
+  }
+
+  // Sync to Stripe if conditions are met
+  if (
+    invoice.status === "final" &&
+    invoice.type === "incoming" &&
+    strata.stripeAccountStatus === "active" &&
+    strata.stripeAccountId &&
+    payerEmail
+  ) {
+    await syncStripeInvoice(invoice, strata.stripeAccountId);
   }
 
   revalidatePath("/dashboard/invoices");

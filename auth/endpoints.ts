@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 
+import { getUserById } from "../data/users/getUser";
 import { signInUser } from "../data/users/signInUser";
 import * as formdata from "../utils/formdata";
 import { formatJwtCookie } from "./cookies";
@@ -27,6 +28,12 @@ export async function GET(config: Config, req: NextRequest) {
     // Require re-authentication if token was issued more than 24 hours ago
     if (!payload.iat || now - payload.iat > VALIDITY_PERIOD) {
       throw new Error("session too old, re-authentication required");
+    }
+
+    const u = await getUserById(payload.user.id);
+
+    if (!u) {
+      throw new Error("invalid user");
     }
 
     const newPayload = {

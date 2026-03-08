@@ -1,9 +1,25 @@
 #!/usr/bin/env bash
 
+if [ "$1" != "--local" ] && [ "$1" != "--remote" ]; then
+    echo "Usage: $0 --local|--remote"
+    exit 1
+fi
+
+if [ "$1" == "--remote" ]; then
+    echo "WARNING: You are about to run migrations against the REMOTE database!"
+    read -p "Are you sure? (y/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "Aborted."
+        exit 1
+    fi
+    target="--remote "
+else
+    target="--local "
+fi
+
 migrations_dir=$( dirname $0 )
 migrations=($( ls $migrations_dir ))
-target="--remote "
-# target="--local "
 
 npx wrangler d1 execute strataspheric ${target}\
     --command "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key)"

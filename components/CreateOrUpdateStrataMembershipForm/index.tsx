@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { upsertStrataMembershipAction } from "../../app/@app/dashboard/membership/actions";
 import { StrataMembership } from "../../data/memberships/getStrataMembership";
+import * as styles from "./style.css";
 import { classnames } from "../../utils/classnames";
 import { AddIcon } from "../Icon/AddIcon";
 import { SaveIcon } from "../Icon/SaveIcon";
@@ -24,6 +25,20 @@ export function CreateOrUpdateStrataMembershipForm({
 }: React.PropsWithChildren<Props>) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const ref = useRef<HTMLFormElement>(null!);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [isStuck, setIsStuck] = useState(false);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStuck(!entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <form
@@ -38,17 +53,26 @@ export function CreateOrUpdateStrataMembershipForm({
       <Stack>
         {children}
 
-        <StatusButton
-          color="primary"
-          icon={membership ? <SaveIcon /> : <AddIcon />}
-          type="submit"
+        <div
+          className={classnames(
+            styles.stickySubmit,
+            isStuck && styles.stickySubmitStuck,
+          )}
         >
-          {membership
-            ? membership.role === "pending"
-              ? "Approve Member"
-              : "Update Member"
-            : "Add Member"}
-        </StatusButton>
+          <StatusButton
+            color="primary"
+            icon={membership ? <SaveIcon /> : <AddIcon />}
+            type="submit"
+            fullWidth
+          >
+            {membership
+              ? membership.role === "pending"
+                ? "Approve Member"
+                : "Update Member"
+              : "Add Member"}
+          </StatusButton>
+        </div>
+        <div ref={sentinelRef} />
       </Stack>
     </form>
   );

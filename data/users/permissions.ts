@@ -9,6 +9,7 @@ export const scopes = [
   "invoices",
   "meetings",
   "memberships",
+  "settings",
   "widgets",
 ] as const;
 export const actions = ["create", "edit", "delete", "view"] as const;

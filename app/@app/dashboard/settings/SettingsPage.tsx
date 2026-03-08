@@ -18,10 +18,18 @@ import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain
 import { classnames } from "../../../../utils/classnames";
 import { updateStrataAction } from "../../actions";
 import { LocationSelector } from "./LocationSelector";
-import { deleteStrataAction } from "./actions";
+import {
+  createStripeConnectAccountAction,
+  createStripeConnectDashboardLinkAction,
+  deleteStrataAction,
+} from "./actions";
 
-export async function SettingsPage() {
-  const [strata] = await Promise.all([mustGetCurrentStrata()]);
+interface Props {
+  canEdit: boolean;
+}
+
+export async function SettingsPage({ canEdit }: Props) {
+  const strata = await mustGetCurrentStrata();
 
   return (
     <DashboardLayout>
@@ -31,80 +39,137 @@ export async function SettingsPage() {
             action={updateStrataAction.bind(undefined, strata.id)}
             className={classnames(styles.form, s({ mb: "large", mt: "large" }))}
           >
-            <Stack className={s({ mb: "large" })}>
-              <Input
-                name="name"
-                label="Strata Name"
-                defaultValue={strata.name}
-              />
-
-              <StrataAddressFormFields strata={strata} />
-
-              <FileSelect
-                label="Strata Bylaws"
-                name="bylawsFileId"
-                defaultValue={strata.bylawsFileId ?? undefined}
-              />
-
-              <InfoPanel
-                header={<Header as="h3">Content Visibility</Header>}
-                level="default"
-              >
-                <Text>
-                  Controls access to strata content by outsiders. If your strata
-                  is public, visitors to your Strataspheric page that are not
-                  members will be able to see content on your dashboard, certain
-                  files that are public, and upcoming events.
-                </Text>
-                <RadioButton
-                  className={s({ flex: 1 })}
-                  name="visibility"
-                  options={["private", "public"]}
-                  defaultValue={strata.isPublic ? "public" : "private"}
+            <fieldset disabled={!canEdit} style={{ border: "none", padding: 0, margin: 0 }}>
+              <Stack className={s({ mb: "large" })}>
+                <Input
+                  name="name"
+                  label="Strata Name"
+                  defaultValue={strata.name}
                 />
-              </InfoPanel>
 
-              <Header as="h2">Location</Header>
-              <Text color="secondary">
-                Let people know where to find your strata.
-              </Text>
-              <LocationSelector
-                defaultCenter={
-                  strata.latitude && strata.longitude
-                    ? [strata.latitude, strata.longitude]
-                    : undefined
-                }
-              />
-              <StatusButton
-                color="success"
-                icon={<SaveIcon />}
-                style="primary"
-                type="submit"
-              >
-                Update Strata
-              </StatusButton>
-            </Stack>
+                <StrataAddressFormFields strata={strata} />
+
+                <FileSelect
+                  label="Strata Bylaws"
+                  name="bylawsFileId"
+                  defaultValue={strata.bylawsFileId ?? undefined}
+                />
+
+                <InfoPanel
+                  header={<Header as="h3">Content Visibility</Header>}
+                  level="default"
+                >
+                  <Text>
+                    Controls access to strata content by outsiders. If your
+                    strata is public, visitors to your Strataspheric page that
+                    are not members will be able to see content on your
+                    dashboard, certain files that are public, and upcoming
+                    events.
+                  </Text>
+                  <RadioButton
+                    className={s({ flex: 1 })}
+                    name="visibility"
+                    options={["private", "public"]}
+                    defaultValue={strata.isPublic ? "public" : "private"}
+                  />
+                </InfoPanel>
+
+                <Header as="h2">Location</Header>
+                <Text color="secondary">
+                  Let people know where to find your strata.
+                </Text>
+                <LocationSelector
+                  defaultCenter={
+                    strata.latitude && strata.longitude
+                      ? [strata.latitude, strata.longitude]
+                      : undefined
+                  }
+                />
+                {canEdit && (
+                  <StatusButton
+                    color="success"
+                    icon={<SaveIcon />}
+                    style="primary"
+                    type="submit"
+                  >
+                    Update Strata
+                  </StatusButton>
+                )}
+              </Stack>
+            </fieldset>
           </form>
 
           <InfoPanel
-            action={
-              <ConfirmButton
-                icon={<DeleteIcon />}
-                onClickConfirm={deleteStrataAction}
-                color="error"
-                style="secondary"
-              >
-                Delete Strata
-              </ConfirmButton>
-            }
-            header={<Header as="h3">Danger Zone</Header>}
-            level="error"
+            header={<Header as="h3">Payment Processing</Header>}
+            level="default"
+            className={s({ mb: "large" })}
           >
             <Text>
-              Deleting your Strata will delete all information and files
-              associated with your strata unrecoverably.
+              Connect a Stripe account to collect payments from owners and
+              members directly via Strataspheric invoices.
             </Text>
+            {strata.stripeAccountStatus === "active" ? (
+              <Stack gap="small">
+                <Text color="success">Stripe account connected and active.</Text>
+                <form action={createStripeConnectDashboardLinkAction}>
+                  <StatusButton
+                    color="primary"
+                    style="secondary"
+                    type="submit"
+                    fullWidth
+                  >
+                    Open Stripe Dashboard
+                  </StatusButton>
+                </form>
+              </Stack>
+            ) : strata.stripeAccountStatus === "pending" ? (
+              <form action={createStripeConnectAccountAction}>
+                <StatusButton
+                  color="primary"
+                  style="secondary"
+                  type="submit"
+                  disabled={!canEdit}
+                  fullWidth
+                >
+                  Complete Stripe Setup
+                </StatusButton>
+              </form>
+            ) : (
+              <form action={createStripeConnectAccountAction}>
+                <StatusButton
+                  color="primary"
+                  style="secondary"
+                  type="submit"
+                  disabled={!canEdit}
+                  fullWidth
+                >
+                  Connect Stripe Account
+                </StatusButton>
+              </form>
+            )}
           </InfoPanel>
+
+          {canEdit && (
+            <InfoPanel
+              action={
+                <ConfirmButton
+                  icon={<DeleteIcon />}
+                  onClickConfirm={deleteStrataAction}
+                  color="error"
+                  style="secondary"
+                >
+                  Delete Strata
+                </ConfirmButton>
+              }
+              header={<Header as="h3">Danger Zone</Header>}
+              level="error"
+            >
+              <Text>
+                Deleting your Strata will delete all information and files
+                associated with your strata unrecoverably.
+              </Text>
+            </InfoPanel>
+          )}
         </div>
       </div>
     </DashboardLayout>

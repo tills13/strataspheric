@@ -29,7 +29,8 @@ export const NAVIGATION_LINKS: Array<Link | LinkWithPermissions> = [
   ["/dashboard/amenities", "Amenities", ["stratas.amenities.view"]],
   ["/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
   ["/dashboard/inbox", "Strata Inbox"],
-  ["/dashboard/settings", "Settings", ["stratas.edit"]],
+  ["/dashboard/subscription", "Subscription", ["stratas.settings.edit"]],
+  ["/dashboard/settings", "Settings", ["stratas.settings.view"]],
 ];
 
 export const NAVIGATION_LINK_ICONS: Record<
@@ -44,5 +45,6 @@ export const NAVIGATION_LINK_ICONS: Record<
   "/dashboard/amenities": BedIcon,
   "/dashboard/meetings": GroupIcon,
   "/dashboard/inbox": InboxIcon,
+  "/dashboard/subscription": PaidDocumentIcon,
   "/dashboard/settings": SettingsIcon,
 };

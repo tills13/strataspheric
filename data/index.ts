@@ -96,6 +96,9 @@ export interface InvoicesTable {
   createdAt: ColumnType<number, never, never>;
   updatedAt: number;
   dueBy: number | null;
+  stripeInvoiceId: string | null;
+  stripeInvoiceUrl: string | null;
+  payerEmail: string | null;
 }
 
 export type Invoice = Selectable<InvoicesTable>;
@@ -175,6 +178,8 @@ export interface StratasTable {
   longitude: number | null;
   bylawsFileId: string | null;
   stripeCustomerId: ColumnType<string, string, never>;
+  stripeAccountId: string | null;
+  stripeAccountStatus: ColumnType<string | null, string | null, string | null>;
   createdAt: ColumnType<number, never, never>;
 }
 
@@ -199,6 +204,7 @@ export interface StrataMembershipsTable {
   rawPermissions: string | null;
   role: Role;
   phoneNumber: string | null;
+  monthlyFee: number | null;
 }
 
 export type StrataMembership = Selectable<StrataMembershipsTable>;
@@ -219,6 +225,7 @@ export interface StrataPlansTable {
 
 export type StrataPlan = Selectable<StrataPlansTable>;
 export type NewStrataPlan = Insertable<StrataPlansTable>;
+export type StrataPlanUpdate = Updateable<StrataPlansTable>;
 
 export interface StrataWidgetsTable {
   id: string;

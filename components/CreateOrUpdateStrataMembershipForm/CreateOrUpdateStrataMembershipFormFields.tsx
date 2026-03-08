@@ -7,12 +7,14 @@ interface Props {
   membership?: StrataMembership;
   strataRoleSelectDisabled?: boolean;
   availableRoles?: Role[];
+  canEditMonthlyFee?: boolean;
 }
 
 export function CreateOrUpdateStrataMembershipFormFields({
   membership,
   strataRoleSelectDisabled,
   availableRoles,
+  canEditMonthlyFee,
 }: Props) {
   return (
     <>
@@ -58,6 +60,16 @@ export function CreateOrUpdateStrataMembershipFormFields({
         availableRoles={availableRoles}
         required
       />
+
+      {canEditMonthlyFee && (
+        <Input
+          name="monthly_fee"
+          type="number"
+          label="Monthly Fee"
+          defaultValue={membership?.monthlyFee ?? undefined}
+          min={0}
+        />
+      )}
     </>
   );
 }

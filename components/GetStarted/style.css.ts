@@ -5,14 +5,6 @@ import { important } from "../../theme";
 
 export const getStartedForm = style({});
 
-export const subdomainField = style({
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-  gap: vars.spacing.small,
-  marginBottom: vars.spacing.normal,
-});
-
 export const subdomainFieldRootDomain = style({
   opacity: 0.7,
 });

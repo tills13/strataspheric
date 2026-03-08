@@ -69,6 +69,13 @@ export async function MembershipTableRow({ membership }: Props) {
           <Text color="secondary">{roleLabels[membership.role]}</Text>
         </Group>
       }
+      rowEnd={
+        membership.monthlyFee != null ? (
+          <Text color="secondary" whiteSpace="nowrap">
+            ${membership.monthlyFee}/mo
+          </Text>
+        ) : undefined
+      }
       rowId={membership.id}
       link={`/dashboard/membership/${membership.id}`}
     />

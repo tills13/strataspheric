@@ -11,6 +11,7 @@ type ValidTextIntrinsicElements =
   | "label"
   | "p"
   | "span"
+  | "b"
   | "h1"
   | "h2"
   | "h3"

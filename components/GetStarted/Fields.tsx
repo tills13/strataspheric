@@ -11,6 +11,7 @@ import { useSession } from "../../hooks/useSession";
 import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
 import { pluralize } from "../../utils/pluralize";
+import { Flex } from "../Flex";
 import { Group } from "../Group";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
@@ -84,16 +85,8 @@ export function GetStartedFormFields({
           required
         />
 
-        <Input
-          name="strata_main_contact"
-          label="Main Contact Email"
-          type="email"
-          defaultValue={session?.user.email || ""}
-          required
-        />
-
         {suggestedSubdomain !== "" && (
-          <div className={styles.subdomainField}>
+          <Group gap="small" justify="end">
             {isDomainAvailable === undefined && suggestedSubdomain ? (
               <CycleIcon className={styles.subdomainStatusLoading} />
             ) : isDomainAvailable ? (
@@ -103,9 +96,10 @@ export function GetStartedFormFields({
             )}
 
             <div>
-              <span className={styles.subdomainFieldSubdomain}>
+              Your Strataspheric site will be available at:{" "}
+              <Text as="b" fw="bold">
                 {suggestedSubdomain}
-              </span>
+              </Text>
               <span className={styles.subdomainFieldRootDomain}>.{tld}</span>
             </div>
 
@@ -114,8 +108,16 @@ export function GetStartedFormFields({
               type="hidden"
               value={`${suggestedSubdomain}.${tld}`}
             />
-          </div>
+          </Group>
         )}
+
+        <Input
+          name="strata_main_contact"
+          label="Main Contact Email"
+          type="email"
+          defaultValue={session?.user.email || ""}
+          required
+        />
 
         <Input
           name="num_units"

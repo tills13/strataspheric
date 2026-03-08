@@ -45,6 +45,7 @@ export default async function Page({
 
   const currentUserRole = currentUserMembership?.role ?? "owner";
   const isEditingSelf = session?.user.id === userId;
+  const canEditMonthlyFee = canEditInformation && !isEditingSelf;
   const isTargetHigherRole = isRoleHigherThan(membership.role, currentUserRole);
 
   // Disable role select if:
@@ -57,8 +58,6 @@ export default async function Page({
   // Only show roles at or below current user's level
   const availableRoles = getAssignableRoles(currentUserRole);
 
-  console.log(membership);
-
   return (
     <DashboardLayout title={membership.name}>
       <Details className={s({ p: "normal" })}>
@@ -67,6 +66,12 @@ export default async function Page({
           description={membership.unit ?? <Badge>No Unit</Badge>}
         />
         <DetailsRow title="Role" description={roleLabels[membership.role]} />
+        {membership.monthlyFee != null && (
+          <DetailsRow
+            title="Monthly Fee"
+            description={`$${membership.monthlyFee}`}
+          />
+        )}
       </Details>
       <Group ph="normal" equalWidthChildren>
         <ExternalLink href={`mailto:${membership.email}`} noUnderline>
@@ -103,6 +108,7 @@ export default async function Page({
               membership={membership}
               strataRoleSelectDisabled={strataRoleSelectDisabled}
               availableRoles={availableRoles}
+              canEditMonthlyFee={canEditMonthlyFee}
             />
           )}
           {canEditPermissions && (
