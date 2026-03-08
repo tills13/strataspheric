@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev -H 0.0.0.0 --webpack",
-    "build": "next build",
+    "build": "next build --webpack",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
