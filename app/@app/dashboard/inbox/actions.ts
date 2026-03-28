@@ -6,10 +6,12 @@ import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
 import { protocol } from "../../../../constants";
 import { createThreadEmail } from "../../../../data/emails/createThreadEmail";
+import { archiveThreads } from "../../../../data/inbox/archiveThreads";
 import { createThreadMessage } from "../../../../data/inbox/createThreadMessage";
 import { deleteThread } from "../../../../data/inbox/deleteThread";
 import { deleteThreadChats } from "../../../../data/inbox/deleteThreadChats";
 import { getThreadMessages } from "../../../../data/inbox/getThreadMessages";
+import { updateThread } from "../../../../data/inbox/updateThread";
 import {
   StrataMembership,
   getStrataMembership,
@@ -17,6 +19,7 @@ import {
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import * as formdata from "../../../../utils/formdata";
 import { sendEmail } from "../../../../utils/sendEmail";
+import { sendNotification } from "../../../../utils/notifications";
 
 export async function deleteThreadAction(threadId: string) {
   await deleteThread(threadId);
@@ -119,10 +122,76 @@ export async function createInboxMessageAction(
       );
     }
 
+    // Notify thread participants
+    const allMessages = await getThreadMessages(threadId);
+    const participantUserIds = [
+      ...new Set(
+        allMessages
+          .map((m) => m.senderUserId)
+          .filter((id): id is string => !!id && id !== u?.user?.id),
+      ),
+    ];
+
+    const participantEmails: string[] = [];
+    for (const uid of participantUserIds) {
+      const member = await getStrataMembership(strata.id, uid);
+      if (member) participantEmails.push(member.email);
+    }
+
+    if (participantEmails.length > 0) {
+      await sendNotification({
+        to: participantEmails,
+        subject: `Re: ${message0.subject}`,
+        html: `
+          <p><strong>${u?.user?.name || senderName || "Someone"}</strong> replied:</p>
+          <p>${message}</p>
+          <p><a href="${viewUrl}">View conversation</a></p>
+        `,
+        ccStrataInbox: true,
+      });
+    }
+
     revalidatePath("/dashboard/inbox/" + threadId);
     return;
   }
 
+  // For new threads, CC strata inbox
+  await sendNotification({
+    to: [],
+    subject: subject,
+    html: `
+      <p><strong>${senderName || "Someone"}</strong> sent a new message:</p>
+      <p>${message}</p>
+    `,
+    ccStrataInbox: true,
+  });
+
   revalidatePath("/dashboard/inbox");
   redirect(viewPath);
+}
+
+export async function markThreadAsReadAction(threadId: string) {
+  await updateThread(threadId, { isUnread: 0 });
+  revalidatePath("/dashboard/inbox");
+}
+
+export async function markThreadAsUnreadAction(threadId: string) {
+  await updateThread(threadId, { isUnread: 1 });
+  revalidatePath("/dashboard/inbox");
+}
+
+export async function archiveThreadAction(threadId: string) {
+  await archiveThreads([threadId]);
+  revalidatePath("/dashboard/inbox");
+}
+
+export async function archiveThreadsAction(threadIds: string[]) {
+  await archiveThreads(threadIds);
+  revalidatePath("/dashboard/inbox");
+}
+
+export async function unarchiveThreadAction(threadId: string) {
+  await updateThread(threadId, { archivedAt: null });
+  revalidatePath("/dashboard/inbox");
+  revalidatePath("/dashboard/inbox/archived");
 }
