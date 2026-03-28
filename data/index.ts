@@ -372,6 +372,6 @@ export function db() {
     dialect: new D1Dialect({
       database: env.DB as D1Database,
     }),
-    log: ["query"],
+    log: process.env.NODE_ENV === "development" ? ["query"] : [],
   });
 }
