@@ -1,8 +1,4 @@
-import {
-  StrataMembership,
-  baseQuery,
-  processRows,
-} from "./getStrataMembership";
+import { baseQuery, processRows } from "./getStrataMembership";
 
 interface FindMembersFilters {
   domain?: string;
@@ -11,14 +7,10 @@ interface FindMembersFilters {
   includePending?: boolean;
 }
 
-export async function listStrataMemberships(
-  filter: FindMembersFilters,
-): Promise<StrataMembership[]> {
-  let query = baseQuery().innerJoin(
-    "stratas",
-    "stratas.id",
-    "strata_memberships.strataId",
-  );
+export async function listStrataMemberships(filter: FindMembersFilters) {
+  let query = baseQuery()
+    .innerJoin("stratas", "stratas.id", "strata_memberships.strataId")
+    .select("stratas.name as strataName");
 
   if (filter.userId) {
     query = query.where("strata_memberships.userId", "=", filter.userId);
@@ -36,5 +28,10 @@ export async function listStrataMemberships(
     query = query.where("strata_memberships.role", "!=", "pending");
   }
 
-  return processRows(...(await query.execute()));
+  const rows = await query.execute();
+  const processed = processRows(...rows);
+  return processed.map((membership, i) => ({
+    ...membership,
+    strataName: rows[i]!.strataName,
+  }));
 }
