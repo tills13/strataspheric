@@ -5,17 +5,19 @@ import ArchiveSelectedInboxMessagesButton from "../../../../components/ArchiveSe
 import { Button } from "../../../../components/Button";
 import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { Group } from "../../../../components/Group";
+import { ArchiveIcon } from "../../../../components/Icon/ArchiveIcon";
+import { GroupIcon } from "../../../../components/Icon/GroupIcon";
 import { SendIcon } from "../../../../components/Icon/SendIcon";
 import { InboxThreads } from "../../../../components/InboxThreads";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Pagination } from "../../../../components/Pagination";
 import { TableSelectProvider } from "../../../../components/Table/TableSelectProvider";
 import { Upsell } from "../../../../components/Upsell";
+import { countUnreadThreads } from "../../../../data/inbox/countUnreadThreads";
 import { listThreads } from "../../../../data/inbox/listThreads";
 import { getCurrentStrataPlan } from "../../../../data/strataPlans/getStrataPlanByDomain";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
-
 
 const INBOX_UPSELL = `
  Stop worrying about shared email accounts or private emails being used
@@ -24,7 +26,9 @@ conversations with council, automatically keeping a history of all
 correspondance forever.
 `.trim();
 
-export default async function Page({ searchParams }: PageProps<"/dashboard/inbox">) {
+export default async function Page({
+  searchParams,
+}: PageProps<"/dashboard/inbox">) {
   const { page: rawPageNum } = await searchParams;
   const [session, strata, strataPlan] = await Promise.all([
     auth(),
@@ -38,10 +42,12 @@ export default async function Page({ searchParams }: PageProps<"/dashboard/inbox
     }
 
     return (
-      <Upsell
-        upsellDescription={INBOX_UPSELL}
-        upsellFeature="The strata inbox"
-      />
+      <DashboardLayout title="Strata Inbox">
+        <Upsell
+          upsellDescription={INBOX_UPSELL}
+          upsellFeature="The strata inbox"
+        />
+      </DashboardLayout>
     );
   }
 
@@ -52,15 +58,20 @@ export default async function Page({ searchParams }: PageProps<"/dashboard/inbox
   const pageNum = parseInt(rawPageNum || "1", 10);
   const offset = (pageNum - 1) * 10;
 
-  const { results: threads, total } = await listThreads(
-    {
-      strataId: strata.id,
-      ...(!can(session.user, "stratas.inbox_messages.view") && {
-        senderUserId: session.user.id,
-      }),
-    },
-    { offset },
-  );
+  const threadFilter = {
+    strataId: strata.id,
+    ...(!can(session.user, "stratas.inbox_messages.view") && {
+      senderUserId: session.user.id,
+    }),
+  };
+
+  const [{ results: threads, total }, unreadCount] = await Promise.all([
+    listThreads(threadFilter, { offset }),
+    countUnreadThreads(threadFilter),
+  ]);
+
+  const title =
+    unreadCount > 0 ? `Strata Inbox (${unreadCount} unread)` : "Strata Inbox";
 
   return (
     <TableSelectProvider>
@@ -68,6 +79,14 @@ export default async function Page({ searchParams }: PageProps<"/dashboard/inbox
         actions={
           <Group gap="small">
             <ArchiveSelectedInboxMessagesButton />
+            <InternalLink href="/dashboard/inbox/archived" noUnderline>
+              <Button
+                color="primary"
+                style="tertiary"
+                size="small"
+                icon={<ArchiveIcon />}
+              />
+            </InternalLink>
             <InternalLink href="/dashboard/inbox/send" noUnderline>
               <Button
                 color="primary"
@@ -76,9 +95,19 @@ export default async function Page({ searchParams }: PageProps<"/dashboard/inbox
                 icon={<SendIcon />}
               />
             </InternalLink>
+            {can(session?.user, "stratas.inbox_blasts.create") && (
+              <InternalLink href="/dashboard/inbox/blast" noUnderline>
+                <Button
+                  color="primary"
+                  style="tertiary"
+                  size="small"
+                  icon={<GroupIcon />}
+                />
+              </InternalLink>
+            )}
           </Group>
         }
-        title={`Inbox (${threads.length})`}
+        title={title}
       >
         <InboxThreads threads={threads} />
 

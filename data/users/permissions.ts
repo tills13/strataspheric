@@ -4,6 +4,7 @@ export const scopes = [
   "amenity_bookings",
   "events",
   "files",
+  "inbox_blasts",
   "inbox_messages",
   "inbox_thread_chats",
   "invoices",

@@ -16,10 +16,12 @@ import {
   StrataMembership,
   getStrataMembership,
 } from "../../../../data/memberships/getStrataMembership";
+import { listStrataMemberships } from "../../../../data/memberships/listStrataMemberships";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { assertCan } from "../../../../data/users/permissions";
 import * as formdata from "../../../../utils/formdata";
-import { sendEmail } from "../../../../utils/sendEmail";
 import { sendNotification } from "../../../../utils/notifications";
+import { sendEmail } from "../../../../utils/sendEmail";
 
 export async function deleteThreadAction(threadId: string) {
   await deleteThread(threadId);
@@ -194,4 +196,49 @@ export async function unarchiveThreadAction(threadId: string) {
   await updateThread(threadId, { archivedAt: null });
   revalidatePath("/dashboard/inbox");
   revalidatePath("/dashboard/inbox/archived");
+}
+
+export async function sendInboxBlastAction(fd: FormData) {
+  const [session, strata] = await Promise.all([
+    auth(),
+    mustGetCurrentStrata(),
+  ]);
+
+  if (!session) throw new Error("not allowed");
+  assertCan(session.user, "stratas.inbox_blasts.create");
+
+  const subject = formdata.getString(fd, "subject");
+  const message = formdata.getString(fd, "message");
+
+  if (!subject || !message) {
+    throw new Error("Subject and message are required");
+  }
+
+  const newMessage = await createThreadMessage({
+    subject,
+    message,
+    senderUserId: session.user.id,
+    strataId: strata.id,
+  });
+
+  const members = await listStrataMemberships({ strataId: strata.id });
+  const recipientEmails = members
+    .map((m) => m.email)
+    .filter((email) => email !== session.user.email);
+
+  if (recipientEmails.length > 0) {
+    await sendNotification({
+      to: recipientEmails,
+      subject,
+      html: `
+        <p><strong>${session.user.name}</strong> sent a message to all members:</p>
+        <p>${message}</p>
+        <p><a href="${protocol}//${strata.domain}/dashboard/inbox/${newMessage.threadId}">View message</a></p>
+      `,
+      ccStrataInbox: true,
+    });
+  }
+
+  revalidatePath("/dashboard/inbox");
+  redirect(`/dashboard/inbox/${newMessage.threadId}`);
 }
