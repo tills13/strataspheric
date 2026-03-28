@@ -60,6 +60,10 @@ export async function joinAction(
         status: "active",
       });
 
+      if (!u) {
+        throw new Error("Failed to create user");
+      }
+
       if (strata) {
         await createStrataMembership({
           strataId: strata.id,

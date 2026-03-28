@@ -53,6 +53,7 @@ export async function getThreadMessages(
       "files.sizeBytes as fileSizeBytes",
       "files.strataId as fileStrataId",
       "files.uploaderId as fileUploaderId",
+      "files.mimeType as fileMimeType",
 
       "invoices.amount as invoiceAmount",
       "invoices.createdAt as invoiceCreatedAt",
@@ -98,7 +99,7 @@ export async function getThreadMessages(
     query = query.where("inbox_messages.viewId", "=", viewId);
   }
 
-  const result = await query.orderBy("inbox_messages.sentAt asc").execute();
+  const result = await query.orderBy("inbox_messages.sentAt", "asc").execute();
 
   return result.map(
     ({
@@ -109,6 +110,7 @@ export async function getThreadMessages(
       fileName,
       filePath,
       fileSizeBytes,
+      fileMimeType,
       fileStrataId,
       fileUploaderId,
 
@@ -175,6 +177,7 @@ export async function getThreadMessages(
               description: fileDescription!,
               id: fileId!,
               isPublic: fileIsPublic!,
+              mimeType: fileMimeType!,
               name: fileName!,
               path: filePath!,
               sizeBytes: fileSizeBytes!,

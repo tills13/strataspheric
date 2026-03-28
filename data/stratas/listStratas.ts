@@ -1,7 +1,6 @@
 import type { OperandExpression, SqlBool } from "kysely";
 
 import { db } from "..";
-import { Strata } from "./getStrataById";
 
 type Filter = {
   address?: string;
@@ -14,7 +13,7 @@ type Filter = {
   planish?: string;
 };
 
-export async function listStratas(filter: Filter): Promise<Strata[]> {
+export async function listStratas(filter: Filter) {
   return db()
     .selectFrom("stratas")
     .leftJoin("strata_plans", "stratas.id", "strata_plans.strataId")

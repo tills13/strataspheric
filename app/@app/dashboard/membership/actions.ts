@@ -51,6 +51,10 @@ export const upsertStrataMembershipAction = withPermissions(
       strata.id,
       session.user.id,
     );
+    if (!currentUserMembership) {
+      throw new Error("Current user is not a member of this strata");
+    }
+
     const currentUserRole = currentUserMembership.role;
 
     // Validate: Cannot assign a role higher than your own
@@ -60,6 +64,10 @@ export const upsertStrataMembershipAction = withPermissions(
 
     if (userId) {
       const membership = await getStrataMembership(strata.id, userId);
+
+      if (!membership) {
+        throw new Error("Membership not found");
+      }
 
       // Validate: Cannot change the role of someone with a higher role
       if (isRoleHigherThan(membership.role, currentUserRole)) {
@@ -126,6 +134,10 @@ export const upsertStrataMembershipAction = withPermissions(
           password,
           status: "pending",
         });
+
+        if (!newUser) {
+          throw new Error("Failed to create user");
+        }
 
         userId = newUser.id;
 

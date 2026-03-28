@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 import { RecipeVariants } from "@vanilla-extract/recipes";
 import React from "react";
 
+import { S } from "../../sprinkles.css";
 import { classnames } from "../../utils/classnames";
 import { Core } from "../Core";
 
@@ -11,14 +12,19 @@ type ButtonRecipeProps = Omit<
   "icon"
 >;
 
-interface Props
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    Omit<React.ComponentProps<typeof Core>, "as" | "color"> {
-  icon?: React.ReactNode;
-  iconTextBehaviour?: "centerRemainder" | "centerGlobal";
-  className?: string;
-  children?: React.ReactNode;
-}
+type CoreProps = Pick<
+  React.ComponentProps<typeof Core>,
+  "visibleFrom" | "visibleOn"
+>;
+
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  CoreProps &
+  Omit<S, "color" | "style"> & {
+    icon?: React.ReactNode;
+    iconTextBehaviour?: "centerRemainder" | "centerGlobal";
+    className?: string;
+    children?: React.ReactNode;
+  };
 
 export function Button({
   children,

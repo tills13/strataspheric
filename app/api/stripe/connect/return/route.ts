@@ -1,10 +1,8 @@
 import { redirect } from "next/navigation";
-import Stripe from "stripe";
 
 import { db } from "../../../../../data";
+import { stripe } from "../../../../../data/stripe";
 import { updateStrata } from "../../../../../data/stratas/updateStrata";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function GET(request: Request) {
   const url = new URL(request.url);

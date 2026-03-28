@@ -29,7 +29,7 @@ export function Core<E extends keyof JSX.IntrinsicElements = "div">({
 }: React.PropsWithChildren<Props<E>>) {
   const { sprinkleAttrs, props } = Object.entries(rest).reduce(
     (acc, [propName, propValue]) => {
-      if (s.properties.has(propName)) {
+      if (s.properties.has(propName as keyof S)) {
         acc.sprinkleAttrs[propName as keyof S] = propValue;
       } else {
         acc.props[propName as keyof JSX.IntrinsicElements[E]] = propValue;
@@ -43,8 +43,11 @@ export function Core<E extends keyof JSX.IntrinsicElements = "div">({
     },
   );
 
+  const Component = IsomorphicComponent as string;
+
   return (
-    <IsomorphicComponent
+    // @ts-expect-error - Generic JSX element type cannot be fully represented in TypeScript
+    <Component
       className={classnames(
         className,
         styles.core,
@@ -57,6 +60,6 @@ export function Core<E extends keyof JSX.IntrinsicElements = "div">({
       {...props}
     >
       {children}
-    </IsomorphicComponent>
+    </Component>
   );
 }

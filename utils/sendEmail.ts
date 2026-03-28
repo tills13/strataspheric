@@ -54,5 +54,5 @@ export async function sendEmail(
 
   await createEmail(rJson.id);
 
-  return rJson;
+  return rJson as { id: string };
 }

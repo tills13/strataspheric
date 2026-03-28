@@ -19,7 +19,8 @@ export default async function Page({
   const session = await auth();
 
   const { threadId } = await params;
-  const { viewId } = await searchParams;
+  const { viewId: rawViewId } = await searchParams;
+  const viewId = typeof rawViewId === "string" ? rawViewId : undefined;
 
   let thread: Thread;
 

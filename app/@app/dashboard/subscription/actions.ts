@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import Stripe from "stripe";
 
 import { auth } from "../../../../auth";
 import { protocol } from "../../../../constants";
@@ -17,9 +16,8 @@ import {
   plans,
 } from "../../../../data/strataPlans/constants";
 import { updateStrataPlan } from "../../../../data/strataPlans/updateStrataPlan";
+import { stripe } from "../../../../data/stripe";
 import { can } from "../../../../data/users/permissions";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const NotAuthorized = new Error("not authorized");
 

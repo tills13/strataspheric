@@ -170,18 +170,6 @@ export default async function Page() {
                 <InfoPanel level="success" visibleOn="mobile">
                   mobile
                 </InfoPanel>
-                <InfoPanel level="success" visibleOn="mobilePlus">
-                  mobilePlus
-                </InfoPanel>
-                <InfoPanel level="success" visibleOn="tablet">
-                  tablet
-                </InfoPanel>
-                <InfoPanel level="success" visibleOn="tabletPlus">
-                  tabletPlus
-                </InfoPanel>
-                <InfoPanel level="success" visibleOn="desktop">
-                  desktop
-                </InfoPanel>
               </Flex>
             </Stack>
           </Panel>
@@ -267,19 +255,19 @@ export default async function Page() {
             <Button icon={<AddIcon />} />
           </Grid>
           <Grid cols={{ base: 3 }}>
-            <Button color="primary" iconLeft={<AddIcon />}>
+            <Button color="primary" icon={<AddIcon />}>
               Icon Left
             </Button>
             <Button
               color="primary"
-              iconLeft={<AddIcon />}
+              icon={<AddIcon />}
               iconTextBehaviour="centerGlobal"
             >
               Text Center Global
             </Button>
             <Button
               color="primary"
-              iconLeft={<AddIcon />}
+              icon={<AddIcon />}
               iconTextBehaviour="centerRemainder"
             >
               Text Center Remainder

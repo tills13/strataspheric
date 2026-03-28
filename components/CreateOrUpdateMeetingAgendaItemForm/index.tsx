@@ -50,7 +50,7 @@ export function CreateOrUpdateMeetingAgendaItemForm({
 
         <AttachInvoiceField
           name="invoiceId"
-          defaultValue={agendaItem?.invoice}
+          defaultValue={agendaItem?.invoice as React.ComponentProps<typeof AttachInvoiceField>["defaultValue"]}
         />
 
         <StatusButton

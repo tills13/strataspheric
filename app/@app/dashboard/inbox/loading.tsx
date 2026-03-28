@@ -7,11 +7,11 @@ export default function Loading() {
   return (
     <DashboardLayout title="Inbox">
       <Table>
-        <TableRow content={<Bone />} />
-        <TableRow content={<Bone />} />
-        <TableRow content={<Bone />} />
-        <TableRow content={<Bone />} />
-        <TableRow content={<Bone />} />
+        <TableRow rowId="skeleton-1" content={<Bone />} />
+        <TableRow rowId="skeleton-2" content={<Bone />} />
+        <TableRow rowId="skeleton-3" content={<Bone />} />
+        <TableRow rowId="skeleton-4" content={<Bone />} />
+        <TableRow rowId="skeleton-5" content={<Bone />} />
       </Table>
     </DashboardLayout>
   );

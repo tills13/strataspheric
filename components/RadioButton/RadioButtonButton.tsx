@@ -30,7 +30,7 @@ export function RadioButtonButton({
         defaultChecked={option === defaultValue}
         value={option}
       />
-      <Text fontWeight="bold" color="primary">
+      <Text fontWeight="bold" color="unset">
         {option}
       </Text>
     </label>

@@ -12,6 +12,7 @@ export default function Loading() {
         {[...range(10)].map((row) => (
           <TableRow
             key={row}
+            rowId={`skeleton-${row}`}
             content={<Bone />}
             rowEnd={<Bone className={s({ flex: 1 })} />}
           />

@@ -20,7 +20,8 @@ export default async function Page({ searchParams }: PageProps<"/dashboard/invoi
     notFound();
   }
 
-  const { page: rawPageNum } = await searchParams;
+  const { page: rawPage } = await searchParams;
+  const rawPageNum = typeof rawPage === "string" ? rawPage : undefined;
   const pageNum = parseInt(rawPageNum || "1", 10);
   const offset = (pageNum - 1) * 10;
 

@@ -6,11 +6,13 @@ import { Stack } from "../Stack";
 import { TextArea } from "../TextArea";
 
 interface Props {
+  body?: string;
   className?: string;
   widget?: StrataWidget;
 }
 
 export function CreateOrUpdateStrataInfoWidgetForm({
+  body,
   className,
   widget,
 }: Props) {
@@ -34,7 +36,7 @@ export function CreateOrUpdateStrataInfoWidgetForm({
           label="Message"
           name="body"
           rows={4}
-          defaultValue={widget?.body}
+          defaultValue={body}
           placeholder="Supports basic HTML formatting (bold, italic, links, lists, etc.)"
         />
       )}

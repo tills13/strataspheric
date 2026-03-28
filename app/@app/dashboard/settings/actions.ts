@@ -1,7 +1,6 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import Stripe from "stripe";
 
 import { auth } from "../../../../auth";
 import { removeCustomDomain } from "../../../../cloudflare/workers/removeCustomDomain";
@@ -19,11 +18,10 @@ import {
   getCurrentStrata,
   mustGetCurrentStrata,
 } from "../../../../data/stratas/getStrataByDomain";
+import { stripe } from "../../../../data/stripe";
 import { updateStrata } from "../../../../data/stratas/updateStrata";
 import { can } from "../../../../data/users/permissions";
 import { deleteAllWidgets } from "../../../../data/widgets/deleteAllWidgets";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const NotAuthorized = new Error("not authorized");
 

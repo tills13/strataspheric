@@ -13,6 +13,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   actionLeft?: React.ReactNode;
   icon?: React.ReactNode;
   inputClassName?: string;
+  label?: string;
   onChangeValue?: (newValue: string) => void;
   placeholder?: string;
   ref?: React.Ref<HTMLInputElement>;
@@ -25,6 +26,7 @@ export function Input({
   icon,
   id: propsId,
   inputClassName,
+  label: _label,
   name,
   onChange,
   onChangeValue,

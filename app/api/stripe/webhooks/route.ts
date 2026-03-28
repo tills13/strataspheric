@@ -3,9 +3,8 @@ import Stripe from "stripe";
 import { db } from "../../../../data";
 import { getInvoiceByStripeInvoiceId } from "../../../../data/invoices/getInvoiceByStripeInvoiceId";
 import { updateInvoice } from "../../../../data/invoices/updateInvoice";
+import { stripe } from "../../../../data/stripe";
 import { updateStrata } from "../../../../data/stratas/updateStrata";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 async function handlePlatformEvent(event: Stripe.Event) {
   if (event.type === "customer.subscription.deleted") {

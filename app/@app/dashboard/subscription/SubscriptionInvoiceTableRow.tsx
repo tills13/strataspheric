@@ -26,7 +26,7 @@ interface Props {
 export function SubscriptionInvoiceTableRow({ invoice }: Props) {
   return (
     <TableRow
-      rowId={invoice.id}
+      rowId={invoice.id ?? invoice.number ?? ""}
       link={invoice.invoice_pdf ?? undefined}
       content={
         <Group flex={1}>

@@ -27,12 +27,17 @@ export async function listInvoices(
     query = query.where("invoices.payee", "=", filter.payeeId);
   }
 
-  const orderBy = pagination.orderBy || "invoices.createdAt desc";
   const limit = pagination.limit ?? 10;
   const offset = pagination.offset ?? 0;
 
+  if (pagination.orderBy) {
+    query = query.orderBy([pagination.orderBy]);
+  } else {
+    query = query.orderBy("invoices.createdAt", "desc");
+  }
+
   const [results, totalRow] = await Promise.all([
-    query.orderBy(orderBy).offset(offset).limit(limit).execute(),
+    query.offset(offset).limit(limit).execute(),
     limitQuery.executeTakeFirst(),
   ]);
 

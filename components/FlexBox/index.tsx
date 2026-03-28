@@ -5,7 +5,7 @@ import React from "react";
 import { classnames } from "../../utils/classnames";
 import { Core } from "../Core";
 
-type CoreProps = React.ComponentProps<typeof Core<"div" | "span">>;
+type CoreProps = React.ComponentProps<typeof Core<"div" | "span" | "dl">>;
 
 interface Props
   extends Omit<

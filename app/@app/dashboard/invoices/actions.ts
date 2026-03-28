@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import Stripe from "stripe";
 
 import { auth } from "../../../../auth";
 import { Invoice } from "../../../../data";
@@ -10,10 +9,9 @@ import { createInvoice } from "../../../../data/invoices/createInvoice";
 import { deleteInvoice } from "../../../../data/invoices/deleteInvoice";
 import { updateInvoice } from "../../../../data/invoices/updateInvoice";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { stripe } from "../../../../data/stripe";
 import { can } from "../../../../data/users/permissions";
 import * as formdata from "../../../../utils/formdata";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function markInvoiceAsPaidAction(invoiceId: string) {
   const session = await auth();

@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
 
 const withVanillaExtract = createVanillaExtractPlugin({});
 
-const nextConfig: NextConfig = {
+const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
   eslint: {
     ignoreDuringBuilds: true,
   },

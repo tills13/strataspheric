@@ -10,7 +10,7 @@ export const GET = auth(async (session, req) => {
   const strata = await getCurrentStrata();
 
   if (!strata) {
-    return new Response("Not Found", { status: 404 });
+    return new NextResponse("Not Found", { status: 404 });
   }
 
   const canSeePrivateFiles = can(session.user, "stratas.files.create");

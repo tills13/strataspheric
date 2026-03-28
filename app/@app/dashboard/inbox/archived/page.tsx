@@ -16,7 +16,8 @@ import { can } from "../../../../../data/users/permissions";
 export default async function Page({
   searchParams,
 }: PageProps<"/dashboard/inbox/archived">) {
-  const { page: rawPageNum } = await searchParams;
+  const { page: rawPage } = await searchParams;
+  const rawPageNum = typeof rawPage === "string" ? rawPage : undefined;
   const [session, strata, strataPlan] = await Promise.all([
     auth(),
     mustGetCurrentStrata(),

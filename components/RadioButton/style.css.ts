@@ -16,6 +16,7 @@ export const radioButtonButton = style({
   justifyContent: "center",
   alignItems: "center",
 
+  color: vars.fontColors.primary,
   backgroundColor: vars.surfaces.interactive,
   borderRadius: vars.borderRadius.md,
 
@@ -27,7 +28,8 @@ export const radioButtonButton = style({
       cursor: "pointer",
     },
     '&:has(input[type="radio"]:checked)': {
-      backgroundColor: vars.colors.grey200,
+      backgroundColor: vars.colors.primary,
+      color: vars.fontColors.primaryInverse,
     },
   },
 });

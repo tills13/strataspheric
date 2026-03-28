@@ -36,7 +36,7 @@ export function FileSelect({
       }
 
       const r = await fetch("/api/files/listFiles?" + query.toString());
-      const rJson = await r.json();
+      const rJson = (await r.json()) as { files?: File[] };
 
       setFiles(rJson.files || []);
       setIsLoading(false);

@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 import { auth, mustAuth } from "../../../../auth";
 import { listInvoices } from "../../../../data/invoices/listInvoices";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
@@ -8,7 +10,7 @@ export const GET = auth(async () => {
   const [session, strata] = await Promise.all([mustAuth(), getCurrentStrata()]);
 
   if (!strata) {
-    return new Response("Not Found", { status: 404 });
+    return new NextResponse("Not Found", { status: 404 });
   }
 
   const canSeeAllInvoices = can(session.user, "stratas.invoices.create");
@@ -18,9 +20,5 @@ export const GET = auth(async () => {
     ...(!canSeeAllInvoices && { payeeId: session.user.id }),
   });
 
-  return new Response(JSON.stringify({ invoices, total }), {
-    headers: {
-      "content-type": "application/json",
-    },
-  });
+  return NextResponse.json({ invoices, total });
 });

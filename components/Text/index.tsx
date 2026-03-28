@@ -74,6 +74,7 @@ export function Text<E extends ValidTextIntrinsicElements = "p">({
   }
 
   return (
+    // @ts-expect-error generic type mismatch between Text and Core is safe at runtime
     <Core
       as={as || "p"}
       className={classnames(

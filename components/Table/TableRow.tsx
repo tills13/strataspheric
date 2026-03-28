@@ -45,6 +45,7 @@ export function TableRow({
         )}
 
         <Wrap
+          if={true}
           with={(children) => {
             if (link) {
               const isInternalLink = link.startsWith("/");

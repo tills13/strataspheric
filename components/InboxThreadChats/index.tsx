@@ -33,6 +33,16 @@ export function InboxThreadChats({ chats, threadId }: Props) {
       message: formdata.getString(fd, "message"),
       name: session.user.name,
       sentAt: Date.now(),
+      threadId: threadId,
+      fileId: null,
+      messageId: null,
+      fileName: null,
+      fileDescription: null,
+      filePath: null,
+      quotedMessageId: null,
+      quotedMessageSender: null,
+      quotedMessageMessage: null,
+      quotedMessageTimestamp: null,
     });
   }
 

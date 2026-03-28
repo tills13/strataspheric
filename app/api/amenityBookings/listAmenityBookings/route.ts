@@ -13,7 +13,7 @@ export const GET = auth(async (session, req) => {
   const endTs = intParam(req.nextUrl.searchParams, "endTs");
 
   if (!amenityId) {
-    return new Response("Bad Request", { status: 400 });
+    return new NextResponse("Bad Request", { status: 400 });
   }
 
   const amenityBookings = await listAmenityBookings({

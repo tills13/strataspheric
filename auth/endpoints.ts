@@ -95,6 +95,7 @@ export async function POST(config: Config, req: NextRequest) {
           id: user.id,
           email: user.email,
           name: user.name,
+          isAdmin: false,
         },
         iat: now,
         exp: now + VALIDITY_PERIOD,

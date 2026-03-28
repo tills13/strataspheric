@@ -82,7 +82,7 @@ export function Date({
       className={classnames(styles.date, className)}
       dateTime={parseTimestamp(timestamp).toISOString()}
       title={parseTimestamp(timestamp).toISOString()}
-      {...rest}
+      {...(rest as Omit<React.ComponentProps<typeof Text<"time">>, "as">)}
     >
       <ClientOnly fallback={() => <Bone className={styles.dateBone} inline />}>
         {() =>

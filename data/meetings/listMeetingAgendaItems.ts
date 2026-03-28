@@ -69,6 +69,7 @@ export async function listMeetingAgendaItems(meetingId: string) {
       "invoices.description as invoiceDescription",
       "invoices.amount as invoiceAmount",
       "invoices.isPaid as invoiceIsPaid",
+      "invoices.dueBy as invoiceDueBy",
 
       "inbox_messages.id as messageId",
       "inbox_messages.threadId as messageThreadId",
@@ -107,6 +108,7 @@ export async function listMeetingAgendaItems(meetingId: string) {
       invoiceId,
       invoiceAmount,
       invoiceDescription,
+      invoiceDueBy,
       invoiceIdentifier,
       invoiceIsPaid,
       invoiceStatus,
@@ -161,6 +163,7 @@ export async function listMeetingAgendaItems(meetingId: string) {
             id: invoiceId!,
             amount: invoiceAmount!,
             description: invoiceDescription!,
+            dueBy: invoiceDueBy!,
             identifier: invoiceIdentifier!,
             isPaid: invoiceIsPaid!,
             status: invoiceStatus!,

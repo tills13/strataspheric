@@ -96,12 +96,13 @@ export async function listThreads(
     );
   }
 
-  const orderBy = pagination.orderBy || "inbox_messages.sentAt desc";
   const limit = pagination.limit ?? 10;
   const offset = pagination.offset ?? 0;
 
+  query = query.orderBy("inbox_messages.sentAt", "desc");
+
   const [results, totalRow] = await Promise.all([
-    query.orderBy(orderBy).offset(offset).limit(limit).execute(),
+    query.offset(offset).limit(limit).execute(),
     limitQuery.executeTakeFirst(),
   ]);
 

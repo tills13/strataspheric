@@ -1,7 +1,5 @@
 "use server";
 
-import Stripe from "stripe";
-
 import { auth } from "../../../../auth";
 import { addCustomDomain } from "../../../../cloudflare/workers/addCustomDomain";
 import { createStrataMembership } from "../../../../data/memberships/createStrataMembership";
@@ -16,12 +14,11 @@ import {
 } from "../../../../data/strataPlans/constants";
 import { createPlan } from "../../../../data/strataPlans/createStrataPlan";
 import { createStrata } from "../../../../data/stratas/createStrata";
+import { stripe } from "../../../../data/stripe";
 import { updateStrata } from "../../../../data/stratas/updateStrata";
 import { createUser } from "../../../../data/users/createUser";
 import * as formdata from "../../../../utils/formdata";
 import { GetStartedFormStep } from "./types";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function submitGetStartedAction(
   state: GetStartedFormStep,

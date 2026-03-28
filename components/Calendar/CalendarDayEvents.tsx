@@ -220,19 +220,15 @@ export function CalendarDayEvents({
           return (
             <Wrap
               key={event.id}
-              with={(children) => {
-                if (event.meetingId) {
-                  return (
-                    <InternalLink
-                      key={event.id}
-                      href={`/dashboard/meetings/${event.meetingId}`}
-                    >
-                      {children}
-                    </InternalLink>
-                  );
-                }
-                return children;
-              }}
+              if={!!event.meetingId}
+              with={(children) => (
+                <InternalLink
+                  key={event.id}
+                  href={`/dashboard/meetings/${event.meetingId}`}
+                >
+                  {children}
+                </InternalLink>
+              )}
             >
               <div
                 className={classnames(styles.calendarEvent, {

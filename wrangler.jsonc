@@ -5,6 +5,9 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": ".open-next/worker.js",
   "keep_vars": true,
+  "observability": {
+    "enabled": true
+  },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

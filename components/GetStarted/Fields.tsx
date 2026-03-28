@@ -33,7 +33,7 @@ export function GetStartedFormFields({
   selectedPlan: PricingPlan;
 }) {
   const session = useSession();
-  const [isDomainAvailable, setIsDomainAvailable] = useState(undefined);
+  const [isDomainAvailable, setIsDomainAvailable] = useState<boolean | undefined>(undefined);
   const [numUnits, setNumUnits] = useState(0);
   const [strataName, setStrataName] = useState("");
   const deferredStrataName = useTimeDeferredValue(strataName);
@@ -49,7 +49,7 @@ export function GetStartedFormFields({
         "/api/stratas/domainAvailable?domain=" +
           encodeURIComponent(`${suggestedSubdomain}.${tld}`),
       );
-      const rJson = await r.json();
+      const rJson = (await r.json()) as { isAvailable: boolean };
 
       setIsDomainAvailable(rJson.isAvailable);
     }

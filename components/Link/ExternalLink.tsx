@@ -6,8 +6,8 @@ import { classnames } from "../../utils/classnames";
 import { Core } from "../Core";
 
 interface Props
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    Omit<React.ComponentProps<typeof Core<"a">>, "as" | "color"> {
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "color">,
+    Omit<React.ComponentProps<typeof Core<"a">>, "as"> {
   noUnderline?: boolean;
 }
 

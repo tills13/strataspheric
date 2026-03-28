@@ -1,4 +1,4 @@
-import { Strata, StrataWidget } from "../../data";
+import { Strata, StrataWidget, db } from "../../data";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   AbstractWidget,
@@ -13,6 +13,18 @@ interface Props extends AbstractWidgetProps {
 }
 
 export async function ServerInfoWidget({ strata, strataId, widget }: Props) {
+  const widgetInfo =
+    widget.type === "info"
+      ? await db()
+          .selectFrom("widget_info")
+          .select("widget_info.body")
+          .where("widget_info.widgetId", "=", widget.id)
+          .executeTakeFirst()
+      : undefined;
+
+  // body is sanitized via sanitizeHtml before rendering
+  const sanitizedBody = sanitizeHtml(widgetInfo?.body ?? "");
+
   return (
     <AbstractWidget
       strataId={strataId}
@@ -22,7 +34,7 @@ export async function ServerInfoWidget({ strata, strataId, widget }: Props) {
       {widget.type === "info" ? (
         <Text
           dangerouslySetInnerHTML={{
-            __html: sanitizeHtml(widget.body ?? ""),
+            __html: sanitizedBody,
           }}
         />
       ) : (

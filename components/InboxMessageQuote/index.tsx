@@ -31,6 +31,7 @@ export function InboxMessageQuote({
 }: Props) {
   return (
     <Wrap
+      if={true}
       with={(children) =>
         linkType === "direct" ? (
           <InternalLink

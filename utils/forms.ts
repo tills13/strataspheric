@@ -20,7 +20,7 @@ export async function validateTurnstileToken(
     },
   );
 
-  const result = await response.json();
+  const result = (await response.json()) as { success: boolean };
 
   console.log(
     "[debug] response from turnstile siteverify",

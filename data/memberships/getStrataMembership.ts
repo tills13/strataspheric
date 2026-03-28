@@ -1,7 +1,9 @@
 import { db } from "..";
 import { roleScopeToScopes } from "../users/permissions";
 
-export type StrataMembership = Awaited<ReturnType<typeof getStrataMembership>>;
+export type StrataMembership = NonNullable<
+  Awaited<ReturnType<typeof getStrataMembership>>
+>;
 
 export function baseQuery() {
   return db()

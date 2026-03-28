@@ -5,7 +5,7 @@ import { parseTimestamp } from "../../utils/datetime";
 import { Badge } from "../Badge";
 
 interface Props {
-  invoice: Invoice;
+  invoice: Pick<Invoice, "isPaid" | "dueBy">;
 }
 
 export function InvoiceStatusBadge({ invoice }: Props) {

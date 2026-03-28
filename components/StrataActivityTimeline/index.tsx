@@ -26,7 +26,7 @@ async function fetchStrataEvents(activityType: string | undefined) {
     `/api/stratas/listActivity?${searchParams.toString()}`,
   );
 
-  return (await response.json()).activity as StrataActivity[];
+  return ((await response.json()) as { activity: StrataActivity[] }).activity;
 }
 
 export interface Props {

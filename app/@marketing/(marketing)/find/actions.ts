@@ -51,7 +51,7 @@ export async function findYourStratasActionReducer(
       "in",
       membershipsQuery && stratasQuery
         ? membershipsQuery.union(stratasQuery)
-        : membershipsQuery || stratasQuery,
+        : (membershipsQuery ?? stratasQuery)!,
     )
     .execute();
 

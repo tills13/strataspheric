@@ -62,5 +62,5 @@ export function getThread(threadId: string, filter: GetThreadFilter = {}) {
     );
   }
 
-  return query.orderBy("inbox_messages.sentAt desc").executeTakeFirstOrThrow();
+  return query.orderBy("inbox_messages.sentAt", "desc").executeTakeFirstOrThrow();
 }

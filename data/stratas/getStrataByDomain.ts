@@ -4,7 +4,6 @@ import { cache } from "react";
 import { StrataPlan, db } from "..";
 import { getDomain } from "../../utils/getDomain";
 import { Strata } from "./getStrataById";
-import { listStratas } from "./listStratas";
 
 export async function mustGetCurrentStrata() {
   const s = await getCurrentStrata();
@@ -69,8 +68,5 @@ export const getStrataByDomain = cache(
         subscriptionId,
       } satisfies StrataPlan,
     };
-
-    const stratas = await listStratas({ domain });
-    return stratas?.[0];
   },
 );

@@ -21,7 +21,7 @@ export function InvoiceSelect({
   useEffect(() => {
     async function loadInvoices() {
       const r = await fetch("/api/invoices/listInvoices");
-      const rJson = await r.json();
+      const rJson = (await r.json()) as { invoices?: Invoice[] };
 
       setInvoices(rJson.invoices || []);
     }

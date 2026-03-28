@@ -4,10 +4,10 @@ import React, { TextareaHTMLAttributes } from "react";
 
 import { classnames } from "../../utils/classnames";
 
-type Props = TextareaHTMLAttributes<HTMLTextAreaElement>;
+type Props = TextareaHTMLAttributes<HTMLTextAreaElement> & { label?: string };
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ className, ...rest }, ref) => (
+  ({ className, label: _label, ...rest }, ref) => (
     <div className={classnames(styles.wrapper, className)}>
       <textarea
         className={classnames(styles.textareaTextarea)}

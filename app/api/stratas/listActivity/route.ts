@@ -12,7 +12,7 @@ export const GET = auth(async (_, req) => {
   const strata = await getCurrentStrata();
 
   if (!strata) {
-    return new Response("Not Found", { status: 404 });
+    return new NextResponse("Not Found", { status: 404 });
   }
 
   const searchParams = new URL(req.url).searchParams;

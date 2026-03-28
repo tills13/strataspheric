@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
 import { Badge } from "../../../../../components/Badge";
@@ -39,6 +39,10 @@ export default async function Page({
       ? getStrataMembership(strata.id, session.user.id)
       : undefined,
   ]);
+
+  if (!membership) {
+    notFound();
+  }
 
   const canEditInformation = can(session?.user, "stratas.memberships.edit");
   const canEditPermissions = can(session?.user, "stratas.memberships.*");

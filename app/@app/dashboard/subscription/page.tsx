@@ -1,15 +1,13 @@
 import { notFound } from "next/navigation";
-import Stripe from "stripe";
 
 import { mustAuth } from "../../../../auth";
 import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { listStrataMemberships } from "../../../../data/memberships/listStrataMemberships";
 import { plans } from "../../../../data/strataPlans/constants";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { stripe } from "../../../../data/stripe";
 import { can } from "../../../../data/users/permissions";
 import { SubscriptionPage } from "./SubscriptionPage";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function Page() {
   const [session, strata] = await Promise.all([
