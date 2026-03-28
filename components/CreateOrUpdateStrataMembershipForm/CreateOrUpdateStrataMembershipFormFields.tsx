@@ -22,6 +22,7 @@ export function CreateOrUpdateStrataMembershipFormFields({
         name="name"
         type="text"
         label="Name"
+        placeholder="Jane Doe"
         defaultValue={membership?.name}
         disabled={!!membership}
         required
@@ -31,6 +32,7 @@ export function CreateOrUpdateStrataMembershipFormFields({
         name="unit"
         type="text"
         label="Unit"
+        placeholder="e.g. 101"
         defaultValue={membership?.unit || undefined}
         required
       />
@@ -39,6 +41,7 @@ export function CreateOrUpdateStrataMembershipFormFields({
         name="email"
         type="email"
         label="Email Address"
+        placeholder="jane@example.com"
         defaultValue={membership?.email}
         disabled={!!membership}
         required
@@ -48,6 +51,7 @@ export function CreateOrUpdateStrataMembershipFormFields({
         name="phone_number"
         type="text"
         label="Phone #"
+        placeholder="604-555-1234"
         defaultValue={membership?.phoneNumber || undefined}
       />
 
@@ -66,6 +70,7 @@ export function CreateOrUpdateStrataMembershipFormFields({
           name="monthly_fee"
           type="number"
           label="Monthly Fee"
+          placeholder="0.00"
           defaultValue={membership?.monthlyFee ?? undefined}
           min={0}
         />

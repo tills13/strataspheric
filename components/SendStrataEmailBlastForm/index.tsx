@@ -41,6 +41,7 @@ export function SendStrataEmailBlastForm({
           className={styles.formElement}
           name="subject"
           label="Subject"
+          placeholder="Email subject"
           required
         />
       )}
@@ -48,6 +49,7 @@ export function SendStrataEmailBlastForm({
         className={styles.formElement}
         name="message"
         label="Message"
+        placeholder="Write your message..."
         rows={3}
         required
       />

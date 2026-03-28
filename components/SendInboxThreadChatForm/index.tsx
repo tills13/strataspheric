@@ -33,6 +33,7 @@ export function SendInboxThreadChatForm({
           className={s({ w: "full" })}
           name="message"
           label="Message"
+          placeholder="Write your message..."
           rows={3}
           required
         />

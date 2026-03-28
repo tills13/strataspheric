@@ -54,6 +54,7 @@ export function CreateOrUpdateEventForm({
         <TextArea
           name="description"
           label="Description"
+          placeholder="Event details"
           defaultValue={event?.description}
         />
 

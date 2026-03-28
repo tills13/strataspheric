@@ -20,6 +20,7 @@ export function SendInboxMessageContactDetailsFields({
       <Input
         name="name"
         label="Name"
+        placeholder="Jane Doe"
         defaultValue={defaultName || ""}
         disabled={!!defaultName}
         required
@@ -27,6 +28,7 @@ export function SendInboxMessageContactDetailsFields({
       <Input
         name="email_address"
         label="Email Address"
+        placeholder="jane@example.com"
         defaultValue={defaultEmail || ""}
         disabled={!!defaultEmail}
         required
@@ -34,6 +36,7 @@ export function SendInboxMessageContactDetailsFields({
       <Input
         name="phone_number"
         label="Phone Number"
+        placeholder="604-555-1234"
         defaultValue={defaultPhoneNumber || ""}
         disabled={!!defaultPhoneNumber}
       />

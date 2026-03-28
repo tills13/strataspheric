@@ -50,12 +50,14 @@ export function CreateOrUpdateFileForm({
         <Input
           name="name"
           label="Name"
+          placeholder="File name"
           ref={nameRef}
           defaultValue={file?.name}
         />
         <TextArea
           name="description"
           label="Description"
+          placeholder="Brief description of this file"
           rows={4}
           defaultValue={file?.description}
         />

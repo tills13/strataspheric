@@ -36,6 +36,7 @@ export function CreateOrUpdateMeetingAgendaItemForm({
           className={s({ w: "full" })}
           name="title"
           label="Description"
+          placeholder="Agenda item title"
           defaultValue={agendaItem?.title}
         />
 
@@ -43,6 +44,7 @@ export function CreateOrUpdateMeetingAgendaItemForm({
           className={s({ w: "full" })}
           name="description"
           label="Details"
+          placeholder="Additional details or context"
           defaultValue={agendaItem?.description}
         />
 

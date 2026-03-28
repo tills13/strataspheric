@@ -43,6 +43,7 @@ export async function SettingsPage({ canEdit }: Props) {
                 <Input
                   name="name"
                   label="Strata Name"
+                  placeholder="e.g. Oceanview Estates"
                   defaultValue={strata.name}
                 />
 

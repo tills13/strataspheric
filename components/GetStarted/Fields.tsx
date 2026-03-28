@@ -82,6 +82,7 @@ export function GetStartedFormFields({
         <Input
           name="strata_name"
           label="Strata Name"
+          placeholder="e.g. Oceanview Estates"
           onChange={(e) => setStrataName(e.target.value)}
           required
         />
@@ -115,6 +116,7 @@ export function GetStartedFormFields({
         <Input
           name="strata_main_contact"
           label="Main Contact Email"
+          placeholder="council@example.com"
           type="email"
           defaultValue={session?.user.email || ""}
           required
@@ -125,6 +127,7 @@ export function GetStartedFormFields({
           min={1}
           type="number"
           label="# of Units"
+          placeholder="e.g. 24"
           onChange={(e) => {
             setNumUnits(parseInt(e.target.value, 10));
           }}
