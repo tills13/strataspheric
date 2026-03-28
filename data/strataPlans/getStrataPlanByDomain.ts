@@ -6,6 +6,7 @@ export async function getCurrentStrataPlan(): Promise<StrataPlan> {
 }
 
 function getStrataPlanByDomain(domain: string) {
+  console.log("getStrataPlanByDomain", domain);
   return db()
     .selectFrom("strata_plans")
     .selectAll()

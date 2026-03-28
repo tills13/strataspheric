@@ -53,7 +53,7 @@ export function SignInForm({ className }: Props) {
   }
 
   return (
-    <form className={classnames(className)} onSubmit={onSubmit}>
+    <form className={classnames(className)} method="POST" onSubmit={onSubmit}>
       <Stack>
         <Input
           className={styles.signInFormInput}

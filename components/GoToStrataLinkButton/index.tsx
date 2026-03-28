@@ -58,6 +58,7 @@ export function GoToStrataLinkButton({
         icon={<RightIcon />}
         size={buttonSize}
         style={buttonStyle}
+        w="full"
       >
         Go to {strata.name}
       </Button>

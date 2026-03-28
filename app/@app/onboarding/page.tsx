@@ -3,6 +3,7 @@ import * as styles from "./style.css";
 
 import { redirect } from "next/navigation";
 
+import { HeroBackground } from "../../@marketing/(marketing)/HeroBackground";
 import { Group } from "../../../components/Group";
 import { Header } from "../../../components/Header";
 import { CircleCheckIcon } from "../../../components/Icon/CircleCheckIcon";
@@ -21,6 +22,8 @@ export default async function Onboarding() {
   const strata = await mustGetCurrentStrata();
 
   return (
+    <>
+    <HeroBackground />
     <form
       action={async (fd) => {
         "use server";
@@ -71,5 +74,6 @@ export default async function Onboarding() {
         </StatusButton>
       </Stack>
     </form>
+    </>
   );
 }

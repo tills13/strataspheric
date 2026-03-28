@@ -37,6 +37,7 @@ export function GetStartedForm({ className, children }: Props) {
 
   const [actionState, action] = useActionState<GetStartedFormStep, FormData>(
     async (state: GetStartedFormStep, fd: FormData) => {
+      console.log("asdas");
       if (state.step === "SUBMIT_PAYMENT") {
         if (!elementsRef.current || !stripeRef.current) {
           return { ...state, error: "something went wrong..." };

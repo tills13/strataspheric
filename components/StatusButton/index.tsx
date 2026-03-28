@@ -72,6 +72,7 @@ export function StatusButton({
       onClick={
         action
           ? () => {
+              console.log("here");
               startActionTransition(() => {
                 action();
               });
