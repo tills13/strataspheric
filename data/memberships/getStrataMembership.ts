@@ -29,6 +29,7 @@ export function processRows(...rows: Row[]) {
 
     return {
       ...rest,
+      notifyEvents: rest.notifyEvents === 1,
       scopes,
     };
   });
