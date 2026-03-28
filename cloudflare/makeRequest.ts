@@ -1,4 +1,4 @@
-import { CF_AUTH_EMAIL, CF_AUTH_KEY } from "./constants";
+import { CF_API_TOKEN } from "./constants";
 
 export type CloudflareApiResponse<T = unknown> =
   | {
@@ -21,10 +21,7 @@ export async function makeRequest<T>(
   const r = await fetch("https://api.cloudflare.com/client/v4" + endpoint, {
     ...init,
     headers: {
-      ...{
-        "x-auth-key": CF_AUTH_KEY,
-        "x-auth-email": CF_AUTH_EMAIL,
-      },
+      authorization: `Bearer ${CF_API_TOKEN}`,
       ...(init.body && {
         "content-type": "application/json",
       }),

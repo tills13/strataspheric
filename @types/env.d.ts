@@ -4,8 +4,7 @@ declare namespace NodeJS {
     CF_ACCOUNT_ID: string;
     CF_ZONE_ID: string;
     CF_WORKER_NAME: string;
-    CF_AUTH_KEY: string;
-    CF_AUTH_EMAIL: string;
+    CF_API_TOKEN: string;
     CF_TURNSTILE_SECRET_KEY: string;
     STRIPE_SECRET_KEY: string;
     STRIPE_WEBHOOK_SECRET: string;
