@@ -17,9 +17,11 @@ import { listThreads } from "../../../../data/inbox/listThreads";
 import { createInvoice } from "../../../../data/invoices/createInvoice";
 import { deleteInvoice } from "../../../../data/invoices/deleteInvoice";
 import { updateInvoice } from "../../../../data/invoices/updateInvoice";
+import { getStrataMembership } from "../../../../data/memberships/getStrataMembership";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../data/users/permissions";
 import { parseTimestamp } from "../../../../utils/datetime";
+import { sendNotification } from "../../../../utils/notifications";
 import * as formdata from "../../../../utils/formdata";
 
 export async function upsertAmenityAction(
@@ -121,6 +123,20 @@ export async function approveOrRejectAmenityBookingAction(
           ? " Please pay the invoice by the booking's start date."
           : ""),
       invoiceId: amenityBooking.invoice?.id,
+    });
+  }
+
+  // Notify the booker via email
+  const bookerMembership = await getStrataMembership(strata.id, amenityBooking.requesterId);
+  if (bookerMembership) {
+    await sendNotification({
+      to: bookerMembership.email,
+      subject: decision === "reject"
+        ? "Booking Request Denied"
+        : "Booking Request Approved",
+      html: decision === "reject"
+        ? `<p>Your booking request has been denied. Check your inbox for details.</p>`
+        : `<p>Your booking request has been approved.${amenityBooking.invoice ? " Please pay the invoice by the booking start date." : ""}</p>`,
     });
   }
 
