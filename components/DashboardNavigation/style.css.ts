@@ -9,16 +9,18 @@ import { style, styleVariants } from "@vanilla-extract/css";
 
 import { padding } from "../../theme";
 
-export const GLOBAL_HEADER_HEIGHT_PX = 57;
+export const GLOBAL_HEADER_HEIGHT_PX = 56;
 
 export const sidebar = style({
   display: "none",
   width: sidebarWidthVar,
   borderRight: `1px solid ${vars.colors.borderDefault}`,
+  backgroundColor: vars.surfaces.raised,
 
   "@media": {
     [breakpoints.tabletPlus]: {
-      display: "block",
+      display: "flex",
+      flexDirection: "column",
     },
   },
 });
@@ -32,21 +34,22 @@ const baseSidebarNavigationItem = style({
 export const sidebarNavigationItem = style([
   baseSidebarNavigationItem,
   {
-    color: vars.colors.primary,
+    color: vars.fontColors.secondary,
     selectors: {
       "&:hover": {
-        backgroundColor: vars.colors.grey100,
-        textDecoration: "underline",
+        backgroundColor: vars.surfaces.interactiveHover,
+        color: vars.fontColors.primary,
       },
     },
   },
 ]);
+
 export const activeSidebarNavigationItem = style([
   baseSidebarNavigationItem,
   {
     backgroundColor: vars.colors.primary,
     color: vars.colors.white,
-    fontWeight: vars.fontWeights.bold,
+    fontWeight: vars.fontWeights.medium,
 
     vars: {
       [iconColorVar]: vars.colors.white,
@@ -60,10 +63,11 @@ export const globalHeader = style({
   justifyContent: "space-between",
   borderBottom: `1px solid ${vars.colors.borderDefault}`,
   height: GLOBAL_HEADER_HEIGHT_PX,
+  backgroundColor: vars.surfaces.raised,
 
   "@media": {
     [breakpoints.tabletPlus]: {
-      padding: padding(0, vars.spacing.normal),
+      padding: padding(0, vars.spacing["20"]),
     },
   },
 });
@@ -82,7 +86,7 @@ export const selectedStrataContainer = style({
 
   selectors: {
     "&:hover": {
-      backgroundColor: vars.colors.grey100,
+      backgroundColor: vars.surfaces.interactiveHover,
     },
 
     [`${globalHeader} &`]: {
@@ -123,7 +127,7 @@ export const userStrataSelectorText = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      fontSize: vars.fontSizes.normal,
+      fontSize: vars.fontSizes.medium,
     },
   },
 });
@@ -192,4 +196,20 @@ export const globalHeaderActionsButton = style({
       width: "100%",
     },
   },
+});
+
+export const sidebarBadge = style({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minWidth: vars.sizes.xxs,
+  height: vars.sizes.xxs,
+  padding: `0 ${vars.spacing.xs}`,
+  borderRadius: vars.borderRadius.full,
+  backgroundColor: vars.colors.blue50,
+  color: vars.colors.blue700,
+  fontSize: vars.fontSizes.xs,
+  fontWeight: vars.fontWeights.bold,
+  lineHeight: vars.lineHeights.none,
+  marginLeft: "auto",
 });

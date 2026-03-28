@@ -2,12 +2,16 @@ import { vars } from "../../app/theme.css";
 
 import { recipe } from "@vanilla-extract/recipes";
 
+function background(baseColor: string) {
+  return `linear-gradient(-45deg, color-mix(in srgb, ${baseColor} 32%, transparent), color-mix(in srgb, ${baseColor} 8%, transparent) 75%)`;
+}
+
 export const infoPanel = recipe({
   base: {
-    padding: vars.spacing.normal,
-    borderRadius: vars.borderRadius.lg,
+    padding: vars.spacing["20"],
+    borderRadius: vars.borderRadius.md,
     borderStyle: "solid",
-    borderWidth: 2,
+    borderWidth: vars.borderWidth,
   },
 
   variants: {
@@ -19,21 +23,26 @@ export const infoPanel = recipe({
     level: {
       default: {
         borderColor: vars.colors.primary,
-        background: `linear-gradient(-45deg, color-mix(in srgb, ${vars.colors.grey500} 32%, transparent), color-mix(in srgb, ${vars.colors.grey500} 8%, transparent) 75%)`,
+        background: background(vars.colors.primary),
+      },
+      hint: {
+        borderColor: vars.colors.borderDefault,
+        background: background(vars.colors.grey200),
+        color: vars.colors.grey500,
       },
       error: {
         borderColor: vars.colors.red500,
-        background: `linear-gradient(-45deg, color-mix(in srgb, ${vars.colors.red500} 32%, transparent), color-mix(in srgb, ${vars.colors.red500} 8%, transparent) 75%)`,
+        background: background(vars.colors.red500),
         color: vars.colors.red900,
       },
       warning: {
         borderColor: vars.colors.orange500,
-        background: `linear-gradient(-45deg, color-mix(in srgb, ${vars.colors.orange500} 32%, transparent), color-mix(in srgb, ${vars.colors.orange500} 8%, transparent) 75%)`,
+        background: background(vars.colors.orange500),
         color: vars.colors.orange900,
       },
       success: {
         borderColor: vars.colors.green500,
-        background: `linear-gradient(-45deg, color-mix(in srgb, ${vars.colors.green500} 32%, transparent), color-mix(in srgb, ${vars.colors.green500} 8%, transparent) 75%)`,
+        background: background(vars.colors.green500),
         color: vars.colors.green900,
       },
     },

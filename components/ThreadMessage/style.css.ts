@@ -14,7 +14,7 @@ export const message = style({
 export const messageHighighted = style([
   message,
   {
-    transition: "background-color 1s ease",
+    transition: `background-color ${vars.transitions.slow}`,
     backgroundColor: `color-mix(in srgb, ${vars.colors.orange100} 30%, transparent)`,
   },
 ]);

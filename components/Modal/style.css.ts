@@ -23,8 +23,8 @@ export const modalWrapper = style({
 });
 
 export const modal = style({
-  padding: padding(0, vars.spacing.normal),
-  backgroundColor: vars.colors.white,
+  padding: padding(0, vars.spacing["20"]),
+  backgroundColor: vars.surfaces.overlay,
   width: "100vw",
   height: "100dvh",
   overflow: "hidden",
@@ -34,7 +34,7 @@ export const modal = style({
   "@media": {
     [breakpoints.tablet]: {
       display: "block",
-      width: "600px",
+      width: vars.containerWidth.sm,
       height: "min-content",
       border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
       borderRadius: vars.borderRadius.lg,
@@ -46,8 +46,8 @@ export const modal = style({
 export const modalBodyContainer = style({});
 
 export const modalBodyContainerInner = style({
-  paddingTop: vars.spacing["6"],
-  paddingBottom: vars.spacing.normal,
+  paddingTop: vars.spacing["12"],
+  paddingBottom: vars.spacing["20"],
 });
 
 export const modalHeader = style({

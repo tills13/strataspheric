@@ -125,7 +125,7 @@ export async function upsertStrataWidgetAction(
     }
   } else {
     const { id: widgetId } = await createWidget({
-      body,
+      // body,
       strataId,
       title,
       type,

@@ -8,6 +8,7 @@ export const headerActionsPrev = style({
 export const container = style({
   display: "grid",
   gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
-  gridTemplateRows: "repeat(3, 75px)",
+  gridTemplateRows: `repeat(3, ${vars.sizes.xxl})`,
   gap: vars.spacing.xs,
+  userSelect: "none",
 });

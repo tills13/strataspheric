@@ -2,10 +2,31 @@ import { breakpoints, vars } from "../../app/theme.css";
 import { keyframes, style } from "@vanilla-extract/css";
 
 export const globalHeader = style({
-  borderBottom: 0,
-  marginBottom: vars.spacing.large,
-  padding: `${vars.spacing.xs} ${vars.spacing.normal} ${vars.spacing.xs} ${vars.spacing.xs}`,
-  backgroundColor: vars.colors.white,
+  borderBottom: `1px solid ${vars.colors.borderDefault}`,
+  padding: `${vars.spacing["12"]} ${vars.spacing["20"]}`,
+  backgroundColor: vars.surfaces.raised,
+  position: "sticky",
+  top: 0,
+  zIndex: vars.zIndex.header,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      padding: `${vars.spacing["12"]} ${vars.spacing["24"]}`,
+    },
+  },
+});
+
+export const navLinks = style({
+  display: "none",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "flex",
+    },
+  },
 });
 
 const animation = keyframes({
@@ -18,15 +39,21 @@ const animation = keyframes({
 });
 
 export const logo = style({
-  width: vars.sizes.xxl,
+  width: vars.sizes.large,
   fill: vars.colors.primary,
   animation: `${animation} 72s linear infinite`,
   pointerEvents: "none",
+
+  "@media": {
+    [breakpoints.tablet]: {
+      width: vars.sizes.xl,
+    },
+  },
 });
 
 export const globalHeaderTitleWrapper = style({
   display: "flex",
-  gap: vars.spacing.xs,
+  gap: vars.spacing.small,
   alignItems: "center",
   justifyContent: "space-between",
 
@@ -38,12 +65,14 @@ export const globalHeaderTitleWrapper = style({
 });
 
 export const globalHeaderTitle = style({
-  fontSize: vars.fontSizes.xl,
+  fontSize: vars.fontSizes.larger,
+  letterSpacing: vars.letterSpacing.wider,
   textTransform: "uppercase",
+  fontWeight: vars.fontWeights.xbold,
 
   "@media": {
     [breakpoints.tablet]: {
-      fontSize: vars.fontSizes.xxl,
+      fontSize: vars.fontSizes.xl,
     },
   },
 });

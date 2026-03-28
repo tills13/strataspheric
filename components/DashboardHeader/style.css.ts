@@ -125,3 +125,19 @@ export const toggleMobileDropdownIconActive = style([
     transform: "rotate(180deg)",
   },
 ]);
+
+export const mobileBadge = style({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minWidth: vars.sizes.xxs,
+  height: vars.sizes.xxs,
+  padding: `0 ${vars.spacing.xs}`,
+  borderRadius: vars.borderRadius.full,
+  backgroundColor: vars.surfaces.sunken,
+  color: vars.colors.primary,
+  fontSize: vars.fontSizes.small,
+  fontWeight: vars.fontWeights.bold,
+  lineHeight: vars.lineHeights.none,
+  marginLeft: "auto",
+});

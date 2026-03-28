@@ -16,7 +16,7 @@ export default async function Page() {
           <AddNewMemberButton />
         )
       }
-      title="Strata Members"
+      title="Directory"
     >
       <Memberships />
     </DashboardLayout>

@@ -11,10 +11,11 @@ import { Text } from "../Text";
 
 interface Props {
   href: string;
+  badge?: number;
   children: string;
 }
 
-export function SidebarNavigationItem({ children, href }: Props) {
+export function SidebarNavigationItem({ badge, children, href }: Props) {
   const pathname = usePathname();
 
   const isActive =
@@ -31,11 +32,14 @@ export function SidebarNavigationItem({ children, href }: Props) {
       }
       href={href}
     >
-      <Group pv="small" ph="normal">
+      <Group pv="10" ph="12" gap="10">
         <IconComponent size="xs" />
-        <Text as="span" whiteSpace="nowrap">
+        <Text as="span" whiteSpace="nowrap" fontSize="normal">
           {children}
         </Text>
+        {badge !== undefined && badge > 0 && (
+          <span className={styles.sidebarBadge}>{badge}</span>
+        )}
       </Group>
     </InternalLink>
   );

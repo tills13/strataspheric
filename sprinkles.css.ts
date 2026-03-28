@@ -11,6 +11,8 @@ const textProperties = defineProperties({
     fontFamily: vars.fontFamilies,
     fontWeight: vars.fontWeights,
     fontSize: vars.fontSizes,
+    lineHeight: vars.lineHeights,
+    letterSpacing: vars.letterSpacing,
     textAlign: {
       center: "center",
       start: "start",
@@ -36,6 +38,8 @@ const textProperties = defineProperties({
     ff: ["fontFamily"],
     fw: ["fontWeight"],
     fs: ["fontSize"],
+    lh: ["lineHeight"],
+    ls: ["letterSpacing"],
     ta: ["textAlign"],
     td: ["textDecoration"],
     tt: ["textTransform"],
@@ -53,10 +57,18 @@ const sizeProperties = defineProperties({
       ...vars.sizes,
       full: "100%",
     },
+    minHeight: {
+      ...vars.sizes,
+    },
+    minWidth: {
+      ...vars.sizes,
+    },
   },
   shorthands: {
     w: ["width"],
     h: ["height"],
+    minw: ["minWidth"],
+    minh: ["minHeight"],
   },
 });
 

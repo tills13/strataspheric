@@ -32,7 +32,7 @@ export const inboxMessageThreadContainer = style({
 });
 
 export const inboxMessageThreadBackNavigationButton = style({
-  marginTop: "6px",
+  marginTop: vars.spacing["6"],
 });
 
 export const pageHeader = style({
@@ -47,7 +47,7 @@ export const outsideMessageWarning = style({
 
 export const chatPanelWrapper = style({
   display: "none",
-  borderLeft: "1px solid " + vars.colors.borderDefault,
+  borderLeft: border("1px", "solid", vars.colors.borderDefault),
 
   "@media": {
     [breakpoints.tablet]: {

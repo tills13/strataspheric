@@ -1,4 +1,4 @@
-import { breakpoints } from "../../theme.css";
+import { breakpoints, vars } from "../../theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const dashboardLayoutContainer = style({
@@ -17,12 +17,16 @@ export const dashboardLayoutContainer = style({
 });
 
 export const dashboardContentsContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  height: "100svh",
+  overflowY: "auto",
+  backgroundColor: vars.surfaces.page,
+
   "@media": {
     [breakpoints.tabletPlus]: {
-      display: "grid",
-      gridTemplateRows: "min-content min-content auto",
+      height: "100%",
       maxHeight: "100vh",
-      overflowY: "auto",
     },
   },
 });

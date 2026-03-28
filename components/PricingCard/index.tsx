@@ -32,6 +32,7 @@ export function PricingCard({
   pricingHtml,
   pricingText,
   pricePerUnit,
+  recommended,
   show = "html",
 }: Props) {
   if (compact) {
@@ -53,7 +54,15 @@ export function PricingCard({
   }
 
   return (
-    <Panel className={classnames(styles.pricingCard, className)}>
+    <Panel
+      className={classnames(
+        recommended ? styles.recommendedPricingCard : styles.pricingCard,
+        className,
+      )}
+    >
+      {recommended && (
+        <div className={styles.recommendedBadge}>Most Popular</div>
+      )}
       <h3 className={styles.pricingCardPlanName}>{name}</h3>
 
       <div className={styles.pricingContainer}>

@@ -5,7 +5,7 @@ export const fileWidget = style({});
 
 export const fileWidgetListItem = style({
   padding: vars.spacing.normal,
-  backgroundColor: vars.colors.grey100,
+  backgroundColor: vars.surfaces.sunken,
   borderRadius: vars.borderRadius.md,
   transition: `background-color ${vars.transitions.fast}`,
 
@@ -17,7 +17,7 @@ export const fileWidgetListItem = style({
 });
 
 export const fileWidgetListItemTitle = style({
-  fontSize: vars.fontSizes.normal,
+  fontSize: vars.fontSizes.medium,
   fontWeight: vars.fontWeights.bold,
 });
 

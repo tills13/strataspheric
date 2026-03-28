@@ -1,5 +1,5 @@
 import { vars } from "../../app/theme.css";
-import { field, fieldLabel } from "../Form/style.css";
+import { field } from "../Form/style.css";
 import { inputFieldInput } from "../Input/styles.css";
 import { style } from "@vanilla-extract/css";
 
@@ -16,5 +16,3 @@ export const textareaTextarea = style([
     padding: `${vars.spacing["12"]} ${vars.spacing.normal}`,
   },
 ]);
-
-export const textareaPlaceholder = style([fieldLabel]);

@@ -13,14 +13,14 @@ globalStyle("html, body", {
 
 globalStyle("body", {
   padding: 0,
-  lineHeight: 1.4,
-  fontSmooth: "always",
-  MozOsxFontSmoothing: "always",
-  WebkitFontSmoothing: "always",
+  lineHeight: vars.lineHeights.normal,
+  WebkitFontSmoothing: "antialiased",
+  MozOsxFontSmoothing: "grayscale",
   color: vars.fontColors.primary,
   fontFamily: vars.fontFamilies.text,
   fontSize: vars.fontSizes.normal,
-  fontWeight: 500,
+  fontWeight: vars.fontWeights.normal,
+  backgroundColor: vars.surfaces.page,
 });
 
 globalStyle("img, picture, video, canvas, svg", {
@@ -62,4 +62,9 @@ globalStyle("a", {
 globalStyle("table", {
   borderCollapse: "collapse",
   borderSpacing: 0,
+});
+
+globalStyle("::selection", {
+  backgroundColor: vars.colors.blue100,
+  color: vars.colors.blue900,
 });

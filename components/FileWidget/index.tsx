@@ -13,11 +13,16 @@ import {
   type Props as AbstractWidgetProps,
 } from "../AbstractWidget";
 import { AddFileToWidgetForm } from "../AddFileToWidgetForm";
+import { Button } from "../Button";
 import { AddIcon } from "../Icon/AddIcon";
+import { ArrowBackIcon } from "../Icon/ArrowBackIcon";
+import { ArrowForwardIcon } from "../Icon/ArrowForwardIcon";
 import { InfoPanel } from "../InfoPanel";
 import { Modal } from "../Modal";
 import { Text } from "../Text";
 import { FileWidgetFile } from "./FileWidgetFile";
+
+const PAGE_SIZE = 5;
 
 interface Props extends AbstractWidgetProps {
   files: File[];
@@ -27,6 +32,10 @@ interface Props extends AbstractWidgetProps {
 export function FileWidget({ files, strataId, widget }: Props) {
   const session = useSession();
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [page, setPage] = useState(0);
+
+  const totalPages = Math.max(1, Math.ceil(files.length / PAGE_SIZE));
+  const paginatedFiles = files.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   return (
     <AbstractWidget
@@ -54,7 +63,7 @@ export function FileWidget({ files, strataId, widget }: Props) {
           </InfoPanel>
         )}
 
-        {files.map((file) => (
+        {paginatedFiles.map((file) => (
           <FileWidgetFile
             key={file.id}
             deleteable={widget.type === "file"}
@@ -63,6 +72,30 @@ export function FileWidget({ files, strataId, widget }: Props) {
           />
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className={abstractWidgetStyles.abstractWidgetPagination}>
+          <Button
+            size="small"
+            style="tertiary"
+            iconOnly
+            icon={<ArrowBackIcon />}
+            disabled={page === 0}
+            onClick={() => setPage((p) => p - 1)}
+          />
+          <Text fontSize="small" color="secondary">
+            {page + 1} / {totalPages}
+          </Text>
+          <Button
+            size="small"
+            style="tertiary"
+            iconOnly
+            icon={<ArrowForwardIcon />}
+            disabled={page >= totalPages - 1}
+            onClick={() => setPage((p) => p + 1)}
+          />
+        </div>
+      )}
 
       {showCreateModal && (
         <Modal

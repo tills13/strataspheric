@@ -63,7 +63,7 @@ export function Breadcrumbs({ className, subPageTitle }: Props) {
         </>
       )}
 
-      {isSubSubpage && (
+      {isSubSubpage && subPageTitle && (
         <>
           <RightIcon size="xxs" />
           <Group gap="xs">

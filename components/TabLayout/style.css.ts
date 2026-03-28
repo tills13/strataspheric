@@ -21,13 +21,13 @@ export const tabsContainer = style({
 export const tabs = style({
   display: "inline-flex",
   flexDirection: "row",
-  gap: vars.spacing.normal,
+  gap: vars.spacing.small,
   margin: "auto",
   padding: vars.spacing.xs,
 
   //   borderRadius: calc(vars.sizes.normal).divide(2).toString(),
   borderRadius: vars.borderRadius.md,
-  backgroundColor: vars.colors.grey100,
+  backgroundColor: vars.surfaces.sunken,
 });
 
 export const tabsTab = style({

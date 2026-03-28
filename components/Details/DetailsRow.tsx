@@ -10,9 +10,9 @@ interface Props {
 
 export function DetailsRow({ description, title }: Props) {
   return (
-    <Group gap="normal" h="small">
+    <Group gap="normal" minh="small">
       <dt>
-        <Text fontWeight="bold">{title}</Text>
+        <Text fontWeight="bold" whiteSpace="nowrap">{title}</Text>
       </dt>
       <div className={styles.detailsRowSpacer} />
       <dd>{description}</dd>

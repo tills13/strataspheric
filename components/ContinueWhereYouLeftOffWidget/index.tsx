@@ -30,7 +30,7 @@ export function ContinueWhereYouLeftOffWidget() {
         Continue where you left off...
       </Header>
       <div className={styles.spacer} />
-      <Group className={styles.continuePanelList} gap="small">
+      <Group className={styles.continuePanelList} gap="small" w="full">
         {session ? (
           <>
             {sessionStratas.length ? (
@@ -48,7 +48,9 @@ export function ContinueWhereYouLeftOffWidget() {
           </>
         ) : (
           <InternalLink className={styles.continueAction} href="/sign-in">
-            <Button color="default">Sign In</Button>
+            <Button color="default" w="full">
+              Sign In
+            </Button>
           </InternalLink>
         )}
       </Group>

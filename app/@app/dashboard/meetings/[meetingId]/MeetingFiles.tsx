@@ -7,6 +7,8 @@ import { Header } from "../../../../../components/Header";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { RemoveButton } from "../../../../../components/RemoveButton";
 import { Stack } from "../../../../../components/Stack";
+import { Table } from "../../../../../components/Table";
+import { TableRow } from "../../../../../components/Table/TableRow";
 import { Text } from "../../../../../components/Text";
 import { getMeetingFiles } from "../../../../../data/meetings/getMeetingFiles";
 import { removeFileFromMeetingAction } from "./actions";
@@ -24,46 +26,62 @@ export async function MeetingFiles({ className, meetingId }: Props) {
       <Header as="h3">Meeting Files</Header>
 
       {files.length === 0 && (
-        <InfoPanel>
-          <Text>
-            <strong>No files have been added to this meeting.</strong> Use the
-            button below to add documents for discussion, images, or anything
-            else you might need for this meeting.
+        <InfoPanel
+          className={styles.meetingAgendaEmptyInfoPanel}
+          level="hint"
+          align="center"
+          justify="center"
+        >
+          <Text textAlign="center">
+            <strong>No files have been added to this meeting.</strong>
+            <br />
+            Use the button below to add documents for discussion, images, or
+            anything else you might need for this meeting.
           </Text>
         </InfoPanel>
       )}
 
       {files.length !== 0 && (
-        <Stack className={styles.meetingFilesList}>
+        <Table>
           {files.map((file) => (
-            <Group key={file.id} className={styles.meetingFilesListItem}>
-              <FileAttachmentChip
-                className={styles.meetingFilesListItemAttachmentChip}
-                fileName={file.name}
-                filePath={file.path}
-              />
-              <RemoveButton
-                action={removeFileFromMeetingAction.bind(
-                  undefined,
-                  meetingId,
-                  "file",
-                  file.id,
-                )}
-                color="error"
-                style="secondary"
-              />
-            </Group>
+            <TableRow
+              key={file.id}
+              rowId={file.id}
+              content={
+                <FileAttachmentChip
+                  fileName={file.name}
+                  filePath={file.path}
+                  linked={false}
+                />
+              }
+              actions={
+                <RemoveButton
+                  action={removeFileFromMeetingAction.bind(
+                    undefined,
+                    meetingId,
+                    "file",
+                    file.id,
+                  )}
+                  size="small"
+                  color="error"
+                  style="tertiary"
+                />
+              }
+            />
           ))}
-        </Stack>
+        </Table>
       )}
 
-      <AddFileToMeetingButton
-        color="primary"
-        meetingId={meetingId}
-        fileType="file"
-        placeholder="Add File"
-        style="primary"
-      />
+      <Group justify="end">
+        <AddFileToMeetingButton
+          color="primary"
+          meetingId={meetingId}
+          fileType="file"
+          placeholder="Add File"
+          style="primary"
+          iconTextBehaviour="centerRemainder"
+        />
+      </Group>
     </Stack>
   );
 }

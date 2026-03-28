@@ -25,7 +25,7 @@ export const base = style({
       color: vars.fontColors.placeholder,
     },
     "&:hover": {
-      backgroundColor: vars.colors.white,
+      backgroundColor: vars.surfaces.raised,
       color: vars.fontColors.primaryInverse,
       borderColor: vars.colors.borderDefaultHover,
     },

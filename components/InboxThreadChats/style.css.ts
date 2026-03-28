@@ -31,7 +31,7 @@ export const chatSelfMessageGroup = style({
 export const chatBubble = style({
   display: "flex",
   flexDirection: "column",
-  backgroundColor: vars.colors.grey100,
+  backgroundColor: vars.surfaces.sunken,
   color: vars.colors.grey700,
   borderRadius: vars.borderRadius.lg,
 });

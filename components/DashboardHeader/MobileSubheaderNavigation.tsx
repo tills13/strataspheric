@@ -69,8 +69,10 @@ const links: Array<Link | LinkWithPermissions> = [
 ];
 
 export function MobileSubheaderNavigation({
+  badgeCounts,
   subPageTitle,
 }: {
+  badgeCounts?: Record<string, number>;
   subPageTitle?: string;
 }) {
   const session = useSession();
@@ -97,12 +99,16 @@ export function MobileSubheaderNavigation({
               href === "/dashboard"
                 ? pathname === href
                 : pathname?.startsWith(href);
+            const badge = badgeCounts?.[href];
 
             if (isActive) {
               return (
                 <div key={href} className={styles.activeSubheaderLink}>
                   <IconComponent classNameOverride={styles.mobileMenuIcon} />
                   <Breadcrumbs subPageTitle={subPageTitle || label} />
+                  {badge !== undefined && badge > 0 && (
+                    <span className={styles.mobileBadge}>{badge}</span>
+                  )}
                   &nbsp;
                 </div>
               );
@@ -117,6 +123,9 @@ export function MobileSubheaderNavigation({
                   <IconComponent classNameOverride={styles.mobileMenuIcon} />
 
                   <div className={styles.mobileMenuText}>{label}</div>
+                  {badge !== undefined && badge > 0 && (
+                    <span className={styles.mobileBadge}>{badge}</span>
+                  )}
                 </InternalLink>
               );
             }

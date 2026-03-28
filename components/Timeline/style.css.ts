@@ -25,7 +25,7 @@ export const timelineItem = style({
       left: calc(vars.sizes.xs).divide(2).subtract(vars.borderWidth).toString(),
       top: 0,
       bottom: 0,
-      width: 4,
+      width: vars.spacing.xs,
       backgroundColor: vars.colors.primary,
     },
     "&:first-child": {
@@ -56,7 +56,7 @@ export const timelineItem = style({
             .divide(2)
             .subtract(vars.borderWidth)
             .toString(),
-          width: 4,
+          width: vars.spacing.xs,
         },
       },
     },

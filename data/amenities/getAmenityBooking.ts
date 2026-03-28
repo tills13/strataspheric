@@ -15,6 +15,7 @@ export function baseQuery() {
     .select([
       // amenity bookings
       "amenity_bookings.id as amenityBookingId",
+      "amenity_bookings.requesterId as amenityBookingRequesterId",
       "amenity_bookings.decision as amenityBookingDecision",
 
       // decider
@@ -50,6 +51,7 @@ type Row = Awaited<ReturnType<ReturnType<typeof baseQuery>["executeTakeFirstOrTh
 export function processRows(...rows: Row[]) {
   return rows.map((row) => ({
     id: row.amenityBookingId,
+    requesterId: row.amenityBookingRequesterId,
     decision: row.amenityBookingDecision,
     decider: row.deciderId
       ? {

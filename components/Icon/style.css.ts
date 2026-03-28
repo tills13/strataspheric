@@ -19,15 +19,15 @@ export const icon = style({
   maxWidth: "unset",
   selectors: {
     [`${buttonStyles.button.classNames.base} &`]: {
-      height: "24px",
+      height: vars.sizes.xs,
       margin: "auto",
     },
     [`${buttonStyles.button.classNames.variants.size.small} &`]: {
-      height: "18px",
+      height: vars.fontSizes.large,
       margin: "auto",
     },
     [`${dropdownActionsStyles.actionRow} &`]: {
-      height: "24px",
+      height: vars.sizes.xs,
     },
     [`${timelineIconContainer} &`]: {
       height: vars.sizes.xxs,

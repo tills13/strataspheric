@@ -3,15 +3,15 @@ import { style } from "@vanilla-extract/css";
 
 export const strataChip = style({
   padding: vars.spacing.normal,
-  backgroundColor: vars.colors.grey50,
+  backgroundColor: vars.surfaces.sunken,
   borderRadius: vars.borderRadius.lg,
   transition: `background-color ${vars.transitions.fast}, border-color ${vars.transitions.fast}`,
-  border: `${vars.borderWidth} solid ${vars.colors.grey50}`,
+  border: `${vars.borderWidth} solid ${vars.surfaces.sunken}`,
   textDecoration: "none",
 
   selectors: {
     "&:hover": {
-      backgroundColor: vars.colors.grey100,
+      backgroundColor: vars.surfaces.interactiveHover,
       borderColor: vars.colors.borderDefaultHover,
     },
   },

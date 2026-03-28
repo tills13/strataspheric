@@ -6,8 +6,8 @@ import { Stripe, StripeElements } from "@stripe/stripe-js";
 import Script from "next/script";
 import { createContext, useActionState, useContext, useRef } from "react";
 
-import { submitGetStartedAction } from "../../app/@marketing/get-started/actions";
-import { GetStartedFormStep } from "../../app/@marketing/get-started/types";
+import { submitGetStartedAction } from "../../app/@marketing/(marketing)/get-started/actions";
+import { GetStartedFormStep } from "../../app/@marketing/(marketing)/get-started/types";
 import { signIn } from "../../auth/actions";
 import { useRefreshSession } from "../../hooks/useRefreshSession";
 import { useSession } from "../../hooks/useSession";

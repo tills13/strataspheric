@@ -1,9 +1,7 @@
 import { breakpoints, vars } from "../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const meetingAgendaContainer = style({
-  padding: vars.spacing.normal,
-});
+export const meetingAgendaContainer = style({});
 
 export const meetingAgendaContainerDeleteMeeting = style({
   "@media": {
@@ -11,6 +9,10 @@ export const meetingAgendaContainerDeleteMeeting = style({
       display: "none",
     },
   },
+});
+
+export const meetingAgendaEmptyInfoPanel = style({
+  height: 200,
 });
 
 export const meetingAgendaList = style({
@@ -23,18 +25,6 @@ export const meetingAgendaListItem = style({
       marginBottom: vars.spacing.normal,
     },
   },
-});
-
-export const meetingFilesList = style({
-  overflow: "hidden",
-});
-
-export const meetingFilesListItem = style({
-  overflow: "hidden",
-});
-
-export const meetingFilesListItemAttachmentChip = style({
-  flex: 1,
 });
 
 export const minutesUrl = style({

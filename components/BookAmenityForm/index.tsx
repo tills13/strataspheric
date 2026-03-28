@@ -1,7 +1,6 @@
 "use client";
 
 import differenceInDays from "date-fns/differenceInDays";
-import isBefore from "date-fns/isBefore";
 import { useState } from "react";
 
 import { createAmenityBookingAction } from "../../app/@app/dashboard/amenities/actions";
@@ -51,18 +50,9 @@ export function BookAmenityForm({ amenity }: Props) {
       <Stack>
         <AmenitiesBookingCalendar
           amenity={amenity}
-          onSelectDate={(date) => {
-            if (!startDate || endDate) {
-              setStartDate(date);
-              setEndDate(undefined);
-            } else {
-              if (isBefore(date, startDate)) {
-                setStartDate(date);
-                setEndDate(startDate);
-              } else {
-                setEndDate(date);
-              }
-            }
+          onRangeSelected={({ start, end }) => {
+            setStartDate(start);
+            setEndDate(end);
           }}
           booking={
             startDate

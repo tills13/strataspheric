@@ -4,6 +4,7 @@ import { upsertAmenityAction } from "../../app/@app/dashboard/amenities/actions"
 import { Amenity } from "../../data/amenities/getAmenity";
 import { AttachFileField } from "../AttachFileField";
 import { ImageIcon } from "../Icon/ImageIcon";
+import { PaidDocumentIcon } from "../Icon/PaidDocumentIcon";
 import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
 import { Stack } from "../Stack";
@@ -41,20 +42,21 @@ export function CreateOrUpdateAmenityForm({ amenity }: Props) {
         <Input
           name="name"
           label="Name"
-          placeholder="e.g. Guest Suite"
+          placeholder="Guest Suite"
           defaultValue={amenity?.name}
         />
 
         <TextArea
           name="description"
           label="Description"
-          placeholder="e.g. Sleeps four..."
+          placeholder="Sleeps four..."
           rows={4}
           defaultValue={amenity?.description}
         />
         <Input
           name="costPerHour"
           label="Cost per Hour ($)"
+          placeholder="Cost per Hour ($)"
           defaultValue={amenity?.costPerHour ?? undefined}
           type="number"
         />

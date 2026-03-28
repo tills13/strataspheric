@@ -21,13 +21,12 @@ export function AddFileToWidgetForm({ strataId, widgetId }: Props) {
       action={upsertFileWidgetFileAction.bind(undefined, strataId, widgetId)}
     >
       <Stack>
-        <Input name="name" label="Name" placeholder="e.g. AGM Minutes" />
+        <Input name="name" placeholder="e.g. AGM Minutes" />
         <TextArea
           name="description"
-          label="Description"
           placeholder="Description"
         />
-        <Input name="file" label="Upload File" type="file" />
+        <Input name="file" placeholder="Upload File" type="file" />
         <DividerText>OR</DividerText>
         <FileSelect label="Attach Existing File" name="existing_file" />
         <StatusButton

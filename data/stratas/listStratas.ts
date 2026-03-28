@@ -54,6 +54,7 @@ export async function listStratas(filter: Filter): Promise<Strata[]> {
         stmts.push(eb("stratas.streetAddress", "like", `%${filter.address}%`));
       }
 
+      if (stmts.length === 0) return eb.lit(true);
       return eb.or(stmts);
     })
     .execute();

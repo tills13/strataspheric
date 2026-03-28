@@ -44,8 +44,8 @@ export const slideIndicatorContainer = style({
 
 export const slideIndicator = style({
   display: "block",
-  height: 4,
-  width: 30,
+  height: vars.spacing.xs,
+  width: vars.spacing.large,
   borderRadius: vars.borderRadius.sm,
   backgroundColor: vars.colors.grey500,
   cursor: "pointer",

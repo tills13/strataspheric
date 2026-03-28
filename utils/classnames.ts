@@ -1,6 +1,4 @@
-export function classnames(
-  ...mClassNames: Array<string | undefined | boolean | Record<string, boolean>>
-): string {
+export function classnames(...mClassNames: Array<unknown>): string {
   return mClassNames
     .flatMap((c) => {
       if (typeof c === "string") {
@@ -12,9 +10,13 @@ export function classnames(
         return [];
       }
 
-      return Object.entries(c)
-        .filter(([, predicate]) => !!predicate)
-        .map(([className]) => className);
+      if (typeof c === "object" && c !== null) {
+        return Object.entries(c)
+          .filter(([, predicate]) => !!predicate)
+          .map(([className]) => className);
+      }
+
+      return `${c}`;
     })
     .join(" ");
 }

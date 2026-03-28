@@ -62,12 +62,6 @@ export function Select({
       {actionRight && (
         <Group className={fieldRightActionContainer}>{actionRight}</Group>
       )}
-
-      {label && (
-        <label className={styles.selectFieldLabel} htmlFor={propsId || name}>
-          {label}
-        </label>
-      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { Strata, StrataWidget } from "../../data";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   AbstractWidget,
   Props as AbstractWidgetProps,
@@ -19,7 +20,11 @@ export async function ServerInfoWidget({ strata, strataId, widget }: Props) {
       widgetTitle={widget.title}
     >
       {widget.type === "info" ? (
-        <Text>{widget.body}</Text>
+        <Text
+          dangerouslySetInnerHTML={{
+            __html: sanitizeHtml(widget.body ?? ""),
+          }}
+        />
       ) : (
         <InfoWidgetContact strata={strata} />
       )}

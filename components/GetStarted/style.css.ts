@@ -6,10 +6,10 @@ import { important } from "../../theme";
 export const getStartedForm = style({});
 
 export const subdomainFieldRootDomain = style({
-  opacity: 0.7,
+  opacity: vars.opacity.muted,
 });
 export const subdomainFieldSubdomain = style({
-  fontWeight: 700,
+  fontWeight: vars.fontWeights.bold,
 });
 
 const subdomainStatusIcon = style({

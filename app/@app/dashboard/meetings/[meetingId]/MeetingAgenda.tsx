@@ -4,6 +4,7 @@ import { Header } from "../../../../../components/Header";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { MeetingAgendaItem } from "../../../../../components/MeetingAgendaItem";
 import { Stack } from "../../../../../components/Stack";
+import { Text } from "../../../../../components/Text";
 import { listMeetingAgendaItems } from "../../../../../data/meetings/listMeetingAgendaItems";
 import { classnames } from "../../../../../utils/classnames";
 import { AddNewMeetingAgendaItemButton } from "./AddNewMeetingAgendaItemButton";
@@ -21,9 +22,17 @@ export async function MeetingAgenda({ className, meetingId }: Props) {
       <Header as="h3">Agenda</Header>
 
       {agendaItems.length === 0 && (
-        <InfoPanel level="warning">
-          You have no agenda items for this meeting. Use the button below to
-          create an agenda.
+        <InfoPanel
+          className={styles.meetingAgendaEmptyInfoPanel}
+          level="hint"
+          align="center"
+          justify="center"
+        >
+          <Text textAlign="center">
+            <strong>You have no agenda items for this meeting.</strong>
+            <br />
+            Use the button below to create an agenda.
+          </Text>
         </InfoPanel>
       )}
 

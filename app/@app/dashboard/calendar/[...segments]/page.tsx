@@ -1,4 +1,3 @@
-import { s } from "../../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import format from "date-fns/format";
@@ -13,10 +12,10 @@ import { RightIcon } from "../../../../../components/Icon/RightIcon";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { StrataCalendar } from "./StrataCalendar";
-import { deleteEventAction, upsertEventAction } from "./actions";
 
-
-export default async function Page({ params }: PageProps<"/dashboard/calendar/[...segments]">) {
+export default async function Page({
+  params,
+}: PageProps<"/dashboard/calendar/[...segments]">) {
   const { segments } = await params;
   const strata = await mustGetCurrentStrata();
 
@@ -50,9 +49,9 @@ export default async function Page({ params }: PageProps<"/dashboard/calendar/[.
     (month === 1 ? year - 1 + "/" + "12" : year + "/" + (month - 1));
 
   return (
-    <DashboardLayout>
+    <DashboardLayout title="Events">
       <div className={styles.calendarPageContainer}>
-        <Group className={s({ p: "normal" })} justify="space-between">
+        <Group justify="space-between">
           <Header as="h2">
             {monthName}, {year}
           </Header>
@@ -77,13 +76,7 @@ export default async function Page({ params }: PageProps<"/dashboard/calendar/[.
           </Group>
         </Group>
         <div className={styles.strataCalendarContainer}>
-          <StrataCalendar
-            deleteEventAction={deleteEventAction}
-            month={month}
-            strata={strata}
-            upsertEventAction={upsertEventAction}
-            year={year}
-          />
+          <StrataCalendar month={month} strata={strata} year={year} />
         </div>
       </div>
     </DashboardLayout>

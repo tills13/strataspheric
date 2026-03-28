@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button } from "../../../../../components/Button";
 import { CreateOrUpdateMeetingAgendaItemForm } from "../../../../../components/CreateOrUpdateMeetingAgendaItemForm";
 import { DividerText } from "../../../../../components/DividerText";
+import { Group } from "../../../../../components/Group";
 import { AddIcon } from "../../../../../components/Icon/AddIcon";
 import { SearchIcon } from "../../../../../components/Icon/SearchIcon";
 import { Modal } from "../../../../../components/Modal";
@@ -24,14 +25,16 @@ export function AddNewMeetingAgendaItemButton({ meetingId }: Props) {
 
   return (
     <>
-      <Button
-        icon={<AddIcon />}
-        color="primary"
-        size="large"
-        onClick={() => setShowModal(true)}
-      >
-        Add New Agenda Item
-      </Button>
+      <Group justify="end">
+        <Button
+          icon={<AddIcon />}
+          iconTextBehaviour="centerRemainder"
+          color="primary"
+          onClick={() => setShowModal(true)}
+        >
+          Add Agenda Item
+        </Button>
+      </Group>
 
       {showStrataTimelineSearchModal && (
         <Modal

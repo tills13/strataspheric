@@ -3,8 +3,6 @@ import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
-import { padding } from "../../theme";
-
 export const fieldBaseActionContainer = style({
   width: "min-content",
   margin: vars.spacing.xs,
@@ -20,7 +18,7 @@ export const fieldBase = style({
 
   color: vars.fontColors.primary,
   background: "none",
-  backgroundColor: vars.colors.white,
+  backgroundColor: vars.surfaces.raised,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius.md,
   boxShadow: "none",
@@ -51,35 +49,9 @@ export const field = style([
     alignItems: "center",
     selectors: {
       "&:not(:has(textarea))": {
-        height: "44px",
+        height: vars.sizes.normal,
         padding: `0 ${vars.spacing.normal}`,
       },
     },
   },
 ]);
-
-export const fieldLabel = style({
-  position: "absolute",
-  pointerEvents: "none",
-  top: "-11px",
-  left: calc(vars.spacing.normal).subtract(vars.spacing.small).toString(),
-  padding: padding(0, vars.spacing.small),
-  fontWeight: vars.fontWeights.bold,
-  color: vars.fontColors.secondary,
-  zIndex: 100,
-
-  selectors: {
-    "&:before": {
-      position: "absolute",
-      left: 0,
-      right: 0,
-      top: 9,
-      display: "block",
-      backgroundColor: vars.colors.white,
-      height: vars.borderWidth,
-      content: " ",
-      padding: `0 ${vars.spacing.small}`,
-      zIndex: -1,
-    },
-  },
-});

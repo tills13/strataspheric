@@ -4,26 +4,16 @@ import React, { TextareaHTMLAttributes } from "react";
 
 import { classnames } from "../../utils/classnames";
 
-interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string;
-}
+type Props = TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ className, label, ...rest }, ref) => (
+  ({ className, ...rest }, ref) => (
     <div className={classnames(styles.wrapper, className)}>
       <textarea
         className={classnames(styles.textareaTextarea)}
         ref={ref}
         {...rest}
       />
-      {label && (
-        <label
-          className={styles.textareaPlaceholder}
-          htmlFor={rest.id || rest.name}
-        >
-          {label}
-        </label>
-      )}
     </div>
   ),
 );

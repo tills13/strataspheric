@@ -5,7 +5,7 @@ import { style } from "@vanilla-extract/css";
 export const quotedMessageIcon = style({
   position: "absolute",
   verticalAlign: "middle",
-  height: "64px",
+  height: vars.sizes.xxl,
   opacity: 0.1,
   left: 0,
   top: 0,

@@ -1,10 +1,16 @@
 "use client";
 
 import endOfMonth from "date-fns/endOfMonth";
+import { useState } from "react";
 import useSWR from "swr";
 
 import { Calendar } from "../../../../../components/Calendar";
-import { Event, Strata } from "../../../../../data";
+import { DateRange } from "../../../../../components/Calendar/useRangeSelection";
+import { CreateOrUpdateEventForm } from "../../../../../components/CreateOrUpdateEventForm";
+import { Modal } from "../../../../../components/Modal";
+import { Strata } from "../../../../../data";
+import { useCan } from "../../../../../hooks/useCan";
+import { formatDateForDatetime } from "../../../../../utils/datetime";
 
 async function fetchStrataEvents(year: number, month: number) {
   const startDate = new Date(year, month - 1, 1);
@@ -14,36 +20,47 @@ async function fetchStrataEvents(year: number, month: number) {
     `/api/events/listEvents?startDate=${startDate.getTime()}&endDate=${endDate.getTime()}`,
   );
 
-  return (await response.json()).events as Event[];
+  const json = (await response.json()) as {
+    events: Parameters<typeof Calendar>[0]["events"];
+  };
+  return json.events;
 }
 
 interface Props {
-  deleteEventAction: (eventId: string) => void;
   month: number;
   strata: Strata;
-  upsertEventAction: (eventId: string | undefined, fd: FormData) => void;
   year: number;
 }
 
-export function StrataCalendar({
-  deleteEventAction,
-  month,
-  strata,
-  upsertEventAction,
-  year,
-}: Props) {
+export function StrataCalendar({ month, strata, year }: Props) {
   const { data: events = [] } = useSWR(
     [strata.id, "events", year, month],
     ([, , mYear, mMonth]) => fetchStrataEvents(mYear, mMonth),
   );
 
+  const can = useCan();
+  const canEdit = can("stratas.events.edit");
+
+  const [selectedRange, setSelectedRange] = useState<DateRange | null>(null);
+
   return (
-    <Calendar
-      upsertEvent={upsertEventAction}
-      events={events}
-      deleteEvent={deleteEventAction}
-      month={month}
-      year={year}
-    />
+    <>
+      <Calendar
+        canEdit={canEdit}
+        events={events}
+        month={month}
+        year={year}
+        onRangeSelected={canEdit ? setSelectedRange : undefined}
+      />
+      {selectedRange && (
+        <Modal closeModal={() => setSelectedRange(null)} title="New Event">
+          <CreateOrUpdateEventForm
+            defaultDate={formatDateForDatetime(selectedRange.start)}
+            defaultEndDate={formatDateForDatetime(selectedRange.end)}
+            onDeleteEvent={() => setSelectedRange(null)}
+          />
+        </Modal>
+      )}
+    </>
   );
 }

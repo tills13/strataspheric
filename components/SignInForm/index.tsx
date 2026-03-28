@@ -11,7 +11,6 @@ import * as formdata from "../../utils/formdata";
 import { Button } from "../Button";
 import { Flex } from "../Flex";
 import { Group } from "../Group";
-import { ArrowForwardIcon } from "../Icon/ArrowForwardIcon";
 import { Input } from "../Input";
 import { ExternalLink } from "../Link/ExternalLink";
 import { InternalLink } from "../Link/InternalLink";
@@ -61,7 +60,7 @@ export function SignInForm({ className }: Props) {
           id="email"
           name="email"
           type="email"
-          label="Email"
+          placeholder="Email"
         />
 
         <Input
@@ -69,7 +68,7 @@ export function SignInForm({ className }: Props) {
           id="password"
           name="password"
           type="password"
-          label="Password"
+          placeholder="Password"
         />
 
         {error && (
@@ -88,9 +87,8 @@ export function SignInForm({ className }: Props) {
               Forgot Password
             </Button>
           </ExternalLink>
-          <InternalLink href="?action=join" noUnderline>
+          <InternalLink href="/join" noUnderline>
             <Button
-              icon={<ArrowForwardIcon />}
               style="tertiary"
               color="primary"
               type="button"

@@ -15,7 +15,10 @@
     "prettier:fix": "prettier --write -l **/*",
     "dev:generate-key": "tsx auth/generateKey.ts",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
-    "knip": "knip"
+    "knip": "knip",
+    "seed": "tsx scripts/seed.ts",
+    "migrate": "tsx scripts/migrate.ts",
+    "reset-database": "tsx scripts/reset-database.ts"
   },
   "author": "",
   "license": "ISC",

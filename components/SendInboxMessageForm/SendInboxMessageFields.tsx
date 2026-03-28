@@ -22,10 +22,10 @@ export function SendInboxMessageFields({
 }: Props) {
   return (
     <Stack gap="normal">
-      {showSubjectInput && <Input name="subject" label="Subject" required />}
+      {showSubjectInput && <Input name="subject" placeholder="Subject" required />}
 
       {/* <WYSIWYGEditor /> */}
-      <TextArea name="message" label="Message" rows={3} required />
+      <TextArea name="message" placeholder="Message" rows={3} required />
 
       <Flex from="tablet">
         <AttachFileField name="fileId" />

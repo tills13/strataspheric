@@ -57,6 +57,7 @@ export interface PricingPlan {
   pricingText?: React.ReactNode;
   productId?: string;
   priceId?: string;
+  recommended?: boolean;
 }
 
 export const plans: PricingPlan[] = [
@@ -75,6 +76,7 @@ export const plans: PricingPlan[] = [
   },
   {
     name: "Standard",
+    recommended: true,
     features: [
       FEATURE_PER_UNIT_PRICING,
       FEATURE_UNLIMITED_FILES_EVENTS,

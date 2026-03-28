@@ -14,7 +14,7 @@ export const addWidgetWidget = style({
 
   selectors: {
     "&:hover": {
-      backgroundColor: vars.colors.grey100,
+      backgroundColor: vars.surfaces.interactiveHover,
       borderRadius: vars.borderRadius.lg,
       border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
     },
@@ -24,7 +24,7 @@ export const addWidgetWidget = style({
 export const addWidgetWidgetContainer = style({
   width: vars.sizes.xxl2,
   textAlign: "center",
-  fontSize: vars.fontSizes.normal,
+  fontSize: vars.fontSizes.medium,
 });
 
 export const addWidgetWidgetIcon = style([

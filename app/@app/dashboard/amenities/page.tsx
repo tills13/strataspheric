@@ -1,8 +1,8 @@
+import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { ProtectedPage } from "../../../../components/ProtectedPage";
 import { Upsell } from "../../../../components/Upsell";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { AmenitiesPage } from "./AmenitiesPage";
-
 
 const AMENITIES_UPSELL = `
 Manage amenity bookings & invoicing directly within Strataspheric.
@@ -13,11 +13,13 @@ export default async function Page() {
 
   if (!strata.plan.enableAmenities) {
     return (
-      <Upsell
-        upsellDescription={AMENITIES_UPSELL}
-        upsellFeature="Amenities"
-        verb="are"
-      />
+      <DashboardLayout title="Amenities">
+        <Upsell
+          upsellDescription={AMENITIES_UPSELL}
+          upsellFeature="Amenities"
+          verb="are"
+        />
+      </DashboardLayout>
     );
   }
 

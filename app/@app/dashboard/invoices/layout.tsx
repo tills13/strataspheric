@@ -9,7 +9,11 @@ const INVOICES_UPSELL = `
 Manage your strata's additional revenue and outflows all within Strataspheric.
 `.trim();
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [session, strata] = await Promise.all([
     mustAuth(),
     mustGetCurrentStrata(),
@@ -17,12 +21,14 @@ export default async function Layout({ children }: { children: React.ReactNode }
 
   if (!strata.plan.enableInvoices) {
     return (
-      <Upsell
-        p="normal"
-        upsellDescription={INVOICES_UPSELL}
-        upsellFeature="Invoices"
-        verb="are"
-      />
+      <DashboardLayout title="Invoices">
+        <Upsell
+          p="normal"
+          upsellDescription={INVOICES_UPSELL}
+          upsellFeature="Invoices"
+          verb="are"
+        />
+      </DashboardLayout>
     );
   }
 

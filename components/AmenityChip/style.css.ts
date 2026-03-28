@@ -13,7 +13,7 @@ export const amentityImage = style({
 
   "@media": {
     [breakpoints.tablet]: {
-      width: 128,
+      width: vars.sizes.xxl2,
     },
   },
 });

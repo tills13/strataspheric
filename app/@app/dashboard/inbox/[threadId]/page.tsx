@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Thread, getThread } from "../../../../../data/inbox/getThread";
+import { updateThread } from "../../../../../data/inbox/updateThread";
 import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
 import { InboxMessageThread } from "./InboxMessageThread";
@@ -40,13 +41,17 @@ export default async function Page({
     redirect("/dashboard");
   }
 
+  if (session?.user && thread.isUnread) {
+    await updateThread(threadId, { isUnread: 0 });
+  }
+
   const canSeeChats = can(
     session?.user,
     p("stratas", "inbox_thread_chats", "view"),
   );
 
   return (
-    <DashboardLayout subPageTitle={thread.subject}>
+    <DashboardLayout subPageTitle={thread.subject} noPadding>
       <div
         className={classnames(
           canSeeChats && styles.threadPageContainerWithChats,

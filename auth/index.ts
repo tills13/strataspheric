@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 import { getStrataMembershipByDomainAndUserId } from "../data/memberships/getStrataMembershipByDomainAndUserId";
+import { getUserById } from "../data/users/getUser";
 import { getDomain } from "../utils/getDomain";
 import { internalAuthDoNotUseDirectly } from "./auth";
 import { GET, POST } from "./endpoints";
@@ -27,16 +28,17 @@ function createAuth(config: Config) {
 }
 
 async function decorateSessionUser(
-  baseUser: Omit<User, "scopes">,
+  baseUser: Omit<User, "scopes" | "isAdmin">,
 ): Promise<User> {
-  const membership = await getStrataMembershipByDomainAndUserId(
-    await getDomain(),
-    baseUser.id,
-  );
+  const [membership, dbUser] = await Promise.all([
+    getStrataMembershipByDomainAndUserId(await getDomain(), baseUser.id),
+    getUserById(baseUser.id),
+  ]);
 
   return {
     ...baseUser,
     scopes: membership?.scopes || [],
+    isAdmin: dbUser?.isAdmin === 1,
   };
 }
 

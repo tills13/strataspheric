@@ -26,7 +26,7 @@ export const dropdownButtonButton = style({
           borderBottomRightRadius: 0,
           borderColor: vars.colors.borderDefault,
           borderBottom: "none",
-          backgroundColor: vars.colors.white,
+          backgroundColor: vars.surfaces.overlay,
         },
         "&:active": {
           borderBottom: "none",
@@ -52,7 +52,7 @@ export const panelWrapper = style({
   // transitionProperty: "display, opacity, margin-top",
   // "transition-behaviour": "allow-discrete",
 
-  backgroundColor: vars.colors.white,
+  backgroundColor: vars.surfaces.overlay,
   zIndex: "9",
 
   selectors: {
@@ -71,7 +71,7 @@ export const panelWrapper = style({
       bottom: "unset",
       left: "unset",
 
-      width: 400,
+      width: vars.sizes.xxl4,
       border: border(vars.borderWidth, "solid", vars.colors.borderDefault),
       borderRadius: vars.borderRadius.lg,
       boxShadow: vars.shadows.lg,

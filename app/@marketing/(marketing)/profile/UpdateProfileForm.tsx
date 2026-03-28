@@ -37,18 +37,18 @@ export function UpdateProfileForm({ user, memberships }: Props) {
       <Stack>
         <Header as="h3">Name</Header>
 
-        <Input label="Full name" name="name" defaultValue={user.name || ""} />
+        <Input placeholder="Full name" name="name" defaultValue={user.name || ""} />
 
         <Header as="h3">Password</Header>
         <Input
-          label="Current Password"
+          placeholder="Current Password"
           name="currentPassword"
           type="password"
         />
 
-        <Input label="Password" name="password" type="password" />
+        <Input placeholder="Password" name="password" type="password" />
         <Input
-          label="Confirm Password"
+          placeholder="Confirm Password"
           name="confirmPassword"
           type="password"
         />

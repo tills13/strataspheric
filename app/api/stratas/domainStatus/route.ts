@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
 
-import {
-  GetCustomDomainData,
-  getCustomDomain,
-} from "../../../../cloudflare/pages/getCustomDomain";
+import { getCustomDomain } from "../../../../cloudflare/workers/getCustomDomain";
 import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
 
-
 export interface GetDomainStatusResponseData {
-  status: GetCustomDomainData["status"];
+  status: "active" | "pending";
 }
 
 export async function GET(req: Request) {
@@ -26,26 +22,26 @@ export async function GET(req: Request) {
   }
 
   if (process.env.NODE_ENV === "development") {
-    return new Response(
-      JSON.stringify({
-        status: "active",
-      } as GetDomainStatusResponseData),
-      {
-        status: 200,
-        headers: {
-          "content-type": "application/json",
-        },
-      },
-    );
+    return NextResponse.json({
+      status: "active",
+    } satisfies GetDomainStatusResponseData);
   }
 
-  const [json] = await getCustomDomain(domain);
+  if (!strata.domainRecordId) {
+    return NextResponse.json({
+      status: "pending",
+    } satisfies GetDomainStatusResponseData);
+  }
+
+  const [json] = await getCustomDomain(strata.domainRecordId);
 
   if (!json.success) {
-    return new Response("Not Found", { status: 404 });
+    return NextResponse.json({
+      status: "pending",
+    } satisfies GetDomainStatusResponseData);
   }
 
   return NextResponse.json({
-    status: json.result.status,
+    status: "active",
   } satisfies GetDomainStatusResponseData);
 }

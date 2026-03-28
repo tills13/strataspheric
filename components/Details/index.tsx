@@ -1,3 +1,5 @@
+import { Stack } from "../Stack";
+
 export function Details({
   children,
   className,
@@ -5,5 +7,9 @@ export function Details({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <dl className={className}>{children}</dl>;
+  return (
+    <Stack as="dl" gap="xs" className={className}>
+      {children}
+    </Stack>
+  );
 }

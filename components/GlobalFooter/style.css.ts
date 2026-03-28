@@ -2,14 +2,12 @@ import { breakpoints, iconColorVar, vars } from "../../app/theme.css";
 import { colorVar } from "../Wordmark/style.css";
 import { style } from "@vanilla-extract/css";
 
-import { border } from "../../theme";
-
 export const footer = style({
   display: "flex",
   flexDirection: "column",
   gap: vars.spacing.normal,
-  padding: vars.spacing.normal,
-  borderTop: border("1px", "solid", vars.colors.borderDefault),
+  padding: `${vars.spacing["12"]} ${vars.spacing["20"]}`,
+  borderTop: `1px solid ${vars.colors.borderDefault}`,
 
   backgroundColor: vars.colors.primary,
   color: vars.colors.white,
@@ -17,7 +15,9 @@ export const footer = style({
   "@media": {
     [breakpoints.tablet]: {
       justifyContent: "space-between",
+      alignItems: "center",
       flexDirection: "row",
+      padding: vars.spacing["24"],
       backgroundColor: "unset",
       color: "unset",
     },

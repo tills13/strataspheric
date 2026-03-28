@@ -18,6 +18,7 @@ import { TextArea } from "../TextArea";
 
 interface Props {
   defaultDate?: string;
+  defaultEndDate?: string;
   event?: Pick<Event, "id" | "name" | "description" | "startDate" | "endDate">;
   onDeleteEvent?: () => void;
   submitLabel?: React.ReactNode;
@@ -25,6 +26,7 @@ interface Props {
 
 export function CreateOrUpdateEventForm({
   defaultDate,
+  defaultEndDate,
   event,
   onDeleteEvent,
   submitLabel,
@@ -40,12 +42,12 @@ export function CreateOrUpdateEventForm({
       }}
     >
       <Stack>
-        <Input name="name" label="Name" defaultValue={event?.name} />
+        <Input name="name" placeholder="Name" defaultValue={event?.name} />
 
         <DateInput
           name="date"
           defaultStartValue={event?.startDate || defaultDate}
-          defaultEndValue={event?.endDate || defaultDate}
+          defaultEndValue={event?.endDate || defaultEndDate || defaultDate}
           type="range"
         />
 

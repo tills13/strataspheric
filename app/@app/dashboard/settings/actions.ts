@@ -4,8 +4,7 @@ import { redirect } from "next/navigation";
 import Stripe from "stripe";
 
 import { auth } from "../../../../auth";
-import { deleteRecord } from "../../../../cloudflare/dns/deleteRecord";
-import { removeCustomDomain } from "../../../../cloudflare/pages/removeCustomDomain";
+import { removeCustomDomain } from "../../../../cloudflare/workers/removeCustomDomain";
 import { protocol, tld } from "../../../../constants";
 import { deleteAllEvents } from "../../../../data/events/deleteAllEvents";
 import { deleteAllFiles } from "../../../../data/files/deleteAllFiles";
@@ -53,8 +52,7 @@ export async function deleteStrataAction() {
   await deleteAllStrataMemberships(currentStrata.id);
 
   if (process.env.NODE_ENV !== "development") {
-    await removeCustomDomain(currentStrata.domain);
-    await deleteRecord(currentStrata.domainRecordId);
+    await removeCustomDomain(currentStrata.domainRecordId);
   }
 
   redirect(`${protocol}//${tld}`);

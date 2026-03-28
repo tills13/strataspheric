@@ -51,7 +51,7 @@ export const recipientCheck = style([
   icon,
   {
     display: "inline-block",
-    height: "24px",
+    height: vars.sizes.xs,
     verticalAlign: "top",
     marginRight: vars.spacing.small,
     opacity: 0.5,

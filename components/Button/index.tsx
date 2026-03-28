@@ -57,7 +57,7 @@ export function Button({
       {...rest}
     >
       {icon && children && iconTextBehaviour !== "centerRemainder" && (
-        <div className={styles.iconContainer} />
+        <div className={styles.iconSpacer} />
       )}
 
       {mChildren || icon}

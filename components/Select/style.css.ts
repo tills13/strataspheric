@@ -1,5 +1,5 @@
 import { vars } from "../../app/theme.css";
-import { field, fieldLabel } from "../Form/style.css";
+import { field } from "../Form/style.css";
 import { inputFieldInput, inputFieldWrapper } from "../Input/styles.css";
 import { style } from "@vanilla-extract/css";
 
@@ -30,5 +30,3 @@ export const select = style([
     },
   },
 ]);
-
-export const selectFieldLabel = style([fieldLabel]);

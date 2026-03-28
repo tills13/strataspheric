@@ -2,7 +2,7 @@
 
 import React, { useActionState } from "react";
 
-import { type JoinFormState } from "../../app/@marketing/join/actions";
+import { type JoinFormState } from "../../app/@marketing/(marketing)/join/actions";
 import { signIn } from "../../auth/actions";
 import { Strata } from "../../data";
 import { classnames } from "../../utils/classnames";

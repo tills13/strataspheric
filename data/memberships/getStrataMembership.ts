@@ -40,6 +40,6 @@ export async function getStrataMembership(strataId: string, userId: string) {
     .where("strata_memberships.strataId", "=", strataId)
     .where("strata_memberships.userId", "=", userId);
 
-  const result = await query.executeTakeFirstOrThrow();
-  return processRows(result)[0];
+  const result = await query.executeTakeFirst();
+  return result ? processRows(result)[0] : undefined;
 }

@@ -1,12 +1,9 @@
-import { s } from "../../../../../sprinkles.css";
-
 import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
 import { Badge } from "../../../../../components/Badge";
 import { Button } from "../../../../../components/Button";
 import { CreateOrUpdateStrataMembershipForm } from "../../../../../components/CreateOrUpdateStrataMembershipForm";
-import { CreateOrUpdateStrataMembershipFormFields } from "../../../../../components/CreateOrUpdateStrataMembershipForm/CreateOrUpdateStrataMembershipFormFields";
 import { UserPermissionsFields } from "../../../../../components/CreateOrUpdateStrataMembershipForm/UserPermissionsFields";
 import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Details } from "../../../../../components/Details";
@@ -14,7 +11,10 @@ import { DetailsRow } from "../../../../../components/Details/DetailsRow";
 import { Group } from "../../../../../components/Group";
 import { EmailIcon } from "../../../../../components/Icon/EmailIcon";
 import { PhoneIcon } from "../../../../../components/Icon/PhoneIcon";
+import { Input } from "../../../../../components/Input";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
+import { StrataRoleSelect } from "../../../../../components/StrataRoleSelect";
+import { Text } from "../../../../../components/Text";
 import { getStrataMembership } from "../../../../../data/memberships/getStrataMembership";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import {
@@ -48,32 +48,119 @@ export default async function Page({
   const canEditMonthlyFee = canEditInformation && !isEditingSelf;
   const isTargetHigherRole = isRoleHigherThan(membership.role, currentUserRole);
 
-  // Disable role select if:
-  // 1. Target member has higher role than current user
-  // 2. Admin is editing themselves (cannot demote self)
   const strataRoleSelectDisabled =
     isTargetHigherRole ||
     (isEditingSelf && currentUserRole === "administrator");
 
-  // Only show roles at or below current user's level
   const availableRoles = getAssignableRoles(currentUserRole);
 
-  return (
-    <DashboardLayout title={membership.name}>
-      <Details className={s({ p: "normal" })}>
+  const canEdit = canEditInformation || canEditPermissions;
+
+  const content = (
+    <>
+      <Details>
+        <DetailsRow
+          title="Name"
+          description={
+            canEditInformation ? (
+              <Input
+                name="name"
+                type="text"
+                defaultValue={membership.name}
+                disabled={!!membership}
+                required
+              />
+            ) : (
+              <Text>{membership.name}</Text>
+            )
+          }
+        />
         <DetailsRow
           title="Unit"
-          description={membership.unit ?? <Badge>No Unit</Badge>}
+          description={
+            canEditInformation ? (
+              <Input
+                name="unit"
+                type="text"
+                defaultValue={membership.unit || undefined}
+                required
+              />
+            ) : (
+              <Text>{membership.unit ?? <Badge>No Unit</Badge>}</Text>
+            )
+          }
         />
-        <DetailsRow title="Role" description={roleLabels[membership.role]} />
-        {membership.monthlyFee != null && (
+        <DetailsRow
+          title="Email"
+          description={
+            canEditInformation ? (
+              <Input
+                name="email"
+                type="email"
+                defaultValue={membership.email}
+                disabled={!!membership}
+                required
+              />
+            ) : (
+              <Text>{membership.email}</Text>
+            )
+          }
+        />
+        <DetailsRow
+          title="Phone"
+          description={
+            canEditInformation ? (
+              <Input
+                name="phone_number"
+                type="text"
+                defaultValue={membership.phoneNumber || undefined}
+              />
+            ) : membership.phoneNumber ? (
+              <Text>{membership.phoneNumber}</Text>
+            ) : null
+          }
+        />
+        <DetailsRow
+          title="Role"
+          description={
+            canEditInformation ? (
+              <StrataRoleSelect
+                key={membership.role}
+                name="role"
+                defaultValue={membership.role || "owner"}
+                disabled={strataRoleSelectDisabled}
+                availableRoles={availableRoles}
+                required
+              />
+            ) : (
+              <Text>{roleLabels[membership.role]}</Text>
+            )
+          }
+        />
+        {canEditMonthlyFee && (
           <DetailsRow
             title="Monthly Fee"
-            description={`$${membership.monthlyFee}`}
+            description={
+              <Input
+                name="monthly_fee"
+                type="number"
+                defaultValue={membership.monthlyFee ?? undefined}
+                min={0}
+              />
+            }
           />
         )}
+        {!canEditMonthlyFee &&
+          canEditInformation &&
+          membership.monthlyFee != null && (
+            <DetailsRow
+              title="Monthly Fee"
+              description={<Text>${membership.monthlyFee}</Text>}
+            />
+          )}
       </Details>
-      <Group ph="normal" equalWidthChildren>
+
+      <Group equalWidthChildren>
         <ExternalLink href={`mailto:${membership.email}`} noUnderline>
           <Button
             color="primary"
@@ -85,36 +172,35 @@ export default async function Page({
             Email
           </Button>
         </ExternalLink>
-        <ExternalLink href={`tel:${membership.phoneNumber}`} noUnderline>
-          <Button
-            color="primary"
-            icon={<PhoneIcon />}
-            style="secondary"
-            iconTextBehaviour="centerRemainder"
-            fullWidth
-          >
-            Phone
-          </Button>
-        </ExternalLink>
+        {membership.phoneNumber && (
+          <ExternalLink href={`tel:${membership.phoneNumber}`} noUnderline>
+            <Button
+              color="primary"
+              icon={<PhoneIcon />}
+              style="secondary"
+              iconTextBehaviour="centerRemainder"
+              fullWidth
+            >
+              Phone
+            </Button>
+          </ExternalLink>
+        )}
       </Group>
 
-      {(canEditInformation || canEditPermissions) && (
-        <CreateOrUpdateStrataMembershipForm
-          className={s({ p: "normal" })}
-          membership={membership}
-        >
-          {canEditInformation && (
-            <CreateOrUpdateStrataMembershipFormFields
-              membership={membership}
-              strataRoleSelectDisabled={strataRoleSelectDisabled}
-              availableRoles={availableRoles}
-              canEditMonthlyFee={canEditMonthlyFee}
-            />
-          )}
-          {canEditPermissions && (
-            <UserPermissionsFields membership={membership} />
-          )}
+      {canEditPermissions && (
+        <UserPermissionsFields membership={membership} />
+      )}
+    </>
+  );
+
+  return (
+    <DashboardLayout title={membership.name}>
+      {canEdit ? (
+        <CreateOrUpdateStrataMembershipForm membership={membership}>
+          {content}
         </CreateOrUpdateStrataMembershipForm>
+      ) : (
+        content
       )}
     </DashboardLayout>
   );

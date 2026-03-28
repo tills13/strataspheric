@@ -44,7 +44,7 @@ export default async function Page({ params }: PageProps<"/dashboard/invoices/[i
   }
 
   return (
-    <Stack className={s({ ph: "normal", pb: "normal" })} gap="large">
+    <Stack className={s({ pb: "normal" })} gap="large">
       {!!invoice.isPaid && (
         <InfoPanel level="success">
           <Text>

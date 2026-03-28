@@ -35,6 +35,7 @@ export function CreateOrUpdateStrataInfoWidgetForm({
           name="body"
           rows={4}
           defaultValue={widget?.body}
+          placeholder="Supports basic HTML formatting (bold, italic, links, lists, etc.)"
         />
       )}
     </Stack>

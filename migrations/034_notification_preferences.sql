@@ -1,0 +1,2 @@
+ALTER TABLE strata_memberships ADD COLUMN notifyEvents INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE stratas ADD COLUMN inboxEmail TEXT;

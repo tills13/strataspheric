@@ -70,7 +70,7 @@ export async function MembershipTableRow({ membership }: Props) {
         </Group>
       }
       rowEnd={
-        membership.monthlyFee != null ? (
+        canUpsert && membership.monthlyFee != null ? (
           <Text color="secondary" whiteSpace="nowrap">
             ${membership.monthlyFee}/mo
           </Text>

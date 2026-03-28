@@ -8,12 +8,14 @@ import { padding } from "../../theme";
 export const badge = recipe({
   base: {
     whiteSpace: "nowrap",
-    height: vars.sizes.small,
-    lineHeight: calc(vars.sizes.small).subtract(vars.spacing.xs).toString(),
+    height: vars.sizes.xs,
+    lineHeight: calc(vars.sizes.xs).subtract(vars.spacing.xs).toString(),
     padding: padding(0, vars.spacing.small),
-    borderRadius: vars.borderRadius.md,
+    borderRadius: vars.borderRadius.sm,
     borderStyle: "solid",
-    borderWidth: 2,
+    borderWidth: vars.borderWidth,
+    fontSize: vars.fontSizes.xs,
+    letterSpacing: vars.letterSpacing.wider,
     textTransform: "uppercase",
   },
 

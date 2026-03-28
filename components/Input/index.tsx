@@ -11,8 +11,8 @@ import { Group } from "../Group";
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   actionRight?: React.ReactNode;
   actionLeft?: React.ReactNode;
+  icon?: React.ReactNode;
   inputClassName?: string;
-  label?: string;
   onChangeValue?: (newValue: string) => void;
   placeholder?: string;
   ref?: React.Ref<HTMLInputElement>;
@@ -22,10 +22,10 @@ export function Input({
   actionRight,
   actionLeft,
   className,
+  icon,
   id: propsId,
   inputClassName,
   name,
-  label,
   onChange,
   onChangeValue,
   ref,
@@ -48,6 +48,8 @@ export function Input({
         </Group>
       )}
 
+      {icon && <div className={styles.inputFieldIconContainer}>{icon}</div>}
+
       <input
         className={classnames(styles.inputFieldInput, inputClassName)}
         name={name}
@@ -65,12 +67,6 @@ export function Input({
         <Group className={styles.inputFieldRightActionContainer}>
           {actionRight}
         </Group>
-      )}
-
-      {label && (
-        <label className={styles.inputFieldLabel} htmlFor={propsId || name}>
-          {label}
-        </label>
       )}
     </div>
   );

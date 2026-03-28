@@ -1,8 +1,8 @@
 import { s } from "../../../../sprinkles.css";
 
 import { auth } from "../../../../auth";
-import { Group } from "../../../../components/Group";
 import { Table } from "../../../../components/Table";
+import { TableFooter } from "../../../../components/Table/TableFooter";
 import { Text } from "../../../../components/Text";
 import { listStrataMemberships } from "../../../../data/memberships/listStrataMemberships";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
@@ -30,18 +30,26 @@ export async function Memberships() {
   const hasFees = memberships.some((m) => m.monthlyFee != null);
 
   return (
-    <div className={s({ ph: "normal" })}>
+    <div>
       <Table>
         {memberships.map((membership) => (
           <MembershipTableRow key={membership.id} membership={membership} />
         ))}
+        {canUpsert && hasFees && (
+          <TableFooter
+            end={
+              <>
+                <Text color="secondary" whiteSpace="nowrap">
+                  Total monthly fees:
+                </Text>
+                <Text fw="bold" whiteSpace="nowrap">
+                  ${totalMonthlyFees}/mo
+                </Text>
+              </>
+            }
+          />
+        )}
       </Table>
-      {hasFees && (
-        <Group justify="end" className={s({ pt: "small" })}>
-          <Text color="secondary">Total monthly fees:</Text>
-          <Text fw="bold">${totalMonthlyFees}/mo</Text>
-        </Group>
-      )}
     </div>
   );
 }

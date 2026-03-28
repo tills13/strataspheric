@@ -11,7 +11,7 @@ export const stickySubmit = style({
 
 export const stickySubmitStuck = style({
   borderRadius: vars.borderRadius.md,
-  boxShadow: "0 -4px 12px rgba(0, 0, 0, 0.20)",
+  boxShadow: vars.shadows.lg,
 });
 
 export const permissionTable = style({});
@@ -20,7 +20,7 @@ export const permissionTableRow = style({
   borderRadius: vars.borderRadius.md,
   selectors: {
     [`${permissionTable} &:nth-child(odd)`]: {
-      backgroundColor: vars.colors.grey50,
+      backgroundColor: vars.surfaces.sunken,
     },
   },
 });

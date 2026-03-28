@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { joinFromTokenAction } from "../../app/@marketing/join/actions";
+import { joinFromTokenAction } from "../../app/@marketing/(marketing)/join/actions";
 import { signIn } from "../../auth/actions";
 import { Strata } from "../../data";
 import { StrataMembership } from "../../data/memberships/getStrataMembership";
@@ -49,10 +49,10 @@ export function JoinFromTokenForm({
           signed in, you can complete your Strataspheric profile.
         </Text>
 
-        <Input label="Password" name="password" type="password" />
+        <Input placeholder="Password" name="password" type="password" />
 
         <Input
-          label="Confirm Password"
+          placeholder="Confirm Password"
           name="confirm_password"
           type="password"
         />

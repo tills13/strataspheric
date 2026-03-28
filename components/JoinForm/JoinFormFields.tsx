@@ -12,14 +12,14 @@ export function JoinFormFields({ className }: Props) {
     <Stack className={className}>
       <Header as="h2">Let&apos;s get to know you...</Header>
 
-      <Input id="name" name="name" label="Name" required />
-      <Input id="email" name="email" type="email" label="Email" required />
+      <Input id="name" name="name" placeholder="Name" required />
+      <Input id="email" name="email" type="email" placeholder="Email" required />
 
       <Input
         id="password"
         name="password"
         type="password"
-        label="Password"
+        placeholder="Password"
         required
       />
 
@@ -27,7 +27,7 @@ export function JoinFormFields({ className }: Props) {
         id="confirmPassword"
         name="confirmPassword"
         type="password"
-        label="Confirm Password"
+        placeholder="Confirm Password"
         required
       />
 

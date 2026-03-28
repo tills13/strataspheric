@@ -1,5 +1,5 @@
-import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { D1Database } from "@cloudflare/workers-types";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ColumnType, Insertable, Kysely, Selectable, Updateable } from "kysely";
 
 import { D1Dialect } from "./d1";
@@ -62,11 +62,17 @@ export interface InboxMessagesTable {
   senderEmail: string | null;
   senderPhoneNumber: string | null;
   sentAt: ColumnType<number, never, never>;
-  isUnread: ColumnType<0 | 1, never, never>;
+  isUnread: ColumnType<0 | 1, 0 | 1 | undefined, 0 | 1>;
+  archivedAt: ColumnType<
+    number | null,
+    number | null | undefined,
+    number | null
+  >;
 }
 
 export type InboxMessage = Selectable<InboxMessagesTable>;
 export type NewInboxMessage = Insertable<InboxMessagesTable>;
+export type InboxMessageUpdate = Updateable<InboxMessagesTable>;
 
 export interface InboxThreadChatsTable {
   id: string;
@@ -156,6 +162,17 @@ export type MeetingMinutes = Selectable<MeetingMinutesTable>;
 export type MeetingMinutesUpdate = Updateable<MeetingMinutesTable>;
 export type NewMeetingMinutes = Insertable<MeetingMinutesTable>;
 
+export interface MeetingAttendeesTable {
+  meetingId: ColumnType<string, string, never>;
+  userId: ColumnType<string, string, never>;
+  status: ColumnType<"invited" | "confirmed" | "declined", "invited" | "confirmed" | "declined" | undefined, "invited" | "confirmed" | "declined">;
+  respondedAt: ColumnType<number | null, number | null | undefined, number | null>;
+}
+
+export type MeetingAttendee = Selectable<MeetingAttendeesTable>;
+export type NewMeetingAttendee = Insertable<MeetingAttendeesTable>;
+export type MeetingAttendeeUpdate = Updateable<MeetingAttendeesTable>;
+
 export interface StratasTable {
   id: ColumnType<string, string, never>;
   status: ColumnType<string, string | undefined, string | undefined>;
@@ -181,6 +198,7 @@ export interface StratasTable {
   stripeAccountId: string | null;
   stripeAccountStatus: ColumnType<string | null, string | null, string | null>;
   createdAt: ColumnType<number, never, never>;
+  inboxEmail: string | null;
 }
 
 export type Strata = Selectable<StratasTable>;
@@ -205,6 +223,7 @@ export interface StrataMembershipsTable {
   role: Role;
   phoneNumber: string | null;
   monthlyFee: number | null;
+  notifyEvents: ColumnType<0 | 1, 0 | 1 | undefined, 0 | 1>;
 }
 
 export type StrataMembership = Selectable<StrataMembershipsTable>;
@@ -254,6 +273,7 @@ export interface UsersTable {
   name: string;
   status: "pending" | "active" | "suspended";
   accountType: ColumnType<AccountType, AccountType | null, AccountType>;
+  isAdmin: ColumnType<0 | 1, 0 | 1 | undefined, 0 | 1>;
 }
 
 export type User = Selectable<UsersTable>;
@@ -331,6 +351,7 @@ export interface Database {
   invoices: InvoicesTable;
   meetings: MeetingsTable;
   meeting_agenda_items: MeetingAgendaItemsTable;
+  meeting_attendees: MeetingAttendeesTable;
   meeting_files: MeetingFilesTable;
   meeting_minutes: MeetingMinutesTable;
   thread_emails: ThreadEmailsTable;

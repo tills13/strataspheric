@@ -1,7 +1,8 @@
+import { vars } from "../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const centerContainer = style({
-  maxWidth: 600,
+  maxWidth: vars.containerWidth.sm,
   margin: "auto",
 });
 

@@ -4,11 +4,13 @@ import * as styles from "./style.css";
 import { Suspense } from "react";
 
 import { auth } from "../../auth";
+import { protocol, tld } from "../../constants";
 import { classnames } from "../../utils/classnames";
 import { Button } from "../Button";
 import { Flex } from "../Flex";
+import { Group } from "../Group";
 import { InternalLink } from "../Link/InternalLink";
-import { SignOutButton } from "../SignOutButton";
+import { SignOutLink } from "../SignOutLink";
 import { Text } from "../Text";
 import { HeaderJoinStrataButton } from "./HeaderJoinStrataButton";
 
@@ -27,14 +29,15 @@ export async function GlobalHeaderActions({ className }: Props) {
         </Suspense>
 
         {session ? (
-          <>
-            <Text color="secondary">{session.user.email}</Text>
-            <SignOutButton
-              className={styles.globalHeaderActionsButton}
-              style="tertiary"
-              color="primary"
-            />
-          </>
+          <Group gap="20" align="center">
+            <Text color="tertiary" fontSize="normal">{session.user.email}</Text>
+            {session.user.isAdmin && (
+              <InternalLink href={`${protocol}//${tld}/admin`} noUnderline>
+                <Text color="secondary" fontSize="normal" fontWeight="bold">Admin</Text>
+              </InternalLink>
+            )}
+            <SignOutLink />
+          </Group>
         ) : (
           <InternalLink
             className={linkStyles.noUnderline}

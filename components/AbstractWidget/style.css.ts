@@ -1,6 +1,4 @@
 import { vars } from "../../app/theme.css";
-import * as eventWidgetStyles from "../EventWidget/style.css";
-import * as fileWidgetStyles from "../FileWidget/style.css";
 import { style } from "@vanilla-extract/css";
 
 export const abstractWidget = style({
@@ -10,7 +8,7 @@ export const abstractWidget = style({
   borderRadius: vars.borderRadius.lg,
   border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
   boxShadow: vars.shadows.sm,
-  height: vars.sizes.xxl4,
+  aspectRatio: "1 / 1",
 });
 
 export const abstractWidgetHeader = style({
@@ -22,25 +20,25 @@ export const abstractWidgetHeader = style({
 
 export const abstractWidgetBody = style({
   flex: 1,
-  selectors: {
-    [`${fileWidgetStyles.fileWidget} &`]: {
-      display: "flex",
-      flexDirection: "column",
-    },
-
-    [`${eventWidgetStyles.eventWidget} &`]: {
-      display: "flex",
-      flexDirection: "column",
-    },
-  },
+  overflow: "hidden",
+  display: "flex",
+  flexDirection: "column",
 });
 
 export const abstractWidgetList = style({
   display: "flex",
   flexDirection: "column",
-  gap: vars.spacing.normal,
+  gap: vars.spacing.small,
   flex: 1,
-  marginBottom: vars.spacing.normal,
+  overflowY: "auto",
+});
+
+export const abstractWidgetPagination = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  paddingTop: vars.spacing.small,
+  marginTop: "auto",
 });
 
 export const abstractWidgetListItem = style({});

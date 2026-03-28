@@ -16,12 +16,12 @@ export const radioButtonButton = style({
   justifyContent: "center",
   alignItems: "center",
 
-  backgroundColor: vars.colors.grey0,
+  backgroundColor: vars.surfaces.interactive,
   borderRadius: vars.borderRadius.md,
 
   selectors: {
     "&:hover": {
-      backgroundColor: vars.colors.grey100,
+      backgroundColor: vars.surfaces.interactiveHover,
     },
     "&:not(:disabled):hover": {
       cursor: "pointer",

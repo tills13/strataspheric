@@ -1,7 +1,6 @@
-import { vars } from "../../app/theme.css";
+import { iconColorVar, vars } from "../../app/theme.css";
 import {
   field,
-  fieldLabel,
   fieldLeftActionContainer,
   fieldRightActionContainer,
 } from "../Form/style.css";
@@ -47,11 +46,11 @@ export const inputFieldInput = style({
       fontWeight: vars.fontWeights.bold,
     },
     "&:hover": {
-      backgroundColor: vars.colors.white,
+      backgroundColor: vars.surfaces.raised,
       borderColor: vars.colors.borderDefaultHover,
     },
     "&:focus": {
-      backgroundColor: vars.colors.white,
+      backgroundColor: vars.surfaces.raised,
       opacity: 1,
     },
     "&:disabled": {
@@ -66,9 +65,17 @@ export const inputFieldFileIcon = style({
   marginRight: vars.spacing.small,
 });
 
+export const inputFieldIconContainer = style({
+  display: "flex",
+  alignItems: "center",
+  flexShrink: 0,
+  marginRight: vars.spacing.small,
+  vars: {
+    [iconColorVar]: vars.fontColors.secondary,
+  },
+});
+
 export const inputFieldLeftActionContainer = style([fieldLeftActionContainer]);
 export const inputFieldRightActionContainer = style([
   fieldRightActionContainer,
 ]);
-
-export const inputFieldLabel = style([fieldLabel]);

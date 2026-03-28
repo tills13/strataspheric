@@ -5,6 +5,7 @@ import { DashboardLayoutHeader } from "./DashboardLayoutHeader";
 
 interface Props {
   actions?: React.ReactNode;
+  noPadding?: boolean;
   title?: string;
   subPageTitle?: string;
 }
@@ -12,18 +13,17 @@ interface Props {
 export function DashboardLayout({
   actions,
   children,
+  noPadding,
   title,
   subPageTitle,
 }: React.PropsWithChildren<Props>) {
   return (
     <>
-      <DashboardHeader subPageTitle={subPageTitle || title} />
-      <Stack flex={1}>
+      <DashboardHeader subPageTitle={subPageTitle} />
+      <Stack flex={1} p={noPadding ? undefined : "20"} gap={noPadding ? undefined : "20"}>
         {(title || actions) && (
-          <Group ph="normal" pt="normal" justify="space-between">
-            <DashboardLayoutHeader
-            // visibleOn={showPageTitleOnDesktop ? "mobile" : undefined}
-            >
+          <Group justify="space-between">
+            <DashboardLayoutHeader>
               {title}
             </DashboardLayoutHeader>
             {actions}

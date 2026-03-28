@@ -51,11 +51,18 @@ export async function MeetingMinutes({
       <Header as="h3">Meeting Minutes</Header>
 
       {!minutesUrl && files.length === 0 && (
-        <InfoPanel>
-          <Text>
-            <strong>No minutes added to this meeting.</strong> Use the button
-            below to add draft minutes or add a URL where council members can
-            view and collaboratively edit the minutes for this meeting.
+        <InfoPanel
+          className={styles.meetingAgendaEmptyInfoPanel}
+          level="hint"
+          align="center"
+          justify="center"
+        >
+          <Text textAlign="center">
+            <strong>No minutes added to this meeting.</strong>
+            <br />
+            Use the button below to add draft minutes or add a URL where council
+            members can view and collaboratively edit the minutes for this
+            meeting.
           </Text>
         </InfoPanel>
       )}

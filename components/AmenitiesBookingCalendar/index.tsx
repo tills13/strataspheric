@@ -16,6 +16,7 @@ import { AmenityBooking } from "../../data/amenities/getAmenityBooking";
 import { range } from "../../utils/arrays";
 import { Button } from "../Button";
 import { CalendarWeek } from "../Calendar/CalendarWeek";
+import { DateRange, useRangeSelection } from "../Calendar/useRangeSelection";
 import { Group } from "../Group";
 import { CalendarIcon } from "../Icon/CalendarIcon";
 import { DownIcon } from "../Icon/DownIcon";
@@ -36,6 +37,7 @@ interface Props {
   booking?: CalendarWeekProps["events"][number] | AmenityBooking;
   loadOtherBookings?: boolean;
   onSelectDate?: CalendarWeekProps["onSelectDate"];
+  onRangeSelected?: (range: DateRange) => void;
 }
 
 export function AmenitiesBookingCalendar({
@@ -43,10 +45,13 @@ export function AmenitiesBookingCalendar({
   booking,
   loadOtherBookings = true,
   onSelectDate,
+  onRangeSelected,
 }: Props) {
   const [baseDate, setBaseDate] = useState(() =>
     startOfWeek(booking ? new Date(booking.startDate * 1000) : new Date()),
   );
+
+  const rangeSelection = useRangeSelection(onRangeSelected);
 
   const bookings = useAmenityBookings(
     amenity.id,
@@ -65,8 +70,9 @@ export function AmenitiesBookingCalendar({
           meetingId: undefined,
           ...booking,
           id: "THIS_BOOKING",
+          readOnly: true,
         }
-      : booking
+      : { ...booking, readOnly: true }
     : undefined;
 
   return (
@@ -117,6 +123,7 @@ export function AmenitiesBookingCalendar({
               currentMonth={weekDate.getMonth() + 1}
               currentYear={weekDate.getFullYear()}
               onSelectDate={onSelectDate}
+              rangeSelection={rangeSelection ?? undefined}
               weekOfMonth={getWeekOfMonth(weekDate) - 1}
             />
           );

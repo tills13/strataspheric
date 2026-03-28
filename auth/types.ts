@@ -5,6 +5,7 @@ export interface User {
   email: string;
   name: string;
   scopes: string[];
+  isAdmin: boolean;
 }
 
 export interface Session {

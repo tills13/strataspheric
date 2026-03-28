@@ -1,7 +1,30 @@
 import { VALIDITY_PERIOD } from "./jwt";
 import { CookieConfig } from "./types";
 
-const COOKIE_NAME = "strataspheric.session";
+export const COOKIE_NAME = "strataspheric.session";
+export const ADMIN_COOKIE_NAME = "strataspheric.admin-session";
+
+const isDev = process.env.NODE_ENV === "development";
+
+export function getServerCookieConfig(): {
+  httpOnly: boolean;
+  sameSite: "lax";
+  path: string;
+  domain?: string;
+  secure: boolean;
+  maxAge: number;
+} {
+  return {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    ...(isDev
+      ? { domain: ".strataspheric.local" }
+      : { domain: ".strataspheric.app" }),
+    secure: !isDev,
+    maxAge: VALIDITY_PERIOD / 1000,
+  };
+}
 
 export function getJwtFromCookies(
   rawCookieHeader: string | undefined | null,
@@ -14,6 +37,15 @@ export function formatJwtCookie(
   data: unknown,
   maxAge = VALIDITY_PERIOD,
 ) {
+  return formatCookie(COOKIE_NAME, config, data, maxAge);
+}
+
+export function formatCookie(
+  name: string,
+  config: CookieConfig | undefined,
+  data: unknown,
+  maxAge = VALIDITY_PERIOD,
+) {
   const path = config?.path ?? "/";
   const domain = config?.domain;
   const httpOnly = !!config?.httpOnly;
@@ -21,7 +53,7 @@ export function formatJwtCookie(
   const secure = !!config?.secure;
 
   return [
-    `${COOKIE_NAME}=${data}`,
+    `${name}=${data}`,
     `Path=${path}`,
     domain && `Domain=${domain}`,
     httpOnly && `HttpOnly`,

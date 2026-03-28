@@ -36,7 +36,7 @@ export async function StrataFilesList({ searchTerm, visibility }: Props) {
     <>
       {files.length === 0 && <NothingHere />}
 
-      <Table className={s({ ph: "normal" })}>
+      <Table>
         {files.map((file) => (
           <FileRow key={file.id} file={file} />
         ))}

@@ -34,7 +34,7 @@ export const selectFieldPlaceholder = style({
     [`${selectFieldSelect}:not(:placeholder-shown) ~ &`]: {
       padding: padding(0, vars.spacing.small),
       left: calc(vars.spacing.normal).subtract(vars.spacing.small).toString(),
-      backgroundColor: vars.colors.white,
+      backgroundColor: vars.surfaces.raised,
       lineHeight: 1,
       top: "-9px",
     },

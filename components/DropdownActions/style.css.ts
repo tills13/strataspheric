@@ -9,7 +9,7 @@ export const actionRow = style({
 
   selectors: {
     "&:hover": {
-      backgroundColor: vars.colors.grey100,
+      backgroundColor: vars.surfaces.interactiveHover,
     },
   },
 });

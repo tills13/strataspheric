@@ -4,24 +4,30 @@ import { style } from "@vanilla-extract/css";
 export const signInToStrataPageContainer = style({
   display: "flex",
   justifyContent: "center",
-  height: "100vh",
-  marginTop: vars.spacing.large,
+  alignItems: "flex-start",
+  minHeight: "100vh",
+  padding: `${vars.spacing["48"]} ${vars.spacing.normal}`,
   "@media": {
     [breakpoints.tablet]: {
-      marginTop: 0,
       alignItems: "center",
+      padding: `${vars.spacing.xl} ${vars.spacing.normal}`,
     },
   },
 });
 
 export const signInToStrataPageFormContainer = style({
   width: "100%",
-  padding: vars.spacing.normal,
+  padding: vars.spacing.large,
+  backgroundColor: vars.surfaces.raised,
+  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
+  borderRadius: vars.borderRadius.xl,
+  boxShadow: vars.shadows.md,
 
   "@media": {
     [breakpoints.tablet]: {
       position: "relative",
-      width: "500px",
+      maxWidth: "460px",
+      padding: vars.spacing["40"],
     },
   },
 });

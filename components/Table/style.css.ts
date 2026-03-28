@@ -7,14 +7,14 @@ export const table = style({
   display: "grid",
   gridTemplateColumns: "auto min-content",
   columnGap: vars.spacing.normal,
-  rowGap: vars.spacing.xs,
+  rowGap: vars.spacing["6"],
 });
 
 export const tableWithSelect = style({
   display: "grid",
   gridTemplateColumns: "min-content auto min-content",
   columnGap: vars.spacing.normal,
-  rowGap: vars.spacing.xs,
+  rowGap: vars.spacing["6"],
 });
 
 export const tableRow = style({
@@ -34,13 +34,13 @@ export const tableRow = style({
 
   selectors: {
     "&:hover": {
-      backgroundColor: vars.colors.grey100,
+      backgroundColor: vars.surfaces.interactiveHover,
     },
     "&:nth-child(odd)": {
-      backgroundColor: vars.colors.grey50,
+      backgroundColor: vars.surfaces.sunken,
     },
     "&:nth-child(odd):hover": {
-      backgroundColor: vars.colors.grey100,
+      backgroundColor: vars.surfaces.interactiveHover,
     },
   },
 });
@@ -100,6 +100,33 @@ export const tableRowContent = style({
 
 export const tableRowEnd = style({});
 
+export const tableFooter = style({
+  display: "grid",
+  gridColumn: "1/-1",
+  gridTemplateColumns: "subgrid",
+  minHeight: vars.sizes.large,
+});
+
+export const tableFooterInner = style({
+  width: "100%",
+  display: "grid",
+  gridTemplateColumns: "subgrid",
+  gridColumn: "1/-1",
+  alignItems: "center",
+
+  selectors: {
+    [`${table} &`]: {
+      padding: padding(vars.spacing["0"], vars.spacing.normal),
+    },
+    [`${tableWithSelect} &`]: {
+      paddingLeft: vars.spacing.normal,
+      paddingRight: vars.spacing.normal,
+    },
+  },
+});
+
+export const tableFooterEnd = style({});
+
 export const tableRowActions = style({
   display: "none",
 
@@ -108,9 +135,9 @@ export const tableRowActions = style({
   top: vars.spacing.small,
   bottom: vars.spacing.small,
   padding: vars.spacing.xxs,
-  border: `2px solid ${vars.colors.borderDefault}`,
+  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
   borderRadius: vars.borderRadius.md,
-  backgroundColor: vars.colors.grey100,
+  backgroundColor: vars.surfaces.sunken,
 
   alignSelf: "center",
 

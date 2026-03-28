@@ -10,7 +10,7 @@ export const filesListFile = style({
   display: "grid",
   columnGap: vars.spacing.normal,
   rowGap: vars.spacing.small,
-  gridTemplateColumns: "48px auto",
+  gridTemplateColumns: `${vars.sizes.large} auto`,
   gridTemplateRows: "min-content auto",
 });
 
@@ -23,7 +23,7 @@ export const filesListFileIconContainer = style({
       alignItems: "center",
       width: vars.sizes.large,
       aspectRatio: "1/1",
-      backgroundColor: vars.colors.grey100,
+      backgroundColor: vars.surfaces.interactiveHover,
 
       vars: {
         [iconColorVar]: vars.colors.grey700,

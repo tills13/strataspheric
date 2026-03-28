@@ -4,6 +4,7 @@ import { Thread } from "./getThread";
 
 export type ListThreadsFilter = {
   amenityBookingId?: string;
+  archived?: boolean;
   senderUserId?: string;
   strataId?: string;
 };
@@ -50,6 +51,14 @@ export async function listThreads(
   limitQuery = limitQuery.where("inbox_messages.id", "=", (eb) =>
     eb.ref("inbox_messages.threadId"),
   );
+
+  if (filter.archived) {
+    query = query.where("inbox_messages.archivedAt", "is not", null);
+    limitQuery = limitQuery.where("inbox_messages.archivedAt", "is not", null);
+  } else {
+    query = query.where("inbox_messages.archivedAt", "is", null);
+    limitQuery = limitQuery.where("inbox_messages.archivedAt", "is", null);
+  }
 
   if (filter.amenityBookingId) {
     query = query.where(

@@ -3,8 +3,11 @@ import * as styles from "./style.css";
 import { fontHeaderVar, fontPrimaryVar } from "./theme.css";
 
 import { Metadata } from "next";
+import { cookies } from "next/headers";
 
 import { auth } from "../auth";
+import { ADMIN_COOKIE_NAME } from "../auth/cookies";
+import { AssumeUserBar } from "../components/AssumeUserBar";
 import { FlexBox } from "../components/FlexBox";
 import { NotFound } from "../components/NotFound";
 import { SessionProvider } from "../components/SessionProvider";
@@ -12,7 +15,7 @@ import { protocol, tld } from "../constants";
 import { getCurrentStrata } from "../data/stratas/getStrataByDomain";
 import { variable } from "../theme";
 import { ReactQueryQueryClientProvider } from "./ReactQueryQueryClientProvider";
-import { laila, sourceSans } from "./fonts";
+import { bricolageGrotesque, plusJakartaSans } from "./fonts";
 
 const fontPrimaryVariable = variable(fontPrimaryVar);
 const fontHeaderVariable = variable(fontHeaderVar);
@@ -36,8 +39,13 @@ export default async function RootLayout({
   app: React.ReactNode;
   marketing: React.ReactNode;
 }) {
-  const [session, strata] = await Promise.all([auth(), getCurrentStrata()]);
+  const [session, strata, cookieStore] = await Promise.all([
+    auth(),
+    getCurrentStrata(),
+    cookies(),
+  ]);
 
+  const isAssuming = cookieStore.has(ADMIN_COOKIE_NAME);
   const node = strata ? app : marketing;
 
   return (
@@ -47,8 +55,8 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
                 :root {
-                    ${fontPrimaryVariable}: ${sourceSans.style.fontFamily}, sans-serif;
-                    ${fontHeaderVariable}: ${laila.style.fontFamily};
+                    ${fontPrimaryVariable}: ${plusJakartaSans.style.fontFamily}, system-ui, sans-serif;
+                    ${fontHeaderVariable}: ${bricolageGrotesque.style.fontFamily}, system-ui, sans-serif;
                 }
             `,
           }}
@@ -78,6 +86,9 @@ export default async function RootLayout({
       <body>
         <ReactQueryQueryClientProvider>
           <SessionProvider session={session}>
+            {isAssuming && session && (
+              <AssumeUserBar assumedUserName={session.user.name} />
+            )}
             {node ? (
               <div className={styles.body}>{node}</div>
             ) : (

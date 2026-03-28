@@ -6,11 +6,8 @@ import { style } from "@vanilla-extract/css";
 import { border } from "../../theme";
 
 export const fileAttachmentChip = style({
-  display: "flex",
-  gap: vars.spacing.small,
-  padding: `0 ${vars.spacing.small}`,
-  backgroundColor: vars.colors.grey50,
-  border: border(vars.borderWidth, "solid", vars.colors.grey50),
+  backgroundColor: vars.surfaces.sunken,
+  border: border(vars.borderWidth, "solid", vars.surfaces.sunken),
   alignItems: "center",
   height: vars.sizes.normal,
   color: "inherit",
@@ -30,7 +27,7 @@ export const fileAttachmentChip = style({
 });
 
 export const icon = style({
-  height: "24px",
+  height: vars.sizes.xs,
   verticalAlign: "top",
   flexShrink: 0,
 });

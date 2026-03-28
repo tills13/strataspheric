@@ -14,10 +14,10 @@ import {
 import { CreateOrUpdateEventForm } from "../CreateOrUpdateEventForm";
 import { AddIcon } from "../Icon/AddIcon";
 import { Modal } from "../Modal";
-import { EventWidgetList } from "./EventWidgetList";
+import { PaginatedEventWidgetList } from "./EventWidgetList";
 
 interface Props extends AbstractWidgetProps {
-  initialEvents: React.ComponentProps<typeof EventWidgetList>["events"];
+  initialEvents: React.ComponentProps<typeof PaginatedEventWidgetList>["events"];
   strataId: string;
   widget: StrataWidget;
 }
@@ -40,7 +40,7 @@ export function EventWidget({ initialEvents, strataId, widget }: Props) {
       widgetTitle={widget.title}
       widget={widget}
     >
-      <EventWidgetList events={initialEvents} />
+      <PaginatedEventWidgetList events={initialEvents} />
 
       {showCreateModal && (
         <Modal
