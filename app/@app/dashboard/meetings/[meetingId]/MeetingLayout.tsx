@@ -1,6 +1,7 @@
 import * as styles from "./style.css";
 
 import { ConfirmButton } from "../../../../../components/ConfirmButton";
+import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Date } from "../../../../../components/Date";
 import { EditMeetingButton } from "../../../../../components/EditMeetingButton";
 import { Group } from "../../../../../components/Group";
@@ -14,6 +15,7 @@ import { getMeeting } from "../../../../../data/meetings/getMeeting";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { deleteMeetingAction } from "../actions";
 import { MeetingAgenda } from "./MeetingAgenda";
+import { MeetingAttendees } from "./MeetingAttendees";
 import { MeetingFiles } from "./MeetingFiles";
 import { MeetingMinutes } from "./MeetingMinutes";
 
@@ -26,16 +28,10 @@ export async function MeetingLayout({ meetingId }: Props) {
   const meeting = await getMeeting(strata.id, meetingId);
 
   return (
-    <Stack className={styles.meetingAgendaContainer} gap="large">
-      <Group align="start" justify="space-between">
-        <Stack gap="small">
-          <Header as="h2">{meeting.purpose}</Header>
-          <Text color="secondary">
-            Called by <b>{meeting.caller}</b> for{" "}
-            <Date timestamp={meeting.startDate} />
-          </Text>
-        </Stack>
-
+    <DashboardLayout
+      title={meeting.purpose}
+      subPageTitle={meeting.purpose}
+      actions={
         <Group>
           <ConfirmButton
             onClickConfirm={deleteMeetingAction.bind(undefined, meetingId)}
@@ -46,40 +42,49 @@ export async function MeetingLayout({ meetingId }: Props) {
           />
           <EditMeetingButton meeting={meeting} />
         </Group>
-      </Group>
-
-      {meeting.notes && <p>{meeting.notes}</p>}
-
-      <MeetingAgenda meetingId={meetingId} />
-
-      <MeetingFiles meetingId={meetingId} />
-
-      <MeetingMinutes
-        meetingId={meetingId}
-        minutesUrl={meeting.minutesUrl}
-        minutesUrlApprovedByName={meeting.minutesUrlApproverName}
-      />
-
-      <InfoPanel
-        action={
-          <ConfirmButton
-            color="error"
-            icon={<DeleteIcon />}
-            onClickConfirm={deleteMeetingAction.bind(undefined, meeting.id)}
-            style="secondary"
-          >
-            Delete Meeting
-          </ConfirmButton>
-        }
-        className={styles.meetingAgendaContainerDeleteMeeting}
-        header={<Header as="h3">Delete Meeting</Header>}
-        level="error"
-      >
-        <Text>
-          Deleting this meeting will delete all associated agenda items, but
-          leave any files created during planning.
+      }
+    >
+      <Stack className={styles.meetingAgendaContainer}>
+        <Text color="secondary">
+          Called by <b>{meeting.caller}</b> for{" "}
+          <Date timestamp={meeting.startDate} />
         </Text>
-      </InfoPanel>
-    </Stack>
+
+        {meeting.notes && <p>{meeting.notes}</p>}
+
+        <MeetingAgenda meetingId={meetingId} />
+
+        <MeetingAttendees meetingId={meetingId} />
+
+        <MeetingFiles meetingId={meetingId} />
+
+        <MeetingMinutes
+          meetingId={meetingId}
+          minutesUrl={meeting.minutesUrl}
+          minutesUrlApprovedByName={meeting.minutesUrlApproverName}
+        />
+
+        <InfoPanel
+          action={
+            <ConfirmButton
+              color="error"
+              icon={<DeleteIcon />}
+              onClickConfirm={deleteMeetingAction.bind(undefined, meeting.id)}
+              style="secondary"
+            >
+              Delete Meeting
+            </ConfirmButton>
+          }
+          className={styles.meetingAgendaContainerDeleteMeeting}
+          header={<Header as="h3">Delete Meeting</Header>}
+          level="error"
+        >
+          <Text>
+            Deleting this meeting will delete all associated agenda items, but
+            leave any files created during planning.
+          </Text>
+        </InfoPanel>
+      </Stack>
+    </DashboardLayout>
   );
 }
