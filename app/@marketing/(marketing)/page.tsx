@@ -17,10 +17,10 @@ export default async function Page() {
     <div className={styles.landingWrapper}>
       <section className={styles.ctaSection}>
         <Stack className={styles.ctaContent} gap="large" align="center">
-          <Header className={styles.ctaHeader} as="h2">
+          <h2 className={styles.ctaHeader}>
             Strata management,{" "}
             <span className={styles.ctaAccent}>elevated.</span>
-          </Header>
+          </h2>
 
           <Text
             as="p"
