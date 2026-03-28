@@ -4,7 +4,6 @@ import { upsertAmenityAction } from "../../app/@app/dashboard/amenities/actions"
 import { Amenity } from "../../data/amenities/getAmenity";
 import { AttachFileField } from "../AttachFileField";
 import { ImageIcon } from "../Icon/ImageIcon";
-import { PaidDocumentIcon } from "../Icon/PaidDocumentIcon";
 import { SaveIcon } from "../Icon/SaveIcon";
 import { Input } from "../Input";
 import { Stack } from "../Stack";

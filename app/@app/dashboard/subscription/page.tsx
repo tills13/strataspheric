@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Stripe from "stripe";
 
 import { mustAuth } from "../../../../auth";
 import { DashboardLayout } from "../../../../components/DashboardLayout";

@@ -11,7 +11,6 @@ import { useSession } from "../../hooks/useSession";
 import { useTimeDeferredValue } from "../../hooks/useTimeDeferredValue";
 import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameToSubdomain";
 import { pluralize } from "../../utils/pluralize";
-import { Flex } from "../Flex";
 import { Group } from "../Group";
 import { Header } from "../Header";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
@@ -33,7 +32,9 @@ export function GetStartedFormFields({
   selectedPlan: PricingPlan;
 }) {
   const session = useSession();
-  const [isDomainAvailable, setIsDomainAvailable] = useState<boolean | undefined>(undefined);
+  const [isDomainAvailable, setIsDomainAvailable] = useState<
+    boolean | undefined
+  >(undefined);
   const [numUnits, setNumUnits] = useState(0);
   const [strataName, setStrataName] = useState("");
   const deferredStrataName = useTimeDeferredValue(strataName);
