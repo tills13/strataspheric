@@ -10,8 +10,14 @@ export interface WorkerCustomDomain {
   environment: string;
 }
 
-export function addCustomDomain(hostname: string) {
-  return makeRequest<CloudflareApiResponse<WorkerCustomDomain>>(
+export async function addCustomDomain(hostname: string) {
+  console.log("[addCustomDomain] request", {
+    hostname,
+    zoneId: ZONE_ID,
+    service: CF_WORKER_NAME,
+  });
+
+  const result = await makeRequest<CloudflareApiResponse<WorkerCustomDomain>>(
     `/accounts/${ACCOUNT_ID}/workers/domains`,
     {
       method: "PUT",
@@ -23,4 +29,20 @@ export function addCustomDomain(hostname: string) {
       }),
     },
   );
+
+  const [response] = result;
+
+  if (response.success) {
+    console.log("[addCustomDomain] domain created", {
+      id: response.result.id,
+      hostname: response.result.hostname,
+    });
+  } else {
+    console.error("[addCustomDomain] Cloudflare API error", {
+      errors: response.errors,
+      messages: response.messages,
+    });
+  }
+
+  return result;
 }

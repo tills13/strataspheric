@@ -147,14 +147,30 @@ export async function submitGetStartedAction(
     });
 
     if (process.env.NODE_ENV !== "development") {
+      console.log("[addCustomDomain] creating domain", {
+        hostname: state.strataDomain,
+        strataId: state.strataId,
+      });
+
       const [addDomainResponse] = await addCustomDomain(state.strataDomain);
 
       if (!addDomainResponse.success) {
+        console.error("[addCustomDomain] failed", {
+          hostname: state.strataDomain,
+          errors: addDomainResponse.errors,
+          messages: addDomainResponse.messages,
+        });
+
         return {
           ...state,
           error: "unable to create custom domain",
         };
       }
+
+      console.log("[addCustomDomain] success", {
+        hostname: state.strataDomain,
+        domainRecordId: addDomainResponse.result.id,
+      });
 
       await updateStrata(state.strataId, {
         domainRecordId: addDomainResponse.result.id,
