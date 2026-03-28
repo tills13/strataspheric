@@ -32,9 +32,8 @@ export async function SettingsPage({ canEdit }: Props) {
   const strata = await mustGetCurrentStrata();
 
   return (
-    <DashboardLayout>
-      <div className={s({ p: "normal" })}>
-        <div className={styles.centerContainer}>
+    <DashboardLayout title="Settings">
+      <div className={styles.centerContainer}>
           <form
             action={updateStrataAction.bind(undefined, strata.id)}
             className={classnames(styles.form, s({ mb: "large", mt: "large" }))}
@@ -53,6 +52,19 @@ export async function SettingsPage({ canEdit }: Props) {
                   label="Strata Bylaws"
                   name="bylawsFileId"
                   defaultValue={strata.bylawsFileId ?? undefined}
+                />
+
+                <Header as="h3">Strata Inbox Email</Header>
+                <Text color="secondary">
+                  All inbox message notifications will be copied to this email address.
+                  Leave blank to disable.
+                </Text>
+                <Input
+                  name="inboxEmail"
+                  label="Global Inbox Email"
+                  type="email"
+                  defaultValue={strata.inboxEmail || ""}
+                  placeholder="council@yourstrata.com"
                 />
 
                 <InfoPanel
@@ -171,7 +183,6 @@ export async function SettingsPage({ canEdit }: Props) {
             </InfoPanel>
           )}
         </div>
-      </div>
     </DashboardLayout>
   );
 }

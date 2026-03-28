@@ -34,6 +34,7 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
   const isPublic =
     formdata.getEnum(fd, "visibility", ["private", "public"]) === "public";
   const bylawsFileId = formdata.getString(fd, "bylawsFileId");
+  const inboxEmail = formdata.getString(fd, "inboxEmail") || null;
 
   let latitude = formdata.getFloat(fd, "latitude");
   let longitude = formdata.getFloat(fd, "longitude");
@@ -65,6 +66,7 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
     longitude,
     bylawsFileId,
     isPublic: isPublic ? 1 : 0,
+    inboxEmail,
   });
 
   revalidatePath("/dashboard");
