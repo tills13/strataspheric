@@ -3,6 +3,8 @@ import { Badge } from "../../../../../components/Badge";
 import { Button } from "../../../../../components/Button";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
+import { AddIcon } from "../../../../../components/Icon/AddIcon";
+import { RemoveIcon } from "../../../../../components/Icon/RemoveIcon";
 import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
 import { listMeetingAttendees } from "../../../../../data/meetings/listMeetingAttendees";
@@ -17,14 +19,6 @@ import {
 
 interface Props {
   meetingId: string;
-}
-
-function attendeeStatusLevel(
-  status: "invited" | "confirmed" | "declined",
-): "default" | "success" | "error" {
-  if (status === "confirmed") return "success";
-  if (status === "declined") return "error";
-  return "default";
 }
 
 export async function MeetingAttendees({ meetingId }: Props) {
@@ -49,6 +43,9 @@ export async function MeetingAttendees({ meetingId }: Props) {
     (a) => a.userId === session.user.id,
   );
 
+  const confirmed = attendees.filter((a) => a.status === "confirmed");
+  const notConfirmed = attendees.filter((a) => a.status !== "confirmed");
+
   return (
     <Stack>
       <Header as="h3">Attendees</Header>
@@ -57,32 +54,81 @@ export async function MeetingAttendees({ meetingId }: Props) {
         <Text color="secondary">No attendees have been added yet.</Text>
       )}
 
-      {attendees.length > 0 && (
+      {confirmed.length > 0 && (
         <Stack gap="small">
-          {attendees.map((attendee) => (
-            <Group key={attendee.userId} justify="space-between" align="center">
-              <Group align="center" gap="small">
-                <Text>{attendee.name}</Text>
-                <Badge level={attendeeStatusLevel(attendee.status)}>
-                  {attendee.status}
-                </Badge>
-              </Group>
-
-              {canEdit && (
-                <form
-                  action={removeAttendeeAction.bind(
-                    undefined,
-                    meetingId,
-                    attendee.userId,
-                  )}
+          <Text color="secondary" fs="small">
+            Confirmed
+          </Text>
+          <Group gap="small">
+            {confirmed.map((attendee) => (
+              <form
+                key={attendee.userId}
+                action={
+                  canEdit
+                    ? removeAttendeeAction.bind(
+                        undefined,
+                        meetingId,
+                        attendee.userId,
+                      )
+                    : undefined
+                }
+              >
+                <Button
+                  type={canEdit ? "submit" : "button"}
+                  size="small"
+                  style="secondary"
+                  color="success"
+                  icon={canEdit ? <RemoveIcon /> : undefined}
+                  iconTextBehaviour="centerRemainder"
                 >
-                  <Button type="submit" size="small" style="tertiary" color="error">
-                    Remove
-                  </Button>
-                </form>
-              )}
-            </Group>
-          ))}
+                  {attendee.name}
+                </Button>
+              </form>
+            ))}
+          </Group>
+        </Stack>
+      )}
+
+      {notConfirmed.length > 0 && (
+        <Stack gap="small">
+          <Text color="secondary" fs="small">
+            Pending
+          </Text>
+          <Group gap="small">
+            {notConfirmed.map((attendee) => (
+              <form
+                key={attendee.userId}
+                action={
+                  canEdit
+                    ? removeAttendeeAction.bind(
+                        undefined,
+                        meetingId,
+                        attendee.userId,
+                      )
+                    : undefined
+                }
+              >
+                <Button
+                  type={canEdit ? "submit" : "button"}
+                  size="small"
+                  style="secondary"
+                  color={attendee.status === "declined" ? "error" : "default"}
+                  icon={canEdit ? <RemoveIcon /> : undefined}
+                  iconTextBehaviour="centerRemainder"
+                >
+                  {attendee.name}
+                  {attendee.status === "declined" && (
+                    <>
+                      {" "}
+                      <Badge level="error" fs="xs">
+                        declined
+                      </Badge>
+                    </>
+                  )}
+                </Button>
+              </form>
+            ))}
+          </Group>
         </Stack>
       )}
 
@@ -116,8 +162,15 @@ export async function MeetingAttendees({ meetingId }: Props) {
                   member.id,
                 )}
               >
-                <Button type="submit" size="small" style="tertiary" color="primary">
-                  + {member.name}
+                <Button
+                  type="submit"
+                  size="small"
+                  style="tertiary"
+                  color="primary"
+                  icon={<AddIcon />}
+                  iconTextBehaviour="centerRemainder"
+                >
+                  {member.name}
                 </Button>
               </form>
             ))}

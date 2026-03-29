@@ -5,7 +5,11 @@ import type { NextConfig } from "next";
 const withVanillaExtract = createVanillaExtractPlugin({});
 
 const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
-  allowedDevOrigins: ["strataspheric.local", "sbstn.strataspheric.local"],
+  allowedDevOrigins: [
+    "strataspheric.local",
+    "sbstn.strataspheric.local",
+    "oceanview.strataspheric.local",
+  ],
   eslint: {
     ignoreDuringBuilds: true,
   },

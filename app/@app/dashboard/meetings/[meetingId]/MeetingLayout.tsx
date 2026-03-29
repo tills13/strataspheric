@@ -52,9 +52,9 @@ export async function MeetingLayout({ meetingId }: Props) {
 
         {meeting.notes && <p>{meeting.notes}</p>}
 
-        <MeetingAgenda meetingId={meetingId} />
-
         <MeetingAttendees meetingId={meetingId} />
+
+        <MeetingAgenda meetingId={meetingId} />
 
         <MeetingFiles meetingId={meetingId} />
 

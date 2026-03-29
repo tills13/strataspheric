@@ -1,7 +1,9 @@
 import { mustAuth } from "../../../../../auth";
 import { DashboardLayout } from "../../../../../components/DashboardLayout";
+import { SendIcon } from "../../../../../components/Icon/SendIcon";
 import { SendInboxMessageFields } from "../../../../../components/SendInboxMessageForm/SendInboxMessageFields";
 import { Stack } from "../../../../../components/Stack";
+import { StatusButton } from "../../../../../components/StatusButton";
 import { Text } from "../../../../../components/Text";
 import { assertCan } from "../../../../../data/users/permissions";
 import { sendInboxBlastAction } from "../actions";
@@ -18,7 +20,12 @@ export default async function Page() {
           will appear in the strata inbox.
         </Text>
         <form action={sendInboxBlastAction}>
-          <SendInboxMessageFields showSubjectInput />
+          <Stack>
+            <SendInboxMessageFields showSubjectInput />
+            <StatusButton color="primary" icon={<SendIcon />} type="submit">
+              Send Blast
+            </StatusButton>
+          </Stack>
         </form>
       </Stack>
     </DashboardLayout>

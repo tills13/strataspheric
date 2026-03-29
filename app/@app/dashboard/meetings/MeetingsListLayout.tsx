@@ -19,7 +19,7 @@ export async function MeetingListLayout({ strataId }: Props) {
   ]);
 
   return (
-    <Stack ph="normal">
+    <Stack>
       <Header as="h2">Upcoming Meetings</Header>
       {futureMeetings.length === 0 && <NothingHere />}
       <Table>

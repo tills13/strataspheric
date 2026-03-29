@@ -1,4 +1,4 @@
-import { breakpoints, vars } from "../../app/theme.css";
+import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const inboxMessagesNoMessages = style({
@@ -15,12 +15,6 @@ export const inboxMessageSubject = style({
 
 export const inboxThreadsTable = style({
   margin: 0,
-  "@media": {
-    [breakpoints.tablet]: {
-      marginLeft: vars.spacing.normal,
-      marginRight: vars.spacing.normal,
-    },
-  },
 });
 
 export const unreadIndicator = style({
