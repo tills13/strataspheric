@@ -26,7 +26,10 @@ export function BulkInvoiceActions() {
     return null;
   }
 
-  const label = `${selectedRows.length} ${pluralize("invoice", selectedRows.length)}`;
+  const label = `${selectedRows.length} ${pluralize(
+    "invoice",
+    selectedRows.length,
+  )}`;
 
   return (
     <BulkActions noun="invoice">

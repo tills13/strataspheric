@@ -1,9 +1,9 @@
+import { S } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { RecipeVariants } from "@vanilla-extract/recipes";
 import React from "react";
 
-import { S } from "../../sprinkles.css";
 import { classnames } from "../../utils/classnames";
 import { Core } from "../Core";
 

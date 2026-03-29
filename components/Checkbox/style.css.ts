@@ -41,9 +41,10 @@ export const checkbox = style({
       borderColor: vars.colors.primaryHover,
     },
 
-    "&:has(input[type=checkbox]:checked):focus-within:has(input:focus-visible)": {
-      boxShadow: `inset 0px 0px 0px 2px ${vars.colors.white}, ${vars.focusRing}`,
-    },
+    "&:has(input[type=checkbox]:checked):focus-within:has(input:focus-visible)":
+      {
+        boxShadow: `inset 0px 0px 0px 2px ${vars.colors.white}, ${vars.focusRing}`,
+      },
 
     "&:has(input[type=checkbox]:disabled)": {
       opacity: vars.opacity.muted,

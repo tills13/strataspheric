@@ -175,7 +175,9 @@ export function SubscriptionPage({
                 .map((plan) => (
                   <form
                     key={plan.name}
-                    action={() => createCheckoutSessionAction(plan.priceId!)}
+                    action={() =>
+                      createCheckoutSessionAction(plan.priceId ?? "")
+                    }
                     style={{ flex: "1 1 250px" }}
                   >
                     <button
@@ -252,7 +254,7 @@ export function SubscriptionPage({
               confirmModalTitle="Change Plan"
               confirmModalDescription={`Switch to the ${alternatePlan.name} Plan. Your subscription will be updated immediately and prorated charges will apply.`}
               onClickConfirm={() =>
-                changeSubscriptionPlanAction(alternatePlan.priceId!)
+                changeSubscriptionPlanAction(alternatePlan.priceId ?? "")
               }
             >
               {currentPlan.name === "Basic"

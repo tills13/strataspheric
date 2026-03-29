@@ -89,7 +89,12 @@ export async function addAttendeeAction(meetingId: string, userId: string) {
       html: `
         <h2>${meeting.purpose}</h2>
         <p>You've been added as an attendee to this meeting.</p>
-        <p><strong>Date:</strong> ${startDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
+        <p><strong>Date:</strong> ${startDate.toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}</p>
         <p>Visit your dashboard to confirm your attendance.</p>
       `,
     });

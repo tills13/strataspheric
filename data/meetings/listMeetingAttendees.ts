@@ -16,4 +16,6 @@ export function listMeetingAttendees(meetingId: string) {
     .execute();
 }
 
-export type MeetingAttendeeWithUser = Awaited<ReturnType<typeof listMeetingAttendees>>[number];
+export type MeetingAttendeeWithUser = Awaited<
+  ReturnType<typeof listMeetingAttendees>
+>[number];

@@ -6,7 +6,6 @@
  *
  * Usage: npx tsx scripts/migrate.ts --local|--remote
  */
-
 import { execFileSync } from "node:child_process";
 import { readdirSync } from "node:fs";
 import { resolve } from "node:path";
@@ -26,7 +25,16 @@ function wrangler(target: string, args: string[]) {
 function wranglerJson(target: string, command: string): unknown[] {
   const result = execFileSync(
     "npx",
-    ["wrangler", "d1", "execute", DB_NAME, target, "--json", "--command", command],
+    [
+      "wrangler",
+      "d1",
+      "execute",
+      DB_NAME,
+      target,
+      "--json",
+      "--command",
+      command,
+    ],
     { cwd: resolve(__dirname, "..") },
   );
   const parsed = JSON.parse(result.toString());
@@ -52,7 +60,9 @@ async function main() {
   }
 
   if (flag === "--remote") {
-    console.log("WARNING: You are about to run migrations against the REMOTE database!");
+    console.log(
+      "WARNING: You are about to run migrations against the REMOTE database!",
+    );
     const ok = await confirm("Are you sure?");
     if (!ok) {
       console.log("Aborted.");
@@ -61,11 +71,19 @@ async function main() {
   }
 
   // Ensure migrations tracking table exists
-  wrangler(flag, ["--command", "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key)"]);
+  wrangler(flag, [
+    "--command",
+    "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key)",
+  ]);
 
   // Get already-executed migrations
-  const rows = wranglerJson(flag, "SELECT migration_name FROM migrations ORDER BY migration_name ASC");
-  const executed = new Set(rows.map((r) => (r as { migration_name: string }).migration_name));
+  const rows = wranglerJson(
+    flag,
+    "SELECT migration_name FROM migrations ORDER BY migration_name ASC",
+  );
+  const executed = new Set(
+    rows.map((r) => (r as { migration_name: string }).migration_name),
+  );
 
   // Get all migration files
   const files = readdirSync(MIGRATIONS_DIR)

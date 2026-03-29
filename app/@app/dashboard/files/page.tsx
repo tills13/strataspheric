@@ -1,8 +1,9 @@
 import { ProtectedPage } from "../../../../components/ProtectedPage";
 import { FilesPage } from "./FilesPage";
 
-
-export default async function Page({ searchParams }: PageProps<"/dashboard/files">) {
+export default async function Page({
+  searchParams,
+}: PageProps<"/dashboard/files">) {
   const { search: rawSearch, visibility: rawVisibility } = await searchParams;
   const search = typeof rawSearch === "string" ? rawSearch : undefined;
   const visibility =

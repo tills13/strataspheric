@@ -1,7 +1,7 @@
 import { Table } from "../../../../components/Table";
 import { Text } from "../../../../components/Text";
-import { SerializedInvoice } from "./SubscriptionPage";
 import { SubscriptionInvoiceTableRow } from "./SubscriptionInvoiceTableRow";
+import { SerializedInvoice } from "./SubscriptionPage";
 
 interface Props {
   invoices: SerializedInvoice[];

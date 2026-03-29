@@ -37,7 +37,11 @@ export function UpdateProfileForm({ user, memberships }: Props) {
       <Stack>
         <Header as="h3">Name</Header>
 
-        <Input placeholder="Full name" name="name" defaultValue={user.name || ""} />
+        <Input
+          placeholder="Full name"
+          name="name"
+          defaultValue={user.name || ""}
+        />
 
         <Header as="h3">Password</Header>
         <Input

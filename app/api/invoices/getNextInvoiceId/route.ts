@@ -4,7 +4,6 @@ import { auth } from "../../../../auth";
 import { getNextInvoiceId } from "../../../../data/invoices/getNextInvoiceId";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 
-
 // @todo permissions
 export const GET = auth(async () => {
   const strata = await mustGetCurrentStrata();

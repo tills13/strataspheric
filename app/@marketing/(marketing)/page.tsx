@@ -12,6 +12,7 @@ import { Tab } from "../../../components/TabLayout/Tab";
 import { Text } from "../../../components/Text";
 import { plans } from "../../../data/strataPlans/constants";
 import { classnames } from "../../../utils/classnames";
+
 export default async function Page() {
   return (
     <div className={styles.landingWrapper}>
@@ -53,7 +54,10 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack gap="12">
-                  <Header as="h3">Manage your <span className={styles.featureAccent}>files</span>.</Header>
+                  <Header as="h3">
+                    Manage your{" "}
+                    <span className={styles.featureAccent}>files</span>.
+                  </Header>
                   <Text color="secondary" fontSize="medium">
                     Stored securely and safely in the cloud. There when you, or
                     anyone else in your strata, needs them.
@@ -71,7 +75,10 @@ export default async function Page() {
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack gap="12">
-                  <Header as="h3">Find <span className={styles.featureAccent}>exactly</span> what you need.</Header>
+                  <Header as="h3">
+                    Find <span className={styles.featureAccent}>exactly</span>{" "}
+                    what you need.
+                  </Header>
                   <Text color="secondary" fontSize="medium">
                     Powerful filtering tools to find the documents you are
                     looking for.
@@ -98,7 +105,10 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack gap="12">
-                  <Header as="h3"><span className={styles.featureAccent}>Never</span> miss a date.</Header>
+                  <Header as="h3">
+                    <span className={styles.featureAccent}>Never</span> miss a
+                    date.
+                  </Header>
                   <Text color="secondary" fontSize="medium">
                     A shared calendar keeps your entire strata on the same page.
                     Upcoming AGMs, maintenance windows, and community events are
@@ -117,7 +127,10 @@ export default async function Page() {
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack gap="12">
-                  <Header as="h3">Automatic reminders, <span className={styles.featureAccent}>zero effort</span>.</Header>
+                  <Header as="h3">
+                    Automatic reminders,{" "}
+                    <span className={styles.featureAccent}>zero effort</span>.
+                  </Header>
                   <Text color="secondary" fontSize="medium">
                     Set it and forget it. Strataspheric sends email reminders
                     before important dates so your community is always prepared.
@@ -137,7 +150,10 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack gap="12">
-                  <Header as="h3">Run <span className={styles.featureAccent}>better</span> meetings.</Header>
+                  <Header as="h3">
+                    Run <span className={styles.featureAccent}>better</span>{" "}
+                    meetings.
+                  </Header>
                   <Text color="secondary" fontSize="medium">
                     Build agendas directly from strata activity. Pull in open
                     issues, upcoming invoices, and recent correspondence so
@@ -165,7 +181,10 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack gap="12">
-                  <Header as="h3"><span className={styles.featureAccent}>One inbox</span> for everything.</Header>
+                  <Header as="h3">
+                    <span className={styles.featureAccent}>One inbox</span> for
+                    everything.
+                  </Header>
                   <Text color="secondary" fontSize="medium">
                     Stop juggling shared email accounts. Council members can
                     receive, discuss, and respond to residents from a single
@@ -193,10 +212,14 @@ export default async function Page() {
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack gap="12">
-                  <Header as="h3">Know your <span className={styles.featureAccent}>community</span>.</Header>
+                  <Header as="h3">
+                    Know your{" "}
+                    <span className={styles.featureAccent}>community</span>.
+                  </Header>
                   <Text color="secondary" fontSize="medium">
-                    A complete directory of owners, tenants, and council members.
-                    Track unit assignments, roles, and monthly fees in one place.
+                    A complete directory of owners, tenants, and council
+                    members. Track unit assignments, roles, and monthly fees in
+                    one place.
                   </Text>
                 </Stack>
               </div>
@@ -211,7 +234,10 @@ export default async function Page() {
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
                 <Stack gap="12">
-                  <Header as="h3">Manage access with <span className={styles.featureAccent}>confidence</span>.</Header>
+                  <Header as="h3">
+                    Manage access with{" "}
+                    <span className={styles.featureAccent}>confidence</span>.
+                  </Header>
                   <Text color="secondary" fontSize="medium">
                     Role-based permissions ensure the right people see the right
                     information. Owners, council, and property managers each get
@@ -232,7 +258,9 @@ export default async function Page() {
 
       <section className={styles.sectionDivider}>
         <Stack gap="normal" align="center">
-          <Header as="h2">For <span className={styles.featureAccent}>Professionals</span></Header>
+          <Header as="h2">
+            For <span className={styles.featureAccent}>Professionals</span>
+          </Header>
           <Text
             as="p"
             className={styles.centerContent}
@@ -246,11 +274,7 @@ export default async function Page() {
 
           <Stack gap="small" align="center" mt="normal">
             <InternalLink href="/find">
-              <Button
-                className={styles.ctaButton}
-                color="primary"
-                size="large"
-              >
+              <Button className={styles.ctaButton} color="primary" size="large">
                 Connect with a Strata
               </Button>
             </InternalLink>
@@ -264,9 +288,7 @@ export default async function Page() {
         </Stack>
       </section>
 
-      <section
-        className={classnames(styles.sectionDivider, s({ pb: "xxl" }))}
-      >
+      <section className={classnames(styles.sectionDivider, s({ pb: "xxl" }))}>
         <Stack gap="normal" align="center">
           <Header as="h2">Simple, month-by-month pricing</Header>
           <Text

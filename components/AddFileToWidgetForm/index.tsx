@@ -22,10 +22,7 @@ export function AddFileToWidgetForm({ strataId, widgetId }: Props) {
     >
       <Stack>
         <Input name="name" placeholder="e.g. AGM Minutes" />
-        <TextArea
-          name="description"
-          placeholder="Description"
-        />
+        <TextArea name="description" placeholder="Description" />
         <Input name="file" placeholder="Upload File" type="file" />
         <DividerText>OR</DividerText>
         <FileSelect label="Attach Existing File" name="existing_file" />

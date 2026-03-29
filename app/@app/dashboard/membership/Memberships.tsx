@@ -1,5 +1,3 @@
-import { s } from "../../../../sprinkles.css";
-
 import { auth } from "../../../../auth";
 import { Table } from "../../../../components/Table";
 import { TableFooter } from "../../../../components/Table/TableFooter";

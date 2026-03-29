@@ -115,7 +115,6 @@ const ICONS = [
   ZipFileIcon,
 ];
 
-
 const MOCK_INVOICE: Invoice = {
   id: "123",
   amount: 123,
@@ -350,10 +349,7 @@ export default async function Page() {
           <Grid cols={{ base: 3 }}>
             <Input placeholder="Placeholder" />
             <Input placeholder="Placeholder" actionRight={<CycleIcon />} />
-            <Input
-              placeholder="Placeholder"
-              actionRight={<CycleIcon />}
-            />
+            <Input placeholder="Placeholder" actionRight={<CycleIcon />} />
           </Grid>
         </Stack>
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { SignOutLink } from "../../../../components/SignOutLink";
 import { MobileNav } from "../../../../components/MobileNav";
+import { SignOutLink } from "../../../../components/SignOutLink";
 import { Stack } from "../../../../components/Stack";
 
 export function AdminMobileNav() {

@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useMemo } from "react";
-
 import isAfter from "date-fns/isAfter";
+import React, { useMemo } from "react";
 
 import { AmenitiesBookingCalendar } from "../../../../../components/AmenitiesBookingCalendar";
 import { AmenityPreviewCard } from "../../../../../components/AmenityPreviewCard";
@@ -21,7 +20,10 @@ import { StatusButton } from "../../../../../components/StatusButton";
 import { AmenityBooking } from "../../../../../data/amenities/getAmenityBooking";
 import { useCan } from "../../../../../hooks/useCan";
 import { useSession } from "../../../../../hooks/useSession";
-import { parseTimestamp, patchTimezoneOffset } from "../../../../../utils/datetime";
+import {
+  parseTimestamp,
+  patchTimezoneOffset,
+} from "../../../../../utils/datetime";
 import {
   approveOrRejectAmenityBookingAction,
   cancelAmenityBookingAction,
@@ -135,9 +137,7 @@ export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
             confirmModalTitle="Cancel Booking"
             confirmModalDescription="Are you sure you want to cancel this booking request?"
             confirmModalConfirmButtonType="error"
-            onClickConfirm={() =>
-              cancelAmenityBookingAction(amenityBooking.id)
-            }
+            onClickConfirm={() => cancelAmenityBookingAction(amenityBooking.id)}
             icon={<CircleXIcon />}
             color="error"
             style="secondary"
@@ -160,10 +160,7 @@ export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
 
             {amenityBooking.decision === "approved" &&
               (isRequester || can("stratas.amenity_bookings.edit")) &&
-              isAfter(
-                parseTimestamp(amenityBooking.startDate),
-                new Date(),
-              ) && (
+              isAfter(parseTimestamp(amenityBooking.startDate), new Date()) && (
                 <ConfirmButton
                   confirmModalTitle="Cancel Booking"
                   confirmModalDescription="Are you sure you want to cancel this booking? The associated event and invoice will be removed."

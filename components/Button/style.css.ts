@@ -450,11 +450,12 @@ export const iconContainer = style({
   height: "100%",
   flexGrow: 0,
   aspectRatio: "1/1",
-  borderRadius: calc(vars.borderRadius.md).subtract(vars.borderWidth).toString(),
+  borderRadius: calc(vars.borderRadius.md)
+    .subtract(vars.borderWidth)
+    .toString(),
   backgroundColor: "rgba(255, 255, 255, 0.1)",
 
   selectors: {
-
     // primary (fill) style - deeper accent tint
     [`${button.classNames.variants.color.error} &`]: {
       backgroundColor: `color-mix(in srgb, ${vars.colors.red700} 40%, transparent)`,
@@ -470,32 +471,40 @@ export const iconContainer = style({
     },
 
     // secondary style - lighter accent tint (more specific, overrides above)
-    [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.error} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 15%, transparent)`,
-    },
-    [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.success} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 15%, transparent)`,
-    },
-    [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.warning} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 15%, transparent)`,
-    },
-    [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.primary} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 15%, transparent)`,
-    },
+    [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.error} &`]:
+      {
+        backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 15%, transparent)`,
+      },
+    [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.success} &`]:
+      {
+        backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 15%, transparent)`,
+      },
+    [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.warning} &`]:
+      {
+        backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 15%, transparent)`,
+      },
+    [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.primary} &`]:
+      {
+        backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 15%, transparent)`,
+      },
 
     // tertiary style - subtle accent tint
-    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.error} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 10%, transparent)`,
-    },
-    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.success} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 10%, transparent)`,
-    },
-    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.warning} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 10%, transparent)`,
-    },
-    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.primary} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 10%, transparent)`,
-    },
+    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.error} &`]:
+      {
+        backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 10%, transparent)`,
+      },
+    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.success} &`]:
+      {
+        backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 10%, transparent)`,
+      },
+    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.warning} &`]:
+      {
+        backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 10%, transparent)`,
+      },
+    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.primary} &`]:
+      {
+        backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 10%, transparent)`,
+      },
   },
 });
 

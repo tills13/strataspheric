@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
-    "build": "next build --webpack",
+    "build": "next build",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
@@ -56,7 +56,6 @@
     "baseline-browser-mapping": "^2.10.0",
     "eslint": "^9.25.1",
     "knip": "^5.50.5",
-    "typescript": "^6.0.2",
-    "typescript-eslint": "^8.31.1"
+    "typescript": "^6.0.2"
   }
 }

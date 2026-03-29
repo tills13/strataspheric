@@ -97,7 +97,10 @@ export const upsertStrataMembershipAction = withPermissions(
       const roleChanged = role && role !== membership.role;
       const permissions = roleChanged
         ? null
-        : rolePermissionsEqualCustomPermissions(membership.role, parsedPermissions)
+        : rolePermissionsEqualCustomPermissions(
+              membership.role,
+              parsedPermissions,
+            )
           ? rawPermissions
             ? // undefined -> don't update, null -> clear
               null

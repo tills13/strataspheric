@@ -123,7 +123,11 @@ export function CreateOrUpdateInvoiceForm({
           <InfoPanel level="default">
             <Text>
               This invoice has been sent via Stripe.{" "}
-              <a href={invoice.stripeInvoiceUrl} target="_blank" rel="noreferrer">
+              <a
+                href={invoice.stripeInvoiceUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
                 View Stripe Invoice
               </a>
             </Text>

@@ -2,9 +2,7 @@ import { db } from "..";
 
 export type Chat = Awaited<ReturnType<typeof listThreadChats>>[number];
 
-export function isThreadChatWithQuote(
-  chat: Chat,
-): chat is Chat & {
+export function isThreadChatWithQuote(chat: Chat): chat is Chat & {
   quotedMessageId: string;
   quotedMessageMessage: string;
   quotedMessageSender: string;

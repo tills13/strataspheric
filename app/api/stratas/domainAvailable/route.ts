@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
 
-
 interface IsDomainAvailableResponseData {
   isAvailable: boolean;
 }

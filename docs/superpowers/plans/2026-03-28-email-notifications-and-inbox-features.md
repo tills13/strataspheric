@@ -13,41 +13,44 @@
 ## File Structure
 
 ### New Files
-| File | Responsibility |
-|------|----------------|
-| `migrations/033_meeting_attendees.sql` | Meeting attendees table |
+
+| File                                          | Responsibility                                    |
+| --------------------------------------------- | ------------------------------------------------- |
+| `migrations/033_meeting_attendees.sql`        | Meeting attendees table                           |
 | `migrations/034_notification_preferences.sql` | User event notification pref + strata inbox email |
-| `migrations/035_inbox_blast_permission.sql` | Add `inbox_blasts` scope to permissions |
-| `data/meetings/listMeetingAttendees.ts` | Query attendees for a meeting |
-| `data/meetings/addMeetingAttendee.ts` | Add attendee to meeting |
-| `data/meetings/removeMeetingAttendee.ts` | Remove attendee from meeting |
-| `data/meetings/updateMeetingAttendee.ts` | Update attendance confirmation |
-| `utils/notifications.ts` | `sendNotification()` — checks prefs, sends email |
-| `components/MeetingAttendees/index.tsx` | Attendee list + add/remove UI |
-| `components/MeetingAttendees/style.css.ts` | Styles |
+| `migrations/035_inbox_blast_permission.sql`   | Add `inbox_blasts` scope to permissions           |
+| `data/meetings/listMeetingAttendees.ts`       | Query attendees for a meeting                     |
+| `data/meetings/addMeetingAttendee.ts`         | Add attendee to meeting                           |
+| `data/meetings/removeMeetingAttendee.ts`      | Remove attendee from meeting                      |
+| `data/meetings/updateMeetingAttendee.ts`      | Update attendance confirmation                    |
+| `utils/notifications.ts`                      | `sendNotification()` — checks prefs, sends email  |
+| `components/MeetingAttendees/index.tsx`       | Attendee list + add/remove UI                     |
+| `components/MeetingAttendees/style.css.ts`    | Styles                                            |
 
 ### Modified Files
-| File | Change |
-|------|--------|
-| `data/index.ts` | Add `MeetingAttendeesTable` type, add `notifyEvents` to `StrataMembershipsTable`, add `inboxEmail` to `StratasTable` |
-| `data/users/permissions.ts` | Add `inbox_blasts` scope |
-| `app/@app/dashboard/meetings/actions.ts` | Send notifications to attendees on meeting create/update |
-| `app/@app/dashboard/meetings/[meetingId]/MeetingLayout.tsx` | Render `MeetingAttendees` component |
-| `app/@app/dashboard/calendar/[...segments]/actions.ts` | Send event notifications on create |
-| `app/@app/dashboard/amenities/actions.ts` | Send booking notifications |
-| `app/@app/dashboard/inbox/actions.ts` | Send participant notifications + blast action |
-| `app/@app/dashboard/inbox/page.tsx` | Add blast button for authorized users |
-| `app/@app/dashboard/settings/SettingsPage.tsx` | Add strata inbox email field |
-| `app/@app/actions.ts` | Add `updateStrataAction` to handle new field |
-| `app/@marketing/(marketing)/profile/UpdateProfileForm.tsx` | Add event notification toggle |
-| `app/@marketing/(marketing)/profile/actions.ts` | Handle notification pref update |
-| `data/memberships/getStrataMembership.ts` | Include `notifyEvents` in query |
+
+| File                                                        | Change                                                                                                               |
+| ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `data/index.ts`                                             | Add `MeetingAttendeesTable` type, add `notifyEvents` to `StrataMembershipsTable`, add `inboxEmail` to `StratasTable` |
+| `data/users/permissions.ts`                                 | Add `inbox_blasts` scope                                                                                             |
+| `app/@app/dashboard/meetings/actions.ts`                    | Send notifications to attendees on meeting create/update                                                             |
+| `app/@app/dashboard/meetings/[meetingId]/MeetingLayout.tsx` | Render `MeetingAttendees` component                                                                                  |
+| `app/@app/dashboard/calendar/[...segments]/actions.ts`      | Send event notifications on create                                                                                   |
+| `app/@app/dashboard/amenities/actions.ts`                   | Send booking notifications                                                                                           |
+| `app/@app/dashboard/inbox/actions.ts`                       | Send participant notifications + blast action                                                                        |
+| `app/@app/dashboard/inbox/page.tsx`                         | Add blast button for authorized users                                                                                |
+| `app/@app/dashboard/settings/SettingsPage.tsx`              | Add strata inbox email field                                                                                         |
+| `app/@app/actions.ts`                                       | Add `updateStrataAction` to handle new field                                                                         |
+| `app/@marketing/(marketing)/profile/UpdateProfileForm.tsx`  | Add event notification toggle                                                                                        |
+| `app/@marketing/(marketing)/profile/actions.ts`             | Handle notification pref update                                                                                      |
+| `data/memberships/getStrataMembership.ts`                   | Include `notifyEvents` in query                                                                                      |
 
 ---
 
 ## Task 1: Database Migrations
 
 **Files:**
+
 - Create: `migrations/033_meeting_attendees.sql`
 - Create: `migrations/034_notification_preferences.sql`
 
@@ -91,6 +94,7 @@ git commit -m "feat: add meeting attendees and notification preferences migratio
 ## Task 2: Update Database Types
 
 **Files:**
+
 - Modify: `data/index.ts`
 
 - [ ] **Step 1: Add MeetingAttendeesTable and update existing types**
@@ -101,8 +105,16 @@ Add to `data/index.ts` after the `MeetingMinutesTable` type block:
 export interface MeetingAttendeesTable {
   meetingId: ColumnType<string, string, never>;
   userId: ColumnType<string, string, never>;
-  status: ColumnType<"invited" | "confirmed" | "declined", "invited" | "confirmed" | "declined" | undefined, "invited" | "confirmed" | "declined">;
-  respondedAt: ColumnType<number | null, number | null | undefined, number | null>;
+  status: ColumnType<
+    "invited" | "confirmed" | "declined",
+    "invited" | "confirmed" | "declined" | undefined,
+    "invited" | "confirmed" | "declined"
+  >;
+  respondedAt: ColumnType<
+    number | null,
+    number | null | undefined,
+    number | null
+  >;
 }
 
 export type MeetingAttendee = Selectable<MeetingAttendeesTable>;
@@ -136,6 +148,7 @@ git commit -m "feat: add meeting attendees and notification preference types"
 ## Task 3: Meeting Attendee Data Layer
 
 **Files:**
+
 - Create: `data/meetings/listMeetingAttendees.ts`
 - Create: `data/meetings/addMeetingAttendee.ts`
 - Create: `data/meetings/removeMeetingAttendee.ts`
@@ -163,7 +176,9 @@ export function listMeetingAttendees(meetingId: string) {
     .execute();
 }
 
-export type MeetingAttendeeWithUser = Awaited<ReturnType<typeof listMeetingAttendees>>[number];
+export type MeetingAttendeeWithUser = Awaited<
+  ReturnType<typeof listMeetingAttendees>
+>[number];
 ```
 
 - [ ] **Step 2: Create addMeetingAttendee**
@@ -228,6 +243,7 @@ git commit -m "feat: meeting attendee CRUD data layer"
 ## Task 4: Notification Utility
 
 **Files:**
+
 - Create: `utils/notifications.ts`
 
 - [ ] **Step 1: Create sendNotification utility**
@@ -292,6 +308,7 @@ git commit -m "feat: add sendNotification utility with strata inbox CC support"
 ## Task 5: Event Notifications on Create
 
 **Files:**
+
 - Modify: `app/@app/dashboard/calendar/[...segments]/actions.ts`
 - Modify: `data/memberships/listStrataMemberships.ts`
 
@@ -309,26 +326,29 @@ import { sendNotification } from "../../../../../utils/notifications";
 After the `createEvent` call (inside the `else` branch for new events), before `revalidatePath`, add:
 
 ```typescript
-    // Notify members who opted into event notifications
-    const members = await listStrataMemberships({ strataId: strata.id });
-    const notifyEmails = members
-      .filter((m) => m.notifyEvents)
-      .map((m) => m.email);
+// Notify members who opted into event notifications
+const members = await listStrataMemberships({ strataId: strata.id });
+const notifyEmails = members.filter((m) => m.notifyEvents).map((m) => m.email);
 
-    if (notifyEmails.length > 0) {
-      const startDate = parseTimestamp(startDateTs);
-      const formattedDate = `${startDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}`;
+if (notifyEmails.length > 0) {
+  const startDate = parseTimestamp(startDateTs);
+  const formattedDate = `${startDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })}`;
 
-      await sendNotification({
-        to: notifyEmails,
-        subject: `New Event: ${name}`,
-        html: `
+  await sendNotification({
+    to: notifyEmails,
+    subject: `New Event: ${name}`,
+    html: `
           <h2>${name}</h2>
           <p>${description || "No description provided."}</p>
           <p><strong>Date:</strong> ${formattedDate}</p>
         `,
-      });
-    }
+  });
+}
 ```
 
 - [ ] **Step 2: Expose notifyEvents in membership data**
@@ -349,6 +369,7 @@ git commit -m "feat: send email notifications on event creation"
 ## Task 6: Profile Event Notification Setting
 
 **Files:**
+
 - Modify: `app/@marketing/(marketing)/profile/UpdateProfileForm.tsx`
 - Modify: `app/@marketing/(marketing)/profile/actions.ts`
 
@@ -425,6 +446,7 @@ git commit -m "feat: event notification toggle on profile page"
 ## Task 7: Meeting Attendance UI & Notifications
 
 **Files:**
+
 - Modify: `app/@app/dashboard/meetings/[meetingId]/MeetingLayout.tsx`
 - Modify: `app/@app/dashboard/meetings/actions.ts`
 - Create: `app/@app/dashboard/meetings/[meetingId]/MeetingAttendees.tsx`
@@ -436,12 +458,12 @@ A server component that lists attendees and provides add/remove/RSVP actions.
 ```tsx
 // app/@app/dashboard/meetings/[meetingId]/MeetingAttendees.tsx
 import { auth } from "../../../../../auth";
+import { Badge } from "../../../../../components/Badge";
 import { Button } from "../../../../../components/Button";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
-import { Badge } from "../../../../../components/Badge";
 import { listMeetingAttendees } from "../../../../../data/meetings/listMeetingAttendees";
 import { listStrataMemberships } from "../../../../../data/memberships/listStrataMemberships";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
@@ -499,7 +521,13 @@ export async function MeetingAttendees({ meetingId }: Props) {
             </Badge>
           </Group>
           {canEdit && (
-            <form action={removeAttendeeAction.bind(undefined, meetingId, attendee.userId)}>
+            <form
+              action={removeAttendeeAction.bind(
+                undefined,
+                meetingId,
+                attendee.userId,
+              )}
+            >
               <Button size="small" style="tertiary" color="error">
                 Remove
               </Button>
@@ -525,7 +553,9 @@ export async function MeetingAttendees({ meetingId }: Props) {
 
       {canEdit && nonAttendeeMembers.length > 0 && (
         <Stack gap="small">
-          <Text color="secondary" fontSize="small">Add attendee:</Text>
+          <Text color="secondary" fontSize="small">
+            Add attendee:
+          </Text>
           {nonAttendeeMembers.map((member) => (
             <form
               key={member.id}
@@ -549,10 +579,10 @@ Add to `app/@app/dashboard/meetings/actions.ts`:
 
 ```typescript
 import { addMeetingAttendee } from "../../../../data/meetings/addMeetingAttendee";
+import { getMeeting } from "../../../../data/meetings/getMeeting";
 import { listMeetingAttendees } from "../../../../data/meetings/listMeetingAttendees";
 import { removeMeetingAttendee } from "../../../../data/meetings/removeMeetingAttendee";
 import { updateMeetingAttendee } from "../../../../data/meetings/updateMeetingAttendee";
-import { getMeeting } from "../../../../data/meetings/getMeeting";
 import { sendNotification } from "../../../../utils/notifications";
 
 export async function addAttendeeAction(meetingId: string, userId: string) {
@@ -574,7 +604,12 @@ export async function addAttendeeAction(meetingId: string, userId: string) {
       html: `
         <h2>${meeting.purpose}</h2>
         <p>You've been added as an attendee to this meeting.</p>
-        <p><strong>Date:</strong> ${startDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
+        <p><strong>Date:</strong> ${startDate.toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}</p>
         <p>Visit your dashboard to confirm your attendance.</p>
       `,
     });
@@ -608,6 +643,7 @@ export async function rsvpAction(
 ```
 
 Add the necessary import for `getStrataMembership`:
+
 ```typescript
 import { getStrataMembership } from "../../../../data/memberships/getStrataMembership";
 ```
@@ -620,7 +656,7 @@ In `app/@app/dashboard/meetings/[meetingId]/MeetingLayout.tsx`, import and rende
 import { MeetingAttendees } from "./MeetingAttendees";
 
 // Inside the JSX, after existing sections:
-<MeetingAttendees meetingId={meetingId} />
+<MeetingAttendees meetingId={meetingId} />;
 ```
 
 - [ ] **Step 4: Commit**
@@ -635,6 +671,7 @@ git commit -m "feat: meeting attendance tracking with RSVP and email notificatio
 ## Task 8: Amenity Booking Notifications
 
 **Files:**
+
 - Modify: `app/@app/dashboard/amenities/actions.ts`
 
 - [ ] **Step 1: Notify booker on booking approval/rejection**
@@ -642,6 +679,7 @@ git commit -m "feat: meeting attendance tracking with RSVP and email notificatio
 The `approveOrRejectAmenityBookingAction` already sends inbox messages. Add email notifications to the booker.
 
 Add import at top:
+
 ```typescript
 import { getStrataMembership } from "../../../../data/memberships/getStrataMembership";
 import { sendNotification } from "../../../../utils/notifications";
@@ -650,19 +688,28 @@ import { sendNotification } from "../../../../utils/notifications";
 After the `createThreadMessage` call in both the approve and reject branches, add:
 
 ```typescript
-    // Notify the booker via email
-    const bookerMembership = await getStrataMembership(strata.id, amenityBooking.requesterId);
-    if (bookerMembership) {
-      await sendNotification({
-        to: bookerMembership.email,
-        subject: decision === "reject"
-          ? `Booking Request Denied`
-          : `Booking Request Approved`,
-        html: decision === "reject"
-          ? `<p>Your booking request has been denied. Check your inbox for details.</p>`
-          : `<p>Your booking request has been approved.${amenityBooking.invoice ? " Please pay the invoice by the booking start date." : ""}</p>`,
-      });
-    }
+// Notify the booker via email
+const bookerMembership = await getStrataMembership(
+  strata.id,
+  amenityBooking.requesterId,
+);
+if (bookerMembership) {
+  await sendNotification({
+    to: bookerMembership.email,
+    subject:
+      decision === "reject"
+        ? `Booking Request Denied`
+        : `Booking Request Approved`,
+    html:
+      decision === "reject"
+        ? `<p>Your booking request has been denied. Check your inbox for details.</p>`
+        : `<p>Your booking request has been approved.${
+            amenityBooking.invoice
+              ? " Please pay the invoice by the booking start date."
+              : ""
+          }</p>`,
+  });
+}
 ```
 
 - [ ] **Step 2: Commit**
@@ -677,6 +724,7 @@ git commit -m "feat: email notifications for amenity booking decisions"
 ## Task 9: Inbox Message Notifications
 
 **Files:**
+
 - Modify: `app/@app/dashboard/inbox/actions.ts`
 
 - [ ] **Step 1: Notify participants on new thread messages**
@@ -684,57 +732,60 @@ git commit -m "feat: email notifications for amenity booking decisions"
 When a new message is added to an existing thread, notify all previous participants (users who sent messages in that thread) except the current sender. Also CC the strata inbox email.
 
 Add import:
+
 ```typescript
-import { sendNotification } from "../../../../utils/notifications";
 import { getThreadMessages } from "../../../../data/inbox/getThreadMessages";
+import { sendNotification } from "../../../../utils/notifications";
 ```
 
 In `createInboxMessageAction`, after sending emails to explicit recipients and to the original sender, add participant notification logic. Before the final `revalidatePath`, add:
 
 ```typescript
-  // Notify thread participants (for replies to existing threads)
-  if (threadId) {
-    const allMessages = await getThreadMessages(threadId);
-    const participantUserIds = [
-      ...new Set(
-        allMessages
-          .map((m) => m.senderUserId)
-          .filter((id): id is string => !!id && id !== u?.user?.id),
-      ),
-    ];
+// Notify thread participants (for replies to existing threads)
+if (threadId) {
+  const allMessages = await getThreadMessages(threadId);
+  const participantUserIds = [
+    ...new Set(
+      allMessages
+        .map((m) => m.senderUserId)
+        .filter((id): id is string => !!id && id !== u?.user?.id),
+    ),
+  ];
 
-    const participantEmails: string[] = [];
-    for (const uid of participantUserIds) {
-      const member = await getStrataMembership(strata.id, uid);
-      if (member) participantEmails.push(member.email);
-    }
+  const participantEmails: string[] = [];
+  for (const uid of participantUserIds) {
+    const member = await getStrataMembership(strata.id, uid);
+    if (member) participantEmails.push(member.email);
+  }
 
-    if (participantEmails.length > 0) {
-      await sendNotification({
-        to: participantEmails,
-        subject: `Re: ${message0.subject}`,
-        html: `
-          <p><strong>${u?.user?.name || senderName || "Someone"}</strong> replied:</p>
+  if (participantEmails.length > 0) {
+    await sendNotification({
+      to: participantEmails,
+      subject: `Re: ${message0.subject}`,
+      html: `
+          <p><strong>${
+            u?.user?.name || senderName || "Someone"
+          }</strong> replied:</p>
           <p>${message}</p>
           <p><a href="${viewUrl}">View conversation</a></p>
         `,
-        ccStrataInbox: true,
-      });
-    }
-  }
-
-  // For new threads, CC strata inbox
-  if (!threadId) {
-    await sendNotification({
-      to: [],
-      subject: subject,
-      html: `
-        <p><strong>${senderName || "Someone"}</strong> sent a new message:</p>
-        <p>${message}</p>
-      `,
       ccStrataInbox: true,
     });
   }
+}
+
+// For new threads, CC strata inbox
+if (!threadId) {
+  await sendNotification({
+    to: [],
+    subject: subject,
+    html: `
+        <p><strong>${senderName || "Someone"}</strong> sent a new message:</p>
+        <p>${message}</p>
+      `,
+    ccStrataInbox: true,
+  });
+}
 ```
 
 - [ ] **Step 2: Commit**
@@ -749,6 +800,7 @@ git commit -m "feat: email notifications for inbox message participants"
 ## Task 10: Strata Inbox Email Setting
 
 **Files:**
+
 - Modify: `app/@app/dashboard/settings/SettingsPage.tsx`
 - Modify: `app/@app/actions.ts` (the `updateStrataAction`)
 
@@ -796,6 +848,7 @@ git commit -m "feat: strata-level global inbox email setting"
 ## Task 11: Strata-wide Inbox Blast
 
 **Files:**
+
 - Modify: `app/@app/dashboard/inbox/actions.ts`
 - Modify: `app/@app/dashboard/inbox/page.tsx`
 - Modify: `data/users/permissions.ts`
@@ -833,10 +886,7 @@ import { assertCan } from "../../../../data/users/permissions";
 import { sendNotification } from "../../../../utils/notifications";
 
 export async function sendInboxBlastAction(fd: FormData) {
-  const [session, strata] = await Promise.all([
-    auth(),
-    mustGetCurrentStrata(),
-  ]);
+  const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
 
   if (!session) throw new Error("not allowed");
   assertCan(session.user, "stratas.inbox_blasts.create");
@@ -881,6 +931,7 @@ export async function sendInboxBlastAction(fd: FormData) {
 ```
 
 Add the `protocol` import at the top if not already present:
+
 ```typescript
 import { protocol } from "../../../../constants";
 ```
@@ -890,18 +941,20 @@ import { protocol } from "../../../../constants";
 In `app/@app/dashboard/inbox/page.tsx`, add a "Send to All" button next to the existing action buttons. Only show it for users with `stratas.inbox_blasts.create` permission:
 
 ```tsx
-{can(session?.user, "stratas.inbox_blasts.create") && (
-  <InternalLink href="/dashboard/inbox/blast" noUnderline>
-    <Button
-      color="primary"
-      style="secondary"
-      size="small"
-      icon={<SendIcon />}
-    >
-      Send to All
-    </Button>
-  </InternalLink>
-)}
+{
+  can(session?.user, "stratas.inbox_blasts.create") && (
+    <InternalLink href="/dashboard/inbox/blast" noUnderline>
+      <Button
+        color="primary"
+        style="secondary"
+        size="small"
+        icon={<SendIcon />}
+      >
+        Send to All
+      </Button>
+    </InternalLink>
+  );
+}
 ```
 
 - [ ] **Step 4: Create blast page**
@@ -946,16 +999,16 @@ git commit -m "feat: strata-wide inbox blast for council members"
 
 ## Summary
 
-| Task | Feature | Status |
-|------|---------|--------|
-| 1 | Database migrations (attendees, prefs) | |
-| 2 | Update TypeScript types | |
-| 3 | Meeting attendee data layer (CRUD) | |
-| 4 | Notification utility (`sendNotification`) | |
-| 5 | Event notifications on create | |
-| 6 | Profile event notification toggle | |
-| 7 | Meeting attendance UI + notifications | |
-| 8 | Amenity booking notifications | |
-| 9 | Inbox message participant notifications | |
-| 10 | Strata global inbox email setting | |
-| 11 | Strata-wide inbox blast | |
+| Task | Feature                                   | Status |
+| ---- | ----------------------------------------- | ------ |
+| 1    | Database migrations (attendees, prefs)    |        |
+| 2    | Update TypeScript types                   |        |
+| 3    | Meeting attendee data layer (CRUD)        |        |
+| 4    | Notification utility (`sendNotification`) |        |
+| 5    | Event notifications on create             |        |
+| 6    | Profile event notification toggle         |        |
+| 7    | Meeting attendance UI + notifications     |        |
+| 8    | Amenity booking notifications             |        |
+| 9    | Inbox message participant notifications   |        |
+| 10   | Strata global inbox email setting         |        |
+| 11   | Strata-wide inbox blast                   |        |

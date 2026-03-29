@@ -5,7 +5,6 @@
  *
  * Usage: npx tsx scripts/reset-database.ts --local|--remote
  */
-
 import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 import { createInterface } from "node:readline";
@@ -32,7 +31,9 @@ async function main() {
   }
 
   if (flag === "--remote") {
-    console.log("WARNING: You are about to delete ALL data from the REMOTE database!");
+    console.log(
+      "WARNING: You are about to delete ALL data from the REMOTE database!",
+    );
     const ok = await confirm("Are you sure?");
     if (!ok) {
       console.log("Aborted.");
@@ -41,10 +42,14 @@ async function main() {
   }
 
   console.log("Removing all data...");
-  execFileSync("npx", ["wrangler", "d1", "execute", DB_NAME, flag, `--file=${REMOVE_ALL_SQL}`], {
-    cwd: resolve(__dirname, ".."),
-    stdio: "inherit",
-  });
+  execFileSync(
+    "npx",
+    ["wrangler", "d1", "execute", DB_NAME, flag, `--file=${REMOVE_ALL_SQL}`],
+    {
+      cwd: resolve(__dirname, ".."),
+      stdio: "inherit",
+    },
+  );
   console.log("Database reset complete.");
 }
 

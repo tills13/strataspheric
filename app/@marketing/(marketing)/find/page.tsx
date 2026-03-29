@@ -8,11 +8,15 @@ import { StaticPageContainer } from "../StaticPageContainer";
 import { FindAStrata } from "./FindAStrata";
 import { StrataSearchForm } from "./StrataSearchForm";
 
-
 export default async function Page({ searchParams }: PageProps<"/find">) {
-  const { name: rawName, strataPlan: rawStrataPlan, address: rawAddress } = await searchParams;
+  const {
+    name: rawName,
+    strataPlan: rawStrataPlan,
+    address: rawAddress,
+  } = await searchParams;
   const name = typeof rawName === "string" ? rawName : undefined;
-  const strataPlan = typeof rawStrataPlan === "string" ? rawStrataPlan : undefined;
+  const strataPlan =
+    typeof rawStrataPlan === "string" ? rawStrataPlan : undefined;
   const address = typeof rawAddress === "string" ? rawAddress : undefined;
 
   return (

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
 import { protocol } from "../../../../constants";
-import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
+import { db } from "../../../../data";
 import {
   FEATURE_AMENITIES,
   FEATURE_DIRECTORY,
@@ -16,7 +16,7 @@ import {
   plans,
 } from "../../../../data/strataPlans/constants";
 import { updateStrataPlan } from "../../../../data/strataPlans/updateStrataPlan";
-import { db } from "../../../../data";
+import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { stripe } from "../../../../data/stripe";
 import { can } from "../../../../data/users/permissions";
 

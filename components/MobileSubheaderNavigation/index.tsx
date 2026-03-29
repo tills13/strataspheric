@@ -89,17 +89,13 @@ export function MobileSubheaderNavigation({
                       <InternalLink
                         key={sub.href}
                         className={
-                          isSubActive
-                            ? styles.activeSubLink
-                            : styles.subLink
+                          isSubActive ? styles.activeSubLink : styles.subLink
                         }
                         onClick={() => setMobileMenuExpanded(false)}
                         href={sub.href}
                       >
                         <SubIcon classNameOverride={styles.mobileMenuIcon} />
-                        <div className={styles.mobileMenuText}>
-                          {sub.label}
-                        </div>
+                        <div className={styles.mobileMenuText}>{sub.label}</div>
                       </InternalLink>
                     );
                   })}

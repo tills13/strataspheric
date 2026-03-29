@@ -11,8 +11,8 @@ import { Stack } from "../../../../../components/Stack";
 import { StatusButton } from "../../../../../components/StatusButton";
 import { Text } from "../../../../../components/Text";
 import { getAdminStrata } from "../../../../../data/admin/getAdminStrata";
-import { updateStrataAction, updateStrataPlanAction } from "./actions";
 import { DeleteStrataButton } from "./DeleteStrataButton";
+import { updateStrataAction, updateStrataPlanAction } from "./actions";
 
 interface Props {
   params: Promise<{ strataId: string }>;
@@ -49,7 +49,11 @@ export default async function AdminStrataEditPage({ params }: Props) {
             Details
           </Text>
           <Input name="name" placeholder="Name" defaultValue={strata.name} />
-          <Input name="domain" placeholder="Domain" defaultValue={strata.domain} />
+          <Input
+            name="domain"
+            placeholder="Domain"
+            defaultValue={strata.domain}
+          />
           <Input
             name="numUnits"
             placeholder="Number of Units"
@@ -66,7 +70,11 @@ export default async function AdminStrataEditPage({ params }: Props) {
             placeholder="Street Address"
             defaultValue={strata.streetAddress ?? ""}
           />
-          <Input name="city" placeholder="City" defaultValue={strata.city ?? ""} />
+          <Input
+            name="city"
+            placeholder="City"
+            defaultValue={strata.city ?? ""}
+          />
           <Input
             name="provinceState"
             placeholder="Province/State"

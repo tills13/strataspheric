@@ -3,15 +3,12 @@
 import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
-import isAfter from "date-fns/isAfter";
 import { useTransition } from "react";
 
 import { markInvoiceAsPaidAction } from "../../app/@app/dashboard/invoices/actions";
 import { Invoice } from "../../data/invoices/getInvoice";
 import { useCan } from "../../hooks/useCan";
 import { classnames } from "../../utils/classnames";
-import { parseTimestamp } from "../../utils/datetime";
-import { Badge } from "../Badge";
 import { Button } from "../Button";
 import { Group } from "../Group";
 import { Header } from "../Header";

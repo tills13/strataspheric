@@ -1,6 +1,5 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import { GLOBAL_HEADER_HEIGHT_PX } from "../DashboardNavigation/style.css";
-
 import { style } from "@vanilla-extract/css";
 
 export const mobileNav = style({

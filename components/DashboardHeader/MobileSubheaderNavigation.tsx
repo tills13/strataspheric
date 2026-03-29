@@ -3,6 +3,7 @@
 import { NAVIGATION_SUB_LINKS } from "../../constants/navigation";
 import { Permission, can, p } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
+import { Breadcrumbs } from "../DashboardNavigation/Breadcrumbs";
 import { BedIcon } from "../Icon/BedIcon";
 import { CalendarIcon } from "../Icon/CalendarIcon";
 import { DashboardIcon } from "../Icon/DashboardIcon";
@@ -16,7 +17,6 @@ import {
   MobileSubheaderLink,
   MobileSubheaderNavigation as MobileSubheaderNavigationBase,
 } from "../MobileSubheaderNavigation";
-import { Breadcrumbs } from "../DashboardNavigation/Breadcrumbs";
 
 type LinkWithPermissions = MobileSubheaderLink & {
   permissions?: Permission[];

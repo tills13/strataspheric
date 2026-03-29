@@ -13,7 +13,13 @@ export function JoinFormFields({ className }: Props) {
       <Header as="h2">Let&apos;s get to know you...</Header>
 
       <Input id="name" name="name" placeholder="Name" required />
-      <Input id="email" name="email" type="email" placeholder="Email" required />
+      <Input
+        id="email"
+        name="email"
+        type="email"
+        placeholder="Email"
+        required
+      />
 
       <Input
         id="password"

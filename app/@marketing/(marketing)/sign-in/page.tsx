@@ -3,7 +3,6 @@ import * as styles from "./style.css";
 import { SignInForm } from "../../../../components/SignInForm";
 import { StaticPageContainer } from "../StaticPageContainer";
 
-
 export default function Page() {
   return (
     <StaticPageContainer centered>

@@ -15,7 +15,9 @@ export function HeroBackground() {
       if (!ref.current) return;
       const scrollY = window.scrollY;
       const parallaxY = scrollY * -0.3;
-      ref.current.style.transform = `translate(${mouseX.current}px, ${parallaxY + mouseY.current}px)`;
+      ref.current.style.transform = `translate(${mouseX.current}px, ${
+        parallaxY + mouseY.current
+      }px)`;
     }
 
     function handleScroll() {

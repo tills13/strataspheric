@@ -12,7 +12,9 @@ export function DetailsRow({ description, title }: Props) {
   return (
     <Group gap="normal" minh="small">
       <dt>
-        <Text fontWeight="bold" whiteSpace="nowrap">{title}</Text>
+        <Text fontWeight="bold" whiteSpace="nowrap">
+          {title}
+        </Text>
       </dt>
       <div className={styles.detailsRowSpacer} />
       <dd>{description}</dd>

@@ -6,7 +6,6 @@
  *
  * Usage: npx tsx scripts/seed.ts
  */
-
 import { execFileSync } from "node:child_process";
 import { readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -34,10 +33,22 @@ async function main() {
 
   console.log("Executing seed against local D1...");
   try {
-    execFileSync("npx", ["wrangler", "d1", "execute", "strataspheric", "--local", `--file=${tmpPath}`, "--yes"], {
-      cwd: resolve(__dirname, ".."),
-      stdio: "inherit",
-    });
+    execFileSync(
+      "npx",
+      [
+        "wrangler",
+        "d1",
+        "execute",
+        "strataspheric",
+        "--local",
+        `--file=${tmpPath}`,
+        "--yes",
+      ],
+      {
+        cwd: resolve(__dirname, ".."),
+        stdio: "inherit",
+      },
+    );
     console.log("Seed completed successfully!");
   } finally {
     unlinkSync(tmpPath);

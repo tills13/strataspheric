@@ -6,8 +6,9 @@ import { Stack } from "../../../../components/Stack";
 import { plans } from "../../../../data/strataPlans/constants";
 import { StaticPageContainer } from "../StaticPageContainer";
 
-
-export default async function Page({ searchParams }: PageProps<"/get-started">) {
+export default async function Page({
+  searchParams,
+}: PageProps<"/get-started">) {
   const { plan: planName } = await searchParams;
 
   let plan = plans.find((plan) => plan.name.toLowerCase() === planName);

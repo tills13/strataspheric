@@ -15,11 +15,7 @@ export function getEventsForRange(
     .selectAll("events")
     .leftJoin("meetings", "meetings.eventId", "events.id")
     .select("meetings.id as meetingId")
-    .leftJoin(
-      "amenity_bookings",
-      "amenity_bookings.eventId",
-      "events.id",
-    )
+    .leftJoin("amenity_bookings", "amenity_bookings.eventId", "events.id")
     .leftJoin("amenities", "amenities.id", "amenity_bookings.amenityId")
     .leftJoin(
       "files as amenity_files",

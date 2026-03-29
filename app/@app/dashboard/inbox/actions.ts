@@ -14,7 +14,6 @@ import { getThreadMessages } from "../../../../data/inbox/getThreadMessages";
 import { markThreadRead } from "../../../../data/inbox/markThreadRead";
 import { markThreadUnread } from "../../../../data/inbox/markThreadUnread";
 import { unarchiveThreadsForUser } from "../../../../data/inbox/unarchiveThreadsForUser";
-import { updateThread } from "../../../../data/inbox/updateThread";
 import {
   StrataMembership,
   getStrataMembership,
@@ -148,7 +147,9 @@ export async function createInboxMessageAction(
         to: participantEmails,
         subject: `Re: ${message0.subject}`,
         html: `
-          <p><strong>${u?.user?.name || senderName || "Someone"}</strong> replied:</p>
+          <p><strong>${
+            u?.user?.name || senderName || "Someone"
+          }</strong> replied:</p>
           <p>${message}</p>
           <p><a href="${viewUrl}">View conversation</a></p>
         `,
@@ -214,10 +215,7 @@ export async function unarchiveThreadsAction(threadIds: string[]) {
 }
 
 export async function sendInboxBlastAction(fd: FormData) {
-  const [session, strata] = await Promise.all([
-    auth(),
-    mustGetCurrentStrata(),
-  ]);
+  const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
 
   if (!session) throw new Error("not allowed");
   assertCan(session.user, "stratas.inbox_blasts.create");

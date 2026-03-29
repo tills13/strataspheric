@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
 import { db } from "../../../../../data";
-import { stripe } from "../../../../../data/stripe";
 import { updateStrata } from "../../../../../data/stratas/updateStrata";
+import { stripe } from "../../../../../data/stripe";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);

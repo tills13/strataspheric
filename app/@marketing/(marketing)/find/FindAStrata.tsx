@@ -14,10 +14,15 @@ export async function FindAStrata({
   searchParams: Awaited<PageProps<"/find">["searchParams"]>;
 }) {
   let stratas: Awaited<ReturnType<typeof listStratas>> = [];
-  const { address: rawAddress, name: rawName, strataPlan: rawStrataPlan } = searchParams;
+  const {
+    address: rawAddress,
+    name: rawName,
+    strataPlan: rawStrataPlan,
+  } = searchParams;
   const address = typeof rawAddress === "string" ? rawAddress : undefined;
   const name = typeof rawName === "string" ? rawName : undefined;
-  const strataPlan = typeof rawStrataPlan === "string" ? rawStrataPlan : undefined;
+  const strataPlan =
+    typeof rawStrataPlan === "string" ? rawStrataPlan : undefined;
 
   if (address || name || strataPlan) {
     stratas = await listStratas({

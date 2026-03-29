@@ -51,7 +51,8 @@ export async function findYourStratasActionReducer(
       "in",
       membershipsQuery && stratasQuery
         ? membershipsQuery.union(stratasQuery)
-        : (membershipsQuery ?? stratasQuery)!,
+        : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          (membershipsQuery ?? stratasQuery)!,
     )
     .execute();
 

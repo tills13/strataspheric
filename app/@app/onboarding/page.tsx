@@ -3,7 +3,6 @@ import * as styles from "./style.css";
 
 import { redirect } from "next/navigation";
 
-import { HeroBackground } from "../../@marketing/(marketing)/HeroBackground";
 import { Group } from "../../../components/Group";
 import { Header } from "../../../components/Header";
 import { CircleCheckIcon } from "../../../components/Icon/CircleCheckIcon";
@@ -14,66 +13,66 @@ import { StrataAddressFormFields } from "../../../components/StrataAddressFormFi
 import { Text } from "../../../components/Text";
 import { Wordmark } from "../../../components/Wordmark";
 import { mustGetCurrentStrata } from "../../../data/stratas/getStrataByDomain";
+import { HeroBackground } from "../../@marketing/(marketing)/HeroBackground";
 import { updateStrataAction } from "../actions";
 import { OnboardingAttachFileField } from "./OnboardingAttachFileField";
-
 
 export default async function Onboarding() {
   const strata = await mustGetCurrentStrata();
 
   return (
     <>
-    <HeroBackground />
-    <form
-      action={async (fd) => {
-        "use server";
-        await updateStrataAction(strata.id, fd);
-        redirect("/dashboard");
-      }}
-      className={styles.pageContainer}
-    >
-      <Group className={s({ mb: "large" })} justify="center">
-        <Text fontSize="large">Welcome to </Text>
-        <Wordmark />
-      </Group>
+      <HeroBackground />
+      <form
+        action={async (fd) => {
+          "use server";
+          await updateStrataAction(strata.id, fd);
+          redirect("/dashboard");
+        }}
+        className={styles.pageContainer}
+      >
+        <Group className={s({ mb: "large" })} justify="center">
+          <Text fontSize="large">Welcome to </Text>
+          <Wordmark />
+        </Group>
 
-      <Header className={s({ mb: "large" })} as="h2">
-        Welcome to your Strata. Let&apos;s get a few things setup for you...
-      </Header>
+        <Header className={s({ mb: "large" })} as="h2">
+          Welcome to your Strata. Let&apos;s get a few things setup for you...
+        </Header>
 
-      <Stack>
-        <Panel>
-          <Header className={s({ mb: "small" })} as="h3">
-            Address
-          </Header>
+        <Stack>
+          <Panel>
+            <Header className={s({ mb: "small" })} as="h3">
+              Address
+            </Header>
 
-          <Stack>
-            <Text color="secondary">
-              Add your address to allow people to find your strata.
-            </Text>
+            <Stack>
+              <Text color="secondary">
+                Add your address to allow people to find your strata.
+              </Text>
 
-            <StrataAddressFormFields strata={strata} />
-          </Stack>
-        </Panel>
+              <StrataAddressFormFields strata={strata} />
+            </Stack>
+          </Panel>
 
-        <Panel>
-          <Header className={s({ mb: "small" })} as="h3">
-            Bylaws
-          </Header>
-          <Stack>
-            <Text color="secondary">Add your bylaws for easy reference</Text>
+          <Panel>
+            <Header className={s({ mb: "small" })} as="h3">
+              Bylaws
+            </Header>
+            <Stack>
+              <Text color="secondary">Add your bylaws for easy reference</Text>
 
-            <OnboardingAttachFileField
-              placeholder="Attach Strata Bylaws"
-              name="bylawsFileId"
-            />
-          </Stack>
-        </Panel>
-        <StatusButton icon={<CircleCheckIcon />} color="primary">
-          Ok, I&apos;m Done
-        </StatusButton>
-      </Stack>
-    </form>
+              <OnboardingAttachFileField
+                placeholder="Attach Strata Bylaws"
+                name="bylawsFileId"
+              />
+            </Stack>
+          </Panel>
+          <StatusButton icon={<CircleCheckIcon />} color="primary">
+            Ok, I&apos;m Done
+          </StatusButton>
+        </Stack>
+      </form>
     </>
   );
 }

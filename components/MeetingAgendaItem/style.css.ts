@@ -5,7 +5,10 @@ export const agendaItem = style({
   position: "relative",
 });
 
-export const agendaItemDone = style([agendaItem, { opacity: vars.opacity.muted }]);
+export const agendaItemDone = style([
+  agendaItem,
+  { opacity: vars.opacity.muted },
+]);
 
 export const agendaItemCheckboxPendingIcon = style({
   height: vars.sizes.xs,

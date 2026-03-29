@@ -1,6 +1,8 @@
 import { db } from "..";
 
-export async function countPendingMemberships(strataId: string): Promise<number> {
+export async function countPendingMemberships(
+  strataId: string,
+): Promise<number> {
   const result = await db()
     .selectFrom("strata_memberships")
     .select((eb) => eb.fn<number>("count", []).as("count"))

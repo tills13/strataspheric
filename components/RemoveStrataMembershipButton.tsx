@@ -7,7 +7,8 @@ import { StrataMembership } from "../data/memberships/getStrataMembership";
 import { ConfirmButton } from "./ConfirmButton";
 import { DeleteIcon } from "./Icon/DeleteIcon";
 
-interface Props extends Omit<React.ComponentProps<typeof ConfirmButton>, "onClickConfirm"> {
+interface Props
+  extends Omit<React.ComponentProps<typeof ConfirmButton>, "onClickConfirm"> {
   membership: StrataMembership;
 }
 

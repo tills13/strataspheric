@@ -1,12 +1,11 @@
-import * as styles from "./style.css";
 import { s } from "../../../../sprinkles.css";
+import * as styles from "./style.css";
 
 import { Header } from "../../../../components/Header";
 import { Panel } from "../../../../components/Panel";
 import { StaticPageContainer } from "../StaticPageContainer";
 import { ContactForm } from "./ContactForm";
 import { submitContactFormActionReducer } from "./actions";
-
 
 export default function Page() {
   return (

@@ -31,7 +31,8 @@ export function BulkActions({ children, noun }: Props) {
       <InfoPanel className={styles.container} pv="xs" ph="small">
         <Group gap="small">
           <Text fontWeight="bold">
-            {selectedRows.length} {pluralize(noun, selectedRows.length)} selected
+            {selectedRows.length} {pluralize(noun, selectedRows.length)}{" "}
+            selected
           </Text>
           {children}
         </Group>

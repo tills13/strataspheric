@@ -6,7 +6,6 @@ import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain
 import { formatTimestampForSql } from "../../../../utils/datetime";
 import { intParam } from "../../../../utils/url";
 
-
 export const GET = auth(async (_, req) => {
   const strata = await mustGetCurrentStrata();
   const u = new URL(req.url);

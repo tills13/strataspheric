@@ -4,7 +4,7 @@ import { WorkerCustomDomain } from "./addCustomDomain";
 
 export type Status = "active" | "pending";
 
-export interface GetCustomDomainData extends WorkerCustomDomain {}
+export type GetCustomDomainData = WorkerCustomDomain;
 
 export function getCustomDomain(domainId: string) {
   return makeRequest<CloudflareApiResponse<GetCustomDomainData>>(

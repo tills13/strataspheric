@@ -26,7 +26,10 @@ export function BulkMembershipActions() {
     return null;
   }
 
-  const label = `${selectedRows.length} ${pluralize("member", selectedRows.length)}`;
+  const label = `${selectedRows.length} ${pluralize(
+    "member",
+    selectedRows.length,
+  )}`;
 
   return (
     <BulkActions noun="member">

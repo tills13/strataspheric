@@ -177,7 +177,10 @@ export async function updateAmenityBookingDatesAction(
     );
     const amount = numHours * amenityBooking.amenity.costPerHour;
 
-    await updateInvoice(amenityBooking.invoice.id, { amount, dueBy: startDate });
+    await updateInvoice(amenityBooking.invoice.id, {
+      amount,
+      dueBy: startDate,
+    });
   }
 
   const {
@@ -190,9 +193,7 @@ export async function updateAmenityBookingDatesAction(
   }
 }
 
-export async function cancelAmenityBookingAction(
-  amenityBookingId: string,
-) {
+export async function cancelAmenityBookingAction(amenityBookingId: string) {
   const [session, strata, amenityBooking] = await Promise.all([
     mustAuth(),
     mustGetCurrentStrata(),

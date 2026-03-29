@@ -5,7 +5,6 @@ import { listFiles } from "../../../../data/files/listFiles";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 
-
 export const GET = auth(async (session, req) => {
   const strata = await getCurrentStrata();
 

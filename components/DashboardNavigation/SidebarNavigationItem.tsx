@@ -20,7 +20,12 @@ interface Props {
   children: string;
 }
 
-export function SidebarNavigationItem({ badge, badgeCounts, children, href }: Props) {
+export function SidebarNavigationItem({
+  badge,
+  badgeCounts,
+  children,
+  href,
+}: Props) {
   const pathname = usePathname();
 
   const isActive =
@@ -29,7 +34,8 @@ export function SidebarNavigationItem({ badge, badgeCounts, children, href }: Pr
   const subLinks = NAVIGATION_SUB_LINKS[href];
 
   const subLinkBadgeTotal = !isActive
-    ? subLinks?.reduce((sum, sub) => sum + (badgeCounts?.[sub.href] ?? 0), 0) ?? 0
+    ? subLinks?.reduce((sum, sub) => sum + (badgeCounts?.[sub.href] ?? 0), 0) ??
+      0
     : 0;
   const displayBadge = (badge ?? 0) + subLinkBadgeTotal || undefined;
 

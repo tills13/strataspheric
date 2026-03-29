@@ -17,7 +17,9 @@ import { Modal } from "../Modal";
 import { PaginatedEventWidgetList } from "./EventWidgetList";
 
 interface Props extends AbstractWidgetProps {
-  initialEvents: React.ComponentProps<typeof PaginatedEventWidgetList>["events"];
+  initialEvents: React.ComponentProps<
+    typeof PaginatedEventWidgetList
+  >["events"];
   strataId: string;
   widget: StrataWidget;
 }

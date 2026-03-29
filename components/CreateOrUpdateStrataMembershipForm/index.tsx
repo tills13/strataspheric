@@ -1,10 +1,11 @@
 "use client";
 
+import * as styles from "./style.css";
+
 import { useEffect, useRef, useState } from "react";
 
 import { upsertStrataMembershipAction } from "../../app/@app/dashboard/membership/actions";
 import { StrataMembership } from "../../data/memberships/getStrataMembership";
-import * as styles from "./style.css";
 import { classnames } from "../../utils/classnames";
 import { AddIcon } from "../Icon/AddIcon";
 import { SaveIcon } from "../Icon/SaveIcon";

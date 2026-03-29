@@ -105,7 +105,11 @@ export interface InvoicesTable {
   stripeInvoiceId: string | null;
   stripeInvoiceUrl: string | null;
   payerEmail: string | null;
-  archivedAt: ColumnType<number | null, number | null | undefined, number | null>;
+  archivedAt: ColumnType<
+    number | null,
+    number | null | undefined,
+    number | null
+  >;
 }
 
 export type Invoice = Selectable<InvoicesTable>;
@@ -166,8 +170,16 @@ export type NewMeetingMinutes = Insertable<MeetingMinutesTable>;
 export interface MeetingAttendeesTable {
   meetingId: ColumnType<string, string, never>;
   userId: ColumnType<string, string, never>;
-  status: ColumnType<"invited" | "confirmed" | "declined", "invited" | "confirmed" | "declined" | undefined, "invited" | "confirmed" | "declined">;
-  respondedAt: ColumnType<number | null, number | null | undefined, number | null>;
+  status: ColumnType<
+    "invited" | "confirmed" | "declined",
+    "invited" | "confirmed" | "declined" | undefined,
+    "invited" | "confirmed" | "declined"
+  >;
+  respondedAt: ColumnType<
+    number | null,
+    number | null | undefined,
+    number | null
+  >;
 }
 
 export type MeetingAttendee = Selectable<MeetingAttendeesTable>;

@@ -41,10 +41,7 @@ export default async function Page() {
         {memberships.length > 0 ? (
           <Table>
             {memberships.map((membership) => (
-              <MembershipTableRow
-                key={membership.id}
-                membership={membership}
-              />
+              <MembershipTableRow key={membership.id} membership={membership} />
             ))}
           </Table>
         ) : (

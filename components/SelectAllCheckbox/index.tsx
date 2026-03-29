@@ -20,8 +20,10 @@ export function SelectAllCheckbox({ rowIds }: Props) {
     return null;
   }
 
-  const allSelected = rowIds.length > 0 && rowIds.every((id) => selectedRows.includes(id));
-  const someSelected = !allSelected && rowIds.some((id) => selectedRows.includes(id));
+  const allSelected =
+    rowIds.length > 0 && rowIds.every((id) => selectedRows.includes(id));
+  const someSelected =
+    !allSelected && rowIds.some((id) => selectedRows.includes(id));
 
   return (
     <Checkbox

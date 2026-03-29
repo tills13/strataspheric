@@ -4,8 +4,8 @@ import { db } from "../../../../data";
 import { getInvoiceByStripeInvoiceId } from "../../../../data/invoices/getInvoiceByStripeInvoiceId";
 import { updateInvoice } from "../../../../data/invoices/updateInvoice";
 import { fulfillCheckoutSession } from "../../../../data/strataPlans/fulfillCheckoutSession";
-import { stripe } from "../../../../data/stripe";
 import { updateStrata } from "../../../../data/stratas/updateStrata";
+import { stripe } from "../../../../data/stripe";
 
 async function handlePlatformEvent(event: Stripe.Event) {
   if (event.type === "checkout.session.completed") {
@@ -65,6 +65,7 @@ export async function POST(request: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       sig,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       process.env.STRIPE_WEBHOOK_SECRET!,
     );
   } catch (err) {

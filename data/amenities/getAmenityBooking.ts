@@ -47,7 +47,9 @@ export function baseQuery() {
     ]);
 }
 
-type Row = Awaited<ReturnType<ReturnType<typeof baseQuery>["executeTakeFirstOrThrow"]>>;
+type Row = Awaited<
+  ReturnType<ReturnType<typeof baseQuery>["executeTakeFirstOrThrow"]>
+>;
 
 export function processRows(...rows: Row[]) {
   return rows.map((row) => ({
