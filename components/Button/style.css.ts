@@ -475,6 +475,20 @@ export const iconContainer = style({
     [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.primary} &`]: {
       backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 15%, transparent)`,
     },
+
+    // tertiary style - subtle accent tint
+    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.error} &`]: {
+      backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 10%, transparent)`,
+    },
+    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.success} &`]: {
+      backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 10%, transparent)`,
+    },
+    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.warning} &`]: {
+      backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 10%, transparent)`,
+    },
+    [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.primary} &`]: {
+      backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 10%, transparent)`,
+    },
   },
 });
 

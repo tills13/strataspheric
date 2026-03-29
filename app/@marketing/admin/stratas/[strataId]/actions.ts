@@ -1,9 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { withAdminAuth } from "../../../../../auth/admin";
 import { updateStrataPlan } from "../../../../../data/strataPlans/updateStrataPlan";
+import { deleteStrata } from "../../../../../data/stratas/deleteStrata";
 import { updateStrata } from "../../../../../data/stratas/updateStrata";
 import * as formdata from "../../../../../utils/formdata";
 
@@ -22,6 +24,15 @@ export const updateStrataAction = withAdminAuth(
 
     revalidatePath(`/admin/stratas/${strataId}`);
     revalidatePath("/admin/stratas");
+  },
+);
+
+export const deleteStrataAction = withAdminAuth(
+  async (_session, strataId: string) => {
+    await deleteStrata(strataId);
+
+    revalidatePath("/admin/stratas");
+    redirect("/admin/stratas");
   },
 );
 

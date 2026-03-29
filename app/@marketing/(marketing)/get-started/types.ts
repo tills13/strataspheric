@@ -14,8 +14,10 @@ interface CreateStrataStep extends BaseStep {
 interface SubmitPaymentStep extends BaseStep {
   step: "SUBMIT_PAYMENT";
   numUnits: number;
-  strataId: string;
+  strataName: string;
   strataDomain: string;
+  strataMainContact: string;
+  isPublic: boolean;
   stripeCustomerId: string;
   stripeClientSecret: string;
   stripeSetupIntentId: string;

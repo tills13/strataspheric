@@ -9,6 +9,7 @@ import { StatusButton } from "../../../../../components/StatusButton";
 import { Text } from "../../../../../components/Text";
 import { getAdminStrata } from "../../../../../data/admin/getAdminStrata";
 import { updateStrataAction, updateStrataPlanAction } from "./actions";
+import { DeleteStrataButton } from "./DeleteStrataButton";
 
 interface Props {
   params: Promise<{ strataId: string }>;
@@ -70,6 +71,10 @@ export default async function AdminStrataEditPage({ params }: Props) {
           </Group>
         </Stack>
       </form>
+
+      <Group justify="end">
+        <DeleteStrataButton strataId={strata.id} />
+      </Group>
 
       {strata.plan && (
         <form action={updatePlanWithId}>

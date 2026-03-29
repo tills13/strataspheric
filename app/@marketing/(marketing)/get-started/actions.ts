@@ -14,6 +14,7 @@ import {
 } from "../../../../data/strataPlans/constants";
 import { createPlan } from "../../../../data/strataPlans/createStrataPlan";
 import { createStrata } from "../../../../data/stratas/createStrata";
+import { getStrataByDomain } from "../../../../data/stratas/getStrataByDomain";
 import { stripe } from "../../../../data/stripe";
 import { updateStrata } from "../../../../data/stratas/updateStrata";
 import { createUser } from "../../../../data/users/createUser";
@@ -69,24 +70,15 @@ export async function submitGetStartedAction(
       return { ...state, error: "missing or invalid fields" };
     }
 
+    const existingStrata = await getStrataByDomain(strataDomain);
+
+    if (existingStrata) {
+      return { ...state, error: "a strata with this domain already exists" };
+    }
+
     const stripeCustomer = await stripe.customers.create({
       name: strataName,
       email: strataMainContact,
-    });
-
-    const { id: strataId } = await createStrata({
-      domain: strataDomain,
-      domainRecordId: "",
-      name: strataName,
-      numUnits,
-      isPublic: isPublic ? 1 : 0,
-      stripeCustomerId: stripeCustomer.id,
-    });
-
-    await createStrataMembership({
-      strataId,
-      userId: session.user.id,
-      role: "administrator",
     });
 
     const setupIntent = await stripe.setupIntents.create({
@@ -102,19 +94,46 @@ export async function submitGetStartedAction(
       step: "SUBMIT_PAYMENT",
       stripeSetupIntentId: setupIntent.id,
       stripeClientSecret: setupIntent.client_secret,
-      strataId,
+      strataName,
       strataDomain,
+      strataMainContact,
+      isPublic,
       stripeCustomerId: stripeCustomer.id,
       numUnits,
       lastStep: state.step,
     };
   } else if (state.step === "SUBMIT_PAYMENT") {
+    if (!session) {
+      return { step: "CREATE_ACCOUNT", lastStep: state.step };
+    }
+
     const planName = formdata.getString(fd, "planName");
     const plan = plans.find((plan) => plan.name.toLowerCase() === planName);
 
     if (!plan) {
       return { ...state, error: "failed to find plan" };
     }
+
+    const existingStrata = await getStrataByDomain(state.strataDomain);
+
+    if (existingStrata) {
+      return { ...state, error: "a strata with this domain already exists" };
+    }
+
+    const { id: strataId } = await createStrata({
+      domain: state.strataDomain,
+      domainRecordId: "",
+      name: state.strataName,
+      numUnits: state.numUnits,
+      isPublic: state.isPublic ? 1 : 0,
+      stripeCustomerId: state.stripeCustomerId,
+    });
+
+    await createStrataMembership({
+      strataId,
+      userId: session.user.id,
+      role: "administrator",
+    });
 
     const setupIntentResult = await stripe.setupIntents.retrieve(
       state.stripeSetupIntentId,
@@ -142,14 +161,14 @@ export async function submitGetStartedAction(
         ? 1
         : 0,
       enableMeetings: plan.features.includes(FEATURE_MEETINGS) ? 1 : 0,
-      strataId: state.strataId,
+      strataId,
       subscriptionId: subscription.id,
     });
 
     if (process.env.NODE_ENV !== "development") {
       console.log("[addCustomDomain] creating domain", {
         hostname: state.strataDomain,
-        strataId: state.strataId,
+        strataId,
       });
 
       const [addDomainResponse] = await addCustomDomain(state.strataDomain);
@@ -172,7 +191,7 @@ export async function submitGetStartedAction(
         domainRecordId: addDomainResponse.result.id,
       });
 
-      await updateStrata(state.strataId, {
+      await updateStrata(strataId, {
         domainRecordId: addDomainResponse.result.id,
       });
     }
