@@ -2,7 +2,7 @@ import * as styles from "./style.css";
 
 import { Map } from "leaflet";
 import Script from "next/script";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 interface Props {
   defaultZoom?: number;
@@ -13,9 +13,15 @@ export function LeafletMap({ defaultZoom = 15, onMapInstance }: Props) {
   const [leafletJsLoaded, setLeafletJsLoaded] = useState(
     typeof window !== "undefined" && !!window.L,
   );
+  const mapRef = useRef<Map | null>(null);
 
   const onRef = useCallback(
     (element: HTMLDivElement | null) => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+
       if (!element || !leafletJsLoaded) {
         return;
       }
@@ -29,6 +35,7 @@ export function LeafletMap({ defaultZoom = 15, onMapInstance }: Props) {
         "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       ).addTo(mMapInstance);
 
+      mapRef.current = mMapInstance;
       onMapInstance(mMapInstance);
     },
     [defaultZoom, leafletJsLoaded, onMapInstance],

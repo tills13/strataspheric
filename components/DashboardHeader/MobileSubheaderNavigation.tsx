@@ -1,71 +1,72 @@
 "use client";
 
-import * as styles from "./style.css";
-
-import { assignInlineVars } from "@vanilla-extract/dynamic";
-import { usePathname } from "next/navigation";
-import React, { useState } from "react";
-
 import { Permission, can, p } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
-import { Button } from "../Button";
-import { Breadcrumbs } from "../DashboardNavigation/Breadcrumbs";
-import { Group } from "../Group";
 import { BedIcon } from "../Icon/BedIcon";
 import { CalendarIcon } from "../Icon/CalendarIcon";
 import { DashboardIcon } from "../Icon/DashboardIcon";
-import { DownIcon } from "../Icon/DownIcon";
 import { FilesIcon } from "../Icon/FilesIcon";
 import { GroupIcon } from "../Icon/GroupIcon";
 import { InboxIcon } from "../Icon/InboxIcon";
 import { PaidDocumentIcon } from "../Icon/PaidDocumentIcon";
 import { PersonIcon } from "../Icon/PersonIcon";
 import { SettingsIcon } from "../Icon/SettingsIcon";
-import { InternalLink } from "../Link/InternalLink";
+import {
+  MobileSubheaderLink,
+  MobileSubheaderNavigation as MobileSubheaderNavigationBase,
+} from "../MobileSubheaderNavigation";
+import { Breadcrumbs } from "../DashboardNavigation/Breadcrumbs";
 
-type Link = [
-  icon: React.ComponentType<{ classNameOverride?: string }>,
-  href: string,
-  label: string,
-];
-type LinkWithPermissions = [
-  icon: React.ComponentType<{ classNameOverride?: string }>,
-  href: string,
-  label: string,
-  permissions: Permission[],
-];
+type LinkWithPermissions = MobileSubheaderLink & {
+  permissions?: Permission[];
+};
 
-const links: Array<Link | LinkWithPermissions> = [
-  [DashboardIcon, "/dashboard", "Dashboard"],
-  [FilesIcon, "/dashboard/files", "Files", [p("stratas", "files", "view")]],
-  [
-    PaidDocumentIcon,
-    "/dashboard/invoices",
-    "Invoices",
-    [p("stratas", "invoices", "view")],
-  ],
-  [
-    CalendarIcon,
-    "/dashboard/calendar",
-    "Events",
-    [p("stratas", "events", "view")],
-  ],
-  [PersonIcon, "/dashboard/membership", "Directory"],
-  [
-    BedIcon,
-    "/dashboard/amenities",
-    "Amenities",
-    [p("stratas", "amenities", "view")],
-  ],
-  [GroupIcon, "/dashboard/meetings", "Meetings", ["stratas.meetings.edit"]],
-  [InboxIcon, "/dashboard/inbox", "Strata Inbox"],
-  [
-    PaidDocumentIcon,
-    "/dashboard/subscription",
-    "Subscription",
-    ["stratas.settings.edit"],
-  ],
-  [SettingsIcon, "/dashboard/settings", "Settings", ["stratas.edit"]],
+const links: LinkWithPermissions[] = [
+  { icon: DashboardIcon, href: "/dashboard", label: "Dashboard", exact: true },
+  {
+    icon: FilesIcon,
+    href: "/dashboard/files",
+    label: "Files",
+    permissions: [p("stratas", "files", "view")],
+  },
+  {
+    icon: PaidDocumentIcon,
+    href: "/dashboard/invoices",
+    label: "Invoices",
+    permissions: [p("stratas", "invoices", "view")],
+  },
+  {
+    icon: CalendarIcon,
+    href: "/dashboard/calendar",
+    label: "Events",
+    permissions: [p("stratas", "events", "view")],
+  },
+  { icon: PersonIcon, href: "/dashboard/membership", label: "Directory" },
+  {
+    icon: BedIcon,
+    href: "/dashboard/amenities",
+    label: "Amenities",
+    permissions: [p("stratas", "amenities", "view")],
+  },
+  {
+    icon: GroupIcon,
+    href: "/dashboard/meetings",
+    label: "Meetings",
+    permissions: ["stratas.meetings.edit"],
+  },
+  { icon: InboxIcon, href: "/dashboard/inbox", label: "Strata Inbox" },
+  {
+    icon: PaidDocumentIcon,
+    href: "/dashboard/subscription",
+    label: "Subscription",
+    permissions: ["stratas.settings.edit"],
+  },
+  {
+    icon: SettingsIcon,
+    href: "/dashboard/settings",
+    label: "Settings",
+    permissions: ["stratas.edit"],
+  },
 ];
 
 export function MobileSubheaderNavigation({
@@ -76,78 +77,18 @@ export function MobileSubheaderNavigation({
   subPageTitle?: string;
 }) {
   const session = useSession();
-  const pathname = usePathname();
-  const [mobileMenuExpanded, setMobileMenuExpanded] = useState(false);
 
-  const filteredMenuItems = links.filter(
-    ([, , , permissions]) => !permissions || can(session?.user, ...permissions),
+  const filteredLinks = links.filter(
+    ({ permissions }) => !permissions || can(session?.user, ...permissions),
   );
 
   return (
-    <div className={styles.subHeaderContainer}>
-      <Group className={styles.subheader} align="start" justify="space-between">
-        <div
-          style={assignInlineVars({
-            [styles.numHeaderItemsVar]: filteredMenuItems.length.toString(),
-          })}
-          className={
-            mobileMenuExpanded ? styles.linksRailOpen : styles.linksRail
-          }
-        >
-          {filteredMenuItems.map(([IconComponent, href, label]) => {
-            const isActive =
-              href === "/dashboard"
-                ? pathname === href
-                : pathname?.startsWith(href);
-            const badge = badgeCounts?.[href];
-
-            if (isActive) {
-              return (
-                <div key={href} className={styles.activeSubheaderLink}>
-                  <IconComponent classNameOverride={styles.mobileMenuIcon} />
-                  <Breadcrumbs subPageTitle={subPageTitle || label} />
-                  {badge !== undefined && badge > 0 && (
-                    <span className={styles.mobileBadge}>{badge}</span>
-                  )}
-                  &nbsp;
-                </div>
-              );
-            } else {
-              return (
-                <InternalLink
-                  key={href}
-                  className={styles.subheaderLink}
-                  onClick={() => setMobileMenuExpanded(false)}
-                  href={href}
-                >
-                  <IconComponent classNameOverride={styles.mobileMenuIcon} />
-
-                  <div className={styles.mobileMenuText}>{label}</div>
-                  {badge !== undefined && badge > 0 && (
-                    <span className={styles.mobileBadge}>{badge}</span>
-                  )}
-                </InternalLink>
-              );
-            }
-          })}
-        </div>
-
-        <Button
-          className={styles.mobileDropdownAction}
-          onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
-          icon={
-            <DownIcon
-              className={
-                mobileMenuExpanded
-                  ? styles.toggleMobileDropdownIconActive
-                  : styles.toggleMobileDropdownIcon
-              }
-            />
-          }
-          size="small"
-          style="tertiary"
-        />
-      </Group>
-    </div>
+    <MobileSubheaderNavigationBase
+      links={filteredLinks}
+      badgeCounts={badgeCounts}
+      breadcrumbs={
+        subPageTitle ? <Breadcrumbs subPageTitle={subPageTitle} /> : undefined
+      }
+    />
   );
 }

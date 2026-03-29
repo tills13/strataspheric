@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 
 import { Checkbox } from "../../../../../components/Checkbox";
+import { GoToStrataLinkButton } from "../../../../../components/GoToStrataLinkButton";
 import { Group } from "../../../../../components/Group";
+import { Header } from "../../../../../components/Header";
+import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Input } from "../../../../../components/Input";
 import { Select } from "../../../../../components/Select";
 import { Stack } from "../../../../../components/Stack";
@@ -28,9 +31,17 @@ export default async function AdminStrataEditPage({ params }: Props) {
 
   return (
     <Stack p="normal" gap="normal">
-      <Text as="h1" fontSize="large" fw="bold">
-        Edit Strata: {strata.name}
-      </Text>
+      <Group
+        justify="space-between"
+        align="center"
+        gap="normal"
+        style={{ flexWrap: "wrap" }}
+      >
+        <Text as="h1" fontSize="large" fw="bold">
+          Edit Strata: {strata.name}
+        </Text>
+        <GoToStrataLinkButton strata={strata} />
+      </Group>
 
       <form action={updateStrataWithId}>
         <Stack gap="normal">
@@ -72,9 +83,16 @@ export default async function AdminStrataEditPage({ params }: Props) {
         </Stack>
       </form>
 
-      <Group justify="end">
-        <DeleteStrataButton strataId={strata.id} />
-      </Group>
+      <InfoPanel
+        action={<DeleteStrataButton strataId={strata.id} />}
+        header={<Header as="h3">Danger Zone</Header>}
+        level="error"
+      >
+        <Text>
+          Deleting this strata will permanently remove all associated data
+          including files, invoices, meetings, and memberships.
+        </Text>
+      </InfoPanel>
 
       {strata.plan && (
         <form action={updatePlanWithId}>

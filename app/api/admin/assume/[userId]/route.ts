@@ -24,6 +24,7 @@ export async function GET(
 ) {
   const session = await auth();
   if (!session || !session.user.isAdmin) {
+    console.log(session);
     return new NextResponse("Not Found", { status: 404 });
   }
 

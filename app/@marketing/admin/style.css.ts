@@ -10,7 +10,7 @@ export const adminLayoutContainer = style({
   "@media": {
     [breakpoints.tabletPlus]: {
       gridTemplateColumns: "min-content auto",
-      gridTemplateRows: "unset",
+      gridTemplateRows: "auto",
       height: "100vh",
       overflow: "hidden",
     },

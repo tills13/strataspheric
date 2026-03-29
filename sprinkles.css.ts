@@ -87,6 +87,10 @@ const flexProperties = defineProperties({
       row: "row",
       column: "column",
     },
+    flexWrap: {
+      wrap: "wrap",
+      nowrap: "nowrap",
+    },
     justifyContent: {
       start: "flex-start",
       center: "center",

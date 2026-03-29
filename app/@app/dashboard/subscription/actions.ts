@@ -16,10 +16,30 @@ import {
   plans,
 } from "../../../../data/strataPlans/constants";
 import { updateStrataPlan } from "../../../../data/strataPlans/updateStrataPlan";
+import { db } from "../../../../data";
 import { stripe } from "../../../../data/stripe";
 import { can } from "../../../../data/users/permissions";
 
 const NotAuthorized = new Error("not authorized");
+
+async function ensureStripeCustomer(strata: {
+  id: string;
+  name: string;
+  stripeCustomerId: string;
+}): Promise<string> {
+  try {
+    await stripe.customers.retrieve(strata.stripeCustomerId);
+    return strata.stripeCustomerId;
+  } catch {
+    const customer = await stripe.customers.create({ name: strata.name });
+    await db()
+      .updateTable("stratas")
+      .set({ stripeCustomerId: customer.id } as Record<string, unknown>)
+      .where("id", "=", strata.id)
+      .execute();
+    return customer.id;
+  }
+}
 
 export async function createBillingPortalSessionAction() {
   const session = await auth();
@@ -29,9 +49,10 @@ export async function createBillingPortalSessionAction() {
   }
 
   const strata = await mustGetCurrentStrata();
+  const customerId = await ensureStripeCustomer(strata);
 
   const portalSession = await stripe.billingPortal.sessions.create({
-    customer: strata.stripeCustomerId,
+    customer: customerId,
     return_url: `${protocol}//${strata.domain}/dashboard/subscription`,
   });
 
@@ -52,6 +73,31 @@ export async function cancelSubscriptionAction() {
   });
 
   revalidatePath("/dashboard/subscription");
+}
+
+export async function createCheckoutSessionAction(priceId: string) {
+  const session = await auth();
+
+  if (!can(session?.user, "stratas.settings.edit")) {
+    throw NotAuthorized;
+  }
+
+  const strata = await mustGetCurrentStrata();
+  const customerId = await ensureStripeCustomer(strata);
+
+  const checkoutSession = await stripe.checkout.sessions.create({
+    customer: customerId,
+    mode: "subscription",
+    line_items: [{ price: priceId, quantity: strata.numUnits }],
+    success_url: `${protocol}//${strata.domain}/dashboard/subscription`,
+    cancel_url: `${protocol}//${strata.domain}/dashboard/subscription`,
+  });
+
+  if (!checkoutSession.url) {
+    throw new Error("Failed to create checkout session");
+  }
+
+  redirect(checkoutSession.url);
 }
 
 export async function changeSubscriptionPlanAction(newPriceId: string) {

@@ -13,7 +13,8 @@ import { getUserById } from "../../../../data/users/getUser";
 
 export async function GET(req: NextRequest) {
   const adminSessionValue = req.cookies.get(ADMIN_COOKIE_NAME)?.value;
-  if (!adminSessionValue) {
+
+  if (adminSessionValue === undefined) {
     return new NextResponse("No admin session", { status: 400 });
   }
 
@@ -21,28 +22,36 @@ export async function GET(req: NextRequest) {
     key: JSON.parse(process.env.AUTH_KEY || "{}"),
   };
 
-  const { payload } = await validateAndParseJwt(
-    config as Config,
-    adminSessionValue,
-  );
-
-  const dbUser = await getUserById(payload.user.id);
-  if (!dbUser || dbUser.isAdmin !== 1) {
-    return new NextResponse("Invalid admin session", { status: 403 });
-  }
-
-  const cookieConfig = getServerCookieConfig();
   const redirectUrl = `${protocol}//${tld}/admin/users`;
 
   const response = NextResponse.redirect(redirectUrl);
-  response.headers.append(
-    "set-cookie",
-    formatCookie(COOKIE_NAME, cookieConfig, adminSessionValue),
-  );
+  const cookieConfig = getServerCookieConfig();
+
+  try {
+    const { payload } = await validateAndParseJwt(
+      config as Config,
+      adminSessionValue,
+    );
+
+    const dbUser = await getUserById(payload.user.id);
+    if (!dbUser || dbUser.isAdmin !== 1) {
+      return new NextResponse("Invalid admin session", { status: 403 });
+    }
+
+    response.headers.append(
+      "set-cookie",
+      formatCookie(COOKIE_NAME, cookieConfig, adminSessionValue),
+    );
+  } catch {
+    // silence is golden
+  }
+
   response.headers.append(
     "set-cookie",
     formatCookie(ADMIN_COOKIE_NAME, cookieConfig, "", 0),
   );
+
+  console.log([...response.headers]);
 
   return response;
 }

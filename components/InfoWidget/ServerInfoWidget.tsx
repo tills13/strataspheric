@@ -33,6 +33,7 @@ export async function ServerInfoWidget({ strata, strataId, widget }: Props) {
     >
       {widget.type === "info" ? (
         <Text
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: sanitizedBody,
           }}

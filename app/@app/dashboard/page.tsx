@@ -6,12 +6,11 @@ import { WidgetSkeleton } from "../../../components/Skeleton/WidgetSkeleton";
 import { mustGetCurrentStrata } from "../../../data/stratas/getStrataByDomain";
 import { StrataWidgets } from "./StrataWidget";
 
-
 export default async function Page() {
   const strata = await mustGetCurrentStrata();
 
   return (
-    <DashboardLayout>
+    <DashboardLayout noPadding>
       <Suspense
         fallback={
           <Grid cols={{ base: 1, tabletPlus: 2, desktop: 3 }}>

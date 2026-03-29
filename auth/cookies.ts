@@ -59,7 +59,7 @@ export function formatCookie(
     httpOnly && `HttpOnly`,
     sameSite && `SameSite=${sameSite === "lax" ? "Lax" : "Strict"}`,
     secure && `Secure`,
-    maxAge && `Max-Age=${maxAge}`,
+    maxAge != null && `Max-Age=${maxAge}`,
   ]
     .filter(Boolean)
     .join(";");

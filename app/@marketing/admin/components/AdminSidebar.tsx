@@ -6,23 +6,10 @@ import * as styles from "../style.css";
 import { usePathname } from "next/navigation";
 
 import { Group } from "../../../../components/Group";
-import { DashboardIcon } from "../../../../components/Icon/DashboardIcon";
-import { GroupIcon } from "../../../../components/Icon/GroupIcon";
-import { Icon } from "../../../../components/Icon/Icon";
-import { PersonIcon } from "../../../../components/Icon/PersonIcon";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Stack } from "../../../../components/Stack";
 import { Text } from "../../../../components/Text";
-
-const ADMIN_NAV_LINKS: Array<{
-  href: string;
-  label: string;
-  icon: React.ComponentType<React.ComponentProps<typeof Icon>>;
-}> = [
-  { href: "/admin", label: "Dashboard", icon: DashboardIcon },
-  { href: "/admin/stratas", label: "Stratas", icon: GroupIcon },
-  { href: "/admin/users", label: "Users", icon: PersonIcon },
-];
+import { ADMIN_NAV_LINKS } from "./adminNavLinks";
 
 export function AdminSidebar() {
   const pathname = usePathname();

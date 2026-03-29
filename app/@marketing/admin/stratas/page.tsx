@@ -1,9 +1,13 @@
 import { Badge } from "../../../../components/Badge";
+import { Button } from "../../../../components/Button";
 import { Group } from "../../../../components/Group";
+import { RightIcon } from "../../../../components/Icon/RightIcon";
+import { ExternalLink } from "../../../../components/Link/ExternalLink";
 import { Stack } from "../../../../components/Stack";
 import { Table } from "../../../../components/Table";
 import { TableRow } from "../../../../components/Table/TableRow";
 import { Text } from "../../../../components/Text";
+import { protocol } from "../../../../constants";
 import { listAdminStratas } from "../../../../data/admin/getAdminStrata";
 
 export default async function AdminStratasPage() {
@@ -20,6 +24,21 @@ export default async function AdminStratasPage() {
             key={strata.id}
             rowId={strata.id}
             link={`/admin/stratas/${strata.id}`}
+            actions={
+              <Group gap="xs">
+                <ExternalLink
+                  href={`${protocol}//${strata.domain}`}
+                  noUnderline
+                >
+                  <Button
+                    icon={<RightIcon />}
+                    style="tertiary"
+                    color="default"
+                    size="small"
+                  />
+                </ExternalLink>
+              </Group>
+            }
             content={
               <Group gap="small" align="center">
                 <Stack gap="xs">
@@ -27,7 +46,7 @@ export default async function AdminStratasPage() {
                     {strata.name}
                   </Text>
                   <Text as="span" fontSize="small" color="secondary">
-                    {strata.domain}.strataspheric.app
+                    {strata.domain}
                   </Text>
                 </Stack>
               </Group>

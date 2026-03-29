@@ -2,8 +2,6 @@
 
 import * as styles from "./style.css";
 
-import React from "react";
-
 import {
   ALL_OPTIONAL_FEATURES,
   FEATURE_DESCRIPTIONS,
@@ -17,6 +15,7 @@ import { RightIcon } from "../Icon/RightIcon";
 import { InternalLink } from "../Link/InternalLink";
 import { Money } from "../Money";
 import { Panel } from "../Panel";
+import { Text } from "../Text";
 
 interface Props extends PricingPlan {
   className?: string;
@@ -37,17 +36,31 @@ export function PricingCard({
 }: Props) {
   if (compact) {
     return (
-      <Panel className={classnames(styles.pricingCard, className)}>
-        <h3 className={styles.pricingCardPlanName}>{name}</h3>
-
-        <div className={styles.compactPricingContainer}>
-          {pricePerUnit !== undefined && (
-            <div className={styles.perSeatPricingSummary}>
-              <Money amount={pricePerUnit} /> / <span>unit</span> /{" "}
-              <span>month</span>
-            </div>
-          )}
-          {show === "text" ? pricingText : pricingHtml}
+      <Panel
+        noPadding
+        className={classnames(
+          recommended ? styles.compactCardRecommended : styles.compactCard,
+          className,
+        )}
+      >
+        <div className={styles.compactCardContent}>
+          <div className={styles.compactCardHeader}>
+            <h3 className={styles.compactCardName}>{name}</h3>
+            {recommended && (
+              <span className={styles.compactCardBadge}>Recommended</span>
+            )}
+          </div>
+          <div className={styles.compactCardPricing}>
+            {pricePerUnit !== undefined ? (
+              <Text as="span" fontSize="unset" color="unset">
+                <Money amount={pricePerUnit} fontSize="unset" /> / unit / month
+              </Text>
+            ) : (
+              <Text as="span" fontSize="unset" color="secondary">
+                {show === "text" ? pricingText : pricingHtml}
+              </Text>
+            )}
+          </div>
         </div>
       </Panel>
     );

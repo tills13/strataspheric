@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Button } from "../../../../../components/Button";
 import { Checkbox } from "../../../../../components/Checkbox";
 import { Group } from "../../../../../components/Group";
+import { Header } from "../../../../../components/Header";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Input } from "../../../../../components/Input";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
@@ -61,18 +62,17 @@ export default async function AdminUserEditPage({ params }: Props) {
       </form>
 
       {user.isAdmin !== 1 && (
-        <InfoPanel level="warning">
-          <Stack gap="small">
-            <Text as="span" fw="bold">
-              Assume User
-            </Text>
+        <InfoPanel
+          level="warning"
+          header={<Header as="h3">Assume {user.name}</Header>}
+        >
+          <Stack gap="normal">
             <Text as="span" fontSize="small">
               Temporarily sign in as this user. You will see the app as they see
-              it. A warning bar will appear at the top of the screen while
-              assuming.
+              it.
             </Text>
             <InternalLink href={`/api/admin/assume/${user.id}`}>
-              <Button color="warning">Assume {user.name}</Button>
+              <Button color="warning">Assume</Button>
             </InternalLink>
           </Stack>
         </InfoPanel>

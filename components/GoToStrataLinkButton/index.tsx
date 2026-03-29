@@ -56,6 +56,7 @@ export function GoToStrataLinkButton({
       <Button
         color={buttonColor}
         icon={<RightIcon />}
+        iconTextBehaviour="centerRemainder"
         size={buttonSize}
         style={buttonStyle}
         w="full"

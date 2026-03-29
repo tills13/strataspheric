@@ -1,5 +1,5 @@
 import { breakpoints, vars } from "../../app/theme.css";
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
@@ -113,4 +113,87 @@ export const planFeaturesFeatureIconIncluded = style([
 
 export const selectPlanButtonLink = style({
   textDecoration: "none",
+});
+
+// Compact card styles
+
+const shimmer = keyframes({
+  "0%": { backgroundPosition: "200% 0" },
+  "100%": { backgroundPosition: "-200% 0" },
+});
+
+export const compactCard = style({
+  position: "relative",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "stretch",
+  overflow: "hidden",
+  borderColor: important(vars.colors.primary),
+  background: `linear-gradient(to right, color-mix(in srgb, ${vars.colors.primary} 12%, transparent), color-mix(in srgb, ${vars.colors.primary} 0%, transparent) 75%)`,
+  transition: `border-color ${vars.transitions.fast}, box-shadow ${vars.transitions.fast}, background ${vars.transitions.normal}`,
+
+  selectors: {
+    "&:hover": {
+      borderColor: vars.colors.primaryHover,
+      boxShadow: vars.shadows.md,
+      background: `linear-gradient(to right, color-mix(in srgb, ${vars.colors.primary} 18%, transparent), color-mix(in srgb, ${vars.colors.primary} 4%, transparent) 75%)`,
+    },
+  },
+});
+
+export const compactCardRecommended = style([
+  compactCard,
+  {
+    backgroundImage: `linear-gradient(
+      100deg,
+      color-mix(in srgb, ${vars.colors.primary} 10%, transparent) 0%,
+      color-mix(in srgb, ${vars.colors.primary} 6%, transparent) 30%,
+      color-mix(in srgb, ${vars.colors.primary} 12%, transparent) 42%,
+      color-mix(in srgb, ${vars.colors.primary} 14%, transparent) 50%,
+      color-mix(in srgb, ${vars.colors.primary} 12%, transparent) 58%,
+      color-mix(in srgb, ${vars.colors.primary} 6%, transparent) 70%,
+      color-mix(in srgb, ${vars.colors.primary} 10%, transparent) 100%
+    )`,
+    backgroundSize: "200% 100%",
+    animation: `${shimmer} 8s ease-in-out infinite`,
+  },
+]);
+
+export const compactCardContent = style({
+  display: "flex",
+  flex: 1,
+  flexDirection: "column",
+  justifyContent: "center",
+  gap: vars.spacing.xs,
+  padding: padding(vars.spacing.normal, vars.spacing["20"]),
+});
+
+export const compactCardHeader = style({
+  display: "flex",
+  alignItems: "center",
+  gap: vars.spacing.small,
+});
+
+export const compactCardName = style({
+  fontSize: vars.fontSizes.medium,
+  fontWeight: vars.fontWeights.bold,
+  fontFamily: vars.fontFamilies.primary,
+  letterSpacing: vars.letterSpacing.tight,
+});
+
+export const compactCardBadge = style({
+  fontSize: vars.fontSizes.xs,
+  fontWeight: vars.fontWeights.bold,
+  textTransform: "uppercase",
+  letterSpacing: vars.letterSpacing.wider,
+  color: vars.colors.white,
+  backgroundColor: vars.colors.primary,
+  padding: padding(vars.spacing.xxs, vars.spacing.small),
+  borderRadius: vars.borderRadius.full,
+  lineHeight: vars.lineHeights.normal,
+});
+
+export const compactCardPricing = style({
+  fontSize: vars.fontSizes.normal,
+  color: vars.fontColors.secondary,
 });
