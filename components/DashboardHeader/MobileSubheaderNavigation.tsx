@@ -1,5 +1,6 @@
 "use client";
 
+import { NAVIGATION_SUB_LINKS } from "../../constants/navigation";
 import { Permission, can, p } from "../../data/users/permissions";
 import { useSession } from "../../hooks/useSession";
 import { BedIcon } from "../Icon/BedIcon";
@@ -85,6 +86,7 @@ export function MobileSubheaderNavigation({
   return (
     <MobileSubheaderNavigationBase
       links={filteredLinks}
+      subLinks={NAVIGATION_SUB_LINKS}
       badgeCounts={badgeCounts}
       breadcrumbs={
         subPageTitle ? <Breadcrumbs subPageTitle={subPageTitle} /> : undefined

@@ -1,8 +1,7 @@
-import Stripe from "stripe";
-
 import { Group } from "../../../../components/Group";
 import { TableRow } from "../../../../components/Table/TableRow";
 import { Text } from "../../../../components/Text";
+import { SerializedInvoice } from "./SubscriptionPage";
 
 function formatDate(timestamp: number) {
   return new Date(timestamp * 1000).toLocaleDateString("en-CA", {
@@ -20,7 +19,7 @@ function formatAmount(amount: number, currency: string) {
 }
 
 interface Props {
-  invoice: Stripe.Invoice;
+  invoice: SerializedInvoice;
 }
 
 export function SubscriptionInvoiceTableRow({ invoice }: Props) {

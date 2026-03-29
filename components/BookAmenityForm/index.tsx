@@ -28,7 +28,7 @@ export function BookAmenityForm({ amenity }: Props) {
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
   const bookingLength =
-    startDate && endDate ? differenceInDays(endDate, startDate) : undefined;
+    startDate && endDate ? differenceInDays(endDate, startDate) + 1 : undefined;
 
   return (
     <form
@@ -73,23 +73,24 @@ export function BookAmenityForm({ amenity }: Props) {
           placeholder="Special requests or questions for council for this booking"
         />
 
-        {amenity.costPerHour && typeof bookingLength !== "undefined" && (
-          <Stack gap="small">
-            <Group justify="space-between">
-              <Text fontWeight="bold">Summary</Text>
-              <Text>
-                <b>
-                  {bookingLength} {pluralize("day", bookingLength)}
-                </b>{" "}
-                at <Money amount={amenity.costPerHour * 24} /> per day
-              </Text>
-            </Group>
-            <Group justify="space-between">
-              <Text fontWeight="bold">Approximate Cost</Text>
-              <Money amount={amenity.costPerHour * 24 * bookingLength} />
-            </Group>
-          </Stack>
-        )}
+        {amenity.costPerHour !== null &&
+          typeof bookingLength !== "undefined" && (
+            <Stack gap="small">
+              <Group justify="space-between">
+                <Text fontWeight="bold">Summary</Text>
+                <Text>
+                  <b>
+                    {bookingLength} {pluralize("day", bookingLength)}
+                  </b>{" "}
+                  at <Money amount={amenity.costPerHour * 24} /> per day
+                </Text>
+              </Group>
+              <Group justify="space-between">
+                <Text fontWeight="bold">Approximate Cost</Text>
+                <Money amount={amenity.costPerHour * 24 * bookingLength} />
+              </Group>
+            </Stack>
+          )}
 
         {startDate && endDate && (
           <InfoPanel>

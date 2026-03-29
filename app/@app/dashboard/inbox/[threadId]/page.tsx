@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Thread, getThread } from "../../../../../data/inbox/getThread";
-import { updateThread } from "../../../../../data/inbox/updateThread";
+import { markThreadRead } from "../../../../../data/inbox/markThreadRead";
 import { can, p } from "../../../../../data/users/permissions";
 import { classnames } from "../../../../../utils/classnames";
 import { InboxMessageThread } from "./InboxMessageThread";
@@ -32,6 +32,7 @@ export default async function Page({
     thread = await getThread(threadId, { viewId });
   } else {
     thread = await getThread(threadId, {
+      userId: session.user.id,
       senderUserId: can(session.user, "stratas.inbox_messages.view")
         ? undefined
         : session.user.id,
@@ -43,7 +44,7 @@ export default async function Page({
   }
 
   if (session?.user && thread.isUnread) {
-    await updateThread(threadId, { isUnread: 0 });
+    await markThreadRead(session.user.id, threadId);
   }
 
   const canSeeChats = can(

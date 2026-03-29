@@ -1,5 +1,4 @@
 import { mustAuth } from "../../../../../auth";
-import { Badge } from "../../../../../components/Badge";
 import { Button } from "../../../../../components/Button";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
@@ -44,7 +43,10 @@ export async function MeetingAttendees({ meetingId }: Props) {
   );
 
   const confirmed = attendees.filter((a) => a.status === "confirmed");
-  const notConfirmed = attendees.filter((a) => a.status !== "confirmed");
+  const declined = attendees.filter((a) => a.status === "declined");
+  const pending = attendees.filter(
+    (a) => a.status !== "confirmed" && a.status !== "declined",
+  );
 
   return (
     <Stack>
@@ -59,7 +61,7 @@ export async function MeetingAttendees({ meetingId }: Props) {
           <Text color="secondary" fs="small">
             Confirmed
           </Text>
-          <Group gap="small">
+          <Group gap="small" wrap="wrap">
             {confirmed.map((attendee) => (
               <form
                 key={attendee.userId}
@@ -89,13 +91,13 @@ export async function MeetingAttendees({ meetingId }: Props) {
         </Stack>
       )}
 
-      {notConfirmed.length > 0 && (
+      {pending.length > 0 && (
         <Stack gap="small">
           <Text color="secondary" fs="small">
             Pending
           </Text>
-          <Group gap="small">
-            {notConfirmed.map((attendee) => (
+          <Group gap="small" wrap="wrap">
+            {pending.map((attendee) => (
               <form
                 key={attendee.userId}
                 action={
@@ -112,19 +114,45 @@ export async function MeetingAttendees({ meetingId }: Props) {
                   type={canEdit ? "submit" : "button"}
                   size="small"
                   style="secondary"
-                  color={attendee.status === "declined" ? "error" : "default"}
                   icon={canEdit ? <RemoveIcon /> : undefined}
                   iconTextBehaviour="centerRemainder"
                 >
                   {attendee.name}
-                  {attendee.status === "declined" && (
-                    <>
-                      {" "}
-                      <Badge level="error" fs="xs">
-                        declined
-                      </Badge>
-                    </>
-                  )}
+                </Button>
+              </form>
+            ))}
+          </Group>
+        </Stack>
+      )}
+
+      {declined.length > 0 && (
+        <Stack gap="small">
+          <Text color="secondary" fs="small">
+            Declined
+          </Text>
+          <Group gap="small" wrap="wrap">
+            {declined.map((attendee) => (
+              <form
+                key={attendee.userId}
+                action={
+                  canEdit
+                    ? removeAttendeeAction.bind(
+                        undefined,
+                        meetingId,
+                        attendee.userId,
+                      )
+                    : undefined
+                }
+              >
+                <Button
+                  type={canEdit ? "submit" : "button"}
+                  size="small"
+                  style="secondary"
+                  color="error"
+                  icon={canEdit ? <RemoveIcon /> : undefined}
+                  iconTextBehaviour="centerRemainder"
+                >
+                  {attendee.name}
                 </Button>
               </form>
             ))}
@@ -152,15 +180,11 @@ export async function MeetingAttendees({ meetingId }: Props) {
           <Text color="secondary" fs="small">
             Add attendee:
           </Text>
-          <Group gap="small">
+          <Group gap="small" wrap="wrap">
             {nonAttendeeMembers.map((member) => (
               <form
                 key={member.id}
-                action={addAttendeeAction.bind(
-                  undefined,
-                  meetingId,
-                  member.id,
-                )}
+                action={addAttendeeAction.bind(undefined, meetingId, member.id)}
               >
                 <Button
                   type="submit"

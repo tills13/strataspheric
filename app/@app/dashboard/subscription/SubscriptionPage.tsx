@@ -1,9 +1,6 @@
 "use client";
 
-import Stripe from "stripe";
-
 import { ConfirmButton } from "../../../../components/ConfirmButton";
-import { FlexBox } from "../../../../components/FlexBox";
 import { Group } from "../../../../components/Group";
 import { Header } from "../../../../components/Header";
 import { CircleCheckIcon } from "../../../../components/Icon/CircleCheckIcon";
@@ -81,9 +78,32 @@ const PLAN_FEATURES: Array<{ label: string; planKey: PlanEnableKey | null }> = [
   { label: FEATURE_DESCRIPTIONS[FEATURE_INBOX], planKey: "enableInbox" },
 ];
 
+export interface SerializedSubscription {
+  status: string;
+  billing_cycle_anchor: number;
+  cancel_at_period_end: boolean;
+  cancel_at: number | null;
+  item: {
+    unitAmount: number;
+    quantity: number;
+    currency: string;
+    interval: string | undefined;
+  } | null;
+}
+
+export interface SerializedInvoice {
+  id: string;
+  number: string | null;
+  created: number | null;
+  amount_due: number;
+  currency: string;
+  status: string | null;
+  invoice_pdf: string | null;
+}
+
 interface Props {
-  subscription: Stripe.Subscription | null;
-  stripeInvoices: Stripe.Invoice[];
+  subscription: SerializedSubscription | null;
+  stripeInvoices: SerializedInvoice[];
   memberCount: number;
   strata: Strata;
   currentPlan: PricingPlan | undefined;
@@ -98,11 +118,11 @@ export function SubscriptionPage({
   currentPlan,
   alternatePlan,
 }: Props) {
-  const item = subscription?.items.data[0];
-  const unitAmount = item?.price.unit_amount ?? 0;
+  const item = subscription?.item;
+  const unitAmount = item?.unitAmount ?? 0;
   const quantity = item?.quantity ?? 1;
-  const currency = item?.price.currency ?? "cad";
-  const interval = item?.price.recurring?.interval;
+  const currency = item?.currency ?? "cad";
+  const interval = item?.interval;
   const cancelAtPeriodEnd = subscription?.cancel_at_period_end ?? false;
   const cancelAt = subscription?.cancel_at;
 
@@ -228,6 +248,7 @@ export function SubscriptionPage({
               color="success"
               style="secondary"
               fullWidth
+              confirmModalConfirmButtonType="success"
               confirmModalTitle="Change Plan"
               confirmModalDescription={`Switch to the ${alternatePlan.name} Plan. Your subscription will be updated immediately and prorated charges will apply.`}
               onClickConfirm={() =>

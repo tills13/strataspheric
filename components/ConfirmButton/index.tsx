@@ -11,6 +11,7 @@ type ConfirmModalProps = React.ComponentProps<typeof ConfirmModal>;
 
 interface Props
   extends Omit<StatusButtonProps, "isPending" | "onClick" | "type"> {
+  confirmModalConfirmButtonType?: ConfirmModalProps["confirmButtonType"];
   confirmModalDescription?: ConfirmModalProps["description"];
   confirmModalTitle?: ConfirmModalProps["title"];
   onClickConfirm: () => void | Promise<void>;
@@ -18,6 +19,7 @@ interface Props
 
 export function ConfirmButton({
   children,
+  confirmModalConfirmButtonType,
   confirmModalDescription,
   confirmModalTitle,
   onClickConfirm,
@@ -40,6 +42,7 @@ export function ConfirmButton({
 
       {showConfirmModal && (
         <ConfirmModal
+          confirmButtonType={confirmModalConfirmButtonType}
           closeModal={() => setShowConfirmModal(false)}
           onClickConfirm={onClickConfirm}
           description={confirmModalDescription}

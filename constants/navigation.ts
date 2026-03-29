@@ -1,7 +1,9 @@
 import React from "react";
 
+import { ArchiveIcon } from "../components/Icon/ArchiveIcon";
 import { BedIcon } from "../components/Icon/BedIcon";
 import { CalendarIcon } from "../components/Icon/CalendarIcon";
+import { CycleIcon } from "../components/Icon/CycleIcon";
 import { DashboardIcon } from "../components/Icon/DashboardIcon";
 import { FilesIcon } from "../components/Icon/FilesIcon";
 import { GroupIcon } from "../components/Icon/GroupIcon";
@@ -11,6 +13,12 @@ import { PaidDocumentIcon } from "../components/Icon/PaidDocumentIcon";
 import { PersonIcon } from "../components/Icon/PersonIcon";
 import { SettingsIcon } from "../components/Icon/SettingsIcon";
 import { Permission } from "../data/users/permissions";
+
+export interface SubLink {
+  href: string;
+  label: string;
+  icon: React.ComponentType<React.ComponentProps<typeof Icon>>;
+}
 
 type Link = [href: string, label: string];
 
@@ -47,4 +55,24 @@ export const NAVIGATION_LINK_ICONS: Record<
   "/dashboard/inbox": InboxIcon,
   "/dashboard/subscription": PaidDocumentIcon,
   "/dashboard/settings": SettingsIcon,
+};
+
+export const NAVIGATION_SUB_LINKS: Record<string, SubLink[]> = {
+  "/dashboard/inbox": [
+    { href: "/dashboard/inbox/archived", label: "Archived", icon: ArchiveIcon },
+  ],
+  "/dashboard/invoices": [
+    {
+      href: "/dashboard/invoices/archived",
+      label: "Archived",
+      icon: ArchiveIcon,
+    },
+  ],
+  "/dashboard/membership": [
+    {
+      href: "/dashboard/membership/pending",
+      label: "Pending",
+      icon: CycleIcon,
+    },
+  ],
 };

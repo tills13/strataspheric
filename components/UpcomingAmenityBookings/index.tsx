@@ -5,6 +5,7 @@ import { Invoice } from "../../data/invoices/getInvoice";
 import { parseTimestamp } from "../../utils/datetime";
 import { BookingStatusBadge } from "../BookingStatusBadge";
 import { Group } from "../Group";
+import { Header } from "../Header";
 import { InvoiceStatusBadge } from "../InvoiceStatusBadge";
 import { InternalLink } from "../Link/InternalLink";
 import { Panel } from "../Panel";
@@ -23,8 +24,8 @@ export async function UpcomingAmenityBookings({ userId }: Props) {
   }
 
   return (
-    <Stack gap="small" ph="normal">
-      <Text fontWeight="bold">Your Upcoming Bookings</Text>
+    <Stack gap="small">
+      <Header as="h3">Your Upcoming Bookings</Header>
       <Stack gap="small">
         {bookings.map((booking) => {
           const startDate = parseTimestamp(booking.startDate);
@@ -44,7 +45,7 @@ export async function UpcomingAmenityBookings({ userId }: Props) {
                     )}
                   </Group>
                 </Group>
-                <Text color="tertiary" fontSize="small">
+                <Text color="fontTertiary" fontSize="small">
                   {format(startDate, "MMM d, yyyy")} at{" "}
                   {format(startDate, "h:mm a")} - {format(endDate, "h:mm a")}
                 </Text>

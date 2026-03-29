@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
 import { Invoice } from "../../../../data";
+import { archiveInvoices } from "../../../../data/invoices/archiveInvoices";
 import { createInvoice } from "../../../../data/invoices/createInvoice";
 import { deleteInvoice } from "../../../../data/invoices/deleteInvoice";
 import { updateInvoice } from "../../../../data/invoices/updateInvoice";
@@ -24,6 +25,27 @@ export async function markInvoiceAsPaidAction(invoiceId: string) {
     isPaid: 1,
     updatedAt: new Date().getTime(),
   });
+
+  revalidatePath("/dashboard/invoices");
+  revalidatePath("/dashboard/invoices/*");
+  revalidatePath("/dashboard/inbox/*");
+}
+
+export async function markInvoicesAsPaidAction(invoiceIds: string[]) {
+  const session = await auth();
+
+  if (!can(session?.user, "stratas.invoices.edit")) {
+    return;
+  }
+
+  await Promise.all(
+    invoiceIds.map((id) =>
+      updateInvoice(id, {
+        isPaid: 1,
+        updatedAt: new Date().getTime(),
+      }),
+    ),
+  );
 
   revalidatePath("/dashboard/invoices");
   revalidatePath("/dashboard/invoices/*");
@@ -170,6 +192,54 @@ export async function upsertInvoiceAction(
 
   revalidatePath("/dashboard/invoices");
   return invoice;
+}
+
+export async function archiveInvoiceAction(invoiceId: string) {
+  const session = await auth();
+
+  if (!can(session?.user, "stratas.invoices.edit")) {
+    return;
+  }
+
+  await archiveInvoices([invoiceId]);
+  revalidatePath("/dashboard/invoices");
+}
+
+export async function archiveInvoicesAction(invoiceIds: string[]) {
+  const session = await auth();
+
+  if (!can(session?.user, "stratas.invoices.edit")) {
+    return;
+  }
+
+  await archiveInvoices(invoiceIds);
+  revalidatePath("/dashboard/invoices");
+}
+
+export async function unarchiveInvoiceAction(invoiceId: string) {
+  const session = await auth();
+
+  if (!can(session?.user, "stratas.invoices.edit")) {
+    return;
+  }
+
+  await updateInvoice(invoiceId, { archivedAt: null });
+  revalidatePath("/dashboard/invoices");
+  revalidatePath("/dashboard/invoices/archived");
+}
+
+export async function unarchiveInvoicesAction(invoiceIds: string[]) {
+  const session = await auth();
+
+  if (!can(session?.user, "stratas.invoices.edit")) {
+    return;
+  }
+
+  await Promise.all(
+    invoiceIds.map((id) => updateInvoice(id, { archivedAt: null })),
+  );
+  revalidatePath("/dashboard/invoices");
+  revalidatePath("/dashboard/invoices/archived");
 }
 
 export async function deleteInvoiceAction(invoiceId: string) {

@@ -149,6 +149,7 @@ export function CalendarWeek({
                       isSelectionEnd: rangeSelection.isSelectionEnd(date),
                       onMouseDown: rangeSelection.onDayMouseDown,
                       onMouseEnter: rangeSelection.onDayMouseEnter,
+                      onTouchStart: rangeSelection.onDayTouchStart,
                     }
                   : undefined
               }

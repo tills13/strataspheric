@@ -24,7 +24,11 @@ export function InfoPanel({
 }: React.PropsWithChildren<Props>) {
   return (
     <Stack
-      className={classnames(className, styles.infoPanel({ alignment, level }))}
+      className={classnames(
+        className,
+        styles.infoPanel({ alignment, level }),
+        !(rest.p || rest.pv || rest.ph) && styles.infoPanelPadding,
+      )}
       {...rest}
     >
       {header}

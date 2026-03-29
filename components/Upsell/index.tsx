@@ -29,7 +29,7 @@ export function Upsell({
 
         <Text color="secondary">{upsellDescription}</Text>
 
-        <InternalLink href={"/dashboard/settings#plan"}>
+        <InternalLink href="/dashboard/subscription">
           <Button color="primary" style="primary" fullWidth>
             Upgrade your plan today
           </Button>

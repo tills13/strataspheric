@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { db } from "..";
 
 export type User = Awaited<ReturnType<typeof getUserByEmail>>;
@@ -10,13 +12,13 @@ export function getUserByEmail(email: string) {
     .executeTakeFirst();
 }
 
-export function getUserById(id: string) {
+export const getUserById = cache((id: string) => {
   return db()
     .selectFrom("users")
     .select(["users.id", "users.email", "users.status", "users.isAdmin"])
     .where("users.id", "=", id)
     .executeTakeFirst();
-}
+});
 
 export function getFullUserById(id: string) {
   return db()

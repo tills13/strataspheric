@@ -3,6 +3,7 @@ import { PaginatedResults, Pagination } from "../types";
 import { Invoice } from "./getInvoice";
 
 type ListInvoicesFilter = {
+  archived?: boolean;
   strataId?: string;
   payeeId?: string;
 };
@@ -25,6 +26,14 @@ export async function listInvoices(
   if (filter.payeeId) {
     limitQuery = limitQuery.where("invoices.payee", "=", filter.payeeId);
     query = query.where("invoices.payee", "=", filter.payeeId);
+  }
+
+  if (filter.archived) {
+    limitQuery = limitQuery.where("invoices.archivedAt", "is not", null);
+    query = query.where("invoices.archivedAt", "is not", null);
+  } else if (filter.archived === false) {
+    limitQuery = limitQuery.where("invoices.archivedAt", "is", null);
+    query = query.where("invoices.archivedAt", "is", null);
   }
 
   const limit = pagination.limit ?? 10;

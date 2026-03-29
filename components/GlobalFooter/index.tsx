@@ -40,7 +40,7 @@ export function GlobalFooter() {
               target="_blank"
               noUnderline
             >
-              <Text color="primary">{linkText}</Text>
+              <Text color="fontPrimary">{linkText}</Text>
             </ExternalLink>
           ))}
         </Group>

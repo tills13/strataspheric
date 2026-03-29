@@ -1,11 +1,10 @@
-import Stripe from "stripe";
-
 import { Table } from "../../../../components/Table";
 import { Text } from "../../../../components/Text";
+import { SerializedInvoice } from "./SubscriptionPage";
 import { SubscriptionInvoiceTableRow } from "./SubscriptionInvoiceTableRow";
 
 interface Props {
-  invoices: Stripe.Invoice[];
+  invoices: SerializedInvoice[];
 }
 
 export function SubscriptionInvoiceHistory({ invoices }: Props) {

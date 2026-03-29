@@ -5,7 +5,6 @@ import * as styles from "./styles.css";
 import React, { useState } from "react";
 
 import { classnames } from "../../utils/classnames";
-import { FileTypeIcon } from "../FileTypeIcon";
 import { Group } from "../Group";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -33,17 +32,10 @@ export function Input({
   ref,
   ...inputProps
 }: Props) {
-  const [value, setValue] = useState<string>();
+  const [hasFile, setHasFile] = useState(false);
 
   return (
     <div className={classnames(styles.inputFieldWrapper, className)}>
-      {inputProps.type === "file" && (
-        <FileTypeIcon
-          className={styles.inputFieldFileIcon}
-          filePath={value || "something.txt"}
-        />
-      )}
-
       {actionLeft && (
         <Group className={styles.inputFieldLeftActionContainer}>
           {actionLeft}
@@ -54,6 +46,7 @@ export function Input({
 
       <input
         className={classnames(styles.inputFieldInput, inputClassName)}
+        data-has-file={hasFile}
         name={name}
         id={propsId || name}
         ref={ref}
@@ -61,7 +54,10 @@ export function Input({
         onChange={(e) => {
           onChange?.(e);
           onChangeValue?.(e.target.value);
-          setValue(e.currentTarget.value);
+
+          if (inputProps.type === "file") {
+            setHasFile((e.target.files?.length ?? 0) > 0);
+          }
         }}
       />
 

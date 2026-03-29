@@ -30,10 +30,14 @@ export async function GlobalHeaderActions({ className }: Props) {
 
         {session ? (
           <Group gap="20" align="center">
-            <Text color="tertiary" fontSize="normal">{session.user.email}</Text>
+            <Text color="fontTertiary" fontSize="normal">
+              {session.user.email}
+            </Text>
             {session.user.isAdmin && (
               <InternalLink href={`${protocol}//${tld}/admin`} noUnderline>
-                <Text color="secondary" fontSize="normal" fontWeight="bold">Admin</Text>
+                <Text color="secondary" fontSize="normal" fontWeight="bold">
+                  Admin
+                </Text>
               </InternalLink>
             )}
             <SignOutLink />

@@ -5,8 +5,8 @@ import { DeleteIcon } from "../../../../components/Icon/DeleteIcon";
 import { RemoveButton } from "../../../../components/RemoveButton";
 import { TableRow } from "../../../../components/Table/TableRow";
 import { Text } from "../../../../components/Text";
-import { can } from "../../../../data/users/permissions";
 import { listMeetings } from "../../../../data/meetings/listMeetings";
+import { can } from "../../../../data/users/permissions";
 import { deleteMeetingAction } from "./actions";
 
 interface Props {
@@ -33,7 +33,7 @@ export async function MeetingRow({ meeting }: Props) {
       }
       content={
         <Group>
-          <Text color="primary" whiteSpace="nowrap">
+          <Text color="fontPrimary" whiteSpace="nowrap">
             {meeting.purpose}
           </Text>
         </Group>

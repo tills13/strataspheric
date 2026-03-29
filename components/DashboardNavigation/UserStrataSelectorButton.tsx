@@ -37,6 +37,9 @@ export function UserStrataSelectorButton({
         ph="normal"
         gap="large"
         className={styles.selectedStrataContainer}
+        onClick={
+          showHasStratas ? () => setShowStrataSelectorModal(true) : undefined
+        }
         justify="space-between"
       >
         <Group gap="small">

@@ -5,7 +5,9 @@ import * as styles from "./style.css";
 import { useState } from "react";
 
 import { Invoice } from "../../data";
+import { Button } from "../Button";
 import { Group } from "../Group";
+import { CircleXIcon } from "../Icon/CircleXIcon";
 import { PaidDocumentIcon } from "../Icon/PaidDocumentIcon";
 import { AttachInvoiceModal } from "./AttachInvoiceModal";
 
@@ -36,6 +38,17 @@ export function AttachInvoiceText({
             ? `#${selectedInvoice.identifier}`
             : attachInvoiceText}
         </button>
+
+        {selectedInvoice && (
+          <Button
+            icon={<CircleXIcon />}
+            onClick={() => onSelectInvoice?.(undefined)}
+            size="small"
+            style="tertiary"
+            color="error"
+            type="button"
+          />
+        )}
       </Group>
 
       {showAttachInvoiceModal && (

@@ -53,7 +53,7 @@ export function Breadcrumbs({ className, subPageTitle }: Props) {
 
           <InternalLink href={activeSubpageHref} noUnderline={!isSubSubpage}>
             <Text
-              color="primary"
+              color="fontPrimary"
               fw={isSubSubpage ? "normal" : "bold"}
               whiteSpace="nowrap"
             >

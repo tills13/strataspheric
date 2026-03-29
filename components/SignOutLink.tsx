@@ -18,7 +18,7 @@ export function SignOutLink() {
         fontFamily: "inherit",
       }}
     >
-      <Text color="primary" fontSize="normal" fontWeight="bold">
+      <Text color="fontPrimary" fontSize="normal" fontWeight="bold">
         Sign Out
       </Text>
     </button>

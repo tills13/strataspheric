@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev -H 0.0.0.0 --webpack",
+    "dev": "next dev -H 0.0.0.0",
     "build": "next build --webpack",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
@@ -27,12 +27,12 @@
     "@opennextjs/cloudflare": "^1.14.4",
     "@stripe/stripe-js": "^7.3.0",
     "@tanstack/react-query": "^5.77.0",
-    "@vanilla-extract/css": "^1.17.1",
-    "@vanilla-extract/css-utils": "^0.1.4",
-    "@vanilla-extract/dynamic": "^2.1.2",
-    "@vanilla-extract/next-plugin": "^2.4.10",
-    "@vanilla-extract/recipes": "^0.5.5",
-    "@vanilla-extract/sprinkles": "^1.6.3",
+    "@vanilla-extract/css": "^1.20.1",
+    "@vanilla-extract/css-utils": "^0.1.6",
+    "@vanilla-extract/dynamic": "^2.1.5",
+    "@vanilla-extract/next-plugin": "^2.5.1",
+    "@vanilla-extract/recipes": "^0.5.7",
+    "@vanilla-extract/sprinkles": "^1.6.5",
     "date-fns": "^2.30.0",
     "kysely": "^0.26.3",
     "kysely-d1": "^0.3.0",
@@ -56,7 +56,7 @@
     "baseline-browser-mapping": "^2.10.0",
     "eslint": "^9.25.1",
     "knip": "^5.50.5",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "typescript-eslint": "^8.31.1"
   }
 }

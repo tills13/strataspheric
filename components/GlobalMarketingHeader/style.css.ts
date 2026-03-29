@@ -64,6 +64,10 @@ export const globalHeaderTitleWrapper = style({
   },
 });
 
+export const mobileNav = style({
+  borderBottom: "none",
+});
+
 export const globalHeaderTitle = style({
   fontSize: vars.fontSizes.larger,
   letterSpacing: vars.letterSpacing.wider,

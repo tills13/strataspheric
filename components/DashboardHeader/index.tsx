@@ -10,13 +10,15 @@ export async function DashboardHeader(
 ) {
   const [session, strata] = await Promise.all([auth(), mustGetCurrentStrata()]);
 
-  const unreadCount = await countUnreadThreads({
-    strataId: strata.id,
-    ...(!can(session?.user, "stratas.inbox_messages.view") &&
-      session?.user && {
-        senderUserId: session.user.id,
-      }),
-  });
+  const unreadCount = session?.user
+    ? await countUnreadThreads({
+        strataId: strata.id,
+        userId: session.user.id,
+        ...(!can(session.user, "stratas.inbox_messages.view") && {
+          senderUserId: session.user.id,
+        }),
+      })
+    : 0;
 
   const badgeCounts: Record<string, number> = {};
   if (unreadCount > 0) {

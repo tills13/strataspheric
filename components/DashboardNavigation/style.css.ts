@@ -27,8 +27,11 @@ export const sidebar = style({
 
 const baseSidebarNavigationItem = style({
   borderRadius: vars.borderRadius.md,
+  borderStyle: "solid",
+  borderWidth: vars.borderWidth,
+  borderColor: "transparent",
   textDecoration: "none",
-  transition: `background-color ${vars.transitions.fast}`,
+  transition: `background-color ${vars.transitions.fast}, border-color ${vars.transitions.fast}`,
 });
 
 export const sidebarNavigationItem = style([
@@ -47,12 +50,13 @@ export const sidebarNavigationItem = style([
 export const activeSidebarNavigationItem = style([
   baseSidebarNavigationItem,
   {
-    backgroundColor: vars.colors.primary,
-    color: vars.colors.white,
+    background: `linear-gradient(to right, color-mix(in srgb, ${vars.colors.primary} 32%, transparent), color-mix(in srgb, ${vars.colors.primary} 8%, transparent) 75%)`,
+    borderColor: vars.colors.primary,
+    color: vars.colors.primary,
     fontWeight: vars.fontWeights.medium,
 
     vars: {
-      [iconColorVar]: vars.colors.white,
+      [iconColorVar]: vars.colors.primary,
     },
   },
 ]);
@@ -197,6 +201,35 @@ export const globalHeaderActionsButton = style({
     },
   },
 });
+
+const baseSidebarSubNavigationItem = style({
+  marginLeft: vars.spacing.small,
+  borderRadius: vars.borderRadius.md,
+  textDecoration: "none",
+  transition: `background-color ${vars.transitions.fast}`,
+});
+
+export const sidebarSubNavigationItem = style([
+  baseSidebarSubNavigationItem,
+  {
+    color: vars.fontColors.secondary,
+    selectors: {
+      "&:hover": {
+        backgroundColor: vars.surfaces.interactiveHover,
+        color: vars.fontColors.primary,
+      },
+    },
+  },
+]);
+
+export const activeSidebarSubNavigationItem = style([
+  baseSidebarSubNavigationItem,
+  {
+    backgroundColor: vars.surfaces.interactiveHover,
+    color: vars.fontColors.primary,
+    fontWeight: vars.fontWeights.medium,
+  },
+]);
 
 export const sidebarBadge = style({
   display: "inline-flex",

@@ -4,19 +4,30 @@ import {
   fieldLeftActionContainer,
   fieldRightActionContainer,
 } from "../Form/style.css";
-import { groupElement } from "../Group/style.css";
 import { stackElement } from "../Stack/style.css";
 import { style } from "@vanilla-extract/css";
+
+export const inputFieldIconContainer = style({
+  display: "flex",
+  alignItems: "center",
+  flexShrink: 0,
+  paddingLeft: vars.spacing.small,
+  marginRight: vars.spacing.small,
+  vars: {
+    [iconColorVar]: vars.fontColors.secondary,
+  },
+});
 
 export const inputFieldWrapper = style([
   field,
   {
-    [`&${groupElement}`]: {
-      marginTop: 0,
-      width: "100%",
-    },
-    [`&${stackElement}`]: {
-      width: "100%",
+    selectors: {
+      [`&${stackElement}`]: {
+        width: "100%",
+      },
+      [`&:has(${inputFieldIconContainer})`]: {
+        paddingLeft: 0,
+      },
     },
   },
 ]);
@@ -30,8 +41,11 @@ export const inputFieldInput = style({
 
   selectors: {
     "&[type=file]": {
-      paddingTop: vars.spacing["6"],
+      color: vars.fontColors.placeholder,
       cursor: "pointer",
+    },
+    '&[type=file][data-has-file="true"]': {
+      color: "inherit",
     },
     "&[type=file]::file-selector-button": {
       display: "none",
@@ -63,16 +77,6 @@ export const inputFieldInput = style({
 export const inputFieldFileIcon = style({
   height: vars.sizes.xs,
   marginRight: vars.spacing.small,
-});
-
-export const inputFieldIconContainer = style({
-  display: "flex",
-  alignItems: "center",
-  flexShrink: 0,
-  marginRight: vars.spacing.small,
-  vars: {
-    [iconColorVar]: vars.fontColors.secondary,
-  },
 });
 
 export const inputFieldLeftActionContainer = style([fieldLeftActionContainer]);

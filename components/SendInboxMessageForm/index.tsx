@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useCallback, useState } from "react";
 
 import { createInboxMessageAction } from "../../app/@app/dashboard/inbox/actions";
 import { SendIcon } from "../Icon/SendIcon";
@@ -15,9 +17,17 @@ export function SendInboxMessageForm({
   threadId,
   children,
 }: React.PropsWithChildren<Props>) {
+  const [formKey, setFormKey] = useState(0);
+
+  const resetForm = useCallback(() => setFormKey((k) => k + 1), []);
+
   return (
     <form
-      action={createInboxMessageAction.bind(undefined, threadId)}
+      key={formKey}
+      action={async (fd) => {
+        await createInboxMessageAction(threadId, fd);
+        resetForm();
+      }}
       className={className}
     >
       <Stack>

@@ -26,6 +26,44 @@ export async function deleteFileAction(fileId: string) {
   revalidatePath("/dashboard/files");
 }
 
+export async function deleteFilesAction(fileIds: string[]) {
+  const session = await auth();
+
+  if (!session?.user || !can(session.user, p("stratas", "files", "delete"))) {
+    throw new Error("not allowed");
+  }
+
+  await Promise.all(
+    fileIds.map(async (fileId) => {
+      const f = await getFile(fileId);
+      if (!f) return;
+      await r2().delete(f.path);
+      await deleteFile(fileId);
+    }),
+  );
+
+  revalidatePath("/dashboard/files");
+}
+
+export async function setFilesVisibilityAction(
+  fileIds: string[],
+  visibility: "public" | "private",
+) {
+  const session = await auth();
+
+  if (!session?.user || !can(session.user, p("stratas", "files", "edit"))) {
+    throw new Error("not allowed");
+  }
+
+  await Promise.all(
+    fileIds.map((fileId) =>
+      updateFile(fileId, { isPublic: visibility === "public" ? 1 : 0 }),
+    ),
+  );
+
+  revalidatePath("/dashboard/files");
+}
+
 export async function upsertFileAction(
   fileId: string | undefined,
   formData: FormData,

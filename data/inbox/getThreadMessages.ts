@@ -37,7 +37,6 @@ export async function getThreadMessages(
       "inbox_messages.message",
       "inbox_messages.threadId",
       "inbox_messages.viewId",
-      "inbox_messages.isUnread",
       "inbox_messages.sentAt",
       "inbox_messages.senderUserId",
       "inbox_messages.senderPhoneNumber",
@@ -69,6 +68,7 @@ export async function getThreadMessages(
 
       // amenity bookings
       "amenity_bookings.id as amenityBookingId",
+      "amenity_bookings.requesterId as amenityBookingRequesterId",
       "amenity_bookings.decision as amenityBookingDecision",
       // amenity booking invoice
       "amenity_booking_invoices.id as amenityBookingInvoiceId",
@@ -127,6 +127,7 @@ export async function getThreadMessages(
       invoiveType,
 
       amenityBookingId,
+      amenityBookingRequesterId,
       amenityBookingDecision,
       amenityBookingInvoiceId,
       amenityBookingInvoiceIdentifier,
@@ -150,6 +151,7 @@ export async function getThreadMessages(
         amenityBooking: amenityBookingId
           ? ({
               id: amenityBookingId,
+              requesterId: amenityBookingRequesterId,
               decision: amenityBookingDecision,
               invoice: amenityBookingInvoiceId
                 ? {

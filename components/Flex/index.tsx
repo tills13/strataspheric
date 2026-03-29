@@ -7,12 +7,14 @@ import { reactNodeCanReceiveClassNameProp } from "../../utils/react";
 import { FlexBox } from "../FlexBox";
 
 interface Props extends React.ComponentProps<typeof FlexBox> {
+  equalWidthChildren?: boolean;
   from: keyof typeof styles.flexBreakpoint;
 }
 
 export function Flex({
   className,
   children,
+  equalWidthChildren,
   from,
   ...delegateProps
 }: React.PropsWithChildren<Props>) {
@@ -29,7 +31,9 @@ export function Flex({
         reactNodeCanReceiveClassNameProp(child)
           ? React.cloneElement(child, {
               className: classnames(
-                styles.flexElement,
+                equalWidthChildren
+                  ? styles.flexElement.fullWidth
+                  : styles.flexElement.default,
                 typeof child.props.className === "string"
                   ? child.props.className
                   : undefined,

@@ -20,7 +20,6 @@ export async function Memberships() {
 
   const memberships = await listStrataMemberships({
     strataId: strata.id,
-    includePending: canUpsert,
   });
 
   const totalMonthlyFees = memberships.reduce(

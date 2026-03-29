@@ -12,6 +12,7 @@ import { StatusButton } from "../StatusButton";
 import { Text } from "../Text";
 
 interface Props {
+  confirmButtonType?: "error" | "success";
   closeModal: () => void;
   description?: React.ReactNode;
   title?: React.ReactNode;
@@ -20,6 +21,7 @@ interface Props {
 
 export function ConfirmModal({
   closeModal,
+  confirmButtonType = "error",
   description = "Are you sure? This action cannot be reversed.",
   onClickConfirm,
   title = "Confirm Action",
@@ -32,7 +34,7 @@ export function ConfirmModal({
         <Text>{description}</Text>
       </InfoPanel>
 
-      <Group gap="normal">
+      <Group gap="normal" equalWidthChildren>
         <Button
           onClick={(e) => {
             e.preventDefault();
@@ -52,7 +54,7 @@ export function ConfirmModal({
               closeModal();
             });
           }}
-          color="error"
+          color={confirmButtonType}
           style="secondary"
           type="button"
           isPending={isPending}

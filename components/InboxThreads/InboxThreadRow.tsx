@@ -77,7 +77,7 @@ export function InboxThreadRow({ archived, thread }: Props) {
           {isUnread && <div className={styles.unreadIndicator} />}
           <Text
             className={classnames(isUnread && styles.unreadText)}
-            color="primary"
+            color="fontPrimary"
             whiteSpace="nowrap"
           >
             {thread.senderName}
@@ -89,7 +89,7 @@ export function InboxThreadRow({ archived, thread }: Props) {
                 styles.inboxMessageSubject,
                 isUnread && styles.unreadText,
               )}
-              color="primary"
+              color="fontPrimary"
               fontWeight="bold"
             >
               {thread.subject}

@@ -5,6 +5,7 @@ interface FindMembersFilters {
   strataId?: string;
   userId?: string;
   includePending?: boolean;
+  pendingOnly?: boolean;
 }
 
 export async function listStrataMemberships(filter: FindMembersFilters) {
@@ -24,7 +25,9 @@ export async function listStrataMemberships(filter: FindMembersFilters) {
     query = query.where("stratas.domain", "=", filter.domain);
   }
 
-  if (!filter.includePending) {
+  if (filter.pendingOnly) {
+    query = query.where("strata_memberships.role", "=", "pending");
+  } else if (!filter.includePending) {
     query = query.where("strata_memberships.role", "!=", "pending");
   }
 

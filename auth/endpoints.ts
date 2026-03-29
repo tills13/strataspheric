@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { getUserById } from "../data/users/getUser";
 import { signInUser } from "../data/users/signInUser";
 import * as formdata from "../utils/formdata";
-import { formatJwtCookie } from "./cookies";
+import { ADMIN_COOKIE_NAME, formatCookie, formatJwtCookie } from "./cookies";
 import { VALIDITY_PERIOD, buildJwt, getKey, readJwtFromRequest } from "./jwt";
 import { Config } from "./types";
 
@@ -74,10 +74,11 @@ export async function POST(config: Config, req: NextRequest) {
 
   if (requestUrl.pathname === SIGN_OUT_ENDPOINT) {
     return new Response("", {
-      headers: {
-        "content-type": "application/json",
-        "set-cookie": formatJwtCookie(cookieConfig, "", -1),
-      },
+      headers: [
+        ["content-type", "application/json"],
+        ["set-cookie", formatJwtCookie(cookieConfig, "", -1)],
+        ["set-cookie", formatCookie(ADMIN_COOKIE_NAME, cookieConfig, "", -1)],
+      ],
       status: 200,
     });
   } else if (requestUrl.pathname === SIGN_IN_ENDPOINT) {

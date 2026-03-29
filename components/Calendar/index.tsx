@@ -16,7 +16,15 @@ import { DateRange, useRangeSelection } from "./useRangeSelection";
 export type CalendarEvent = Pick<
   Event,
   "id" | "name" | "description" | "startDate" | "endDate"
-> & { meetingId?: string; readOnly?: boolean };
+> & {
+  meetingId?: string;
+  amenityBookingId?: string | null;
+  amenityBookingThreadId?: string | null;
+  amenityName?: string | null;
+  amenityDescription?: string | null;
+  amenityImageSrc?: string | null;
+  readOnly?: boolean;
+};
 
 interface Props {
   canEdit?: boolean;

@@ -1,6 +1,7 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { auth } from "../../../../../auth";
+import { ApproveStrataMembershipButton } from "../../../../../components/ApproveStrataMembershipButton";
 import { Badge } from "../../../../../components/Badge";
 import { Button } from "../../../../../components/Button";
 import { CreateOrUpdateStrataMembershipForm } from "../../../../../components/CreateOrUpdateStrataMembershipForm";
@@ -13,6 +14,8 @@ import { EmailIcon } from "../../../../../components/Icon/EmailIcon";
 import { PhoneIcon } from "../../../../../components/Icon/PhoneIcon";
 import { Input } from "../../../../../components/Input";
 import { ExternalLink } from "../../../../../components/Link/ExternalLink";
+import { RejectStrataMembershipButton } from "../../../../../components/RejectStrataMembershipButton";
+import { RemoveStrataMembershipButton } from "../../../../../components/RemoveStrataMembershipButton";
 import { StrataRoleSelect } from "../../../../../components/StrataRoleSelect";
 import { Text } from "../../../../../components/Text";
 import { getStrataMembership } from "../../../../../data/memberships/getStrataMembership";
@@ -46,11 +49,18 @@ export default async function Page({
 
   const canEditInformation = can(session?.user, "stratas.memberships.edit");
   const canEditPermissions = can(session?.user, "stratas.memberships.*");
+  const canDelete = can(session?.user, "stratas.memberships.delete");
 
   const currentUserRole = currentUserMembership?.role ?? "owner";
   const isEditingSelf = session?.user.id === userId;
   const canEditMonthlyFee = canEditInformation && !isEditingSelf;
   const isTargetHigherRole = isRoleHigherThan(membership.role, currentUserRole);
+  const isPending = membership.role === "pending";
+
+  const canApprove = canEditInformation && isPending;
+  const canReject = canDelete && isPending;
+  const canRemove =
+    canDelete && !isPending && !isEditingSelf && !isTargetHigherRole;
 
   const strataRoleSelectDisabled =
     isTargetHigherRole ||
@@ -171,6 +181,7 @@ export default async function Page({
             icon={<EmailIcon />}
             style="secondary"
             iconTextBehaviour="centerRemainder"
+            type="button"
             fullWidth
           >
             Email
@@ -183,6 +194,7 @@ export default async function Page({
               icon={<PhoneIcon />}
               style="secondary"
               iconTextBehaviour="centerRemainder"
+              type="button"
               fullWidth
             >
               Phone
@@ -191,9 +203,25 @@ export default async function Page({
         )}
       </Group>
 
-      {canEditPermissions && (
-        <UserPermissionsFields membership={membership} />
+      {(canApprove || canReject || canRemove) && (
+        <Group equalWidthChildren>
+          {canApprove && (
+            <ApproveStrataMembershipButton
+              membership={membership}
+              style="secondary"
+              fullWidth
+            />
+          )}
+          {canReject && (
+            <RejectStrataMembershipButton membership={membership} />
+          )}
+          {canRemove && (
+            <RemoveStrataMembershipButton membership={membership} />
+          )}
+        </Group>
       )}
+
+      {canEditPermissions && <UserPermissionsFields membership={membership} />}
     </>
   );
 

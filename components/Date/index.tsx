@@ -23,7 +23,11 @@ function formatDate(
   compactOutputPrefix?: boolean,
 ): string {
   if (output === "date") {
-    return d.toLocaleDateString();
+    return d.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
   } else if (output === "time") {
     return d.toLocaleTimeString(undefined, {
       hour: "numeric",

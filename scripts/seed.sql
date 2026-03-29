@@ -91,7 +91,13 @@ INSERT INTO files (id, strataId, uploaderId, name, description, isPublic, sizeBy
   ('019579a0-3001-7000-8000-000000000007', '019579a0-1000-7000-8000-000000000001', '019579a0-0001-7000-8000-000000000001', 'Pool Area Photo.jpg',              'Rooftop pool amenity photo',                   1, 4500000, 'oceanview/pool-photo.jpg',            'image/jpeg',      strftime('%s', '2024-08-10')),
   ('019579a0-3001-7000-8000-000000000008', '019579a0-1000-7000-8000-000000000001', '019579a0-0001-7000-8000-000000000001', 'BBQ Area Photo.jpg',               'Rooftop BBQ area photo',                       1, 3800000, 'oceanview/bbq-photo.jpg',             'image/jpeg',      strftime('%s', '2024-08-10')),
   ('019579a0-3001-7000-8000-000000000009', '019579a0-1000-7000-8000-000000000001', '019579a0-0001-7000-8000-000000000001', 'Party Room Photo.jpg',             'Ground floor party room',                      1, 3200000, 'oceanview/party-room-photo.jpg',      'image/jpeg',      strftime('%s', '2024-08-10')),
-  ('019579a0-3001-7000-8000-000000000010', '019579a0-1000-7000-8000-000000000001', '019579a0-0001-7000-8000-000000000001', 'Guest Suite Photo.jpg',            'Guest suite on 6th floor',                     1, 2900000, 'oceanview/guest-suite-photo.jpg',     'image/jpeg',      strftime('%s', '2024-08-10'));
+  ('019579a0-3001-7000-8000-000000000010', '019579a0-1000-7000-8000-000000000001', '019579a0-0001-7000-8000-000000000001', 'Guest Suite Photo.jpg',            'Guest suite on 6th floor',                     1, 2900000, 'oceanview/guest-suite-photo.jpg',     'image/jpeg',      strftime('%s', '2024-08-10')),
+  ('019579a0-3001-7000-8000-000000000011', '019579a0-1000-7000-8000-000000000001', '019579a0-0003-7000-8000-000000000003', 'Q1 2026 Financial Report.pdf',     'First quarter financial statements',            0, 1102000, 'oceanview/q1-2026-financials.pdf',    'application/pdf', strftime('%s', '2026-03-31')),
+  ('019579a0-3001-7000-8000-000000000012', '019579a0-1000-7000-8000-000000000001', '019579a0-0001-7000-8000-000000000001', 'Elevator Inspection Report.pdf',   'Annual elevator safety inspection',             0, 2780000, 'oceanview/elevator-inspection-2026.pdf','application/pdf', strftime('%s', '2026-01-22')),
+  ('019579a0-3001-7000-8000-000000000013', '019579a0-1000-7000-8000-000000000001', '019579a0-0002-7000-8000-000000000002', 'Pet Policy.pdf',                   'Updated pet policy for residents',              1, 345000,  'oceanview/pet-policy.pdf',            'application/pdf', strftime('%s', '2025-06-01')),
+  ('019579a0-3001-7000-8000-000000000014', '019579a0-1000-7000-8000-000000000001', '019579a0-0001-7000-8000-000000000001', 'Emergency Procedures.pdf',         'Building emergency evacuation procedures',      1, 890000,  'oceanview/emergency-procedures.pdf',  'application/pdf', strftime('%s', '2025-09-15')),
+  ('019579a0-3001-7000-8000-000000000015', '019579a0-1000-7000-8000-000000000001', '019579a0-0004-7000-8000-000000000004', 'Council Meeting Minutes Feb.pdf',  'February 2026 council meeting minutes',         0, 675000,  'oceanview/council-minutes-2026-02.pdf','application/pdf', strftime('%s', '2026-02-15')),
+  ('019579a0-3001-7000-8000-000000000016', '019579a0-1000-7000-8000-000000000001', '019579a0-0005-7000-8000-000000000005', 'Move-in Checklist.pdf',            'Checklist for new residents moving in',         1, 210000,  'oceanview/move-in-checklist.pdf',     'application/pdf', strftime('%s', '2025-04-10'));
 
 -- Set bylaws file on strata
 UPDATE stratas SET bylawsFileId = '019579a0-3001-7000-8000-000000000001' WHERE id = '019579a0-1000-7000-8000-000000000001';
@@ -209,7 +215,15 @@ INSERT INTO invoices (id, strataId, type, status, identifier, description, amoun
   ('019579a0-7001-7000-8000-000000000003', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'final', 'INV-2026-003', 'Fire alarm inspection and testing',              3500.00,  'FireSafe Inspections Inc.',   1, strftime('%s', '2026-03-20'), strftime('%s', '2026-03-10'), strftime('%s', '2026-03-20')),
   ('019579a0-7001-7000-8000-000000000004', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'final', 'INV-2026-004', 'Elevator maintenance contract - Q2 2026',        8500.00,  'Pacific Elevators Inc.',      0, strftime('%s', '2026-04-30'), strftime('%s', '2026-03-25'), strftime('%s', '2026-03-25')),
   ('019579a0-7001-7000-8000-000000000005', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'draft', 'INV-2026-005', 'Window cleaning - all units exterior',           4200.00,  'Crystal Clear Windows',       0, strftime('%s', '2026-05-20'), strftime('%s', '2026-03-28'), strftime('%s', '2026-03-28')),
-  ('019579a0-7001-7000-8000-000000000006', '019579a0-1000-7000-8000-000000000001', 'incoming', 'final', 'RCV-2026-001', 'Insurance claim - water damage unit 301',        12500.00, NULL,                          1, NULL,                         strftime('%s', '2026-01-20'), strftime('%s', '2026-02-10'));
+  ('019579a0-7001-7000-8000-000000000006', '019579a0-1000-7000-8000-000000000001', 'incoming', 'final', 'RCV-2026-001', 'Insurance claim - water damage unit 301',        12500.00, NULL,                          1, NULL,                         strftime('%s', '2026-01-20'), strftime('%s', '2026-02-10')),
+  ('019579a0-7001-7000-8000-000000000007', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'final', 'INV-2026-006', 'Plumbing repair - common area washroom',         2800.00,  'Coastal Plumbing Co.',        1, strftime('%s', '2026-02-28'), strftime('%s', '2026-02-10'), strftime('%s', '2026-02-28')),
+  ('019579a0-7001-7000-8000-000000000008', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'final', 'INV-2026-007', 'Security camera system upgrade',                 6700.00,  'SecureTech Solutions',        0, strftime('%s', '2026-04-15'), strftime('%s', '2026-03-18'), strftime('%s', '2026-03-18')),
+  ('019579a0-7001-7000-8000-000000000009', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'final', 'INV-2026-008', 'Hallway carpet cleaning - all floors',           1500.00,  'Fresh Start Cleaning',        1, strftime('%s', '2026-02-15'), strftime('%s', '2026-01-30'), strftime('%s', '2026-02-15')),
+  ('019579a0-7001-7000-8000-000000000010', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'draft', 'INV-2026-009', 'Lobby renovation - phase 1 deposit',             15000.00, 'Urban Interiors Ltd.',         0, strftime('%s', '2026-05-01'), strftime('%s', '2026-03-29'), strftime('%s', '2026-03-29')),
+  ('019579a0-7001-7000-8000-000000000011', '019579a0-1000-7000-8000-000000000001', 'incoming', 'final', 'RCV-2026-002', 'Parking rental revenue - Q1 2026',               3600.00,  NULL,                          1, NULL,                         strftime('%s', '2026-03-31'), strftime('%s', '2026-03-31')),
+  ('019579a0-7001-7000-8000-000000000012', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'final', 'INV-2026-010', 'Monthly pest control - March',                   450.00,   'No Bug Zone Pest Control',    1, strftime('%s', '2026-03-31'), strftime('%s', '2026-03-05'), strftime('%s', '2026-03-28')),
+  ('019579a0-7001-7000-8000-000000000013', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'final', 'INV-2026-011', 'Fire extinguisher servicing',                    920.00,   'FireSafe Inspections Inc.',    1, strftime('%s', '2026-03-10'), strftime('%s', '2026-02-20'), strftime('%s', '2026-03-08')),
+  ('019579a0-7001-7000-8000-000000000014', '019579a0-1000-7000-8000-000000000001', 'outgoing', 'draft', 'INV-2026-012', 'HVAC system annual maintenance',                 5200.00,  'Pacific Climate Controls',    0, strftime('%s', '2026-05-15'), strftime('%s', '2026-03-28'), strftime('%s', '2026-03-28'));
 
 -- ============================================================
 -- Inbox Messages (threads with replies)
@@ -257,6 +271,58 @@ INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderUser
    'Hi Sarah,\n\nJust a heads up that I will be moving some new furniture into my unit on April 8th. The movers are scheduled between 9am and 2pm. I will make sure they use the service elevator and protect the hallway floors.\n\nDo I need to fill out any forms or book the elevator?\n\nThanks,\nEmma',
    '019579a0-0005-7000-8000-000000000005', 'Emma Thompson', 'tills13+emma.thompson@gmail.com', strftime('%s', '2026-03-27 16:00:00'), 1);
 
+-- Thread 6: Water leak report
+INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderUserId, senderName, senderEmail, sentAt, isUnread) VALUES
+  ('019579a0-8001-7000-8000-000000000009', '019579a0-1000-7000-8000-000000000001', 'thread-006', 'Water Stain on Ceiling - Unit 401',
+   'Hi,\n\nI noticed a water stain appearing on my bathroom ceiling. It seems to be getting bigger. Could be a leak from the unit above or a pipe issue. Can someone come take a look?\n\nThanks,\nLisa Nguyen',
+   '019579a0-0007-7000-8000-000000000007', 'Lisa Nguyen', 'tills13+lisa.nguyen@gmail.com', strftime('%s', '2026-03-18 09:00:00'), 0);
+
+INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderUserId, senderName, senderEmail, sentAt, isUnread) VALUES
+  ('019579a0-8001-7000-8000-000000000010', '019579a0-1000-7000-8000-000000000001', 'thread-006', 'RE: Water Stain on Ceiling - Unit 401',
+   'Lisa, I have scheduled a plumber to come check it out tomorrow morning. Please make sure someone is home between 9-11am.\n\n- Sarah',
+   '019579a0-0001-7000-8000-000000000001', 'Sarah Chen', 'tills13+sarah.chen@gmail.com', strftime('%s', '2026-03-18 14:30:00'), 0);
+
+-- Thread 7: Package theft concern
+INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderUserId, senderName, senderEmail, sentAt, isUnread) VALUES
+  ('019579a0-8001-7000-8000-000000000011', '019579a0-1000-7000-8000-000000000001', 'thread-007', 'Missing Package from Lobby',
+   'Council,\n\nI had a package delivered on Monday that was left in the lobby and it has gone missing. This is the second time this has happened. Can we look into getting a secure package locker system?\n\nMike Brown, Unit 402',
+   '019579a0-0008-7000-8000-000000000008', 'Mike Brown', 'tills13+mike.brown@gmail.com', strftime('%s', '2026-03-15 18:45:00'), 0);
+
+-- Thread 8: Recycling question
+INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderUserId, senderName, senderEmail, sentAt, isUnread) VALUES
+  ('019579a0-8001-7000-8000-000000000012', '019579a0-1000-7000-8000-000000000001', 'thread-008', 'Recycling Bin Overflow',
+   'The recycling bins in the garbage room are constantly overflowing by Friday. Can we get additional bins or arrange more frequent pickup?\n\nRachel Lee, Unit 501',
+   '019579a0-0009-7000-8000-000000000009', 'Rachel Lee', 'tills13+rachel.lee@gmail.com', strftime('%s', '2026-03-12 10:20:00'), 0);
+
+INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderUserId, senderName, senderEmail, sentAt, isUnread) VALUES
+  ('019579a0-8001-7000-8000-000000000013', '019579a0-1000-7000-8000-000000000001', 'thread-008', 'RE: Recycling Bin Overflow',
+   'Good point Rachel. I have contacted the waste management company to add a Wednesday pickup in addition to Monday. Should start next week.\n\n- Sarah',
+   '019579a0-0001-7000-8000-000000000001', 'Sarah Chen', 'tills13+sarah.chen@gmail.com', strftime('%s', '2026-03-12 15:00:00'), 0);
+
+-- Thread 9: Bike storage request
+INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderUserId, senderName, senderEmail, sentAt, isUnread) VALUES
+  ('019579a0-8001-7000-8000-000000000014', '019579a0-1000-7000-8000-000000000001', 'thread-009', 'Bike Storage Room Access',
+   'Hi Sarah,\n\nI recently got a bike and would like access to the bike storage room in P1. Could you let me know how to get a key or fob for it?\n\nThanks,\nAlex',
+   '019579a0-0006-7000-8000-000000000006', 'Alex Patel', 'tills13+alex.patel@gmail.com', strftime('%s', '2026-03-08 13:10:00'), 0);
+
+-- Thread 10: Insurance question from vendor
+INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderName, senderEmail, sentAt, isUnread) VALUES
+  ('019579a0-8001-7000-8000-000000000015', '019579a0-1000-7000-8000-000000000001', 'thread-010', 'Insurance Renewal Quote - 2026/2027',
+   'Dear Strata Council,\n\nYour current building insurance policy expires on June 30, 2026. We would like to offer a renewal quote for the upcoming term. Please find our proposed premium and coverage details below.\n\nAnnual Premium: $42,500 (3.2% increase)\nDeductible: $25,000\nCoverage: $50M replacement cost\n\nPlease let us know if you would like to schedule a call to discuss.\n\nRegards,\nJennifer Walsh\nWestCoast Insurance Brokers',
+   'Jennifer Walsh', 'tills13+jennifer.walsh@gmail.com', strftime('%s', '2026-03-24 11:00:00'), 1);
+
+-- Thread 11: Laundry room complaint
+INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderUserId, senderName, senderEmail, sentAt, isUnread) VALUES
+  ('019579a0-8001-7000-8000-000000000016', '019579a0-1000-7000-8000-000000000001', 'thread-011', 'Broken Dryer in Laundry Room',
+   'The dryer on the left side in the 2nd floor laundry room has not been heating for the past week. Clothes come out damp after a full cycle. Can we get it repaired?\n\nJames Wilson, Unit 102',
+   '019579a0-0002-7000-8000-000000000002', 'James Wilson', 'tills13+james.wilson@gmail.com', strftime('%s', '2026-03-19 20:30:00'), 0);
+
+-- Thread 12: Garden committee
+INSERT INTO inbox_messages (id, strataId, threadId, subject, message, senderUserId, senderName, senderEmail, sentAt, isUnread) VALUES
+  ('019579a0-8001-7000-8000-000000000017', '019579a0-1000-7000-8000-000000000001', 'thread-012', 'Starting a Garden Committee',
+   'Hello everyone,\n\nI would like to propose starting a garden committee to maintain the planters on the ground floor patio. A few of us have been informally caring for them but it would be great to make it official and get a small budget for plants and soil.\n\nWould anyone be interested in joining?\n\nEmma Thompson, Unit 301',
+   '019579a0-0005-7000-8000-000000000005', 'Emma Thompson', 'tills13+emma.thompson@gmail.com', strftime('%s', '2026-03-10 09:15:00'), 0);
+
 -- ============================================================
 -- Inbox Thread Chats (internal council discussion on threads)
 -- ============================================================
@@ -283,3 +349,36 @@ INSERT INTO strata_widgets (id, strataId, type, title) VALUES
 INSERT INTO widget_info (widgetId, body) VALUES
   ('019579a0-9001-7000-8000-000000000002', '<p><strong>Building Manager:</strong> Sarah Chen</p><p>Email: tills13+sarah.chen@gmail.com</p><p>Phone: 604-555-0101</p><p><strong>Emergency Maintenance:</strong> 604-555-9999</p><p><strong>Concierge Hours:</strong> 8am - 10pm daily</p>'),
   ('019579a0-9001-7000-8000-000000000003', '<p>Welcome to Oceanview Towers! This is your strata dashboard where you can find important documents, upcoming events, and communicate with the strata council.</p><p>If you are new to the building, please review the bylaws and parking rules in the Files section.</p>');
+
+-- ============================================================
+-- Second Strata: Harbour Ridge
+-- ============================================================
+
+INSERT INTO stratas (id, name, domain, domainRecordId, numUnits, strataId, streetAddress, postalCode, city, provinceState, isPublic, status, strataActiveEmailSent, latitude, longitude, stripeCustomerId, stripeAccountId, stripeAccountStatus, createdAt, inboxEmail) VALUES
+  ('019579a0-1000-7000-8000-000000000002', 'Harbour Ridge', 'harbourridge.strataspheric.local:3000', 'dns_rec_seed_002', 12, 'VIS5678', '880 Harbour Road', 'V6Z 2R5', 'Vancouver', 'BC', 1, 'active', 1, 49.2830, -123.1170, 'cus_seed_harbourridge', NULL, 'none', strftime('%s', '2025-01-10'), 'tills13+harbourridge.inbox@gmail.com');
+
+INSERT INTO strata_plans (id, strataId, subscriptionId, enableInbox, enableInvoices, enableAmenities, enableDirectory, enableEmailNotifications, enableMeetings) VALUES
+  ('019579a0-2000-7000-8000-000000000002', '019579a0-1000-7000-8000-000000000002', 'sub_seed_harbourridge', 1, 1, 1, 1, 1, 1);
+
+-- Memberships: Sarah is owner here, James is administrator
+INSERT INTO strata_memberships (strataId, userId, unit, role, phoneNumber, monthlyFee, notifyEvents) VALUES
+  ('019579a0-1000-7000-8000-000000000002', '019579a0-0002-7000-8000-000000000002', '1',  'administrator', '604-555-0102', 35000, 1),
+  ('019579a0-1000-7000-8000-000000000002', '019579a0-0001-7000-8000-000000000001', '4',  'owner',         '604-555-0101', 35000, 1),
+  ('019579a0-1000-7000-8000-000000000002', '019579a0-0005-7000-8000-000000000005', '7',  'owner',         '604-555-0301', 35000, 0),
+  ('019579a0-1000-7000-8000-000000000002', '019579a0-0008-7000-8000-000000000008', '10', 'treasurer',     NULL,           35000, 1);
+
+-- ============================================================
+-- Third Strata: Maple Gardens
+-- ============================================================
+
+INSERT INTO stratas (id, name, domain, domainRecordId, numUnits, strataId, streetAddress, postalCode, city, provinceState, isPublic, status, strataActiveEmailSent, latitude, longitude, stripeCustomerId, stripeAccountId, stripeAccountStatus, createdAt, inboxEmail) VALUES
+  ('019579a0-1000-7000-8000-000000000003', 'Maple Gardens', 'maplegardens.strataspheric.local:3000', 'dns_rec_seed_003', 8, 'VIS9012', '2200 Maple Street', 'V6J 3T4', 'Vancouver', 'BC', 1, 'active', 1, 49.2620, -123.1530, 'cus_seed_maplegardens', NULL, 'none', strftime('%s', '2025-06-20'), 'tills13+maplegardens.inbox@gmail.com');
+
+INSERT INTO strata_plans (id, strataId, subscriptionId, enableInbox, enableInvoices, enableAmenities, enableDirectory, enableEmailNotifications, enableMeetings) VALUES
+  ('019579a0-2000-7000-8000-000000000003', '019579a0-1000-7000-8000-000000000003', 'sub_seed_maplegardens', 1, 1, 1, 1, 1, 1);
+
+-- Memberships: Sarah is president here, Maria is administrator
+INSERT INTO strata_memberships (strataId, userId, unit, role, phoneNumber, monthlyFee, notifyEvents) VALUES
+  ('019579a0-1000-7000-8000-000000000003', '019579a0-0003-7000-8000-000000000003', '1', 'administrator', '604-555-0201', 28000, 1),
+  ('019579a0-1000-7000-8000-000000000003', '019579a0-0001-7000-8000-000000000001', '3', 'president',     '604-555-0101', 28000, 1),
+  ('019579a0-1000-7000-8000-000000000003', '019579a0-0006-7000-8000-000000000006', '5', 'owner',         '604-555-0302', 28000, 0);

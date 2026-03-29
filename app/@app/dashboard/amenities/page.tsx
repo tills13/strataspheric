@@ -4,9 +4,8 @@ import { Upsell } from "../../../../components/Upsell";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { AmenitiesPage } from "./AmenitiesPage";
 
-const AMENITIES_UPSELL = `
-Manage amenity bookings & invoicing directly within Strataspheric.
-`.trim();
+const AMENITIES_UPSELL =
+  "Let residents book shared spaces online. Reduce scheduling conflicts and keep amenity usage fair and transparent.";
 
 export default async function Page() {
   const strata = await mustGetCurrentStrata();

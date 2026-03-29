@@ -1,8 +1,10 @@
+import { cache } from "react";
+
 import { StrataPlan, db } from "..";
 
 export type Strata = Awaited<ReturnType<typeof getStrataById>>;
 
-export async function getStrataById(id: string) {
+export const getStrataById = cache(async (id: string) => {
   const row = await db()
     .selectFrom("stratas")
     .innerJoin("strata_plans", "stratas.id", "strata_plans.strataId")
@@ -46,4 +48,4 @@ export async function getStrataById(id: string) {
       subscriptionId,
     } satisfies StrataPlan,
   };
-}
+});

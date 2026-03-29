@@ -31,22 +31,28 @@ export function JoinFromTokenForm({
     <form
       action={async (fd) => {
         await joinFromTokenAction(token, fd);
-        await signIn(membership.email, formdata.getString(fd, "password"));
+        const result = await signIn(
+          membership.email,
+          formdata.getString(fd, "password"),
+        );
+
+        if (!result.error) {
+          window.location.href = "/dashboard";
+        }
       }}
       className={className}
     >
       <Stack>
         <Header as="h2">
           Welcome to Strataspheric,{" "}
-          <Text as="span" color="secondary" fontFamily="unset" fontSize="unset">
+          <Text as="span" color="primary" fontFamily="unset" fontSize="unset">
             {membership.name}
           </Text>
         </Header>
 
-        <Text mb="large">
+        <Text>
           You have been invited to join <b>{strata.name}</b> on Strataspheric.
-          Finish setting up your account be creating a password. After you've
-          signed in, you can complete your Strataspheric profile.
+          Finish setting up your account by creating a password below.
         </Text>
 
         <Input placeholder="Password" name="password" type="password" />

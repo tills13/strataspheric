@@ -3,7 +3,9 @@
 import React, { useCallback, useMemo, useState } from "react";
 
 interface TableSelectContext {
+  clearSelection(): void;
   isRowSelected(rowId: string): boolean;
+  selectAll(rowIds: string[]): void;
   toggleRowSelected(rowId: string): void;
 }
 
@@ -35,9 +37,16 @@ export function TableSelectProvider({
     [],
   );
 
+  const clearSelection = useCallback(() => setSelectedRows([]), []);
+
+  const selectAll = useCallback(
+    (rowIds: string[]) => setSelectedRows(rowIds),
+    [],
+  );
+
   const value = useMemo(
-    () => ({ isRowSelected, toggleRowSelected }),
-    [isRowSelected, toggleRowSelected],
+    () => ({ clearSelection, isRowSelected, selectAll, toggleRowSelected }),
+    [clearSelection, isRowSelected, selectAll, toggleRowSelected],
   );
 
   return (

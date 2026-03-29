@@ -178,3 +178,31 @@ export const approveStrataMembershipAction = withPermissions(
     revalidatePath("/dashboard/membership");
   },
 );
+
+export const bulkApproveStrataMembershipsAction = withPermissions(
+  ["stratas.memberships.edit"],
+  async (_, userIds: string[]) => {
+    const strata = await mustGetCurrentStrata();
+
+    await Promise.all(
+      userIds.map((userId) =>
+        updateStrataMembership(strata.id, userId, { role: "owner" }),
+      ),
+    );
+
+    revalidatePath("/dashboard/membership");
+  },
+);
+
+export const bulkRejectStrataMembershipsAction = withPermissions(
+  ["stratas.memberships.delete"],
+  async (_, userIds: string[]) => {
+    const strata = await mustGetCurrentStrata();
+
+    await Promise.all(
+      userIds.map((userId) => deleteStrataMembership(strata.id, userId)),
+    );
+
+    revalidatePath("/dashboard/membership");
+  },
+);

@@ -126,6 +126,31 @@ export const toggleMobileDropdownIconActive = style([
   },
 ]);
 
+const baseSubLink = style([
+  baseSubheaderLink,
+  {
+    paddingLeft: vars.spacing.large,
+    order: 1,
+  },
+]);
+
+export const subLink = style([
+  baseSubLink,
+  {
+    color: vars.fontColors.secondary,
+  },
+]);
+
+export const activeSubLink = style([
+  baseSubLink,
+  {
+    color: vars.fontColors.primary,
+    fontWeight: vars.fontWeights.medium,
+    backgroundColor: vars.surfaces.interactiveHover,
+    borderRadius: vars.borderRadius.md,
+  },
+]);
+
 export const mobileBadge = style({
   display: "inline-flex",
   alignItems: "center",

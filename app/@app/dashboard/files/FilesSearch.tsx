@@ -52,8 +52,8 @@ export function FilesSearch({ className, searchTerm, visibility }: Props) {
       <Stack>
         <Input
           name="search"
-          label="Name or Description"
-          placeholder="e.g. 2024 AGM Minutes"
+          label="Name or description"
+          placeholder="Name or Description"
           defaultValue={searchTerm}
           required={false}
         />

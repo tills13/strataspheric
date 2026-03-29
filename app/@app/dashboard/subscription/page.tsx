@@ -5,36 +5,85 @@ import { mustAuth } from "../../../../auth";
 import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { listStrataMemberships } from "../../../../data/memberships/listStrataMemberships";
 import { plans } from "../../../../data/strataPlans/constants";
+import { fulfillCheckoutSession } from "../../../../data/strataPlans/fulfillCheckoutSession";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { stripe } from "../../../../data/stripe";
 import { can } from "../../../../data/users/permissions";
 import { SubscriptionPage } from "./SubscriptionPage";
 
-export default async function Page() {
-  const [session, strata] = await Promise.all([
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ session_id?: string }>;
+}) {
+  const [session, strata, params] = await Promise.all([
     mustAuth(),
     mustGetCurrentStrata(),
+    searchParams,
   ]);
 
   if (!can(session.user, "stratas.settings.edit")) {
     notFound();
   }
 
+  // Fulfill checkout session on return from Stripe
+  let subscriptionId = strata.plan.subscriptionId;
+  if (params.session_id) {
+    const fulfilled = await fulfillCheckoutSession(
+      params.session_id,
+      strata.id,
+      strata.plan.subscriptionId,
+    );
+    if (fulfilled) {
+      subscriptionId = fulfilled;
+    }
+  }
+
   const [invoicesResult, subscriptionResult, memberships] = await Promise.all([
     stripe.invoices
       .list({ customer: strata.stripeCustomerId, limit: 24 })
       .catch(() => ({ data: [] as Stripe.Invoice[] })),
-    stripe.subscriptions.retrieve(strata.plan.subscriptionId).catch(() => null),
+    subscriptionId
+      ? stripe.subscriptions.retrieve(subscriptionId).catch(() => null)
+      : Promise.resolve(null),
     listStrataMemberships({ strataId: strata.id }),
   ]);
 
-  const stripeInvoices = "data" in invoicesResult ? invoicesResult.data : [];
-  const subscription = subscriptionResult;
+  const rawInvoices = "data" in invoicesResult ? invoicesResult.data : [];
+
+  const stripeInvoices = rawInvoices.map((inv) => ({
+    id: inv.id ?? "",
+    number: inv.number ?? null,
+    created: inv.created ?? null,
+    amount_due: inv.amount_due,
+    currency: inv.currency,
+    status: inv.status ?? null,
+    invoice_pdf: inv.invoice_pdf ?? null,
+  }));
+
+  const item = subscriptionResult?.items.data[0];
+
+  const subscription = subscriptionResult
+    ? {
+        status: subscriptionResult.status,
+        billing_cycle_anchor: subscriptionResult.billing_cycle_anchor,
+        cancel_at_period_end: subscriptionResult.cancel_at_period_end,
+        cancel_at: subscriptionResult.cancel_at,
+        item: item
+          ? {
+              unitAmount: item.price.unit_amount ?? 0,
+              quantity: item.quantity ?? 1,
+              currency: item.price.currency,
+              interval: item.price.recurring?.interval,
+            }
+          : null,
+      }
+    : null;
 
   const productId =
-    typeof subscription?.items.data[0]?.price.product === "string"
-      ? subscription.items.data[0].price.product
-      : subscription?.items.data[0]?.price.product?.id;
+    typeof item?.price.product === "string"
+      ? item.price.product
+      : item?.price.product?.id;
 
   const currentPlan = plans.find((p) => p.productId === productId);
   const alternatePlan =

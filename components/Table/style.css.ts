@@ -5,14 +5,14 @@ import { padding } from "../../theme";
 
 export const table = style({
   display: "grid",
-  gridTemplateColumns: "auto min-content",
+  gridTemplateColumns: "1fr min-content",
   columnGap: vars.spacing.normal,
   rowGap: vars.spacing["6"],
 });
 
 export const tableWithSelect = style({
   display: "grid",
-  gridTemplateColumns: "min-content auto min-content",
+  gridTemplateColumns: "min-content 1fr min-content",
   columnGap: vars.spacing.normal,
   rowGap: vars.spacing["6"],
 });
@@ -94,6 +94,7 @@ export const tableRowCheckbox = style({
 });
 
 export const tableRowContent = style({
+  minWidth: 0,
   overflow: "hidden",
   textOverflow: "ellipsis",
 });
@@ -101,28 +102,16 @@ export const tableRowContent = style({
 export const tableRowEnd = style({});
 
 export const tableFooter = style({
-  display: "grid",
+  display: "flex",
+  justifyContent: "flex-end",
   gridColumn: "1/-1",
-  gridTemplateColumns: "subgrid",
   minHeight: vars.sizes.large,
+  padding: padding(vars.spacing["0"], vars.spacing.normal),
 });
 
 export const tableFooterInner = style({
-  width: "100%",
-  display: "grid",
-  gridTemplateColumns: "subgrid",
-  gridColumn: "1/-1",
+  display: "flex",
   alignItems: "center",
-
-  selectors: {
-    [`${table} &`]: {
-      padding: padding(vars.spacing["0"], vars.spacing.normal),
-    },
-    [`${tableWithSelect} &`]: {
-      paddingLeft: vars.spacing.normal,
-      paddingRight: vars.spacing.normal,
-    },
-  },
 });
 
 export const tableFooterEnd = style({});

@@ -4,6 +4,7 @@ export type Thread = Awaited<ReturnType<typeof getThread>>;
 
 type GetThreadFilter = {
   senderUserId?: string;
+  userId?: string;
   viewId?: string;
 };
 
@@ -16,19 +17,36 @@ export function getThread(threadId: string, filter: GetThreadFilter = {}) {
       "strata_memberships.userId",
     )
     .leftJoin("users", "inbox_messages.senderUserId", "users.id")
+    .$if(!!filter.userId, (qb) =>
+      qb.leftJoin("thread_reads", (join) =>
+        join
+          .onRef("thread_reads.threadId", "=", "inbox_messages.threadId")
+          .on("thread_reads.userId", "=", filter.userId!),
+      ),
+    )
     .select((eb) => [
       "inbox_messages.id",
       "inbox_messages.subject",
       "inbox_messages.message",
       "inbox_messages.threadId",
       "inbox_messages.viewId",
-      "inbox_messages.isUnread",
       "inbox_messages.sentAt",
       "inbox_messages.senderUserId",
       "inbox_messages.strataId",
       "inbox_messages.fileId",
       "inbox_messages.invoiceId",
       "inbox_messages.amenityBookingId",
+      ...(filter.userId
+        ? [
+            eb
+              .case()
+              .when("thread_reads.threadId", "is", null)
+              .then(1)
+              .else(0)
+              .end()
+              .as("isUnread"),
+          ]
+        : [eb.val(1).as("isUnread")]),
       eb.fn
         .coalesce("users.name", "inbox_messages.senderName")
         .as("senderName"),

@@ -6,9 +6,11 @@ import React, { useState } from "react";
 
 import { File } from "../../data";
 import { classnames } from "../../utils/classnames";
+import { Button } from "../Button";
 import { FilePreview } from "../FilePreview";
 import { Group } from "../Group";
 import { AttachmentIcon } from "../Icon/AttachmentIcon";
+import { CircleXIcon } from "../Icon/CircleXIcon";
 import { Icon } from "../Icon/Icon";
 import { Text } from "../Text";
 import { AttachFileModal } from "./AttachFileModal";
@@ -38,38 +40,51 @@ export function AttachFileText({
 
   return (
     <>
-      <button
-        className={classnames(className, styles.attachFileTextText)}
-        onClick={() => setShowAttachFileModal(true)}
-        type="button"
-      >
-        <Group gap="small">
-          {selectedFile ? (
-            <>
-              <FilePreview
-                file={selectedFile}
-                showImagePreview={showImagePreview}
-              />
-              {showFileName && (
+      <Group gap="small">
+        <button
+          className={classnames(className, styles.attachFileTextText)}
+          onClick={() => setShowAttachFileModal(true)}
+          type="button"
+        >
+          <Group gap="small">
+            {selectedFile ? (
+              <>
+                <FilePreview
+                  file={selectedFile}
+                  showImagePreview={showImagePreview}
+                />
+                {showFileName && (
+                  <Text fw="bold" td="underline" ws="nowrap">
+                    {selectedFile.name}
+                  </Text>
+                )}
+              </>
+            ) : (
+              <>
+                {defaultIcon ? (
+                  React.cloneElement(defaultIcon, { size: "xs" })
+                ) : (
+                  <AttachmentIcon size="xs" />
+                )}
                 <Text fw="bold" td="underline" ws="nowrap">
-                  {selectedFile.name}
+                  {placeholder}
                 </Text>
-              )}
-            </>
-          ) : (
-            <>
-              {defaultIcon ? (
-                React.cloneElement(defaultIcon, { size: "xs" })
-              ) : (
-                <AttachmentIcon size="xs" />
-              )}
-              <Text fw="bold" td="underline" ws="nowrap">
-                {placeholder}
-              </Text>
-            </>
-          )}
-        </Group>
-      </button>
+              </>
+            )}
+          </Group>
+        </button>
+
+        {selectedFile && (
+          <Button
+            icon={<CircleXIcon />}
+            onClick={() => onSelectFile?.(undefined)}
+            size="small"
+            style="tertiary"
+            color="error"
+            type="button"
+          />
+        )}
+      </Group>
 
       {showAttachFileModal && (
         <AttachFileModal

@@ -50,7 +50,7 @@ export function AmenityChip({ amenity, className, showPrice = true }: Props) {
             </Stack>
 
             <Group justify="end">
-              {showPrice && amenity.costPerHour && (
+              {showPrice && amenity.costPerHour !== null && (
                 <Text as="span">
                   <Money amount={amenity.costPerHour} /> / hour
                 </Text>

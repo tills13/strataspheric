@@ -105,6 +105,7 @@ export interface InvoicesTable {
   stripeInvoiceId: string | null;
   stripeInvoiceUrl: string | null;
   payerEmail: string | null;
+  archivedAt: ColumnType<number | null, number | null | undefined, number | null>;
 }
 
 export type Invoice = Selectable<InvoicesTable>;
@@ -239,7 +240,7 @@ export interface StrataPlansTable {
   enableDirectory: 0 | 1;
   enableEmailNotifications: 0 | 1;
   enableMeetings: 0 | 1;
-  subscriptionId: ColumnType<string, string, never>;
+  subscriptionId: ColumnType<string, string, string>;
 }
 
 export type StrataPlan = Selectable<StrataPlansTable>;
@@ -331,7 +332,7 @@ export interface AmenityBookingsTable {
   amenityId: string;
   eventId: string;
   deciderId: string | null;
-  decision: "approved" | "rejected" | null;
+  decision: "approved" | "rejected" | "cancelled" | null;
   requesterId: ColumnType<string, string, never>;
   invoiceId: string | null;
 }
@@ -339,6 +340,24 @@ export interface AmenityBookingsTable {
 export type AmenityBooking = Selectable<AmenityBookingsTable>;
 export type NewAmenityBooking = Insertable<AmenityBookingsTable>;
 export type AmenityBookingUpdate = Updateable<AmenityBookingsTable>;
+
+export interface ThreadReadsTable {
+  userId: string;
+  threadId: string;
+  readAt: ColumnType<number, number | undefined, number>;
+}
+
+export type ThreadRead = Selectable<ThreadReadsTable>;
+export type NewThreadRead = Insertable<ThreadReadsTable>;
+
+export interface ThreadArchivesTable {
+  userId: string;
+  threadId: string;
+  archivedAt: ColumnType<number, number | undefined, number>;
+}
+
+export type ThreadArchive = Selectable<ThreadArchivesTable>;
+export type NewThreadArchive = Insertable<ThreadArchivesTable>;
 
 export interface Database {
   amenities: AmenitiesTable;
@@ -354,7 +373,9 @@ export interface Database {
   meeting_attendees: MeetingAttendeesTable;
   meeting_files: MeetingFilesTable;
   meeting_minutes: MeetingMinutesTable;
+  thread_archives: ThreadArchivesTable;
   thread_emails: ThreadEmailsTable;
+  thread_reads: ThreadReadsTable;
   strata_memberships: StrataMembershipsTable;
   strata_plans: StrataPlansTable;
   strata_widgets: StrataWidgetsTable;

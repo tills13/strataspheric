@@ -5,12 +5,12 @@ import ArchiveSelectedInboxMessagesButton from "../../../../components/ArchiveSe
 import { Button } from "../../../../components/Button";
 import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { Group } from "../../../../components/Group";
-import { ArchiveIcon } from "../../../../components/Icon/ArchiveIcon";
 import { GroupIcon } from "../../../../components/Icon/GroupIcon";
 import { SendIcon } from "../../../../components/Icon/SendIcon";
 import { InboxThreads } from "../../../../components/InboxThreads";
 import { InternalLink } from "../../../../components/Link/InternalLink";
 import { Pagination } from "../../../../components/Pagination";
+import { SelectAllCheckbox } from "../../../../components/SelectAllCheckbox";
 import { TableSelectProvider } from "../../../../components/Table/TableSelectProvider";
 import { Upsell } from "../../../../components/Upsell";
 import { countUnreadThreads } from "../../../../data/inbox/countUnreadThreads";
@@ -19,12 +19,8 @@ import { getCurrentStrataPlan } from "../../../../data/strataPlans/getStrataPlan
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
 
-const INBOX_UPSELL = `
- Stop worrying about shared email accounts or private emails being used
-to store official strata communication. The strata inbox streamlines
-conversations with council, automatically keeping a history of all
-correspondance forever.
-`.trim();
+const INBOX_UPSELL =
+  "One place for all strata communication. No more scattered emails or lost threads — every conversation is tracked and searchable.";
 
 export default async function Page({
   searchParams,
@@ -67,8 +63,8 @@ export default async function Page({
   };
 
   const [{ results: threads, total }, unreadCount] = await Promise.all([
-    listThreads(threadFilter, { offset }),
-    countUnreadThreads(threadFilter),
+    listThreads({ ...threadFilter, userId: session.user.id }, { offset }),
+    countUnreadThreads({ ...threadFilter, userId: session.user.id }),
   ]);
 
   const title =
@@ -80,14 +76,7 @@ export default async function Page({
         actions={
           <Group gap="small">
             <ArchiveSelectedInboxMessagesButton />
-            <InternalLink href="/dashboard/inbox/archived" noUnderline>
-              <Button
-                color="primary"
-                style="tertiary"
-                size="small"
-                icon={<ArchiveIcon />}
-              />
-            </InternalLink>
+
             <InternalLink href="/dashboard/inbox/send" noUnderline>
               <Button
                 color="primary"
@@ -107,6 +96,9 @@ export default async function Page({
               </InternalLink>
             )}
           </Group>
+        }
+        selectAll={
+          <SelectAllCheckbox rowIds={threads.map((t) => t.threadId)} />
         }
         title={title}
       >

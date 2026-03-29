@@ -1,7 +1,7 @@
 import * as styles from "./style.css";
 
 import { Thread } from "../../data/inbox/getThread";
-import { Header } from "../Header";
+import { NothingHere } from "../NothingHere";
 import { Table } from "../Table";
 import { InboxThreadRow } from "./InboxThreadRow";
 
@@ -18,12 +18,7 @@ export function InboxThreads({
 }: Props) {
   return (
     <>
-      {threads.length === 0 && (
-        <div className={styles.inboxMessagesNoMessages}>
-          <Header as="h2">Inbox Zero 🎉</Header>
-          <p>{emptyMessage}</p>
-        </div>
-      )}
+      {threads.length === 0 && <NothingHere>{emptyMessage}</NothingHere>}
 
       <Table className={styles.inboxThreadsTable}>
         {threads.map((thread) => (

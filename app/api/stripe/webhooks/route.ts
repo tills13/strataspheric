@@ -3,11 +3,34 @@ import Stripe from "stripe";
 import { db } from "../../../../data";
 import { getInvoiceByStripeInvoiceId } from "../../../../data/invoices/getInvoiceByStripeInvoiceId";
 import { updateInvoice } from "../../../../data/invoices/updateInvoice";
+import { fulfillCheckoutSession } from "../../../../data/strataPlans/fulfillCheckoutSession";
 import { stripe } from "../../../../data/stripe";
 import { updateStrata } from "../../../../data/stratas/updateStrata";
 
 async function handlePlatformEvent(event: Stripe.Event) {
-  if (event.type === "customer.subscription.deleted") {
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+
+    if (session.mode !== "subscription" || !session.subscription) return;
+
+    const customerId =
+      typeof session.customer === "string"
+        ? session.customer
+        : session.customer?.id;
+
+    if (!customerId) return;
+
+    const strata = await db()
+      .selectFrom("stratas")
+      .innerJoin("strata_plans", "stratas.id", "strata_plans.strataId")
+      .select(["stratas.id", "strata_plans.subscriptionId"])
+      .where("stratas.stripeCustomerId", "=", customerId)
+      .executeTakeFirst();
+
+    if (!strata) return;
+
+    await fulfillCheckoutSession(session.id, strata.id, strata.subscriptionId);
+  } else if (event.type === "customer.subscription.deleted") {
     const subscription = event.data.object as Stripe.Subscription;
     const customerId =
       typeof subscription.customer === "string"

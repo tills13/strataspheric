@@ -22,6 +22,7 @@ interface RangeSelectionState {
 export interface RangeSelectionHandlers {
   onDayMouseDown: (date: Date) => void;
   onDayMouseEnter: (date: Date) => void;
+  onDayTouchStart: (date: Date) => void;
   isDayInSelection: (date: Date) => boolean;
   isSelectionStart: (date: Date) => boolean;
   isSelectionEnd: (date: Date) => boolean;
@@ -60,7 +61,7 @@ export function useRangeSelection(
   useEffect(() => {
     if (!onRangeSelected) return;
 
-    function handleMouseUp() {
+    function commitSelection() {
       const { anchor, current, isDragging } = stateRef.current;
 
       if (!isDragging || !anchor) {
@@ -75,11 +76,38 @@ export function useRangeSelection(
       setState({ anchor: null, current: null, isDragging: false });
     }
 
-    window.addEventListener("mouseup", handleMouseUp);
-    return () => window.removeEventListener("mouseup", handleMouseUp);
+    function handleTouchMove(e: TouchEvent) {
+      if (!stateRef.current.isDragging) return;
+
+      const touch = e.touches[0];
+      const el = document.elementFromPoint(touch.clientX, touch.clientY);
+      const dayEl = el?.closest<HTMLElement>("[data-calendar-date]");
+      if (!dayEl?.dataset.calendarDate) return;
+
+      const date = new Date(dayEl.dataset.calendarDate);
+      if (isNaN(date.getTime())) return;
+
+      e.preventDefault();
+      setState((prev) => (prev.isDragging ? { ...prev, current: date } : prev));
+    }
+
+    window.addEventListener("mouseup", commitSelection);
+    window.addEventListener("touchend", commitSelection);
+    window.addEventListener("touchcancel", commitSelection);
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    return () => {
+      window.removeEventListener("mouseup", commitSelection);
+      window.removeEventListener("touchend", commitSelection);
+      window.removeEventListener("touchcancel", commitSelection);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
   }, [getRange, onRangeSelected]);
 
   const onDayMouseDown = useCallback((date: Date) => {
+    setState({ anchor: date, current: date, isDragging: true });
+  }, []);
+
+  const onDayTouchStart = useCallback((date: Date) => {
     setState({ anchor: date, current: date, isDragging: true });
   }, []);
 
@@ -125,6 +153,7 @@ export function useRangeSelection(
   return {
     onDayMouseDown,
     onDayMouseEnter,
+    onDayTouchStart,
     isDayInSelection,
     isSelectionStart,
     isSelectionEnd,

@@ -1,11 +1,7 @@
 "use server";
 
-import { redirect } from "next/navigation";
-
 import { createStrataMembership } from "../../../../data/memberships/createStrataMembership";
-import { listStrataMemberships } from "../../../../data/memberships/listStrataMemberships";
 import { getCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
-import { getStrataById } from "../../../../data/stratas/getStrataById";
 import { deleteUserPasswordResetToken } from "../../../../data/userPasswordResetTokens/deleteUserPasswordResetToken";
 import { getUserPasswordResetToken } from "../../../../data/userPasswordResetTokens/getUserPasswordResetToken";
 import { createUser } from "../../../../data/users/createUser";
@@ -103,23 +99,4 @@ export async function joinFromTokenAction(token: string, fd: FormData) {
 
   await updateUser(resetToken.userId, { password });
   await deleteUserPasswordResetToken(resetToken.token);
-
-  const [membership] = await listStrataMemberships({
-    userId: resetToken.userId,
-  });
-
-  if (!membership) {
-    throw new Error("");
-  }
-
-  const strata = await getStrataById(membership.strataId);
-
-  if (!strata) {
-    throw new Error("");
-  }
-
-  redirect(
-    (process.env.NODE_ENV === "development" ? "http://" : "https://") +
-      strata.domain,
-  );
 }

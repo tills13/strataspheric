@@ -238,6 +238,12 @@ export const orb2 = style([
     background: "transparent",
     opacity: 0.6,
     animation: `${float2} 22s ease-in-out infinite`,
+    boxShadow: [
+      `inset 0 -4px 12px -4px ${vars.colors.indigo500}`,
+      `inset 0 4px 12px -4px ${vars.colors.indigo100}`,
+      `0 4px 16px -6px ${vars.colors.indigo400}`,
+      `0 -2px 10px -4px rgba(255,255,255,0.08)`,
+    ].join(", "),
   },
 ]);
 
@@ -280,6 +286,12 @@ export const orb5 = style([
     background: "transparent",
     opacity: 0.5,
     animation: `${float3} 14s ease-in-out infinite reverse`,
+    boxShadow: [
+      `inset 0 -3px 8px -3px ${vars.colors.indigo600}`,
+      `inset 0 3px 8px -3px ${vars.colors.indigo200}`,
+      `0 3px 10px -4px ${vars.colors.indigo500}`,
+      `0 -2px 8px -4px rgba(255,255,255,0.06)`,
+    ].join(", "),
   },
 ]);
 

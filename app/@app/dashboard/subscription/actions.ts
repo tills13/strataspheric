@@ -89,7 +89,7 @@ export async function createCheckoutSessionAction(priceId: string) {
     customer: customerId,
     mode: "subscription",
     line_items: [{ price: priceId, quantity: strata.numUnits }],
-    success_url: `${protocol}//${strata.domain}/dashboard/subscription`,
+    success_url: `${protocol}//${strata.domain}/dashboard/subscription?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${protocol}//${strata.domain}/dashboard/subscription`,
   });
 

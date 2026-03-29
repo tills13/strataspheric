@@ -12,6 +12,8 @@ import { getAmenityBooking } from "../../../../data/amenities/getAmenityBooking"
 import { updateAmenity } from "../../../../data/amenities/updateAmenity";
 import { updateAmenityBooking } from "../../../../data/amenities/updateAmenityBooking";
 import { createEvent } from "../../../../data/events/createEvent";
+import { deleteEvent } from "../../../../data/events/deleteEvent";
+import { updateEvent } from "../../../../data/events/updateEvent";
 import { createThreadMessage } from "../../../../data/inbox/createThreadMessage";
 import { listThreads } from "../../../../data/inbox/listThreads";
 import { createInvoice } from "../../../../data/invoices/createInvoice";
@@ -21,8 +23,8 @@ import { getStrataMembership } from "../../../../data/memberships/getStrataMembe
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can, p } from "../../../../data/users/permissions";
 import { parseTimestamp } from "../../../../utils/datetime";
-import { sendNotification } from "../../../../utils/notifications";
 import * as formdata from "../../../../utils/formdata";
+import { sendNotification } from "../../../../utils/notifications";
 
 export async function upsertAmenityAction(
   amenityId: string | undefined,
@@ -127,20 +129,118 @@ export async function approveOrRejectAmenityBookingAction(
   }
 
   // Notify the booker via email
-  const bookerMembership = await getStrataMembership(strata.id, amenityBooking.requesterId);
+  const bookerMembership = await getStrataMembership(
+    strata.id,
+    amenityBooking.requesterId,
+  );
   if (bookerMembership) {
     await sendNotification({
       to: bookerMembership.email,
-      subject: decision === "reject"
-        ? "Booking Request Denied"
-        : "Booking Request Approved",
-      html: decision === "reject"
-        ? `<p>Your booking request has been denied. Check your inbox for details.</p>`
-        : `<p>Your booking request has been approved.${amenityBooking.invoice ? " Please pay the invoice by the booking start date." : ""}</p>`,
+      subject:
+        decision === "reject"
+          ? "Booking Request Denied"
+          : "Booking Request Approved",
+      html:
+        decision === "reject"
+          ? `<p>Your booking request has been denied. Check your inbox for details.</p>`
+          : `<p>Your booking request has been approved.${
+              amenityBooking.invoice
+                ? " Please pay the invoice by the booking start date."
+                : ""
+            }</p>`,
     });
   }
 
   revalidatePath(`/dashboard/inbox/${thread.threadId}`);
+}
+
+export async function updateAmenityBookingDatesAction(
+  amenityBookingId: string,
+  fd: FormData,
+) {
+  const session = await mustAuth();
+
+  if (!can(session.user, "stratas.amenity_bookings.edit")) {
+    throw new Error("unauthorized");
+  }
+
+  const amenityBooking = await getAmenityBooking(amenityBookingId);
+  const startDate = formdata.getTimestamp(fd, "date_start");
+  const endDate = formdata.getTimestamp(fd, "date_end");
+
+  await updateEvent(amenityBooking.eventId, { startDate, endDate });
+
+  if (amenityBooking.invoice && amenityBooking.amenity.costPerHour) {
+    const numHours = differenceInHours(
+      parseTimestamp(endDate),
+      parseTimestamp(startDate),
+    );
+    const amount = numHours * amenityBooking.amenity.costPerHour;
+
+    await updateInvoice(amenityBooking.invoice.id, { amount, dueBy: startDate });
+  }
+
+  const {
+    results: [thread],
+  } = await listThreads({ amenityBookingId: amenityBooking.id });
+
+  revalidatePath("/dashboard/calendar");
+  if (thread) {
+    revalidatePath(`/dashboard/inbox/${thread.threadId}`);
+  }
+}
+
+export async function cancelAmenityBookingAction(
+  amenityBookingId: string,
+) {
+  const [session, strata, amenityBooking] = await Promise.all([
+    mustAuth(),
+    mustGetCurrentStrata(),
+    getAmenityBooking(amenityBookingId),
+  ]);
+
+  const isRequester = session.user.id === amenityBooking.requesterId;
+
+  if (!isRequester && !can(session.user, "stratas.amenity_bookings.edit")) {
+    throw new Error("unauthorized");
+  }
+
+  if (
+    amenityBooking.decision !== "approved" &&
+    amenityBooking.decision !== null
+  ) {
+    throw new Error("only pending or approved bookings can be cancelled");
+  }
+
+  await updateAmenityBooking(amenityBooking.id, {
+    decision: "cancelled",
+    deciderId: session.user.id,
+  });
+
+  await deleteEvent(amenityBooking.eventId);
+
+  if (amenityBooking.invoice) {
+    await deleteInvoice(amenityBooking.invoice.id);
+    await updateAmenityBooking(amenityBooking.id, { invoiceId: null });
+  }
+
+  const {
+    results: [thread],
+  } = await listThreads({ amenityBookingId: amenityBooking.id });
+
+  if (thread) {
+    await createThreadMessage({
+      subject: "",
+      senderName: "Strataspheric",
+      strataId: strata.id,
+      threadId: thread.threadId,
+      message: "This booking has been cancelled.",
+    });
+
+    revalidatePath(`/dashboard/inbox/${thread.threadId}`);
+  }
+
+  revalidatePath("/dashboard/calendar");
 }
 
 export async function createAmenityBookingAction(
@@ -175,17 +275,14 @@ export async function createAmenityBookingAction(
     );
     const amount = numHours * amenity.costPerHour;
 
-    const invoice = await createInvoice(
-      {
-        amount,
-        status: "draft",
-        strataId: strata.id,
-        type: "incoming",
-        dueBy: startDate,
-        updatedAt: new Date().getTime(),
-      },
-      "BOOKING",
-    );
+    const invoice = await createInvoice({
+      amount,
+      status: "draft",
+      strataId: strata.id,
+      type: "incoming",
+      dueBy: startDate,
+      updatedAt: new Date().getTime(),
+    });
 
     invoiceId = invoice.id;
   }

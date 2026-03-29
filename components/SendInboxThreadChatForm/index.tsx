@@ -1,4 +1,8 @@
+"use client";
+
 import { s } from "../../sprinkles.css";
+
+import { useCallback, useState } from "react";
 
 import { sendInboxThreadChatAction } from "../../app/@app/dashboard/inbox/[threadId]/actions";
 import { AttachFileField } from "../AttachFileField";
@@ -20,12 +24,18 @@ export function SendInboxThreadChatForm({
   onSendInboxThreadChat,
   threadId,
 }: Props) {
+  const [formKey, setFormKey] = useState(0);
+
+  const resetForm = useCallback(() => setFormKey((k) => k + 1), []);
+
   return (
     <form
+      key={formKey}
       className={className}
       action={async (fd) => {
         onSendInboxThreadChat?.(fd);
         await sendInboxThreadChatAction(threadId, messageId, fd);
+        resetForm();
       }}
     >
       <Stack>

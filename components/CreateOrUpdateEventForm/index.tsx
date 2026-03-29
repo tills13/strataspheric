@@ -58,7 +58,7 @@ export function CreateOrUpdateEventForm({
           defaultValue={event?.description}
         />
 
-        <Flex from="tablet">
+        <Flex from="tablet" equalWidthChildren>
           {event && (
             <ConfirmButton
               onClickConfirm={async () => {

@@ -2,10 +2,17 @@
 
 import React, { useMemo } from "react";
 
+import isAfter from "date-fns/isAfter";
+
 import { AmenitiesBookingCalendar } from "../../../../../components/AmenitiesBookingCalendar";
+import { AmenityPreviewCard } from "../../../../../components/AmenityPreviewCard";
 import { CalendarEvent } from "../../../../../components/Calendar";
+import { ConfirmButton } from "../../../../../components/ConfirmButton";
+import { DateInput } from "../../../../../components/DateInput";
 import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
+import { CircleXIcon } from "../../../../../components/Icon/CircleXIcon";
+import { SaveIcon } from "../../../../../components/Icon/SaveIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { InvoiceChip } from "../../../../../components/InvoiceChip";
 import { Panel } from "../../../../../components/Panel";
@@ -13,7 +20,13 @@ import { Stack } from "../../../../../components/Stack";
 import { StatusButton } from "../../../../../components/StatusButton";
 import { AmenityBooking } from "../../../../../data/amenities/getAmenityBooking";
 import { useCan } from "../../../../../hooks/useCan";
-import { approveOrRejectAmenityBookingAction } from "../../amenities/actions";
+import { useSession } from "../../../../../hooks/useSession";
+import { parseTimestamp, patchTimezoneOffset } from "../../../../../utils/datetime";
+import {
+  approveOrRejectAmenityBookingAction,
+  cancelAmenityBookingAction,
+  updateAmenityBookingDatesAction,
+} from "../../amenities/actions";
 
 interface Props {
   className?: string;
@@ -22,6 +35,8 @@ interface Props {
 
 export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
   const can = useCan();
+  const session = useSession();
+  const isRequester = session?.user.id === amenityBooking.requesterId;
   const virtualEvent = useMemo<CalendarEvent>(
     () => ({
       id: amenityBooking.id,
@@ -41,6 +56,8 @@ export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
       <Stack>
         <Header as="h3">Booking Request</Header>
 
+        <AmenityPreviewCard amenity={amenityBooking.amenity} />
+
         <AmenitiesBookingCalendar
           amenity={amenityBooking.amenity}
           booking={virtualEvent}
@@ -48,6 +65,31 @@ export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
 
         {can("stratas.amenity_bookings.edit") && !amenityBooking.decision && (
           <>
+            <form
+              action={async (fd) => {
+                patchTimezoneOffset(fd, "date_start");
+                patchTimezoneOffset(fd, "date_end");
+                await updateAmenityBookingDatesAction(amenityBooking.id, fd);
+              }}
+            >
+              <Stack>
+                <DateInput
+                  name="date"
+                  defaultStartValue={amenityBooking.startDate}
+                  defaultEndValue={amenityBooking.endDate}
+                  type="range"
+                />
+                <StatusButton
+                  color="primary"
+                  icon={<SaveIcon />}
+                  style="secondary"
+                  type="submit"
+                >
+                  Update Dates
+                </StatusButton>
+              </Stack>
+            </form>
+
             {amenityBooking.invoice && (
               <InvoiceChip invoice={amenityBooking.invoice} />
             )}
@@ -88,13 +130,56 @@ export function InboxMessageThreadAmenityBooking({ amenityBooking }: Props) {
           </>
         )}
 
-        {amenityBooking.decision && (
-          <InfoPanel
-            alignment="center"
-            level={amenityBooking.decision === "approved" ? "success" : "error"}
+        {!amenityBooking.decision && isRequester && (
+          <ConfirmButton
+            confirmModalTitle="Cancel Booking"
+            confirmModalDescription="Are you sure you want to cancel this booking request?"
+            confirmModalConfirmButtonType="error"
+            onClickConfirm={() =>
+              cancelAmenityBookingAction(amenityBooking.id)
+            }
+            icon={<CircleXIcon />}
+            color="error"
+            style="secondary"
+            fullWidth
           >
-            Booking {amenityBooking.decision}
-          </InfoPanel>
+            Cancel Booking
+          </ConfirmButton>
+        )}
+
+        {amenityBooking.decision && (
+          <>
+            <InfoPanel
+              alignment="center"
+              level={
+                amenityBooking.decision === "approved" ? "success" : "error"
+              }
+            >
+              Booking {amenityBooking.decision}
+            </InfoPanel>
+
+            {amenityBooking.decision === "approved" &&
+              (isRequester || can("stratas.amenity_bookings.edit")) &&
+              isAfter(
+                parseTimestamp(amenityBooking.startDate),
+                new Date(),
+              ) && (
+                <ConfirmButton
+                  confirmModalTitle="Cancel Booking"
+                  confirmModalDescription="Are you sure you want to cancel this booking? The associated event and invoice will be removed."
+                  confirmModalConfirmButtonType="error"
+                  onClickConfirm={() =>
+                    cancelAmenityBookingAction(amenityBooking.id)
+                  }
+                  icon={<CircleXIcon />}
+                  color="error"
+                  style="secondary"
+                  fullWidth
+                >
+                  Cancel Booking
+                </ConfirmButton>
+              )}
+          </>
         )}
       </Stack>
     </Panel>

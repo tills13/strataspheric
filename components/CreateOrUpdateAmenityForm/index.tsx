@@ -19,25 +19,23 @@ interface Props {
 export function CreateOrUpdateAmenityForm({ amenity }: Props) {
   return (
     <form action={upsertAmenityAction.bind(undefined, amenity?.id)}>
-      <AttachFileField
-        className={s({ mb: "large" })}
-        defaultIcon={<ImageIcon />}
-        defaultValue={
-          amenity
-            ? {
-                id: amenity.imageFileId,
-                name: amenity.imageName,
-                path: amenity.imageSrc,
-              }
-            : undefined
-        }
-        fileTypes={IMAGE_FILE_TYPES}
-        name="imageFileId"
-        placeholder="Preview Image"
-        showImagePreview
-      />
-
       <Stack className={s({ flex: 1 })}>
+        <AttachFileField
+          defaultIcon={<ImageIcon />}
+          defaultValue={
+            amenity
+              ? {
+                  id: amenity.imageFileId,
+                  name: amenity.imageName,
+                  path: amenity.imageSrc,
+                }
+              : undefined
+          }
+          fileTypes={IMAGE_FILE_TYPES}
+          name="imageFileId"
+          placeholder="Preview Image"
+          showImagePreview
+        />
         <Input
           name="name"
           label="Name"

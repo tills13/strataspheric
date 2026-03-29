@@ -1,4 +1,5 @@
 import { vars } from "../../app/theme.css";
+import { style } from "@vanilla-extract/css";
 
 import { recipe } from "@vanilla-extract/recipes";
 
@@ -8,7 +9,6 @@ function background(baseColor: string) {
 
 export const infoPanel = recipe({
   base: {
-    padding: vars.spacing["20"],
     borderRadius: vars.borderRadius.md,
     borderStyle: "solid",
     borderWidth: vars.borderWidth,
@@ -51,4 +51,8 @@ export const infoPanel = recipe({
   defaultVariants: {
     level: "default",
   },
+});
+
+export const infoPanelPadding = style({
+  padding: vars.spacing["20"],
 });

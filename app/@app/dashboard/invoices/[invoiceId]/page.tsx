@@ -4,18 +4,17 @@ import isAfter from "date-fns/isAfter";
 import { notFound } from "next/navigation";
 
 import { mustAuth } from "../../../../../auth";
-import { AmenitiesBookingCalendar } from "../../../../../components/AmenitiesBookingCalendar";
+import { AmenityPreviewCard } from "../../../../../components/AmenityPreviewCard";
 import { Button } from "../../../../../components/Button";
 import { ConfirmButton } from "../../../../../components/ConfirmButton";
 import { CreateOrUpdateInvoiceForm } from "../../../../../components/CreateOrUpdateInvoiceForm";
+import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Date as DateComponent } from "../../../../../components/Date";
-import { Flex } from "../../../../../components/Flex";
 import { Header } from "../../../../../components/Header";
 import { ArrowForwardIcon } from "../../../../../components/Icon/ArrowForwardIcon";
 import { DeleteIcon } from "../../../../../components/Icon/DeleteIcon";
 import { InfoPanel } from "../../../../../components/InfoPanel";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
-import { Panel } from "../../../../../components/Panel";
 import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
 import { listAmenityBookings } from "../../../../../data/amenities/listAmenityBookings";
@@ -44,6 +43,7 @@ export default async function Page({ params }: PageProps<"/dashboard/invoices/[i
   }
 
   return (
+    <DashboardLayout title="Invoices" subPageTitle={`Invoice #${invoice.identifier}`}>
     <Stack className={s({ pb: "normal" })} gap="large">
       {!!invoice.isPaid && (
         <InfoPanel level="success">
@@ -60,34 +60,21 @@ export default async function Page({ params }: PageProps<"/dashboard/invoices/[i
       )}
 
       {amenityBooking && inboxMessageThread && (
-        <Panel>
-          <Stack>
-            <Flex justify="space-between" from="mobilePlus">
-              <Header as="h3">
-                This invoice references an amenity booking.
-              </Header>
-              <InternalLink
-                href={`/dashboard/inbox/${inboxMessageThread.threadId}`}
-                noUnderline
-              >
-                <Button
-                  color="primary"
-                  icon={<ArrowForwardIcon />}
-                  iconTextBehaviour="centerRemainder"
-                  style="primary"
-                  fullWidth
-                >
-                  Go to Booking Request
-                </Button>
-              </InternalLink>
-            </Flex>
-            <AmenitiesBookingCalendar
-              amenity={amenityBooking.amenity}
-              booking={amenityBooking}
-              loadOtherBookings={false}
-            />
-          </Stack>
-        </Panel>
+        <AmenityPreviewCard amenity={amenityBooking.amenity}>
+          <InternalLink
+            href={`/dashboard/inbox/${inboxMessageThread.threadId}`}
+            noUnderline
+          >
+            <Button
+              color="primary"
+              icon={<ArrowForwardIcon />}
+              iconTextBehaviour="centerRemainder"
+              style="primary"
+            >
+              Go to Booking Request
+            </Button>
+          </InternalLink>
+        </AmenityPreviewCard>
       )}
 
       {!invoice.isPaid &&
@@ -117,5 +104,6 @@ export default async function Page({ params }: PageProps<"/dashboard/invoices/[i
         <Text>Deleting an invoice cannot be undone.</Text>
       </InfoPanel>
     </Stack>
+    </DashboardLayout>
   );
 }

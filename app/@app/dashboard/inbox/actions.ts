@@ -3,14 +3,17 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { auth } from "../../../../auth";
+import { auth, mustAuth } from "../../../../auth";
 import { protocol } from "../../../../constants";
 import { createThreadEmail } from "../../../../data/emails/createThreadEmail";
-import { archiveThreads } from "../../../../data/inbox/archiveThreads";
+import { archiveThreadsForUser } from "../../../../data/inbox/archiveThreadsForUser";
 import { createThreadMessage } from "../../../../data/inbox/createThreadMessage";
 import { deleteThread } from "../../../../data/inbox/deleteThread";
 import { deleteThreadChats } from "../../../../data/inbox/deleteThreadChats";
 import { getThreadMessages } from "../../../../data/inbox/getThreadMessages";
+import { markThreadRead } from "../../../../data/inbox/markThreadRead";
+import { markThreadUnread } from "../../../../data/inbox/markThreadUnread";
+import { unarchiveThreadsForUser } from "../../../../data/inbox/unarchiveThreadsForUser";
 import { updateThread } from "../../../../data/inbox/updateThread";
 import {
   StrataMembership,
@@ -173,27 +176,39 @@ export async function createInboxMessageAction(
 }
 
 export async function markThreadAsReadAction(threadId: string) {
-  await updateThread(threadId, { isUnread: 0 });
+  const session = await mustAuth();
+  await markThreadRead(session.user.id, threadId);
   revalidatePath("/dashboard/inbox");
 }
 
 export async function markThreadAsUnreadAction(threadId: string) {
-  await updateThread(threadId, { isUnread: 1 });
+  const session = await mustAuth();
+  await markThreadUnread(session.user.id, threadId);
   revalidatePath("/dashboard/inbox");
 }
 
 export async function archiveThreadAction(threadId: string) {
-  await archiveThreads([threadId]);
+  const session = await mustAuth();
+  await archiveThreadsForUser(session.user.id, [threadId]);
   revalidatePath("/dashboard/inbox");
 }
 
 export async function archiveThreadsAction(threadIds: string[]) {
-  await archiveThreads(threadIds);
+  const session = await mustAuth();
+  await archiveThreadsForUser(session.user.id, threadIds);
   revalidatePath("/dashboard/inbox");
 }
 
 export async function unarchiveThreadAction(threadId: string) {
-  await updateThread(threadId, { archivedAt: null });
+  const session = await mustAuth();
+  await unarchiveThreadsForUser(session.user.id, [threadId]);
+  revalidatePath("/dashboard/inbox");
+  revalidatePath("/dashboard/inbox/archived");
+}
+
+export async function unarchiveThreadsAction(threadIds: string[]) {
+  const session = await mustAuth();
+  await unarchiveThreadsForUser(session.user.id, threadIds);
   revalidatePath("/dashboard/inbox");
   revalidatePath("/dashboard/inbox/archived");
 }

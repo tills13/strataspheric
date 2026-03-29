@@ -15,6 +15,29 @@ export function getEventsForRange(
     .selectAll("events")
     .leftJoin("meetings", "meetings.eventId", "events.id")
     .select("meetings.id as meetingId")
+    .leftJoin(
+      "amenity_bookings",
+      "amenity_bookings.eventId",
+      "events.id",
+    )
+    .leftJoin("amenities", "amenities.id", "amenity_bookings.amenityId")
+    .leftJoin(
+      "files as amenity_files",
+      "amenities.imageFileId",
+      "amenity_files.id",
+    )
+    .leftJoin(
+      "inbox_messages",
+      "inbox_messages.amenityBookingId",
+      "amenity_bookings.id",
+    )
+    .select([
+      "amenity_bookings.id as amenityBookingId",
+      "amenities.name as amenityName",
+      "amenities.description as amenityDescription",
+      "amenity_files.path as amenityImageSrc",
+      "inbox_messages.threadId as amenityBookingThreadId",
+    ])
 
     .where((eb) =>
       eb.or([

@@ -65,11 +65,7 @@ export function CreateOrUpdateStrataMembershipForm({
             type="submit"
             fullWidth
           >
-            {membership
-              ? membership.role === "pending"
-                ? "Approve Member"
-                : "Update Member"
-              : "Add Member"}
+            {membership ? "Update Member" : "Add Member"}
           </StatusButton>
         </div>
         <div ref={sentinelRef} />

@@ -1,6 +1,5 @@
 "use client";
 
-import { s } from "../../../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { useActionState } from "react";
@@ -12,7 +11,6 @@ import { Input } from "../../../../components/Input";
 import { Stack } from "../../../../components/Stack";
 import { StatusButton } from "../../../../components/StatusButton";
 import { Text } from "../../../../components/Text";
-import { classnames } from "../../../../utils/classnames";
 import { requestPasswordResetActionReducer } from "./actions";
 
 export function ForgotPasswordForm() {
@@ -23,11 +21,12 @@ export function ForgotPasswordForm() {
 
   return (
     <form action={requestPasswordResetAction}>
-      <Text className={classnames(s({ mb: "large" }))} color="secondary">
-        Enter the email address associated with your account and we&apos;ll send
-        you a link to reset your password.
-      </Text>
       <Stack>
+        <Text color="secondary">
+          Enter the email address associated with your account and we&apos;ll
+          send you a link to reset your password.
+        </Text>
+
         <Input placeholder="Email Address" name="email_address" />
 
         {state.error && (
@@ -39,7 +38,7 @@ export function ForgotPasswordForm() {
         {state.success ? (
           <Group gap="small">
             <CircleCheckIcon className={styles.submitButtonIcon} /> an email has
-            been sent to the entered address if it exists in our system.
+            been sent to the provided address if it exists in our system.
           </Group>
         ) : (
           <StatusButton color="primary" success={state.success}>

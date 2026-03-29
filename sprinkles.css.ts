@@ -6,7 +6,12 @@ const textProperties = defineProperties({
   properties: {
     color: {
       ...vars.colors,
-      ...vars.fontColors,
+      ...Object.fromEntries(
+        Object.entries(vars.fontColors).map(([key, value]) => [
+          `font${key[0].toUpperCase()}${key.substring(1)}`,
+          value,
+        ]),
+      ),
     },
     fontFamily: vars.fontFamilies,
     fontWeight: vars.fontWeights,

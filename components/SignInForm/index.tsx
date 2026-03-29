@@ -9,7 +9,6 @@ import { protocol, tld } from "../../constants";
 import { classnames } from "../../utils/classnames";
 import * as formdata from "../../utils/formdata";
 import { Button } from "../Button";
-import { Flex } from "../Flex";
 import { Group } from "../Group";
 import { Input } from "../Input";
 import { ExternalLink } from "../Link/ExternalLink";
@@ -81,23 +80,18 @@ export function SignInForm({ className }: Props) {
           Sign in
         </StatusButton>
 
-        <Flex from="mobilePlus">
-          <ExternalLink href={protocol + "//" + tld + "/forgot"} w="full">
+        <Group equalWidthChildren>
+          <ExternalLink href={protocol + "//" + tld + "/forgot"}>
             <Button style="tertiary" color="primary" type="button" w="full">
               Forgot Password
             </Button>
           </ExternalLink>
-          <InternalLink href="/join" noUnderline>
-            <Button
-              style="tertiary"
-              color="primary"
-              type="button"
-              w="full"
-            >
-              Join Strataspheric
+          <InternalLink href="/?action=join" noUnderline>
+            <Button style="tertiary" color="primary" type="button" w="full">
+              Sign Up
             </Button>
           </InternalLink>
-        </Flex>
+        </Group>
       </Stack>
     </form>
   );

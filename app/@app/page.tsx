@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 
 import { auth } from "../../auth";
 import { Button } from "../../components/Button";
-import { HeroBackground } from "../@marketing/(marketing)/HeroBackground";
 import { DividerText } from "../../components/DividerText";
 import { ArrowForwardIcon } from "../../components/Icon/ArrowForwardIcon";
 import { JoinForm } from "../../components/JoinForm";
@@ -15,6 +14,7 @@ import { SignInForm } from "../../components/SignInForm";
 import { Stack } from "../../components/Stack";
 import { protocol, tld } from "../../constants";
 import { getCurrentStrata } from "../../data/stratas/getStrataByDomain";
+import { HeroBackground } from "../@marketing/(marketing)/HeroBackground";
 import { joinAction } from "../@marketing/(marketing)/join/actions";
 
 export default async function Page({ searchParams }: PageProps<"/">) {
@@ -38,7 +38,7 @@ export default async function Page({ searchParams }: PageProps<"/">) {
   return (
     <div className={styles.signInToStrataPageContainer}>
       <HeroBackground />
-      <Stack className={styles.signInToStrataPageFormContainer} align="center">
+      <Stack className={styles.signInToStrataPageFormContainer} align="stretch">
         <Logo h="xxl" mb="large" />
         {action === "join" ? (
           <JoinForm onSubmit={joinAction} strata={strata} />

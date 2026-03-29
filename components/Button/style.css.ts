@@ -302,6 +302,8 @@ export const button = recipe({
         color: "error",
       },
       style: {
+        backgroundColor: "transparent",
+        borderColor: "transparent",
         color: vars.colors.red700,
         vars: {
           [iconColorVar]: vars.colors.red500,
@@ -329,6 +331,8 @@ export const button = recipe({
         color: "primary",
       },
       style: {
+        backgroundColor: "transparent",
+        borderColor: "transparent",
         color: vars.colors.primary,
         vars: {
           [iconColorVar]: vars.colors.primary,
@@ -356,6 +360,8 @@ export const button = recipe({
         color: "success",
       },
       style: {
+        backgroundColor: "transparent",
+        borderColor: "transparent",
         color: vars.colors.green900,
         vars: {
           [iconColorVar]: vars.colors.green500,
@@ -383,6 +389,8 @@ export const button = recipe({
         color: "warning",
       },
       style: {
+        backgroundColor: "transparent",
+        borderColor: "transparent",
         color: vars.colors.orange900,
         vars: {
           [iconColorVar]: vars.colors.orange500,
@@ -423,7 +431,6 @@ export const iconButton = style({
       padding: vars.spacing.xxs,
     },
     [`${button.classNames.variants.size.small}&`]: {
-      background: "blue",
       gap: vars.spacing.xs,
     },
   },

@@ -1,13 +1,13 @@
 import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
-import { Button } from "../../../../../components/Button";
 import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Group } from "../../../../../components/Group";
-import { InboxIcon } from "../../../../../components/Icon/InboxIcon";
 import { InboxThreads } from "../../../../../components/InboxThreads";
-import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { Pagination } from "../../../../../components/Pagination";
+import { SelectAllCheckbox } from "../../../../../components/SelectAllCheckbox";
+import { TableSelectProvider } from "../../../../../components/Table/TableSelectProvider";
+import { UnarchiveSelectedInboxMessagesButton } from "../../../../../components/UnarchiveSelectedInboxMessagesButton";
 import { listThreads } from "../../../../../data/inbox/listThreads";
 import { getCurrentStrataPlan } from "../../../../../data/strataPlans/getStrataPlanByDomain";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
@@ -39,6 +39,7 @@ export default async function Page({
     {
       archived: true,
       strataId: strata.id,
+      userId: session.user.id,
       ...(!can(session.user, "stratas.inbox_messages.view") && {
         senderUserId: session.user.id,
       }),
@@ -47,30 +48,31 @@ export default async function Page({
   );
 
   return (
-    <DashboardLayout
-      actions={
-        <InternalLink href="/dashboard/inbox" noUnderline>
-          <Button
-            color="primary"
-            style="tertiary"
-            size="small"
-            icon={<InboxIcon />}
-          >
-            Back to Inbox
-          </Button>
-        </InternalLink>
-      }
-      title="Archived Messages"
-    >
-      <InboxThreads
-        archived
-        emptyMessage="There are no archived messages."
-        threads={threads}
-      />
+    <TableSelectProvider>
+      <DashboardLayout
+        selectAll={
+          <SelectAllCheckbox rowIds={threads.map((t) => t.threadId)} />
+        }
+        actions={
+          <Group gap="small">
+            <UnarchiveSelectedInboxMessagesButton />
+          </Group>
+        }
+        title="Archived Messages"
+      >
+        <InboxThreads
+          archived
+          emptyMessage="There are no archived messages."
+          threads={threads}
+        />
 
-      <Group p="normal" justify="end">
-        <Pagination currentPage={pageNum} totalPages={Math.ceil(total / 10)} />
-      </Group>
-    </DashboardLayout>
+        <Group p="normal" justify="end">
+          <Pagination
+            currentPage={pageNum}
+            totalPages={Math.ceil(total / 10)}
+          />
+        </Group>
+      </DashboardLayout>
+    </TableSelectProvider>
   );
 }

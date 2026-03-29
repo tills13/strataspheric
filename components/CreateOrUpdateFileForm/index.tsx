@@ -1,11 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { upsertFileAction } from "../../app/@app/dashboard/files/actions";
 import { File } from "../../data";
 import { useCan } from "../../hooks/useCan";
+import { FileTypeIcon } from "../FileTypeIcon";
+import { Header } from "../Header";
 import { SaveIcon } from "../Icon/SaveIcon";
+import { InfoPanel } from "../InfoPanel";
 import { Input } from "../Input";
 import { RadioButton } from "../RadioButton";
 import { Stack } from "../Stack";
@@ -26,6 +29,7 @@ export function CreateOrUpdateFileForm({
 }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const nameRef = useRef<HTMLInputElement>(null!);
+  const [fileName, setFileName] = useState<string>();
   const can = useCan();
 
   return (
@@ -39,40 +43,52 @@ export function CreateOrUpdateFileForm({
         {!file && (
           <Input
             accept={acceptFileTypes?.join(",")}
+            icon={
+              <FileTypeIcon size="xs" filePath={fileName || "something.txt"} />
+            }
             label="Upload File"
             name="file"
             type="file"
             onChange={(e) => {
-              nameRef.current.value = e.target.files?.[0].name || "";
+              const name = e.target.files?.[0].name || "";
+              nameRef.current.value = name;
+              setFileName(name);
             }}
+            required
           />
         )}
+        <Header as="h3">Details</Header>
         <Input
           name="name"
           label="Name"
-          placeholder="File name"
+          placeholder="Filename"
           ref={nameRef}
           defaultValue={file?.name}
+          required
         />
         <TextArea
           name="description"
           label="Description"
-          placeholder="Brief description of this file"
+          placeholder="Description"
           rows={4}
           defaultValue={file?.description}
         />
 
         {can("stratas.files.create") && (
-          <Stack gap="small">
-            <Text as="label" color="secondary" fontWeight="bold">
-              Visibility
-            </Text>
+          <>
+            <Header as="h3">Visibility</Header>
             <RadioButton
               name="is_public"
               options={["public", "private"]}
               defaultValue={file?.isPublic ? "public" : "private"}
             />
-          </Stack>
+            <InfoPanel>
+              <Text>
+                Public files are visible to everyone in the strata. Private
+                files are visible only to strata administrators and yourself.
+              </Text>
+            </InfoPanel>
+          </>
         )}
 
         <StatusButton

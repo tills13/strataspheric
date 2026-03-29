@@ -32,7 +32,7 @@ export async function MeetingLayout({ meetingId }: Props) {
       title={meeting.purpose}
       subPageTitle={meeting.purpose}
       actions={
-        <Group>
+        <Group gap="small">
           <ConfirmButton
             onClickConfirm={deleteMeetingAction.bind(undefined, meetingId)}
             icon={<RemoveIcon />}

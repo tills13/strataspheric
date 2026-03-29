@@ -1,6 +1,7 @@
 "use client";
 
 import { vars } from "../../app/theme.css";
+import { s } from "../../sprinkles.css";
 import * as styles from "./style.css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -15,7 +16,10 @@ import { CalendarEvent } from ".";
 import { useIsAfterHydration } from "../../hooks/useIsAfterHydration";
 import { classnames } from "../../utils/classnames";
 import { formatDateForDatetime, parseTimestamp } from "../../utils/datetime";
+import { AmenityPreviewCard } from "../AmenityPreviewCard";
+import { Button } from "../Button";
 import { CreateOrUpdateEventForm } from "../CreateOrUpdateEventForm";
+import { ArrowForwardIcon } from "../Icon/ArrowForwardIcon";
 import { InternalLink } from "../Link/InternalLink";
 import { Modal } from "../Modal";
 import { Wrap } from "../Wrap";
@@ -27,6 +31,7 @@ export interface CalendarDaySelectionProps {
   isSelectionEnd: boolean;
   onMouseDown: (date: Date) => void;
   onMouseEnter: (date: Date) => void;
+  onTouchStart: (date: Date) => void;
 }
 
 export interface DragState {
@@ -142,6 +147,7 @@ export function CalendarDayEvents({
           inSelection && styles.calendarDaySelected,
           selectionClassName,
         )}
+        data-calendar-date={date.toISOString()}
         onMouseDown={
           selectionProps
             ? (e) => {
@@ -154,6 +160,14 @@ export function CalendarDayEvents({
         }
         onMouseEnter={
           selectionProps ? () => selectionProps.onMouseEnter(date) : undefined
+        }
+        onTouchStart={
+          selectionProps
+            ? (e) => {
+                e.preventDefault();
+                selectionProps.onTouchStart(date);
+              }
+            : undefined
         }
         onClick={
           selectionProps
@@ -320,6 +334,32 @@ export function CalendarDayEvents({
           closeModal={() => setSelectedEvent(undefined)}
           title="Edit Event"
         >
+          {selectedEvent.amenityBookingId && selectedEvent.amenityName && (
+            <AmenityPreviewCard
+              amenity={{
+                name: selectedEvent.amenityName,
+                description: selectedEvent.amenityDescription,
+                imageSrc: selectedEvent.amenityImageSrc,
+              }}
+              className={s({ mb: "normal" })}
+            >
+              {selectedEvent.amenityBookingThreadId && (
+                <InternalLink
+                  href={`/dashboard/inbox/${selectedEvent.amenityBookingThreadId}`}
+                  noUnderline
+                >
+                  <Button
+                    color="primary"
+                    icon={<ArrowForwardIcon />}
+                    iconTextBehaviour="centerRemainder"
+                    style="primary"
+                  >
+                    Go to Booking Request
+                  </Button>
+                </InternalLink>
+              )}
+            </AmenityPreviewCard>
+          )}
           <CreateOrUpdateEventForm
             onDeleteEvent={() => setSelectedEvent(undefined)}
             event={selectedEvent}
