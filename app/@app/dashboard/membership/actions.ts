@@ -41,7 +41,6 @@ export const upsertStrataMembershipAction = withPermissions(
     const email = formdata.getString(fd, "email");
     const name = formdata.getString(fd, "name");
     const phoneNumber = formdata.getString(fd, "phone_number");
-    const unit = formdata.getString(fd, "unit");
     const role = formdata.getEnum(fd, "role", roles);
     const password = formdata.getString(fd, "password");
     const rawPermissions = formdata.getObject(fd, "permission");
@@ -107,23 +106,13 @@ export const upsertStrataMembershipAction = withPermissions(
             : undefined
           : parsedPermissions;
 
-      // Only admins editing someone else can set monthly fee
-      const isEditingSelf = session.user.id === userId;
-      const monthlyFeeStr = formdata.getString(fd, "monthly_fee");
-      const monthlyFee =
-        !isEditingSelf && monthlyFeeStr !== ""
-          ? parseInt(monthlyFeeStr, 10)
-          : undefined;
-
       await updateStrataMembership(strata.id, userId, {
-        unit,
         phoneNumber,
         ...(role && { role }),
         ...(permissions !== undefined && {
           rawPermissions:
             permissions === null ? null : JSON.stringify(permissions),
         }),
-        ...(monthlyFee !== undefined && { monthlyFee }),
       });
     } else {
       const existingUser = await getUserByEmail(email);
@@ -163,7 +152,6 @@ export const upsertStrataMembershipAction = withPermissions(
         strataId: strata.id,
         userId,
         phoneNumber,
-        unit,
         role: role as Role,
       });
     }

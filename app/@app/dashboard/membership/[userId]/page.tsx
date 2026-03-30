@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 
 import { auth } from "../../../../../auth";
 import { ApproveStrataMembershipButton } from "../../../../../components/ApproveStrataMembershipButton";
-import { Badge } from "../../../../../components/Badge";
 import { Button } from "../../../../../components/Button";
 import { CreateOrUpdateStrataMembershipForm } from "../../../../../components/CreateOrUpdateStrataMembershipForm";
 import { UserPermissionsFields } from "../../../../../components/CreateOrUpdateStrataMembershipForm/UserPermissionsFields";
@@ -53,7 +52,6 @@ export default async function Page({
 
   const currentUserRole = currentUserMembership?.role ?? "owner";
   const isEditingSelf = session?.user.id === userId;
-  const canEditMonthlyFee = canEditInformation && !isEditingSelf;
   const isTargetHigherRole = isRoleHigherThan(membership.role, currentUserRole);
   const isPending = membership.role === "pending";
 
@@ -86,21 +84,6 @@ export default async function Page({
               />
             ) : (
               <Text>{membership.name}</Text>
-            )
-          }
-        />
-        <DetailsRow
-          title="Unit"
-          description={
-            canEditInformation ? (
-              <Input
-                name="unit"
-                type="text"
-                defaultValue={membership.unit || undefined}
-                required
-              />
-            ) : (
-              <Text>{membership.unit ?? <Badge>No Unit</Badge>}</Text>
             )
           }
         />
@@ -151,27 +134,6 @@ export default async function Page({
             )
           }
         />
-        {canEditMonthlyFee && (
-          <DetailsRow
-            title="Monthly Fee"
-            description={
-              <Input
-                name="monthly_fee"
-                type="number"
-                defaultValue={membership.monthlyFee ?? undefined}
-                min={0}
-              />
-            }
-          />
-        )}
-        {!canEditMonthlyFee &&
-          canEditInformation &&
-          membership.monthlyFee != null && (
-            <DetailsRow
-              title="Monthly Fee"
-              description={<Text>${membership.monthlyFee}</Text>}
-            />
-          )}
       </Details>
 
       <Group equalWidthChildren>

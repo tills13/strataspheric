@@ -1,5 +1,4 @@
 import { auth } from "../../../../auth";
-import { Badge } from "../../../../components/Badge";
 import { Button } from "../../../../components/Button";
 import { Group } from "../../../../components/Group";
 import { EmailIcon } from "../../../../components/Icon/EmailIcon";
@@ -62,22 +61,14 @@ export async function MembershipTableRow({ membership }: Props) {
       }
       content={
         <Group flex={1}>
-          {membership.unit && <Badge>Unit {membership.unit}</Badge>}
           <Text fw="bold" whiteSpace="nowrap" color="primary">
             {membership.name}
           </Text>
           <Text color="secondary">{roleLabels[membership.role]}</Text>
         </Group>
       }
-      rowEnd={
-        canUpsert && membership.monthlyFee != null ? (
-          <Text color="secondary" whiteSpace="nowrap">
-            ${membership.monthlyFee}/mo
-          </Text>
-        ) : undefined
-      }
-      rowId={membership.id}
-      link={`/dashboard/membership/${membership.id}`}
+      rowId={membership.userId}
+      link={`/dashboard/membership/${membership.userId}`}
     />
   );
 }
