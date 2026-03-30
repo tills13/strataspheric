@@ -1,3 +1,5 @@
+import { uuidv7 } from "uuidv7";
+
 import { NewStrataMembership, db } from "..";
 
 export async function createStrataMembership(
@@ -5,6 +7,9 @@ export async function createStrataMembership(
 ) {
   return db()
     .insertInto("strata_memberships")
-    .values(strataMembership)
+    .values({
+      id: uuidv7(),
+      ...strataMembership,
+    })
     .execute();
 }
