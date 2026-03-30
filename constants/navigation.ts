@@ -70,6 +70,11 @@ export const NAVIGATION_SUB_LINKS: Record<string, SubLink[]> = {
   ],
   "/dashboard/membership": [
     {
+      href: "/dashboard/membership/units",
+      label: "Units",
+      icon: GroupIcon,
+    },
+    {
       href: "/dashboard/membership/pending",
       label: "Pending",
       icon: CycleIcon,
