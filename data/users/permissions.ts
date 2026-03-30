@@ -11,6 +11,7 @@ export const scopes = [
   "meetings",
   "memberships",
   "settings",
+  "units",
   "widgets",
 ] as const;
 export const actions = ["create", "edit", "delete", "view"] as const;
@@ -21,6 +22,8 @@ export const roles = [
   "treasurer",
   "secretary",
   "owner",
+  "tenant",
+  "resident",
   "pending",
 ] as const;
 
@@ -31,6 +34,8 @@ export const roleLabels: Record<Role, string> = {
   "vice-president": "Vice President",
   president: "President",
   administrator: "Administrator",
+  tenant: "Tenant",
+  resident: "Resident",
   pending: "Pending",
 };
 
@@ -111,6 +116,15 @@ export function roleScopeToScopes(
       // @todo fix, make work -- explicit deny > implicit allow
       return [
         "!stratas.invoices.view",
+        "stratas.amenities.view",
+        "stratas.events.view",
+        "stratas.files.view",
+        "stratas.memberships.view",
+      ];
+    }
+    case "tenant":
+    case "resident": {
+      return [
         "stratas.amenities.view",
         "stratas.events.view",
         "stratas.files.view",
