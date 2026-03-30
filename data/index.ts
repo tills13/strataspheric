@@ -131,9 +131,16 @@ export type Meeting = Selectable<MeetingsTable>;
 export type NewMeeting = Insertable<MeetingsTable>;
 export type MeetingUpdate = Updateable<MeetingsTable>;
 
+export type MeetingAgendaItemType = "item" | "discussion" | "vote";
+
 export interface MeetingAgendaItemsTable {
   id: ColumnType<string, string, never>;
   meetingId: string;
+  type: ColumnType<
+    MeetingAgendaItemType,
+    MeetingAgendaItemType | undefined,
+    MeetingAgendaItemType
+  >;
   title: string;
   description: string;
   minutes: string | null;
@@ -186,6 +193,17 @@ export type MeetingAttendee = Selectable<MeetingAttendeesTable>;
 export type NewMeetingAttendee = Insertable<MeetingAttendeesTable>;
 export type MeetingAttendeeUpdate = Updateable<MeetingAttendeesTable>;
 
+export type AgendaItemVoteValue = "for" | "against" | "abstain";
+
+export interface MeetingAgendaItemVotesTable {
+  agendaItemId: ColumnType<string, string, never>;
+  userId: ColumnType<string, string, never>;
+  vote: AgendaItemVoteValue;
+}
+
+export type MeetingAgendaItemVote = Selectable<MeetingAgendaItemVotesTable>;
+export type NewMeetingAgendaItemVote = Insertable<MeetingAgendaItemVotesTable>;
+
 export interface StratasTable {
   id: ColumnType<string, string, never>;
   status: ColumnType<string, string | undefined, string | undefined>;
@@ -212,6 +230,8 @@ export interface StratasTable {
   stripeAccountStatus: ColumnType<string | null, string | null, string | null>;
   createdAt: ColumnType<number, never, never>;
   inboxEmail: string | null;
+  levyMode: ColumnType<"entitlement" | "custom", string | undefined, string>;
+  totalMonthlyBudget: number | null;
 }
 
 export type Strata = Selectable<StratasTable>;
@@ -229,6 +249,7 @@ export type NewThreadEmail = Insertable<ThreadEmailsTable>;
 export type ThreadEmailUpdate = Updateable<ThreadEmailsTable>;
 
 export interface StrataMembershipsTable {
+  id: ColumnType<string, string, never>;
   strataId: ColumnType<string, string, never>;
   userId: ColumnType<string, string, never>;
   unit: string | null;
@@ -242,6 +263,27 @@ export interface StrataMembershipsTable {
 export type StrataMembership = Selectable<StrataMembershipsTable>;
 export type NewStrataMembership = Insertable<StrataMembershipsTable>;
 export type StrataMembershipUpdate = Updateable<StrataMembershipsTable>;
+
+export interface UnitsTable {
+  id: ColumnType<string, string, never>;
+  strataId: string;
+  unitNumber: string;
+  entitlementShares: ColumnType<number, number | undefined, number>;
+  customMonthlyFee: number | null;
+  createdAt: ColumnType<number, never, never>;
+}
+
+export type Unit = Selectable<UnitsTable>;
+export type NewUnit = Insertable<UnitsTable>;
+export type UnitUpdate = Updateable<UnitsTable>;
+
+export interface UnitOccupantsTable {
+  unitId: string;
+  membershipId: string;
+}
+
+export type UnitOccupant = Selectable<UnitOccupantsTable>;
+export type NewUnitOccupant = Insertable<UnitOccupantsTable>;
 
 export interface StrataPlansTable {
   id: string;
@@ -382,6 +424,7 @@ export interface Database {
   invoices: InvoicesTable;
   meetings: MeetingsTable;
   meeting_agenda_items: MeetingAgendaItemsTable;
+  meeting_agenda_item_votes: MeetingAgendaItemVotesTable;
   meeting_attendees: MeetingAttendeesTable;
   meeting_files: MeetingFilesTable;
   meeting_minutes: MeetingMinutesTable;
@@ -392,6 +435,8 @@ export interface Database {
   strata_plans: StrataPlansTable;
   strata_widgets: StrataWidgetsTable;
   stratas: StratasTable;
+  units: UnitsTable;
+  unit_occupants: UnitOccupantsTable;
   users: UsersTable;
   user_password_reset_tokens: UserPasswordResetTokensTable;
   widget_events: WidgetEventsTable;
