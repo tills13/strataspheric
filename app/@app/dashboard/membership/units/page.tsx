@@ -41,8 +41,8 @@ export default async function Page() {
       {overLimit && (
         <Group p="normal">
           <Text color="error" fw="bold">
-            You have {units.length} units but your plan covers{" "}
-            {strata.numUnits}. Update your plan to avoid billing adjustments.
+            You have {units.length} units but your plan covers {strata.numUnits}
+            . Update your plan to avoid billing adjustments.
           </Text>
         </Group>
       )}

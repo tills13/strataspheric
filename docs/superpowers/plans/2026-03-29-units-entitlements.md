@@ -13,6 +13,7 @@
 ## File Map
 
 ### New Files
+
 - `migrations/039_units_and_entitlements.sql` — DDL for new tables and schema changes
 - `data/units/createUnit.ts` — insert a unit
 - `data/units/getUnit.ts` — fetch a unit by id with occupants
@@ -28,6 +29,7 @@
 - `app/@app/dashboard/membership/units/[unitId]/page.tsx` — unit detail/edit page
 
 ### Modified Files
+
 - `data/index.ts` — add UnitsTable, UnitOccupantsTable interfaces; add levyMode/totalMonthlyBudget to StratasTable; add id to StrataMembershipsTable; register new tables in Database
 - `data/users/permissions.ts` — add "tenant", "resident" roles; add "units" scope; update roleScopeToScopes
 - `data/memberships/createStrataMembership.ts` — generate `id` with uuidv7
@@ -46,6 +48,7 @@
 ### Task 1: Migration — schema changes
 
 **Files:**
+
 - Create: `migrations/039_units_and_entitlements.sql`
 
 - [ ] **Step 1: Write the migration SQL**
@@ -91,6 +94,7 @@ git commit -m "feat: add migration for units, unit_occupants, and levy settings"
 ### Task 2: Schema types — update data/index.ts
 
 **Files:**
+
 - Modify: `data/index.ts`
 
 - [ ] **Step 1: Add UnitsTable and UnitOccupantsTable interfaces, add id to StrataMembershipsTable, add levy fields to StratasTable**
@@ -124,7 +128,7 @@ Add `id` to `StrataMembershipsTable`:
 
 ```typescript
 export interface StrataMembershipsTable {
-  id: ColumnType<string, string, never>;  // <-- ADD THIS
+  id: ColumnType<string, string, never>; // <-- ADD THIS
   strataId: ColumnType<string, string, never>;
   userId: ColumnType<string, string, never>;
   unit: string | null;
@@ -164,6 +168,7 @@ git commit -m "feat: add unit and unit_occupant schema types, extend strata and 
 ### Task 3: Permissions — add roles and units scope
 
 **Files:**
+
 - Modify: `data/users/permissions.ts`
 
 - [ ] **Step 1: Add "tenant" and "resident" roles, "units" scope, and update roleScopeToScopes**
@@ -246,6 +251,7 @@ git commit -m "feat: add tenant/resident roles and units scope to permissions"
 ### Task 4: Data layer — membership id generation
 
 **Files:**
+
 - Modify: `data/memberships/createStrataMembership.ts`
 
 - [ ] **Step 1: Generate id on insert**
@@ -282,6 +288,7 @@ git commit -m "feat: generate uuidv7 id for new strata memberships"
 ### Task 5: Data layer — unit CRUD functions
 
 **Files:**
+
 - Create: `data/units/createUnit.ts`
 - Create: `data/units/getUnit.ts`
 - Create: `data/units/listUnits.ts`
@@ -429,10 +436,7 @@ export async function deleteUnit(unitId: string) {
 import { NewUnitOccupant, db } from "..";
 
 export async function addUnitOccupant(occupant: NewUnitOccupant) {
-  return db()
-    .insertInto("unit_occupants")
-    .values(occupant)
-    .execute();
+  return db().insertInto("unit_occupants").values(occupant).execute();
 }
 ```
 
@@ -462,6 +466,7 @@ git commit -m "feat: add unit CRUD data functions"
 ### Task 6: Navigation — add Units sub-link
 
 **Files:**
+
 - Modify: `constants/navigation.ts`
 
 - [ ] **Step 1: Add Units sub-link and import BuildingIcon**
@@ -497,6 +502,7 @@ git commit -m "feat: add Units sub-link to directory navigation"
 ### Task 7: Settings — levy mode configuration
 
 **Files:**
+
 - Modify: `app/@app/dashboard/settings/SettingsPage.tsx`
 - Modify: `app/@app/actions.ts`
 
@@ -533,10 +539,7 @@ After the "Content Visibility" section (after the `RadioButton` for visibility, 
 In `app/@app/actions.ts`, add form field parsing after the existing fields (around line 36):
 
 ```typescript
-const levyMode = formdata.getEnum(fd, "levy_mode", [
-  "entitlement",
-  "custom",
-]);
+const levyMode = formdata.getEnum(fd, "levy_mode", ["entitlement", "custom"]);
 const totalMonthlyBudgetStr = formdata.getString(fd, "total_monthly_budget");
 const totalMonthlyBudget = totalMonthlyBudgetStr
   ? parseInt(totalMonthlyBudgetStr, 10)
@@ -575,6 +578,7 @@ git commit -m "feat: add levy mode and total monthly budget to strata settings"
 ### Task 8: Units server actions
 
 **Files:**
+
 - Create: `app/@app/dashboard/membership/units/actions.ts`
 
 - [ ] **Step 1: Write unit server actions**
@@ -584,12 +588,12 @@ git commit -m "feat: add levy mode and total monthly budget to strata settings"
 
 import { revalidatePath } from "next/cache";
 
+import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { addUnitOccupant } from "../../../../../data/units/addUnitOccupant";
 import { createUnit } from "../../../../../data/units/createUnit";
 import { deleteUnit } from "../../../../../data/units/deleteUnit";
 import { removeUnitOccupant } from "../../../../../data/units/removeUnitOccupant";
 import { updateUnit } from "../../../../../data/units/updateUnit";
-import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { withPermissions } from "../../../../../utils/actions";
 import * as formdata from "../../../../../utils/formdata";
 
@@ -680,6 +684,7 @@ git commit -m "feat: add server actions for unit CRUD and occupant management"
 ### Task 9: Units list page
 
 **Files:**
+
 - Create: `app/@app/dashboard/membership/units/page.tsx`
 - Create: `app/@app/dashboard/membership/units/UnitsList.tsx`
 - Create: `app/@app/dashboard/membership/units/UnitTableRow.tsx`
@@ -697,8 +702,8 @@ import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Group } from "../../../../../components/Group";
 import { InternalLink } from "../../../../../components/Link/InternalLink";
 import { Text } from "../../../../../components/Text";
-import { listUnits } from "../../../../../data/units/listUnits";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
+import { listUnits } from "../../../../../data/units/listUnits";
 import { can } from "../../../../../data/users/permissions";
 import { UnitsList } from "./UnitsList";
 
@@ -732,12 +737,16 @@ export default async function Page() {
       {overLimit && (
         <Group p="normal">
           <Text color="error" fw="bold">
-            You have {units.length} units but your plan covers{" "}
-            {strata.numUnits}. Update your plan to avoid billing adjustments.
+            You have {units.length} units but your plan covers {strata.numUnits}
+            . Update your plan to avoid billing adjustments.
           </Text>
         </Group>
       )}
-      <UnitsList units={units} levyMode={strata.levyMode} totalMonthlyBudget={strata.totalMonthlyBudget} />
+      <UnitsList
+        units={units}
+        levyMode={strata.levyMode}
+        totalMonthlyBudget={strata.totalMonthlyBudget}
+      />
     </DashboardLayout>
   );
 }
@@ -875,6 +884,7 @@ git commit -m "feat: add units list page with levy calculations"
 ### Task 10: Unit detail/edit page
 
 **Files:**
+
 - Create: `app/@app/dashboard/membership/units/[unitId]/page.tsx`
 
 - [ ] **Step 1: Create unit detail page**
@@ -1084,7 +1094,11 @@ export default async function Page({
           <Text color="secondary">No members assigned to this unit.</Text>
         )}
         {unit.occupants.map((occupant) => (
-          <Group key={occupant.membershipId} align="center" justify="space-between">
+          <Group
+            key={occupant.membershipId}
+            align="center"
+            justify="space-between"
+          >
             <Group align="center">
               <Text>{occupant.name}</Text>
               <Badge level="info">{roleLabels[occupant.role]}</Badge>
@@ -1156,6 +1170,7 @@ git commit -m "feat: add unit detail page with edit, occupant management, and de
 ### Task 11: Clean up membership — remove monthlyFee and unit references from UI
 
 **Files:**
+
 - Modify: `app/@app/dashboard/membership/Memberships.tsx`
 - Modify: `app/@app/dashboard/membership/MembershipTableRow.tsx`
 - Modify: `app/@app/dashboard/membership/[userId]/page.tsx`
@@ -1283,6 +1298,7 @@ Remove the "Unit" `DetailsRow` (lines 92-104), the `canEditMonthlyFee` variable 
 In the `DetailsRow` for "Unit", replace with a read-only display that shows units the member is assigned to (fetched separately). For now, simply remove the unit input and monthlyFee fields. The unit assignment is managed from the unit detail page.
 
 Remove these sections:
+
 - The `const canEditMonthlyFee = ...` line
 - The `DetailsRow` with title "Unit" (the entire block from the `<DetailsRow title="Unit"` to its closing `/>`)
 - Both `DetailsRow` blocks with title "Monthly Fee"
@@ -1294,6 +1310,7 @@ In `app/@app/dashboard/membership/actions.ts`, in `upsertStrataMembershipAction`
 Remove `const unit = formdata.getString(fd, "unit");` (line 44).
 
 Remove the monthlyFee parsing block (lines 111-116):
+
 ```typescript
 const monthlyFeeStr = formdata.getString(fd, "monthly_fee");
 const monthlyFee =
@@ -1361,6 +1378,7 @@ npm run dev
 ```
 
 Verify:
+
 1. Settings page shows Levies section with radio toggle and budget input
 2. Directory page loads without errors
 3. "Units" sub-link appears in directory navigation for admin users

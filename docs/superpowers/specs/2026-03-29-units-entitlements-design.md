@@ -8,24 +8,24 @@ Split the "monthly fee" concept off memberships, introduce a concrete `units` ta
 
 ### New table: `units`
 
-| Column | Type | Default | Notes |
-|--------|------|---------|-------|
-| `id` | text PK | uuidv7 | |
-| `strataId` | text FK | | → stratas.id, NOT NULL |
-| `unitNumber` | text | | e.g., "101", "PH-2", NOT NULL |
-| `entitlementShares` | integer | 1 | Used in entitlement mode |
-| `customMonthlyFee` | integer | null | Used in custom mode (cents) |
-| `createdAt` | integer | | Unix timestamp |
+| Column              | Type    | Default | Notes                         |
+| ------------------- | ------- | ------- | ----------------------------- |
+| `id`                | text PK | uuidv7  |                               |
+| `strataId`          | text FK |         | → stratas.id, NOT NULL        |
+| `unitNumber`        | text    |         | e.g., "101", "PH-2", NOT NULL |
+| `entitlementShares` | integer | 1       | Used in entitlement mode      |
+| `customMonthlyFee`  | integer | null    | Used in custom mode (cents)   |
+| `createdAt`         | integer |         | Unix timestamp                |
 
 Unique constraint on `(strataId, unitNumber)`.
 
 ### New table: `unit_occupants`
 
-| Column | Type | Notes |
-|--------|------|-------|
-| `unitId` | text FK | → units.id, NOT NULL |
-| `membershipId` | text FK | → strata_memberships.id, NOT NULL |
-| PK | composite | (unitId, membershipId) |
+| Column         | Type      | Notes                             |
+| -------------- | --------- | --------------------------------- |
+| `unitId`       | text FK   | → units.id, NOT NULL              |
+| `membershipId` | text FK   | → strata_memberships.id, NOT NULL |
+| PK             | composite | (unitId, membershipId)            |
 
 The occupancy relationship type is derived from the membership's existing `role` field (owner, tenant, resident, etc.).
 
@@ -54,12 +54,12 @@ Tenant and resident get the same base permissions as owner (minus anything owner
 
 New scope: `units` added to the permissions system.
 
-| Role | Unit permissions |
-|------|-----------------|
+| Role                                                | Unit permissions  |
+| --------------------------------------------------- | ----------------- |
 | administrator, president, vice-president, treasurer | `stratas.units.*` |
-| secretary | none |
-| owner, tenant, resident | none |
-| pending | none |
+| secretary                                           | none              |
+| owner, tenant, resident                             | none              |
+| pending                                             | none              |
 
 The "Units" sub-tab is visible only to users with `stratas.units.view`.
 
