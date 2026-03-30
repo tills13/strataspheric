@@ -35,6 +35,14 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
     formdata.getEnum(fd, "visibility", ["private", "public"]) === "public";
   const bylawsFileId = formdata.getString(fd, "bylawsFileId");
   const inboxEmail = formdata.getString(fd, "inboxEmail") || null;
+  const levyMode = formdata.getEnum(fd, "levy_mode", [
+    "entitlement",
+    "custom",
+  ]);
+  const totalMonthlyBudgetStr = formdata.getString(fd, "total_monthly_budget");
+  const totalMonthlyBudget = totalMonthlyBudgetStr
+    ? parseInt(totalMonthlyBudgetStr, 10)
+    : null;
 
   let latitude = formdata.getFloat(fd, "latitude");
   let longitude = formdata.getFloat(fd, "longitude");
@@ -67,6 +75,8 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
     bylawsFileId,
     isPublic: isPublic ? 1 : 0,
     inboxEmail,
+    ...(levyMode && { levyMode }),
+    totalMonthlyBudget,
   });
 
   revalidatePath("/dashboard");

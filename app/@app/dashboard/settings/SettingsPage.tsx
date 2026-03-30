@@ -96,6 +96,28 @@ export async function SettingsPage({ canEdit }: Props) {
               defaultValue={strata.isPublic ? "public" : "private"}
             />
 
+            <Header as="h3">Levies</Header>
+            <Text color="secondary">
+              Choose how monthly levies are calculated for each unit.
+              Entitlement-based splits a total budget by each unit&apos;s
+              share value. Custom lets you set each unit&apos;s fee
+              directly.
+            </Text>
+            <RadioButton
+              className={s({ flex: 1 })}
+              name="levy_mode"
+              options={["entitlement", "custom"]}
+              defaultValue={strata.levyMode ?? "entitlement"}
+            />
+            <Input
+              name="total_monthly_budget"
+              label="Total Monthly Budget"
+              type="number"
+              min={0}
+              placeholder="e.g. 5000"
+              defaultValue={strata.totalMonthlyBudget ?? undefined}
+            />
+
             {canEdit && (
               <StatusButton
                 color="success"
