@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { addUnitOccupant } from "../../../../../data/units/addUnitOccupant";
@@ -24,7 +25,7 @@ export const createUnitAction = withPermissions(
       throw new Error("Unit number is required");
     }
 
-    await createUnit({
+    const unit = await createUnit({
       strataId: strata.id,
       unitNumber,
       entitlementShares: entitlementSharesStr
@@ -66,6 +67,7 @@ export const deleteUnitAction = withPermissions(
   async (_, unitId: string) => {
     await deleteUnit(unitId);
     revalidatePath("/dashboard/membership/units");
+    redirect("/dashboard/membership/units");
   },
 );
 

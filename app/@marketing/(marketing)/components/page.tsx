@@ -132,6 +132,7 @@ const MOCK_INVOICE: Invoice = {
   stripeInvoiceId: null,
   stripeInvoiceUrl: null,
   payerEmail: null,
+  archivedAt: null,
 };
 
 export default async function Page() {

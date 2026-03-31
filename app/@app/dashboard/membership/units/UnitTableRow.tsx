@@ -1,9 +1,6 @@
-import { Badge } from "../../../../../components/Badge";
-import { Group } from "../../../../../components/Group";
 import { TableRow } from "../../../../../components/Table/TableRow";
 import { Text } from "../../../../../components/Text";
 import { UnitWithOccupants } from "../../../../../data/units/listUnits";
-import { roleLabels } from "../../../../../data/users/permissions";
 
 interface Props {
   unit: UnitWithOccupants;
@@ -40,19 +37,9 @@ export function UnitTableRow({
   return (
     <TableRow
       content={
-        <Group flex={1} align="center">
-          <Text fw="bold" whiteSpace="nowrap" color="primary">
-            Unit {unit.unitNumber}
-          </Text>
-          {levyMode === "entitlement" && (
-            <Text color="secondary">{unit.entitlementShares} shares</Text>
-          )}
-          {unit.occupants.map((o) => (
-            <Badge key={o.membershipId} level="info">
-              {o.name} ({roleLabels[o.role]})
-            </Badge>
-          ))}
-        </Group>
+        <Text fw="bold" whiteSpace="nowrap" color="primary">
+          {unit.unitNumber}
+        </Text>
       }
       rowEnd={
         levy != null ? (

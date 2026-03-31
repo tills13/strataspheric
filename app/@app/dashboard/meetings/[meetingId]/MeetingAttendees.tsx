@@ -111,6 +111,7 @@ export async function MeetingAttendees({ meetingId }: Props) {
                 }
               >
                 <Button
+                  color="primary"
                   type={canEdit ? "submit" : "button"}
                   size="small"
                   style="secondary"

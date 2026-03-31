@@ -1,6 +1,8 @@
 import { breakpoints, vars } from "../../../../theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { colorMix } from "../../../../../styles/utils";
+
 export const meetingAgendaContainer = style({});
 
 export const meetingAgendaContainerDeleteMeeting = style({
@@ -9,6 +11,29 @@ export const meetingAgendaContainerDeleteMeeting = style({
       display: "none",
     },
   },
+});
+
+export const meetingAgendaProgress = style({
+  position: "sticky",
+  top: 0,
+  zIndex: 10,
+  paddingBlock: vars.spacing.normal,
+  paddingInline: vars.spacing["20"],
+  marginInline: `calc(-1 * ${vars.spacing["20"]})`,
+  transition: `background-color ${vars.transitions.slow}, backdrop-filter ${vars.transitions.slow}, box-shadow ${vars.transitions.slow}, border-color ${vars.transitions.slow}`,
+  borderBottom: "1px solid transparent",
+});
+
+export const meetingAgendaProgressStuck = style({
+  backgroundColor: colorMix(vars.colors.white, 55),
+  backdropFilter: "blur(24px) saturate(1.6)",
+  WebkitBackdropFilter: "blur(24px) saturate(1.6)",
+  borderBottom: `1px solid ${colorMix(vars.colors.indigo200, 30)}`,
+  boxShadow: [
+    `0 4px 24px ${colorMix(vars.colors.indigo300, 10)}`,
+    `0 1px 8px ${colorMix(vars.colors.indigo400, 6)}`,
+    `inset 0 1px 0 ${colorMix(vars.colors.white, 50)}`,
+  ].join(", "),
 });
 
 export const meetingAgendaEmptyInfoPanel = style({

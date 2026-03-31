@@ -7,6 +7,7 @@ import {
 import * as linkStyles from "../Link/style.css";
 import { style, styleVariants } from "@vanilla-extract/css";
 
+import { colorMix } from "../../styles/utils";
 import { padding } from "../../theme";
 
 export const GLOBAL_HEADER_HEIGHT_PX = 56;
@@ -50,7 +51,10 @@ export const sidebarNavigationItem = style([
 export const activeSidebarNavigationItem = style([
   baseSidebarNavigationItem,
   {
-    background: `linear-gradient(to right, color-mix(in srgb, ${vars.colors.primary} 32%, transparent), color-mix(in srgb, ${vars.colors.primary} 8%, transparent) 75%)`,
+    background: `linear-gradient(to right, ${colorMix(
+      vars.colors.primary,
+      32,
+    )}, ${colorMix(vars.colors.primary, 8)} 75%)`,
     borderColor: vars.colors.primary,
     color: vars.colors.primary,
     fontWeight: vars.fontWeights.medium,

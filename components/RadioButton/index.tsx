@@ -12,9 +12,16 @@ interface Props {
   name: string;
   options: string[];
   defaultValue?: string;
+  onChange?: (value: string) => void;
 }
 
-export function RadioButton({ className, defaultValue, name, options }: Props) {
+export function RadioButton({
+  className,
+  defaultValue,
+  name,
+  onChange,
+  options,
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = useState(() =>
     defaultValue ? options.indexOf(defaultValue) : -1,
@@ -76,7 +83,10 @@ export function RadioButton({ className, defaultValue, name, options }: Props) {
               id={syntheticName}
               defaultChecked={option === defaultValue}
               value={option}
-              onChange={() => setSelectedIndex(index)}
+              onChange={() => {
+                setSelectedIndex(index);
+                onChange?.(option);
+              }}
             />
             <Text fontWeight="bold" color="unset">
               {option}

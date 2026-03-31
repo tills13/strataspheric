@@ -1,6 +1,3 @@
--- Add id column to strata_memberships
-ALTER TABLE strata_memberships ADD COLUMN id TEXT;
-
 -- Create units table
 CREATE TABLE units (
   id TEXT PRIMARY KEY,

@@ -1,6 +1,7 @@
 import { vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { colorMix } from "../../styles/utils";
 import { border } from "../../theme";
 
 export const message = style({
@@ -15,6 +16,6 @@ export const messageHighighted = style([
   message,
   {
     transition: `background-color ${vars.transitions.slow}`,
-    backgroundColor: `color-mix(in srgb, ${vars.colors.orange100} 30%, transparent)`,
+    backgroundColor: colorMix(vars.colors.orange100, 30),
   },
 ]);

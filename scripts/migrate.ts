@@ -7,39 +7,16 @@
  * Usage: npx tsx scripts/migrate.ts --local|--remote
  */
 import { execFileSync } from "node:child_process";
-import { readdirSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { createInterface } from "node:readline";
 
+import { getPlatformProxy } from "wrangler";
+
 const MIGRATIONS_DIR = resolve(__dirname, "../migrations");
-const DB_NAME = "strataspheric";
 const SKIP_FILES = new Set(["_remove_all_data.sql"]);
-
-function wrangler(target: string, args: string[]) {
-  execFileSync("npx", ["wrangler", "d1", "execute", DB_NAME, target, ...args], {
-    cwd: resolve(__dirname, ".."),
-    stdio: "inherit",
-  });
-}
-
-function wranglerJson(target: string, command: string): unknown[] {
-  const result = execFileSync(
-    "npx",
-    [
-      "wrangler",
-      "d1",
-      "execute",
-      DB_NAME,
-      target,
-      "--json",
-      "--command",
-      command,
-    ],
-    { cwd: resolve(__dirname, "..") },
-  );
-  const parsed = JSON.parse(result.toString());
-  return parsed[0]?.results ?? [];
-}
+const D1_DATABASE_NAME = "strataspheric";
+const PROJECT_ROOT = resolve(__dirname, "..");
 
 async function confirm(message: string): Promise<boolean> {
   const rl = createInterface({ input: process.stdin, output: process.stdout });
@@ -51,41 +28,53 @@ async function confirm(message: string): Promise<boolean> {
   });
 }
 
-async function main() {
-  const flag = process.argv[2];
+// ---------------------------------------------------------------------------
+// Remote helpers — shell out to `wrangler d1 execute` which handles auth
+// and actually talks to the remote D1 API.
+// ---------------------------------------------------------------------------
 
-  if (flag !== "--local" && flag !== "--remote") {
-    console.error("Usage: npx tsx scripts/migrate.ts --local|--remote");
-    process.exit(1);
-  }
+function remoteQuery(sql: string): string {
+  return execFileSync(
+    "npx",
+    ["wrangler", "d1", "execute", D1_DATABASE_NAME, "--remote", "--json", "--command", sql],
+    { encoding: "utf-8", cwd: PROJECT_ROOT },
+  );
+}
 
-  if (flag === "--remote") {
-    console.log(
-      "WARNING: You are about to run migrations against the REMOTE database!",
-    );
-    const ok = await confirm("Are you sure?");
-    if (!ok) {
-      console.log("Aborted.");
-      process.exit(0);
-    }
+function remoteExecFile(filePath: string): void {
+  execFileSync(
+    "npx",
+    ["wrangler", "d1", "execute", D1_DATABASE_NAME, "--remote", "--file", filePath],
+    { encoding: "utf-8", stdio: "inherit", cwd: PROJECT_ROOT },
+  );
+}
+
+async function runRemote() {
+  console.log(
+    "WARNING: You are about to run migrations against the REMOTE database!",
+  );
+  const ok = await confirm("Are you sure?");
+  if (!ok) {
+    console.log("Aborted.");
+    process.exit(0);
   }
 
   // Ensure migrations tracking table exists
-  wrangler(flag, [
-    "--command",
-    "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key)",
-  ]);
+  remoteQuery(
+    "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key);",
+  );
 
   // Get already-executed migrations
-  const rows = wranglerJson(
-    flag,
+  const raw = remoteQuery(
     "SELECT migration_name FROM migrations ORDER BY migration_name ASC",
   );
+  const parsed = JSON.parse(raw) as {
+    result: { results: { migration_name: string }[] }[];
+  };
   const executed = new Set(
-    rows.map((r) => (r as { migration_name: string }).migration_name),
+    (parsed.result?.[0]?.results ?? []).map((r) => r.migration_name),
   );
 
-  // Get all migration files
   const files = readdirSync(MIGRATIONS_DIR)
     .filter((f) => f.endsWith(".sql") && !SKIP_FILES.has(f))
     .sort();
@@ -99,13 +88,13 @@ async function main() {
     console.log(`Running ${file}...`);
 
     try {
-      wrangler(flag, ["--file", resolve(MIGRATIONS_DIR, file)]);
-    } catch {
-      console.error(`Migration ${file} failed`);
+      remoteExecFile(resolve(MIGRATIONS_DIR, file));
+    } catch (err) {
+      console.error(`Migration ${file} failed:`, err);
       process.exit(1);
     }
 
-    wrangler(flag, ["--command", `INSERT INTO migrations VALUES ('${file}')`]);
+    remoteQuery(`INSERT INTO migrations VALUES ('${file}')`);
     applied++;
   }
 
@@ -113,6 +102,93 @@ async function main() {
     console.log("No pending migrations.");
   } else {
     console.log(`Applied ${applied} migration(s).`);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Local — uses getPlatformProxy which works fine for the local D1 emulator
+// ---------------------------------------------------------------------------
+
+async function runLocal() {
+  const { env, dispose } = await getPlatformProxy<{ DB: D1Database }>({
+    configPath: resolve(__dirname, "../wrangler.jsonc"),
+  });
+
+  try {
+    const db = env.DB;
+
+    await db
+      .prepare(
+        "CREATE TABLE IF NOT EXISTS migrations (migration_name text primary key);",
+      )
+      .run();
+
+    const { results } = await db
+      .prepare(
+        "SELECT migration_name FROM migrations ORDER BY migration_name ASC",
+      )
+      .all<{ migration_name: string }>();
+
+    const executed = new Set(results.map((r) => r.migration_name));
+
+    const files = readdirSync(MIGRATIONS_DIR)
+      .filter((f) => f.endsWith(".sql") && !SKIP_FILES.has(f))
+      .sort();
+
+    let applied = 0;
+    for (const file of files) {
+      if (executed.has(file)) {
+        continue;
+      }
+
+      console.log(`Running ${file}...`);
+
+      const sql = readFileSync(resolve(MIGRATIONS_DIR, file), "utf-8");
+
+      try {
+        const statements = sql
+          .split(";")
+          .map((s) => s.replace(/--.*$/gm, "").trim())
+          .filter(Boolean);
+
+        for (const stmt of statements) {
+          await db.prepare(`${stmt};`).run();
+        }
+      } catch (err) {
+        console.error(`Migration ${file} failed:`, err);
+        process.exit(1);
+      }
+
+      await db
+        .prepare("INSERT INTO migrations VALUES (?)")
+        .bind(file)
+        .run();
+
+      applied++;
+    }
+
+    if (applied === 0) {
+      console.log("No pending migrations.");
+    } else {
+      console.log(`Applied ${applied} migration(s).`);
+    }
+  } finally {
+    await dispose();
+  }
+}
+
+async function main() {
+  const flag = process.argv[2] ?? "--local";
+
+  if (flag !== "--local" && flag !== "--remote") {
+    console.error("Usage: npx tsx scripts/migrate.ts [--local|--remote]");
+    process.exit(1);
+  }
+
+  if (flag === "--remote") {
+    await runRemote();
+  } else {
+    await runLocal();
   }
 }
 

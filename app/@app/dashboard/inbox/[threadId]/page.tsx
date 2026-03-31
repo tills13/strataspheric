@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
 import { DashboardLayout } from "../../../../../components/DashboardLayout";
+import { LiveSyncProvider } from "../../../../../components/LiveSyncProvider";
 import { Thread, getThread } from "../../../../../data/inbox/getThread";
 import { markThreadRead } from "../../../../../data/inbox/markThreadRead";
 import { can, p } from "../../../../../data/users/permissions";
@@ -54,14 +55,16 @@ export default async function Page({
 
   return (
     <DashboardLayout subPageTitle={thread.subject} noPadding>
-      <div
-        className={classnames(
-          canSeeChats && styles.threadPageContainerWithChats,
-        )}
-      >
-        <InboxMessageThread threadId={threadId} />
-        {canSeeChats && <InboxThreadChatPanel threadId={threadId} />}
-      </div>
+      <LiveSyncProvider intervalMs={5000}>
+        <div
+          className={classnames(
+            canSeeChats && styles.threadPageContainerWithChats,
+          )}
+        >
+          <InboxMessageThread threadId={threadId} />
+          {canSeeChats && <InboxThreadChatPanel threadId={threadId} />}
+        </div>
+      </LiveSyncProvider>
     </DashboardLayout>
   );
 }

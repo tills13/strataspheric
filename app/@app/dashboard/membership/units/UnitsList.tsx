@@ -1,6 +1,5 @@
+import { NothingHere } from "../../../../../components/NothingHere";
 import { Table } from "../../../../../components/Table";
-import { TableFooter } from "../../../../../components/Table/TableFooter";
-import { Text } from "../../../../../components/Text";
 import { UnitWithOccupants } from "../../../../../data/units/listUnits";
 import { UnitTableRow } from "./UnitTableRow";
 
@@ -13,6 +12,10 @@ interface Props {
 export function UnitsList({ units, levyMode, totalMonthlyBudget }: Props) {
   const totalShares = units.reduce((sum, u) => sum + u.entitlementShares, 0);
 
+  if (units.length === 0) {
+    return <NothingHere>No units yet. Add units to track entitlements and levies.</NothingHere>;
+  }
+
   return (
     <Table>
       {units.map((unit) => (
@@ -24,15 +27,6 @@ export function UnitsList({ units, levyMode, totalMonthlyBudget }: Props) {
           totalShares={totalShares}
         />
       ))}
-      {units.length === 0 && (
-        <TableFooter
-          content={
-            <Text color="secondary">
-              No units yet. Add units to track entitlements and levies.
-            </Text>
-          }
-        />
-      )}
     </Table>
   );
 }

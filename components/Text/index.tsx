@@ -18,7 +18,8 @@ type ValidTextIntrinsicElements =
   | "h4"
   | "h5"
   | "h6"
-  | "time";
+  | "time"
+  | "div";
 
 interface BaseProps<E extends ValidTextIntrinsicElements> {
   as?: E;

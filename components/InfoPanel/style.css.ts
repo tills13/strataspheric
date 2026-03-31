@@ -3,8 +3,13 @@ import { style } from "@vanilla-extract/css";
 
 import { recipe } from "@vanilla-extract/recipes";
 
+import { colorMix } from "../../styles/utils";
+
 function background(baseColor: string) {
-  return `linear-gradient(-45deg, color-mix(in srgb, ${baseColor} 32%, transparent), color-mix(in srgb, ${baseColor} 8%, transparent) 75%)`;
+  return `linear-gradient(-45deg, ${colorMix(baseColor, 32)}, ${colorMix(
+    baseColor,
+    8,
+  )} 75%)`;
 }
 
 export const infoPanel = recipe({

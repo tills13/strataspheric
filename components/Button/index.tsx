@@ -29,7 +29,7 @@ type Props = React.ButtonHTMLAttributes<HTMLButtonElement> &
 export function Button({
   children,
   className,
-  color,
+  color = "default",
   fullWidth: propsFullWidth,
   icon,
   iconTextBehaviour = "centerGlobal",

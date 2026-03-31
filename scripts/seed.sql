@@ -10,6 +10,7 @@ DELETE FROM widget_events;
 DELETE FROM widget_files;
 DELETE FROM meeting_minutes;
 DELETE FROM meeting_files;
+DELETE FROM meeting_agenda_item_votes;
 DELETE FROM meeting_agenda_items;
 DELETE FROM meeting_attendees;
 DELETE FROM amenity_bookings;
@@ -23,6 +24,8 @@ DELETE FROM amenities;
 DELETE FROM files;
 DELETE FROM strata_widgets;
 DELETE FROM strata_plans;
+DELETE FROM unit_occupants;
+DELETE FROM units;
 DELETE FROM strata_memberships;
 DELETE FROM user_password_reset_tokens;
 DELETE FROM emails;
@@ -65,17 +68,47 @@ INSERT INTO strata_plans (id, strataId, subscriptionId, enableInbox, enableInvoi
 -- Strata Memberships
 -- ============================================================
 
-INSERT INTO strata_memberships (strataId, userId, unit, role, phoneNumber, monthlyFee, notifyEvents) VALUES
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-0001-7000-8000-000000000001', '101', 'administrator', '604-555-0101', 45000, 1),
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-0002-7000-8000-000000000002', '102', 'president',     '604-555-0102', 45000, 1),
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-0003-7000-8000-000000000003', '201', 'treasurer',     '604-555-0201', 52000, 1),
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-0004-7000-8000-000000000004', '202', 'secretary',     '604-555-0202', 52000, 0),
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-0005-7000-8000-000000000005', '301', 'owner',         '604-555-0301', 58000, 1),
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-0006-7000-8000-000000000006', '302', 'owner',         '604-555-0302', 58000, 0),
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-0007-7000-8000-000000000007', '401', 'owner',         '604-555-0401', 62000, 1),
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-0008-7000-8000-000000000008', '402', 'owner',         NULL,           62000, 0),
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-0009-7000-8000-000000000009', '501', 'owner',         '604-555-0501', 68000, 1),
-  ('019579a0-1000-7000-8000-000000000001', '019579a0-000a-7000-8000-000000000010', NULL,  'pending',       NULL,           NULL,  0);
+INSERT INTO strata_memberships (id, strataId, userId, unit, role, phoneNumber, monthlyFee, notifyEvents) VALUES
+  ('019579a0-a001-7000-8000-000000000001', '019579a0-1000-7000-8000-000000000001', '019579a0-0001-7000-8000-000000000001', '101', 'administrator', '604-555-0101', 45000, 1),
+  ('019579a0-a001-7000-8000-000000000002', '019579a0-1000-7000-8000-000000000001', '019579a0-0002-7000-8000-000000000002', '102', 'president',     '604-555-0102', 45000, 1),
+  ('019579a0-a001-7000-8000-000000000003', '019579a0-1000-7000-8000-000000000001', '019579a0-0003-7000-8000-000000000003', '201', 'treasurer',     '604-555-0201', 52000, 1),
+  ('019579a0-a001-7000-8000-000000000004', '019579a0-1000-7000-8000-000000000001', '019579a0-0004-7000-8000-000000000004', '202', 'secretary',     '604-555-0202', 52000, 0),
+  ('019579a0-a001-7000-8000-000000000005', '019579a0-1000-7000-8000-000000000001', '019579a0-0005-7000-8000-000000000005', '301', 'owner',         '604-555-0301', 58000, 1),
+  ('019579a0-a001-7000-8000-000000000006', '019579a0-1000-7000-8000-000000000001', '019579a0-0006-7000-8000-000000000006', '302', 'owner',         '604-555-0302', 58000, 0),
+  ('019579a0-a001-7000-8000-000000000007', '019579a0-1000-7000-8000-000000000001', '019579a0-0007-7000-8000-000000000007', '401', 'owner',         '604-555-0401', 62000, 1),
+  ('019579a0-a001-7000-8000-000000000008', '019579a0-1000-7000-8000-000000000001', '019579a0-0008-7000-8000-000000000008', '402', 'owner',         NULL,           62000, 0),
+  ('019579a0-a001-7000-8000-000000000009', '019579a0-1000-7000-8000-000000000001', '019579a0-0009-7000-8000-000000000009', '501', 'owner',         '604-555-0501', 68000, 1),
+  ('019579a0-a001-7000-8000-000000000010', '019579a0-1000-7000-8000-000000000001', '019579a0-000a-7000-8000-000000000010', NULL,  'pending',       NULL,           NULL,  0);
+
+-- ============================================================
+-- Units
+-- ============================================================
+
+INSERT INTO units (id, strataId, unitNumber, entitlementShares, customMonthlyFee) VALUES
+  ('019579a0-b001-7000-8000-000000000001', '019579a0-1000-7000-8000-000000000001', '101', 1, NULL),
+  ('019579a0-b001-7000-8000-000000000002', '019579a0-1000-7000-8000-000000000001', '102', 1, NULL),
+  ('019579a0-b001-7000-8000-000000000003', '019579a0-1000-7000-8000-000000000001', '201', 2, NULL),
+  ('019579a0-b001-7000-8000-000000000004', '019579a0-1000-7000-8000-000000000001', '202', 2, NULL),
+  ('019579a0-b001-7000-8000-000000000005', '019579a0-1000-7000-8000-000000000001', '301', 2, NULL),
+  ('019579a0-b001-7000-8000-000000000006', '019579a0-1000-7000-8000-000000000001', '302', 2, NULL),
+  ('019579a0-b001-7000-8000-000000000007', '019579a0-1000-7000-8000-000000000001', '401', 3, NULL),
+  ('019579a0-b001-7000-8000-000000000008', '019579a0-1000-7000-8000-000000000001', '402', 3, NULL),
+  ('019579a0-b001-7000-8000-000000000009', '019579a0-1000-7000-8000-000000000001', '501', 4, NULL);
+
+-- ============================================================
+-- Unit Occupants (link members to their units)
+-- ============================================================
+
+INSERT INTO unit_occupants (unitId, membershipId) VALUES
+  ('019579a0-b001-7000-8000-000000000001', '019579a0-a001-7000-8000-000000000001'),
+  ('019579a0-b001-7000-8000-000000000002', '019579a0-a001-7000-8000-000000000002'),
+  ('019579a0-b001-7000-8000-000000000003', '019579a0-a001-7000-8000-000000000003'),
+  ('019579a0-b001-7000-8000-000000000004', '019579a0-a001-7000-8000-000000000004'),
+  ('019579a0-b001-7000-8000-000000000005', '019579a0-a001-7000-8000-000000000005'),
+  ('019579a0-b001-7000-8000-000000000006', '019579a0-a001-7000-8000-000000000006'),
+  ('019579a0-b001-7000-8000-000000000007', '019579a0-a001-7000-8000-000000000007'),
+  ('019579a0-b001-7000-8000-000000000008', '019579a0-a001-7000-8000-000000000008'),
+  ('019579a0-b001-7000-8000-000000000009', '019579a0-a001-7000-8000-000000000009');
 
 -- ============================================================
 -- Files (documents uploaded to the strata)
@@ -172,22 +205,47 @@ INSERT INTO meeting_attendees (meetingId, userId, status, respondedAt) VALUES
 -- Meeting Agenda Items
 -- ============================================================
 
-INSERT INTO meeting_agenda_items (id, meetingId, title, description, minutes, done) VALUES
+INSERT INTO meeting_agenda_items (id, meetingId, title, description, minutes, done, type, sortOrder) VALUES
   -- AGM agenda
-  ('019579a0-6101-7000-8000-000000000001', '019579a0-6001-7000-8000-000000000001', 'Call to Order',                    'Establish quorum and call meeting to order.',                                        'Meeting called to order at 10:05 AM. Quorum established with 7 of 10 units represented.', 1),
-  ('019579a0-6101-7000-8000-000000000002', '019579a0-6001-7000-8000-000000000001', 'Approval of Previous Minutes',     'Review and approve minutes from the 2025 AGM.',                                      'Minutes approved unanimously.',                                                           1),
-  ('019579a0-6101-7000-8000-000000000003', '019579a0-6001-7000-8000-000000000001', 'Financial Report',                 'Treasurer to present Q4 2025 financials and proposed 2026 budget.',                   'Maria presented the financial report. Operating surplus of $12,400. Budget approved.',     1),
-  ('019579a0-6101-7000-8000-000000000004', '019579a0-6001-7000-8000-000000000001', 'Roof Repair Update',               'Status update on the roof repair project approved at last AGM.',                      'Roof repairs completed in February. Final cost $45,000 - under budget by $5,000.',        1),
-  ('019579a0-6101-7000-8000-000000000005', '019579a0-6001-7000-8000-000000000001', 'Elevator Modernization Proposal',  'Discussion of elevator modernization quote from Pacific Elevators.',                  'Council to obtain two additional quotes before May council meeting.',                     1),
-  ('019579a0-6101-7000-8000-000000000006', '019579a0-6001-7000-8000-000000000001', 'Board Elections',                  'Election of council members for 2026-2027 term.',                                    'All current council members re-elected by acclamation.',                                  1),
+  ('019579a0-6101-7000-8000-000000000001', '019579a0-6001-7000-8000-000000000001', 'Call to Order',                    'Establish quorum and call meeting to order.',                                        'Meeting called to order at 10:05 AM. Quorum established with 7 of 10 units represented.', 1, 'item',       0),
+  ('019579a0-6101-7000-8000-000000000002', '019579a0-6001-7000-8000-000000000001', 'Approval of Previous Minutes',     'Review and approve minutes from the 2025 AGM.',                                      'Minutes approved unanimously.',                                                           1, 'vote',       1),
+  ('019579a0-6101-7000-8000-000000000003', '019579a0-6001-7000-8000-000000000001', 'Financial Report',                 'Treasurer to present Q4 2025 financials and proposed 2026 budget.',                   'Maria presented the financial report. Operating surplus of $12,400. Budget approved.',     1, 'item',       2),
+  ('019579a0-6101-7000-8000-000000000004', '019579a0-6001-7000-8000-000000000001', 'Roof Repair Update',               'Status update on the roof repair project approved at last AGM.',                      'Roof repairs completed in February. Final cost $45,000 - under budget by $5,000.',        1, 'discussion', 3),
+  ('019579a0-6101-7000-8000-000000000005', '019579a0-6001-7000-8000-000000000001', 'Elevator Modernization Proposal',  'Discussion of elevator modernization quote from Pacific Elevators.',                  'Council to obtain two additional quotes before May council meeting.',                     1, 'discussion', 4),
+  ('019579a0-6101-7000-8000-000000000006', '019579a0-6001-7000-8000-000000000001', 'Board Elections',                  'Election of council members for 2026-2027 term.',                                    'All current council members re-elected by acclamation.',                                  1, 'vote',       5),
   -- Council meeting agenda
-  ('019579a0-6101-7000-8000-000000000007', '019579a0-6001-7000-8000-000000000002', 'Elevator Quotes Review',           'Review additional quotes for elevator modernization.',                                NULL, 0),
-  ('019579a0-6101-7000-8000-000000000008', '019579a0-6001-7000-8000-000000000002', 'Parking Enforcement',              'Discuss recurring parking violations in visitor spots.',                               NULL, 0),
-  ('019579a0-6101-7000-8000-000000000009', '019579a0-6001-7000-8000-000000000002', 'Summer Pool Schedule',             'Finalize pool hours and lifeguard schedule for summer season.',                        NULL, 0),
-  ('019579a0-6101-7000-8000-000000000010', '019579a0-6001-7000-8000-000000000002', 'Landscaping Contract Renewal',     'Review bids for landscaping maintenance contract.',                                   NULL, 0);
+  ('019579a0-6101-7000-8000-000000000007', '019579a0-6001-7000-8000-000000000002', 'Elevator Quotes Review',           'Review additional quotes for elevator modernization.',                                NULL, 0, 'item',       0),
+  ('019579a0-6101-7000-8000-000000000008', '019579a0-6001-7000-8000-000000000002', 'Parking Enforcement',              'Discuss recurring parking violations in visitor spots.',                               NULL, 0, 'discussion', 1),
+  ('019579a0-6101-7000-8000-000000000009', '019579a0-6001-7000-8000-000000000002', 'Summer Pool Schedule',             'Finalize pool hours and lifeguard schedule for summer season.',                        NULL, 0, 'item',       2),
+  ('019579a0-6101-7000-8000-000000000010', '019579a0-6001-7000-8000-000000000002', 'Landscaping Contract Renewal',     'Review bids for landscaping maintenance contract.',                                   NULL, 0, 'vote',       3),
+  ('019579a0-6101-7000-8000-000000000011', '019579a0-6001-7000-8000-000000000002', 'Noise Complaint Policy',           'Should we adopt a formal noise complaint process with written warnings?',              NULL, 0, 'discussion', 4),
+  ('019579a0-6101-7000-8000-000000000012', '019579a0-6001-7000-8000-000000000002', 'Approve Special Levy for Lobby Renovation', 'Vote on $15,000 special levy for lobby furniture and paint.',                  NULL, 0, 'vote',       5);
 
 -- AGM agenda item referencing financial report file
 UPDATE meeting_agenda_items SET fileId = '019579a0-3001-7000-8000-000000000003' WHERE id = '019579a0-6101-7000-8000-000000000003';
+
+-- ============================================================
+-- Meeting Agenda Item Votes
+-- ============================================================
+
+INSERT INTO meeting_agenda_item_votes (agendaItemId, userId, vote) VALUES
+  -- AGM: Approval of Previous Minutes (all confirmed attendees voted for)
+  ('019579a0-6101-7000-8000-000000000002', '019579a0-0001-7000-8000-000000000001', 'for'),
+  ('019579a0-6101-7000-8000-000000000002', '019579a0-0002-7000-8000-000000000002', 'for'),
+  ('019579a0-6101-7000-8000-000000000002', '019579a0-0003-7000-8000-000000000003', 'for'),
+  ('019579a0-6101-7000-8000-000000000002', '019579a0-0004-7000-8000-000000000004', 'for'),
+  ('019579a0-6101-7000-8000-000000000002', '019579a0-0007-7000-8000-000000000007', 'for'),
+  -- AGM: Board Elections (mixed votes)
+  ('019579a0-6101-7000-8000-000000000006', '019579a0-0001-7000-8000-000000000001', 'for'),
+  ('019579a0-6101-7000-8000-000000000006', '019579a0-0002-7000-8000-000000000002', 'for'),
+  ('019579a0-6101-7000-8000-000000000006', '019579a0-0003-7000-8000-000000000003', 'for'),
+  ('019579a0-6101-7000-8000-000000000006', '019579a0-0004-7000-8000-000000000004', 'abstain'),
+  ('019579a0-6101-7000-8000-000000000006', '019579a0-0007-7000-8000-000000000007', 'for'),
+  -- Council: Landscaping Contract Renewal (partial votes, meeting in progress)
+  ('019579a0-6101-7000-8000-000000000010', '019579a0-0001-7000-8000-000000000001', 'for'),
+  ('019579a0-6101-7000-8000-000000000010', '019579a0-0002-7000-8000-000000000002', 'against'),
+  -- Council: Approve Special Levy (one vote so far)
+  ('019579a0-6101-7000-8000-000000000012', '019579a0-0001-7000-8000-000000000001', 'for');
 
 -- ============================================================
 -- Meeting Files

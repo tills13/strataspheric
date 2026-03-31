@@ -1,3 +1,5 @@
+import { sql } from "kysely";
+
 import { db } from "..";
 
 export type Thread = Awaited<ReturnType<typeof getThread>>;
@@ -40,7 +42,7 @@ export function getThread(threadId: string, filter: GetThreadFilter = {}) {
         ? [
             eb
               .case()
-              .when("thread_reads.threadId", "is", null)
+              .when(sql.ref("thread_reads.threadId"), "is", null)
               .then(1)
               .else(0)
               .end()

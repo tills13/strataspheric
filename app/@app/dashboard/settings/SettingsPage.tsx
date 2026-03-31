@@ -99,9 +99,8 @@ export async function SettingsPage({ canEdit }: Props) {
             <Header as="h3">Levies</Header>
             <Text color="secondary">
               Choose how monthly levies are calculated for each unit.
-              Entitlement-based splits a total budget by each unit&apos;s
-              share value. Custom lets you set each unit&apos;s fee
-              directly.
+              Entitlement-based splits a total budget by each unit&apos;s share
+              value. Custom lets you set each unit&apos;s fee directly.
             </Text>
             <RadioButton
               className={s({ flex: 1 })}

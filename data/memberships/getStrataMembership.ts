@@ -9,7 +9,8 @@ export function baseQuery() {
   return db()
     .selectFrom("strata_memberships")
     .innerJoin("users", "users.id", "strata_memberships.userId")
-    .selectAll(["strata_memberships", "users"]);
+    .selectAll(["strata_memberships", "users"])
+    .select("strata_memberships.id as membershipId");
 }
 
 type Row = Awaited<

@@ -1,4 +1,4 @@
-import { OrderByExpression } from "kysely/dist/cjs/parser/order-by-parser";
+import { OrderByDirectionExpression, OrderByExpression } from "kysely";
 
 import { Database } from ".";
 

@@ -93,6 +93,7 @@ DROP TABLE IF EXISTS strata_memberships;
 
 CREATE TABLE
     IF NOT EXISTS strata_memberships (
+        id text primary key,
         strataId text,
         userId text,
         unit text,
@@ -101,7 +102,7 @@ CREATE TABLE
         email text,
         phoneNumber text,
         isPaid boolean DEFAULT FALSE,
-        primary key (strataId, userId)
+        UNIQUE (strataId, userId)
     );
 
 DROP TABLE IF EXISTS inbox_messages;

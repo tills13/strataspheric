@@ -12,6 +12,7 @@ import { listInvoices } from "../../../../data/invoices/listInvoices";
 import { getCurrentStrataPlan } from "../../../../data/strataPlans/getStrataPlanByDomain";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
+import { PAGE_SIZE, parsePagination } from "../../../../utils/pagination";
 import { CreateNewInvoiceButton } from "./CreateNewInvoiceButton";
 import { StrataInvoicesList } from "./StrataInvoicesList";
 
@@ -44,10 +45,7 @@ export default async function Page({
     notFound();
   }
 
-  const { page: rawPage } = await searchParams;
-  const rawPageNum = typeof rawPage === "string" ? rawPage : undefined;
-  const pageNum = parseInt(rawPageNum || "1", 10);
-  const offset = (pageNum - 1) * 10;
+  const { pageNum, offset } = parsePagination(await searchParams);
 
   const { results: invoices, total } = await listInvoices(
     { strataId: strata.id, archived: false },
@@ -73,7 +71,7 @@ export default async function Page({
         <Group p="normal" justify="end">
           <Pagination
             currentPage={pageNum}
-            totalPages={Math.ceil(total / 10)}
+            totalPages={Math.ceil(total / PAGE_SIZE)}
           />
         </Group>
       </DashboardLayout>

@@ -6,7 +6,7 @@ const DECISION_TO_LEVEL: Record<
 > = { approved: "success", rejected: "error" };
 
 interface Props {
-  decision: "approved" | "rejected" | null;
+  decision: "approved" | "rejected" | "cancelled" | null;
 }
 
 export function BookingStatusBadge({ decision }: Props) {

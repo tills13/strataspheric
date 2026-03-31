@@ -150,6 +150,7 @@ export interface MeetingAgendaItemsTable {
   messageId: string | null;
   chatId: string | null;
   done: ColumnType<0 | 1, 0 | 1 | undefined, 0 | 1 | undefined>;
+  sortOrder: ColumnType<number, number | undefined, number>;
 }
 
 export type MeetingAgendaItem = Selectable<MeetingAgendaItemsTable>;

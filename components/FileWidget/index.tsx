@@ -76,9 +76,9 @@ export function FileWidget({ files, strataId, widget }: Props) {
       {totalPages > 1 && (
         <div className={abstractWidgetStyles.abstractWidgetPagination}>
           <Button
+            color="primary"
             size="small"
             style="tertiary"
-            iconOnly
             icon={<ArrowBackIcon />}
             disabled={page === 0}
             onClick={() => setPage((p) => p - 1)}
@@ -87,9 +87,9 @@ export function FileWidget({ files, strataId, widget }: Props) {
             {page + 1} / {totalPages}
           </Text>
           <Button
+            color="primary"
             size="small"
             style="tertiary"
-            iconOnly
             icon={<ArrowForwardIcon />}
             disabled={page >= totalPages - 1}
             onClick={() => setPage((p) => p + 1)}

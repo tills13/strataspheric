@@ -1,6 +1,7 @@
 import { breakpoints, vars } from "../../app/theme.css";
 import { style } from "@vanilla-extract/css";
 
+import { colorMix } from "../../styles/utils";
 import { important } from "../../theme";
 
 export const pricingPlanSelectorContainer = style({
@@ -39,7 +40,10 @@ export const activePlan = style([
   {
     borderColor: important(vars.colors.primary),
     background: important(
-      `linear-gradient(to right, color-mix(in srgb, ${vars.colors.primary} 18%, transparent), color-mix(in srgb, ${vars.colors.primary} 4%, transparent) 75%)`,
+      `linear-gradient(to right, ${colorMix(
+        vars.colors.primary,
+        18,
+      )}, ${colorMix(vars.colors.primary, 4)} 75%)`,
     ),
     boxShadow: vars.shadows.md,
 

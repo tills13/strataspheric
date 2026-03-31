@@ -53,7 +53,6 @@ export function CreateOrUpdateStrataMembershipFormFields({
         availableRoles={availableRoles}
         required
       />
-
     </>
   );
 }

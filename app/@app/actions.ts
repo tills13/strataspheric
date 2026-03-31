@@ -35,10 +35,7 @@ export async function updateStrataAction(strataId: string, fd: FormData) {
     formdata.getEnum(fd, "visibility", ["private", "public"]) === "public";
   const bylawsFileId = formdata.getString(fd, "bylawsFileId");
   const inboxEmail = formdata.getString(fd, "inboxEmail") || null;
-  const levyMode = formdata.getEnum(fd, "levy_mode", [
-    "entitlement",
-    "custom",
-  ]);
+  const levyMode = formdata.getEnum(fd, "levy_mode", ["entitlement", "custom"]);
   const totalMonthlyBudgetStr = formdata.getString(fd, "total_monthly_budget");
   const totalMonthlyBudget = totalMonthlyBudgetStr
     ? parseInt(totalMonthlyBudgetStr, 10)

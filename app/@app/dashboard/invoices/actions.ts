@@ -15,20 +15,7 @@ import { can } from "../../../../data/users/permissions";
 import * as formdata from "../../../../utils/formdata";
 
 export async function markInvoiceAsPaidAction(invoiceId: string) {
-  const session = await auth();
-
-  if (!can(session?.user, "stratas.invoices.edit")) {
-    return;
-  }
-
-  await updateInvoice(invoiceId, {
-    isPaid: 1,
-    updatedAt: new Date().getTime(),
-  });
-
-  revalidatePath("/dashboard/invoices");
-  revalidatePath("/dashboard/invoices/*");
-  revalidatePath("/dashboard/inbox/*");
+  return markInvoicesAsPaidAction([invoiceId]);
 }
 
 export async function markInvoicesAsPaidAction(invoiceIds: string[]) {
@@ -195,14 +182,7 @@ export async function upsertInvoiceAction(
 }
 
 export async function archiveInvoiceAction(invoiceId: string) {
-  const session = await auth();
-
-  if (!can(session?.user, "stratas.invoices.edit")) {
-    return;
-  }
-
-  await archiveInvoices([invoiceId]);
-  revalidatePath("/dashboard/invoices");
+  return archiveInvoicesAction([invoiceId]);
 }
 
 export async function archiveInvoicesAction(invoiceIds: string[]) {
@@ -217,15 +197,7 @@ export async function archiveInvoicesAction(invoiceIds: string[]) {
 }
 
 export async function unarchiveInvoiceAction(invoiceId: string) {
-  const session = await auth();
-
-  if (!can(session?.user, "stratas.invoices.edit")) {
-    return;
-  }
-
-  await updateInvoice(invoiceId, { archivedAt: null });
-  revalidatePath("/dashboard/invoices");
-  revalidatePath("/dashboard/invoices/archived");
+  return unarchiveInvoicesAction([invoiceId]);
 }
 
 export async function unarchiveInvoicesAction(invoiceIds: string[]) {

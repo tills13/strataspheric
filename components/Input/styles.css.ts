@@ -59,12 +59,7 @@ export const inputFieldInput = style({
       fontFamily: vars.fontFamilies.text,
       fontWeight: vars.fontWeights.bold,
     },
-    "&:hover": {
-      backgroundColor: vars.surfaces.raised,
-      borderColor: vars.colors.borderDefaultHover,
-    },
     "&:focus": {
-      backgroundColor: vars.surfaces.raised,
       opacity: 1,
     },
     "&:disabled": {

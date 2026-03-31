@@ -1,3 +1,5 @@
+import { sql } from "kysely";
+
 import { db } from "..";
 import { PaginatedResults, Pagination } from "../types";
 import { Thread } from "./getThread";
@@ -47,7 +49,7 @@ export async function listThreads(
         ? [
             eb
               .case()
-              .when("thread_reads.threadId", "is", null)
+              .when(sql.ref("thread_reads.threadId"), "is", null)
               .then(1)
               .else(0)
               .end()

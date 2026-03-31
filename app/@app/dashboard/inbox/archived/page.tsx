@@ -1,23 +1,25 @@
 import { redirect } from "next/navigation";
 
 import { auth } from "../../../../../auth";
+import { BulkActionButton } from "../../../../../components/BulkActionButton";
 import { DashboardLayout } from "../../../../../components/DashboardLayout";
 import { Group } from "../../../../../components/Group";
+import { UnarchiveIcon } from "../../../../../components/Icon/UnarchiveIcon";
 import { InboxThreads } from "../../../../../components/InboxThreads";
 import { Pagination } from "../../../../../components/Pagination";
 import { SelectAllCheckbox } from "../../../../../components/SelectAllCheckbox";
 import { TableSelectProvider } from "../../../../../components/Table/TableSelectProvider";
-import { UnarchiveSelectedInboxMessagesButton } from "../../../../../components/UnarchiveSelectedInboxMessagesButton";
 import { listThreads } from "../../../../../data/inbox/listThreads";
 import { getCurrentStrataPlan } from "../../../../../data/strataPlans/getStrataPlanByDomain";
 import { mustGetCurrentStrata } from "../../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../../data/users/permissions";
+import { PAGE_SIZE, parsePagination } from "../../../../../utils/pagination";
+import { unarchiveThreadsAction } from "../actions";
 
 export default async function Page({
   searchParams,
 }: PageProps<"/dashboard/inbox/archived">) {
-  const { page: rawPage } = await searchParams;
-  const rawPageNum = typeof rawPage === "string" ? rawPage : undefined;
+  const { pageNum, offset } = parsePagination(await searchParams);
   const [session, strata, strataPlan] = await Promise.all([
     auth(),
     mustGetCurrentStrata(),
@@ -31,9 +33,6 @@ export default async function Page({
   if (!session || !session.user) {
     redirect("/dashboard/inbox");
   }
-
-  const pageNum = parseInt(rawPageNum || "1", 10);
-  const offset = (pageNum - 1) * 10;
 
   const { results: threads, total } = await listThreads(
     {
@@ -55,7 +54,12 @@ export default async function Page({
         }
         actions={
           <Group gap="small">
-            <UnarchiveSelectedInboxMessagesButton />
+            <BulkActionButton
+              action={unarchiveThreadsAction}
+              noun="message"
+              icon={<UnarchiveIcon />}
+              titleTemplate="Unarchive {label}"
+            />
           </Group>
         }
         title="Archived Messages"
@@ -69,7 +73,7 @@ export default async function Page({
         <Group p="normal" justify="end">
           <Pagination
             currentPage={pageNum}
-            totalPages={Math.ceil(total / 10)}
+            totalPages={Math.ceil(total / PAGE_SIZE)}
           />
         </Group>
       </DashboardLayout>

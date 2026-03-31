@@ -1,5 +1,5 @@
+import { NothingHere } from "../../../../components/NothingHere";
 import { Table } from "../../../../components/Table";
-import { Text } from "../../../../components/Text";
 import { SubscriptionInvoiceTableRow } from "./SubscriptionInvoiceTableRow";
 import { SerializedInvoice } from "./SubscriptionPage";
 
@@ -9,7 +9,7 @@ interface Props {
 
 export function SubscriptionInvoiceHistory({ invoices }: Props) {
   if (invoices.length === 0) {
-    return <Text color="secondary">No invoices found.</Text>;
+    return <NothingHere>No invoices found.</NothingHere>;
   }
 
   return (

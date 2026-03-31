@@ -1,6 +1,10 @@
 import { sql } from "kysely";
 
 import { db } from "..";
+import {
+  AgendaItemVoteWithUser,
+  listAgendaItemVotes,
+} from "./listAgendaItemVotes";
 
 export type MeetingAgendaItem = Awaited<
   ReturnType<typeof listMeetingAgendaItems>
@@ -48,6 +52,7 @@ export async function listMeetingAgendaItems(meetingId: string) {
     .leftJoin("invoices", "meeting_agenda_items.invoiceId", "invoices.id")
     .select([
       "meeting_agenda_items.id",
+      "meeting_agenda_items.type",
       "meeting_agenda_items.title",
       "meeting_agenda_items.description",
       "meeting_agenda_items.done",
@@ -85,7 +90,21 @@ export async function listMeetingAgendaItems(meetingId: string) {
       "inbox_thread_chats.sentAt as chatSentAt",
     ])
     .where("meeting_agenda_items.meetingId", "=", meetingId)
+    .orderBy("meeting_agenda_items.sortOrder", "asc")
+    .orderBy("meeting_agenda_items.id", "asc")
     .execute();
+
+  const voteItemIds = rows.filter((r) => r.type === "vote").map((r) => r.id);
+
+  const votesByItem = new Map<string, AgendaItemVoteWithUser[]>();
+  if (voteItemIds.length > 0) {
+    const allVotes = await Promise.all(
+      voteItemIds.map((id) => listAgendaItemVotes(id)),
+    );
+    voteItemIds.forEach((id, i) => {
+      votesByItem.set(id, allVotes[i]);
+    });
+  }
 
   return rows.map(
     ({
@@ -169,6 +188,7 @@ export async function listMeetingAgendaItems(meetingId: string) {
             status: invoiceStatus!,
           }
         : undefined,
+      votes: votesByItem.get(rest.id) ?? [],
     }),
   );
 }

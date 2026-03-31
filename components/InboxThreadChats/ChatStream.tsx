@@ -6,6 +6,7 @@ import React, { useLayoutEffect, useRef } from "react";
 
 import { Chat } from "../../data/inbox/listThreadChats";
 import { useSession } from "../../hooks/useSession";
+import { NothingHere } from "../NothingHere";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
 import { InboxThreadChat } from "./InboxThreadChat";
@@ -31,12 +32,7 @@ export function ChatStream({ chats }: Props) {
 
   return (
     <Stack ref={ref} className={styles.chatStream} gap="small">
-      {chats.length === 0 && (
-        <Text color="secondary">
-          No chats, yet. Start a conversation about this thread using the form
-          below.
-        </Text>
-      )}
+      {chats.length === 0 && <NothingHere>No chats yet.</NothingHere>}
       {chats.map((chat) => {
         const isSelf = chat.userId === session?.user.id;
         const showChatter = !lastChatter || lastChatter !== chat.userId;

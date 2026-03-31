@@ -5,6 +5,8 @@ import { style, styleVariants } from "@vanilla-extract/css";
 import { calc } from "@vanilla-extract/css-utils";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { colorMix } from "../../styles/utils";
+
 export const buttonBase = style({
   position: "relative",
   fontWeight: vars.fontWeights.bold,
@@ -188,7 +190,7 @@ export const button = recipe({
         color: "error",
       },
       style: {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 8%, transparent)`,
+        backgroundColor: colorMix(vars.colors.red500, 8),
         color: vars.colors.red700,
         vars: {
           [iconColorVar]: vars.colors.red500,
@@ -198,7 +200,7 @@ export const button = recipe({
           "(hover: hover) and (pointer: fine)": {
             selectors: {
               "&:hover": {
-                backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 12%, transparent)`,
+                backgroundColor: colorMix(vars.colors.red500, 12),
                 color: vars.colors.red900,
                 borderColor: vars.colors.red900,
                 vars: {
@@ -216,7 +218,7 @@ export const button = recipe({
         color: "primary",
       },
       style: {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 8%, transparent)`,
+        backgroundColor: colorMix(vars.colors.primary, 8),
         color: vars.colors.primary,
         vars: {
           [iconColorVar]: vars.colors.primary,
@@ -226,7 +228,7 @@ export const button = recipe({
           "(hover: hover) and (pointer: fine)": {
             selectors: {
               "&:hover": {
-                backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 12%, transparent)`,
+                backgroundColor: colorMix(vars.colors.primary, 12),
                 color: vars.colors.primaryHover,
                 borderColor: vars.colors.primaryHover,
                 vars: {
@@ -244,7 +246,7 @@ export const button = recipe({
         color: "success",
       },
       style: {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 8%, transparent)`,
+        backgroundColor: colorMix(vars.colors.green500, 8),
         color: vars.colors.green900,
         vars: {
           [iconColorVar]: vars.colors.green500,
@@ -254,7 +256,7 @@ export const button = recipe({
           "(hover: hover) and (pointer: fine)": {
             selectors: {
               "&:hover": {
-                backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 12%, transparent)`,
+                backgroundColor: colorMix(vars.colors.green500, 12),
                 color: vars.colors.green900,
                 borderColor: vars.colors.green900,
                 vars: {
@@ -272,7 +274,7 @@ export const button = recipe({
         color: "warning",
       },
       style: {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 8%, transparent)`,
+        backgroundColor: colorMix(vars.colors.orange500, 8),
         color: vars.colors.orange900,
         vars: {
           [iconColorVar]: vars.colors.orange500,
@@ -282,7 +284,7 @@ export const button = recipe({
           "(hover: hover) and (pointer: fine)": {
             selectors: {
               "&:hover": {
-                backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 12%, transparent)`,
+                backgroundColor: colorMix(vars.colors.orange500, 12),
                 color: vars.colors.orange900,
                 borderColor: vars.colors.orange900,
                 vars: {
@@ -313,10 +315,10 @@ export const button = recipe({
           "(hover: hover) and (pointer: fine)": {
             selectors: {
               "&:hover": {
-                backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 12%, transparent)`,
+                backgroundColor: colorMix(vars.colors.red500, 12),
                 color: vars.colors.red900,
                 vars: {
-                  borderColor: `color-mix(in srgb, ${vars.colors.red500} 12%, transparent)`,
+                  borderColor: colorMix(vars.colors.red500, 12),
                   [iconColorVar]: vars.colors.red700,
                 },
               },
@@ -342,10 +344,10 @@ export const button = recipe({
           "(hover: hover) and (pointer: fine)": {
             selectors: {
               "&:hover": {
-                backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 12%, transparent)`,
+                backgroundColor: colorMix(vars.colors.primary, 12),
                 color: vars.colors.primaryHover,
                 vars: {
-                  borderColor: `color-mix(in srgb, ${vars.colors.primary} 12%, transparent)`,
+                  borderColor: colorMix(vars.colors.primary, 12),
                   [iconColorVar]: vars.colors.primaryHover,
                 },
               },
@@ -371,10 +373,10 @@ export const button = recipe({
           "(hover: hover) and (pointer: fine)": {
             selectors: {
               "&:hover": {
-                backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 12%, transparent)`,
+                backgroundColor: colorMix(vars.colors.green500, 12),
                 color: vars.colors.green900,
                 vars: {
-                  borderColor: `color-mix(in srgb, ${vars.colors.green500} 12%, transparent)`,
+                  borderColor: colorMix(vars.colors.green500, 12),
                   [iconColorVar]: vars.colors.green700,
                 },
               },
@@ -400,10 +402,10 @@ export const button = recipe({
           "(hover: hover) and (pointer: fine)": {
             selectors: {
               "&:hover": {
-                backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 12%, transparent)`,
+                backgroundColor: colorMix(vars.colors.orange500, 12),
                 color: vars.colors.orange900,
                 vars: {
-                  borderColor: `color-mix(in srgb, ${vars.colors.orange500} 12%, transparent)`,
+                  borderColor: colorMix(vars.colors.orange500, 12),
                   [iconColorVar]: vars.colors.orange700,
                 },
               },
@@ -430,17 +432,13 @@ export const iconButton = style({
     "&:has(:nth-child(2))": {
       padding: vars.spacing.xxs,
     },
-    [`${button.classNames.variants.size.small}&`]: {
-      gap: vars.spacing.xs,
-    },
+    // [`${button.classNames.variants.size.small}&`]: {
+    //   gap: vars.spacing.small,
+    // },
   },
 });
 
 export const iconCenterRemainder = style({
-  // selectors: {
-  //   "&:has(:nth-child(2))": {
-  //   }
-  // }
   paddingLeft: vars.spacing.normal,
 });
 
@@ -458,52 +456,52 @@ export const iconContainer = style({
   selectors: {
     // primary (fill) style - deeper accent tint
     [`${button.classNames.variants.color.error} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.red700} 40%, transparent)`,
+      backgroundColor: colorMix(vars.colors.red700, 40),
     },
     [`${button.classNames.variants.color.success} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.green700} 40%, transparent)`,
+      backgroundColor: colorMix(vars.colors.green700, 40),
     },
     [`${button.classNames.variants.color.warning} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.orange700} 40%, transparent)`,
+      backgroundColor: colorMix(vars.colors.orange700, 40),
     },
     [`${button.classNames.variants.color.primary} &`]: {
-      backgroundColor: `color-mix(in srgb, ${vars.colors.indigo800} 40%, transparent)`,
+      backgroundColor: colorMix(vars.colors.indigo800, 40),
     },
 
     // secondary style - lighter accent tint (more specific, overrides above)
     [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.error} &`]:
       {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 15%, transparent)`,
+        backgroundColor: colorMix(vars.colors.red500, 15),
       },
     [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.success} &`]:
       {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 15%, transparent)`,
+        backgroundColor: colorMix(vars.colors.green500, 15),
       },
     [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.warning} &`]:
       {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 15%, transparent)`,
+        backgroundColor: colorMix(vars.colors.orange500, 15),
       },
     [`${button.classNames.variants.style.secondary}${button.classNames.variants.color.primary} &`]:
       {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 15%, transparent)`,
+        backgroundColor: colorMix(vars.colors.primary, 15),
       },
 
     // tertiary style - subtle accent tint
     [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.error} &`]:
       {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.red500} 10%, transparent)`,
+        backgroundColor: colorMix(vars.colors.red500, 10),
       },
     [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.success} &`]:
       {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.green500} 10%, transparent)`,
+        backgroundColor: colorMix(vars.colors.green500, 10),
       },
     [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.warning} &`]:
       {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.orange500} 10%, transparent)`,
+        backgroundColor: colorMix(vars.colors.orange500, 10),
       },
     [`${button.classNames.variants.style.tertiary}${button.classNames.variants.color.primary} &`]:
       {
-        backgroundColor: `color-mix(in srgb, ${vars.colors.primary} 10%, transparent)`,
+        backgroundColor: colorMix(vars.colors.primary, 10),
       },
   },
 });

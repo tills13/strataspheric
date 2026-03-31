@@ -1,4 +1,5 @@
 import { vars } from "../../app/theme.css";
+import { focusableFieldBase } from "../../styles/fields.css";
 import { style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -13,34 +14,24 @@ export const fieldBaseActionContainer = style({
 export const fieldLeftActionContainer = style([fieldBaseActionContainer, {}]);
 export const fieldRightActionContainer = style([fieldBaseActionContainer, {}]);
 
-export const fieldBase = style({
-  position: "relative",
+export const fieldBase = style([
+  focusableFieldBase,
+  {
+    position: "relative",
 
-  color: vars.fontColors.primary,
-  background: "none",
-  backgroundColor: vars.surfaces.raised,
-  border: `${vars.borderWidth} solid ${vars.colors.borderDefault}`,
-  borderRadius: vars.borderRadius.md,
-  boxShadow: "none",
-  outline: "none",
-  transition: `border-color ${vars.transitions.fast}, box-shadow ${vars.transitions.fast}`,
+    color: vars.fontColors.primary,
+    borderRadius: vars.borderRadius.md,
 
-  selectors: {
-    "&:hover": {
-      borderColor: vars.colors.borderDefaultHover,
-    },
-    "&:focus-within": {
-      borderColor: vars.colors.blue600,
-      boxShadow: vars.focusRing,
-    },
-    [`&:has(${fieldLeftActionContainer})`]: {
-      paddingLeft: 0,
-    },
-    [`&:has(${fieldRightActionContainer})`]: {
-      paddingRight: 0,
+    selectors: {
+      [`&:has(${fieldLeftActionContainer})`]: {
+        paddingLeft: 0,
+      },
+      [`&:has(${fieldRightActionContainer})`]: {
+        paddingRight: 0,
+      },
     },
   },
-});
+]);
 
 export const field = style([
   fieldBase,

@@ -189,9 +189,7 @@ export async function markThreadAsUnreadAction(threadId: string) {
 }
 
 export async function archiveThreadAction(threadId: string) {
-  const session = await mustAuth();
-  await archiveThreadsForUser(session.user.id, [threadId]);
-  revalidatePath("/dashboard/inbox");
+  return archiveThreadsAction([threadId]);
 }
 
 export async function archiveThreadsAction(threadIds: string[]) {
@@ -201,10 +199,7 @@ export async function archiveThreadsAction(threadIds: string[]) {
 }
 
 export async function unarchiveThreadAction(threadId: string) {
-  const session = await mustAuth();
-  await unarchiveThreadsForUser(session.user.id, [threadId]);
-  revalidatePath("/dashboard/inbox");
-  revalidatePath("/dashboard/inbox/archived");
+  return unarchiveThreadsAction([threadId]);
 }
 
 export async function unarchiveThreadsAction(threadIds: string[]) {

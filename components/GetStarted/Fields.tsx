@@ -13,6 +13,7 @@ import { normalizeStrataNameToSubdomain } from "../../utils/normalizeStrataNameT
 import { pluralize } from "../../utils/pluralize";
 import { Group } from "../Group";
 import { Header } from "../Header";
+import { ProgressBar } from "../ProgressBar";
 import { CircleCheckIcon } from "../Icon/CircleCheckIcon";
 import { CircleErrorIcon } from "../Icon/CircleErrorIcon";
 import { CycleIcon } from "../Icon/CycleIcon";
@@ -25,6 +26,14 @@ import { RadioButton } from "../RadioButton";
 import { StatusButton } from "../StatusButton";
 import { Text } from "../Text";
 import { useFormState } from "./Form";
+
+const STEP_NUMBER: Record<string, number> = {
+  CREATE_ACCOUNT: 1,
+  CREATE_STRATA: 2,
+  SUBMIT_PAYMENT: 3,
+};
+
+const TOTAL_STEPS = 3;
 
 export function GetStartedFormFields({
   selectedPlan,
@@ -62,9 +71,12 @@ export function GetStartedFormFields({
     fetchIsDomainAvailable();
   }, [suggestedSubdomain]);
 
+  const currentStep = state?.step ? (STEP_NUMBER[state.step] ?? 0) : 1;
+
   if (!state?.step || state.step === "CREATE_ACCOUNT") {
     return (
       <>
+        <ProgressBar current={currentStep} total={TOTAL_STEPS} />
         <JoinFormFields />
 
         {state?.error && <InfoPanel level="error">{state.error}</InfoPanel>}
@@ -77,6 +89,7 @@ export function GetStartedFormFields({
   } else if (state.step === "CREATE_STRATA") {
     return (
       <>
+        <ProgressBar current={currentStep} total={TOTAL_STEPS} />
         <Header as="h2">Let&apos;s get to know your strata...</Header>
 
         <Input
@@ -179,6 +192,7 @@ export function GetStartedFormFields({
   } else if (state.step === "SUBMIT_PAYMENT") {
     return (
       <>
+        <ProgressBar current={currentStep} total={TOTAL_STEPS} />
         <div id="payment-element" />
 
         <input

@@ -1,10 +1,11 @@
 import { redirect } from "next/navigation";
 
 import { auth } from "../../../../auth";
-import ArchiveSelectedInboxMessagesButton from "../../../../components/ArchiveSelectedInboxMessagesButton";
+import { BulkActionButton } from "../../../../components/BulkActionButton";
 import { Button } from "../../../../components/Button";
 import { DashboardLayout } from "../../../../components/DashboardLayout";
 import { Group } from "../../../../components/Group";
+import { ArchiveIcon } from "../../../../components/Icon/ArchiveIcon";
 import { GroupIcon } from "../../../../components/Icon/GroupIcon";
 import { SendIcon } from "../../../../components/Icon/SendIcon";
 import { InboxThreads } from "../../../../components/InboxThreads";
@@ -18,6 +19,8 @@ import { listThreads } from "../../../../data/inbox/listThreads";
 import { getCurrentStrataPlan } from "../../../../data/strataPlans/getStrataPlanByDomain";
 import { mustGetCurrentStrata } from "../../../../data/stratas/getStrataByDomain";
 import { can } from "../../../../data/users/permissions";
+import { PAGE_SIZE, parsePagination } from "../../../../utils/pagination";
+import { archiveThreadsAction } from "./actions";
 
 const INBOX_UPSELL =
   "One place for all strata communication. No more scattered emails or lost threads — every conversation is tracked and searchable.";
@@ -25,8 +28,7 @@ const INBOX_UPSELL =
 export default async function Page({
   searchParams,
 }: PageProps<"/dashboard/inbox">) {
-  const { page: rawPage } = await searchParams;
-  const rawPageNum = typeof rawPage === "string" ? rawPage : undefined;
+  const { pageNum, offset } = parsePagination(await searchParams);
   const [session, strata, strataPlan] = await Promise.all([
     auth(),
     mustGetCurrentStrata(),
@@ -52,9 +54,6 @@ export default async function Page({
     redirect("/dashboard/inbox/send");
   }
 
-  const pageNum = parseInt(rawPageNum || "1", 10);
-  const offset = (pageNum - 1) * 10;
-
   const threadFilter = {
     strataId: strata.id,
     ...(!can(session.user, "stratas.inbox_messages.view") && {
@@ -75,7 +74,12 @@ export default async function Page({
       <DashboardLayout
         actions={
           <Group gap="small">
-            <ArchiveSelectedInboxMessagesButton />
+            <BulkActionButton
+              action={archiveThreadsAction}
+              noun="message"
+              icon={<ArchiveIcon />}
+              titleTemplate="Archive {label}"
+            />
 
             <InternalLink href="/dashboard/inbox/send" noUnderline>
               <Button
@@ -107,7 +111,7 @@ export default async function Page({
         <Group p="normal" justify="end">
           <Pagination
             currentPage={pageNum}
-            totalPages={Math.ceil(total / 10)}
+            totalPages={Math.ceil(total / PAGE_SIZE)}
           />
         </Group>
       </DashboardLayout>

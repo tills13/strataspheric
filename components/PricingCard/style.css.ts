@@ -3,6 +3,7 @@ import { keyframes, style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
 
+import { colorMix } from "../../styles/utils";
 import { border, important, padding } from "../../theme";
 
 export const pricingCard = style({
@@ -129,14 +130,20 @@ export const compactCard = style({
   alignItems: "stretch",
   overflow: "hidden",
   borderColor: important(vars.colors.primary),
-  background: `linear-gradient(to right, color-mix(in srgb, ${vars.colors.primary} 12%, transparent), color-mix(in srgb, ${vars.colors.primary} 0%, transparent) 75%)`,
+  background: `linear-gradient(to right, ${colorMix(
+    vars.colors.primary,
+    12,
+  )}, ${colorMix(vars.colors.primary, 0)} 75%)`,
   transition: `border-color ${vars.transitions.fast}, box-shadow ${vars.transitions.fast}, background ${vars.transitions.normal}`,
 
   selectors: {
     "&:hover": {
       borderColor: vars.colors.primaryHover,
       boxShadow: vars.shadows.md,
-      background: `linear-gradient(to right, color-mix(in srgb, ${vars.colors.primary} 18%, transparent), color-mix(in srgb, ${vars.colors.primary} 4%, transparent) 75%)`,
+      background: `linear-gradient(to right, ${colorMix(
+        vars.colors.primary,
+        18,
+      )}, ${colorMix(vars.colors.primary, 4)} 75%)`,
     },
   },
 });
@@ -146,13 +153,13 @@ export const compactCardRecommended = style([
   {
     backgroundImage: `linear-gradient(
       100deg,
-      color-mix(in srgb, ${vars.colors.primary} 10%, transparent) 0%,
-      color-mix(in srgb, ${vars.colors.primary} 6%, transparent) 30%,
-      color-mix(in srgb, ${vars.colors.primary} 12%, transparent) 42%,
-      color-mix(in srgb, ${vars.colors.primary} 14%, transparent) 50%,
-      color-mix(in srgb, ${vars.colors.primary} 12%, transparent) 58%,
-      color-mix(in srgb, ${vars.colors.primary} 6%, transparent) 70%,
-      color-mix(in srgb, ${vars.colors.primary} 10%, transparent) 100%
+      ${colorMix(vars.colors.primary, 10)} 0%,
+      ${colorMix(vars.colors.primary, 6)} 30%,
+      ${colorMix(vars.colors.primary, 12)} 42%,
+      ${colorMix(vars.colors.primary, 14)} 50%,
+      ${colorMix(vars.colors.primary, 12)} 58%,
+      ${colorMix(vars.colors.primary, 6)} 70%,
+      ${colorMix(vars.colors.primary, 10)} 100%
     )`,
     backgroundSize: "200% 100%",
     animation: `${shimmer} 8s ease-in-out infinite`,
