@@ -18,7 +18,7 @@ export async function MeetingsPage() {
           <ScheduleMeetingButton />
         )
       }
-      title="Meetings"
+      title="Upcoming Meetings"
     >
       <MeetingListLayout strataId={strata.id} />
     </DashboardLayout>

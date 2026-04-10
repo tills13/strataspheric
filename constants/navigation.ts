@@ -2,6 +2,7 @@ import React from "react";
 
 import { ApartmentIcon } from "../components/Icon/ApartmentIcon";
 import { ArchiveIcon } from "../components/Icon/ArchiveIcon";
+import { HistoryIcon } from "../components/Icon/HistoryIcon";
 import { BedIcon } from "../components/Icon/BedIcon";
 import { CalendarIcon } from "../components/Icon/CalendarIcon";
 import { CycleIcon } from "../components/Icon/CycleIcon";
@@ -67,6 +68,13 @@ export const NAVIGATION_SUB_LINKS: Record<string, SubLink[]> = {
       href: "/dashboard/invoices/archived",
       label: "Archived",
       icon: ArchiveIcon,
+    },
+  ],
+  "/dashboard/meetings": [
+    {
+      href: "/dashboard/meetings/past",
+      label: "Past",
+      icon: HistoryIcon,
     },
   ],
   "/dashboard/membership": [

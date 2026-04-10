@@ -6,14 +6,12 @@ import React, { useCallback, useState, useTransition } from "react";
 
 import {
   imperativeUpdateAgendaItemAction,
-  insertAgendaItemAfterAction,
-  reorderAgendaItemAction,
   removeItemFromAgendaAction,
+  reorderAgendaItemAction,
 } from "../../app/@app/dashboard/meetings/[meetingId]/actions";
 import { type MeetingAgendaItem } from "../../data/meetings/listMeetingAgendaItems";
 import { type MeetingAttendeeWithUser } from "../../data/meetings/listMeetingAttendees";
 import { classnames } from "../../utils/classnames";
-import { Badge } from "../Badge";
 import { Button } from "../Button";
 import { CreateOrUpdateMeetingAgendaItemForm } from "../CreateOrUpdateMeetingAgendaItemForm";
 import { EditMeetingAgendaItemButton } from "../EditMeetingAgendaItemButton";
@@ -32,12 +30,6 @@ import { Stack } from "../Stack";
 import { TextArea } from "../TextArea";
 import { MeetingAgendaItemCheckbox } from "./Checkbox";
 import { VoteTracker } from "./VoteTracker";
-
-const TYPE_BADGE_LABELS = {
-  item: null,
-  discussion: "Discussion",
-  vote: "Vote",
-} as const;
 
 function formatOrdinal(n: number): string {
   return String(n).padStart(2, "0");
@@ -83,7 +75,6 @@ export function MeetingAgendaItem({
   );
 
   const isDone = agendaItem.done === 1;
-  const badgeLabel = TYPE_BADGE_LABELS[agendaItem.type];
 
   return (
     <>
@@ -129,7 +120,6 @@ export function MeetingAgendaItem({
                 meetingId={meetingId}
               />
 
-              {badgeLabel && <Badge level="default">{badgeLabel}</Badge>}
               <Header className={styles.headerHeader} as="h4">
                 {agendaItem.title}
               </Header>
@@ -194,10 +184,7 @@ export function MeetingAgendaItem({
               )}
 
               {agendaItem.chat && (
-                <InboxMessageQuote
-                  source={agendaItem.chat}
-                  linkType="direct"
-                />
+                <InboxMessageQuote source={agendaItem.chat} linkType="direct" />
               )}
 
               {agendaItem.file && (

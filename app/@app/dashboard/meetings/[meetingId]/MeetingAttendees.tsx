@@ -4,6 +4,7 @@ import { Group } from "../../../../../components/Group";
 import { Header } from "../../../../../components/Header";
 import { AddIcon } from "../../../../../components/Icon/AddIcon";
 import { RemoveIcon } from "../../../../../components/Icon/RemoveIcon";
+import { InfoPanel } from "../../../../../components/InfoPanel";
 import { Stack } from "../../../../../components/Stack";
 import { Text } from "../../../../../components/Text";
 import { listMeetingAttendees } from "../../../../../data/meetings/listMeetingAttendees";
@@ -162,18 +163,21 @@ export async function MeetingAttendees({ meetingId }: Props) {
       )}
 
       {currentUserAttendee && currentUserAttendee.status === "invited" && (
-        <Group>
-          <form action={rsvpAction.bind(undefined, meetingId, "confirmed")}>
-            <Button type="submit" size="small" style="primary" color="success">
-              Confirm Attendance
-            </Button>
-          </form>
-          <form action={rsvpAction.bind(undefined, meetingId, "declined")}>
-            <Button type="submit" size="small" style="secondary" color="error">
-              Decline
-            </Button>
-          </form>
-        </Group>
+        <InfoPanel level="default">
+          <Text>You have been invited to this meeting.</Text>
+          <Group>
+            <form action={rsvpAction.bind(undefined, meetingId, "confirmed")}>
+              <Button type="submit" style="primary" color="success">
+                Confirm
+              </Button>
+            </form>
+            <form action={rsvpAction.bind(undefined, meetingId, "declined")}>
+              <Button type="submit" style="secondary" color="error">
+                Decline
+              </Button>
+            </form>
+          </Group>
+        </InfoPanel>
       )}
 
       {canEdit && nonAttendeeMembers.length > 0 && (

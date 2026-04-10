@@ -1,4 +1,4 @@
-import { vars } from "../../app/theme.css";
+import { breakpoints, vars } from "../../app/theme.css";
 import { keyframes, style } from "@vanilla-extract/css";
 
 const checkIn = keyframes({
@@ -13,18 +13,21 @@ export const agendaItemWrapper = style({
   position: "relative",
 });
 
-export const agendaItemWrapperDone = style([
-  agendaItemWrapper,
-  {},
-]);
+export const agendaItemWrapperDone = style([agendaItemWrapper, {}]);
 
 export const ordinalColumn = style({
-  display: "flex",
+  display: "none",
   flexDirection: "column",
   alignItems: "center",
   flexShrink: 0,
-  width: 48,
   paddingTop: 2,
+  width: 48,
+
+  "@media": {
+    [breakpoints.tablet]: {
+      display: "flex",
+    },
+  },
 });
 
 export const ordinalNumber = style({
@@ -125,4 +128,3 @@ export const voteRow = style({
 export const voteAttendeeName = style({
   minWidth: "120px",
 });
-
