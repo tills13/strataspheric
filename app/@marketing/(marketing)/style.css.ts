@@ -1,4 +1,5 @@
 import { breakpoints, vars } from "../../theme.css";
+import { glassSurface, luminousGlow } from "../../ethereal.css";
 import { globalStyle, keyframes, style } from "@vanilla-extract/css";
 
 import { calc } from "@vanilla-extract/css-utils";
@@ -35,7 +36,6 @@ export const featuresSection = style([
     position: "relative",
     zIndex: 1,
     padding: `0 ${vars.spacing.normal}`,
-
     "@media": {
       [breakpoints.desktop]: {
         maxWidth: vars.containerWidth.lg,
@@ -47,6 +47,7 @@ export const featuresSection = style([
   },
 ]);
 
+
 export const tabLayoutTabs = style({
   width: "100%",
   overflow: "auto",
@@ -55,9 +56,45 @@ export const tabLayoutTabs = style({
   "@media": {
     [breakpoints.tablet]: {
       width: "auto",
-      borderRadius: vars.borderRadius.md,
+      borderRadius: vars.borderRadius.lg,
     },
   },
+});
+
+export const featureLabel = style([
+  luminousGlow,
+  {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: vars.spacing["6"],
+    fontSize: vars.fontSizes.xs,
+    fontWeight: vars.fontWeights.bold,
+    letterSpacing: vars.letterSpacing.wider,
+    textTransform: "uppercase" as const,
+    color: vars.colors.primary,
+    padding: `${vars.spacing.xs} ${vars.spacing["12"]}`,
+    borderRadius: vars.borderRadius.full,
+    backgroundColor: "rgba(238, 242, 255, 0.7)",
+    backdropFilter: "blur(8px)",
+    WebkitBackdropFilter: "blur(8px)",
+    border: `1px solid rgba(165, 180, 252, 0.3)`,
+    width: "fit-content",
+  },
+]);
+
+export const featureHeading = style({
+  fontSize: "clamp(22px, 3vw, 30px)",
+  fontFamily: vars.fontFamilies.primaryHeader,
+  lineHeight: vars.lineHeights.tight,
+  letterSpacing: vars.letterSpacing.tight,
+  color: vars.fontColors.primary,
+});
+
+export const featureDescription = style({
+  fontSize: vars.fontSizes.medium,
+  lineHeight: vars.lineHeights.relaxed,
+  color: vars.fontColors.secondary,
+  maxWidth: "480px",
 });
 
 export const sideBySideFeature = style({
@@ -65,19 +102,13 @@ export const sideBySideFeature = style({
   gridTemplateColumns: "1fr",
   gap: vars.spacing["40"],
   width: "100%",
-  padding: `${vars.spacing.large} 0`,
+  padding: `${vars.spacing["40"]} 0`,
   alignItems: "center",
 
   "@media": {
     [breakpoints.desktop]: {
       gridTemplateColumns: "5fr 7fr",
-      padding: `${vars.spacing["48"]} 0`,
-    },
-  },
-
-  selectors: {
-    "&:not(:last-child)": {
-      borderBottom: `1px solid ${vars.colors.borderDefault}`,
+      padding: `${vars.spacing.xl} 0`,
     },
   },
 });
@@ -94,7 +125,6 @@ export const sideBySideFeatureReversed = style([
 ]);
 
 export const sideBySideTextContainer = style({
-  paddingTop: vars.spacing.small,
   selectors: {
     [`${sideBySideFeatureReversed} &`]: {
       order: 2,
@@ -106,10 +136,28 @@ export const sideBySideImageStack = style({
   position: "relative",
 });
 
+export const imageWrapper = style([
+  glassSurface,
+  {
+    position: "relative",
+    borderRadius: vars.borderRadius.xl,
+    padding: vars.spacing["20"],
+
+    "@media": {
+      [breakpoints.desktop]: {
+        padding: vars.spacing.large,
+      },
+    },
+  },
+]);
+
+
 export const sideBySideImage = style({
   borderRadius: vars.borderRadius.lg,
   border: `1px solid ${vars.colors.borderDefault}`,
-  boxShadow: vars.shadows.lg,
+  boxShadow: `${vars.shadows.lg}, 0 0 0 1px rgba(0,0,0,0.02)`,
+  width: "100%",
+  display: "block",
 
   selectors: {
     [`${sideBySideImageStack} &`]: {
@@ -118,6 +166,7 @@ export const sideBySideImage = style({
       right: calc(vars.spacing.small).negate().toString(),
       maxHeight: 200,
       maxWidth: "75%",
+      width: "auto",
     },
     [`${sideBySideFeatureReversed} ${sideBySideImageStack} &`]: {
       left: calc(vars.spacing.small).negate().toString(),
@@ -137,6 +186,7 @@ export const sideBySideImageStackRootImage = style([
         left: 0,
         maxHeight: "unset",
         maxWidth: "100%",
+        width: "100%",
         zIndex: -1,
       },
       [`${sideBySideFeatureReversed} ${sideBySideImageStack} &`]: {

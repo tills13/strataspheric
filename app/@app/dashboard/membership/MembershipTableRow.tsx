@@ -13,7 +13,7 @@ import { can, roleLabels } from "../../../../data/users/permissions";
 import { deleteStrataMembershipAction } from "./actions";
 
 interface Props {
-  membership: StrataMembership;
+  membership: StrataMembership & { unitNumbers?: string[] };
 }
 
 export async function MembershipTableRow({ membership }: Props) {
@@ -65,6 +65,11 @@ export async function MembershipTableRow({ membership }: Props) {
             {membership.name}
           </Text>
           <Text color="secondary">{roleLabels[membership.role]}</Text>
+          {membership.unitNumbers && membership.unitNumbers.length > 0 && (
+            <Text color="grey400" fontSize="small">
+              Unit {membership.unitNumbers.join(", ")}
+            </Text>
+          )}
         </Group>
       }
       rowId={membership.userId}

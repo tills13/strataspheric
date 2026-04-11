@@ -9,9 +9,15 @@ import { Tabs } from "./Tabs";
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 export const TabContext = React.createContext<string>(null!);
 
+export interface TabDefinition {
+  name: string;
+  label: string;
+  description?: string;
+}
+
 interface Props {
   defaultTab: string;
-  tabs: string[];
+  tabs: TabDefinition[];
   tabsClassName?: string;
 }
 
@@ -21,7 +27,7 @@ export function TabLayout({
   tabs,
   tabsClassName,
 }: React.PropsWithChildren<Props>) {
-  const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]);
+  const [activeTab, setActiveTab] = useState(defaultTab || tabs[0].name);
 
   return (
     <div className={styles.tabLayout}>

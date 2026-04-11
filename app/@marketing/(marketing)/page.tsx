@@ -47,56 +47,82 @@ export default async function Page() {
       <section className={styles.featuresSection}>
         <TabLayout
           defaultTab="Files"
-          tabs={["Files", "Events", "Meetings", "Inbox", "Directory"]}
+          tabs={[
+            { name: "Files", label: "Documents", description: "Store & share" },
+            { name: "Events", label: "Calendar", description: "Stay in sync" },
+            {
+              name: "Meetings",
+              label: "Meetings",
+              description: "Run agendas",
+            },
+            {
+              name: "Inbox",
+              label: "Inbox",
+              description: "Unified threads",
+            },
+            {
+              name: "Directory",
+              label: "Directory",
+              description: "Know your community",
+            },
+          ]}
           tabsClassName={styles.tabLayoutTabs}
         >
           <Tab name="Files">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
-                <Stack gap="12">
-                  <Header as="h3">
-                    Manage your{" "}
-                    <span className={styles.featureAccent}>files</span>.
-                  </Header>
-                  <Text color="secondary" fontSize="medium">
-                    Stored securely and safely in the cloud. There when you, or
-                    anyone else in your strata, needs them.
-                  </Text>
+                <Stack gap="normal">
+                  <span className={styles.featureLabel}>Documents</span>
+                  <h3 className={styles.featureHeading}>
+                    All your building documents,{" "}
+                    <span className={styles.featureAccent}>one place</span>.
+                  </h3>
+                  <p className={styles.featureDescription}>
+                    Bylaws, minutes, financial reports, inspection records.
+                    Stored securely in the cloud and accessible to anyone in
+                    your strata, anytime.
+                  </p>
                 </Stack>
               </div>
 
-              <img
-                alt="files view for organization of strata documents"
-                className={styles.sideBySideImage}
-                src="/images/files.png"
-              />
+              <div className={styles.imageWrapper}>
+                <img
+                  alt="files view for organization of strata documents"
+                  className={styles.sideBySideImage}
+                  src="/images/files.png"
+                />
+              </div>
             </div>
 
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
-                <Stack gap="12">
-                  <Header as="h3">
-                    Find <span className={styles.featureAccent}>exactly</span>{" "}
-                    what you need.
-                  </Header>
-                  <Text color="secondary" fontSize="medium">
-                    Powerful filtering tools to find the documents you are
-                    looking for.
-                  </Text>
+                <Stack gap="normal">
+                  <span className={styles.featureLabel}>Search</span>
+                  <h3 className={styles.featureHeading}>
+                    Find{" "}
+                    <span className={styles.featureAccent}>exactly</span> what
+                    you need.
+                  </h3>
+                  <p className={styles.featureDescription}>
+                    Filter by type, date, or keyword. No more digging through
+                    email chains or shared drives to find that one PDF.
+                  </p>
                 </Stack>
               </div>
 
-              <div className={styles.sideBySideImageStack}>
-                <img
-                  alt="files view for organization of strata documents"
-                  className={styles.sideBySideImage}
-                  src="/images/search.png"
-                />
-                <img
-                  alt="files view for organization of strata documents"
-                  className={styles.sideBySideImageStackRootImage}
-                  src="/images/files_filtered.png"
-                />
+              <div className={styles.imageWrapper}>
+                <div className={styles.sideBySideImageStack}>
+                  <img
+                    alt="search overlay for finding documents"
+                    className={styles.sideBySideImage}
+                    src="/images/search.png"
+                  />
+                  <img
+                    alt="filtered file results"
+                    className={styles.sideBySideImageStackRootImage}
+                    src="/images/files_filtered.png"
+                  />
+                </div>
               </div>
             </div>
           </Tab>
@@ -104,75 +130,85 @@ export default async function Page() {
           <Tab name="Events">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
-                <Stack gap="12">
-                  <Header as="h3">
-                    <span className={styles.featureAccent}>Never</span> miss a
-                    date.
-                  </Header>
-                  <Text color="secondary" fontSize="medium">
-                    A shared calendar keeps your entire strata on the same page.
-                    Upcoming AGMs, maintenance windows, and community events are
-                    always visible at a glance.
-                  </Text>
+                <Stack gap="normal">
+                  <span className={styles.featureLabel}>Calendar</span>
+                  <h3 className={styles.featureHeading}>
+                    <span className={styles.featureAccent}>Never</span> miss
+                    what matters.
+                  </h3>
+                  <p className={styles.featureDescription}>
+                    A shared calendar keeps your entire strata aligned. AGMs,
+                    maintenance windows, and community events are always visible
+                    at a glance.
+                  </p>
                 </Stack>
               </div>
 
-              <img
-                alt="strata events calendar view"
-                className={styles.sideBySideImage}
-                src="/images/agenda.png"
-              />
+              <div className={styles.imageWrapper}>
+                <img
+                  alt="strata events calendar view"
+                  className={styles.sideBySideImage}
+                  src="/images/agenda.png"
+                />
+              </div>
             </div>
 
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
-                <Stack gap="12">
-                  <Header as="h3">
+                <Stack gap="normal">
+                  <span className={styles.featureLabel}>Reminders</span>
+                  <h3 className={styles.featureHeading}>
                     Automatic reminders,{" "}
                     <span className={styles.featureAccent}>zero effort</span>.
-                  </Header>
-                  <Text color="secondary" fontSize="medium">
-                    Set it and forget it. Strataspheric sends email reminders
-                    before important dates so your community is always prepared.
-                  </Text>
+                  </h3>
+                  <p className={styles.featureDescription}>
+                    Set it and forget it. Email reminders go out before
+                    important dates so your community is always prepared.
+                  </p>
                 </Stack>
               </div>
 
-              <img
-                alt="event notification settings"
-                className={styles.sideBySideImage}
-                src="/images/agenda_chat.png"
-              />
+              <div className={styles.imageWrapper}>
+                <img
+                  alt="event notification settings"
+                  className={styles.sideBySideImage}
+                  src="/images/agenda_chat.png"
+                />
+              </div>
             </div>
           </Tab>
 
           <Tab name="Meetings">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
-                <Stack gap="12">
-                  <Header as="h3">
-                    Run <span className={styles.featureAccent}>better</span>{" "}
-                    meetings.
-                  </Header>
-                  <Text color="secondary" fontSize="medium">
+                <Stack gap="normal">
+                  <span className={styles.featureLabel}>Agendas</span>
+                  <h3 className={styles.featureHeading}>
+                    Run{" "}
+                    <span className={styles.featureAccent}>shorter</span>,
+                    better meetings.
+                  </h3>
+                  <p className={styles.featureDescription}>
                     Build agendas directly from strata activity. Pull in open
                     issues, upcoming invoices, and recent correspondence so
                     nothing falls through the cracks.
-                  </Text>
+                  </p>
                 </Stack>
               </div>
 
-              <div className={styles.sideBySideImageStack}>
-                <img
-                  alt="add item to meeting agenda"
-                  className={styles.sideBySideImage}
-                  src="/images/add_to_agenda.png"
-                />
-                <img
-                  alt="meeting agenda overview"
-                  className={styles.sideBySideImageStackRootImage}
-                  src="/images/agenda.png"
-                />
+              <div className={styles.imageWrapper}>
+                <div className={styles.sideBySideImageStack}>
+                  <img
+                    alt="add item to meeting agenda"
+                    className={styles.sideBySideImage}
+                    src="/images/add_to_agenda.png"
+                  />
+                  <img
+                    alt="meeting agenda overview"
+                    className={styles.sideBySideImageStackRootImage}
+                    src="/images/agenda.png"
+                  />
+                </div>
               </div>
             </div>
           </Tab>
@@ -180,30 +216,33 @@ export default async function Page() {
           <Tab name="Inbox">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
-                <Stack gap="12">
-                  <Header as="h3">
+                <Stack gap="normal">
+                  <span className={styles.featureLabel}>Messaging</span>
+                  <h3 className={styles.featureHeading}>
                     <span className={styles.featureAccent}>One inbox</span> for
                     everything.
-                  </Header>
-                  <Text color="secondary" fontSize="medium">
+                  </h3>
+                  <p className={styles.featureDescription}>
                     Stop juggling shared email accounts. Council members can
                     receive, discuss, and respond to residents from a single
-                    unified inbox with a full history of every conversation.
-                  </Text>
+                    unified inbox with full conversation history.
+                  </p>
                 </Stack>
               </div>
 
-              <div className={styles.sideBySideImageStack}>
-                <img
-                  alt="inbox thread conversation"
-                  className={styles.sideBySideImage}
-                  src="/images/inbox_chat.png"
-                />
-                <img
-                  alt="inbox message list"
-                  className={styles.sideBySideImageStackRootImage}
-                  src="/images/inbox.png"
-                />
+              <div className={styles.imageWrapper}>
+                <div className={styles.sideBySideImageStack}>
+                  <img
+                    alt="inbox thread conversation"
+                    className={styles.sideBySideImage}
+                    src="/images/inbox_chat.png"
+                  />
+                  <img
+                    alt="inbox message list"
+                    className={styles.sideBySideImageStackRootImage}
+                    src="/images/inbox.png"
+                  />
+                </div>
               </div>
             </div>
           </Tab>
@@ -211,46 +250,52 @@ export default async function Page() {
           <Tab name="Directory">
             <div className={styles.sideBySideFeature}>
               <div className={styles.sideBySideTextContainer}>
-                <Stack gap="12">
-                  <Header as="h3">
+                <Stack gap="normal">
+                  <span className={styles.featureLabel}>People</span>
+                  <h3 className={styles.featureHeading}>
                     Know your{" "}
                     <span className={styles.featureAccent}>community</span>.
-                  </Header>
-                  <Text color="secondary" fontSize="medium">
+                  </h3>
+                  <p className={styles.featureDescription}>
                     A complete directory of owners, tenants, and council
-                    members. Track unit assignments, roles, and monthly fees in
-                    one place.
-                  </Text>
+                    members. Track unit assignments, roles, and monthly
+                    contributions in one place.
+                  </p>
                 </Stack>
               </div>
 
-              <img
-                alt="strata member directory"
-                className={styles.sideBySideImage}
-                src="/images/files.png"
-              />
+              <div className={styles.imageWrapper}>
+                <img
+                  alt="strata member directory"
+                  className={styles.sideBySideImage}
+                  src="/images/files.png"
+                />
+              </div>
             </div>
 
             <div className={styles.sideBySideFeatureReversed}>
               <div className={styles.sideBySideTextContainer}>
-                <Stack gap="12">
-                  <Header as="h3">
+                <Stack gap="normal">
+                  <span className={styles.featureLabel}>Permissions</span>
+                  <h3 className={styles.featureHeading}>
                     Manage access with{" "}
                     <span className={styles.featureAccent}>confidence</span>.
-                  </Header>
-                  <Text color="secondary" fontSize="medium">
+                  </h3>
+                  <p className={styles.featureDescription}>
                     Role-based permissions ensure the right people see the right
                     information. Owners, council, and property managers each get
                     a tailored experience.
-                  </Text>
+                  </p>
                 </Stack>
               </div>
 
-              <img
-                alt="member profile and permissions"
-                className={styles.sideBySideImage}
-                src="/images/files_filtered.png"
-              />
+              <div className={styles.imageWrapper}>
+                <img
+                  alt="member profile and permissions"
+                  className={styles.sideBySideImage}
+                  src="/images/files_filtered.png"
+                />
+              </div>
             </div>
           </Tab>
         </TabLayout>
